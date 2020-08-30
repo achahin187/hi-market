@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">create new offer</a></li>
                         </ol>
                     </div>
 
@@ -41,7 +41,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">products</h3>
+                                <h3 class="card-title">Offers</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -56,32 +56,38 @@
                                         <th>category</th>
                                         <th>vendor</th>
                                         <th>barcode</th>
+                                        <th>status</th>
+                                        <th>start_date</th>
+                                        <th>end_date</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($offers as $offer)
                                         <tr>
-                                            <td>{{$product->arab_name}}</td>
-                                            <td>{{$product->eng_name}}</td>
-                                            <td>{{$product->eng_description}}</td>
-                                            <td>{{$product->arab_description}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td>{{$product->category->eng_name}}</td>
-                                            <td>{{$product->vendor->eng_name}}</td>
-                                            <td>{{$product->barcode}}</td>
+                                            <td>{{$offer->arab_name}}</td>
+                                            <td>{{$offer->eng_name}}</td>
+                                            <td>{{$offer->eng_description}}</td>
+                                            <td>{{$offer->arab_description}}</td>
+                                            <td>{{$offer->price}}</td>
+                                            <td>{{$offer->category->eng_name}}</td>
+                                            <td>{{$offer->vendor->eng_name}}</td>
+                                            <td>{{$offer->barcode}}</td>
+                                            <td>{{$offer->status}}</td>
+                                            <td>{{$offer->start_date}}</td>
+                                            <td>{{$offer->end_date}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                                        <form action="{{ route('products.destroy', $offer->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="{{ route('products.edit', ['id' => $offer->id,'flag' => $offer->flag]) }}">{{ __('edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 
                                                     </div>
@@ -97,7 +103,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $products->links() }}
+                                            {{ $offers->links() }}
                                         </nav>
                                     </div>
                                 </div>

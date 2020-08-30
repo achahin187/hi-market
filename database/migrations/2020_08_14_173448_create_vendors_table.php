@@ -19,6 +19,7 @@ class CreateVendorsTable extends Migration
             $table->string('eng_name');
             $table->string('image')->nullable();
             $table->bigInteger('category_id')->unsigned();
+            $table->unsignedInteger('sponsor');
 
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('no action')->onDelete('no action');
         });

@@ -10,6 +10,11 @@ class Address extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'description','user_id'
+        'description','client_id'
     ];
+
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client');
+    }
 }

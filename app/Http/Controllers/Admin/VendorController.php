@@ -45,6 +45,7 @@ class VendorController extends Controller
         $rules = [
             'arab_name' => 'required|min:2|max:60',
             'eng_name' => 'required|min:2|max:60',
+            'sponsor' => 'required|integer|min:0',
             'category_id' => 'required|integer',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
@@ -54,6 +55,8 @@ class VendorController extends Controller
         $arab_name = $request->input('arab_name');
 
         $eng_name = $request->input('eng_name');
+
+        $sponsor = $request->input('sponsor');
 
         if($image = $request->file('image'))
         {
@@ -67,6 +70,7 @@ class VendorController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'sponsor' => $sponsor,
                 'category_id' => $request->category_id,
                 'image' => $file_to_store
             ]);
@@ -77,6 +81,7 @@ class VendorController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'sponsor' => $sponsor,
                 'category_id' => $request->category_id,
             ]);
         }
@@ -124,7 +129,7 @@ class VendorController extends Controller
         }
         else
         {
-            return redirect('admin/vendord')->withStatus('no vendor have this id');
+            return redirect('admin/vendors')->withStatus('no vendor have this id');
         }
     }
 
@@ -143,6 +148,7 @@ class VendorController extends Controller
             'arab_name' => 'required|min:2|max:60',
             'eng_name' => 'required|min:2|max:60',
             'category_id' => 'required|integer',
+            'sponsor' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
 
@@ -150,33 +156,38 @@ class VendorController extends Controller
 
         $vendor = Vendor::findOrFail($id);
 
-        if($file = $request->file('image')) {
+        if($vendor) {
 
-            $this->validate($request,$rules);
+            if ($file = $request->file('image')) {
 
-            $filename = $file->getClientOriginalName();
-            $fileextension = $file->getClientOriginalExtension();
-            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.'.$fileextension;
+                $this->validate($request, $rules);
 
-            if($file->move('vendor_images', $file_to_store)) {
-                if($vendor->image != null) {
+                $filename = $file->getClientOriginalName();
+                $fileextension = $file->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                    unlink('vendor_images/'.$vendor->image);
+                if ($file->move('vendor_images', $file_to_store)) {
+                    if ($vendor->image != null) {
+
+                        unlink('vendor_images/' . $vendor->image);
+                    }
+                }
+                $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'sponsor' => $request->sponsor ,'image' => $file_to_store]);
+            } else {
+
+                if ($request->has('checkedimage')) {
+                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
+                } else {
+                    unlink('vendor_images/' . $vendor->image);
+                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id, 'sponsor' => $request->sponsor , 'image' => null]);
                 }
             }
-            $vendor->update(['arab_name' => $request->arab_name , 'eng_name' => $request->eng_name ,'category_id' => $request->category_id , 'image' => $file_to_store]);
+            return redirect('/admin/vendors')->withStatus('vendor successfully updated.');
         }
-        else {
-            if($request->has('checkedimage')) {
-                $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name , 'category_id' => $request->category_id , 'image' => $request->input('checkedimage')]);
-            }
-            else
-            {
-                unlink('vendor_images/'.$vendor->image);
-                $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name , 'category_id' => $request->category_id , 'image' => null]);
-            }
+        else
+        {
+            return redirect('/admin/vendors')->withStatus('no vendor exist');
         }
-        return redirect('/admin/vendors')->withStatus('vednor successfully updated.');
     }
 
     /**

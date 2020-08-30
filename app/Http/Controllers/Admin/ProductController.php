@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::orderBy('id', 'desc')->paginate(10);
+        $products = Product::where('flag',0)->orderBy('id', 'desc')->paginate(10);
         return view('Admin.products.index',compact('products'));
     }
 
@@ -25,10 +25,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($flag)
     {
         //
-        return view('Admin.products.create');
+        return view('Admin.products.create',compact('flag'));
     }
 
     /**
@@ -37,20 +37,100 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$flag)
     {
-        //not_regex:/^[`~<>;':"/[\]|{}=_+]*$/|
+        if($flag == 1) {
 
-        $rules = [
-            'arab_name' => 'required|min:2|max:60',
-            'eng_name' => 'required|min:2|max:60',
-            'description' => '',
-            'vendor_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
-        ];
+            $rules = [
+                'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                'price' => '',
+                'vendor_id' => 'required|integer|min:0',
+                'category_id' => 'required|integer|min:0',
+                'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
+                'status' => 'required|string',
+                'start_date' => 'required|date_format:Y-m-d H:i:s',
+                'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
+            ];
 
-        $this->validate($request, $rules);
+            $this->validate($request, $rules);
+
+
+            $arab_name = $request->input('arab_name');
+
+            $eng_name = $request->input('eng_name');
+
+
+            $arab_description = $request->input('arab_description');
+
+            $eng_description = $request->input('eng_description');
+
+
+            $price = $request->input('price');
+
+            if ($price == null) {
+                $price = 0;
+            }
+
+            $category = $request->input('category_id');
+
+            $vendor = $request->input('vendor_id');
+
+            $barcode = $request->input('barcode');
+
+            $status = $request->input('status');
+
+            $start_date = $request->input('start_date');
+
+            $end_date = $request->input('end_date');
+        }
+        else
+        {
+            $rules = [
+                'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                'price' => '',
+                'vendor_id' => 'required|integer',
+                'category_id' => 'required|integer',
+                'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
+            ];
+
+            $this->validate($request, $rules);
+
+
+            $arab_name = $request->input('arab_name');
+
+            $eng_name = $request->input('eng_name');
+
+
+            $arab_description = $request->input('arab_description');
+
+            $eng_description = $request->input('eng_description');
+
+
+            $price = $request->input('price');
+
+            if ($price == null) {
+                $price = 0;
+            }
+
+            $category = $request->input('category_id');
+
+            $vendor = $request->input('vendor_id');
+
+            $barcode = $request->input('barcode');
+
+            $status = null;
+
+            $start_date = null;
+
+            $end_date = null;
+
+        }
 
 
         if ($request->hasFile('images')) {
@@ -75,25 +155,6 @@ class ProductController extends Controller
             $images = '';
         }
 
-        $arab_name = $request->input('arab_name');
-
-        $eng_name = $request->input('eng_name');
-
-
-        $price = $request->input('price');
-
-        if($price == null)
-        {
-            $price = 0;
-        }
-
-        $category = $request->input('category_id');
-
-        $vendor = $request->input('vendor_id');
-
-        $barcode = $request->input('barcode');
-
-        $description = $request->input('description');
 
         $product = Product::create([
             'arab_name' => $arab_name,
@@ -103,7 +164,12 @@ class ProductController extends Controller
             'vendor_id' => $vendor,
             'images' => $images,
             'barcode' => $barcode,
-            'description' => $description
+            'arab_description' => $arab_description,
+            'eng_description' => $eng_description,
+            'flag' => $flag,
+            'status' => $status,
+            'start_date' => $start_date,
+            'end_date' => $end_date
         ]);
 
         if($product)
@@ -143,7 +209,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$flag)
     {
         //
         $product = Product::findOrFail($id);
@@ -151,7 +217,7 @@ class ProductController extends Controller
         if($product)
         {
             $productimages = explode(',',$product->images);
-            return view('Admin.products.create', compact('product','productimages'));
+            return view('Admin.products.create', compact('product','productimages','flag'));
         }
         else
         {
@@ -166,201 +232,235 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id,$flag)
     {
         //
-        $rules = [
-            'arab_name' => 'required|min:2|max:60',
-            'eng_name' => 'required|min:2|max:60',
-            'description' => '',
-            'vendor_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
-        ];
 
-        $this->validate($request,$rules);
+        $product = Product::findOrFail($id);
 
+        if($product) {
 
-        if($request->hasFile('images'))
-        {
+            if ($flag == 1) {
 
-            $product = Product::findOrFail($id);
+                $rules = [
+                    'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                    'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'price' => '',
+                    'vendor_id' => 'required|integer',
+                    'category_id' => 'required|integer',
+                    'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
+                    'status' => 'required|string',
+                ];
 
-            $image_names = $request->file('images');
-
-            foreach ($image_names as $image) {
-
-                $filename = $image->getClientOriginalName();
-                $fileextension = $image->getClientOriginalExtension();
-                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
-
-                $image->move('product_images',$file_to_store);
-
-                $file_names[] = $file_to_store;
-            }
-
-            if( $request->has('image') ) {
-
-                $productimages = explode(',',$product->images);
-
-                $checkedimages = $request->input('image');
-
-                $deletedimages = array_diff($productimages,$checkedimages);
+                $this->validate($request, $rules);
 
 
-                if(!empty($deletedimages))
-                {
-                    foreach ($deletedimages as $deletedimage)
-                    {
-                        if (($key = array_search($deletedimage, $productimages)) !== false) {
-                            unset($productimages[$key]);
-                            unlink('product_images/'.$deletedimage);
-                        }
-                    }
-                }
+                $status = $request->input('status');
 
-                $productimages = array_merge($productimages,$file_names);
+                $start_date = $request->input('start_date');
 
+                $end_date = $request->input('end_date');
 
             }
+            else {
+                $rules = [
+                    'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+                    'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'price' => '',
+                    'vendor_id' => 'required|integer',
+                    'category_id' => 'required|integer',
+                    'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
+                ];
 
-            else
-            {
-                $productimages = $file_names;
+                $this->validate($request, $rules);
+
+
+                $status = null;
+
+                $start_date = null;
+
+                $end_date = null;
 
             }
-
-
 
             $arab_name = $request->input('arab_name');
 
             $eng_name = $request->input('eng_name');
 
+
+            $arab_description = $request->input('arab_description');
+
+            $eng_description = $request->input('eng_description');
+
+
             $price = $request->input('price');
 
-            if($price == null)
-            {
+            if ($price == null) {
                 $price = 0;
             }
 
-            $vendor = $request->input('vendor_id');
-
             $category = $request->input('category_id');
+
+            $vendor = $request->input('vendor_id');
 
             $barcode = $request->input('barcode');
 
-            $description = $request->input('description');
 
-            $images = implode(',',$productimages);
-
-
-            $product = Product::findOrFail($id);
-
-            if($product)
-            {
-                $product->update([
-                    'arab_name' => $arab_name,
-                    'eng_name' => $eng_name,
-                    'price' => $price,
-                    'vendor_id' => $vendor,
-                    'category_id' => $category,
-                    'barcode' => $barcode,
-                    'description' => $description,
-                    'images' => $images
-                ]);
-                return redirect('admin/products')->withStatus(__('product updated successfully'));
-            }
-            else
-            {
-                return redirect('admin/products')->withStatus(__('no product with this id , try again'));
-            }
-
-
-        } else {
-
-            if ($request->has('image')) {
+            if ($request->hasFile('images')) {
 
                 $product = Product::findOrFail($id);
 
-                $productimages = explode(',',$product->images);
+                $image_names = $request->file('images');
 
-                $checkedimages = $request->input('image');
+                foreach ($image_names as $image) {
 
-                $deletedimages = array_diff($productimages,$checkedimages);
+                    $filename = $image->getClientOriginalName();
+                    $fileextension = $image->getClientOriginalExtension();
+                    $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
+                    $image->move('product_images', $file_to_store);
 
-                if(!empty($deletedimages))
-                {
-                    foreach ($deletedimages as $deletedimage)
-                    {
-                        if (($key = array_search($deletedimage, $productimages)) !== false) {
-                            unset($productimages[$key]);
-                            unlink('product_images/'.$deletedimage);
-                        }
-                    }
+                    $file_names[] = $file_to_store;
                 }
 
+                if ($request->has('image')) {
+
+                    $productimages = explode(',', $product->images);
+
+                    $checkedimages = $request->input('image');
+
+                    $deletedimages = array_diff($productimages, $checkedimages);
+
+
+                    if (!empty($deletedimages)) {
+                        foreach ($deletedimages as $deletedimage) {
+                            if (($key = array_search($deletedimage, $productimages)) !== false) {
+                                unset($productimages[$key]);
+                                unlink('product_images/' . $deletedimage);
+                            }
+                        }
+                    }
+
+                    $productimages = array_merge($productimages, $file_names);
+                } else {
+                    $productimages = $file_names;
+                }
 
                 $images = implode(',', $productimages);
 
-                $arab_name = $request->input('arab_name');
-
-                $eng_name = $request->input('eng_name');
-
-                $price = $request->input('price');
-
-                $vendor = $request->input('vendor_id');
-
-                $category = $request->input('category_id');
-
-                $barcode = $request->input('barcode');
-
-                $description = $request->input('description');
-
-
-                $product = Product::findOrFail($id);
-
                 $product->update([
                     'arab_name' => $arab_name,
                     'eng_name' => $eng_name,
                     'price' => $price,
-                    'vendor_id' => $vendor,
                     'category_id' => $category,
+                    'vendor_id' => $vendor,
                     'barcode' => $barcode,
-                    'description' => $description,
+                    'arab_description' => $arab_description,
+                    'eng_description' => $eng_description,
+                    'flag' => $flag,
+                    'status' => $status,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
                     'images' => $images,
                 ]);
 
-                return redirect('admin/products')->withStatus(__('product updated successfully'));
+                if($flag == 1)
+                {
+                    return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                }
+                else
+                {
+                    return redirect('admin/products')->withStatus(__('product updated successfully'));
+                }
 
             } else {
 
-                $arab_name = $request->input('arab_name');
+                if ($request->has('image')) {
 
-                $eng_name = $request->input('eng_name');
+                    $productimages = explode(',', $product->images);
 
-                $price = $request->input('price');
+                    $checkedimages = $request->input('image');
 
-                $vendor = $request->input('vendor_id');
+                    $deletedimages = array_diff($productimages, $checkedimages);
 
-                $category = $request->input('category_id');
 
-                $barcode = $request->input('barcode');
+                    if (!empty($deletedimages)) {
+                        foreach ($deletedimages as $deletedimage) {
+                            if (($key = array_search($deletedimage, $productimages)) !== false) {
+                                unset($productimages[$key]);
+                                unlink('product_images/' . $deletedimage);
+                            }
+                        }
+                    }
 
-                $description = $request->input('description');
+                    $images = implode(',', $productimages);
 
-                $product = Product::findOrFail($id);
+                    $product->update([
+                        'arab_name' => $arab_name,
+                        'eng_name' => $eng_name,
+                        'price' => $price,
+                        'category_id' => $category,
+                        'vendor_id' => $vendor,
+                        'barcode' => $barcode,
+                        'arab_description' => $arab_description,
+                        'eng_description' => $eng_description,
+                        'flag' => $flag,
+                        'status' => $status,
+                        'start_date' => $start_date,
+                        'end_date' => $end_date,
+                        'images' => $images,
+                    ]);
 
-                $product->update([
-                    'arab_name' => $arab_name,
-                    'eng_name' => $eng_name,
-                    'price' => $price,
-                    'vendor_id' => $vendor,
-                    'category_id' => $category,
-                    'barcode' => $barcode,
-                    'description' => $description,
-                ]);
-                return redirect('admin/products')->withStatus(__('product updated successfully'));
+                    if($flag == 1)
+                    {
+                        return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                    }
+                    else
+                    {
+                        return redirect('admin/products')->withStatus(__('product updated successfully'));
+                    }
+
+                } else {
+
+                    $product->update([
+                        'arab_name' => $arab_name,
+                        'eng_name' => $eng_name,
+                        'price' => $price,
+                        'category_id' => $category,
+                        'vendor_id' => $vendor,
+                        'barcode' => $barcode,
+                        'arab_description' => $arab_description,
+                        'eng_description' => $eng_description,
+                        'flag' => $flag,
+                        'status' => $status,
+                        'start_date' => $start_date,
+                        'end_date' => $end_date
+                    ]);
+                    if($flag == 1)
+                    {
+                        return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                    }
+                    else
+                    {
+                        return redirect('admin/products')->withStatus(__('product updated successfully'));
+                    }
+                }
+            }
+        }
+
+        else
+        {
+            if($flag == 1)
+            {
+                return redirect('admin/offers')->withStatus(__('no offer exists'));
+            }
+            else
+            {
+                return redirect('admin/products')->withStatus(__('no product exists'));
             }
         }
 
@@ -390,6 +490,14 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        return redirect('/admin/products')->withStatus('product successfully deleted.');
+
+        if($product->flag == 1)
+        {
+            return redirect('admin/offers')->withStatus(__('offer deleted successfully'));
+        }
+        else
+        {
+            return redirect('admin/products')->withStatus(__('product deleted successfully'));
+        }
     }
 }

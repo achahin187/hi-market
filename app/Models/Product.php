@@ -10,7 +10,7 @@ class Product extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'arab_name','eng_name','rate','price','images','category_id','vendor_id','barcode','description'
+        'arab_name','eng_name','rate','price','images','category_id','vendor_id','barcode','arab_description','eng_description','flag','status','start_date','end_date'
     ];
 
     public function category() {
@@ -20,8 +20,12 @@ class Product extends Model
         return $this->belongsTo('App\Models\Vendor');
     }
 
-    public function favourite_to_clients() {
+    public function clients() {
         return $this->belongsToMany('App\Models\Client');
+    }
+
+    public function orders() {
+        return $this->belongsToMany('App\Models\Order');
     }
 
 }

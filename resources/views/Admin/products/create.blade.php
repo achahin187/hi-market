@@ -13,8 +13,14 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('products.index')}}">products</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            @if(($flag == 1))
+
+                                <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
+                                <li class="breadcrumb-item active">Offer Form</li>
+                            @else
+                                <li class="breadcrumb-item"><a href="{{route('products.index')}}">products</a></li>
+                                <li class="breadcrumb-item active">product Form</li>
+                            @endif
                         </ol>
                     </div>
                 </div>
@@ -31,17 +37,36 @@
                         <div class="card-header">
                             <h3 class="card-title">
 
+
                                 @if(isset($product))
-                                    edit product
+
+                                    @if($product->flag == 0)
+
+                                        edit product
+                                    @else
+
+                                        edit offer
+
+                                    @endif
+
                                 @else
-                                    create product
+                                    @if($flag == 0)
+
+                                        create product
+
+                                    @else
+
+                                        create offer
+
+                                    @endif
+
 
                                 @endif
                             </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="@if(isset($product)){{route('products.update',$product->id) }} @else {{route('products.store') }} @endif" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="@if(isset($product)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @else {{route('productsadd',$flag) }} @endif" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             @if(isset($product))
@@ -71,19 +96,35 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.product_description')}}</label>
-                                    <textarea class=" @error('description') is-invalid @enderror form-control" name="description" rows="3" placeholder="Enter ...">
+                                    <label>{{__('admin.arab_description')}}</label>
+                                    <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
 
                                         @if(isset($product))
-                                            {{$product->description }}
+                                            {{$product->arab_description }}
                                         @endif
                                     </textarea>
-                                    @error('description')
+                                    @error('arab_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label>{{__('admin.eng_description')}}</label>
+                                    <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
+
+                                        @if(isset($product))
+                                            {{$product->eng_description }}
+                                        @endif
+                                    </textarea>
+                                    @error('eng_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
                                     <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control" >
@@ -144,6 +185,42 @@
                                     @enderror
 
                                 </div>
+
+                                @if($flag == 1)
+
+                                    <div class="form-group">
+                                        <label>product status</label>
+                                        <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                            @if(isset($product))
+
+                                                <option  <?php if($product->status == 'active') echo 'selected'; ?> value="active">active</option>
+                                                <option <?php if($product->status == 'inactive') echo 'selected'; ?> ="inactive">inactive</option>
+
+                                            @else
+
+                                                <option value="active">active</option>
+                                                <option value="inactive">inactive</option>
+
+                                            @endif
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>start_date</label>
+                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" @if(!isset($product)) required @endif >
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>end_date</label>
+                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" @if(!isset($product)) required @endif >
+                                    </div>
+
+
+
+                                @endif
 
                                 @if(isset($product))
 

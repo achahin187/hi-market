@@ -13,11 +13,6 @@
                     <div class="col-sm-6">
                         <h1>DataTables</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
-                        </ol>
-                    </div>
 
                     <div class="col-12">
 
@@ -41,47 +36,54 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">products</h3>
+                                <h3 class="card-title">Orders</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
-                                        <th>eng_description</th>
-                                        <th>arab_description</th>
-                                        <th>price</th>
-                                        <th>category</th>
-                                        <th>vendor</th>
-                                        <th>barcode</th>
+                                        <th>address</th>
+                                        <th>status</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($orders as $order)
                                         <tr>
-                                            <td>{{$product->arab_name}}</td>
-                                            <td>{{$product->eng_name}}</td>
-                                            <td>{{$product->eng_description}}</td>
-                                            <td>{{$product->arab_description}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td>{{$product->category->eng_name}}</td>
-                                            <td>{{$product->vendor->eng_name}}</td>
-                                            <td>{{$product->barcode}}</td>
+                                            <td>{{$order->address}}</td>
+                                            <td>
+                                                @if($order->status == '1' )
+
+                                                    <form action="{{ route('orders.status', $order->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <input type="hidden" value="1" name="favourite" class="btn btn-default btn-enroll">
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">delivered</button>
+                                                    </form>
+                                                @else
+                                                    <form action="{{ route('orders.status', $order->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <input type="hidden" value="1" name="favourite" class="btn btn-default btn-enroll">
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-danger">not delivered</button>
+                                                    </form>                                                @endif
+
+                                            </td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                                        <form action="{{ route('orders.delete', $order->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 
                                                     </div>
@@ -97,7 +99,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $products->links() }}
+                                            {{ $orders->links() }}
                                         </nav>
                                     </div>
                                 </div>

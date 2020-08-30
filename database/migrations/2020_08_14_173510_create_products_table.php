@@ -17,13 +17,18 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('arab_name');
             $table->string('eng_name');
-            $table->text('description')->nullable();
+            $table->text('eng_description')->nullable();
+            $table->text('arab_description')->nullable();
             $table->unsignedDecimal('rate')->nullable();
             $table->unsignedFloat('price')->nullable();
             $table->string('images')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
             $table->string('barcode');
+            $table->unsignedInteger('flag');
+            $table->string('status')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
 
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

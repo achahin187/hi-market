@@ -10,7 +10,7 @@ class Vendor extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'arab_name','eng_name','image','category_id'
+        'arab_name','eng_name','image','category_id','sponsor'
     ];
 
     public function products() {

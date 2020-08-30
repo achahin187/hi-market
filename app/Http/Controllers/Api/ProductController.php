@@ -15,14 +15,41 @@ class ProductController extends Controller
 
     public function index()
     {
-        if ($this->getCurrentLang() == 'en') {
-            $products = Product::select('id','eng_name as name','rate','price','images','category_id','vendor_id','barcode','description')->get();
-        }
-        else {
-            $products = Product::select('id','arab_name as name','rate','price','images','category_id','vendor_id','barcode','description')->get();
+
+        $products = Product::all();
+
+
+        foreach($products as $product) {
+
+            if ($this->getCurrentLang() == 'ar') {
+
+                $productarray =
+                    [
+                        'name' => $product->arab_name,
+                        'description' => $product->arab_description,
+                        'rate' => $product->rate,
+                        'price' => $product->price,
+                        'images' => $product->images,
+                        'category' => $product->category->arab_name,
+                        'vendor' => $product->vendor->arab_name
+                    ];
+            } else {
+
+                $productarray =
+                    [
+                        'name' => $product->eng_name,
+                        'description' => $product->eng_description,
+                        'rate' => $product->rate,
+                        'price' => $product->price,
+                        'images' => $product->images,
+                        'category' => $product->category->eng_name,
+                        'vendor' => $product->vendor->eng_name
+                    ];
+            }
+            $all_products [] = $productarray;
         }
 
-        return $this->returnData('products',$products);
+        return $this->returnData('products',$all_products);
     }
 
     public function productdetails($id)
@@ -32,15 +59,32 @@ class ProductController extends Controller
 
         if($product)
         {
-            if($this->getCurrentLang() == 'en')
-            {
-                $product = Product::select('id','eng_name as name','rate','price','images','category_id','vendor_id','barcode','description')->where('id',$id)->get();
+            if ($this->getCurrentLang() == 'ar') {
+
+                $productarray =
+                    [
+                        'name' => $product->arab_name,
+                        'description' => $product->arab_description,
+                        'rate' => $product->rate,
+                        'price' => $product->price,
+                        'images' => $product->images,
+                        'category' => $product->category->arab_name,
+                        'vendor' => $product->vendor->arab_name
+                    ];
+            } else {
+
+                $productarray =
+                    [
+                        'name' => $product->eng_name,
+                        'description' => $product->eng_description,
+                        'rate' => $product->rate,
+                        'price' => $product->price,
+                        'images' => $product->images,
+                        'category' => $product->category->eng_name,
+                        'vendor' => $product->vendor->eng_name
+                    ];
             }
-            else
-            {
-                $product = Product::select('id','arab_name as name','rate','price','images','category_id','vendor_id','barcode','description');
-            }
-            return $this->returnData('product',$product);
+            return $this->returnData('product',$productarray);
         }
         else {
             return $this->returnError('','there is no product found');
@@ -52,24 +96,46 @@ class ProductController extends Controller
 
         $type = intval($value);
 
-        if($type == 0)
+        if(strlen($type) < 10 )
         {
-            $products = Product::where('arab_name','LIKE','%'.$value."%")->orWhere('eng_name','LIKE','%'.$value."%")->first();
+            $products = Product::where('arab_name','LIKE','%'.$value."%")->orWhere('eng_name','LIKE','%'.$value."%")->get();
 
-            if($products)
+            if(count($products) < 1)
             {
-                if($this->getCurrentLang() == 'en')
-                {
-                    $products = Product::select('id','eng_name as name','rate','price','images','category_id','vendor_id','barcode','description')->where('arab_name','LIKE','%'.$value."%")->orWhere('eng_name','LIKE','%'.$value."%")->get();
-                }
-                else
-                {
-                    $products = Product::select('id','arab_name as name','rate','price','images','category_id','vendor_id','barcode','description')->where('arab_name','LIKE','%'.$value."%")->orWhere('eng_name','LIKE','%'.$value."%")->get();
-                }
-                return $this->returnData('product',$products);
+                return $this->returnError('','there is no product found');
             }
             else {
-                return $this->returnError('','there is no product found');
+                foreach($products as $product) {
+
+                    if ($this->getCurrentLang() == 'ar') {
+
+                        $productarray =
+                            [
+                                'name' => $product->arab_name,
+                                'description' => $product->arab_description,
+                                'rate' => $product->rate,
+                                'price' => $product->price,
+                                'images' => $product->images,
+                                'category' => $product->category->arab_name,
+                                'vendor' => $product->vendor->arab_name
+                            ];
+                    } else {
+
+                        $productarray =
+                            [
+                                'name' => $product->eng_name,
+                                'description' => $product->eng_description,
+                                'rate' => $product->rate,
+                                'price' => $product->price,
+                                'images' => $product->images,
+                                'category' => $product->category->eng_name,
+                                'vendor' => $product->vendor->eng_name
+                            ];
+                    }
+                    $all_products [] = $productarray;
+                }
+
+                return $this->returnData('products',$all_products);
             }
         }
 
@@ -79,15 +145,32 @@ class ProductController extends Controller
 
             if($product)
             {
-                if($this->getCurrentLang() == 'en')
-                {
-                    $product = Product::select('id','eng_name as name','rate','price','images','category_id','vendor_id','barcode','description')->where('barcode',$value)->get();
+                if ($this->getCurrentLang() == 'ar') {
+
+                    $productarray =
+                        [
+                            'name' => $product->arab_name,
+                            'description' => $product->arab_description,
+                            'rate' => $product->rate,
+                            'price' => $product->price,
+                            'images' => $product->images,
+                            'category' => $product->category->arab_name,
+                            'vendor' => $product->vendor->arab_name
+                        ];
+                } else {
+
+                    $productarray =
+                        [
+                            'name' => $product->eng_name,
+                            'description' => $product->eng_description,
+                            'rate' => $product->rate,
+                            'price' => $product->price,
+                            'images' => $product->images,
+                            'category' => $product->category->eng_name,
+                            'vendor' => $product->vendor->eng_name
+                        ];
                 }
-                else
-                {
-                    $product = Product::select('id','arab_name as name','rate','price','images','category_id','vendor_id','barcode','description')->where('barcode',$value)->get();
-                }
-                return $this->returnData('product',$product);
+                return $this->returnData('product',$productarray);
             }
             else {
                 return $this->returnError('','there is no product found');

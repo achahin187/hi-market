@@ -93,6 +93,25 @@
                                         </select>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label>status</label>
+                                        <select class=" @error('sponsor') is-invalid @enderror select2"  name="sponsor" style="width: 100%;" required>
+
+                                            @if(isset($vendor))
+
+                                                <option  <?php if($vendor->sponsor == 'sponsor') echo 'selected'; ?> value="1">sponsor</option>
+                                                <option <?php if($vendor->sponsor == 'vendor') echo 'selected'; ?> value="0">vendor</option>
+
+                                            @else
+
+                                                <option value="1">sponsor</option>
+                                                <option value="0">vendor</option>
+
+                                            @endif
+
+                                        </select>
+                                    </div>
+
 
                                     @if(isset($vendor) && $vendor->image != null)
 
