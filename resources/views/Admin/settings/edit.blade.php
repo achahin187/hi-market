@@ -17,6 +17,17 @@
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
+                    <div class="col-12">
+
+                        @if (session('status'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('status') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -36,37 +47,25 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($setting)){{route('settings.update',$setting->id) }} @else {{route('settings.store') }} @endif" method="POST">
+                            <form role="form" action="{{route('settings.update',$setting->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
 
-                                @if(isset($setting))
-
-                                    @method('PUT')
-
-                                @endif
 
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>tax</label>
                                         <select class=" @error('tax') is-invalid @enderror select2"  name="tax" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                            @if(isset($setting))
-
                                                 <option <?php if($setting->tax == 1) echo 'selected'; ?> value="1">percentage</option>
-                                                <option <?php if($setting->tax == 1) echo 'selected'; ?> value="0">value</option>
-                                            @else
-
-                                                <option value="1">percentage</option>
-                                                <option value="0">value</option>
-
-                                            @endif
+                                                <option <?php if($setting->tax == 0) echo 'selected'; ?> value="0">value</option>
 
                                         </select>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('tax_value')}}</label>
-                                        <input type="number" name="tax_value" @if(isset($setting)) value="{{$setting->tax_value}}"@endif class=" @error('tax_value') is-invalid @enderror form-control" >
+                                        <input type="number" name="tax_value" value="{{$setting->tax_value}}" class=" @error('tax_value') is-invalid @enderror form-control" >
                                         @error('tax_value')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -78,23 +77,14 @@
                                         <label>tax on product</label>
                                         <select class=" @error('tax_on_product') is-invalid @enderror select2"  name="tax_on_product" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                            @if(isset($setting))
-
                                                 <option <?php if($setting->tax_on_product == 1) echo 'selected'; ?> value="1">product price contains tax</option>
                                                 <option <?php if($setting->tax_on_product == 0) echo 'selected'; ?> value="0">product price doesn't contain tax</option>
-                                            @else
-
-                                                <option value="1">product price contains tax</option>
-                                                <option value="0">product price doesn't contain tax</option>
-
-                                            @endif
-
                                         </select>
                                     </div>
 
                                     <div class="form-group">
                                         <label>delivery</label>
-                                        <input type="number" name="tax_value" @if(isset($setting)) value="{{$setting->delivery}}"@endif class=" @error('delivery') is-invalid @enderror form-control" >
+                                        <input type="number" name="delivery" value="{{$setting->delivery}}" class=" @error('delivery') is-invalid @enderror form-control" >
                                         @error('delivery')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

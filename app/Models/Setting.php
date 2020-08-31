@@ -10,6 +10,6 @@ class Setting extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'tax','tax_on_product','delivery'
+        'tax','tax_on_product','delivery','tax_value'
     ];
 }

@@ -1,6 +1,6 @@
 
 <?php
-$settings = App\Models\Setting::all();
+$settings = App\Models\Setting::all()->first();
 
 ?>
 
@@ -282,7 +282,7 @@ $settings = App\Models\Setting::all();
                     </li>
 
                     <li class="nav-item">
-                        <a href="@if($settings != null){{route('settings.create')}} @else {{route('settings.edit',$settings->id)}} @endif" class="nav-link">
+                        <a href="{{route('settings.edit',$settings->id)}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Settings

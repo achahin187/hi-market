@@ -16,9 +16,9 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('tax');
+            $table->unsignedFloat('tax_value');
             $table->unsignedInteger('tax_on_product');
-            $table->unsignedInteger('delivery');
-            $table->timestamps();
+            $table->unsignedFloat('delivery');
         });
     }
 

@@ -121,8 +121,9 @@ $factory->define(CartRequest::class, function (Faker $faker) {
 $factory->define(Setting::class, function (Faker $faker) {
     return [
         'tax' => $faker->randomElement([0,1]),
+        'tax_value' => $faker->randomNumber([5.55,10.55]),
         'tax_on_product' => $faker->randomElement([0,1]),
-        'delivery' => $faker->randomElement([0,1]),
+        'delivery' => $faker->randomNumber([5,10]),
     ];
 });
 
