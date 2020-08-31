@@ -9393,7 +9393,7 @@ jQuery.extend( {
 			// Url cleanup var
 			urlAnchor,
 
-			// Request state (becomes false upon send and true upon completion)
+			// CartRequest state (becomes false upon send and true upon completion)
 			completed,
 
 			// To know if global events are to be dispatched

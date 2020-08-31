@@ -4256,11 +4256,11 @@ Docs & License: https://fullcalendar.io/
                 }
             }
             else {
-                failureCallback('Request failed', xhr);
+                failureCallback('CartRequest failed', xhr);
             }
         };
         xhr.onerror = function () {
-            failureCallback('Request failed', xhr);
+            failureCallback('CartRequest failed', xhr);
         };
         xhr.send(body);
     }

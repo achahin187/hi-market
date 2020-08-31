@@ -13,20 +13,9 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Requests</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
-                    </div>
-                    <div class="col-12">
-
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -237,7 +226,7 @@
                                                 <tr>
                                                     <td>{{$orderproduct->arab_name}}</td>
                                                     <td>{{$orderproduct->eng_name}}</td>
-                                                    <td>{{$orderproduct->price}}</td>
+                                                    <td>{{$orderproduct->price * $orderproduct->pivot->quantity}}</td>
                                                     <td>{{$orderproduct->pivot->quantity}}</td>
                                                     <td>
                                                         <div class="dropdown">

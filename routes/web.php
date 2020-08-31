@@ -53,6 +53,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('categories', 'Admin\CategoryController');
         Route::resource('vendors', 'Admin\VendorController');
         Route::resource('offers', 'Admin\OfferController');
+        Route::resource('requests', 'Admin\RequestController');
         Route::get('products', 'Admin\ProductController@index')->name('products.index');
         Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
         Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');

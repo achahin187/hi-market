@@ -4250,11 +4250,11 @@ function requestJson(method, url, params, successCallback, failureCallback) {
             }
         }
         else {
-            failureCallback('Request failed', xhr);
+            failureCallback('CartRequest failed', xhr);
         }
     };
     xhr.onerror = function () {
-        failureCallback('Request failed', xhr);
+        failureCallback('CartRequest failed', xhr);
     };
     xhr.send(body);
 }

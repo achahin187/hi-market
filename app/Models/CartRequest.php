@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class CartRequest extends Model
 {
+    //
 
     protected $fillable = [
-            'address','client_id','status','order_price','tax','delivery','total_price'
+        'cart_description','address','client_id'
     ];
 
     public function client() {

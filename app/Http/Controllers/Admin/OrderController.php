@@ -55,7 +55,7 @@ class OrderController extends Controller
         if($order)
         {
             $order->update(['address' => $request->input('address')]);
-            return redirect('admin/orders/'.$order_id.'/edit')->withStatus('product information successfully updated.');
+            return redirect('admin/orders/'.$order_id.'/edit')->withStatus('Order information successfully updated.');
         }
         else
         {
@@ -155,11 +155,33 @@ class OrderController extends Controller
         {
             $product_id = $request->input('product_id');
 
-            $quantity = $request->input('quantity');
+            $product = Product::find($product_id);
 
-            $order->products()->attach($product_id,['quantity' => $quantity]);
+            foreach ($product->orders as $orderproduct)
+            {
+                if($orderproduct->id == $order->id)
+                {
+                    $status = true;
+                }
+            }
 
-            return redirect('admin/orders/'.$order_id.'/edit')->withStatus('product information successfully added.');
+            if($status)
+            {
+
+                $order->products()->detach($product_id);
+
+                $quantity = $request->input('quantity');
+
+                $order->products()->attach($product_id,['quantity' => $quantity]);
+            }
+            else
+            {
+                $quantity = $request->input('quantity');
+
+                $order->products()->attach($product_id,['quantity' => $quantity]);
+            }
+
+            return redirect('admin/orders/'.$order_id.'/edit')->withStatus('product successfully added to order');
         }
         else
         {
@@ -174,7 +196,7 @@ class OrderController extends Controller
         if($order)
         {
             $order->products()->detach($product_id);
-            return redirect('admin/orders/'.$order_id.'/edit')->withStatus(__('order successfully deleted.'));
+            return redirect('admin/orders/'.$order_id.'/edit')->withStatus(__('product successfully deleted.'));
         }
         return redirect('admin/orders/'.$order_id.'/edit')->withStatus(__('this id is not in our database'));
     }

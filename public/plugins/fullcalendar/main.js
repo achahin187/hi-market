@@ -4256,11 +4256,11 @@ Docs & License: https://fullcalendar.io/
                 }
             }
             else {
-                failureCallback('Request failed', xhr);
+                failureCallback('CartRequest failed', xhr);
             }
         };
         xhr.onerror = function () {
-            failureCallback('Request failed', xhr);
+            failureCallback('CartRequest failed', xhr);
         };
         xhr.send(body);
     }
@@ -4398,7 +4398,7 @@ Docs & License: https://fullcalendar.io/
         var endMarker = framingRange.end;
         var instanceStarts = [];
         while (dayMarker < endMarker) {
-            var instanceStart 
+            var instanceStart
             // if everyday, or this particular day-of-week
             = void 0;
             // if everyday, or this particular day-of-week

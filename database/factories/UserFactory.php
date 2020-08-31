@@ -4,6 +4,7 @@
 
 use App\Models\Address;
 use App\Models\Admin;
+use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Product;
@@ -105,6 +106,14 @@ $factory->define(Address::class, function (Faker $faker) {
     return [
         'description' => $faker->paragraph,
         'client_id' => Client::all()->random()->id,
+    ];
+});
+
+$factory->define(CartRequest::class, function (Faker $faker) {
+    return [
+        'cart_description' => $faker->paragraph,
+        'client_id' => Client::all()->random()->id,
+        'address' => $faker->address,
     ];
 });
 

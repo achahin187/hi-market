@@ -10616,7 +10616,7 @@ var core_helpers = function() {
 
 		return niceFraction * Math.pow(10, exponent);
 	};
-	// Request animation polyfill - https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+	// CartRequest animation polyfill - https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 	helpers$1.requestAnimFrame = (function() {
 		if (typeof window === 'undefined') {
 			return function(callback) {

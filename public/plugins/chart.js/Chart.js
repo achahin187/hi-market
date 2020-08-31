@@ -1528,7 +1528,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -10612,7 +10612,7 @@ var core_helpers = function() {
 
 		return niceFraction * Math.pow(10, exponent);
 	};
-	// Request animation polyfill - https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+	// CartRequest animation polyfill - https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 	helpers$1.requestAnimFrame = (function() {
 		if (typeof window === 'undefined') {
 			return function(callback) {

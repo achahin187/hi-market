@@ -15,7 +15,9 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->
+            $table->text('cart_description');
+            $table->string('address');
+            $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
         });
     }

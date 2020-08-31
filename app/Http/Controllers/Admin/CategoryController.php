@@ -44,9 +44,9 @@ class CategoryController extends Controller
         //
 
         $rules = [
-            'arab_name' => 'required|min:2|max:60',
-            'eng_name' => 'required|min:2|max:60',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request,$rules);

@@ -4250,11 +4250,11 @@ function requestJson(method, url, params, successCallback, failureCallback) {
             }
         }
         else {
-            failureCallback('Request failed', xhr);
+            failureCallback('CartRequest failed', xhr);
         }
     };
     xhr.onerror = function () {
-        failureCallback('Request failed', xhr);
+        failureCallback('CartRequest failed', xhr);
     };
     xhr.send(body);
 }
@@ -4392,7 +4392,7 @@ function expandRanges(daysOfWeek, startTime, framingRange, dateEnv) {
     var endMarker = framingRange.end;
     var instanceStarts = [];
     while (dayMarker < endMarker) {
-        var instanceStart 
+        var instanceStart
         // if everyday, or this particular day-of-week
         = void 0;
         // if everyday, or this particular day-of-week
