@@ -49,12 +49,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($orders as $order)
+                                    @foreach($requests as $request)
                                         <tr>
-                                            <td>{{$order->cart_description}}</td>
-                                            <td>{{$order->address}}</td>
+                                            <td>{{$request->cart_description}}</td>
+                                            <td>{{$request->address}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-block btn-info btn-lg">Info</button>
+                                                <button type="button" onclick="window.location.href='{{route('requests.show',$request->id)}}'" class="btn btn-block btn-info btn-lg">Show</button>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Fav_product extends Model
+class Setting extends Model
 {
     //
     public $timestamps = false;
 
     protected $fillable = [
-        'user_id','product_id'
+        'tax','tax_on_product','delivery'
     ];
 }

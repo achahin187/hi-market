@@ -8,6 +8,7 @@ use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Product;
+use App\Models\Setting;
 use App\User;
 use App\Models\Order;
 use App\Models\Vendor;
@@ -114,6 +115,14 @@ $factory->define(CartRequest::class, function (Faker $faker) {
         'cart_description' => $faker->paragraph,
         'client_id' => Client::all()->random()->id,
         'address' => $faker->address,
+    ];
+});
+
+$factory->define(Setting::class, function (Faker $faker) {
+    return [
+        'tax' => $faker->randomElement([0,1]),
+        'tax_on_product' => $faker->randomElement([0,1]),
+        'delivery' => $faker->randomElement([0,1]),
     ];
 });
 

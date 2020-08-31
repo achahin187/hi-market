@@ -1,3 +1,9 @@
+
+<?php
+$settings = App\Models\Setting::all();
+
+?>
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -271,6 +277,15 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Requests
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="@if($settings != null){{route('settings.create')}} @else {{route('settings.edit',$settings->id)}} @endif" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Settings
                             </p>
                         </a>
                     </li>

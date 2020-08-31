@@ -44,5 +44,10 @@ class DatabaseSeeder extends Seeder
 
         factory('App\Models\Address', 10)->create();
 
+
+        factory('App\Models\CartRequest', 10)->create();
+
+        factory('App\Models\Setting', 10)->create();
+
     }
 }

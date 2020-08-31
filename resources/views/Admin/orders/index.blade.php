@@ -60,7 +60,7 @@
                                                         @csrf
                                                         @method('put')
                                                         <input type="hidden" value="1" name="favourite" class="btn btn-default btn-enroll">
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">delivered</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}')" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">delivered</button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('orders.status', $order->id) }}" method="POST">

@@ -16,7 +16,4 @@ class CartRequest extends Model
         return $this->belongsTo('App\Models\Client');
     }
 
-    public function products() {
-        return $this->belongsToMany('App\Models\Product')->withPivot('quantity','price');
-    }
 }

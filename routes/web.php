@@ -50,10 +50,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::get('', 'Admin\AdminController@index')->name('home');
         Route::resource('admins', 'Admin\AdminController', ['except' => ['show']]);
-        Route::resource('categories', 'Admin\CategoryController');
-        Route::resource('vendors', 'Admin\VendorController');
-        Route::resource('offers', 'Admin\OfferController');
-        Route::resource('requests', 'Admin\RequestController');
+        Route::resource('categories', 'Admin\CategoryController',['except' => ['show']]);
+        Route::resource('vendors', 'Admin\VendorController',['except' => ['show']]);
+        Route::resource('offers', 'Admin\OfferController',['except' => ['show']]);
+        Route::resource('requests', 'Admin\RequestController',['except' => ['show']]);
+        Route::resource('settings', 'Admin\SettingsController',['except' => ['show']]);
         Route::get('products', 'Admin\ProductController@index')->name('products.index');
         Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
         Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');
