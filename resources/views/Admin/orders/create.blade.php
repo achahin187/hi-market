@@ -9,11 +9,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>Create order</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.index')}}">categories</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
@@ -40,74 +40,78 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">
-
-                                    order settings
-                                </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{route('settings.update',$setting->id) }}" method="POST">
+                            <form role="form" action="{{route('orders.store',$request->id) }}" method="POST" enctype="multipart/form-data">
+
                                 @csrf
-                                @method('PUT')
-
-
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>tax</label>
-                                        <select class=" @error('tax') is-invalid @enderror select2"  name="tax" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                <option <?php if($setting->tax == 1) echo 'selected'; ?> value="1">percentage</option>
-                                                <option <?php if($setting->tax == 0) echo 'selected'; ?> value="0">value</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('tax_value')}}</label>
-                                        <input type="number" name="tax_value" value="{{$setting->tax_value}}" class=" @error('tax_value') is-invalid @enderror form-control" >
-                                        @error('tax_value')
+                                        <label for="exampleInputEmail1">{{__('client name')}}</label>
+                                        <input type="text" value="{{$request->client->name }}" name="name" class=" @error('name') is-invalid @enderror form-control" required>
+                                        @error('name')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <label>tax on product</label>
-                                        <select class=" @error('tax_on_product') is-invalid @enderror select2"  name="tax_on_product" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                <option <?php if($setting->tax_on_product == 1) echo 'selected'; ?> value="1">product price contains tax</option>
-                                                <option <?php if($setting->tax_on_product == 0) echo 'selected'; ?> value="0">product price doesn't contain tax</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>delivery</label>
-                                        <input type="number" name="delivery" value="{{$setting->delivery}}" class=" @error('delivery') is-invalid @enderror form-control" >
-                                        @error('delivery')
+                                        <label for="exampleInputEmail1">Request Address</label>
+                                        <input type="text" value="{{$request->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        @error('address')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Cancellation disabled when order</label>
-                                        <select class=" @error('tax') is-invalid @enderror select2"  name="tax" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                            <option <?php if($setting->cancellation == 0) echo 'selected'; ?> value="0">new</option>
-                                            <option <?php if($setting->cancellation == 1) echo 'selected'; ?> value="1">approved</option>
-                                            <option <?php if($setting->cancellation == 2) echo 'selected'; ?> value="2">prepared</option>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>select product</label>
+                                                <select class=" @error('product_id') is-invalid @enderror select2" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                                    @foreach(\App\Models\Product::all() as $editproduct)
 
-                                        </select>
+                                                        <option value="{{ $editproduct->id }}">
+
+                                                            @if(App::getLocale() == 'ar')
+
+                                                                {{ $editproduct->arab_name }}
+
+                                                            @else
+
+                                                                {{ $editproduct->eng_name }}
+
+                                                            @endif
+
+                                                        </option>
+
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
 
-                                <!-- /.card-body -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
+                                                <input type="number" name="quantity" min="1" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
 
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                @error('quantity')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -220,4 +224,3 @@
         </script>
         </body>
         </html>
-

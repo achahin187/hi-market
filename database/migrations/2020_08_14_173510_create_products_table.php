@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('eng_name');
             $table->text('eng_description')->nullable();
             $table->text('arab_description')->nullable();
-            $table->unsignedDecimal('rate')->nullable();
             $table->unsignedFloat('price')->nullable();
             $table->string('images')->nullable();
             $table->bigInteger('category_id')->unsigned();

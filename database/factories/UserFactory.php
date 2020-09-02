@@ -8,6 +8,7 @@ use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Product;
+use App\Models\Reason;
 use App\Models\Setting;
 use App\User;
 use App\Models\Order;
@@ -64,7 +65,6 @@ $factory->define(product::class, function (Faker $faker) {
         'eng_name' => $faker->name,
         'arab_description' => $faker->paragraph,
         'eng_description' => $faker->paragraph,
-        'rate' => $faker->randomElement([3,4.5,5,4]),
         'price' => $faker->randomElement([30,40]),
         'images' => $faker->randomElement([0,1]),
         'category_id' => Category::all()->random()->id,
@@ -93,16 +93,6 @@ $factory->define(Client::class, function (Faker $faker) {
 
 
 
-$factory->define(Order::class, function (Faker $faker) {
-    return [
-        'address' => $faker->address,
-        'status' => $faker->randomElement([0,1]),
-        'client_id' => Client::all()->random()->id,
-        'order_price' => $faker->randomElement([30,40])
-    ];
-});
-
-
 $factory->define(Address::class, function (Faker $faker) {
     return [
         'description' => $faker->paragraph,
@@ -115,6 +105,7 @@ $factory->define(CartRequest::class, function (Faker $faker) {
         'cart_description' => $faker->paragraph,
         'client_id' => Client::all()->random()->id,
         'address' => $faker->address,
+        'converted' => $faker->randomElement([0,1])
     ];
 });
 
@@ -124,6 +115,39 @@ $factory->define(Setting::class, function (Faker $faker) {
         'tax_value' => $faker->randomNumber([5.55,10.55]),
         'tax_on_product' => $faker->randomElement([0,1]),
         'delivery' => $faker->randomNumber([5,10]),
+        'cancellation' => $faker->randomElement([0,1])
+    ];
+});
+
+$factory->define(Reason::class, function (Faker $faker) {
+    return [
+        'eng_reason' => $faker->text,
+        'arab_reason' => $faker->text,
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+
+$factory->define(Order::class, function (Faker $faker) {
+    return [
+        'address' => $faker->address,
+        'status' => $faker->randomElement([0,1]),
+        'client_id' => Client::all()->random()->id,
+        'order_price' => $faker->randomElement([30,40]),
+        'request' => $faker->randomElement([0,1]),
+        'rate' => $faker->randomElement([4.5,5.5,4,5,3.5]),
+        'mobile_delivery' => $faker->phoneNumber,
+        'comment' => $faker->text,
+        'order_price' => $faker->randomElement([50,40,30]),
+        'request' => $faker->randomElement([0,1]),
+        'approved_at' => $faker->dateTime,
+        'prepared_at' => $faker->dateTime,
+        'shipping_at' => $faker->dateTime,
+        'shipped_at' => $faker->dateTime,
+        'cancelled_at' => $faker->dateTime,
+        'admin_cancellation' => $faker->randomElement([0,1]),
+        'reason_id' => Reason::all()->random()->id,
+        'notes' => $faker->text
     ];
 });
 

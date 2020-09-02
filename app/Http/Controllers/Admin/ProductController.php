@@ -39,6 +39,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag)
     {
+
         if($flag == 1) {
 
             $rules = [
@@ -46,13 +47,13 @@ class ProductController extends Controller
                 'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
                 'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => '',
+                'price' => 'numeric|min:0',
                 'vendor_id' => 'required|integer|min:0',
                 'category_id' => 'required|integer|min:0',
                 'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                 'status' => 'required|string',
-                'start_date' => 'required|date_format:Y-m-d H:i:s',
-                'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
+                'start_date' => 'required',
+                'end_date' => 'required|after:start_date',
                 'images' => 'image|mimes:jpeg,png,jpg|max:2048'
             ];
 
@@ -94,7 +95,7 @@ class ProductController extends Controller
                 'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
                 'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => '',
+                'price' => 'numeric|min:0',
                 'vendor_id' => 'required|integer',
                 'category_id' => 'required|integer',
                 'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
@@ -240,6 +241,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
+
         if($product) {
 
             if ($flag == 1) {
@@ -249,13 +251,13 @@ class ProductController extends Controller
                     'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                     'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
                     'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'price' => '',
+                    'price' => 'numeric|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
                     'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                     'status' => 'required|string',
-                    'start_date' => 'required|date_format:Y-m-d H:i:s',
-                    'end_date' => 'required|date_format:Y-m-d H:i:s|after:start_date',
+                    'start_date' => 'required',
+                    'end_date' => 'required|after:start_date',
                     'images' => 'image|mimes:jpeg,png,jpg|max:2048'
                 ];
 
@@ -275,7 +277,7 @@ class ProductController extends Controller
                     'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                     'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
                     'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'price' => '',
+                    'price' => 'numeric|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
                     'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',

@@ -43,11 +43,11 @@ class VendorController extends Controller
     {
         //
         $rules = [
-            'arab_name' => 'required|min:2|max:60',
-            'eng_name' => 'required|min:2|max:60',
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'sponsor' => 'required|integer|min:0',
-            'category_id' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'category_id' => 'required|integer|min:0',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request,$rules);
@@ -145,11 +145,11 @@ class VendorController extends Controller
         //
 
         $rules = [
-            'arab_name' => 'required|min:2|max:60',
-            'eng_name' => 'required|min:2|max:60',
-            'category_id' => 'required|integer',
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'category_id' => 'required|integer|min:0',
             'sponsor' => 'required|integer|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request, $rules);

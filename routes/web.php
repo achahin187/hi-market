@@ -53,7 +53,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('categories', 'Admin\CategoryController',['except' => ['show']]);
         Route::resource('vendors', 'Admin\VendorController',['except' => ['show']]);
         Route::resource('offers', 'Admin\OfferController',['except' => ['show']]);
-        Route::resource('requests', 'Admin\RequestController',['except' => ['show']]);
+        Route::resource('requests', 'Admin\RequestController');
+        Route::resource('reasons', 'Admin\ReasonController');
         Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
         Route::get('products', 'Admin\ProductController@index')->name('products.index');
         Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
@@ -64,6 +65,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::group(['prefix' => 'orders'],function() {
             Route::get('/', 'Admin\OrderController@index')->name('orders.index');
+            Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
+            Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');
             Route::put('{order_id}', 'Admin\OrderController@updateorder')->name('orders.update');
             Route::post('products/add/{order_id}', 'Admin\OrderController@addproduct')->name('products.store');

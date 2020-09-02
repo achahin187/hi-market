@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CartRequest;
+use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,6 +20,78 @@ class OrderController extends Controller
         return view('Admin.orders.index',compact('orders'));
     }
 
+    public function create($request_id)
+    {
+        //
+        $request = CartRequest::find($request_id);
+
+        if($request)
+        {
+            return view('Admin.orders.create', compact('request'));
+        }
+        else
+        {
+            return redirect('admin/requests')->withStatus('no request have this id');
+        }
+
+    }
+
+
+    public function store(Request $request,$request_id)
+    {
+        //
+
+        $rules = [
+            'product_id' => 'required|integer|min:0',
+            'quantity' => 'required|integer|min:1'
+        ];
+
+        $this->validate($request,$rules);
+
+
+        $cart_request = CartRequest::find($request_id);
+
+
+        $client_id = $cart_request->client->id;
+
+        $product = Product::find($request->input('product_id'));
+
+        $quantity = $request->input('quantity');
+
+
+        if($cart_request)
+        {
+            $order = Order::create([
+
+                'address' => $request->input('address'),
+                'status' => 0,
+                'client_id' => $client_id,
+                'request' => $request_id
+            ]);
+
+            $total_price = 0;
+
+            $cart_request->update(['converted' => 1]);
+
+            $price = $product->price * $quantity;
+
+            $request = $cart_request;
+
+            $order->products()->attach($product->id,['quantity' => $quantity,'price' => $price]);
+
+            foreach ($order->products as $product)
+            {
+                $total_price = $total_price + $product->pivot->price;
+            }
+            return view('Admin.orders.edit',compact('order','request','total_price'));
+        }
+        else
+        {
+            return redirect('admin/requests')->withStatus('no request have this id');
+        }
+
+    }
+
     public function editorder($order_id)
     {
         //
@@ -27,11 +101,26 @@ class OrderController extends Controller
 
         if($order)
         {
-            foreach ($order->products as $product)
+
+            if($order->request != 0)
             {
-                $total_price = $total_price + $product->pivot->price;
+                $request = CartRequest::find($order->request);
+
+                foreach ($order->products as $product)
+                {
+                    $total_price = $total_price + $product->pivot->price;
+                }
+                return view('Admin.orders.edit', compact('order','total_price','request'));
             }
-            return view('Admin.orders.edit', compact('order','total_price'));
+            else
+            {
+                foreach ($order->products as $product)
+                {
+                    $total_price = $total_price + $product->pivot->price;
+                }
+                return view('Admin.orders.edit', compact('order','total_price'));
+            }
+
         }
         else
         {
@@ -109,7 +198,7 @@ class OrderController extends Controller
 
         $rules = [
             'product_id' => 'required|integer|min:0',
-            'quantity' => 'required|integer|min:0',
+            'quantity' => 'required|integer|min:1',
         ];
 
         $this->validate($request,$rules);
@@ -146,7 +235,7 @@ class OrderController extends Controller
 
         $rules = [
             'product_id' => 'required|integer|min:0',
-            'quantity' => 'required|integer|min:0',
+            'quantity' => 'required|integer|min:1',
         ];
 
         $this->validate($request,$rules);
@@ -162,6 +251,9 @@ class OrderController extends Controller
                 if($orderproduct->id == $order->id)
                 {
                     $status = true;
+                }else
+                {
+                    $status = false;
                 }
             }
 
@@ -221,13 +313,34 @@ class OrderController extends Controller
         if($order)
         {
             if($order->status == 0) {
-                $order->update(['status' => 1]);
+                $order->update(['status' => 1,'approved_at' => now()]);
+            }
+            elseif ($order->status == 1)
+            {
+                $order->update(['status' => 2,'prepared_at' => now()]);
+            }
+            elseif ($order->status == 2)
+            {
+                $order->update(['status' => 3,'shipping_at' => now()]);
             }
             else
             {
-                $order->update(['status' => 0]);
+                $order->update(['status' => 4,'shipped_at' => now()]);
             }
                 return redirect('/admin/orders')->withStatus(__('order status successfully updated.'));
+        }
+        return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
+    }
+
+    public function cancel(Request $request,$id)
+    {
+
+        $order = Order::find($id);
+
+        if($order)
+        {
+            $order->update(['status' => 5,'cancelled_at' => now()]);
+            return redirect('/admin/orders')->withStatus(__('order status successfully updated.'));
         }
         return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
     }

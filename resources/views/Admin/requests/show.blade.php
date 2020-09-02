@@ -14,7 +14,12 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('requests.index')}}">Requests</a></li>
-                            <li class="breadcrumb-item active">Show Request</li>
+
+                            @if($request->converted == 1)
+                                <li class="breadcrumb-item active"><a href="{{route('orders.edit',$order->id)}}">Edit order</a></li>
+                            @else
+                                <li class="breadcrumb-item active"><a href="{{route('orders.create',$request->id)}}">convert to order</a></li>
+                            @endif
                         </ol>
                     </div>
                 </div>

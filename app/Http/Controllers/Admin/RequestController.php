@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\CartRequest;
 
@@ -21,14 +22,22 @@ class RequestController extends Controller
         return view('Admin.requests.index',compact('requests'));
     }
 
-    public function show($id)
+    public function show($request_id)
     {
         //
-        $request = CartRequest::findOrFail($id);
+        $request = CartRequest::findOrFail($request_id);
 
         if($request)
         {
-            return view('Admin.requests.show', compact('request'));
+            if($request->converted == 1)
+            {
+                $order = Order::where('request',$request->id);
+                return view('Admin.requests.show', compact('order','request'));
+            }
+            else
+            {
+                return view('Admin.requests.show', compact('request'));
+            }
         }
         else
         {

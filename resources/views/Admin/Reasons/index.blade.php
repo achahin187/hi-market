@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('reasons.create')}}">create new reason</a></li>
                         </ol>
                     </div>
 
@@ -48,39 +48,29 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
                                         <th>eng_description</th>
                                         <th>arab_description</th>
-                                        <th>price</th>
-                                        <th>category</th>
-                                        <th>vendor</th>
-                                        <th>barcode</th>
+                                        <th>status</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($products as $product)
                                         <tr>
-                                            <td>{{$product->arab_name}}</td>
-                                            <td>{{$product->eng_name}}</td>
-                                            <td>{{$product->eng_description}}</td>
-                                            <td>{{$product->arab_description}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td>{{$product->category->eng_name}}</td>
-                                            <td>{{$product->vendor->eng_name}}</td>
-                                            <td>{{$product->barcode}}</td>
+                                            <td>{{$reason->eng_reason}}</td>
+                                            <td>{{$reason->arab_reason}}</td>
+                                            <td>{{$reason->status}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                                        <form action="{{ route('reasons.destroy', $reason->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('edit') }}</a>
+                                                            <a class="dropdown-item" href="{{ route('reasons.edit',$product->id}}">{{ __('edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 

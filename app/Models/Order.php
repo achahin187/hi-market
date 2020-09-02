@@ -8,7 +8,7 @@ class Order extends Model
 {
 
     protected $fillable = [
-            'address','client_id','status','order_price','tax','delivery','total_price'
+            'address','client_id','status','rate','delivery_number','order_price','request','approved_at','prepared_at','shipping_at','shipped_at','admin_cancellation','cancelled_at','reason_id','notes'
     ];
 
     public function client() {

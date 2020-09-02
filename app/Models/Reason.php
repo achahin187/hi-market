@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class Reason extends Model
 {
     //
+
     public $timestamps = false;
 
     protected $fillable = [
-        'tax','tax_on_product','delivery','tax_value','cancellation'
+        'arab_reason','eng_reason','status'
     ];
 }

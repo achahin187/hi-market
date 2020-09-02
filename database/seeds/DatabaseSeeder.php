@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         factory('App\Models\Vendor', 10)->create();
         factory('App\Models\Product', 10)->create();
         $clients = factory('App\Models\Client', 10)->create();
-        $orders = factory('App\Models\Order', 10)->create();
 
         foreach ($clients as $client) {
             $products_ids = [];
@@ -31,6 +30,18 @@ class DatabaseSeeder extends Seeder
             $client->products()->sync( $products_ids );
         }
 
+
+        factory('App\Models\Address', 10)->create();
+
+
+        factory('App\Models\CartRequest', 10)->create();
+
+        factory('App\Models\Setting', 1)->create();
+
+        factory('App\Models\Reason', 10)->create();
+
+        $orders = factory('App\Models\Order', 10)->create();
+
         foreach ($orders as $order) {
             $products_ids = [];
 
@@ -40,14 +51,6 @@ class DatabaseSeeder extends Seeder
 
             $order->products()->sync( $products_ids );
         }
-
-
-        factory('App\Models\Address', 10)->create();
-
-
-        factory('App\Models\CartRequest', 10)->create();
-
-        factory('App\Models\Setting', 1)->create();
 
     }
 }

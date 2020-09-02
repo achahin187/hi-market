@@ -139,7 +139,7 @@ class CategoryController extends Controller
         $rules = [
             'arab_name' => 'required|min:2|max:100',
             'eng_name' => 'required|min:2|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request, $rules);

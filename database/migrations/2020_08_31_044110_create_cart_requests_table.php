@@ -18,6 +18,7 @@ class CreateCartRequestsTable extends Migration
             $table->text('cart_description');
             $table->string('address');
             $table->bigInteger('client_id')->unsigned();
+            $table->unsignedInteger('converted');
             $table->timestamps();
 
 

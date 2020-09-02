@@ -68,13 +68,13 @@
                                             @enderror
                                         </div>
 
-                                        @if(!count($order->products))
+                                        @if($order->request != 0)
 
                                             <div class="form-group">
                                                 <label>{{__('order_description')}}</label>
                                                 <textarea class="@error('cart_description') is-invalid @enderror form-control" name="cart_description" rows="3" placeholder="Enter ...">
 
-                                                        {{$order->cart_description }}
+                                                        {{$request->cart_description }}
                                                 </textarea>
                                                 @error('cart_description')
                                                     <span class="invalid-feedback" role="alert">
@@ -87,10 +87,10 @@
 
                                         <div class="form-group">
                                             <label>{{__('order_address')}}</label>
-                                            <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
+                                            <textarea3 class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
 
                                                     {{$order->address }}
-                                            </textarea>
+                                            </textarea3>
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -185,7 +185,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                        <input type="number" name="quantity" min="0" value="@if(isset($orderproduct)){{$quantity}} @endif" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
+                                                        <input type="number" name="quantity" min="1" value="@if(isset($orderproduct)){{$quantity}} @endif" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
 
                                                         @error('quantity')
                                                             <span class="invalid-feedback" role="alert">

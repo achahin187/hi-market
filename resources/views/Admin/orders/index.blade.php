@@ -53,23 +53,50 @@
                                         <tr>
                                             <td>{{$order->address}}</td>
                                             <td>
-                                                @if($order->status == '1' )
+
+                                                @if($order->status == '0' )
 
                                                     <form action="{{ route('orders.status', $order->id) }}" method="POST">
 
                                                         @csrf
                                                         @method('put')
-                                                        <input type="hidden" value="1" name="favourite" class="btn btn-default btn-enroll">
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}')" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">delivered</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">new</button>
                                                     </form>
-                                                @else
+
+                                                @elseif($order->status == '1' )
+
                                                     <form action="{{ route('orders.status', $order->id) }}" method="POST">
 
                                                         @csrf
                                                         @method('put')
-                                                        <input type="hidden" value="1" name="favourite" class="btn btn-default btn-enroll">
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-danger">not delivered</button>
-                                                    </form>                                                @endif
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">approved</button>
+                                                    </form>
+
+                                                @elseif($order->status == '2' )
+
+                                                    <form action="{{ route('orders.status', $order->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">prepared</button>
+                                                    </form>
+
+                                                @elseif($order->status == '3' )
+
+                                                    <form action="{{ route('orders.status', $order->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">shipping</button>
+                                                    </form>
+
+                                                @elseif($order->status == '4' )
+                                                        <button type="button" disabled class="btn btn-block btn-outline-danger">shipped</button>
+
+                                                @else
+                                                    <button type="button" disabled class="btn btn-block btn-outline-danger">cancelled</button>
+
+                                                @endif
 
                                             </td>
                                             <td>

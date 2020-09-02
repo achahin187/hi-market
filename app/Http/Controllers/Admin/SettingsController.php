@@ -28,8 +28,8 @@ class SettingsController extends Controller
         $rules = [
             'tax' => 'required|integer|min:0',
             'tax_on_product' => 'required|integer|min:0',
-            'tax_value' => 'required',
-            'delivery' => 'required'
+            'tax_value' => 'required|numeric|min:0',
+            'delivery' => 'required|numeric|min:0'
         ];
 
         $this->validate($request, $rules);

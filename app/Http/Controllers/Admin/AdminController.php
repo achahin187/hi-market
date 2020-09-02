@@ -49,7 +49,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|min:2|max:100',
+            'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
             'password_confirmation' => ['required', 'min:8']
@@ -127,7 +127,7 @@ class AdminController extends Controller
         if($request->input('password') == null )
         {
             $rules = [
-                'name' => 'required|string|min:2|max:100',
+                'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/']
             ];
 
@@ -144,7 +144,7 @@ class AdminController extends Controller
         }
         else {
             $rules = [
-                'name' => 'required|string|min:2|max:100',
+                'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                 'password' => ['required', 'min:8', 'confirmed', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
                 'password_confirmation' => ['required', 'min:8']

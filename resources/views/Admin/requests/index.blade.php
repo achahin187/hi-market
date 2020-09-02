@@ -45,6 +45,7 @@
                                     <tr>
                                         <th>Cart_description</th>
                                         <th>address</th>
+                                        <th>status</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -53,6 +54,17 @@
                                         <tr>
                                             <td>{{$request->cart_description}}</td>
                                             <td>{{$request->address}}</td>
+
+                                            @if($request->converted == 1)
+
+                                                <td>converted</td>
+
+                                            @else
+
+                                                <td>not converted</td>
+
+                                            @endif
+
                                             <td>
                                                 <button type="button" onclick="window.location.href='{{route('requests.show',$request->id)}}'" class="btn btn-block btn-info btn-lg">Show</button>
                                             </td>
