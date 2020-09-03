@@ -52,7 +52,7 @@ class ProductController extends Controller
                 'category_id' => 'required|integer|min:0',
                 'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                 'status' => 'required|string',
-                'start_date' => 'required',
+                'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
                 'images' => 'image|mimes:jpeg,png,jpg|max:2048'
             ];
@@ -256,7 +256,7 @@ class ProductController extends Controller
                     'category_id' => 'required|integer',
                     'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                     'status' => 'required|string',
-                    'start_date' => 'required',
+                    'start_date' => 'required|after:today',
                     'end_date' => 'required|after:start_date',
                     'images' => 'image|mimes:jpeg,png,jpg|max:2048'
                 ];
