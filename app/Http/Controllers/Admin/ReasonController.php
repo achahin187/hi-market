@@ -118,7 +118,7 @@ class ReasonController extends Controller
         $rules = [
             'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'active' => 'required|string',
+            'status' => 'required|string',
         ];
 
         $this->validate($request, $rules);
@@ -136,21 +136,4 @@ class ReasonController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $reason = Reason::findOrFail($id);
-
-        if($reason)
-        {
-            $reason->delete();
-            return redirect('/admin/reasons')->withStatus(__('reason successfully deleted.'));
-        }
-        return redirect('/admin/reasons')->withStatus(__('this id is not in our database'));
-    }
 }

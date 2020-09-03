@@ -65,7 +65,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('tax_value')}}</label>
-                                        <input type="number" name="tax_value" value="{{$setting->tax_value}}" class=" @error('tax_value') is-invalid @enderror form-control" >
+                                        <input type="number" min="0" step="0.01" name="tax_value" value="{{$setting->tax_value}}" class=" @error('tax_value') is-invalid @enderror form-control" >
                                         @error('tax_value')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -84,17 +84,17 @@
 
                                     <div class="form-group">
                                         <label>delivery</label>
-                                        <input type="number" name="delivery" value="{{$setting->delivery}}" class=" @error('delivery') is-invalid @enderror form-control" >
+                                        <input type="number" min="0" step="0.01" name="delivery" value="{{$setting->delivery}}" class=" @error('delivery') is-invalid @enderror form-control" >
                                         @error('delivery')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
                                         <label>Cancellation disabled when order</label>
-                                        <select class=" @error('tax') is-invalid @enderror select2"  name="tax" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('tax') is-invalid @enderror select2"  name="cancellation" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             <option <?php if($setting->cancellation == 0) echo 'selected'; ?> value="0">new</option>
                                             <option <?php if($setting->cancellation == 1) echo 'selected'; ?> value="1">approved</option>

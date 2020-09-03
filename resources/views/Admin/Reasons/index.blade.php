@@ -55,7 +55,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($reasons as $reason)
                                         <tr>
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
@@ -66,13 +66,8 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('reasons.destroy', $reason->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('reasons.edit',$product->id}}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                        </form>
+                                                        <a class="dropdown-item" href="{{ route('reasons.edit',$reason->id) }}">{{ __('edit') }}</a>
 
                                                     </div>
                                                 </div>
@@ -87,7 +82,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $products->links() }}
+                                            {{ $reasons->links() }}
                                         </nav>
                                     </div>
                                 </div>

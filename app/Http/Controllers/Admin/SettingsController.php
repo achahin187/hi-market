@@ -29,7 +29,8 @@ class SettingsController extends Controller
             'tax' => 'required|integer|min:0',
             'tax_on_product' => 'required|integer|min:0',
             'tax_value' => 'required|numeric|min:0',
-            'delivery' => 'required|numeric|min:0'
+            'delivery' => 'required|numeric|min:0',
+            'cancellation' => 'required|integer|min:0'
         ];
 
         $this->validate($request, $rules);
@@ -38,7 +39,7 @@ class SettingsController extends Controller
 
         if($setting) {
 
-            $setting->update(['tax' => $request->input('tax') , 'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery')]);
+            $setting->update(['tax' => $request->input('tax') , 'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation]);
             return redirect('/admin/settings/'.$id.'/edit')->withStatus('settings successfully updated.');
         }
         else

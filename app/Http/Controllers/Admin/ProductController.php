@@ -249,8 +249,8 @@ class ProductController extends Controller
                 $rules = [
                     'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                     'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'arab_description' => ['not_regex:/([%\$#\*<>]+)/'],
+                    'eng_description' => ['not_regex:/([%\$#\*<>]+)/'],
                     'price' => 'numeric|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',

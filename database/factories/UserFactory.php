@@ -131,7 +131,7 @@ $factory->define(Reason::class, function (Faker $faker) {
 $factory->define(Order::class, function (Faker $faker) {
     return [
         'address' => $faker->address,
-        'status' => $faker->randomElement([0,1]),
+        'status' => $faker->randomElement([0,1,2,3,4,5]),
         'client_id' => Client::all()->random()->id,
         'order_price' => $faker->randomElement([30,40]),
         'request' => $faker->randomElement([0,1]),
