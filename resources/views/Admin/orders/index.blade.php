@@ -60,8 +60,13 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">new</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-info">new</button>
                                                     </form>
+
+                                                    @if($order->status <= $setting->cancellation)
+
+                                                            <button type="button" data-toggle="modal" data-target="#showvideo"  value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @endif
 
                                                 @elseif($order->status == '1' )
 
@@ -69,8 +74,12 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">approved</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-secondary">approved</button>
                                                     </form>
+
+                                                    @if($order->status <= $setting->cancellation)
+                                                            <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @endif
 
                                                 @elseif($order->status == '2' )
 
@@ -78,8 +87,12 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">prepared</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-warning">prepared</button>
                                                     </form>
+
+                                                    @if($order->status <= $setting->cancellation)
+                                                            <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @endif
 
                                                 @elseif($order->status == '3' )
 
@@ -87,15 +100,22 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-success">shipping</button>
+                                                        <button type="button"  data-toggle="modal" data-target="#showvideo" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-primary">shipping</button>
                                                     </form>
 
+                                                    @if($order->status <= $setting->cancellation)
+                                                            <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @endif
+
                                                 @elseif($order->status == '4' )
-                                                        <button type="button" disabled class="btn btn-block btn-outline-danger">shipped</button>
+
+                                                    <button type="button" disabled class="btn btn-block btn-outline-success">shipped</button>
+                                                    @if($order->status <= $setting->cancellation)
+                                                            <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @endif
 
                                                 @else
                                                     <button type="button" disabled class="btn btn-block btn-outline-danger">cancelled</button>
-
                                                 @endif
 
                                             </td>
@@ -117,6 +137,60 @@
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <div class="modal fade" id="showvideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Video Preview</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('orders.cancel') }}" method="POST">
+
+                                                            @csrf
+                                                            @method('put')
+
+
+                                                            <div class="card-body">
+
+                                                                <input type="hidden" class="id" name="order_id">
+
+                                                                <div class="form-group">
+                                                                    <label>Cancellation Reason</label>
+                                                                    <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                                        @foreach(\App\Models\Reason::all() as $reason)
+
+                                                                            <option value="{{ $reason->id }}">{{ $reason->arab_reason }}</option>
+
+                                                                        @endforeach
+
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label>Notes</label>
+                                                                    <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ..."></textarea>
+
+                                                                    @error('notes')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="card-footer">
+                                                                <button type="submit" class="btn btn-primary">cancel order</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
 
                                     </tbody>
@@ -144,6 +218,7 @@
         <!-- /.content -->
     </div>
 
+
 @endsection
 
 
@@ -168,6 +243,12 @@
         $("#example1").DataTable({
             "responsive": true,
             "autoWidth": false,
+        });
+
+        $(".cancel").on('click', function(){
+            let id = $(this).val();
+           $('.id').val(id);
+
         });
     });
 </script>

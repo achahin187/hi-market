@@ -7,6 +7,7 @@ use App\Models\CartRequest;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -16,8 +17,10 @@ class OrderController extends Controller
     public function index()
     {
         //
+
+        $setting = Setting::all()->first();
         $orders = Order::orderBy('id', 'desc')->paginate(10);
-        return view('Admin.orders.index',compact('orders'));
+        return view('Admin.orders.index',compact('orders','setting'));
     }
 
     public function create($request_id)
@@ -332,16 +335,23 @@ class OrderController extends Controller
         return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
     }
 
-    public function cancel(Request $request,$id)
+    public function cancel(Request $request)
     {
+        dd($request->order_id);
 
-        $order = Order::find($id);
+
+        $rules = [
+            'reason_id' => 'required|integer|min:0',
+            'notes' => ['not_regex:/([%\$#\*<>]+)/']
+        ];
+
+        $this->validate($request,$rules);
 
         if($order)
         {
-            $order->update(['status' => 5,'cancelled_at' => now()]);
-            return redirect('/admin/orders')->withStatus(__('order status successfully updated.'));
+            $order->update(['status' => 5,'cancelled_at' => now(),'admin_cancellation' => 1 , 'notes' => $request->notes]);
+            return redirect('/admin/orders')->withStatus(__('order status successfully cancelled.'));
         }
-        return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
+        return redirect('/admin/orders')->withStatus(__('this id is not in our database'));
     }
 }

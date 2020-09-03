@@ -75,6 +75,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::delete('products/{order_id}/{product_id}', 'Admin\OrderController@productdelete')->name('orderproduct.delete');
             Route::delete('{order_id}', 'Admin\OrderController@orderdelete')->name('orders.delete');
             Route::put('status/{order_id}', 'Admin\OrderController@status')->name('orders.status');
+            Route::put('cancel', 'Admin\OrderController@cancel')->name('orders.cancel');
         });
     });
 
