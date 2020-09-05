@@ -15,6 +15,10 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
                             <li class="breadcrumb-item active">General Form</li>
+                            @if($order->request != 0)
+
+                                <li class="breadcrumb-item active"> <button type="button" data-toggle="modal" data-target="#showvideo" class="btn btn-primary">cart description</button></li>
+                            @endif
                         </ol>
                     </div>
                     <div class="col-12">
@@ -68,29 +72,12 @@
                                             @enderror
                                         </div>
 
-                                        @if($order->request != 0)
-
-                                            <div class="form-group">
-                                                <label>{{__('order_description')}}</label>
-                                                <textarea class="@error('cart_description') is-invalid @enderror form-control" name="cart_description" rows="3" placeholder="Enter ...">
-
-                                                        {{$request->cart_description }}
-                                                </textarea>
-                                                @error('cart_description')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-
-                                        @endif
-
                                         <div class="form-group">
                                             <label>{{__('order_address')}}</label>
-                                            <textarea3 class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
+                                            <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
 
                                                     {{$order->address }}
-                                            </textarea3>
+                                            </textarea>
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -99,7 +86,7 @@
                                         </div>
 
                                         <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -128,92 +115,102 @@
                                         @endif
 
 
-                                            <div class="row">
+                                        <div class="row">
 
+                                            <div class="col-md-3">
 
-                                                <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>select product</label>
+                                                    <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                    <div class="form-group">
-                                                        <label>select product</label>
-                                                        <select class=" @error('product_id') is-invalid @enderror select2" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                                        @if(isset($orderproduct))
 
-                                                            @if(isset($orderproduct))
+                                                            @foreach(\App\Models\Product::all() as $editproduct)
 
-                                                                @foreach(\App\Models\Product::all() as $editproduct)
+                                                                <option data-price="{{$editproduct->price}}" <?php if($orderproduct->id == $editproduct->id) echo 'selected'; ?> value="{{ $editproduct->id }}">
+                                                                    @if(App::getLocale() == 'ar')
 
-                                                                    <option <?php if($orderproduct->id == $editproduct->id) echo 'selected'; ?> value="{{ $editproduct->id }}">
-                                                                        @if(App::getLocale() == 'ar')
+                                                                        {{ $editproduct->arab_name }}
 
-                                                                            {{ $editproduct->arab_name }}
+                                                                    @else
 
-                                                                        @else
+                                                                        {{ $editproduct->eng_name }}
 
-                                                                            {{ $editproduct->eng_name }}
+                                                                    @endif
 
-                                                                        @endif
+                                                                </option>
 
-                                                                    </option>
+                                                            @endforeach
 
-                                                                @endforeach
+                                                        @else
 
-                                                            @else
+                                                            @foreach(\App\Models\Product::all() as $editproduct)
 
-                                                                @foreach(\App\Models\Product::all() as $editproduct)
+                                                                <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
 
-                                                                    <option value="{{ $editproduct->id }}">
+                                                                    @if(App::getLocale() == 'ar')
 
-                                                                        @if(App::getLocale() == 'ar')
+                                                                        {{ $editproduct->arab_name }}
 
-                                                                            {{ $editproduct->arab_name }}
+                                                                    @else
 
-                                                                        @else
+                                                                        {{ $editproduct->eng_name }}
 
-                                                                            {{ $editproduct->eng_name }}
+                                                                    @endif
 
-                                                                        @endif
+                                                                </option>
 
-                                                                    </option>
+                                                            @endforeach
 
-                                                                @endforeach
+                                                        @endif
 
-                                                            @endif
-
-                                                        </select>
-                                                    </div>
+                                                    </select>
                                                 </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                        <input type="number" name="quantity" min="1" value="@if(isset($orderproduct)){{$quantity}} @endif" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
-
-                                                        @error('quantity')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputPassword1">{{__('admin.price')}}</label>
-                                                        <input type="number" name="price" min="0" max="99999.99" class=" quantity @error('price') is-invalid @enderror form-control">
-
-                                                        @error('price')
-                                                        <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
                                             </div>
 
-                                        <!-- /.card-body -->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
+                                                    <input type="number" name="quantity" min="1" value="@if(isset($orderproduct)){{$quantity}} @endif" class="@error('quantity') is-invalid @enderror form-control quantity" required>
 
-                                        <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                    @error('quantity')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">{{__('admin.price')}}</label>
+                                                    <input type="number" name="price" min="0" max="99999.99" class=" @error('price') is-invalid @enderror form-control price" required>
+
+                                                    @error('price')
+                                                    <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">
+
+                                                        @if(isset($orderproduct))
+
+                                                            save
+
+                                                        @else
+
+                                                            add
+
+                                                        @endif
+
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -270,6 +267,32 @@
                         </div>
                     </div>
                 </section>
+
+        @if($order->request !=0)
+
+            <div class="modal fade" id="showvideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>cart description</label>
+                                <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ...">
+
+                                    {{$request->cart_description}}
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
 
     @endsection
@@ -400,6 +423,16 @@
 
                 $("input[data-bootstrap-switch]").each(function(){
                     $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                });
+
+                $('.quantity').on('change', function() {
+
+                    let product_price = $('.product').find(':selected').data('price');
+                    let quantity = $(this).val();
+
+                    let total_price = product_price * quantity;
+
+                    $('.price').val(total_price);
                 });
 
             })

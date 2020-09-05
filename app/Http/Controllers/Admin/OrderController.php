@@ -105,24 +105,13 @@ class OrderController extends Controller
         if($order)
         {
 
-            if($order->request != 0)
-            {
-                $request = CartRequest::find($order->request);
+            $request = CartRequest::find($order->request);
 
-                foreach ($order->products as $product)
-                {
-                    $total_price = $total_price + $product->pivot->price;
-                }
-                return view('Admin.orders.edit', compact('order','total_price','request'));
-            }
-            else
+            foreach ($order->products as $product)
             {
-                foreach ($order->products as $product)
-                {
-                    $total_price = $total_price + $product->pivot->price;
-                }
-                return view('Admin.orders.edit', compact('order','total_price'));
+                $total_price = $total_price + $product->pivot->price;
             }
+            return view('Admin.orders.edit', compact('order','total_price','request'));
 
         }
         else
@@ -139,7 +128,7 @@ class OrderController extends Controller
         $order = Order::find($order_id);
 
         $rules = [
-            'address' => 'required|string',
+            'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
         ];
 
         $this->validate($request,$rules);
@@ -168,6 +157,9 @@ class OrderController extends Controller
 
         if($orderproduct != null && $order != null)
         {
+
+            $request = CartRequest::find($order->request);
+
             foreach ($order->products as $product)
             {
                 $total_price = $total_price + $product->pivot->price;
@@ -177,7 +169,7 @@ class OrderController extends Controller
                 }
             }
 
-            return view('Admin.orders.edit', compact('orderproduct','order','quantity','total_price'));
+            return view('Admin.orders.edit', compact('orderproduct','order','quantity','total_price','request'));
         }
         else
         {
@@ -206,15 +198,18 @@ class OrderController extends Controller
 
         $this->validate($request,$rules);
 
+        $price = $request->input('price');
+
+        $quantity = $request->input('quantity');
+
         if($order)
         {
 
             $new_product_id = $request->input('product_id');
-            $quantity = $request->input('quantity');
 
             $order->products()->detach($product_id);
 
-            $order->products()->attach($new_product_id,['quantity' => $quantity]);
+            $order->products()->attach($new_product_id,['quantity' => $quantity , 'price' => $price]);
             return redirect('admin/orders/'.$order_id.'/edit')->withStatus('product information successfully updated.');
         }
         else
@@ -238,10 +233,15 @@ class OrderController extends Controller
 
         $rules = [
             'product_id' => 'required|integer|min:0',
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'required|integer|min:1'
         ];
 
         $this->validate($request,$rules);
+
+        $quantity = $request->input('quantity');
+
+        $price = $request->input('price');
+
 
         if($order)
         {
@@ -265,15 +265,11 @@ class OrderController extends Controller
 
                 $order->products()->detach($product_id);
 
-                $quantity = $request->input('quantity');
-
-                $order->products()->attach($product_id,['quantity' => $quantity]);
+                $order->products()->attach($product_id,['quantity' => $quantity , 'price' => $price]);
             }
             else
             {
-                $quantity = $request->input('quantity');
-
-                $order->products()->attach($product_id,['quantity' => $quantity]);
+                $order->products()->attach($product_id,['quantity' => $quantity , 'price' => $price]);
             }
 
             return redirect('admin/orders/'.$order_id.'/edit')->withStatus('product successfully added to order');
@@ -337,12 +333,13 @@ class OrderController extends Controller
 
     public function cancel(Request $request)
     {
-        dd($request->order_id);
 
+
+        $order = Order::find($request->order_id);
 
         $rules = [
             'reason_id' => 'required|integer|min:0',
-            'notes' => ['not_regex:/([%\$#\*<>]+)/']
+            'notes' => ['nullable','not_regex:/([%\$#\*<>]+)/']
         ];
 
         $this->validate($request,$rules);

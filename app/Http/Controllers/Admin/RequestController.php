@@ -25,13 +25,13 @@ class RequestController extends Controller
     public function show($request_id)
     {
         //
-        $request = CartRequest::findOrFail($request_id);
+        $request = CartRequest::find($request_id);
 
         if($request)
         {
             if($request->converted == 1)
             {
-                $order = Order::where('request',$request->id);
+                $order = Order::where('request',$request->id)->first();
                 return view('Admin.requests.show', compact('order','request'));
             }
             else

@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request,$rules);
@@ -137,9 +137,9 @@ class CategoryController extends Controller
         //
 
         $rules = [
-            'arab_name' => 'required|min:2|max:100',
-            'eng_name' => 'required|min:2|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request, $rules);

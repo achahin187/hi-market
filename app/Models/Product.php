@@ -10,7 +10,7 @@ class Product extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'arab_name','eng_name','price','images','category_id','vendor_id','barcode','arab_description','eng_description','flag','status','start_date','end_date'
+        'arab_name','eng_name','price','images','category_id','vendor_id','arab_description','eng_description','flag','status','start_date','end_date'
     ];
 
     public function category() {

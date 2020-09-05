@@ -10,6 +10,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>General Form</h1>
+                        @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -36,7 +37,6 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
-
 
                                 @if(isset($product))
 
@@ -134,57 +134,58 @@
                                         </span>
                                     @enderror
                                 </div>
-                                    <div class="form-group">
-                                        <label>product category</label>
-                                        <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                            @if(isset($product))
-                                                @foreach(\App\Models\Category::all() as $category)
-
-                                                    <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->eng_name }}</option>
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Category::all() as $category)
-
-                                                    <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
-
-                                                @endforeach
-
-                                            @endif
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>product vendor </label>
-                                        <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($product))
-                                                @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                    <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                    <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.barcode')}}</label>
-                                    <input type="text" name="barcode" value="@if(isset($product)){{$product->barcode }} @endif" class=" @error('barcode') is-invalid @enderror form-control" required>
-                                    @error('barcode')
+                                    <label for="exampleInputPassword1">{{__('admin.product_points')}}</label>
+                                    <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control" >
+                                    @error('points')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-
                                 </div>
+
+                                <div class="form-group">
+                                    <label>product category</label>
+                                    <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Category::all() as $category)
+
+                                                <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->eng_name }}</option>
+
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Category::all() as $category)
+
+                                                <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
+
+                                            @endforeach
+
+                                        @endif
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>product vendor </label>
+                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+
+                                        @endif
+                                    </select>
+                                </div>
+
 
                                 @if($flag == 1)
 
@@ -263,7 +264,7 @@
                                         <label for="exampleInputFile">File input</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images[]" multiple type="file" class="custom-file-input" id="exampleInputFile">
+                                                <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
                                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                             </div>
                                             <div class="input-group-append">
@@ -271,8 +272,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 @endif
                             </div>
                             <!-- /.card-body -->

@@ -21,9 +21,9 @@ class CreateProductsTable extends Migration
             $table->text('arab_description')->nullable();
             $table->unsignedFloat('price')->nullable();
             $table->string('images')->nullable();
+            $table->unsignedFloat('points')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
-            $table->string('barcode');
             $table->unsignedInteger('flag');
             $table->string('status')->nullable();
             $table->dateTime('start_date')->nullable();

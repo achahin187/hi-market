@@ -10,6 +10,6 @@ class Point extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'range','type','value'
+        'from','to','type','value'
     ];
 }

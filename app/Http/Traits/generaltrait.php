@@ -15,7 +15,6 @@ trait generaltrait
         {
             return response()->json([
             'status' => false,
-            'errNum' => $errNum,
             'msg' => $msg
             ]);
         }
@@ -25,7 +24,6 @@ trait generaltrait
         {
             return [
             'status' => true,
-            'errNum' => $errNum,
             'msg' => $msg
             ];
         }
@@ -34,7 +32,6 @@ trait generaltrait
         {
             return response()->json([
             'status' => true,
-            'errNum' => "S000",
             'msg' => $msg,
             $key => $value
             ]);

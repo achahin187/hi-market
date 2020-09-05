@@ -63,7 +63,7 @@
                                                         <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-info">new</button>
                                                     </form>
 
-                                                    @if($order->status <= $setting->cancellation)
+                                                    @if($order->status < $setting->cancellation)
 
                                                             <button type="button" data-toggle="modal" data-target="#showvideo"  value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
                                                     @endif
@@ -77,7 +77,7 @@
                                                         <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-secondary">approved</button>
                                                     </form>
 
-                                                    @if($order->status <= $setting->cancellation)
+                                                    @if($order->status < $setting->cancellation)
                                                             <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
                                                     @endif
 
@@ -90,7 +90,7 @@
                                                         <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-warning">prepared</button>
                                                     </form>
 
-                                                    @if($order->status <= $setting->cancellation)
+                                                    @if($order->status < $setting->cancellation)
                                                             <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
                                                     @endif
 
@@ -103,15 +103,15 @@
                                                         <button type="button"  data-toggle="modal" data-target="#showvideo" onclick="confirm('{{ __("Are you sure you want to change status of this order?") }}') ? this.parentElement.submit() : ''" href="{{route('orders.status', $order->id)}}" class="btn btn-block btn-outline-primary">shipping</button>
                                                     </form>
 
-                                                    @if($order->status <= $setting->cancellation)
+                                                    @if($order->status < $setting->cancellation)
                                                             <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
                                                     @endif
 
                                                 @elseif($order->status == '4' )
 
                                                     <button type="button" disabled class="btn btn-block btn-outline-success">shipped</button>
-                                                    @if($order->status <= $setting->cancellation)
-                                                            <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
+                                                    @if($order->status < $setting->cancellation)
+                                                        <button type="button" data-toggle="modal" data-target="#showvideo" value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">cancel</button>
                                                     @endif
 
                                                 @else
@@ -142,7 +142,7 @@
                                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Video Preview</h5>
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -151,7 +151,7 @@
                                                         <form action="{{ route('orders.cancel') }}" method="POST">
 
                                                             @csrf
-                                                            @method('put')
+
 
 
                                                             <div class="card-body">
@@ -184,7 +184,7 @@
                                                             </div>
 
                                                             <div class="card-footer">
-                                                                <button type="submit" class="btn btn-primary">cancel order</button>
+                                                                <button type="submit"  class="btn btn-primary">cancel order</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -250,6 +250,7 @@
            $('.id').val(id);
 
         });
+
     });
 </script>
 </body>

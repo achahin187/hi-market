@@ -13,8 +13,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item active"> <button type="button" data-toggle="modal" data-target="#showvideo" class="btn btn-primary">cart description</button></li>
                         </ol>
                     </div>
                     <div class="col-12">
@@ -62,52 +61,66 @@
                                         <input type="text" value="{{$request->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('address')
                                         <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                         @enderror
                                     </div>
 
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>select product</label>
-                                                <select class=" @error('product_id') is-invalid @enderror select2" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                                    @foreach(\App\Models\Product::all() as $editproduct)
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>select product</label>
+                                                    <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                                        @foreach(\App\Models\Product::all() as $editproduct)
 
-                                                        <option value="{{ $editproduct->id }}">
+                                                            <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
 
-                                                            @if(App::getLocale() == 'ar')
+                                                                @if(App::getLocale() == 'ar')
 
-                                                                {{ $editproduct->arab_name }}
+                                                                    {{ $editproduct->arab_name }}
 
-                                                            @else
+                                                                @else
 
-                                                                {{ $editproduct->eng_name }}
+                                                                    {{ $editproduct->eng_name }}
 
-                                                            @endif
+                                                                @endif
 
-                                                        </option>
+                                                            </option>
 
-                                                    @endforeach
-                                                </select>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
 
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
+                                                    <input type="number" name="quantity" min="1" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                <input type="number" name="quantity" min="1" class=" quantity @error('quantity') is-invalid @enderror form-control" required>
+                                                    @error('quantity')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
-                                                @error('quantity')
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">{{__('product price')}}</label>
+                                                    <input type="number" name="price" min="0" max="99999.99" class=" quantity @error('price') is-invalid @enderror form-control price">
+
+                                                    @error('price')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
-                                                @enderror
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -120,6 +133,30 @@
                 </div>
             </div>
         </section>
+
+
+        <div class="modal fade" id="showvideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>cart description</label>
+                            <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ...">
+
+                                {{$request->cart_description}}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     @endsection
@@ -218,6 +255,16 @@
 
                 $("input[data-bootstrap-switch]").each(function(){
                     $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                });
+
+                $('.quantity').on('change', function() {
+
+                  let product_price = $('.product').find(':selected').data('price');
+                  let quantity = $(this).val();
+
+                  let total_price = product_price * quantity;
+
+                  $('.price').val(total_price);
                 });
 
             })

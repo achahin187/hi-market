@@ -45,16 +45,17 @@ class ProductController extends Controller
             $rules = [
                 'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => 'numeric|min:0',
+                'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                'price' => 'nullable|numeric|min:0',
+                'points' => 'nullable|integer|min:0',
                 'vendor_id' => 'required|integer|min:0',
                 'category_id' => 'required|integer|min:0',
-                'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                 'status' => 'required|string',
                 'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
-                'images' => 'image|mimes:jpeg,png,jpg|max:2048'
+                'images' => 'nullable',
+                'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
             ];
 
             $this->validate($request, $rules);
@@ -71,6 +72,8 @@ class ProductController extends Controller
 
 
             $price = $request->input('price');
+
+            $points = $request->input('points');
 
             if ($price == null) {
                 $price = 0;
@@ -93,13 +96,14 @@ class ProductController extends Controller
             $rules = [
                 'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => 'numeric|min:0',
+                'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                'price' => 'nullable|numeric|min:0',
+                'points' => 'nullable|integer|min:0',
                 'vendor_id' => 'required|integer',
                 'category_id' => 'required|integer',
-                'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
-                'images' => 'image|mimes:jpeg,png,jpg|max:2048'
+                'images' => 'nullable',
+                'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
             ];
 
             $this->validate($request, $rules);
@@ -116,6 +120,8 @@ class ProductController extends Controller
 
 
             $price = $request->input('price');
+
+            $points = $request->input('points');
 
             if ($price == null) {
                 $price = 0;
@@ -163,6 +169,7 @@ class ProductController extends Controller
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
             'price' => $price,
+            'points' => $points,
             'category_id' => $category,
             'vendor_id' => $vendor,
             'images' => $images,
@@ -249,16 +256,17 @@ class ProductController extends Controller
                 $rules = [
                     'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                     'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'arab_description' => ['not_regex:/([%\$#\*<>]+)/'],
-                    'eng_description' => ['not_regex:/([%\$#\*<>]+)/'],
-                    'price' => 'numeric|min:0',
+                    'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'price' => 'nullable|numeric|min:0',
+                    'points' => 'nullable|integer|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
-                    'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
                     'status' => 'required|string',
                     'start_date' => 'required|after:today',
                     'end_date' => 'required|after:start_date',
-                    'images' => 'image|mimes:jpeg,png,jpg|max:2048'
+                    'images' => 'nullable',
+                    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
                 ];
 
                 $this->validate($request, $rules);
@@ -275,13 +283,14 @@ class ProductController extends Controller
                 $rules = [
                     'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                     'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'arab_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_description' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'price' => 'numeric|min:0',
+                    'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+                    'price' => 'nullable|numeric|min:0',
+                    'points' => 'nullable|integer|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
-                    'barcode' => 'required|string|regex:/^[0-9]+$/|digits_between:10,16',
-                    'images' => 'image|mimes:jpeg,png,jpg|max:2048'
+                    'images' => 'nullable',
+                    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
                 ];
 
                 $this->validate($request, $rules);
@@ -306,6 +315,8 @@ class ProductController extends Controller
 
 
             $price = $request->input('price');
+
+            $points = $request->input('points');
 
             if ($price == null) {
                 $price = 0;
@@ -364,6 +375,7 @@ class ProductController extends Controller
                     'arab_name' => $arab_name,
                     'eng_name' => $eng_name,
                     'price' => $price,
+                    'points' => $points,
                     'category_id' => $category,
                     'vendor_id' => $vendor,
                     'barcode' => $barcode,
@@ -411,6 +423,7 @@ class ProductController extends Controller
                         'arab_name' => $arab_name,
                         'eng_name' => $eng_name,
                         'price' => $price,
+                        'points' => $points,
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'barcode' => $barcode,
@@ -438,6 +451,7 @@ class ProductController extends Controller
                         'arab_name' => $arab_name,
                         'eng_name' => $eng_name,
                         'price' => $price,
+                        'points' => $points,
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'barcode' => $barcode,
