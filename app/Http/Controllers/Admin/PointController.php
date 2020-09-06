@@ -111,8 +111,14 @@ class PointController extends Controller
 
             foreach ($points as $oldpoint) {
 
-                if ($oldpoint->from == $request->input('from') || $oldpoint->to == $request->input('to')) {
-                    return redirect('/admin/points')->withStatus('this range have been chosen already');
+                if($oldpoint->id != $point->id) {
+
+                    dd($point->id);
+
+                    if ($oldpoint->from == $request->input('from') || $oldpoint->to == $request->input('to')) {
+
+                        return redirect('/admin/points')->withStatus('this range have been chosen already');
+                    }
                 }
             }
 
