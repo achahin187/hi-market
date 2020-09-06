@@ -14,13 +14,22 @@ class OrderController extends Controller
 {
     //
 
-    public function index()
+    public function index($cancel = false)
     {
         //
 
         $setting = Setting::all()->first();
-        $orders = Order::orderBy('id', 'desc')->paginate(10);
-        return view('Admin.orders.index',compact('orders','setting'));
+
+        if($cancel) {
+
+            $cancelledorders = Order::where('status',5)->orderBy('id', 'desc')->paginate(10);
+            return view('Admin.orders.index', compact('cancelledorders'));
+        }
+        else
+        {
+            $orders = Order::whereIn('status',array(0,1,2,3,4))->orderBy('id', 'desc')->paginate(10);
+            return view('Admin.orders.index', compact('orders', 'setting'));
+        }
     }
 
     public function create($request_id)

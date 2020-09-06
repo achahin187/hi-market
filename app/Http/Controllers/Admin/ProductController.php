@@ -318,8 +318,10 @@ class ProductController extends Controller
 
             $points = $request->input('points');
 
-            if ($price == null) {
+            if ($price == null || $points == null) {
+
                 $price = 0;
+                $points = 0;
             }
 
             $category = $request->input('category_id');

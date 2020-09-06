@@ -56,6 +56,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('requests', 'Admin\RequestController');
         Route::resource('reasons', 'Admin\ReasonController');
         Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
+        Route::resource('points', 'Admin\PointController',['except' => ['show']]);
         Route::get('products', 'Admin\ProductController@index')->name('products.index');
         Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
         Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');
@@ -64,7 +65,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::delete('products/{id}', 'Admin\ProductController@destroy')->name('products.destroy');
 
         Route::group(['prefix' => 'orders'],function() {
-            Route::get('/', 'Admin\OrderController@index')->name('orders.index');
+            Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');
