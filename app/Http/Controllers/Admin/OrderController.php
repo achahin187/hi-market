@@ -254,7 +254,8 @@ class OrderController extends Controller
                 if($orderproduct->id == $order->id)
                 {
                     $status = true;
-                }else
+                }
+                else
                 {
                     $status = false;
                 }

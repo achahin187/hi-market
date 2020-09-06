@@ -20,7 +20,14 @@ class OrderController extends Controller
 
         if($client)
         {
-            return $this->returnData('orders', $client->orders);
+            if(count($client->orders) > 0) {
+
+                return $this->returnData('orders', $client->orders);
+            }
+            else
+            {
+                return $this->returnError('','there is no orders for this client');
+            }
         }
         else
         {
@@ -34,11 +41,11 @@ class OrderController extends Controller
 
         if($order)
         {
-            return $this->returnData('order', $order);
+            return $this->returnData('order', $order->products);
         }
         else
         {
-            return $this->returnError('','there is no client found');
+            return $this->returnError('','there is no order found');
         }
     }
 }

@@ -87,6 +87,11 @@ class ProductController extends Controller
             return $this->returnData('product',$productarray);
         }
         else {
+
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لا يوجد هذا المنتج');
+            }
             return $this->returnError('','there is no product found');
         }
     }
@@ -102,6 +107,10 @@ class ProductController extends Controller
 
             if(count($products) < 1)
             {
+                if($this->getCurrentLang() == 'ar')
+                {
+                    return $this->returnError('','ليس هناك منتج بهذا الاسم');
+                }
                 return $this->returnError('','there is no product found');
             }
             else {

@@ -24,6 +24,10 @@ class ClientController extends Controller
         }
         else
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لم نجد هذا العميل');
+            }
             return $this->returnError('','there is no client found');
         }
     }
@@ -32,23 +36,27 @@ class ClientController extends Controller
     {
         $rules = [
             'client_id' => 'required|integer|min:0',
-            'description' => 'required|string|min:2'
+            'description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
         ];
 
         $this->validate($request,$rules);
-
-        $client_id = $request->input('client_id');
-
-        $description = $request->input('description');
 
         $address = Address::create($request->all());
 
         if($address)
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnSuccessMessage('لقد اضفت هذا العنوان بنجاح ');
+            }
             return $this->returnSuccessMessage('This address have been added successfully');
         }
         else
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','هناك مشكلة في اضافة العنوان , حاول مرة اخري');
+            }
             return $this->returnError('','something wrong happened');
         }
     }
@@ -61,12 +69,20 @@ class ClientController extends Controller
         {
             if(count($client->addresses) < 1)
             {
+                if($this->getCurrentLang() == 'ar')
+                {
+                    return $this->returnError('','ليس هناك عناوين مسجلة باسمك');
+                }
                 return $this->returnError('','there is no addresses for this client registered');
             }
             return $this->returnData('client', $client->addresses);
         }
         else
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لم نجد هذا العميل');
+            }
             return $this->returnError('','there is no client found');
         }
     }

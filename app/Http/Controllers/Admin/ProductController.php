@@ -55,7 +55,7 @@ class ProductController extends Controller
                 'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
                 'images' => 'nullable',
-                'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+                'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
             ];
 
             $this->validate($request, $rules);
@@ -103,7 +103,7 @@ class ProductController extends Controller
                 'vendor_id' => 'required|integer',
                 'category_id' => 'required|integer',
                 'images' => 'nullable',
-                'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+                'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
             ];
 
             $this->validate($request, $rules);
@@ -266,7 +266,7 @@ class ProductController extends Controller
                     'start_date' => 'required|after:today',
                     'end_date' => 'required|after:start_date',
                     'images' => 'nullable',
-                    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+                    'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
                 ];
 
                 $this->validate($request, $rules);
@@ -290,7 +290,7 @@ class ProductController extends Controller
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
                     'images' => 'nullable',
-                    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+                    'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
                 ];
 
                 $this->validate($request, $rules);

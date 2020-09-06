@@ -35,10 +35,19 @@ class FavouritesController extends Controller
         {
             $client->products()->attach($product_id,['flag' => $flag]);
 
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لقد اصبح هذا المنتج في المفضلات');
+            }
+
             return $this->returnSuccessMessage('This product have been added to your favourites successfully');
         }
         else
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لم نجد هذا العميل');
+            }
             return $this->returnError('','no client exists');
         }
 
@@ -94,6 +103,10 @@ class FavouritesController extends Controller
 
                 if(count($favourites) < 1)
                 {
+                    if($this->getCurrentLang() == 'ar')
+                    {
+                        return $this->returnError('','ليس هناك منتجات في المفضلات');
+                    }
                     return $this->returnError('4545', 'there is no favourite products for this client');
                 }
                 return $this->returnData('favourites', $favourites);
@@ -146,6 +159,10 @@ class FavouritesController extends Controller
         }
         else
         {
+            if($this->getCurrentLang() == 'ar')
+            {
+                return $this->returnError('','لم نجد هذا العميل');
+            }
             return $this->returnError('','no client exists with this id');
         }
     }
