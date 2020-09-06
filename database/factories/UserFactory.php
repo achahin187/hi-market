@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Point;
 use App\Models\Product;
 use App\Models\Reason;
 use App\Models\Setting;
@@ -148,6 +149,16 @@ $factory->define(Order::class, function (Faker $faker) {
         'admin_cancellation' => $faker->randomElement([0,1]),
         'reason_id' => Reason::all()->random()->id,
         'notes' => $faker->text
+    ];
+});
+
+$factory->define(Point::class, function (Faker $faker) {
+    return [
+        'from' => $faker->randomElement([100,200,300]),
+        'to' => $faker->randomElement([400,500,600]),
+        'type' => $faker->randomElement([0,1]),
+        'value' => $faker->randomElement([30,40,50]),
+
     ];
 });
 

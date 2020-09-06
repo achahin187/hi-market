@@ -15,9 +15,10 @@ class CreatePointsTable extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->id();
-            $table->string('range');
-            $table->string('type');
-            $table->string('value');
+            $table->unsignedInteger('from');
+            $table->unsignedInteger('to');
+            $table->unsignedInteger('type');
+            $table->unsignedFloat('value');
         });
     }
 

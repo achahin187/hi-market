@@ -14,14 +14,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if(($flag == 1))
-
-                                <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
-                                <li class="breadcrumb-item active">Offer Form</li>
-                            @else
-                                <li class="breadcrumb-item"><a href="{{route('products.index')}}">products</a></li>
-                                <li class="breadcrumb-item active">product Form</li>
-                            @endif
+                            <li class="breadcrumb-item"><a href="{{route('products.index')}}">points</a></li>
+                            <li class="breadcrumb-item active">points Form</li>
                         </ol>
                     </div>
                 </div>
@@ -38,57 +32,34 @@
                         <div class="card-header">
                             <h3 class="card-title">
 
-                                @if(isset($product))
+                                @if(isset($point))
 
-                                    @if($product->flag == 0)
-
-                                        edit product
-                                    @else
-
-                                        edit offer
-
-                                    @endif
+                                    edit point
 
                                 @else
-                                    @if($flag == 0)
 
-                                        create product
-
-                                    @else
-
-                                        create offer
-
-                                    @endif
-
+                                    create points
 
                                 @endif
                             </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="@if(isset($product)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @else {{route('productsadd',$flag) }} @endif" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="@if(isset($point)){{route('points.update',$point->id) }} @else {{route('points.store') }} @endif" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            @if(isset($product))
+                            @if(isset($point))
 
                                 @method('PUT')
 
                             @endif
 
                             <div class="card-body">
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
-                                    <input type="text" value="@if(isset($product)){{$product->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
-                                    @error('arab_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
-                                    <input type="text" name="eng_name" value="@if(isset($product)){{$product->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
-                                    @error('eng_name')
+                                    <label for="exampleInputPassword1">{{__('admin.product_from')}}</label>
+                                    <input type="number" name="from" min="0" @if(isset($point)) value="{{$point->from}}" @else value="0" @endif class=" @error('from') is-invalid @enderror form-control" >
+                                    @error('from')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -96,188 +67,40 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.arab_description')}}</label>
-                                    <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
+                                    <label for="exampleInputPassword1">{{__('admin.product_to')}}</label>
+                                    <input type="number" name="to" min="0" @if(isset($point)) value="{{$point->to}}" @else value="0" @endif class=" @error('to') is-invalid @enderror form-control" >
+                                    @error('to')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                                        @if(isset($product))
-                                            {{$product->arab_description }}
-                                        @endif
-                                    </textarea>
-                                    @error('arab_description')
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">{{__('admin.product_value')}}</label>
+                                    <input type="number" name="value" min="0" @if(isset($point)) value="{{$point->value}}" @else value="0" @endif class=" @error('value') is-invalid @enderror form-control" >
+                                    @error('value')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label>{{__('admin.eng_description')}}</label>
-                                    <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
-
-                                        @if(isset($product))
-                                            {{$product->eng_description }}
-                                        @endif
-                                    </textarea>
-                                    @error('eng_description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
-                                    <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control" >
-                                    @error('price')
-                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.product_points')}}</label>
-                                    <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control" >
-                                    @error('points')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label>product category</label>
-                                    <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                        @if(isset($product))
-                                            @foreach(\App\Models\Category::all() as $category)
-
-                                                <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->eng_name }}</option>
-
-                                            @endforeach
-                                        @else
-                                            @foreach(\App\Models\Category::all() as $category)
-
-                                                <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
-
-                                            @endforeach
-
-                                        @endif
-
-                                    </select>
-                                </div>
                                 <div class="form-group">
                                     <label>product vendor </label>
                                     <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                        @if(isset($product))
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
 
-                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+                                        <option value="0">discount</option>
+                                        <option value="1">gift</option>
 
-                                            @endforeach
-                                        @else
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                            @endforeach
-
-                                        @endif
                                     </select>
                                 </div>
 
-
-                                @if($flag == 1)
-
-                                    <div class="form-group">
-                                        <label>product status</label>
-                                        <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                            @if(isset($product))
-
-                                                <option  <?php if($product->status == 'active') echo 'selected'; ?> value="active">active</option>
-                                                <option <?php if($product->status == 'inactive') echo 'selected'; ?> ="inactive">inactive</option>
-
-                                            @else
-
-                                                <option value="active">active</option>
-                                                <option value="inactive">inactive</option>
-
-                                            @endif
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>start_date</label>
-                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" @if(!isset($product)) required @endif >
-
-                                        @error('start_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label>end_date</label>
-                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" @if(!isset($product)) required @endif >
-
-                                        @error('end_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-
-
-
-                                @endif
-
-                                @if(isset($product))
-
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-
-                                                    @foreach($productimages as $image)
-
-                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
-
-                                                        <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
-
-                                                    @endforeach
-
-                                                        <input name="images[]" multiple type="file">
-
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
                             <!-- /.card-body -->
 
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
                             </div>
                         </form>
                     </div>
