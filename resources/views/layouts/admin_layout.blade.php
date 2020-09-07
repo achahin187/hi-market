@@ -316,6 +316,18 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
+
+                    @if(auth()->user()->flag == 1)
+
+                        <li class="nav-item">
+                            <a href="{{route('roles.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Roles
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

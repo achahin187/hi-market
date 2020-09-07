@@ -20,6 +20,7 @@ class CreateSettingsTable extends Migration
             $table->unsignedInteger('tax_on_product');
             $table->unsignedFloat('delivery');
             $table->unsignedInteger('cancellation');
+            $table->string('splash')->nullable();
         });
     }
 

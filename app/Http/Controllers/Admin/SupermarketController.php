@@ -40,6 +40,44 @@ class SupermarketController extends Controller
     public function store(Request $request)
     {
         //
+        $rules = [
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ];
+
+        $this->validate($request,$rules);
+
+        $arab_name = $request->input('arab_name');
+
+        $eng_name = $request->input('eng_name');;
+
+        if($image = $request->file('image'))
+        {
+            $filename = $image->getClientOriginalName();
+            $fileextension = $image->getClientOriginalExtension();
+            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $image->move('supermarket_images', $file_to_store);
+
+            Supermarket::create([
+
+                'arab_name' => $arab_name,
+                'eng_name' => $eng_name,
+                'image' => $file_to_store
+            ]);
+        }
+        else
+        {
+            Supermarket::create([
+
+                'arab_name' => $arab_name,
+                'eng_name' => $eng_name,
+            ]);
+        }
+
+
+        return redirect('admin/supermarkets')->withStatus(__('supermarket created successfully'));
     }
 
     /**
@@ -62,9 +100,9 @@ class SupermarketController extends Controller
     public function edit($id)
     {
         //
-        $admin = Supermarket::find($id);
+        $supermarket = Supermarket::find($id);
 
-        if($admin)
+        if($supermarket)
         {
             return view('Admin.admins.create', compact('supermarket'));
         }
@@ -84,6 +122,49 @@ class SupermarketController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $rules = [
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ];
+
+        $this->validate($request, $rules);
+
+        $supermarket = Supermarket::find($id);
+
+        if($supermarket) {
+
+            if ($file = $request->file('image')) {
+
+                $this->validate($request, $rules);
+
+                $filename = $file->getClientOriginalName();
+                $fileextension = $file->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+                if ($file->move('vendor_images', $file_to_store)) {
+                    if ($supermarket->image != null) {
+
+                        unlink('supermarket_images/' . $supermarket->image);
+                    }
+                }
+                $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'image' => $file_to_store]);
+            } else {
+
+                if ($request->has('checkedimage')) {
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
+                } else {
+                    unlink('super_images/' . $supermarket->image);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'image' => null]);
+                }
+            }
+            return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
+        }
+        else
+        {
+            return redirect('/admin/supermarkets')->withStatus('no supermarket exist');
+        }
     }
 
     /**

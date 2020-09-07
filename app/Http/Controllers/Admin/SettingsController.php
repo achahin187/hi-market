@@ -30,7 +30,8 @@ class SettingsController extends Controller
             'tax_on_product' => 'required|integer|min:0',
             'tax_value' => 'required|numeric|min:0',
             'delivery' => 'required|numeric|min:0',
-            'cancellation' => 'required|integer|min:0'
+            'cancellation' => 'required|integer|min:0',
+            'splash' => 'image|mimes:jpeg,png,jpg|max:277'
         ];
 
         $this->validate($request, $rules);

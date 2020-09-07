@@ -10,7 +10,9 @@ use App\Models\Client;
 use App\Models\Point;
 use App\Models\Product;
 use App\Models\Reason;
+use App\Models\Role;
 use App\Models\Setting;
+use App\Models\Supermarket;
 use App\User;
 use App\Models\Order;
 use App\Models\Vendor;
@@ -159,6 +161,21 @@ $factory->define(Point::class, function (Faker $faker) {
         'type' => $faker->randomElement([0,1]),
         'value' => $faker->randomElement([30,40,50]),
 
+    ];
+});
+
+$factory->define(Role::class, function (Faker $faker) {
+    return [
+        'name' => $faker->randomElement(['delivery','admin']),
+
+    ];
+});
+
+
+$factory->define(Supermarket::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
     ];
 });
 

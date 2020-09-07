@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->unsignedFloat('points')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
+            $table->bigInteger('supermarket_id')->unsigned();
             $table->unsignedInteger('flag');
             $table->string('status')->nullable();
             $table->dateTime('start_date')->nullable();
@@ -32,6 +33,7 @@ class CreateProductsTable extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }

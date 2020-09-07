@@ -15,7 +15,9 @@ class CreateSupermarketsTable extends Migration
     {
         Schema::create('supermarkets', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('arab_name');
+            $table->string('eng_name');
+            $table->string('image')->nullable();
         });
     }
 

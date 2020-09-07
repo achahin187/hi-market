@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}">admins</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('supermarkets.index')}}">supermarkets</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
@@ -32,20 +32,20 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                    @if(isset($admin))
-                                        edit admin
+                                    @if(isset($supermarket))
+                                        edit supermarket
                                     @else
-                                        create admin
+                                        create supermarket
 
                                     @endif
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($admin)){{route('admins.update',$admin->id) }} @else {{route('admins.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="@if(isset($supermarket)){{route('supermarkets.update',$supermarket->id) }} @else {{route('supermarkets.store') }} @endif" method="POST" enctype="multipart/form-data">
                                 @csrf
 
-                                @if(isset($admin))
+                                @if(isset($supermarket))
 
                                     @method('PUT')
 
@@ -54,38 +54,60 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
-                                        <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <input type="text" value="@if(isset($supermarket)){{$supermarket->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
+                                        @error('arab_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
+                                        <input type="text" name="eng_name" value="@if(isset($supermarket)){{$supermarket->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
+                                        @error('eng_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" value="@if(isset($admin)){{$admin->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password" @if(isset($admin))  @else required @endif>
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                    @if(isset($supermarket) && $supermarket->image != null)
 
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" value="" @if(isset($admin))  @else required @endif>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">File input</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('supermarket_images') }}/{{$supermarket->image}}" class="card-img-top" alt="Course Photo">
+
+                                                    <input type="checkbox" checked style="margin-right:10px;" name="checkedimage" value="{{$supmermarket->image}}">
+
+                                                    <input name="image" type="file">
+
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">File input</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    @endif
 
                                 </div>
                                 <!-- /.card-body -->

@@ -58,6 +58,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
         Route::resource('points', 'Admin\PointController',['except' => ['show']]);
         Route::resource('supermarkets', 'Admin\SupermarketController',['except' => ['show']]);
+        Route::resource('roles', 'Admin\RoleController');
         Route::get('products', 'Admin\ProductController@index')->name('products.index');
         Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
         Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');

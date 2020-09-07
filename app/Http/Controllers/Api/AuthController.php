@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\generaltrait;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Traits\GeneralTrait;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 
@@ -57,7 +58,7 @@ class AuthController extends Controller
         $user = Client::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
         $token = auth()->login($user);

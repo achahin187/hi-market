@@ -42,6 +42,10 @@ class DatabaseSeeder extends Seeder
 
         factory('App\Models\Point', 10)->create();
 
+        factory('App\Models\Role', 2)->create();
+
+        factory('App\Models\Supermarket', 10)->create();
+
         $orders = factory('App\Models\Order', 10)->create();
 
         foreach ($orders as $order) {

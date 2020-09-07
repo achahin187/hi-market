@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Validation\Rule;
-
+use Spatie\Permission\Models\Role;
 use App\User;
 
 class AdminController extends Controller
@@ -37,6 +37,7 @@ class AdminController extends Controller
     public function create()
     {
         //
+        $roles = Role::pluck('name','name')->all();
         return view('Admin.admins.create');
     }
 
@@ -52,18 +53,20 @@ class AdminController extends Controller
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-            'password_confirmation' => ['required', 'min:8']
+            'password_confirmation' => ['required', 'min:8'],
+            'roles' => 'required'
         ];
 
         $this->validate($request,$rules);
 
 
-        $admin = User::create([
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
 
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-        ]);
+
+        $admin = User::create($input);
+        $admin->assignRole($request->input('roles'));
+
 
         if($admin)
         {
@@ -86,6 +89,9 @@ class AdminController extends Controller
     public function show($id)
     {
         //
+
+        $admin = User::find($id);
+        return view('Admin.admins.show',compact('admin'));
     }
 
     /**
@@ -99,6 +105,8 @@ class AdminController extends Controller
         //
 
         $admin = User::find($id);
+        $roles = Role::pluck('arab_name','arab_name')->all();
+        $userRole = $admin->roles->pluck('arab_name','arab_name')->all();
 
         if($admin)
         {
