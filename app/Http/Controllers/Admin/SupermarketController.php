@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Supermarket;
 use Illuminate\Http\Request;
 
-class OfferController extends Controller
+class SupermarketController extends Controller
 {
-    //
-
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +16,8 @@ class OfferController extends Controller
     public function index()
     {
         //
-        $offers = Offer::orderBy('id', 'desc')->paginate(10);
-        return view('Admin.offers.index',compact('offers'));
+        $supermarkets = Supermarket::orderBy('id', 'desc')->paginate(10);
+        return view('Admin.supermarkets.index',compact('supermarkets'));
     }
 
     /**
@@ -30,7 +28,7 @@ class OfferController extends Controller
     public function create()
     {
         //
-        return view('Admin.offers.create');
+        return view('Admin.supermarkets.create');
     }
 
     /**
@@ -41,9 +39,19 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -54,15 +62,15 @@ class OfferController extends Controller
     public function edit($id)
     {
         //
-        $offer = Offer::findOrFail($id);
+        $admin = Supermarket::find($id);
 
-        if($offer)
+        if($admin)
         {
-            return view('Admin.products.create', compact('offer'));
+            return view('Admin.admins.create', compact('supermarket'));
         }
         else
         {
-            return redirect('admin/offers')->withStatus('no offer have this id');
+            return redirect('admin/supermarkets')->withStatus('no supermarket have this id');
         }
     }
 
@@ -76,8 +84,6 @@ class OfferController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-
     }
 
     /**
@@ -89,15 +95,13 @@ class OfferController extends Controller
     public function destroy($id)
     {
         //
+        $supermarket = Supermarket::find($id);
 
-        $offer = Offer::findOrFail($id);
-
-        if($offer) {
-            $offer->delete();
-            return redirect('/admin/offers')->withStatus('offer successfully deleted.');
+        if($supermarket)
+        {
+            $supermarket->delete();
+            return redirect('/admin/supermarkets')->withStatus(__('supermarket successfully deleted.'));
         }
-        return redirect('/admin/offers')->withStatus('no offer with this id.');
-
-
+        return redirect('/admin/supermarkets')->withStatus(__('this id is not in our database'));
     }
 }

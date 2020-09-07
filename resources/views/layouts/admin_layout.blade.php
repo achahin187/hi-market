@@ -307,6 +307,15 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('supermarkets.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Supermarkets
+                            </p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

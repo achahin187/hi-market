@@ -42,6 +42,10 @@ Route::group(['middleware' => ['api','check_lang','CheckClientToken:client-api']
     Route::get('profile/{client_id}','ClientController@client_profile')->name('client_profile');
     Route::post('addresses/add','ClientController@add_address')->name('add_address');
     Route::get('address/{client_id}','ClientController@get_addresses')->name('client_addresses');
+    Route::post('register', 'AuthController@register')->name('client.register');
+    Route::post('login', 'AuthController@login')->name('client.login');
+    Route::get('logout', 'AuthController@logout')->name('logout');
+    Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
 });
 
 

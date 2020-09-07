@@ -113,8 +113,6 @@ class PointController extends Controller
 
                 if($oldpoint->id != $point->id) {
 
-                    dd($point->id);
-
                     if ($oldpoint->from == $request->input('from') || $oldpoint->to == $request->input('to')) {
 
                         return redirect('/admin/points')->withStatus('this range have been chosen already');
