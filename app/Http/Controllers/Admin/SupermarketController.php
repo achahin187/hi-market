@@ -104,7 +104,7 @@ class SupermarketController extends Controller
 
         if($supermarket)
         {
-            return view('Admin.admins.create', compact('supermarket'));
+            return view('Admin.supermarkets.create', compact('supermarket'));
         }
         else
         {
@@ -143,7 +143,7 @@ class SupermarketController extends Controller
                 $fileextension = $file->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                if ($file->move('vendor_images', $file_to_store)) {
+                if ($file->move('supermarket_images', $file_to_store)) {
                     if ($supermarket->image != null) {
 
                         unlink('supermarket_images/' . $supermarket->image);
@@ -155,7 +155,7 @@ class SupermarketController extends Controller
                 if ($request->has('checkedimage')) {
                     $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
                 } else {
-                    unlink('super_images/' . $supermarket->image);
+                    unlink('supermarket_images/' . $supermarket->image);
                     $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'image' => null]);
                 }
             }

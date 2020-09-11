@@ -63,8 +63,8 @@ return [
     'add_user'=>'Add New layouts',
 
 
-    //Roles
-    'roles'=>'Roles',
+    //roles
+    'roles'=>'roles',
     'add_role'=>'Add New Role',
     'modify_role'=>'Modify Role',
     'delete_role'=>'Delete Role',

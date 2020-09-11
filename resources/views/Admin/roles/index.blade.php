@@ -13,11 +13,14 @@
                     <div class="col-sm-6">
                         <h1>DataTables</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.create')}}">create new category</a></li>
-                        </ol>
-                    </div>
+
+                    @if(auth()->user()->can('role-create'))
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="{{route('roles.create')}}">create new role</a></li>
+                            </ol>
+                        </div>
+                    @endif
 
                     <div class="col-12">
 
@@ -41,7 +44,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Categories</h3>
+                                <h3 class="card-title">Roles</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -54,22 +57,31 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
+                                    @foreach($roles as $role)
                                         <tr>
-                                            <td>{{$category->arab_name}}</td>
-                                            <td>{{$category->eng_name}}</td>
+                                            <td>{{$role->arab_name}}</td>
+                                            <td>{{$role->eng_name}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                                        <form action="{{ route('roles.destroy', $role->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('categories.edit', $category->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            @if(auth()->user()->can('role-edit'))
+
+                                                                <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}">{{ __('edit') }}</a>
+
+                                                            @endif
+
+                                                            @if(auth()->user()->can('role-delete'))
+
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+
+                                                            @endif
                                                         </form>
 
                                                     </div>
@@ -85,7 +97,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $categories->links() }}
+                                            {{ $roles->links() }}
                                         </nav>
                                     </div>
                                 </div>
@@ -104,5 +116,6 @@
     </div>
 
 @endsection
+
 
 

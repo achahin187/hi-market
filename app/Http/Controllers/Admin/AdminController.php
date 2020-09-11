@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Rules\CurrentPasswordCheckRule;
@@ -16,6 +17,10 @@ class AdminController extends Controller
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('permission:admin-list|admin-create|admin-edit|admin-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:admin-create', ['only' => ['create','store']]);
+        $this->middleware('permission:admin-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:admin-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +30,7 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $admins = User::orderBy('id', 'desc')->paginate(10);
+        $admins = User::where('flag',0)->orderBy('id', 'desc')->paginate(10);
         return view('Admin.admins.index',compact('admins'));
     }
 
@@ -37,8 +42,8 @@ class AdminController extends Controller
     public function create()
     {
         //
-        $roles = Role::pluck('name','name')->all();
-        return view('Admin.admins.create');
+        $roles = Role::orderBy('id', 'desc')->paginate(10);
+        return view('Admin.admins.create',compact('roles'));
     }
 
     /**
@@ -105,12 +110,12 @@ class AdminController extends Controller
         //
 
         $admin = User::find($id);
-        $roles = Role::pluck('arab_name','arab_name')->all();
-        $userRole = $admin->roles->pluck('arab_name','arab_name')->all();
+        $roles = Role::all();
+        $userRole = $admin->roles->pluck('name','name')->all();
 
         if($admin)
         {
-            return view('Admin.admins.create', compact('admin'));
+            return view('Admin.admins.create', compact('admin','roles','userRole'));
         }
         else
         {
@@ -136,13 +141,17 @@ class AdminController extends Controller
         {
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/']
+                'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+                'roles' => 'required'
             ];
 
             $this->validate($request,$rules);
 
             if($admin->update(['name' => $request->name , 'email' => $request->email]))
             {
+                DB::table('model_has_roles')->where('model_id',$id)->delete();
+
+                $admin->assignRole($request->input('roles'));
                 return redirect('/admin/admins')->withStatus('admin information successfully updated.');
             }
             else
@@ -155,7 +164,8 @@ class AdminController extends Controller
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                 'password' => ['required', 'min:8', 'confirmed', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-                'password_confirmation' => ['required', 'min:8']
+                'password_confirmation' => ['required', 'min:8'],
+                'roles' => 'required'
             ];
 
             $this->validate($request,$rules);
@@ -166,6 +176,9 @@ class AdminController extends Controller
 
                 if($admin->update(['name' => $request->name , 'email' => $request->email , 'password' => $password]))
                 {
+                    DB::table('model_has_roles')->where('model_id',$id)->delete();
+
+                    $admin->assignRole($request->input('roles'));
                     return redirect('/admin/admins')->withStatus('admin information successfully updated.');
                 }
                 else

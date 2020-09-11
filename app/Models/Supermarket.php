@@ -13,4 +13,8 @@ class Supermarket extends Model
     protected $fillable = [
         'arab_name','eng_name','image'
     ];
+
+    public function products() {
+        return $this->hasMany('App\Models\Product');
+    }
 }

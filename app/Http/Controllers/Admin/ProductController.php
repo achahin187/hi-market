@@ -8,14 +8,27 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($flag = null)
     {
         //
+        if($flag != null)
+        {
+            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(10);
+            return view('Admin.offers.index',compact('offers'));
+        }
         $products = Product::where('flag',0)->orderBy('id', 'desc')->paginate(10);
         return view('Admin.products.index',compact('products'));
     }
@@ -51,6 +64,7 @@ class ProductController extends Controller
                 'points' => 'nullable|integer|min:0',
                 'vendor_id' => 'required|integer|min:0',
                 'category_id' => 'required|integer|min:0',
+                'supermarket_id' => 'required|integer|min:0',
                 'status' => 'required|string',
                 'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
@@ -83,6 +97,8 @@ class ProductController extends Controller
 
             $vendor = $request->input('vendor_id');
 
+            $supermarket = $request->input('supermarket_id');
+
             $barcode = $request->input('barcode');
 
             $status = $request->input('status');
@@ -102,6 +118,7 @@ class ProductController extends Controller
                 'points' => 'nullable|integer|min:0',
                 'vendor_id' => 'required|integer',
                 'category_id' => 'required|integer',
+                'supermarket_id' => 'required|integer|min:0',
                 'images' => 'nullable',
                 'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
             ];
@@ -130,6 +147,8 @@ class ProductController extends Controller
             $category = $request->input('category_id');
 
             $vendor = $request->input('vendor_id');
+
+            $supermarket = $request->input('supermarket_id');
 
             $barcode = $request->input('barcode');
 
@@ -172,6 +191,7 @@ class ProductController extends Controller
             'points' => $points,
             'category_id' => $category,
             'vendor_id' => $vendor,
+            'supermarket_id' => $supermarket,
             'images' => $images,
             'barcode' => $barcode,
             'arab_description' => $arab_description,
@@ -184,10 +204,18 @@ class ProductController extends Controller
 
         if($product)
         {
+            if($flag == 1)
+            {
+                return redirect('admin/products/1')->withStatus(__('product created successfully'));
+            }
             return redirect('admin/products')->withStatus(__('product created successfully'));
         }
         else
         {
+            if($flag == 1)
+            {
+                return redirect('admin/products/1')->withStatus(__('something wrong happened, try again'));
+            }
             return redirect('admin/products')->withStatus(__('something wrong happened, try again'));
         }
     }
@@ -260,8 +288,9 @@ class ProductController extends Controller
                     'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
                     'price' => 'nullable|numeric|min:0',
                     'points' => 'nullable|integer|min:0',
-                    'vendor_id' => 'required|integer',
-                    'category_id' => 'required|integer',
+                    'vendor_id' => 'required|integer|min:0',
+                    'category_id' => 'required|integer|min:0',
+                    'supermarket_id' => 'required|integer|min:0',
                     'status' => 'required|string',
                     'start_date' => 'required|after:today',
                     'end_date' => 'required|after:start_date',
@@ -289,6 +318,7 @@ class ProductController extends Controller
                     'points' => 'nullable|integer|min:0',
                     'vendor_id' => 'required|integer',
                     'category_id' => 'required|integer',
+                    'supermarket_id' => 'required|integer|min:0',
                     'images' => 'nullable',
                     'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
                 ];
@@ -327,6 +357,8 @@ class ProductController extends Controller
             $category = $request->input('category_id');
 
             $vendor = $request->input('vendor_id');
+
+            $supermarket = $request->input('supermarket_id');
 
             $barcode = $request->input('barcode');
 
@@ -380,6 +412,7 @@ class ProductController extends Controller
                     'points' => $points,
                     'category_id' => $category,
                     'vendor_id' => $vendor,
+                    'supermarket_id' => $supermarket,
                     'barcode' => $barcode,
                     'arab_description' => $arab_description,
                     'eng_description' => $eng_description,
@@ -428,6 +461,7 @@ class ProductController extends Controller
                         'points' => $points,
                         'category_id' => $category,
                         'vendor_id' => $vendor,
+                        'supermarket_id' => $supermarket,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
                         'eng_description' => $eng_description,
@@ -456,6 +490,7 @@ class ProductController extends Controller
                         'points' => $points,
                         'category_id' => $category,
                         'vendor_id' => $vendor,
+                        'supermarket_id' => $supermarket,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
                         'eng_description' => $eng_description,

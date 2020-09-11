@@ -60,6 +60,13 @@ $factory->define(Vendor::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(Supermarket::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
+    ];
+});
+
 $factory->define(product::class, function (Faker $faker) {
 
     $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
@@ -73,6 +80,7 @@ $factory->define(product::class, function (Faker $faker) {
         'images' => $faker->randomElement([0,1]),
         'category_id' => Category::all()->random()->id,
         'vendor_id' => Vendor::all()->random()->id,
+        'supermarket_id' => Supermarket::all()->random()->id,
         'flag' => $faker->randomElement([1,0]),
         'status' => $faker->randomElement(['inactive']),
         'start_date' => $startingDate,
@@ -172,11 +180,5 @@ $factory->define(Role::class, function (Faker $faker) {
 });
 
 
-$factory->define(Supermarket::class, function (Faker $faker) {
-    return [
-        'arab_name' => $faker->name,
-        'eng_name' => $faker->name,
-    ];
-});
 
 

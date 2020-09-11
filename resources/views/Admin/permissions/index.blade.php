@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">create new vendor</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('permissions.create')}}">create new permission</a></li>
                         </ol>
                     </div>
 
@@ -41,35 +41,37 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Roles</h3>
+                                <h3 class="card-title">Permissions</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
+                                        <th>name</th>
                                         <th>arab_name</th>
                                         <th>eng_name</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($roles as $role)
+                                    @foreach($permissions as $permission)
                                         <tr>
-                                            <td>{{$role->arab_name}}</td>
-                                            <td>{{$role->eng_name}}</td>
+                                            <td>{{$permission->name}}</td>
+                                            <td>{{$permission->arab_name}}</td>
+                                            <td>{{$permission->eng_name}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('vendors.destroy', $vendor->id) }}" method="post">
+                                                        <form action="{{ route('permissions.destroy', $permission->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="{{ route('permissions.edit', $permission->id) }}">{{ __('edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this permission?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 
                                                     </div>
@@ -85,7 +87,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $roles->links() }}
+                                            {{ $permissions->links() }}
                                         </nav>
                                     </div>
                                 </div>
@@ -107,28 +109,3 @@
 
 
 
-
-<!-- jQuery -->
-<script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="{{ asset('plugins') }}/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist') }}/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist') }}/js/demo.js"></script>
-<!-- page script -->
-<script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-    });
-</script>
-</body>
-</html>

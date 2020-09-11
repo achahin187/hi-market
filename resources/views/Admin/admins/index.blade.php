@@ -13,11 +13,14 @@
                     <div class="col-sm-6">
                         <h1>DataTables</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admins.create')}}">addr new admin</a></li>
-                        </ol>
-                    </div>
+
+                    @if(auth()->user()->can('admin-create'))
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">addr new admin</a></li>
+                            </ol>
+                        </div>
+                    @endif
 
                     <div class="col-12">
 
@@ -50,6 +53,7 @@
                                     <tr>
                                         <th>name</th>
                                         <th>email</th>
+                                        <th>Role</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -58,6 +62,20 @@
                                         <tr>
                                             <td>{{$admin->name}}</td>
                                             <td>{{$admin->email}}</td>
+
+                                            @foreach($admin->roles as $role)
+
+                                                @if(App::getLocale() == 'ar')
+
+                                                    <td>{{$role->arab_name}}</td>
+
+                                                @else
+
+                                                    <td>{{$role->eng_name}}</td>
+
+                                                @endif
+
+                                            @endforeach
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -68,8 +86,13 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            @if(auth()->user()->can('admin-edit'))
+
+                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                            @endif
+                                                            @if(auth()->user()->can('admin-delete'))
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            @endif
                                                         </form>
 
                                                     </div>
@@ -105,30 +128,3 @@
 
 @endsection
 
-
-
-
-<!-- jQuery -->
-<script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="{{ asset('plugins') }}/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist') }}/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist') }}/js/demo.js"></script>
-<!-- page script -->
-<script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-    });
-</script>
-</body>
-</html>

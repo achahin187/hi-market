@@ -9,6 +9,15 @@ use App\Models\Vendor;
 
 class VendorController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('permission:vendor-list|vendor-create|vendor-edit|vendor-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:vendor-create', ['only' => ['create','store']]);
+        $this->middleware('permission:vendor-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:vendor-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -151,6 +160,8 @@ class VendorController extends Controller
             'sponsor' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
+
+        dd($request->image);
 
         $this->validate($request, $rules);
 

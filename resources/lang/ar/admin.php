@@ -42,7 +42,7 @@ return [
     'users'=> 'Users',
     'add_user'=>'Add New User',
 
-    //Roles
+    //roles
     'roles'=>'الأدوار',
     'add_role'=>'إضافة دور جديد',
     'modify_role'=>'تعديل الدور',

@@ -59,14 +59,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('points', 'Admin\PointController',['except' => ['show']]);
         Route::resource('supermarkets', 'Admin\SupermarketController',['except' => ['show']]);
         Route::resource('roles', 'Admin\RoleController');
-        Route::get('products', 'Admin\ProductController@index')->name('products.index');
-        Route::get('products/{flag}', 'Admin\ProductController@create')->name('products.create');
-        Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');
-        Route::get('products/{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
-        Route::put('products/{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
-        Route::delete('products/{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+        Route::resource('permissions', 'Admin\PermissionController');
 
-        Route::group(['prefix' => 'orders'],function() {
+
+            Route::get('products/{flag?}', 'Admin\ProductController@index')->name('products.index');
+            Route::get('products/create/{flag}', 'Admin\ProductController@create')->name('products.create');
+            Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');
+            Route::get('products/{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
+            Route::put('products/{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
+            Route::delete('products/{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+
+
+        Route::group(['prefix' => 'orders','middleware' => ['role:Admin']],function() {
+
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
@@ -78,7 +83,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::delete('products/{order_id}/{product_id}', 'Admin\OrderController@productdelete')->name('orderproduct.delete');
             Route::delete('{order_id}', 'Admin\OrderController@orderdelete')->name('orders.delete');
             Route::put('status/{order_id}', 'Admin\OrderController@status')->name('orders.status');
-
             Route::post('cancel', 'Admin\OrderController@cancel')->name('orders.cancel');
         });
     });

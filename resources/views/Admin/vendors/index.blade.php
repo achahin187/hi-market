@@ -13,11 +13,15 @@
                     <div class="col-sm-6">
                         <h1>DataTables</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">create new vendor</a></li>
-                        </ol>
-                    </div>
+
+                    @if(auth()->user()->can('vendor-create'))
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">create new vendor</a></li>
+                            </ol>
+                        </div>
+                    @endif
+
 
                     <div class="col-12">
 
@@ -84,8 +88,17 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            @if(auth()->user()->can('vendor-edit'))
+
+                                                                <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
+
+                                                            @endif
+
+                                                            @if(auth()->user()->can('vendor-delete'))
+
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+
+                                                            @endif
                                                         </form>
 
                                                     </div>
@@ -123,28 +136,3 @@
 
 
 
-
-<!-- jQuery -->
-<script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="{{ asset('plugins') }}/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist') }}/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist') }}/js/demo.js"></script>
-<!-- page script -->
-<script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-    });
-</script>
-</body>
-</html>

@@ -27,6 +27,7 @@ $settings = App\Models\Setting::all()->first();
     <link rel="stylesheet" href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/select2/css/select2.min.css">
+
     <link rel="stylesheet" href="{{ asset('plugins') }}/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
@@ -219,14 +220,17 @@ $settings = App\Models\Setting::all()->first();
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{route('products.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Products
-                            </p>
-                        </a>
-                    </li>
+
+                    @if(auth()->user()->can('product-create') || auth()->user()->can('product-delete') || auth()->user()->can('product-edit') || auth()->user()->can('product-list'))
+                        <li class="nav-item">
+                            <a href="{{route('products.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Products
+                                </p>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a href="{{route('categories.index')}}" class="nav-link">
@@ -237,23 +241,30 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('vendors.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Vendors
-                            </p>
-                        </a>
-                    </li>
+                    @if(auth()->user()->can('vendor-create') || auth()->user()->can('vendor-delete') || auth()->user()->can('vendor-edit') || auth()->user()->can('vendor-list'))
 
-                    <li class="nav-item">
-                        <a href="{{route('admins.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Admins
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('vendors.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Vendors
+                                </p>
+                            </a>
+                        </li>
+
+                    @endif
+
+                    @if(auth()->user()->can('admin-create') || auth()->user()->can('admin-delete') || auth()->user()->can('admin-edit') || auth()->user()->can('admin-list'))
+
+                        <li class="nav-item">
+                            <a href="{{route('admins.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Admins
+                                </p>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a href="{{route('orders.index')}}" class="nav-link">
@@ -265,7 +276,7 @@ $settings = App\Models\Setting::all()->first();
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{route('offers.index')}}" class="nav-link">
+                        <a href="{{route('products.index',1)}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Offers
@@ -317,13 +328,25 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-                    @if(auth()->user()->flag == 1)
+                    @if(auth()->user()->can('role-create') || auth()->user()->can('role-delete') || auth()->user()->can('role-edit') || auth()->user()->can('role-list'))
 
                         <li class="nav-item">
                             <a href="{{route('roles.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Roles
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->flag == 1)
+
+                        <li class="nav-item">
+                            <a href="{{route('permissions.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Permissions
                                 </p>
                             </a>
                         </li>
@@ -354,5 +377,71 @@ $settings = App\Models\Setting::all()->first();
     <!-- Control sidebar content goes here -->
 </aside>
 
+
+<!-- jQuery -->
+<script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="{{ asset('plugins') }}/datatables/jquery.dataTables.min.js"></script>
+
+<script src="{{ asset('plugins') }}/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="{{ asset('plugins') }}/datatables-responsive/js/dataTables.responsive.min.js"></script>
+
+<script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<!-- AdminLTE App -->
+<script src="{{ asset('dist') }}/js/adminlte.min.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist') }}/js/demo.js"></script>
+
+<!-- Select2 -->
+<script src="{{ asset('plugins') }}/select2/js/select2.full.min.js"></script>
+
+<!-- date-range-picker -->
+<script src="{{ asset('plugins') }}/daterangepicker/daterangepicker.js"></script>
+
+<!-- bootstrap color picker -->
+<script src="{{ asset('plugins') }}/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+
+<!-- Bootstrap Switch -->
+<script src="{{ asset('plugins') }}/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+<!-- InputMask -->
+<script src="{{ asset('plugins') }}/moment/moment.min.js"></script>
+
+<script src="{{ asset('plugins') }}/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+<script>
+
+    $(function () {
+
+        $('.quantity').on('change', function () {
+
+            let product_price = $('.product').find(':selected').data('price');
+            let quantity = $(this).val();
+
+            let total_price = product_price * quantity;
+
+            $('.price').val(total_price);
+        });
+
+    });
+
+</script>
+
+<!-- Page script -->
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+    })
+</script>
+
+</body>
+</html>
 
 
