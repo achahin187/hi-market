@@ -19,7 +19,7 @@ class OfferController extends Controller
     {
         //
         $offers = Offer::orderBy('id', 'desc')->paginate(10);
-        return view('Admin.offers.index',compact('offers'));
+        return view('Admin.dynamic_offers.index',compact('offers'));
     }
 
     /**
@@ -30,7 +30,7 @@ class OfferController extends Controller
     public function create()
     {
         //
-        return view('Admin.offers.create');
+        return view('Admin.dynamic_offers.create');
     }
 
     /**
@@ -54,11 +54,11 @@ class OfferController extends Controller
     public function edit($id)
     {
         //
-        $offer = Offer::findOrFail($id);
+        $offer = Offer::find($id);
 
         if($offer)
         {
-            return view('Admin.products.create', compact('offer'));
+            return view('Admin.dynamic_offers.create', compact('offer'));
         }
         else
         {
@@ -90,7 +90,7 @@ class OfferController extends Controller
     {
         //
 
-        $offer = Offer::findOrFail($id);
+        $offer = Offer::find($id);
 
         if($offer) {
             $offer->delete();

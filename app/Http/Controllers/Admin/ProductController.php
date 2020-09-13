@@ -206,7 +206,7 @@ class ProductController extends Controller
         {
             if($flag == 1)
             {
-                return redirect('admin/products/1')->withStatus(__('product created successfully'));
+                return redirect('admin/products/1')->withStatus(__('offer created successfully'));
             }
             return redirect('admin/products')->withStatus(__('product created successfully'));
         }

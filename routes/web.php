@@ -70,7 +70,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::delete('products/{id}', 'Admin\ProductController@destroy')->name('products.destroy');
 
 
-        Route::group(['prefix' => 'orders','middleware' => ['role:Admin']],function() {
+        Route::group(['prefix' => 'orders'],function() {
 
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
