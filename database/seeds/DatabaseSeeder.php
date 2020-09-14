@@ -3629,6 +3629,8 @@ DatabaseSeeder extends Seeder
             $order->products()->sync( $products_ids );
         }
 
+        factory('App\Models\Team', 10)->create();
+
         $this->call([
             PermissionTableSeeder::class,
             CreateAdminSeeder::class

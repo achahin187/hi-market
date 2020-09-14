@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Vendor extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'arab_name','eng_name','image','category_id','sponsor'
+        'arab_name','eng_name','image','category_id','sponsor','created_by','updated_by'
     ];
 
     public function products() {

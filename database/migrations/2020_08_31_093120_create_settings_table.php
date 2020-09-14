@@ -21,6 +21,10 @@ class CreateSettingsTable extends Migration
             $table->unsignedFloat('delivery');
             $table->unsignedInteger('cancellation');
             $table->string('splash')->nullable();
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
+
         });
     }
 

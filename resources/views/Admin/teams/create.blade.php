@@ -11,17 +11,6 @@
                     <div class="col-sm-6">
                         <h1>General Form</h1>
                         @include('includes.errors')
-                        <div class="col-12">
-
-                            @if (session('status'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('status') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-                        </div>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -108,16 +97,7 @@
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
                                                         <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
-
-                                                        @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
-                                                        @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
-                                                        @endif
+                                                        <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->name}}</label>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -128,76 +108,13 @@
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
                                                         <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
-                                                        @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
-                                                        @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
-                                                        @endif
+                                                        <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->name}}</label>
                                                     </div>
                                                 </div>
                                             @endforeach
 
                                         @endif
 
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>admin team </label>
-                                        <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($admin))
-                                                @foreach(\App\Models\Team::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Supermarket::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>manager</label>
-                                        <select class=" @error('manager') is-invalid @enderror select2"  name="manager" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                            @if(isset($admin))
-
-                                                <option  <?php if($admin->manager == '1') echo 'selected'; ?> value="1">true</option>
-                                                <option <?php if($admin->manager == '0') echo 'selected'; ?> value="0">false</option>
-
-                                            @else
-
-                                                <option value="1">true</option>
-                                                <option value="0">false</option>
-
-                                            @endif
-
-                                        </select>
                                     </div>
 
                                 </div>

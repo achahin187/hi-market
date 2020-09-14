@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AdminExport;
 use App\Http\Controllers\Controller;
+use App\Imports\AdminImport;
+use App\Models\Team;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use App\User;
 
@@ -42,6 +46,7 @@ class AdminController extends Controller
     public function create()
     {
         //
+
         $roles = Role::orderBy('id', 'desc')->paginate(10);
         return view('Admin.admins.create',compact('roles'));
     }
@@ -59,7 +64,9 @@ class AdminController extends Controller
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
             'password_confirmation' => ['required', 'min:8'],
-            'roles' => 'required'
+            'roles' => 'required',
+            'team_id' => 'required|integer|min:0',
+            'manager' => 'required|integer|min:0'
         ];
 
         $this->validate($request,$rules);
@@ -68,10 +75,17 @@ class AdminController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
+        $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
+
+
+        if($teammanager != null && $request->manager == 1)
+        {
+            return redirect('admin/admins/create')->withStatus('you can not assign more than one manager to the same team');
+        }
+
 
         $admin = User::create($input);
         $admin->assignRole($request->input('roles'));
-
 
         if($admin)
         {
@@ -205,6 +219,27 @@ class AdminController extends Controller
             return redirect('/admin/admins')->withStatus(__('Admin successfully deleted.'));
         }
         return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 
 }

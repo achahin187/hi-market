@@ -18,6 +18,8 @@ class CreateClientProductTable extends Migration
             $table->bigInteger('client_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
             $table->unsignedInteger('flag')->nullable();
+            $table->timestamps();
+
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');

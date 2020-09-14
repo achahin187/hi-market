@@ -17,6 +17,9 @@ class CreateAreasTable extends Migration
             $table->id();
             $table->integer('lat');
             $table->integer('lng');
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
         });
     }
 

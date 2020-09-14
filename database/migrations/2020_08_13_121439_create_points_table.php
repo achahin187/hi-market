@@ -19,6 +19,9 @@ class CreatePointsTable extends Migration
             $table->unsignedInteger('to');
             $table->unsignedInteger('type');
             $table->unsignedFloat('value');
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
         });
     }
 

@@ -20,6 +20,8 @@ class CreateCartRequestsTable extends Migration
             $table->bigInteger('client_id')->unsigned();
             $table->unsignedInteger('converted');
             $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
 
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');

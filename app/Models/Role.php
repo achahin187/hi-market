@@ -21,7 +21,7 @@ class Role extends Model implements RoleContract
     use RefreshesPermissionCache;
 
     protected $fillable = [
-        'arab_name','eng_name','name','guard_name'
+        'arab_name','eng_name','name','guard_name','created_by','updated_by'
     ];
 
     protected $guarded = ['id'];

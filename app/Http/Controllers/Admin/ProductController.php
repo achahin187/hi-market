@@ -250,7 +250,7 @@ class ProductController extends Controller
     public function edit($id,$flag)
     {
         //
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
         if($product)
         {
@@ -274,7 +274,7 @@ class ProductController extends Controller
     {
         //
 
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
 
         if($product) {
@@ -348,9 +348,11 @@ class ProductController extends Controller
 
             $points = $request->input('points');
 
-            if ($price == null || $points == null) {
-
+            if ($price == null) {
                 $price = 0;
+            }
+
+            if ($points == null) {
                 $points = 0;
             }
 
@@ -535,7 +537,7 @@ class ProductController extends Controller
     {
         //
 
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
         $images = $product->images;
 

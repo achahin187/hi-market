@@ -59,15 +59,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('points', 'Admin\PointController',['except' => ['show']]);
         Route::resource('supermarkets', 'Admin\SupermarketController',['except' => ['show']]);
         Route::resource('roles', 'Admin\RoleController');
+        Route::resource('teams', 'Admin\TeamController');
+        Route::resource('clients', 'Admin\ClientController');
         Route::resource('permissions', 'Admin\PermissionController');
 
+        Route::group(['prefix' => 'products'],function() {
 
-            Route::get('products/{flag?}', 'Admin\ProductController@index')->name('products.index');
-            Route::get('products/create/{flag}', 'Admin\ProductController@create')->name('products.create');
-            Route::post('products/{flag}', 'Admin\ProductController@store')->name('productsadd');
-            Route::get('products/{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
-            Route::put('products/{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
-            Route::delete('products/{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+            Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
+            Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
+            Route::get('create/{flag}', 'Admin\ProductController@create')->name('products.create');
+            Route::post('{flag}', 'Admin\ProductController@store')->name('productsadd');
+            Route::get('{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
+            Route::put('{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
+            Route::delete('{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+
+        });
 
 
         Route::group(['prefix' => 'orders'],function() {

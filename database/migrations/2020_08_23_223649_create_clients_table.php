@@ -24,6 +24,9 @@ class CreateClientsTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->unsignedInteger('unique_id')->nullable();
             $table->rememberToken();
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
         });
     }
 

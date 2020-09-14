@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'password','name','email'
+        'password','name','email','flag','team_id','manager','created_by','updated_by'
     ];
 
     /**
@@ -40,4 +40,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function team() {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

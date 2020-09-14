@@ -13,6 +13,7 @@ use App\Models\Reason;
 use App\Models\Role;
 use App\Models\Setting;
 use App\Models\Supermarket;
+use App\Models\Team;
 use App\User;
 use App\Models\Order;
 use App\Models\Vendor;
@@ -30,6 +31,13 @@ use Illuminate\Support\Str;
 |
 */
 
+$factory->define(Team::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name
+    ];
+});
+
 $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
@@ -37,6 +45,9 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'team_id' => Team::all()->random()->id,
+        'flag' => $faker->randomElement([0,1]),
+        'manager' => $faker->randomElement([0,1]),
     ];
 });
 

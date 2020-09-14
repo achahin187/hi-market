@@ -9,7 +9,7 @@ class CartRequest extends Model
     //
 
     protected $fillable = [
-        'cart_description','address','client_id','converted'
+        'cart_description','address','client_id','converted','created_by','updated_by'
     ];
 
     public function client() {

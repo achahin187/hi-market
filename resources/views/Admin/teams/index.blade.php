@@ -44,62 +44,36 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Admins</h3>
+                                <h3 class="card-title">Teams</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>email</th>
-                                        <th>Role</th>
-                                        <th>Team</th>
+                                        <th>Team arab name</th>
+                                        <th>Team eng name</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($admins as $admin)
+                                    @foreach($teams as $team)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
-
-                                            @foreach($admin->roles as $role)
-
-                                                @if(App::getLocale() == 'ar')
-
-                                                    <td>{{$role->arab_name}}</td>
-
-                                                @else
-
-                                                    <td>{{$role->eng_name}}</td>
-
-                                                @endif
-
-                                            @endforeach
-
-                                            @if(App::getLocale() == 'ar')
-
-                                                <td>{{$admin->team->arab_name}}</td>
-
-                                            @else
-
-                                                <td>{{$admin->team->eng_name}}</td>
-
-                                            @endif
+                                            <td>{{$team->arab_name}}</td>
+                                            <td>{{$team->eng_name}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="post">
+                                                        <form action="{{ route('teams.destroy', $team->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
                                                             @if(auth()->user()->can('admin-edit'))
 
-                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('teams.edit', $team->id) }}">{{ __('edit') }}</a>
                                                             @endif
                                                             @if(auth()->user()->can('admin-delete'))
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
@@ -119,7 +93,7 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end w-100">
                                         <nav aria-label="Page navigation example">
-                                            {{ $admins->links() }}
+                                            {{ $teams->links() }}
                                         </nav>
                                     </div>
                                 </div>

@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'question','answer'
+        'question','answer','created_by','updated_by'
     ];
 }

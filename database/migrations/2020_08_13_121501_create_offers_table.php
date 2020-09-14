@@ -23,6 +23,9 @@ class CreateOffersTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('status');
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
         });
     }
 

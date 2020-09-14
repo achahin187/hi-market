@@ -8,10 +8,8 @@ class Supermarket extends Model
 {
     //
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'arab_name','eng_name','image'
+        'arab_name','eng_name','image','created_by','updated_by'
     ];
 
     public function products() {

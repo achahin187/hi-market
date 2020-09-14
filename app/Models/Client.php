@@ -10,10 +10,9 @@ class Client extends Authenticatable implements JWTSubject
 {
     //
 
-    public $timestamps = false;
 
     protected $fillable = [
-        'password','name','email','mobile_number','address','unique_id','total_points'
+        'password','name','email','mobile_number','address','unique_id','total_points','created_by','updated_by'
     ];
 
     protected $hidden = [

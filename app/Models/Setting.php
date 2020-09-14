@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'tax','tax_on_product','delivery','tax_value','cancellation','splash'
+        'tax','tax_on_product','delivery','tax_value','cancellation','splash','created_by','updated_by'
     ];
 }

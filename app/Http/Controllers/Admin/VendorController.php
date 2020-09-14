@@ -165,7 +165,7 @@ class VendorController extends Controller
 
         $this->validate($request, $rules);
 
-        $vendor = Vendor::findOrFail($id);
+        $vendor = Vendor::find($id);
 
         if($vendor) {
 
@@ -210,7 +210,7 @@ class VendorController extends Controller
     public function destroy($id)
     {
         //
-        $vendor = Vendor::findOrFail($id);
+        $vendor = Vendor::find($id);
 
         if($vendor)
         {

@@ -231,7 +231,7 @@
                                                                         <label>Cancellation Reason</label>
                                                                         <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                                            @foreach(\App\Models\Reason::all() as $reason)
+                                                                            @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
 
                                                                                 <option value="{{ $reason->id }}">{{ $reason->arab_reason }}</option>
 

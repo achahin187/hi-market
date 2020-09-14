@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Point extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'from','to','type','value'
+        'from','to','type','value','created_by','updated_by'
     ];
 }

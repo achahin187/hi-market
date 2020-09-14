@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'description','client_id'
+        'description','client_id','created_by','updated_by'
     ];
 
     public function client()

@@ -216,7 +216,7 @@
                                             @if(isset($product))
 
                                                 <option  <?php if($product->status == 'active') echo 'selected'; ?> value="active">active</option>
-                                                <option <?php if($product->status == 'inactive') echo 'selected'; ?> ="inactive">inactive</option>
+                                                <option <?php if($product->status == 'inactive') echo 'selected'; ?> value="inactive">inactive</option>
 
                                             @else
 

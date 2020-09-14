@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     //
-    public $timestamps = false;
 
     protected $fillable = [
-        'image','arab_name','eng_name'
+        'image','arab_name','eng_name','created_by','updated_by'
     ];
 
     public function products() {

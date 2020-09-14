@@ -17,6 +17,9 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->text('description');
             $table->bigInteger('client_id')->unsigned();
+            $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
 
 
             $table->foreign('client_id')->references('id')->on('clients')->onUpdate('cascade')->onDelete('cascade');

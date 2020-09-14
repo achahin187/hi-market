@@ -8,9 +8,7 @@ class Reason extends Model
 {
     //
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'arab_reason','eng_reason','status'
+        'arab_reason','eng_reason','status','created_by','updated_by'
     ];
 }

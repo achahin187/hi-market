@@ -328,6 +328,15 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{route('teams.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                teams
+                            </p>
+                        </a>
+                    </li>
+
                     @if(auth()->user()->can('role-create') || auth()->user()->can('role-delete') || auth()->user()->can('role-edit') || auth()->user()->can('role-list'))
 
                         <li class="nav-item">

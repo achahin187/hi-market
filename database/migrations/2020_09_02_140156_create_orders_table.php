@@ -32,6 +32,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('reason_id')->unsigned()->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->dateTime('created_by')->nullable();
+            $table->dateTime('updated_by')->nullable();
 
             $table->foreign('client_id')->references('id')->on('clients')->onUpdate('no action')->onDelete('no action');
             $table->foreign('reason_id')->references('id')->on('reasons')->onUpdate('no action')->onDelete('no action');
