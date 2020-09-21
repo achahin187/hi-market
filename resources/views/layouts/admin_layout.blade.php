@@ -19,6 +19,12 @@ $settings = App\Models\Setting::all()->first();
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('plugins') }}/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="{{ asset('plugins') }}/datatables-responsive/css/responsive.bootstrap4.min.css">
+
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Bootstrap Color Picker -->
@@ -223,7 +229,7 @@ $settings = App\Models\Setting::all()->first();
 
                     @if(auth()->user()->can('product-create') || auth()->user()->can('product-delete') || auth()->user()->can('product-edit') || auth()->user()->can('product-list'))
                         <li class="nav-item">
-                            <a href="{{route('products.index')}}" class="nav-link">
+                            <a href="{{route('products.index',0)}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Products
@@ -237,6 +243,15 @@ $settings = App\Models\Setting::all()->first();
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 categories
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('subcategories.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                subcategories
                             </p>
                         </a>
                     </li>
@@ -333,6 +348,15 @@ $settings = App\Models\Setting::all()->first();
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 teams
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('clients.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                clients
                             </p>
                         </a>
                     </li>
@@ -448,6 +472,24 @@ $settings = App\Models\Setting::all()->first();
         //Initialize Select2 Elements
         $('.select2').select2()
     })
+</script>
+
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
 </script>
 
 </body>

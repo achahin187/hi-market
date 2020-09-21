@@ -26,7 +26,7 @@ class VendorController extends Controller
     public function index()
     {
         //
-        $vendors = Vendor::orderBy('id', 'desc')->paginate(10);
+        $vendors = Vendor::orderBy('id', 'desc')->get();
 
         return view('Admin.vendors.index',compact('vendors'));
     }
@@ -109,7 +109,7 @@ class VendorController extends Controller
     public function show($id)
     {
         //
-        $vendor = Vendor::findOrFail($id);
+        $vendor = Vendor::find($id);
 
         if($vendor)
         {
@@ -130,7 +130,7 @@ class VendorController extends Controller
     public function edit($id)
     {
         //
-        $vendor = Vendor::findOrFail($id);
+        $vendor = Vendor::find($id);
 
         if($vendor)
         {
@@ -221,5 +221,26 @@ class VendorController extends Controller
             return redirect('/admin/vendors')->withStatus(__('vendor successfully deleted.'));
         }
         return redirect('/admin/vendors')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new VendorExport , 'vendors.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'file' => 'mimes:csv|max:277'
+        ];
+        Excel::import(new VendorImport ,request()->file('file'));
+
+        return back();
     }
 }

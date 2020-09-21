@@ -16,7 +16,7 @@ class TeamController extends Controller
     public function index()
     {
         //
-        $teams = Team::orderBy('id', 'desc')->paginate(10);
+        $teams = Team::orderBy('id', 'desc')->get();
         return view('Admin.teams.index',compact('teams'));
     }
 
@@ -123,6 +123,35 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $team = team::find($id);
+
+        $rules = [
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+        ];
+
+        $this->validate($request, $rules);
+
+        $arab_name = $request->input('arab_name');
+
+        $eng_name = $request->input('eng_name');
+
+        $user = auth()->user();
+
+        if($team)
+        {
+            $team->update([
+                'arab_name' => $arab_name,
+                'eng_name' => $eng_name,
+                'created_by' => $user->id,
+            ]);
+            return redirect('/admin/teams')->withStatus('team successfully updated.');
+        }
+        else
+        {
+            return redirect('/admin/team')->withStatus('no team exist');
+        }
     }
 
     /**
@@ -142,5 +171,26 @@ class TeamController extends Controller
             return redirect('/admin/teams')->withStatus(__('teams successfully deleted.'));
         }
         return redirect('/admin/teams')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 }

@@ -70,4 +70,25 @@ class SettingsController extends Controller
             return redirect('/admin/settings/'.$id.'/edit')->withStatus('no id exist');
         }
     }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
+    }
 }

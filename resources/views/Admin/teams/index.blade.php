@@ -17,7 +17,7 @@
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">addr new admin</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('teams.create')}}">create new team</a></li>
                             </ol>
                         </div>
                     @endif
@@ -48,7 +48,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>Team arab name</th>
@@ -88,15 +88,6 @@
 
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-end w-100">
-                                        <nav aria-label="Page navigation example">
-                                            {{ $teams->links() }}
-                                        </nav>
-                                    </div>
-                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div>

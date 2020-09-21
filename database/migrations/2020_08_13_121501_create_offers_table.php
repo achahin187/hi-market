@@ -24,8 +24,8 @@ class CreateOffersTable extends Migration
             $table->date('end_date');
             $table->integer('status');
             $table->timestamps();
-            $table->dateTime('created_by')->nullable();
-            $table->dateTime('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
         });
     }
 

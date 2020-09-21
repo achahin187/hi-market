@@ -16,6 +16,8 @@ class AdminImport implements ToModel
     {
         return new User([
             //
+            'name'     => $row[0],
+            'email'    => $row[1],
 
         ]);
     }

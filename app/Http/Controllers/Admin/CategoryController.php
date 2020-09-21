@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Category::orderBy('id', 'desc')->paginate(10);
+        $categories = Category::orderBy('id', 'desc')->get();
 
         return view('Admin.categories.index',compact('categories'));
     }
@@ -56,6 +56,8 @@ class CategoryController extends Controller
 
         $eng_name = $request->input('eng_name');
 
+        $user = auth()->user();
+
         if($image = $request->file('image'))
         {
                 $filename = $image->getClientOriginalName();
@@ -68,7 +70,8 @@ class CategoryController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
-                'image' => $file_to_store
+                'image' => $file_to_store,
+                'created_by' => $user->id
             ]);
         }
         else
@@ -77,6 +80,7 @@ class CategoryController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'created_by' => $user->id
             ]);
         }
 
@@ -147,6 +151,8 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
 
+        $user = auth()->user();
+
         if($category) {
 
             if ($file = $request->file('image')) {
@@ -163,13 +169,13 @@ class CategoryController extends Controller
                         unlink('category_images/' . $category->image);
                     }
                 }
-                $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $file_to_store]);
+                $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $file_to_store , 'updated_by' => $user->id]);
             } else {
                 if ($request->has('checkedimage')) {
-                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $request->input('checkedimage')]);
+                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $request->input('checkedimage') , 'updated_by' => $user->id]);
                 } else {
                     unlink('category_images/' . $category->image);
-                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => null]);
+                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => null , 'updated_by' => $user->id]);
                 }
 
             }
@@ -200,5 +206,29 @@ class CategoryController extends Controller
             return redirect('/admin/categories')->withStatus(__('category successfully deleted.'));
         }
         return redirect('/admin/categories')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new CategoryExport , 'categories.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'file' => 'mimes:csv|max:277'
+        ];
+
+        $this->validate($request,$rules);
+
+        Excel::import(new CategoryImport ,request()->file('file'));
+
+        return back()->withStatus('Category Data imported successfully');
     }
 }

@@ -19,24 +19,36 @@ class CreateProductsTable extends Migration
             $table->string('eng_name');
             $table->text('eng_description')->nullable();
             $table->text('arab_description')->nullable();
+            $table->text('eng_spec')->nullable();
+            $table->text('arab_spec')->nullable();
+            $table->text('review')->nullable();
             $table->unsignedFloat('price')->nullable();
+            $table->unsignedInteger('priority')->nullable();
             $table->string('images')->nullable();
-            $table->unsignedFloat('points')->nullable();
+            $table->unsignedInteger('points')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
             $table->bigInteger('supermarket_id')->unsigned();
+            $table->bigInteger('subcategory_id')->unsigned();
+            $table->bigInteger('measure_id')->unsigned();
+            $table->bigInteger('size_id')->unsigned();
             $table->unsignedInteger('flag');
-            $table->string('status')->nullable();
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->string('status')->default('active');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->date('exp_date');
+            $table->string('barcode');
             $table->timestamps();
-            $table->dateTime('created_by')->nullable();
-            $table->dateTime('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
 
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('measure_id')->references('id')->on('measures')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

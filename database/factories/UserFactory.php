@@ -3,15 +3,17 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Address;
-use App\Models\Admin;
 use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Measures;
 use App\Models\Point;
 use App\Models\Product;
 use App\Models\Reason;
 use App\Models\Role;
 use App\Models\Setting;
+use App\Models\Size;
+use App\Models\SubCategory;
 use App\Models\Supermarket;
 use App\Models\Team;
 use App\User;
@@ -31,12 +33,16 @@ use Illuminate\Support\Str;
 |
 */
 
+
 $factory->define(Team::class, function (Faker $faker) {
     return [
         'arab_name' => $faker->name,
-        'eng_name' => $faker->name
+        'eng_name' => $faker->name,
+        'created_by' => 1,
+        'updated_by' => 1
     ];
 });
+
 
 $factory->define(User::class, function (Faker $faker) {
     return [
@@ -48,6 +54,8 @@ $factory->define(User::class, function (Faker $faker) {
         'team_id' => Team::all()->random()->id,
         'flag' => $faker->randomElement([0,1]),
         'manager' => $faker->randomElement([0,1]),
+        'created_by' => 1,
+        'updated_by' => 1
     ];
 });
 
@@ -56,6 +64,19 @@ $factory->define(Category::class, function (Faker $faker) {
         'arab_name' => $faker->name,
         'eng_name' => $faker->name,
         'image' => $faker->randomElement([0,1]),
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
+$factory->define(SubCategory::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
+        'image' => $faker->randomElement([0,1]),
+        'category_id' => Category::all()->random()->id,
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
     ];
 });
 
@@ -66,7 +87,10 @@ $factory->define(Vendor::class, function (Faker $faker) {
         'eng_name' => $faker->name,
         'image' => $faker->randomElement([0,1]),
         'category_id' => Category::all()->random()->id,
+        'subcategory_id' => SubCategory::all()->random()->id,
         'sponsor' => $faker->randomElement([0,1]),
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
 
     ];
 });
@@ -75,6 +99,29 @@ $factory->define(Supermarket::class, function (Faker $faker) {
     return [
         'arab_name' => $faker->name,
         'eng_name' => $faker->name,
+        'status' => $faker->randomElement(['inactive','active']),
+        'priority' => $faker->numberBetween(1,50),
+        'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
+
+$factory->define(Measures::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
+$factory->define(Size::class, function (Faker $faker) {
+    return [
+        'value' => $faker->randomElement(['1x24','1x10','1','2','3.5','5','10']),
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
     ];
 });
 
@@ -86,16 +133,24 @@ $factory->define(product::class, function (Faker $faker) {
         'eng_name' => $faker->name,
         'arab_description' => $faker->paragraph,
         'eng_description' => $faker->paragraph,
+        'arab_spec' => $faker->paragraph,
+        'eng_spec' => $faker->paragraph,
         'price' => $faker->randomElement([30,40]),
         'points' => $faker->randomElement([30,40,10,25,35]),
+        'priority' => $faker->numberBetween(1,50),
+        'barcode' => $faker->randomNumber(),
         'images' => $faker->randomElement([0,1]),
         'category_id' => Category::all()->random()->id,
         'vendor_id' => Vendor::all()->random()->id,
         'supermarket_id' => Supermarket::all()->random()->id,
+        'subcategory_id' => SubCategory::all()->random()->id,
+        'measure_id' => Measures::all()->random()->id,
+        'size_id' => Size::all()->random()->id,
         'flag' => $faker->randomElement([1,0]),
-        'status' => $faker->randomElement(['inactive']),
+        'status' => $faker->randomElement(['inactive','active']),
         'start_date' => $startingDate,
-        'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d H:i:s').' +2 days')
+        'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
+        'exp_date'=> $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
     ];
 });
 

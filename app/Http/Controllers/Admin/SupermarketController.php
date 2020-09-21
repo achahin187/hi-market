@@ -16,7 +16,7 @@ class SupermarketController extends Controller
     public function index()
     {
         //
-        $supermarkets = Supermarket::orderBy('id', 'desc')->paginate(10);
+        $supermarkets = Supermarket::orderBy('id', 'desc')->get();
         return view('Admin.supermarkets.index',compact('supermarkets'));
     }
 
@@ -43,6 +43,9 @@ class SupermarketController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'status' => ['required','string'],
+            'commission' => ['required','min:0','numeric'],
+            'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
@@ -50,7 +53,13 @@ class SupermarketController extends Controller
 
         $arab_name = $request->input('arab_name');
 
-        $eng_name = $request->input('eng_name');;
+        $eng_name = $request->input('eng_name');
+
+        $status = $request->input('status');
+
+        $commission = $request->input('commission');
+
+        $priority = $request->input('priority');
 
         if($image = $request->file('image'))
         {
@@ -64,6 +73,9 @@ class SupermarketController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'status' => $status,
+                'commission' => $commission,
+                'priority' => $priority,
                 'image' => $file_to_store
             ]);
         }
@@ -73,6 +85,9 @@ class SupermarketController extends Controller
 
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'status' => $status,
+                'commission' => $commission,
+                'priority' => $priority,
             ]);
         }
 
@@ -126,6 +141,9 @@ class SupermarketController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'status' => ['required','string'],
+            'commission' => ['required','min:0','numeric'],
+            'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
@@ -149,14 +167,14 @@ class SupermarketController extends Controller
                         unlink('supermarket_images/' . $supermarket->image);
                     }
                 }
-                $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'image' => $file_to_store]);
+                $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'status' => $request->status , 'commission' => $request->commission , 'priority' => $request->priority ,'image' => $file_to_store]);
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'status' => $request->status , 'commission' => $request->commission ,'image' => $request->input('checkedimage')]);
                 } else {
                     unlink('supermarket_images/' . $supermarket->image);
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'image' => null]);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'status' => $request->status , 'commission' => $request->commission , 'image' => null]);
                 }
             }
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
@@ -184,5 +202,45 @@ class SupermarketController extends Controller
             return redirect('/admin/supermarkets')->withStatus(__('supermarket successfully deleted.'));
         }
         return redirect('/admin/supermarkets')->withStatus(__('this id is not in our database'));
+    }
+
+    public function status(Request $request,$id)
+    {
+
+        $supermarket = Supermarket::find($id);
+
+        if($supermarket)
+        {
+            if($supermarket->status == 'active') {
+                $supermarket->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $supermarket->update(['status' => 'active']);
+            }
+            return redirect('/admin/supermarkets')->withStatus(__('supermarket status successfully updated.'));
+        }
+        return redirect('/admin/supermarkets')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new SupermarketExport , 'supermarkets.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'file' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new SupermarketImport ,request()->file('file'));
+
+        return back();
     }
 }

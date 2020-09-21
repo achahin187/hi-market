@@ -58,21 +58,39 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
         Route::resource('points', 'Admin\PointController',['except' => ['show']]);
         Route::resource('supermarkets', 'Admin\SupermarketController',['except' => ['show']]);
+        Route::resource('subcategories', 'Admin\SubcategoryController',['except' => ['show']]);
         Route::resource('roles', 'Admin\RoleController');
         Route::resource('teams', 'Admin\TeamController');
         Route::resource('clients', 'Admin\ClientController');
         Route::resource('permissions', 'Admin\PermissionController');
 
+        Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
+
         Route::group(['prefix' => 'products'],function() {
 
             Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
+            Route::get('{id}/{flag}/clone', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
+            Route::get('show/{flag}', 'Admin\ProductController@show')->name('products.show');
             Route::get('create/{flag}', 'Admin\ProductController@create')->name('products.create');
             Route::post('{flag}', 'Admin\ProductController@store')->name('productsadd');
             Route::get('{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
             Route::put('{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
+            Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
             Route::delete('{id}', 'Admin\ProductController@destroy')->name('products.destroy');
 
+        });
+
+        Route::group(['prefix' => 'export'],function() {
+
+            Route::get('admins', 'Admin\AdminController@export')->name('admins.export');
+            Route::get('products', 'Admin\ProductController@export')->name('products.export');
+        });
+
+        Route::group(['prefix' => 'import'],function() {
+
+            Route::post('admins', 'Admin\AdminController@import')->name('admins.import');
+            Route::post('products', 'Admin\ProductController@import')->name('products.import');
         });
 
 

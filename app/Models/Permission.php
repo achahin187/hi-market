@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Contracts\Permission as PermissionContract;
 use Spatie\Permission\Exceptions\PermissionAlreadyExists;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
@@ -18,6 +19,7 @@ class Permission extends Model implements PermissionContract
     //
     use HasRoles;
     use RefreshesPermissionCache;
+    use LogsActivity;
 
     protected $fillable = [
         'arab_name','eng_name','name','guard_name'

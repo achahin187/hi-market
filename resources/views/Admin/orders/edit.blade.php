@@ -219,7 +219,7 @@
                                     <div class="card-body">
                                         <h3>Order Products</h3>
                                         <h5>Total : {{$total_price}}</h5>
-                                        <table id="example2" class="table table-bordered table-hover">
+                                        <table id="example1" class="table table-bordered table-hover">
                                             <thead>
                                             <tr>
                                                 <th>arab_name</th>

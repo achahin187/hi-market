@@ -16,7 +16,7 @@ class ReasonController extends Controller
     public function index()
     {
         //
-        $reasons = Reason::orderBy('id', 'desc')->paginate(10);
+        $reasons = Reason::orderBy('id', 'desc')->get();
         return view('Admin.reasons.index',compact('reasons'));
     }
 
@@ -134,6 +134,27 @@ class ReasonController extends Controller
         {
             return redirect('/admin/reasons')->withStatus('no reason exist');
         }
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 
 }

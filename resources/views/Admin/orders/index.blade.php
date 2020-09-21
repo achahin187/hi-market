@@ -57,7 +57,7 @@
                             <!-- /.card-header -->
                         @if(isset($cancelledorders))
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>address</th>
@@ -264,15 +264,6 @@
 
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="d-flex justify-content-end w-100">
-                                            <nav aria-label="Page navigation example">
-                                                {{ $orders->links() }}
-                                            </nav>
-                                        </div>
-                                    </div>
                                 </div>
                             @endif
                             <!-- /.card-body -->

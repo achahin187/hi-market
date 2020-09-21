@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Vendor extends Model
 {
     //
+    use LogsActivity;
 
     protected $fillable = [
         'arab_name','eng_name','image','category_id','sponsor','created_by','updated_by'
@@ -18,5 +20,9 @@ class Vendor extends Model
 
     public function category() {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    public function subcategory() {
+        return $this->belongsTo('App\Models\SubCategory');
     }
 }

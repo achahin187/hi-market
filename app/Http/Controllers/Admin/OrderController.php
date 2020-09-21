@@ -361,4 +361,25 @@ class OrderController extends Controller
         }
         return redirect('/admin/orders')->withStatus(__('this id is not in our database'));
     }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
+    }
 }

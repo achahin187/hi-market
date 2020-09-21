@@ -16,13 +16,7 @@ class CreateAdminSeeder extends Seeder
     {
         //
 
-        $user = User::create([
-            'name' => 'Hardik Savani',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('123456'),
-            'team_id' => 1,
-            'manager' => 0
-        ]);
+        factory('App\User', 5)->create();
 
         $role = Role::create([
             'name' => explode(' ','admin')[0],
@@ -35,6 +29,9 @@ class CreateAdminSeeder extends Seeder
 
         $role->syncPermissions($permissions);
 
-        $user->assignRole([$role->id]);
+        foreach(User::all() as $user) {
+
+            $user->assignRole([$role->id]);
+        }
     }
 }

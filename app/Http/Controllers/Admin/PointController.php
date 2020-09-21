@@ -13,7 +13,7 @@ class PointController extends Controller
     public function index()
     {
         //
-        $points = Point::orderBy('id', 'desc')->paginate(10);
+        $points = Point::orderBy('id', 'desc')->get();
         return view('Admin.points.index',compact('points'));
     }
 
@@ -146,5 +146,26 @@ class PointController extends Controller
             return redirect('/admin/points')->withStatus(__('range successfully deleted.'));
         }
         return redirect('/admin/points')->withStatus(__('this range is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 }

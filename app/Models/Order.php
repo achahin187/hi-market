@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Order extends Model
 {
+
+    use LogsActivity;
 
     protected $fillable = [
             'address','client_id','status','rate','delivery_number','order_price','request','approved_at','prepared_at','shipping_at','shipped_at','admin_cancellation','cancelled_at','reason_id','notes','created_by','updated_by'

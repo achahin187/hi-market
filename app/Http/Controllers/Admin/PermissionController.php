@@ -25,7 +25,7 @@ class PermissionController extends Controller
     public function index()
     {
         //
-        $permissions = Permission::orderBy('id', 'desc')->paginate(10);
+        $permissions = Permission::orderBy('id', 'desc')->get();
         return view('Admin.permissions.index',compact('permissions'));
     }
 
@@ -152,5 +152,26 @@ class PermissionController extends Controller
             return redirect('/admin/permissions')->withStatus(__('permission successfully deleted.'));
         }
         return redirect('/admin/permissions')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 }

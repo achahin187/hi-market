@@ -18,7 +18,7 @@ class OfferController extends Controller
     public function index()
     {
         //
-        $offers = Offer::orderBy('id', 'desc')->paginate(10);
+        $offers = Offer::orderBy('id', 'desc')->get();
         return view('Admin.dynamic_offers.index',compact('offers'));
     }
 
@@ -99,5 +99,26 @@ class OfferController extends Controller
         return redirect('/admin/offers')->withStatus('no offer with this id.');
 
 
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 }

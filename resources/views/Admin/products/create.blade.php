@@ -38,14 +38,27 @@
                         <div class="card-header">
                             <h3 class="card-title">
 
-                                @if(isset($product))
+                                @if(isset($product) && !isset($clone))
 
                                     @if($product->flag == 0)
 
                                         edit product
+
                                     @else
 
                                         edit offer
+
+                                    @endif
+
+                                @elseif(isset($product) && isset($clone))
+
+                                    @if($flag == 0)
+
+                                        clone product
+
+                                    @else
+
+                                        clone offer
 
                                     @endif
 
@@ -66,10 +79,10 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="@if(isset($product)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @else {{route('productsadd',$flag) }} @endif" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="@if(isset($product) && !isset($clone)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @elseif(isset($clone) && isset($product)) {{route('productsadd',$flag) }} @else {{route('productsadd',$flag) }}  @endif" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            @if(isset($product))
+                            @if(isset($product) && !isset($clone))
 
                                 @method('PUT')
 
@@ -126,8 +139,48 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label>{{__('admin.arab_spec')}}</label>
+                                    <textarea class=" @error('arab_spec') is-invalid @enderror form-control" name="arab_spec" rows="3" placeholder="Enter ...">
+
+                                        @if(isset($product))
+                                            {{$product->arab_spec }}
+                                        @endif
+                                    </textarea>
+                                    @error('arab_spec')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{__('admin.eng_spec')}}</label>
+                                    <textarea class=" @error('eng_spec') is-invalid @enderror form-control" name="eng_spec" rows="3" placeholder="Enter ...">
+
+                                        @if(isset($product))
+                                            {{$product->eng_spec }}
+                                        @endif
+                                    </textarea>
+                                    @error('eng_spec')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{{__('admin.product_barcode')}}</label>
+                                    <input type="text" value="@if(isset($product)){{$product->barcode }} @endif" name="barcode" class=" @error('barcode') is-invalid @enderror form-control" required>
+                                    @error('barcode')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
-                                    <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control" >
+                                    <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control" required>
                                     @error('price')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -137,8 +190,18 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.product_points')}}</label>
-                                    <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control" >
+                                    <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control">
                                     @error('points')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">{{__('admin.product_priority')}}</label>
+                                    <input type="number" name="priority" min="0" @if(isset($product)) value="{{$product->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" >
+                                    @error('priority')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -206,54 +269,103 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label>product subcategory </label>
+                                    <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
 
-                                @if($flag == 1)
+                                                <option <?php if($product->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
 
-                                    <div class="form-group">
-                                        <label>product status</label>
-                                        <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
 
-                                            @if(isset($product))
+                                                <option value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
 
-                                                <option  <?php if($product->status == 'active') echo 'selected'; ?> value="active">active</option>
-                                                <option <?php if($product->status == 'inactive') echo 'selected'; ?> value="inactive">inactive</option>
+                                            @endforeach
 
-                                            @else
+                                        @endif
+                                    </select>
+                                </div>
 
-                                                <option value="active">active</option>
-                                                <option value="inactive">inactive</option>
+                                <div class="form-group">
+                                    <label>product measuring unit </label>
+                                    <select class=" @error('measuring_unit') is-invalid @enderror select2" name="measure_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Measures::all() as $measure)
 
-                                            @endif
+                                                <option <?php if($product->measure->id == $measure->id) echo 'selected'; ?> value="{{ $measure->id }}">{{ $measure->eng_name }}</option>
 
-                                        </select>
-                                    </div>
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Measures::all() as $measure)
 
-                                    <div class="form-group">
-                                        <label>start_date</label>
-                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" @if(!isset($product)) required @endif >
+                                                <option value="{{ $measure->id }}">{{ $measure->eng_name }}</option>
 
-                                        @error('start_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                            @endforeach
 
-
-                                    <div class="form-group">
-                                        <label>end_date</label>
-                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" @if(!isset($product)) required @endif >
-
-                                        @error('end_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                        @endif
+                                    </select>
+                                </div>
 
 
+                                <div class="form-group">
+                                    <label>product size </label>
+                                    <select class=" @error('size') is-invalid @enderror select2" name="size_id" data-placeholder="Select a Size" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Size::all() as $size)
 
-                                @endif
+                                                <option <?php if($product->size->id == $size->id) echo 'selected'; ?> value="{{ $size->id }}">{{ $size->value }}</option>
+
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Size::all() as $size)
+
+                                                <option value="{{ $size->id }}">{{ $size->value }}</option>
+
+                                            @endforeach
+
+                                        @endif
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>start_date</label>
+                                    <input type="date" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
+
+                                    @error('start_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>end_date</label>
+                                    <input type="date" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+
+                                    @error('end_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>exp_date</label>
+                                    <input type="date" class=" @error('exp_date') is-invalid @enderror form-control"  name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
+
+                                    @error('exp_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
 
                                 @if(isset($product))
 
@@ -262,15 +374,15 @@
                                         <div class="input-group">
                                             <div class="custom-file">
 
-                                                    @foreach($productimages as $image)
+                                                @foreach($productimages as $image)
 
-                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
 
-                                                        <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
+                                                    <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
 
-                                                    @endforeach
+                                                @endforeach
 
-                                                        <input name="images[]" multiple type="file">
+                                                <input name="images[]" multiple type="file">
 
                                             </div>
                                             <div class="input-group-append">

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Rules\CurrentPasswordCheckRule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
@@ -34,7 +35,10 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $admins = User::where('flag',0)->orderBy('id', 'desc')->paginate(10);
+        $admins = User::where('flag',0)->orderBy('id', 'desc')->get();
+
+        Log::info('this is mohamed');
+
         return view('Admin.admins.index',compact('admins'));
     }
 
@@ -235,9 +239,13 @@ class AdminController extends Controller
     public function import(Request $request)
     {
         $rules = [
-            'images' => 'image|mimes:csv|max:277'
+            'file' => 'mimes:csv|max:2048'
         ];
-        Excel::import(new AdminImport ,request()->file('file'));
+
+        $this->validate($request,$rules);
+
+
+        Excel::import(new AdminImport ,$request->file('file'));
 
         return back();
     }

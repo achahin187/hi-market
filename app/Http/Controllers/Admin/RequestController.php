@@ -18,7 +18,7 @@ class RequestController extends Controller
     public function index()
     {
         //
-        $requests = CartRequest::orderBy('id', 'desc')->paginate(10);
+        $requests = CartRequest::orderBy('id', 'desc')->get();
         return view('Admin.requests.index',compact('requests'));
     }
 
@@ -43,6 +43,27 @@ class RequestController extends Controller
         {
             return redirect('admin/requests')->withStatus('no request have this id');
         }
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 
 }

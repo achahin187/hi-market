@@ -53,7 +53,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.category_arabname')}}</label>
                                         <input type="text" value="@if(isset($category)){{$category->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                         @error('arab_name')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.category_engname')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($category)){{$category->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('eng_name')
                                         <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
 
                                                         <input type="checkbox" checked style="margin-right:10px;" name="checkedimage" value="{{$category->image}}">
 
-                                                    <input name="image" type="file">
+                                                    <input name="image" accept=".png,.jpg,.jpeg"  type="file">
 
                                                 </div>
                                                 <div class="input-group-append">
@@ -97,7 +97,7 @@
                                             <label for="exampleInputFile">File input</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
+                                                    <input name="image" accept=".png,.jpg,.jpeg"  type="file" class="custom-file-input" id="exampleInputFile">
                                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                 </div>
                                                 <div class="input-group-append">

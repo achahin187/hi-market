@@ -17,10 +17,13 @@ class CreateSupermarketsTable extends Migration
             $table->id();
             $table->string('arab_name');
             $table->string('eng_name');
+            $table->string('status')->default('inactive');
+            $table->unsignedFloat('commission');
+            $table->unsignedInteger('priority');
             $table->string('image')->nullable();
             $table->timestamps();
-            $table->dateTime('created_by')->nullable();
-            $table->dateTime('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
         });
     }
 

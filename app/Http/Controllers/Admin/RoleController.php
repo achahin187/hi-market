@@ -26,7 +26,7 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::orderBy('id', 'desc')->paginate(10);
+        $roles = Role::orderBy('id', 'desc')->get();
         return view('Admin.roles.index',compact('roles'));
     }
 
@@ -150,5 +150,26 @@ class RoleController extends Controller
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('roles.index')
             ->with('success','Role deleted successfully');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new AdminExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new AdminImport ,request()->file('file'));
+
+        return back();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Exceptions\GuardDoesNotMatch;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
@@ -17,8 +18,10 @@ class Role extends Model implements RoleContract
 {
     //
 
+
     use HasPermissions;
     use RefreshesPermissionCache;
+    use LogsActivity;
 
     protected $fillable = [
         'arab_name','eng_name','name','guard_name','created_by','updated_by'

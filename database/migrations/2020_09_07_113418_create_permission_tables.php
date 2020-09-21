@@ -37,8 +37,8 @@ class CreatePermissionTables extends Migration
             $table->string('arab_name');
             $table->string('eng_name');
             $table->timestamps();
-            $table->dateTime('created_by')->nullable();
-            $table->dateTime('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {

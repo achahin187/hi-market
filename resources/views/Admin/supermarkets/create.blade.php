@@ -71,6 +71,27 @@
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.product_priority')}}</label>
+                                        <input type="number" name="priority" min="0" @if(isset($supermarket)) value="{{$supermarket->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
+                                        @error('priority')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.product_commission')}}</label>
+                                        <input type="number" name="commission" min="0"  step="0.01" @if(isset($supermarket)) value="{{$supermarket->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
+                                        @error('commission')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
 
                                     @if(isset($supermarket) && $supermarket->image != null)
 

@@ -19,8 +19,8 @@ class CreateReasonsTable extends Migration
             $table->text('arab_reason');
             $table->string('status');
             $table->timestamps();
-            $table->dateTime('created_by')->nullable();
-            $table->dateTime('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
         });
     }
 

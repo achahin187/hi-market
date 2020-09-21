@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Imports\ProductImport;
+use App\Exports\ProductExport;
 
 class ProductController extends Controller
 {
@@ -24,13 +26,13 @@ class ProductController extends Controller
     public function index($flag = null)
     {
         //
-        if($flag != null)
+        if($flag == 1)
         {
-            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(10);
-            return view('Admin.offers.index',compact('offers'));
+            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+            return view('Admin.offers.index',compact('offers','flag'));
         }
-        $products = Product::where('flag',0)->orderBy('id', 'desc')->paginate(10);
-        return view('Admin.products.index',compact('products'));
+        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+        return view('Admin.products.index',compact('products','flag'));
     }
 
     /**
@@ -53,111 +55,95 @@ class ProductController extends Controller
     public function store(Request $request,$flag)
     {
 
+
+        $user = auth()->user();
+
+        $rules = [
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'barcode' => ['required','numeric','digits_between:10,16'],
+            'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'price' => 'required|numeric|min:0',
+            'points' => 'nullable|integer|min:0',
+            'vendor_id' => 'required|integer|min:0',
+            'category_id' => 'required|integer|min:0',
+            'supermarket_id' => 'required|integer|min:0',
+            'subcategory_id' => 'required|integer|min:0',
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
+            'exp_date' => 'required|date',
+            'measure_id' => 'required|integer|min:0',
+            'size_id' => 'required|integer|min:0',
+            'priority' => 'required|integer|min:0',
+            'images' => 'nullable',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
+        ];
+
+        $this->validate($request, $rules);
+
         if($flag == 1) {
-
-            $rules = [
-                'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => 'nullable|numeric|min:0',
-                'points' => 'nullable|integer|min:0',
-                'vendor_id' => 'required|integer|min:0',
-                'category_id' => 'required|integer|min:0',
-                'supermarket_id' => 'required|integer|min:0',
-                'status' => 'required|string',
-                'start_date' => 'required|after:today',
-                'end_date' => 'required|after:start_date',
-                'images' => 'nullable',
-                'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
-            ];
-
-            $this->validate($request, $rules);
-
-
-            $arab_name = $request->input('arab_name');
-
-            $eng_name = $request->input('eng_name');
-
-
-            $arab_description = $request->input('arab_description');
-
-            $eng_description = $request->input('eng_description');
-
-
-            $price = $request->input('price');
-
-            $points = $request->input('points');
-
-            if ($price == null) {
-                $price = 0;
-            }
-
-            $category = $request->input('category_id');
-
-            $vendor = $request->input('vendor_id');
-
-            $supermarket = $request->input('supermarket_id');
-
-            $barcode = $request->input('barcode');
-
-            $status = $request->input('status');
-
-            $start_date = $request->input('start_date');
-
-            $end_date = $request->input('end_date');
+            $priority = null;
         }
         else
         {
-            $rules = [
-                'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                'price' => 'nullable|numeric|min:0',
-                'points' => 'nullable|integer|min:0',
-                'vendor_id' => 'required|integer',
-                'category_id' => 'required|integer',
-                'supermarket_id' => 'required|integer|min:0',
-                'images' => 'nullable',
-                'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
-            ];
-
-            $this->validate($request, $rules);
+            $priority = $request->input('priority');
+        }
 
 
-            $arab_name = $request->input('arab_name');
+        $arab_name = $request->input('arab_name');
 
-            $eng_name = $request->input('eng_name');
+        $eng_name = $request->input('eng_name');
+
+        $arab_description = $request->input('arab_description');
+
+        $eng_description = $request->input('eng_description');
+
+        $arab_spec = $request->input('arab_spec');
+
+        $eng_spec = $request->input('eng_spec');
+
+        $price = $request->input('price');
+
+        $points = $request->input('points');
+
+        $quantity = $request->input('quantity');
+
+        $category = $request->input('category_id');
+
+        $vendor = $request->input('vendor_id');
+
+        $supermarket = $request->input('supermarket_id');
+
+        $subcategory = $request->input('subcategory_id');
+
+        $barcode = $request->input('barcode');
+
+        $start_date = $request->input('start_date');
+
+        $end_date = $request->input('end_date');
+
+        $exp_date = $request->input('exp_date');
+
+        $measuring_unit = $request->input('measure_id');
+
+        $size = $request->input('size_id');
 
 
-            $arab_description = $request->input('arab_description');
+        if ($price == null) {
+            $price = 0;
+        }
 
-            $eng_description = $request->input('eng_description');
+        if($quantity == null || $quantity == 0)
+        {
+            $status = 'inactive';
+        }
 
-
-            $price = $request->input('price');
-
-            $points = $request->input('points');
-
-            if ($price == null) {
-                $price = 0;
-            }
-
-            $category = $request->input('category_id');
-
-            $vendor = $request->input('vendor_id');
-
-            $supermarket = $request->input('supermarket_id');
-
-            $barcode = $request->input('barcode');
-
-            $status = null;
-
-            $start_date = null;
-
-            $end_date = null;
-
+        if($points == null)
+        {
+            $points == 0;
         }
 
 
@@ -184,6 +170,7 @@ class ProductController extends Controller
         }
 
 
+
         $product = Product::create([
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
@@ -192,15 +179,24 @@ class ProductController extends Controller
             'category_id' => $category,
             'vendor_id' => $vendor,
             'supermarket_id' => $supermarket,
+            'subcategory_id' => $subcategory,
             'images' => $images,
             'barcode' => $barcode,
             'arab_description' => $arab_description,
             'eng_description' => $eng_description,
+            'arab_spec' => $arab_spec,
+            'eng_spec' => $eng_spec,
             'flag' => $flag,
-            'status' => $status,
             'start_date' => $start_date,
-            'end_date' => $end_date
+            'end_date' => $end_date,
+            'exp_date' => $exp_date,
+            'priority' => $priority,
+            'quantity' => $quantity,
+            'measure_id' => $measuring_unit,
+            'size_id' => $size,
+            'created_by' => $user->id
         ]);
+
 
         if($product)
         {
@@ -208,7 +204,7 @@ class ProductController extends Controller
             {
                 return redirect('admin/products/1')->withStatus(__('offer created successfully'));
             }
-            return redirect('admin/products')->withStatus(__('product created successfully'));
+            return redirect('admin/products/0')->withStatus(__('product created successfully'));
         }
         else
         {
@@ -216,7 +212,7 @@ class ProductController extends Controller
             {
                 return redirect('admin/products/1')->withStatus(__('something wrong happened, try again'));
             }
-            return redirect('admin/products')->withStatus(__('something wrong happened, try again'));
+            return redirect('admin/products/0')->withStatus(__('something wrong happened, try again'));
         }
     }
 
@@ -226,19 +222,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$flag)
     {
         //
-        $product = Product::findOrFail($id);
 
-        if($product)
+        $columns = $request->columns;
+
+        if($flag == 1)
         {
-            return view('Admin.products.show', compact('product'));
+            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+            return view('Admin.offers.index',compact('offers','columns','flag'));
         }
-        else
-        {
-            return redirect('admin/products')->withStatus('no product have this id');
-        }
+        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+        return view('Admin.products.index',compact('products','columns','flag'));
     }
 
     /**
@@ -259,7 +255,28 @@ class ProductController extends Controller
         }
         else
         {
-            return redirect('admin/products')->withStatus('no product have this id');
+            if($flag == 1)
+            {
+                return redirect('admin/products/1')->withStatus('no product have this id');
+            }
+            return redirect('admin/products/0')->withStatus('no product have this id');
+        }
+    }
+
+    public function clone($id,$flag)
+    {
+        //
+        $product = Product::find($id);
+
+        if($product)
+        {
+            $clone = true;
+            $productimages = explode(',',$product->images);
+            return view('Admin.products.create', compact('product','productimages','flag','clone'));
+        }
+        else
+        {
+            return redirect('admin/products/0')->withStatus('no product have this id');
         }
     }
 
@@ -276,85 +293,59 @@ class ProductController extends Controller
 
         $product = Product::find($id);
 
+        $user = auth()->user();
+
+        $rules = [
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'barcode' => ['required','numeric','digits_between:10,16'],
+            'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'price' => 'required|numeric|min:0',
+            'points' => 'nullable|integer|min:0',
+            'vendor_id' => 'required|integer|min:0',
+            'category_id' => 'required|integer|min:0',
+            'supermarket_id' => 'required|integer|min:0',
+            'subcategory_id' => 'required|integer|min:0',
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
+            'exp_date' => 'required|date',
+            'measure_id' => 'required|integer|min:0',
+            'size_id' => 'required|integer|min:0',
+            'priority' => 'required|integer|min:0',
+            'images' => 'nullable',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
+        ];
+
+        $this->validate($request, $rules);
 
         if($product) {
 
-            if ($flag == 1) {
+            if($flag == 1) {
 
-                $rules = [
-                    'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'price' => 'nullable|numeric|min:0',
-                    'points' => 'nullable|integer|min:0',
-                    'vendor_id' => 'required|integer|min:0',
-                    'category_id' => 'required|integer|min:0',
-                    'supermarket_id' => 'required|integer|min:0',
-                    'status' => 'required|string',
-                    'start_date' => 'required|after:today',
-                    'end_date' => 'required|after:start_date',
-                    'images' => 'nullable',
-                    'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
-                ];
-
-                $this->validate($request, $rules);
-
-
-                $status = $request->input('status');
-
-                $start_date = $request->input('start_date');
-
-                $end_date = $request->input('end_date');
-
+                $priority = null;
             }
             else {
-                $rules = [
-                    'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                    'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-                    'price' => 'nullable|numeric|min:0',
-                    'points' => 'nullable|integer|min:0',
-                    'vendor_id' => 'required|integer',
-                    'category_id' => 'required|integer',
-                    'supermarket_id' => 'required|integer|min:0',
-                    'images' => 'nullable',
-                    'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
-                ];
-
-                $this->validate($request, $rules);
-
-
-                $status = null;
-
-                $start_date = null;
-
-                $end_date = null;
-
+                $priority = $request->input('priority');
             }
 
             $arab_name = $request->input('arab_name');
 
             $eng_name = $request->input('eng_name');
 
-
             $arab_description = $request->input('arab_description');
 
             $eng_description = $request->input('eng_description');
 
+            $arab_spec = $request->input('arab_spec');
+
+            $eng_spec = $request->input('eng_spec');
 
             $price = $request->input('price');
 
             $points = $request->input('points');
-
-            if ($price == null) {
-                $price = 0;
-            }
-
-            if ($points == null) {
-                $points = 0;
-            }
 
             $category = $request->input('category_id');
 
@@ -362,7 +353,31 @@ class ProductController extends Controller
 
             $supermarket = $request->input('supermarket_id');
 
+            $subcategory = $request->input('subcategory_id');
+
             $barcode = $request->input('barcode');
+
+            $start_date = $request->input('start_date');
+
+            $end_date = $request->input('end_date');
+
+            $exp_date = $request->input('exp_date');
+
+            $priority = $request->input('priority');
+
+            $measuring_unit = $request->input('measuring_unit');
+
+            $size = $request->input('size');
+
+
+            if ($price == null) {
+                $price = 0;
+            }
+
+            if($points == null)
+            {
+                $points == 0;
+            }
 
 
             if ($request->hasFile('images')) {
@@ -415,23 +430,30 @@ class ProductController extends Controller
                     'category_id' => $category,
                     'vendor_id' => $vendor,
                     'supermarket_id' => $supermarket,
+                    'subcategory_id' => $subcategory,
+                    'images' => $images,
                     'barcode' => $barcode,
                     'arab_description' => $arab_description,
                     'eng_description' => $eng_description,
+                    'arab_spec' => $arab_spec,
+                    'eng_spec' => $eng_spec,
                     'flag' => $flag,
-                    'status' => $status,
                     'start_date' => $start_date,
                     'end_date' => $end_date,
-                    'images' => $images,
+                    'exp_date' => $exp_date,
+                    'priority' => $priority,
+                    'measuring_unit' => $measuring_unit,
+                    'size' => $size,
+                    'updated_by' => $user->id
                 ]);
 
                 if($flag == 1)
                 {
-                    return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                    return redirect('admin/products/1')->withStatus(__('offer updated successfully'));
                 }
                 else
                 {
-                    return redirect('admin/products')->withStatus(__('product updated successfully'));
+                    return redirect('admin/products/0')->withStatus(__('product updated successfully'));
                 }
 
             } else {
@@ -464,14 +486,21 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
+                        'subcategory_id' => $subcategory,
+                        'images' => $images,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
                         'eng_description' => $eng_description,
+                        'arab_spec' => $arab_spec,
+                        'eng_spec' => $eng_spec,
                         'flag' => $flag,
-                        'status' => $status,
                         'start_date' => $start_date,
                         'end_date' => $end_date,
-                        'images' => $images,
+                        'exp_date' => $exp_date,
+                        'priority' => $priority,
+                        'measuring_unit' => $measuring_unit,
+                        'size' => $size,
+                        'updated_by' => $user->id
                     ]);
 
                     if($flag == 1)
@@ -480,7 +509,7 @@ class ProductController extends Controller
                     }
                     else
                     {
-                        return redirect('admin/products')->withStatus(__('product updated successfully'));
+                        return redirect('admin/products/0')->withStatus(__('product updated successfully'));
                     }
 
                 } else {
@@ -493,13 +522,20 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
+                        'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
                         'eng_description' => $eng_description,
+                        'arab_spec' => $arab_spec,
+                        'eng_spec' => $eng_spec,
                         'flag' => $flag,
-                        'status' => $status,
                         'start_date' => $start_date,
-                        'end_date' => $end_date
+                        'end_date' => $end_date,
+                        'exp_date' => $exp_date,
+                        'priority' => $priority,
+                        'measuring_unit' => $measuring_unit,
+                        'size' => $size,
+                        'updated_by' => $user->id
                     ]);
                     if($flag == 1)
                     {
@@ -507,7 +543,7 @@ class ProductController extends Controller
                     }
                     else
                     {
-                        return redirect('admin/products')->withStatus(__('product updated successfully'));
+                        return redirect('admin/products/0')->withStatus(__('product updated successfully'));
                     }
                 }
             }
@@ -517,11 +553,11 @@ class ProductController extends Controller
         {
             if($flag == 1)
             {
-                return redirect('admin/offers')->withStatus(__('no offer exists'));
+                return redirect('admin/products/1')->withStatus(__('no offer exists'));
             }
             else
             {
-                return redirect('admin/products')->withStatus(__('no product exists'));
+                return redirect('admin/products/0')->withStatus(__('no product exists'));
             }
         }
 
@@ -554,11 +590,52 @@ class ProductController extends Controller
 
         if($product->flag == 1)
         {
-            return redirect('admin/offers')->withStatus(__('offer deleted successfully'));
+            return redirect('admin/products/1')->withStatus(__('offer deleted successfully'));
         }
         else
         {
-            return redirect('admin/products')->withStatus(__('product deleted successfully'));
+            return redirect('admin/products/0')->withStatus(__('product deleted successfully'));
         }
+    }
+
+
+    public function status(Request $request,$id,$flag)
+    {
+
+        $product = Product::find($id);
+
+        if($product)
+        {
+            if($product->status == 'active') {
+                $product->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $product->update(['status' => 'active']);
+            }
+            return redirect('/admin/products')->withStatus(__('product status successfully updated.'));
+        }
+        return redirect('/admin/products')->withStatus(__('this id is not in our database'));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new ProductExport , 'admins.csv');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import(Request $request)
+    {
+        $rules = [
+            'images' => 'image|mimes:csv|max:277'
+        ];
+        Excel::import(new ProductImport ,request()->file('file'));
+
+        return back();
     }
 }
