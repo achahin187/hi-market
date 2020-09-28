@@ -92,6 +92,26 @@
                                         @enderror
                                     </div>
 
+                                    @if(!isset($supermarket))
+
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                    <option value="active">active</option>
+                                                    <option value="inactive">inactive</option>
+
+                                            </select>
+
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    @endif
+
 
                                     @if(isset($supermarket) && $supermarket->image != null)
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -42,6 +42,44 @@ class OfferController extends Controller
     public function store(Request $request)
     {
 
+        $user = auth()->user();
+
+        $rules = [
+
+            'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'promocode' => ['nullable','numeric','digits:6'],
+            'status' => ['required','string'],
+            'value_type' => ['required','string'],
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
+        ];
+
+        $this->validate($request, $rules);
+
+
+        $offer = Offer::create([
+
+            'arab_description' => $request->arab_description,
+            'eng_description' => $request->eng_description,
+            'status' => $request->status,
+            'promocode' => $request->promocode,
+            'value_type' => $request->value_type,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'created_by' => $user->id
+        ]);
+
+
+        if($offer)
+        {
+            return redirect('admin/offers')->withStatus(__('offer created successfully'));
+        }
+        else
+        {
+            return redirect('admin/offers')->withStatus(__('something wrong happened, try again'));
+        }
+
     }
 
 
@@ -76,7 +114,42 @@ class OfferController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = auth()->user();
 
+        $offer = Offer::find($id);
+
+        $rules = [
+
+            'arab_description' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'promocode' => ['nullable','numeric','digits:6'],
+            'value_type' => ['required','string'],
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
+        ];
+
+        $this->validate($request, $rules);
+
+
+        if($offer)
+        {
+            $offer->update([
+
+                'arab_description' => $request->arab_description,
+                'eng_description' => $request->eng_description,
+                'promocode' => $request->promocode,
+                'value_type' => $request->value_type,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'updated_by' => $user->id
+            ]);
+
+            return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+        }
+        else
+        {
+            return redirect('admin/offers')->withStatus(__('no offer with this id'));
+        }
 
     }
 
@@ -94,11 +167,30 @@ class OfferController extends Controller
 
         if($offer) {
             $offer->delete();
-            return redirect('/admin/offers')->withStatus('offer successfully deleted.');
+            return redirect('/admin/product_offers')->withStatus('offer successfully deleted.');
         }
-        return redirect('/admin/offers')->withStatus('no offer with this id.');
+        return redirect('/admin/product_offers')->withStatus('no offer with this id.');
 
 
+    }
+
+    public function status(Request $request,$id)
+    {
+
+        $offer = Offer::find($id);
+
+        if($offer)
+        {
+            if($offer->status == 'active') {
+                $offer->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $offer->update(['status' => 'active']);
+            }
+            return redirect('/admin/offers')->withStatus(__('offer status successfully updated.'));
+        }
+        return redirect('/admin/offers')->withStatus(__('this id is not in our database'));
     }
 
     /**

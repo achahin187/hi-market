@@ -27,11 +27,17 @@ class PointController extends Controller
 
     public function store(Request $request)
     {
+
+        $user = auth()->user();
+
         $rules = [
             'from' => ['required','min:0','integer'],
-            'to' => ['required','min:0','integer'],
+            'to' => ['required','min:0','integer','gt:from'],
             'value' => ['required', 'min:0', 'numeric'],
-            'type' => ['required', 'min:0' , 'integer']
+            'type' => ['required', 'min:0' , 'integer'],
+            'status' => ['required', 'min:0' , 'string'],
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
         ];
 
         $this->validate($request,$rules);
@@ -40,7 +46,7 @@ class PointController extends Controller
 
         foreach ($points as $oldpoint) {
 
-            if ($oldpoint->from == $request->input('from') || $oldpoint->to == $request->input('to')) {
+            if ($request->input('from') < $oldpoint->to) {
                 return redirect('/admin/points')->withStatus('this range have been chosen already');
             }
         }
@@ -51,7 +57,11 @@ class PointController extends Controller
             'from' => $request->input('from'),
             'to' => $request->input('to'),
             'value' => $request->input('value'),
-            'type' => $request->input('type')
+            'type' => $request->input('type'),
+            'status' => $request->input('status'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'created_by' => $user->id
         ]);
 
         if($point)
@@ -69,17 +79,17 @@ class PointController extends Controller
     public function edit($id)
     {
         //
-        $point = Point::findOrFail($id);
+        $point = Point::find($id);
 
         $points = Point::orderBy('id', 'desc')->paginate(10);
 
         if($point)
         {
-            return view('Admin.points.index', compact('point','points'));
+            return view('Admin.points.create', compact('point','points'));
         }
         else
         {
-            return redirect('admin/vendors')->withStatus('no vendor have this id');
+            return redirect('admin/points')->withStatus('no vendor have this id');
         }
     }
 
@@ -92,41 +102,79 @@ class PointController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = auth()->user();
 
         $rules = [
             'from' => ['required','min:0','integer'],
-            'to' => ['required','min:0','integer'],
+            'to' => ['required','min:0','integer','gt:from'],
             'value' => ['required', 'min:0', 'numeric'],
-            'type' => ['required', 'min:0' , 'integer']
+            'type' => ['required', 'min:0' , 'integer'],
+            'start_date' => 'required|after:today|date',
+            'end_date' => 'required|after:start_date|date',
         ];
 
         $this->validate($request, $rules);
 
-        $point = Point::findOrFail($id);
+        $point = Point::find($id);
 
         $points = Point::orderBy('id', 'desc')->paginate(10);
 
         if($point) {
 
-            foreach ($points as $oldpoint) {
+            if($point->from != $request->from || $point->to != $request->to) {
 
-                if($oldpoint->id != $point->id) {
+                foreach ($points as $oldpoint) {
 
-                    if ($oldpoint->from == $request->input('from') || $oldpoint->to == $request->input('to')) {
+                    if ($oldpoint->id == $point->id) {
+
+                        continue;
+                    }
+
+                    if ($request->input('from') < $oldpoint->to) {
 
                         return redirect('/admin/points')->withStatus('this range have been chosen already');
                     }
                 }
             }
 
-            $point->update(['from' => $request->input('from') , 'to' => $request->input('to') , 'type' => $request->input('type') , 'value' => $request->input('value')]);
+
+            $point->update([
+
+                'from' => $request->input('from'),
+                'to' => $request->input('to'),
+                'value' => $request->input('value'),
+                'type' => $request->input('type'),
+                'start_date' => $request->input('start_date'),
+                'end_date' => $request->input('end_date'),
+                'updated_by' => $user->id
+
+            ]);
+
             return redirect('/admin/points')->withStatus('range successfully updated.');
         }
         else
         {
             return redirect('/admin/points')->withStatus('no range exist');
         }
+    }
+
+    public function status(Request $request,$id)
+    {
+
+        $point = Point::find($id);
+
+        if($point)
+        {
+            if($point->status == 'active') {
+                $point->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $point->update(['status' => 'active']);
+            }
+            return redirect('/admin/points')->withStatus(__('point status successfully updated.'));
+        }
+        return redirect('/admin/points')->withStatus(__('this id is not in our database'));
     }
 
     /**
@@ -138,7 +186,7 @@ class PointController extends Controller
     public function destroy($id)
     {
         //
-        $point = Point::findOrFail($id);
+        $point = Point::find($id);
 
         if($point)
         {

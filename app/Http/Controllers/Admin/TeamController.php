@@ -144,7 +144,7 @@ class TeamController extends Controller
             $team->update([
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
-                'created_by' => $user->id,
+                'updated_by' => $user->id,
             ]);
             return redirect('/admin/teams')->withStatus('team successfully updated.');
         }

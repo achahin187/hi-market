@@ -39,12 +39,11 @@ class ReasonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
 
         $rules = [
             'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'status' => 'required|string',
         ];
 
         $this->validate($request,$rules);
@@ -59,7 +58,7 @@ class ReasonController extends Controller
 
             'arab_reason' => $arab_reason,
             'eng_reason' => $eng_reason,
-            'status' => $status,
+            'created_by' => $user->id
         ]);
 
         if($reason)
@@ -115,25 +114,45 @@ class ReasonController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = auth()->user();
+
         $rules = [
             'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'status' => 'required|string',
         ];
 
         $this->validate($request, $rules);
 
-        $reason = Reason::findOrFail($id);
+        $reason = Reason::find($id);
 
         if($reason)
         {
-            $reason->update(['arab_reason' => $request->arab_reason, 'eng_reason' => $request->eng_reason, 'status' => $request->status]);
+            $reason->update(['arab_reason' => $request->arab_reason, 'eng_reason' => $request->eng_reason , 'updated_by' => $user->id]);
             return redirect('/admin/reasons')->withStatus('reason successfully updated.');
         }
         else
         {
             return redirect('/admin/reasons')->withStatus('no reason exist');
         }
+    }
+
+    public function status(Request $request,$id)
+    {
+
+        $reason = Reason::find($id);
+
+        if($reason)
+        {
+            if($reason->status == 'active') {
+                $reason->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $reason->update(['status' => 'active']);
+            }
+            return redirect('/admin/reasons')->withStatus(__('reason status successfully updated.'));
+        }
+        return redirect('/admin/reasons')->withStatus(__('this id is not in our database'));
     }
 
     /**

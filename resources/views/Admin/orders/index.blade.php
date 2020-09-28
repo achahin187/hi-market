@@ -225,7 +225,7 @@
 
                                                                 <div class="card-body">
 
-                                                                    <input type="hidden" class="id" name="order_id">
+                                                                    <input type="hidden" value="{{$order->id}}" class="id" name="order_id">
 
                                                                     <div class="form-group">
                                                                         <label>Cancellation Reason</label>

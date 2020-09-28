@@ -15,7 +15,11 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('points.create')}}">add new points</a></li>
+
+                            @if(!isset($point))
+
+                                <li class="breadcrumb-item"><a href="{{route('points.create')}}">add new points</a></li>
+                            @endif
                         </ol>
                     </div>
 
@@ -33,81 +37,6 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
-        <form role="form" action="@if(isset($point)){{route('points.update',$point->id) }} @else {{route('points.store') }} @endif" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            @if(isset($point))
-
-                @method('PUT')
-
-            @endif
-
-            <div class="card-body">
-
-                <div class="form-group">
-                    <label for="exampleInputPassword1">{{__('admin.product_from')}}</label>
-                    <input type="number" name="from" min="0" @if(isset($point)) value="{{$point->from}}" @else value="0" @endif class=" @error('from') is-invalid @enderror form-control" >
-                    @error('from')
-                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleInputPassword1">{{__('admin.product_to')}}</label>
-                    <input type="number" name="to" min="0" @if(isset($point)) value="{{$point->to}}" @else value="0" @endif class=" @error('to') is-invalid @enderror form-control" >
-                    @error('to')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleInputPassword1">{{__('admin.product_value')}}</label>
-                    <input type="number" name="value" min="0" @if(isset($point)) value="{{$point->value}}" @else value="0" @endif class=" @error('value') is-invalid @enderror form-control" >
-                    @error('value')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>type </label>
-                    <select class="@error('type') is-invalid @enderror select2" name="type" data-placeholder="Select a State" style="width: 100%;" required>
-
-
-                        @if(isset($point))
-
-                            <option <?php if($point->type == 0) echo 'selected'; ?> value="0">discount</option>
-                            <option <?php if($point->type == 1) echo 'selected'; ?> value="1">gift</option>
-
-                        @else
-
-                            <option value="0">discount</option>
-                            <option value="1">gift</option>\
-
-                        @endif
-
-                    </select>
-
-                    @error('type')
-                    <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </form>
 
         <!-- Main content -->
         <section class="content">
@@ -127,6 +56,7 @@
                                         <th>to</th>
                                         <th>type</th>
                                         <th>value</th>
+                                        <th>status</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -149,6 +79,30 @@
 
                                             </td>
                                             <td>{{$point->value}}</td>
+                                            <td>
+
+                                                @if($point->status == 'active' )
+
+                                                    <form action="{{ route('points.status', $point->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this range ?") }}') ? this.parentElement.submit() : ''" href="{{ route('points.status', $point->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                    </form>
+
+                                                @else
+
+                                                    <form action="{{ route('points.status', $point->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this range ?") }}') ? this.parentElement.submit() : ''" href="{{ route('points.status', $point->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                    </form>
+
+                                                @endif
+
+
+                                            </td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

@@ -63,6 +63,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = auth()->user();
+
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
@@ -76,9 +79,6 @@ class AdminController extends Controller
         $this->validate($request,$rules);
 
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-
         $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
 
 
@@ -88,7 +88,17 @@ class AdminController extends Controller
         }
 
 
-        $admin = User::create($input);
+        $admin = User::create([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'team_id' => $request->team_id,
+            'manager' => $request->manager,
+            'created_by' => $user->id
+
+
+        ]);
         $admin->assignRole($request->input('roles'));
 
         if($admin)
@@ -153,6 +163,8 @@ class AdminController extends Controller
     {
         //
 
+        $user = auth()->user();
+
         $admin = User::find($id);
 
         if($request->input('password') == null )
@@ -160,13 +172,31 @@ class AdminController extends Controller
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'roles' => 'required'
+                'roles' => 'required',
+                'team_id' => 'required|integer|min:0',
+                'manager' => 'required|integer|min:0'
             ];
 
             $this->validate($request,$rules);
 
-            if($admin->update(['name' => $request->name , 'email' => $request->email]))
+            $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
+
+            if($teammanager != null && $request->manager == 1)
             {
+                return redirect('admin/admins/'.$id.'/edit')->withStatus('you can not assign more than one manager to the same team');
+            }
+
+            if($admin)
+            {
+
+                $admin->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'team_id' => $request->team_id,
+                    'manager' => $request->manager,
+                    'updated_by' => $user->id
+                ]);
+
                 DB::table('model_has_roles')->where('model_id',$id)->delete();
 
                 $admin->assignRole($request->input('roles'));
@@ -174,7 +204,7 @@ class AdminController extends Controller
             }
             else
             {
-                return redirect('admin/admins')->withStatus('no information updated');
+                return redirect('admin/admins')->withStatus('no admin with this id');
             }
         }
         else {
@@ -183,7 +213,9 @@ class AdminController extends Controller
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                 'password' => ['required', 'min:8', 'confirmed', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
                 'password_confirmation' => ['required', 'min:8'],
-                'roles' => 'required'
+                'roles' => 'required',
+                'team_id' => 'required|integer|min:0',
+                'manager' => 'required|integer|min:0'
             ];
 
             $this->validate($request,$rules);
@@ -192,8 +224,20 @@ class AdminController extends Controller
             $password = password_hash($request->password,PASSWORD_DEFAULT);
 
 
-                if($admin->update(['name' => $request->name , 'email' => $request->email , 'password' => $password]))
+                if($admin)
                 {
+
+                    $admin->update([
+
+                        'name' => $request->name ,
+                        'email' => $request->email ,
+                        'password' => $password,
+                        'team_id' => $request->team_id,
+                        'manager' => $request->manager,
+                        'updated_by' => $user->id
+
+                    ]);
+
                     DB::table('model_has_roles')->where('model_id',$id)->delete();
 
                     $admin->assignRole($request->input('roles'));
@@ -201,7 +245,7 @@ class AdminController extends Controller
                 }
                 else
                 {
-                    return redirect('admin/admins')->withStatus('no information updated');
+                    return redirect('admin/admins')->withStatus('no admin with this id');
                 }
         }
 

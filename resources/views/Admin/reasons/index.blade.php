@@ -59,7 +59,30 @@
                                         <tr>
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
-                                            <td>{{$reason->status}}</td>
+                                            <td>
+
+                                                @if($reason->status == 'active' )
+
+                                                    <form action="{{ route('reason.status', $reason->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this reason?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $reason->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                    </form>
+
+                                                @else
+
+                                                    <form action="{{ route('reason.status', $reason->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this reason?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $reason->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                    </form>
+
+                                                @endif
+
+
+                                            </td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

@@ -65,6 +65,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('permissions', 'Admin\PermissionController');
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
+        Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
+        Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');
+        Route::put('offers/status/{reason_id}', 'Admin\OfferController@status')->name('offers.status');
 
         Route::group(['prefix' => 'products'],function() {
 

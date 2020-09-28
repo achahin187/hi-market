@@ -11,6 +11,6 @@ class Offer extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'type','description','promo_code','promo_code_type','status','end_date','start_date','mode','value','created_by','updated_by'
+        'arab_description','eng_description','promocode','status','end_date','start_date','value_type','created_by','updated_by'
     ];
 }

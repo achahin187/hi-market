@@ -15,14 +15,13 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->integer('mode');
+            $table->text('eng_description')->nullable();
+            $table->text('arab_description')->nullable();
             $table->string('promocode');
-            $table->string('promocode_type');
-            $table->string('value');
+            $table->integer('value_type');
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('status');
+            $table->string('status');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
@@ -36,6 +35,6 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offers');
+        Schema::dropIfExists('product_offers');
     }
 }

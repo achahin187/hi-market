@@ -344,7 +344,6 @@ class OrderController extends Controller
     public function cancel(Request $request)
     {
 
-
         $order = Order::find($request->order_id);
 
         $rules = [

@@ -29,7 +29,7 @@ class ProductController extends Controller
         if($flag == 1)
         {
             $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-            return view('Admin.offers.index',compact('offers','flag'));
+            return view('Admin.product_offers.index',compact('offers','flag'));
         }
         $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
         return view('Admin.products.index',compact('products','flag'));
@@ -231,7 +231,7 @@ class ProductController extends Controller
         if($flag == 1)
         {
             $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-            return view('Admin.offers.index',compact('offers','columns','flag'));
+            return view('Admin.product_offers.index',compact('offers','columns','flag'));
         }
         $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
         return view('Admin.products.index',compact('products','columns','flag'));
@@ -505,7 +505,7 @@ class ProductController extends Controller
 
                     if($flag == 1)
                     {
-                        return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                        return redirect('admin/product_offers')->withStatus(__('offer updated successfully'));
                     }
                     else
                     {
@@ -539,7 +539,7 @@ class ProductController extends Controller
                     ]);
                     if($flag == 1)
                     {
-                        return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+                        return redirect('admin/product_offers')->withStatus(__('offer updated successfully'));
                     }
                     else
                     {

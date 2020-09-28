@@ -283,20 +283,20 @@
 
                                                                 @if($product->status == 'active' )
 
-                                                                    <form action="{{ route('product.status', ['product_id' => $product->id , 'flag' => $flag]) }}" method="POST">
+                                                                    <form id="active" onsubmit="return confirm('Do you really want to submit the form?');" action="{{ route('product.status', ['product_id' => $product->id , 'flag' => $flag]) }}"  method="POST">
 
                                                                         @csrf
                                                                         @method('put')
-                                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this product?") }}') ? this.parentElement.submit() : ''" class="btn btn-block btn-outline-success">active</button>
+                                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">active</button>
                                                                     </form>
 
                                                                 @else
 
-                                                                    <form action="{{ route('product.status', ['product_id' => $product->id , 'flag' => $flag]) }}" method="POST">
+                                                                    <form id="in-active" onsubmit="return confirm('Do you really want to submit the form?');" action="{{ route('product.status', ['product_id' => $product->id , 'flag' => $flag]) }}" method="POST">
 
                                                                         @csrf
                                                                         @method('put')
-                                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this product?") }}') ? this.parentElement.submit() : ''" class="btn btn-block btn-outline-danger">inactive</button>
+                                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">inactive</button>
                                                                     </form>
 
                                                                 @endif

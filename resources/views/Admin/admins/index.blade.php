@@ -17,8 +17,10 @@
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">addr new admin</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">add new admin</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('admins.export')}}">export</a></li>
+
+                                <!--
                                 <form action="{{route('admins.import') }}" method="POST" enctype="multipart/form-data">
 
                                     @csrf
@@ -30,6 +32,8 @@
                                 </form>
                             </ol>
                         </div>
+
+                        -->
                     @endif
 
                     <div class="col-12">
@@ -65,6 +69,7 @@
                                         <th>email</th>
                                         <th>Role</th>
                                         <th>Team</th>
+                                        <th>manager</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -95,6 +100,16 @@
                                             @else
 
                                                 <td>{{$admin->team->eng_name}}</td>
+
+                                            @endif
+
+                                            @if($admin->manager == 1)
+
+                                                <td>manager</td>
+
+                                            @else
+
+                                                <td>employee</td>
 
                                             @endif
                                             <td>

@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('offers.index')}}">admins</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
@@ -32,20 +32,20 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                    @if(isset($admin))
-                                        edit admin
+                                    @if(isset($offer))
+                                        edit offer
                                     @else
-                                        create admin
+                                        create offer
 
                                     @endif
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($admin)){{route('admins.update',$admin->id) }} @else {{route('admins.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="@if(isset($offer)){{route('offers.update',$offer->id) }} @else {{route('offers.store') }} @endif" method="POST">
                                 @csrf
 
-                                @if(isset($admin))
+                                @if(isset($offer))
 
                                     @method('PUT')
 
@@ -53,9 +53,14 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
-                                        <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
-                                        @error('name')
+                                        <label>{{__('offer.arab_description')}}</label>
+                                        <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
+
+                                            @if(isset($offer))
+                                                {{$offer->arab_description }}
+                                            @endif
+                                        </textarea>
+                                        @error('arab_description')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -63,58 +68,100 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" value="@if(isset($admin)){{$admin->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-                                        @error('email')
+                                        <label>{{__('offer.eng_description')}}</label>
+                                        <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
+
+                                            @if(isset($offer))
+                                                {{$offer->eng_description }}
+                                            @endif
+                                        </textarea>
+                                        @error('eng_description')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
+
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <label for="exampleInputEmail1">{{__('offer.promocode')}}</label>
+                                        <input type="text" value="@if(isset($offer)){{$offer->promocode }} @endif" name="promocode" class=" @error('promocode') is-invalid @enderror form-control" required>
+                                        @error('promocode')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                         @enderror
                                     </div>
 
+
+                                    @if(!isset($offer))
+
+
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select offer status" style="width: 100%;" required>
+
+                                                <option value="active">active</option>
+                                                <option value="inactive">inactive</option>
+
+                                            </select>
+
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+
+                                    @endif
+
+
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" value="">
+                                        <label>Value Type </label>
+                                        <select class=" @error('value_type') is-invalid @enderror select2" name="value_type" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                            @if(isset($offer))
+
+                                                <option <?php if($offer->value_type == 1) echo 'selected'; ?> value="1">discount by value</option>
+                                                <option <?php if($offer->value_type == 2) echo 'selected'; ?> value="2">discount by percentage</option>
+                                                <option <?php if($offer->value_type == 3) echo 'selected'; ?> value="3">free product</option>
+                                                <option <?php if($offer->value_type == 4) echo 'selected'; ?> value="4">free delivery</option>
+
+                                            @else
+
+                                                <option value="1">discount by value</option>
+                                                <option value="2">discount by percentage</option>
+                                                <option value="3">free product</option>
+                                                <option value="4">free delivery</option>
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label>start_date</label>
+                                        <input type="date" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{$offer->start_date}}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
+
+                                        @error('start_date')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
 
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.roles')}}</label>
+                                        <label>end_date</label>
+                                        <input type="date" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{$offer->end_date}}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
-                                        @if(isset($admin))
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
-                                                        <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->name}}</label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @else
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
-                                                        <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->name}}</label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @endif
-
+                                        @error('end_date')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
                                     </div>
 
                                 </div>

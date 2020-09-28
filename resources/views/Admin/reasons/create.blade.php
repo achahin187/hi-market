@@ -85,25 +85,19 @@
                                     @enderror
                                 </div>
 
+                                @if(!isset($reason))
 
-                                <div class="form-group">
-                                    <label>reason status</label>
-                                    <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                        @if(isset($reason))
-
-                                            <option  <?php if($reason->status == 'active') echo 'selected'; ?> value="active">active</option>
-                                            <option <?php if($reason->status == 'inactive') echo 'selected'; ?> value="inactive">inactive</option>
-
-                                        @else
+                                    <div class="form-group">
+                                        <label>reason status</label>
+                                        <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             <option value="active">active</option>
                                             <option value="inactive">inactive</option>
 
-                                        @endif
+                                        </select>
+                                    </div>
 
-                                    </select>
-                                </div>
+                                @endif
                             </div>
                             <!-- /.card-body -->
 

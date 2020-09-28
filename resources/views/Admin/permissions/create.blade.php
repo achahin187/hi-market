@@ -53,7 +53,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.arab_name')}}</label>
                                         <input type="text" value="@if(isset($permission)){{$permission->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                         @error('arab_name')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.eng_name')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($permission)){{$permission->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('eng_name')
                                         <span class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.unique_name')}}</label>
                                         <input type="text" value="@if(isset($permission)){{$permission->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">

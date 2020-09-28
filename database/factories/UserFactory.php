@@ -7,6 +7,7 @@ use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Measures;
+use App\Models\Offer;
 use App\Models\Point;
 use App\Models\Product;
 use App\Models\Reason;
@@ -229,11 +230,16 @@ $factory->define(Order::class, function (Faker $faker) {
 });
 
 $factory->define(Point::class, function (Faker $faker) {
+
+    $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
     return [
         'from' => $faker->randomElement([100,200,300]),
         'to' => $faker->randomElement([400,500,600]),
         'type' => $faker->randomElement([0,1]),
         'value' => $faker->randomElement([30,40,50]),
+        'status' => $faker->randomElement(['inactive','active']),
+        'start_date' => $startingDate,
+        'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
 
     ];
 });
@@ -241,6 +247,21 @@ $factory->define(Point::class, function (Faker $faker) {
 $factory->define(Role::class, function (Faker $faker) {
     return [
         'name' => $faker->randomElement(['delivery','admin']),
+
+    ];
+});
+
+$factory->define(Offer::class, function (Faker $faker) {
+
+    $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
+    return [
+        'arab_description' => $faker->paragraph,
+        'eng_description' => $faker->paragraph,
+        'promocode' => $faker->randomNumber(),
+        'value_type' => $faker->randomElement([1,2,3,4]),
+        'status' => $faker->randomElement(['inactive','active']),
+        'start_date' => $startingDate,
+        'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
 
     ];
 });
