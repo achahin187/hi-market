@@ -44,6 +44,7 @@ class ReasonController extends Controller
         $rules = [
             'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'status' => 'required|string'
         ];
 
         $this->validate($request,$rules);
@@ -58,6 +59,7 @@ class ReasonController extends Controller
 
             'arab_reason' => $arab_reason,
             'eng_reason' => $eng_reason,
+            'status' => $status,
             'created_by' => $user->id
         ]);
 
