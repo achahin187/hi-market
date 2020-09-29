@@ -48,7 +48,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
     Route::group(['prefix' => 'admin','middleware' => 'auth'],function() {
 
-        Route::get('', 'Admin\AdminController@index')->name('home');
+        Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('', 'HomeController@index')->name('home');
         Route::resource('admins', 'Admin\AdminController', ['except' => ['show']]);
         Route::resource('categories', 'Admin\CategoryController',['except' => ['show']]);
         Route::resource('vendors', 'Admin\VendorController',['except' => ['show']]);
@@ -112,9 +113,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::put('status/{order_id}', 'Admin\OrderController@status')->name('orders.status');
             Route::post('cancel', 'Admin\OrderController@cancel')->name('orders.cancel');
         });
-    });
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    });
 
 });
 

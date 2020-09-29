@@ -173,7 +173,10 @@ class SubcategoryController extends Controller
                         'category_id' => $request->input('category_id')
                     ]);
                 } else {
-                    unlink('subcategory_images/' . $subcategory->image);
+
+                    if($subcategory->image) {
+                        unlink('subcategory_images/' . $subcategory->image);
+                    }
                     $subcategory->update([
 
                         'arab_name' => $request->arab_name,

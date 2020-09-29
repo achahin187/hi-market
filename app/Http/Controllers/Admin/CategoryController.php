@@ -174,7 +174,10 @@ class CategoryController extends Controller
                 if ($request->has('checkedimage')) {
                     $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $request->input('checkedimage') , 'updated_by' => $user->id]);
                 } else {
-                    unlink('category_images/' . $category->image);
+
+                    if($category->image) {
+                        unlink('category_images/' . $category->image);
+                    }
                     $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => null , 'updated_by' => $user->id]);
                 }
 

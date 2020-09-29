@@ -11,7 +11,7 @@ class Team extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'arab_name','eng_name','created_by','updated_by'
+        'arab_name','eng_name','arab_description','eng_description','created_by','updated_by'
     ];
 
     public function users() {

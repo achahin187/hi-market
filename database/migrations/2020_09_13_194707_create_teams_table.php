@@ -17,6 +17,8 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('arab_name');
             $table->string('eng_name');
+            $table->text('eng_description')->nullable();
+            $table->text('arab_description')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

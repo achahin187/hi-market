@@ -43,6 +43,8 @@ class TeamController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
         ];
 
         $this->validate($request, $rules);
@@ -51,11 +53,17 @@ class TeamController extends Controller
 
         $eng_name = $request->input('eng_name');
 
+        $arab_description = $request->input('arab_description');
+
+        $eng_description = $request->input('eng_description');
+
         $user = auth()->user();
 
         $team = Team::create([
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
+            'arab_description' => $arab_description,
+            'eng_description' => $eng_description,
             'created_by' => $user->id,
         ]);
 
@@ -129,6 +137,8 @@ class TeamController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
         ];
 
         $this->validate($request, $rules);
@@ -137,6 +147,10 @@ class TeamController extends Controller
 
         $eng_name = $request->input('eng_name');
 
+        $arab_description = $request->input('arab_description');
+
+        $eng_description = $request->input('eng_description');
+
         $user = auth()->user();
 
         if($team)
@@ -144,6 +158,8 @@ class TeamController extends Controller
             $team->update([
                 'arab_name' => $arab_name,
                 'eng_name' => $eng_name,
+                'arab_description' => $arab_description,
+                'eng_description' => $eng_description,
                 'updated_by' => $user->id,
             ]);
             return redirect('/admin/teams')->withStatus('team successfully updated.');

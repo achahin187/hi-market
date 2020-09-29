@@ -71,6 +71,36 @@
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label>{{__('team.arab_description')}}</label>
+                                        <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
+
+                                        @if(isset($team))
+                                                {{$team->arab_description }}
+                                            @endif
+                                    </textarea>
+                                        @error('arab_description')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{{__('team.eng_description')}}</label>
+                                        <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
+
+                                        @if(isset($team))
+                                                {{$team->eng_description }}
+                                            @endif
+                                    </textarea>
+                                        @error('eng_description')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+
                                 </div>
                                 <!-- /.card-body -->
 

@@ -53,6 +53,7 @@
                                     <tr>
                                         <th>Team arab name</th>
                                         <th>Team eng name</th>
+                                        <th>no. of members</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -61,6 +62,7 @@
                                         <tr>
                                             <td>{{$team->arab_name}}</td>
                                             <td>{{$team->eng_name}}</td>
+                                            <td>{{count($team->users)}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
