@@ -39,8 +39,9 @@ class PermissionTableSeeder extends Seeder
             Permission::create([
                 'name' => $permission,
                 'arab_name' => 'اسم العربي',
-                'eng_name' => 'english name',
-                'group_name' => explode('-', $permission)[0]
+                'eng_name' => 'english-name',
+                'group_name_ar' => 'قسم',
+                'group_name_en' => 'category'
             ]);
         }
     }

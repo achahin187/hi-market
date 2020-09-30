@@ -77,12 +77,26 @@
                                         @if(isset($role))
                                             @foreach($permissions as $permission)
                                                 <div class="form-check" style="margin-bottom: 10px">
-                                                    <label class="form-check-label">{{$permission->group_name}}</label>
+                                                    <label class="form-check-label">
+
+                                                        @if(App::getLocale() == 'ar')
+                                                            {{$permission->group_name_ar}}
+                                                        @else
+                                                            {{$permission->group_name_en}}
+                                                        @endif
+                                                    </label>
                                                     <div class="row">
-                                                        @foreach(\App\Models\Permission::where('group_name',$permission->group_name)->get() as $permission)
+                                                        @foreach(\App\Models\Permission::where('group_name_en',$permission->group_name_en)->get() as $permission)
                                                             <div class="form-check" style="margin-left: 20px">
                                                                 <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox" <?php if(in_array($permission->id, $rolePermissions)) echo 'checked' ?>>
-                                                                <label class="form-check-label">{{$permission->name}}</label>
+                                                                <label class="form-check-label">
+
+                                                                    @if(App::getLocale() == 'ar')
+                                                                        {{$permission->arab_name}}
+                                                                    @else
+                                                                        {{$permission->eng_name}}
+                                                                    @endif
+                                                                </label>
                                                             </div>
 
                                                         @endforeach
@@ -92,21 +106,35 @@
                                             @endforeach
 
                                         @else
-                                                @foreach($permissions as $permission)
-                                                    <div class="form-check" style="margin-bottom: 10px">
-                                                        <label class="form-check-label">{{$permission->group_name}}</label>
-                                                        <div class="row">
-                                                            @foreach(\App\Models\Permission::where('group_name',$permission->group_name)->get() as $permission)
-                                                                <div class="form-check" style="margin-left: 20px">
-                                                                    <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox">
-                                                                    <label class="form-check-label">{{$permission->name}}</label>
-                                                                </div>
+                                            @foreach($permissions as $permission)
+                                                <div class="form-check" style="margin-bottom: 10px">
+                                                    <label class="form-check-label">
 
-                                                            @endforeach
-                                                        </div>
+                                                        @if(App::getLocale() == 'ar')
+                                                            {{$permission->group_name_ar}}
+                                                        @else
+                                                            {{$permission->group_name_en}}
+                                                        @endif
+                                                    </label>
+                                                    <div class="row">
+                                                        @foreach(\App\Models\Permission::where('group_name_en',$permission->group_name_en)->get() as $permission)
+                                                            <div class="form-check" style="margin-left: 20px">
+                                                                <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox">
+                                                                <label class="form-check-label">
+
+                                                                    @if(App::getLocale() == 'ar')
+                                                                        {{$permission->arab_name}}
+                                                                    @else
+                                                                        {{$permission->eng_name}}
+                                                                    @endif
+                                                                </label>
+                                                            </div>
+
+                                                        @endforeach
                                                     </div>
+                                                </div>
 
-                                                @endforeach
+                                            @endforeach
 
                                         @endif
 

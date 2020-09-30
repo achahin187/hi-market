@@ -22,7 +22,7 @@ class Permission extends Model implements PermissionContract
     use LogsActivity;
 
     protected $fillable = [
-        'arab_name','eng_name','name','guard_name','group_name'
+        'arab_name','eng_name','name','guard_name','group_name_en','group_name_ar'
     ];
 
     protected $guarded = ['id'];

@@ -9,14 +9,14 @@ use App\Models\Permission;
 class PermissionController extends Controller
 {
 
-
+/*
     function __construct()
     {
         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
         $this->middleware('permission:role-create', ['only' => ['create','store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
+    }*/
     /**
      * Display a listing of the resource.
      *
@@ -56,14 +56,15 @@ class PermissionController extends Controller
         ]);
 
 
-        $role = Permission::create([
+        $permission = Permission::create([
             'name' => $request->input('name'),
             'arab_name' => $request->input('arab_name'),
             'eng_name' => $request->input('eng_name'),
-            'group_name' => explode('-', $request->input('name'))[0]
+            'group_name_ar' => explode(' ', $request->input('arab_name'))[1],
+            'group_name_en' => explode('-', $request->input('eng_name'))[0]
         ]);
 
-        if($role)
+        if($permission)
         {
             return redirect('admin/permissions')->withStatus(__('permission created successfully'));
         }
@@ -90,7 +91,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         //
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::find($id);
 
         if($permission)
         {
@@ -123,10 +124,11 @@ class PermissionController extends Controller
         if($permission)
         {
            $permission->update([
-                'name' => $request->input('name'),
-                'arab_name' => $request->input('arab_name'),
-                'eng_name' => $request->input('eng_name'),
-                'group_name' => explode('-', $request->input('name'))[0]
+               'name' => $request->input('name'),
+               'arab_name' => $request->input('arab_name'),
+               'eng_name' => $request->input('eng_name'),
+               'group_name_ar' => explode(' ', $request->input('arab_name'))[1],
+               'group_name_en' => explode('-', $request->input('eng_name'))[0]
             ]);
             return redirect('admin/permissions')->withStatus(__('permisssion updated successfully'));
         }

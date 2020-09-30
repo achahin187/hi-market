@@ -26,7 +26,8 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name');
             $table->string('arab_name');
             $table->string('eng_name');
-            $table->string('group_name');
+            $table->string('group_name_ar');
+            $table->string('group_name_en');
             $table->timestamps();
         });
 

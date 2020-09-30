@@ -369,7 +369,6 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-                    @if(auth()->user()->can('role-create') || auth()->user()->can('role-delete') || auth()->user()->can('role-edit') || auth()->user()->can('role-list'))
 
                         <li class="nav-item">
                             <a href="{{route('roles.index')}}" class="nav-link">
@@ -379,7 +378,6 @@ $settings = App\Models\Setting::all()->first();
                                 </p>
                             </a>
                         </li>
-                    @endif
 
                     @if(auth()->user()->flag == 1)
 

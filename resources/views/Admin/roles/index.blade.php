@@ -14,13 +14,13 @@
                         <h1>DataTables</h1>
                     </div>
 
-                    @if(auth()->user()->can('role-create'))
+
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('roles.create')}}">create new role</a></li>
                             </ol>
                         </div>
-                    @endif
+
 
                     <div class="col-12">
 
@@ -71,17 +71,10 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            @if(auth()->user()->can('role-edit'))
 
                                                                 <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}">{{ __('edit') }}</a>
 
-                                                            @endif
-
-                                                            @if(auth()->user()->can('role-delete'))
-
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-
-                                                            @endif
                                                         </form>
 
                                                     </div>

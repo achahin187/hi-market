@@ -114,6 +114,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('cancel', 'Admin\OrderController@cancel')->name('orders.cancel');
         });
 
+
+        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OrderController@cancel')->name('supermarkets.offers');
+        Route::get('supermarkets/products/{supermarket_id}', 'Admin\OrderController@cancel')->name('supermarkets.products');
+
+
+
     });
 
 });

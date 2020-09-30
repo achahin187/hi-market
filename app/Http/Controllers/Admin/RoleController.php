@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-
+/*
     function __construct()
     {
         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','show']]);
         $this->middleware('permission:role-create', ['only' => ['create','store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
+    }*/
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +38,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        $permissions = Permission::select('group_name')->groupBy('group_name')->get();
+        $permissions = Permission::select('group_name_en','group_name_ar')->groupBy('group_name_en','group_name_ar')->get();
         return view('Admin.roles.create',compact('permissions'));
     }
 
@@ -95,7 +95,7 @@ class RoleController extends Controller
     {
         //
         $role = Role::find($id);
-        $permissions = Permission::select('group_name')->groupBy('group_name')->get();
+        $permissions = Permission::select('group_name_en','group_name_ar')->groupBy('group_name_en','group_name_ar')->get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
@@ -146,8 +146,7 @@ class RoleController extends Controller
     {
         //
         DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+        return redirect('/admin/roles')->withStatus(__('role deleted successfully'));
     }
 
     /**
