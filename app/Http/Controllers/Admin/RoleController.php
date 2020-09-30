@@ -69,7 +69,7 @@ class RoleController extends Controller
         {
             return redirect('admin/roles')->withStatus(__('role created successfully'));
         }
-        return redirect('admin/products')->withStatus(__('something wrong happened'));
+        return redirect('admin/roles')->withStatus(__('something wrong happened'));
 
     }
 
@@ -131,11 +131,9 @@ class RoleController extends Controller
         if($role) {
             $role->update(['name' => $name , 'arab_name' => $arab_name , 'eng_name' => $eng_name]);;
             $role->syncPermissions($request->input('permission'));
-            return redirect()->route('roles.index')
-                ->withtStatus('Role updated successfully');
+            return redirect('/admin/roles')->withStatus(__('role successfully updated.'));
         }
-        return redirect()->route('roles.index')
-            ->withtStatus('no role with this id');
+        return redirect('/admin/roles')->withStatus(__('something wrong happenned'));
     }
 
     /**

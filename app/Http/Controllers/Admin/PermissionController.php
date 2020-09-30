@@ -59,7 +59,8 @@ class PermissionController extends Controller
         $role = Permission::create([
             'name' => $request->input('name'),
             'arab_name' => $request->input('arab_name'),
-            'eng_name' => $request->input('eng_name')
+            'eng_name' => $request->input('eng_name'),
+            'group_name' => explode('-', $request->input('name'))[0]
         ]);
 
         if($role)
@@ -124,7 +125,8 @@ class PermissionController extends Controller
            $permission->update([
                 'name' => $request->input('name'),
                 'arab_name' => $request->input('arab_name'),
-                'eng_name' => $request->input('eng_name')
+                'eng_name' => $request->input('eng_name'),
+                'group_name' => explode('-', $request->input('name'))[0]
             ]);
             return redirect('admin/permissions')->withStatus(__('permisssion updated successfully'));
         }
