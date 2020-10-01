@@ -30,15 +30,31 @@ class PointController extends Controller
 
         $user = auth()->user();
 
-        $rules = [
-            'from' => ['required','min:0','integer'],
-            'to' => ['required','min:0','integer','gt:from'],
-            'value' => ['required', 'min:0', 'numeric'],
-            'type' => ['required', 'min:0' , 'integer'],
-            'status' => ['required', 'min:0' , 'string'],
-            'start_date' => 'required|after:today|date',
-            'end_date' => 'required|after:start_date|date',
-        ];
+        if($request->type == "discount") {
+
+            $rules = [
+                'from' => ['required', 'min:0', 'integer'],
+                'to' => ['required', 'min:0', 'integer', 'gt:from'],
+                'value' => ['required', 'min:0', 'numeric'],
+                'type' => ['required', 'min:0', 'integer'],
+                'status' => ['required', 'min:0', 'string'],
+                'start_date' => 'after:yesterday|date',
+                'end_date' => 'after:start_date|date'
+            ];
+
+        }
+        else
+        {
+            $rules = [
+                'from' => ['required', 'min:0', 'integer'],
+                'to' => ['required', 'min:0', 'integer', 'gt:from'],
+                'value' => ['required', 'min:0', 'numeric'],
+                'type' => ['required', 'min:0', 'integer'],
+                'status' => ['required', 'min:0', 'string'],
+                'start_date' => 'required|after:yesterday|date',
+                'end_date' => 'required|after:start_date|date'
+            ];
+        }
 
         $this->validate($request,$rules);
 
@@ -51,18 +67,32 @@ class PointController extends Controller
             }
         }
 
+        if($request->type == "gift") {
+            $point = Point::create([
 
-        $point = Point::create([
+                'from' => $request->input('from'),
+                'to' => $request->input('to'),
+                'value' => $request->input('value'),
+                'type' => $request->input('type'),
+                'status' => $request->input('status'),
+                'start_date' => $request->input('start_date'),
+                'end_date' => $request->input('end_date'),
+                'created_by' => $user->id
+            ]);
+        }
 
-            'from' => $request->input('from'),
-            'to' => $request->input('to'),
-            'value' => $request->input('value'),
-            'type' => $request->input('type'),
-            'status' => $request->input('status'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-            'created_by' => $user->id
-        ]);
+        else
+        {
+            $point = Point::create([
+
+                'from' => $request->input('from'),
+                'to' => $request->input('to'),
+                'value' => $request->input('value'),
+                'type' => $request->input('type'),
+                'status' => $request->input('status'),
+                'created_by' => $user->id
+            ]);
+        }
 
         if($point)
         {
@@ -104,20 +134,36 @@ class PointController extends Controller
     {
         $user = auth()->user();
 
-        $rules = [
-            'from' => ['required','min:0','integer'],
-            'to' => ['required','min:0','integer','gt:from'],
-            'value' => ['required', 'min:0', 'numeric'],
-            'type' => ['required', 'min:0' , 'integer'],
-            'start_date' => 'required|after:today|date',
-            'end_date' => 'required|after:start_date|date',
-        ];
+        if($request->type == "discount") {
+
+            $rules = [
+                'from' => ['required', 'min:0', 'integer'],
+                'to' => ['required', 'min:0', 'integer', 'gt:from'],
+                'value' => ['required', 'min:0', 'numeric'],
+                'type' => ['required', 'min:0', 'integer'],
+                'start_date' => 'after:yesterday|date',
+                'end_date' => 'after:start_date|date'
+            ];
+
+        }
+        else
+        {
+            $rules = [
+                'from' => ['required', 'min:0', 'integer'],
+                'to' => ['required', 'min:0', 'integer', 'gt:from'],
+                'value' => ['required', 'min:0', 'numeric'],
+                'type' => ['required', 'min:0', 'integer'],
+                'start_date' => 'required|after:yesterday|date',
+                'end_date' => 'required|after:start_date|date'
+            ];
+        }
 
         $this->validate($request, $rules);
 
         $point = Point::find($id);
 
         $points = Point::orderBy('id', 'desc')->paginate(10);
+
 
         if($point) {
 
@@ -138,17 +184,32 @@ class PointController extends Controller
             }
 
 
-            $point->update([
+            if($request->type == 1) {
 
-                'from' => $request->input('from'),
-                'to' => $request->input('to'),
-                'value' => $request->input('value'),
-                'type' => $request->input('type'),
-                'start_date' => $request->input('start_date'),
-                'end_date' => $request->input('end_date'),
-                'updated_by' => $user->id
+                $point->update([
 
-            ]);
+                    'from' => $request->input('from'),
+                    'to' => $request->input('to'),
+                    'value' => $request->input('value'),
+                    'type' => $request->input('type'),
+                    'start_date' => $request->input('start_date'),
+                    'end_date' => $request->input('end_date'),
+                    'updated_by' => $user->id
+                ]);
+            }
+            else
+            {
+                $point->update([
+
+                    'from' => $request->input('from'),
+                    'to' => $request->input('to'),
+                    'value' => $request->input('value'),
+                    'type' => $request->input('type'),
+                    'start_date' => null,
+                    'end_date' => null,
+                    'updated_by' => $user->id
+                ]);
+            }
 
             return redirect('/admin/points')->withStatus('range successfully updated.');
         }

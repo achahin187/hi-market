@@ -51,13 +51,14 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
+                                        <th>arab name</th>
+                                        <th>eng name</th>
                                         <th>arab description</th>
                                         <th>eng description</th>
                                         <th>offer type</th>
                                         <th>value type</th>
                                         <th>status</th>
-                                        <th>start date</th>
-                                        <th>end date</th>
+                                        <th>supermarket</th>
                                         <th>promocode</th>
                                         <th>controls</th>
                                     </tr>
@@ -65,24 +66,11 @@
                                     <tbody>
                                     @foreach($offers as $offer)
                                         <tr>
-                                            <td>{{$offer->arab_description}}</td>
-                                            <td>{{$offer->eng_description}}</td>
-                                            <td>
-
-                                                @if($offer->promocode == null)
-
-                                                    navigable offer
-
-
-                                                @else
-
-                                                    promocode offer
-
-                                                @endif
-
-
-                                            </td>
-
+                                            <td>{{$offer->arab_name}}</td>
+                                            <td>{{$offer->eng_name}}</td>
+                                            <td>{{\Str::limit($offer->arab_description,20)}}</td>
+                                            <td>{{\Str::limit($offer->eng_description,20)}}</td>
+                                            <td>{{$offer->offer_type}}</td>
                                             <td>{{$offer->value_type}}</td>
                                             <td>
 
@@ -108,8 +96,11 @@
 
 
                                             </td>
-                                            <td>{{$offer->start_date}}</td>
-                                            <td>{{$offer->end_date}}</td>
+                                            @if(App::getLocale() == 'ar')
+                                                <td>{{$offer->supermarket->arab_name}}</td>
+                                            @else
+                                                <td>{{$offer->supermarket->eng_name}}</td>
+                                            @endif
                                             <td>{{$offer->promocode}}</td>
                                             <td>
                                                 <div class="dropdown">

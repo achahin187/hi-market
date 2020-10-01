@@ -115,8 +115,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         });
 
 
-        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OrderController@cancel')->name('supermarkets.offers');
-        Route::get('supermarkets/products/{supermarket_id}', 'Admin\OrderController@cancel')->name('supermarkets.products');
+        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
+        Route::get('supermarkets/products/{supermarket_id}/{flag}', 'Admin\ProductController@supermarketproducts')->name('supermarket.products');
 
 
 

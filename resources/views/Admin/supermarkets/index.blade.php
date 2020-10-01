@@ -65,8 +65,6 @@
                                             <td>{{$supermarket->eng_name}}</td>
                                             <td>{{$supermarket->commission}}</td>
                                             <td>{{$supermarket->priority}}</td>
-                                            <td><button type="button" data-toggle="modal" data-target="#showproducts" class="btn btn-primary">super market products</button></td>
-                                            <td><button type="button" data-toggle="modal" data-target="#showoffers" class="btn btn-primary">super market offers</button></td>
                                             <td>
 
                                                 @if($supermarket->status == 'active' )
@@ -92,11 +90,11 @@
 
                                             </td>
                                             <td>
-                                                <button type="button" href="{{ route('supermarket.products', $supermarket->id) }}" class="btn btn-block btn-outline-danger">products</button>
+                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 0]) }}" class="btn btn-info">products</a>
                                             </td>
 
                                             <td>
-                                                <button type="button" href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-block btn-outline-danger">offers</button>
+                                                <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">offers</a>
                                             </td>
                                             <td>
                                                 <div class="dropdown">

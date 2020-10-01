@@ -256,11 +256,17 @@ $factory->define(Role::class, function (Faker $faker) {
 $factory->define(Offer::class, function (Faker $faker) {
 
     $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
+
     return [
+
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
         'arab_description' => $faker->paragraph,
         'eng_description' => $faker->paragraph,
-        'promocode' => $faker->randomNumber(),
-        'value_type' => $faker->randomElement([1,2,3,4]),
+        'promocode' => 'sjd123',
+        'value_type' => $faker->randomElement(["free delivery","discount by percentage","free product","discount by value"]),
+        'offer_type' => $faker->randomElement(["promocode","navigable"]),
+        'supermarket_id' => Supermarket::all()->random()->id,
         'status' => $faker->randomElement(['inactive','active']),
         'start_date' => $startingDate,
         'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),

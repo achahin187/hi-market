@@ -11,6 +11,11 @@ class Offer extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'arab_description','eng_description','promocode','status','end_date','start_date','value_type','created_by','updated_by'
+        'arab_name','eng_name','arab_description','eng_description','offer_type','promocode','status','end_date','start_date','value_type','supermarket_id','created_by','updated_by'
     ];
+
+    public function supermarket() {
+        return $this->belongsTo('App\Models\Supermarket');
+    }
+
 }

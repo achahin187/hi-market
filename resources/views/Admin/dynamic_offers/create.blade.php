@@ -51,7 +51,25 @@
 
                                 @endif
 
-                                <div class="card-body">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{__('offer.product_arabname')}}</label>
+                                            <input type="text" value="@if(isset($product)){{$product->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
+                                            @error('arab_name')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{__('offer.product_engname')}}</label>
+                                            <input type="text" name="eng_name" value="@if(isset($product)){{$product->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
+                                            @error('eng_name')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                            @enderror
+                                        </div>
                                     <div class="form-group">
                                         <label>{{__('offer.arab_description')}}</label>
                                         <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
@@ -82,16 +100,25 @@
                                         @enderror
                                     </div>
 
+                                        <div class="form-group">
+                                            <label>offer supermarket </label>
+                                            <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                                @if(isset($offer))
+                                                    @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('offer.promocode')}}</label>
-                                        <input type="text" value="@if(isset($offer)){{$offer->promocode }} @endif" name="promocode" class=" @error('promocode') is-invalid @enderror form-control" required>
-                                        @error('promocode')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                                        <option <?php if($offer->supermarket->id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                                    @endforeach
+                                                @else
+                                                    @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                        <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                                    @endforeach
+
+                                                @endif
+                                            </select>
+                                        </div>
 
 
                                     @if(!isset($offer))
@@ -116,6 +143,24 @@
 
                                     @endif
 
+                                        <div class="form-group">
+                                            <label>offer Type </label>
+                                            <select class=" @error('offer_type') is-invalid @enderror select2" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required @if(isset($offer) && $offer->offer_type == 'promocode') disabled @endif>
+
+                                                @if(isset($offer))
+
+                                                    <option <?php if($offer->offer_type == "navigable") echo 'selected'; ?> value="navigable">navigable</option>
+                                                    <option <?php if($offer->offer_type == "promocode") echo 'selected'; ?> value="promocode">promocode</option>
+
+                                                @else
+
+                                                    <option value="promocode">promocode</option>
+                                                    <option value="navigable">navigable</option>
+
+                                                @endif
+                                            </select>
+                                        </div>
+
 
                                     <div class="form-group">
                                         <label>Value Type </label>
@@ -123,17 +168,17 @@
 
                                             @if(isset($offer))
 
-                                                <option <?php if($offer->value_type == 1) echo 'selected'; ?> value="1">discount by value</option>
-                                                <option <?php if($offer->value_type == 2) echo 'selected'; ?> value="2">discount by percentage</option>
-                                                <option <?php if($offer->value_type == 3) echo 'selected'; ?> value="3">free product</option>
-                                                <option <?php if($offer->value_type == 4) echo 'selected'; ?> value="4">free delivery</option>
+                                                <option <?php if($offer->value_type == "discount by value") echo 'selected'; ?> value="discount by value">discount by value</option>
+                                                <option <?php if($offer->value_type == "discount by percentage") echo 'selected'; ?> value="discount by percentage">discount by percentage</option>
+                                                <option <?php if($offer->value_type == "free product") echo 'selected'; ?> value="free product">free product</option>
+                                                <option <?php if($offer->value_type == "free delivery") echo 'selected'; ?> value="free delivery">free delivery</option>
 
                                             @else
 
-                                                <option value="1">discount by value</option>
-                                                <option value="2">discount by percentage</option>
-                                                <option value="3">free product</option>
-                                                <option value="4">free delivery</option>
+                                                <option value="discount by value">discount by value</option>
+                                                <option value="discount by percentage">discount by percentage</option>
+                                                <option value="free product">free product</option>
+                                                <option value="free delivery">free delivery</option>
 
                                             @endif
                                         </select>

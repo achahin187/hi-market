@@ -17,4 +17,9 @@ class Supermarket extends Model
     public function products() {
         return $this->hasMany('App\Models\Product');
     }
+
+    public function offers() {
+        return $this->hasMany('App\Models\Offer');
+    }
+
 }

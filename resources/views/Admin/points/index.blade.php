@@ -57,6 +57,8 @@
                                         <th>type</th>
                                         <th>value</th>
                                         <th>status</th>
+                                        <th>start date</th>
+                                        <th>end date</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -103,6 +105,8 @@
 
 
                                             </td>
+                                            <td>{{$point->start_date}}</td>
+                                            <td>{{$point->end_date}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

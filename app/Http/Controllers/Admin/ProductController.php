@@ -23,7 +23,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($flag = null)
+    public function index($flag)
     {
         //
         if($flag == 1)
@@ -561,6 +561,13 @@ class ProductController extends Controller
             }
         }
 
+    }
+
+    public function supermarketproducts($supermarket_id,$flag)
+    {
+        //
+        $products = Product::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
+        return view('Admin.products.index',compact('products','flag'));
     }
 
     /**
