@@ -258,9 +258,10 @@ class OrderController extends Controller
 
             $product = Product::find($product_id);
 
-            foreach ($product->orders as $orderproduct)
+
+            foreach ($order->products as $orderproduct)
             {
-                if($orderproduct->id == $order->id)
+                if($orderproduct->id == $product->id)
                 {
                     $status = true;
                 }
