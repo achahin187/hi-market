@@ -274,6 +274,17 @@ $factory->define(Offer::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(\App\Models\Notification::class, function (Faker $faker) {
+    return [
+        'arab_title' => $faker->name,
+        'eng_title' => $faker->name,
+        'arab_body' => $faker->paragraph,
+        'eng_body' => $faker->paragraph,
+        'icon' => "12.jpg",
+        'flag' => $faker->randomElement([0,1,2])
+    ];
+});
+
 
 
 

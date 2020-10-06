@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Imports\ProductImport;
 use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -134,11 +136,6 @@ class ProductController extends Controller
 
         if ($price == null) {
             $price = 0;
-        }
-
-        if($quantity == null || $quantity == 0)
-        {
-            $status = 'inactive';
         }
 
         if($points == null)
@@ -382,8 +379,6 @@ class ProductController extends Controller
 
             if ($request->hasFile('images')) {
 
-                $product = Product::findOrFail($id);
-
                 $image_names = $request->file('images');
 
                 foreach ($image_names as $image) {
@@ -620,9 +615,9 @@ class ProductController extends Controller
             {
                 $product->update(['status' => 'active']);
             }
-            return redirect('/admin/products')->withStatus(__('product status successfully updated.'));
+            return redirect('/admin/products/0')->withStatus(__('product status successfully updated.'));
         }
-        return redirect('/admin/products')->withStatus(__('this id is not in our database'));
+        return redirect('/admin/products/0')->withStatus(__('this id is not in our database'));
     }
 
     /**
@@ -630,7 +625,7 @@ class ProductController extends Controller
      */
     public function export()
     {
-        return Excel::download(new ProductExport , 'admins.csv');
+        return Excel::download(new ProductsExport , 'admins.csv');
     }
 
     /**

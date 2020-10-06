@@ -37,8 +37,6 @@ class AdminController extends Controller
         //
         $admins = User::where('flag',0)->orderBy('id', 'desc')->get();
 
-        Log::info('this is mohamed');
-
         return view('Admin.admins.index',compact('admins'));
     }
 

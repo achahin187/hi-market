@@ -23,8 +23,8 @@ class CreateOffersTable extends Migration
             $table->string('promocode')->nullable();
             $table->string('offer_type');
             $table->string('value_type');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->string('status');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

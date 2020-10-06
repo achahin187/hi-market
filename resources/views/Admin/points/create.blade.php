@@ -136,7 +136,7 @@
 
                                 <div class="form-group">
                                     <label>start_date</label>
-                                    <input type="date" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($point)) value="{{$point->start_date}}" @endif data-placeholder="Select a point start_date" style="width: 100%;" >
+                                    <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($point)) value="{{$point->start_date}}" @endif data-placeholder="Select a point start_date" style="width: 100%;" >
 
                                     @error('start_date')
                                     <span class="invalid-feedback" role="alert">
@@ -148,7 +148,7 @@
 
                                 <div class="form-group">
                                     <label>end_date</label>
-                                    <input type="date" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($point)) value="{{$point->end_date}}" @endif data-placeholder="Select a point end_date" style="width: 100%;" >
+                                    <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($point)) value="{{$point->end_date}}" @endif data-placeholder="Select a point end_date" style="width: 100%;" >
 
                                     @error('end_date')
                                     <span class="invalid-feedback" role="alert">

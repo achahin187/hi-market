@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('notifications.index')}}">Notifications</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
@@ -33,9 +33,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($offer))
-                                        edit offer
+                                        resend notification
                                     @else
-                                        create offer
+                                        create notification
 
                                     @endif
                                 </h3>
@@ -188,7 +188,7 @@
 
                                     <div class="form-group">
                                         <label>start_date</label>
-                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{$offer->start_date}}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
+                                        <input type="date" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{$offer->start_date}}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
                                         @error('start_date')
                                         <span class="invalid-feedback" role="alert">
@@ -200,7 +200,7 @@
 
                                     <div class="form-group">
                                         <label>end_date</label>
-                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{$offer->end_date}}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
+                                        <input type="date" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{$offer->end_date}}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
                                         @error('end_date')
                                         <span class="invalid-feedback" role="alert">

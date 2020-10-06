@@ -30,7 +30,7 @@ class PointController extends Controller
 
         $user = auth()->user();
 
-        if($request->type == "discount") {
+        if($request->type == 0) {
 
             $rules = [
                 'from' => ['required', 'min:0', 'integer'],
@@ -38,7 +38,7 @@ class PointController extends Controller
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
                 'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'after:yesterday|date',
+                'start_date' => 'after:yesterday',
                 'end_date' => 'after:start_date|date'
             ];
 
@@ -51,8 +51,8 @@ class PointController extends Controller
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
                 'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'required|after:yesterday|date',
-                'end_date' => 'required|after:start_date|date'
+                'start_date' => 'required|after:yesterday',
+                'end_date' => 'required|after:start_date'
             ];
         }
 
@@ -67,7 +67,7 @@ class PointController extends Controller
             }
         }
 
-        if($request->type == "gift") {
+        if($request->type == 1) {
             $point = Point::create([
 
                 'from' => $request->input('from'),
@@ -134,15 +134,15 @@ class PointController extends Controller
     {
         $user = auth()->user();
 
-        if($request->type == "discount") {
+        if($request->type == 0) {
 
             $rules = [
                 'from' => ['required', 'min:0', 'integer'],
                 'to' => ['required', 'min:0', 'integer', 'gt:from'],
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'after:yesterday|date',
-                'end_date' => 'after:start_date|date'
+                'start_date' => 'after:yesterday',
+                'end_date' => 'after:start_date'
             ];
 
         }
@@ -153,8 +153,8 @@ class PointController extends Controller
                 'to' => ['required', 'min:0', 'integer', 'gt:from'],
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'required|after:yesterday|date',
-                'end_date' => 'required|after:start_date|date'
+                'start_date' => 'after:yesterday',
+                'end_date' => 'after:start_date'
             ];
         }
 

@@ -64,6 +64,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('teams', 'Admin\TeamController');
         Route::resource('clients', 'Admin\ClientController');
         Route::resource('permissions', 'Admin\PermissionController');
+        Route::resource('notifications', 'Admin\NotificationController');
+        Route::resource('measuring_units', 'Admin\UnitController');
+        Route::resource('sizes', 'Admin\SizeController');
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');

@@ -369,6 +369,15 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{route('notifications.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Notifications
+                            </p>
+                        </a>
+                    </li>
+
 
                         <li class="nav-item">
                             <a href="{{route('roles.index')}}" class="nav-link">
@@ -494,6 +503,75 @@ $settings = App\Models\Setting::all()->first();
             "info": true,
             "autoWidth": false,
             "responsive": true,
+        });
+    });
+</script>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+<script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase.js"></script>
+<script>
+    $(document).ready(function(){
+        const config = {
+            apiKey: "<XXX>",
+            authDomain: "<XXX>",
+            databaseURL: "<XXX>",
+            projectId: "<XXX>",
+            storageBucket: "<XXX>",
+            messagingSenderId: "<XXX>",
+            appId: "<XXX>"
+        };
+        firebase.initializeApp(config);
+        const messaging = firebase.messaging();
+
+        messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ URL::to('/save-device-token') }}',
+                    type: 'POST',
+                    data: {
+                        user_id: {!! json_encode($user_id ?? '') !!},
+                        fcm_token: token
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    error: function (err) {
+                        console.log(" Can't do because: " + err);
+                    },
+                });
+            })
+            .catch(function (err) {
+                console.log("Unable to get permission to notify.", err);
+            });
+
+        messaging.onMessage(function(payload) {
+            const noteTitle = payload.notification.title;
+            const noteOptions = {
+                body: payload.notification.body,
+                icon: payload.notification.icon,
+            };
+            new Notification(noteTitle, noteOptions);
         });
     });
 </script>

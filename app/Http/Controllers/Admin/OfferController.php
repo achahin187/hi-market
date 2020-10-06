@@ -54,8 +54,8 @@ class OfferController extends Controller
             'status' => ['required','string'],
             'offer_type' => ['required','string'],
             'value_type' => ['required','string'],
-            'start_date' => 'required|after:yesterday|date',
-            'end_date' => 'required|after:start_date|date',
+            'start_date' => 'required|after:yesterday',
+            'end_date' => 'required|after:start_date',
         ];
 
         $this->validate($request, $rules);
@@ -282,8 +282,8 @@ class OfferController extends Controller
                 'supermarket_id' => 'required|integer|min:0',
                 'offer_type' => ['required','string'],
                 'value_type' => ['required', 'string'],
-                'start_date' => 'required|after:yesterday|date',
-                'end_date' => 'required|after:start_date|date',
+                'start_date' => 'required|after:yesterday',
+                'end_date' => 'required|after:start_date',
             ];
         }
 
@@ -297,8 +297,8 @@ class OfferController extends Controller
                 'eng_description' => ['nullable', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'supermarket_id' => 'required|integer|min:0',
                 'value_type' => ['required', 'string'],
-                'start_date' => 'required|after:yesterday|date',
-                'end_date' => 'required|after:start_date|date',
+                'start_date' => 'required|after:yesterday',
+                'end_date' => 'required|after:start_date',
             ];
         }
 

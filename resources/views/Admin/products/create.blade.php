@@ -333,7 +333,7 @@
 
                                 <div class="form-group">
                                     <label>start_date</label>
-                                    <input type="date" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
+                                    <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->start_date)) }}" @endif id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
                                     @error('start_date')
                                     <span class="invalid-feedback" role="alert">
@@ -345,7 +345,7 @@
 
                                 <div class="form-group">
                                     <label>end_date</label>
-                                    <input type="date" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+                                    <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->end_date)) }}" @endif name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
                                     @error('end_date')
                                     <span class="invalid-feedback" role="alert">
@@ -357,7 +357,7 @@
 
                                 <div class="form-group">
                                     <label>exp_date</label>
-                                    <input type="date" class=" @error('exp_date') is-invalid @enderror form-control"  name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
+                                    <input type="datetime-local" class=" @error('exp_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->exp_date)) }}" @endif name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
 
                                     @error('exp_date')
                                     <span class="invalid-feedback" role="alert">

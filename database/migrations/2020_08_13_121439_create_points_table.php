@@ -20,8 +20,8 @@ class CreatePointsTable extends Migration
             $table->unsignedInteger('type');
             $table->unsignedFloat('value');
             $table->string('status');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
