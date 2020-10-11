@@ -55,6 +55,7 @@
                                         <th>arab_name</th>
                                         <th>eng_name</th>
                                         <th>category</th>
+                                        <th>subcategory</th>
                                         <th>status</th>
                                         <th>controls</th>
                                     </tr>
@@ -65,7 +66,7 @@
                                             <td>{{$vendor->arab_name}}</td>
                                             <td>{{$vendor->eng_name}}</td>
                                             <td>{{$vendor->category->eng_name}}</td>
-
+                                            <td>{{$vendor->subcategory->eng_name}}</td>
                                             <td>
                                                 @if($vendor->sponsor == 1 )
 

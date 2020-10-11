@@ -30,6 +30,7 @@ class UnitController extends Controller
     public function create()
     {
         //
+        return view('Admin.product_measuring_unit.create');
     }
 
     /**
@@ -89,6 +90,18 @@ class UnitController extends Controller
     public function edit($id)
     {
         //
+        $unit = Measures::find($id);
+
+        $measures = Measures::orderBy('id', 'desc')->get();
+
+        if($unit)
+        {
+            return view('Admin.product_measuring_unit.index', compact('measures','unit'));
+        }
+        else
+        {
+            return redirect('admin/measures')->withStatus('no measuring unit have this id');
+        }
     }
 
     /**
@@ -141,7 +154,7 @@ class UnitController extends Controller
     {
         //
 
-        $measure = Measure::find($id);
+        $measure = Measures::find($id);
 
         if($measure)
         {

@@ -47,7 +47,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{route('orders.update',$order->id) }} " method="POST" enctype="multipart/form-data">
+                            <form role="form" action="{{route('order_client.update',$order->id) }} " method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -73,17 +73,60 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>{{__('order_address')}}</label>
-                                            <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
+                                            <label for="exampleInputEmail1"> client mobile number</label>
+                                            <input type="text" value="{{$order->mobile_delivery }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                            @error('mobile_number')
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
 
-                                                    {{$order->address }}
-                                            </textarea>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"> client location</label>
+                                            <input type="text" value="{{$order->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
+
+                                        @if($order->status == "7" && $order->client_review != null)
+
+                                            <div class="form-group">
+                                                <label>{{__('client review')}}</label>
+                                                <textarea class=" @error('review') is-invalid @enderror form-control" name="review" rows="3" disabled placeholder="Enter ...">
+                                                        {{$order->client_review }}
+                                                </textarea>
+                                                        @error('arab_spec')
+                                                        <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>review status</label>
+                                                <select class="@error('status') is-invalid @enderror select2" name="review_status" data-placeholder="Select a State" style="width: 100%;" required>
+
+
+                                                    <option value="1" <?php if($order->review_status == '1') echo 'selected'; ?>>approved</option>
+                                                    <option value="0" <?php if($order->review_status == '0') echo 'selected'; ?>>rejected</option>
+
+
+                                                </select>
+
+                                                @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                                @enderror
+                                            </div>
+
+                                        @endif
+
 
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-primary">Save</button>
@@ -121,9 +164,10 @@
 
                                                 <div class="form-group">
                                                     <label>select product</label>
-                                                    <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                         @if(isset($orderproduct))
+
+                                                        <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required disabled>
 
                                                             @foreach(\App\Models\Product::all() as $editproduct)
 
@@ -142,29 +186,35 @@
 
                                                             @endforeach
 
+                                                        </select>
+
+                                                        <input type="hidden" name="product_id" value="{{$orderproduct->id}}" />
+
                                                         @else
 
-                                                            @foreach(\App\Models\Product::all() as $editproduct)
+                                                            <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                                <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
+                                                                @foreach(\App\Models\Product::all() as $editproduct)
 
-                                                                    @if(App::getLocale() == 'ar')
+                                                                    <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
 
-                                                                        {{ $editproduct->arab_name }}
+                                                                        @if(App::getLocale() == 'ar')
 
-                                                                    @else
+                                                                            {{ $editproduct->arab_name }}
 
-                                                                        {{ $editproduct->eng_name }}
+                                                                        @else
 
-                                                                    @endif
+                                                                            {{ $editproduct->eng_name }}
 
-                                                                </option>
+                                                                        @endif
 
-                                                            @endforeach
+                                                                    </option>
+
+                                                                @endforeach
+                                                            </select>
 
                                                         @endif
 
-                                                    </select>
                                                 </div>
                                             </div>
 

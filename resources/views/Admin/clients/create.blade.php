@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}">admins</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('clients.index')}}">clients</a></li>
                             <li class="breadcrumb-item active">General Form</li>
                         </ol>
                     </div>
@@ -43,20 +43,20 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                    @if(isset($admin))
-                                        edit admin
+                                    @if(isset($client))
+                                        edit client
                                     @else
-                                        create admin
+                                        create client
 
                                     @endif
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($admin)){{route('admins.update',$admin->id) }} @else {{route('admins.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="@if(isset($client)){{route('clients.update',$client->id) }} @else {{route('clients.store') }} @endif" method="POST" enctype="multipart/form-data">
                                 @csrf
 
-                                @if(isset($admin))
+                                @if(isset($client))
 
                                     @method('PUT')
 
@@ -64,8 +64,8 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
-                                        <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
+                                        <label for="exampleInputEmail1">{{__('name')}}</label>
+                                        <input type="text" value="@if(isset($client)){{$client->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -75,13 +75,117 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" value="@if(isset($admin)){{$admin->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        <input type="email" value="@if(isset($client)){{$client->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> client address</label>
+                                        <input type="text" value="@if(isset($client)){{$client->address }}@endif " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter address" required>
+                                        @error('address')
+                                        <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> client city</label>
+                                        <input type="text" value="@if(isset($client)){{$client->city }}@endif " name="city" class="@error('city') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter city" required>
+                                        @error('city')
+                                        <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> client mobile number</label>
+                                        <input type="text" value="@if(isset($client)){{$client->mobile_number }} @endif" name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        @error('mobile_number')
+                                        <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('age')}}</label>
+                                        <input type="number" name="age" min="1" @if(isset($client)) value="{{$client->age}}" @else value="1" @endif class=" @error('age') is-invalid @enderror form-control">
+                                        @error('age')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                    @if(isset($client))
+
+
+                                        <div class="form-group">
+                                            <label>gender</label>
+                                            <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                <option value="male" <?php if($client->status == 'male') echo 'selected'; ?>>male</option>
+                                                <option value="female" <?php if($client->status == 'female') echo 'selected'; ?>>female</option>
+
+                                            </select>
+
+                                            @error('gender')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    @else
+
+
+                                        <div class="form-group">
+                                            <label>gender</label>
+                                            <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                <option value="male">male</option>
+                                                <option value="female">female</option>
+
+                                            </select>
+
+                                            @error('gender')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+                                    @endif
+
+
+
+                                    @if(!isset($client))
+
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+
+                                                <option value="active">active</option>
+                                                <option value="inactive">inactive</option>
+
+                                            </select>
+
+                                            @error('status')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+                                    @endif
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Password</label>
@@ -98,109 +202,6 @@
                                         <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" value="">
                                     </div>
 
-
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.roles')}}</label>
-
-                                        @if(isset($admin))
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
-
-                                                        @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
-                                                        @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @else
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
-                                                        @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
-                                                        @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @endif
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>admin team </label>
-                                        <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($admin))
-                                                @foreach(\App\Models\Team::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Supermarket::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>manager</label>
-                                        <select class=" @error('manager') is-invalid @enderror select2"  name="manager" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                            @if(isset($admin))
-
-                                                <option  <?php if($admin->manager == '1') echo 'selected'; ?> value="1">true</option>
-                                                <option <?php if($admin->manager == '0') echo 'selected'; ?> value="0">false</option>
-
-                                            @else
-
-                                                <option value="1">true</option>
-                                                <option value="0">false</option>
-
-                                            @endif
-
-                                        </select>
-                                    </div>
-
-                                </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">

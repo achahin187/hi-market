@@ -141,7 +141,7 @@ class PointController extends Controller
                 'to' => ['required', 'min:0', 'integer', 'gt:from'],
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'after:yesterday',
+                'start_date' => 'after:today',
                 'end_date' => 'after:start_date'
             ];
 
@@ -153,7 +153,7 @@ class PointController extends Controller
                 'to' => ['required', 'min:0', 'integer', 'gt:from'],
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'after:yesterday',
+                'start_date' => 'after:today',
                 'end_date' => 'after:start_date'
             ];
         }

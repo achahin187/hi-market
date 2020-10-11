@@ -163,7 +163,7 @@
 
                                                 @endforeach
                                             @else
-                                                @foreach(\App\Models\Supermarket::all() as $team)
+                                                @foreach(\App\Models\Team::all() as $team)
 
                                                     @if(App::getLocale() == 'ar')
 

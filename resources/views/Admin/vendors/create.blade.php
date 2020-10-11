@@ -73,7 +73,7 @@
 
 
                                     <div class="form-group">
-                                        <label>product category</label>
+                                        <label>vendor category</label>
                                         <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($vendor))
@@ -86,6 +86,28 @@
                                                 @foreach(\App\Models\Category::all() as $category)
 
                                                     <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
+
+                                                @endforeach
+
+                                            @endif
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>vendor subcategory</label>
+                                        <select class=" @error('subcategory_id') is-invalid @enderror select2"  name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                            @if(isset($vendor))
+                                                @foreach(\App\Models\SubCategory::all() as $subcategory)
+
+                                                    <option <?php if($vendor->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\SubCategory::all() as $subcategory)
+
+                                                    <option value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
 
                                                 @endforeach
 

@@ -180,7 +180,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
-                                    <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control" required>
+                                    <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control">
                                     @error('price')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -207,6 +207,27 @@
                                         </span>
                                     @enderror
                                 </div>
+
+                                @if(!isset($client))
+
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+
+                                            <option value="active">active</option>
+                                            <option value="inactive">inactive</option>
+
+                                        </select>
+
+                                        @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                @endif
 
                                 <div class="form-group">
                                     <label>product category</label>
@@ -374,13 +395,17 @@
                                         <div class="input-group">
                                             <div class="custom-file">
 
-                                                @foreach($productimages as $image)
+                                                @if($product->images != null)
 
-                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
+                                                    @foreach($productimages as $image)
 
-                                                    <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
+                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
 
-                                                @endforeach
+                                                        <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
+
+                                                    @endforeach
+
+                                                @endif
 
                                                 <input name="images[]" multiple type="file">
 

@@ -89,6 +89,18 @@ class SizeController extends Controller
     public function edit($id)
     {
         //
+        $size = Size::find($id);
+
+        $sizes = Size::orderBy('id', 'desc')->get();
+
+        if($size)
+        {
+            return view('Admin.product_size.index', compact('sizes','size'));
+        }
+        else
+        {
+            return redirect('admin/sizes')->withStatus('no size have this id');
+        }
     }
 
     /**

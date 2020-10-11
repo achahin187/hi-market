@@ -15,18 +15,24 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('mobile_delivery');
             $table->string('address');
             $table->unsignedFloat('rate')->nullable();
-            $table->string('mobile_delivery')->nullable();
-            $table->text('comment')->nullable();
+            $table->dateTime('delivery_date');
+            $table->unsignedFloat('delivery_rate')->nullable();
+            $table->text('client_review')->nullable();
+            $table->string('review_status')->nullable();
             $table->unsignedFloat('order_price')->nullable();
             $table->unsignedInteger('status');
             $table->bigInteger('client_id')->unsigned();
+            $table->unsignedInteger('driver_id')->nullable();
             $table->unsignedInteger('request');
             $table->dateTime('approved_at')->nullable();
             $table->dateTime('prepared_at')->nullable();
             $table->dateTime('shipping_at')->nullable();
             $table->dateTime('shipped_at')->nullable();
+            $table->dateTime('rejected_at')->nullable();
+            $table->dateTime('received_at')->nullable();
             $table->dateTime('cancelled_at')->nullable();
             $table->unsignedInteger('admin_cancellation')->default(0);
             $table->bigInteger('reason_id')->unsigned()->nullable();

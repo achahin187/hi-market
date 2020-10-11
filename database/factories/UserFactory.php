@@ -166,6 +166,10 @@ $factory->define(Client::class, function (Faker $faker) {
         'total_points' => $faker->randomElement([100,200,300,400]),
         'address' => $faker->address,
         'mobile_number' => $faker->phoneNumber,
+        'city' => $faker->city,
+        'gender' => $faker->randomElement(['male','female']),
+        'age' => $faker->randomElement([20,30,50,35]),
+        'status' => $faker->randomElement(['inactive','active']),
         'unique_id' => $faker->randomNumber(),
         'remember_token' => Str::random(10),
     ];
@@ -209,21 +213,29 @@ $factory->define(Reason::class, function (Faker $faker) {
 
 
 $factory->define(Order::class, function (Faker $faker) {
+
+    $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
     return [
+
         'address' => $faker->address,
         'status' => $faker->randomElement([0,1,2,3,4,5]),
+        'delivery_date' => $startingDate,
+        'delivery_rate' => $faker->randomElement([3.5,5,4,3]),
         'client_id' => Client::all()->random()->id,
         'order_price' => $faker->randomElement([30,40]),
         'request' => $faker->randomElement([0,1]),
         'rate' => $faker->randomElement([4.5,5.5,4,5,3.5]),
         'mobile_delivery' => $faker->phoneNumber,
-        'comment' => $faker->text,
+        'client_review' => $faker->text,
+        'driver_id' => User::all()->random()->id,
         'order_price' => $faker->randomElement([50,40,30]),
         'request' => $faker->randomElement([0,1]),
         'approved_at' => $faker->dateTime,
         'prepared_at' => $faker->dateTime,
         'shipping_at' => $faker->dateTime,
         'shipped_at' => $faker->dateTime,
+        'rejected_at' => $faker->dateTime,
+        'received_at' => $faker->dateTime,
         'cancelled_at' => $faker->dateTime,
         'admin_cancellation' => $faker->randomElement([0,1]),
         'reason_id' => Reason::all()->random()->id,

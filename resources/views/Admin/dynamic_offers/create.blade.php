@@ -53,8 +53,8 @@
 
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">{{__('offer.product_arabname')}}</label>
-                                            <input type="text" value="@if(isset($product)){{$product->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
+                                            <label for="exampleInputEmail1">{{__('offer.arabname')}}</label>
+                                            <input type="text" value="@if(isset($offer)){{$offer->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                             @error('arab_name')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -62,8 +62,8 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">{{__('offer.product_engname')}}</label>
-                                            <input type="text" name="eng_name" value="@if(isset($product)){{$product->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
+                                            <label for="exampleInputEmail1">{{__('offer.engname')}}</label>
+                                            <input type="text" name="eng_name" value="@if(isset($offer)){{$offer->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                             @error('eng_name')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -188,7 +188,7 @@
 
                                     <div class="form-group">
                                         <label>start_date</label>
-                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{$offer->start_date}}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
+                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($offer->start_date)) }}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
                                         @error('start_date')
                                         <span class="invalid-feedback" role="alert">
@@ -200,7 +200,7 @@
 
                                     <div class="form-group">
                                         <label>end_date</label>
-                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{$offer->end_date}}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
+                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($offer->end_date)) }}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
                                         @error('end_date')
                                         <span class="invalid-feedback" role="alert">

@@ -65,13 +65,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('clients', 'Admin\ClientController');
         Route::resource('permissions', 'Admin\PermissionController');
         Route::resource('notifications', 'Admin\NotificationController');
-        Route::resource('measuring_units', 'Admin\UnitController');
+        Route::resource('measures', 'Admin\UnitController');
         Route::resource('sizes', 'Admin\SizeController');
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
         Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');
-        Route::put('offers/status/{reason_id}', 'Admin\OfferController@status')->name('offers.status');
+        Route::put('offers/status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
+        Route::put('clients/status/{client_id}', 'Admin\ClientController@status')->name('clients.status');
 
         Route::group(['prefix' => 'products'],function() {
 
@@ -108,18 +109,22 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');
             Route::put('{order_id}', 'Admin\OrderController@updateorder')->name('orders.update');
+            Route::put('order_client/{order_id}', 'Admin\OrderController@updateclient')->name('order_client.update');
             Route::post('products/add/{order_id}', 'Admin\OrderController@addproduct')->name('products.store');
             Route::get('{order_id}/{product_id}', 'Admin\OrderController@editproduct')->name('orderproduct.edit');
             Route::put('products/{order_id}/{product_id}', 'Admin\OrderController@updateproduct')->name('orderproduct.update');
             Route::delete('products/{order_id}/{product_id}', 'Admin\OrderController@productdelete')->name('orderproduct.delete');
             Route::delete('{order_id}', 'Admin\OrderController@orderdelete')->name('orders.delete');
             Route::put('status/{order_id}', 'Admin\OrderController@status')->name('orders.status');
-            Route::post('cancel', 'Admin\OrderController@cancel')->name('orders.cancel');
+            Route::post('cancel/{flag}', 'Admin\OrderController@cancelorreject')->name('orders.cancel');
+            Route::get('order/details/{order_id}', 'Admin\OrderController@show')->name('order_details');
         });
 
 
         Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
         Route::get('supermarkets/products/{supermarket_id}/{flag}', 'Admin\ProductController@supermarketproducts')->name('supermarket.products');
+        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
+        Route::get('client/orders/{order_id}', 'Admin\ClientController@clientorders')->name('client.orders');
 
 
 

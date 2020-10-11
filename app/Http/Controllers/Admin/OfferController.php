@@ -54,7 +54,7 @@ class OfferController extends Controller
             'status' => ['required','string'],
             'offer_type' => ['required','string'],
             'value_type' => ['required','string'],
-            'start_date' => 'required|after:yesterday',
+            'start_date' => 'required|after:today',
             'end_date' => 'required|after:start_date',
         ];
 
@@ -282,7 +282,7 @@ class OfferController extends Controller
                 'supermarket_id' => 'required|integer|min:0',
                 'offer_type' => ['required','string'],
                 'value_type' => ['required', 'string'],
-                'start_date' => 'required|after:yesterday',
+                'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
             ];
         }
@@ -297,7 +297,7 @@ class OfferController extends Controller
                 'eng_description' => ['nullable', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'supermarket_id' => 'required|integer|min:0',
                 'value_type' => ['required', 'string'],
-                'start_date' => 'required|after:yesterday',
+                'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date',
             ];
         }
@@ -508,9 +508,9 @@ class OfferController extends Controller
 
         if($offer) {
             $offer->delete();
-            return redirect('/admin/product_offers')->withStatus('offer successfully deleted.');
+            return redirect('/admin/offers')->withStatus('offer successfully deleted.');
         }
-        return redirect('/admin/product_offers')->withStatus('no offer with this id.');
+        return redirect('/admin/offers')->withStatus('no offer with this id.');
 
 
     }

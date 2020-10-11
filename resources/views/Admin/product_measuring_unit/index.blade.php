@@ -10,13 +10,8 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div style="margin-bottom: 5px" class="col-sm-6">
                         <h1>DataTables</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('measuring_units.create')}}">create new measuring unit</a></li>
-                        </ol>
                     </div>
 
 
@@ -30,6 +25,64 @@
                                 </button>
                             </div>
                         @endif
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">
+
+                                    @if(isset($unit))
+                                        edit measuring unit
+                                    @else
+                                        create measuring unit
+
+                                    @endif
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form" action="@if(isset($unit)){{route('measures.update',$unit->id) }} @else {{route('measures.store') }} @endif" method="POST" enctype="multipart/form-data">
+                                @csrf
+
+                                @if(isset($unit))
+
+                                    @method('PUT')
+
+                                @endif
+
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{__('measuring_unit arabname')}}</label>
+                                        <input type="text" value="@if(isset($unit)){{$unit->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
+                                        @error('arab_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{__('measuring unit engname')}}</label>
+                                        <input type="text" name="eng_name" value="@if(isset($unit)){{$unit->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
+                                        @error('eng_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -55,7 +108,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($measuringunits as $unit)
+                                    @foreach($measures as $unit)
                                         <tr>
                                             <td>{{$unit->arab_name}}</td>
                                             <td>{{$unit->eng_name}}</td>
@@ -65,13 +118,13 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('vendors.destroy', $vendor->id) }}" method="post">
+                                                        <form action="{{ route('measures.destroy', $unit->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
                                                             @if(auth()->user()->can('vendor-edit'))
 
-                                                                <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('measures.edit', $unit->id) }}">{{ __('edit') }}</a>
 
                                                             @endif
 
@@ -86,61 +139,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-
-
-                                        <div class="modal fade" id="showvideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{ route('orders.cancel') }}" method="POST">
-
-                                                            @csrf
-
-
-
-                                                            <div class="card-body">
-
-                                                                <input type="hidden" value="{{$order->id}}" class="id" name="order_id">
-
-                                                                <div class="form-group">
-                                                                    <label>Cancellation Reason</label>
-                                                                    <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                                        @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
-
-                                                                            <option value="{{ $reason->id }}">{{ $reason->arab_reason }}</option>
-
-                                                                        @endforeach
-
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label>Notes</label>
-                                                                    <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ..."></textarea>
-
-                                                                    @error('notes')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="card-footer">
-                                                                <button type="submit"  class="btn btn-primary">cancel order</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endforeach
 
                                     </tbody>

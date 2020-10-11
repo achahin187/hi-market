@@ -59,7 +59,10 @@ class SettingsController extends Controller
                 if ($request->has('checkedimage')) {
                     $setting->update(['tax' => $request->input('tax') , 'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation ,'splash' => $request->input('checkedimage')]);
                 } else {
-                    unlink('splash/' . $setting->image);
+
+                    if ($setting->splash != null) {
+                        unlink('splash/' . $setting->image);
+                    }
                     $setting->update(['tax' => $request->input('tax') , 'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation , 'image' => null]);
                 }
             }

@@ -40,6 +40,9 @@ $settings = App\Models\Setting::all()->first();
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist') }}/css/adminlte.min.css">
 
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ URL::asset('plugins/daterangepicker/daterangepicker.css') }}">
+
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="{{ URL::asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
@@ -227,13 +230,35 @@ $settings = App\Models\Setting::all()->first();
                          with font-awesome or any other icon font library -->
 
                     @if(auth()->user()->can('product-create') || auth()->user()->can('product-delete') || auth()->user()->can('product-edit') || auth()->user()->can('product-list'))
-                        <li class="nav-item">
-                            <a href="{{route('products.index',0)}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
-                                    Products
+                                    products
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item">
+                                    <a href="{{route('products.index',0)}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>list of products</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('measures.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>measuring units</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('sizes.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>sizes</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     @endif
 
@@ -477,6 +502,15 @@ $settings = App\Models\Setting::all()->first();
             $('.price').val(total_price);
         });
 
+        $('#cancel').on('click', function(){
+
+            let ordervalue = $(this).val();
+
+
+            $("#order").val(ordervalue);
+
+        });
+
     });
 
 </script>
@@ -506,6 +540,7 @@ $settings = App\Models\Setting::all()->first();
         });
     });
 </script>
+
 
 
 <!--
@@ -571,6 +606,7 @@ $settings = App\Models\Setting::all()->first();
         });
     });
 </script> -->
+
 
 </body>
 </html>

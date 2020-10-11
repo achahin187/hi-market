@@ -17,8 +17,7 @@
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">addr new admin</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('admins.export')}}">export</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('clients.create')}}">add new client</a></li>
                             </ol>
                         </div>
                     @endif
@@ -45,7 +44,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Admins</h3>
+                                <h3 class="card-title">Clients</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -54,56 +53,65 @@
                                     <tr>
                                         <th>name</th>
                                         <th>email</th>
-                                        <th>Role</th>
-                                        <th>Team</th>
+                                        <th>address</th>
+                                        <th>gender</th>
+                                        <th>city</th>
+                                        <th>mobile number</th>
+                                        <th>client orders</th>
+                                        <th>status</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($admins as $admin)
+                                    @foreach($clients as $client)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
+                                            <td>{{$client->name}}</td>
+                                            <td>{{$client->email}}</td>
+                                            <td>{{$client->address}}</td>
+                                            <td>{{$client->gender}}</td>
+                                            <td>{{$client->city}}</td>
+                                            <td>{{$client->mobile_number}}</td>
+                                            <td><a href="{{route('client.orders',$client->id)}}" class="btn btn-info">client orders</a></td>
+                                            <td>
 
-                                            @foreach($admin->roles as $role)
+                                                @if($client->status == 'active' )
 
-                                                @if(App::getLocale() == 'ar')
+                                                    <form id="active" onsubmit="return confirm('Do you really want to change status of client?');" action="{{ route('clients.status',$client->id) }}"  method="POST">
 
-                                                    <td>{{$role->arab_name}}</td>
+                                                        @csrf
+                                                        @method('put')
+                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">active</button>
+                                                    </form>
 
                                                 @else
 
-                                                    <td>{{$role->eng_name}}</td>
+                                                    <form id="in-active" onsubmit="return confirm('Do you really want to submit the form?');" action="{{ route('clients.status',$client->id) }}" method="POST">
+
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">inactive</button>
+                                                    </form>
 
                                                 @endif
 
-                                            @endforeach
 
-                                            @if(App::getLocale() == 'ar')
-
-                                                <td>{{$admin->team->arab_name}}</td>
-
-                                            @else
-
-                                                <td>{{$admin->team->eng_name}}</td>
-
-                                            @endif
+                                            </td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="post">
+                                                        <form action="{{ route('clients.destroy', $client->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
                                                             @if(auth()->user()->can('admin-edit'))
 
-                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">{{ __('edit') }}</a>
                                                             @endif
                                                             @if(auth()->user()->can('admin-delete'))
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this client?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                             @endif
                                                         </form>
 

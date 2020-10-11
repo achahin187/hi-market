@@ -14,7 +14,7 @@ class Client extends Authenticatable implements JWTSubject
 
 
     protected $fillable = [
-        'password','name','email','mobile_number','address','unique_id','device_token','total_points','created_by','updated_by'
+        'password','name','email','age','mobile_number','address','city','status','gender','unique_id','device_token','total_points','created_by','updated_by'
     ];
 
     protected $hidden = [

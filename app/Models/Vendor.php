@@ -11,7 +11,7 @@ class Vendor extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'arab_name','eng_name','image','category_id','sponsor','created_by','updated_by'
+        'arab_name','eng_name','image','category_id','subcategory_id','sponsor','created_by','updated_by'
     ];
 
     public function products() {

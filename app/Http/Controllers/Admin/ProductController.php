@@ -68,7 +68,7 @@ class ProductController extends Controller
             'barcode' => ['required','numeric','digits_between:10,16'],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'points' => 'nullable|integer|min:0',
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
@@ -411,7 +411,9 @@ class ProductController extends Controller
                     }
 
                     $productimages = array_merge($productimages, $file_names);
-                } else {
+                }
+                else
+                {
                     $productimages = $file_names;
                 }
 
@@ -530,7 +532,8 @@ class ProductController extends Controller
                         'priority' => $priority,
                         'measuring_unit' => $measuring_unit,
                         'size' => $size,
-                        'updated_by' => $user->id
+                        'updated_by' => $user->id,
+                        'images' => null
                     ]);
                     if($flag == 1)
                     {
@@ -609,6 +612,7 @@ class ProductController extends Controller
         if($product)
         {
             if($product->status == 'active') {
+
                 $product->update(['status' => 'inactive']);
             }
             else

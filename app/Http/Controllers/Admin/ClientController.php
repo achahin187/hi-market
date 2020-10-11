@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Order;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -20,7 +23,7 @@ class ClientController extends Controller
 
         $clients = Client::orderBy('id', 'desc')->get();
 
-        return view('Admin.clients.index',compact('clientss'));
+        return view('Admin.clients.index',compact('clients'));
     }
 
     /**
@@ -43,13 +46,20 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
+
+        $user = auth()->user();
+
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'email' => ['required', 'email', Rule::unique((new Client)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
             'password_confirmation' => ['required', 'min:8'],
-            'address' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-            'mobile_number' => 'required|regex:/(01)[0-9]{9}/'
+            'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
+            'city' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'gender' => 'required|string',
+            'age' => 'required|min:1|integer',
+            'status' => ['required','string'],
         ];
 
         $this->validate($request,$rules);
@@ -70,7 +80,12 @@ class ClientController extends Controller
             'email' => $email,
             'password' => $password,
             'address' => $address,
-            'mobile_number' => $mobile_number
+            'mobile_number' => $mobile_number,
+            'city' => $request->city,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'status' => $request->status,
+            'created_by' => $user->id
         ]);
 
         if($client)
@@ -125,46 +140,77 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = auth()->user();
 
         $client = Client::find($id);
 
-        $rules = [
-            'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-            'password_confirmation' => ['required', 'min:8'],
-            'address' => ['min:2','not_regex:/([%\$#\*<>]+)/'],
-            'mobile_number' => 'required|regex:/(01)[0-9]{9}/'
-        ];
+        if($client) {
 
-        $this->validate($request,$rules);
+            if ($request->input('password') == null) {
 
-        $name = $request->input('name');
+                $rules = [
+                    'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+                    'email' => ['required', 'email', Rule::unique((new Client)->getTable())->ignore($client->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+                    'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                    'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
+                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                    'gender' => 'required|string',
+                    'age' => 'required|min:0|integer'
+                ];
 
-        $email = $request->input('email');
+                $this->validate($request, $rules);
 
-        $password = Hash::make($request->input('password'));
 
-        $address = $request->input('address');
+                $client->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address' => $request->address,
+                    'mobile_number' => $request->mobile_number,
+                    'city' => $request->city,
+                    'gender' => $request->gender,
+                    'age' => $request->age,
+                    'updated_by' => $user->id
+                ]);
 
-        $mobile_number = $request->input('mobile_number');
+                return redirect('/admin/clients')->withStatus('client information successfully updated.');
+            }
+            else {
+                $rules = [
+                    'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+                    'email' => ['required', 'email', Rule::unique((new Client)->getTable())->ignore($client->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+                    'password' => ['required', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+                    'password_confirmation' => ['required', 'min:8'],
+                    'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                    'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
+                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                    'gender' => 'required|string',
+                    'age' => 'required|min:0|integer'
+                ];
 
-        if($client)
-        {
-            $client->update([
+                $this->validate($request, $rules);
 
-                'name' => $name,
-                'email' => $email,
-                'password' => $password,
-                'address' => $address,
-                'mobile_number' => $mobile_number
-            ]);
 
-            return redirect('/admin/clients')->withStatus('client information successfully updated.');
+                $password = password_hash($request->password, PASSWORD_DEFAULT);
+
+                $client->update([
+
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address' => $request->address,
+                    'mobile_number' => $request->mobile_number,
+                    'password' => $password,
+                    'city' => $request->city,
+                    'gender' => $request->gender,
+                    'age' => $request->age,
+                    'updated_by' => $user->id
+
+                ]);
+                return redirect('/admin/clients')->withStatus('admin information successfully updated.');
+            }
+
         }
-        else
-        {
-            return redirect('/admin/clients')->withStatus('no client exist');
+        else{
+            return redirect('admin/admins')->withStatus('no admin with this id');
         }
 
     }
@@ -188,6 +234,35 @@ class ClientController extends Controller
         else {
             return redirect('/admin/clients')->withStatus(__('this id is not in our database'));
         }
+    }
+
+    public function status(Request $request,$client_id)
+    {
+
+        $client = Client::find($client_id);
+
+        if($client)
+        {
+            if($client->status == 'active') {
+
+                $client->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $client->update(['status' => 'active']);
+            }
+            return redirect('/admin/clients')->withStatus(__('clients status successfully updated.'));
+        }
+        return redirect('/adminclients')->withStatus(__('this id is not in our database'));
+    }
+
+    public function clientorders($client_id)
+    {
+        //
+        $setting = Setting::all()->first();
+
+        $orders = Order::where('client_id',$client_id)->orderBy('id', 'desc')->get();
+        return view('Admin.orders.index',compact('orders','setting'));
     }
 
     /**
