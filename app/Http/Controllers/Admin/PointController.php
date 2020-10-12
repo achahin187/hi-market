@@ -38,7 +38,7 @@ class PointController extends Controller
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
                 'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'after:yesterday',
+                'start_date' => 'after:today',
                 'end_date' => 'after:start_date|date'
             ];
 
@@ -51,7 +51,7 @@ class PointController extends Controller
                 'value' => ['required', 'min:0', 'numeric'],
                 'type' => ['required', 'min:0', 'integer'],
                 'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'required|after:yesterday',
+                'start_date' => 'required|after:today',
                 'end_date' => 'required|after:start_date'
             ];
         }
@@ -119,7 +119,7 @@ class PointController extends Controller
         }
         else
         {
-            return redirect('admin/points')->withStatus('no vendor have this id');
+            return redirect('admin/points')->withStatus('no range have this id');
         }
     }
 

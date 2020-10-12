@@ -141,7 +141,6 @@ class SupermarketController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'status' => ['required','string'],
             'commission' => ['required','min:0','numeric'],
             'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
@@ -171,10 +170,12 @@ class SupermarketController extends Controller
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'status' => $request->status , 'commission' => $request->commission ,'image' => $request->input('checkedimage')]);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission ,'image' => $request->input('checkedimage')]);
                 } else {
-                    unlink('supermarket_images/' . $supermarket->image);
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'status' => $request->status , 'commission' => $request->commission , 'image' => null]);
+                    if ($supermarket->image != null) {
+                        unlink('supermarket_images/' . $supermarket->image);
+                    }
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission , 'image' => null]);
                 }
             }
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
