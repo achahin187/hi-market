@@ -388,7 +388,7 @@
                                 </div>
 
 
-                                @if(isset($product))
+                                @if(isset($product) && !isset($clone))
 
                                     <div class="form-group">
                                         <label for="exampleInputFile">File input</label>
@@ -409,6 +409,22 @@
 
                                                 <input name="images[]" multiple type="file">
 
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="">Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                @elseif(isset($product) && isset($clone))
+
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">File input</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                             </div>
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="">Upload</span>

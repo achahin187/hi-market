@@ -122,13 +122,9 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            @if(auth()->user()->can('admin-edit'))
-
                                                                 <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
-                                                            @endif
-                                                            @if(auth()->user()->can('admin-delete'))
+
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                            @endif
                                                         </form>
 
                                                     </div>

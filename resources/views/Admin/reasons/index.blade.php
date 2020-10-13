@@ -48,8 +48,8 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>eng_description</th>
-                                        <th>arab_description</th>
+                                        <th>eng reason</th>
+                                        <th>arab reason</th>
                                         <th>status</th>
                                         <th>controls</th>
                                     </tr>

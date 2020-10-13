@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->text('review')->nullable();
             $table->unsignedFloat('price')->nullable();
             $table->unsignedInteger('priority')->nullable();
-            $table->string('images')->nullable();
+            $table->text('images')->nullable();
             $table->unsignedInteger('points')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();

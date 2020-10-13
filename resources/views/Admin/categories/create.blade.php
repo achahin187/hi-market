@@ -53,7 +53,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.category_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('category arabname')}}</label>
                                         <input type="text" value="@if(isset($category)){{$category->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                         @error('arab_name')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.category_engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('category engname')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($category)){{$category->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('eng_name')
                                         <span class="invalid-feedback" role="alert">

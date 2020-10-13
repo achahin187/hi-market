@@ -64,7 +64,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('arabname')}}</label>
                                         <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">

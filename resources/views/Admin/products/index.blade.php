@@ -378,20 +378,15 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            @if(auth()->user()->can('product-edit'))
 
                                                                 <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('edit') }}</a>
 
-                                                            @endif
 
                                                                 <a class="dropdown-item" href="{{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('clone') }}</a>
 
 
-                                                            @if(auth()->user()->can('product-delete'))
-
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
 
-                                                            @endif
                                                         </form>
 
                                                     </div>
