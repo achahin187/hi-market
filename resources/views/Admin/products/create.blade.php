@@ -296,7 +296,7 @@
                                         @if(isset($product))
                                             @foreach(\App\Models\SubCategory::all() as $subcategory)
 
-                                                <option <?php if($product->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                <option <?php if($product->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
 
                                             @endforeach
                                         @else
