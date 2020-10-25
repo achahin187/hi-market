@@ -10,6 +10,10 @@ class SubCategory extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'subcategories';
+
+    protected static $logAttributes = ['image','arab_name','eng_name','category_id',];
+
     protected $table = 'subcategories';
 
     protected $fillable = [

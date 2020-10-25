@@ -11,6 +11,11 @@ class Area extends Model
 
     use LogsActivity;
 
+
+    protected static $logName = 'area';
+
+    protected static $logAttributes = ['ltn','lan'];
+
     protected $fillable = [
         'ltn','lan','created_by','updated_by'
     ];

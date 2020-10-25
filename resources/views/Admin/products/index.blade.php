@@ -14,8 +14,6 @@
                         <h1>DataTables</h1>
                     </div>
 
-
-                    @if(auth()->user()->can('product-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
@@ -23,7 +21,6 @@
                                 <li class="breadcrumb-item"><a href="{{route('products.import')}}">import</a></li>
                             </ol>
                         </div>
-                    @endif
 
                     <div class="col-12">
 

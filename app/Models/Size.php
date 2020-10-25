@@ -10,6 +10,10 @@ class Size extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'sizes';
+
+    protected static $logAttributes = ['value'];
+
     protected $fillable = [
         'value','created_by','updated_by'
     ];

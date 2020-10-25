@@ -10,6 +10,10 @@ class Address extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'address';
+
+    protected static $logAttributes = ['description','client_id'];
+
     protected $fillable = [
         'description','client_id','created_by','updated_by'
     ];

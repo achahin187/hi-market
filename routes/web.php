@@ -67,6 +67,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('notifications', 'Admin\NotificationController');
         Route::resource('measures', 'Admin\UnitController');
         Route::resource('sizes', 'Admin\SizeController');
+        Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
+        Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);
+        Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
@@ -126,6 +129,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
         Route::get('client/orders/{order_id}', 'Admin\ClientController@clientorders')->name('client.orders');
 
+
+        //system logs
+        Route::get('systemlogs', 'Admin\LogController@index')->name('logs.index');
+        Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
 
     });

@@ -23,6 +23,10 @@ class Role extends Model implements RoleContract
     use RefreshesPermissionCache;
     use LogsActivity;
 
+    protected static $logName = 'roles';
+
+    protected static $logAttributes = ['arab_name','eng_name','name','guard_name'];
+
     protected $fillable = [
         'arab_name','eng_name','name','guard_name','created_by','updated_by'
     ];

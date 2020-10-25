@@ -13,10 +13,17 @@ trait generaltrait
 
         public function returnError($errNum, $msg)
         {
-            return response()->json([
+           /*  return response()->json([
             'status' => false,
+            'code'=>$errNum,
             'msg' => $msg
-            ]);
+            ]); */
+            return response([
+                'status' => false,
+                'code'=> $errNum,
+                'msg' => $msg
+                ], $errNum)
+            ->header('Content-Type', 'text/json');
         }
 
 
@@ -28,12 +35,20 @@ trait generaltrait
             ];
         }
 
-        public function returnData($key, $value, $msg = "")
+        public function returnData($keys, $values, $msg = "")
         {
+            $data=[];
+
+            for($i=0;$i<count($keys);$i++) {
+
+                $data[$keys[$i]]= $values[$i];
+
+
+            }
             return response()->json([
             'status' => true,
             'msg' => $msg,
-            $key => $value
+            'data' => $data
             ]);
         }
 

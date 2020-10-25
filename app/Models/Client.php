@@ -13,6 +13,10 @@ class Client extends Authenticatable implements JWTSubject
     use LogsActivity;
 
 
+    protected static $logName = 'client';
+
+    protected static $logAttributes = ['password','name','email','age','mobile_number','address','city','status','gender','unique_id','device_token','total_points',];
+
     protected $fillable = [
         'password','name','email','age','mobile_number','address','city','status','gender','unique_id','device_token','total_points','created_by','updated_by'
     ];

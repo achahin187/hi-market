@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Supermarket;
 use Illuminate\Http\Request;
 use App\Http\Traits\generaltrait;
 
@@ -50,6 +51,37 @@ class ProductController extends Controller
         }
 
         return $this->returnData('products',$all_products);
+    }
+
+    function homedata(Request $request)
+    {
+        $lang = $request->header('lang');
+        $udid = $request->header('udid');
+
+        if (!$lang || $lang == '') {
+            return $this->returnError(402, 'language is missing');
+        }
+
+        $device = Client_Devices::where('udid', $udid)->first();
+
+
+        if ($device == null) {
+
+            $client_device = Client_Devices::create([
+
+                'udid' => $udid
+            ]);
+        }
+
+        $supermarkets = Supermarket::where('status','active')->get();
+
+        $offers = offer::where('status','active')->get();
+
+
+
+        return $this->returnData(['supermarkets','offer'],[$supermarkets,$offers]);
+
+
     }
 
     public function productdetails($id)

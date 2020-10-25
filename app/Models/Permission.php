@@ -21,6 +21,10 @@ class Permission extends Model implements PermissionContract
     use RefreshesPermissionCache;
     use LogsActivity;
 
+    protected static $logName = 'permission';
+
+    protected static $logAttributes = ['arab_name','eng_name','name','guard_name','group_name_en','group_name_ar'];
+
     protected $fillable = [
         'arab_name','eng_name','name','guard_name','group_name_en','group_name_ar'
     ];

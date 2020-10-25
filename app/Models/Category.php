@@ -10,6 +10,10 @@ class Category extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'category';
+
+    protected static $logAttributes = ['image','arab_name','eng_name',];
+
     protected $fillable = [
         'image','arab_name','eng_name','created_by','updated_by'
     ];

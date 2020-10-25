@@ -10,6 +10,10 @@ class Supermarket extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'supermarkets';
+
+    protected static $logAttributes = ['arab_name','eng_name','status','commission','priority','image'];
+
     protected $fillable = [
         'arab_name','eng_name','status','commission','priority','image','created_by','updated_by'
     ];

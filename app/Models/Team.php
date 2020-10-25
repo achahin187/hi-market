@@ -10,6 +10,10 @@ class Team extends Model
     //
     use LogsActivity;
 
+    protected static $logName = 'teams';
+
+    protected static $logAttributes = ['arab_name','eng_name','arab_description','eng_description'];
+
     protected $fillable = [
         'arab_name','eng_name','arab_description','eng_description','created_by','updated_by'
     ];
