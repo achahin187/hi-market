@@ -15,14 +15,14 @@ class Client extends Authenticatable implements JWTSubject
 
     protected static $logName = 'client';
 
-    protected static $logAttributes = ['password','name','email','age','mobile_number','address','city','status','gender','unique_id','device_token','total_points',];
+    protected static $logAttributes = ['status','password','name','email','mobile_number','address'];
 
     protected $fillable = [
-        'password','name','email','age','mobile_number','address','city','status','gender','unique_id','device_token','total_points','created_by','updated_by'
+        'device_type','status','password','name','email','mobile_number','address','unique_id','total_points','remember_token','activation_code','updated_at','created_at','created_by','updated_by'
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password','remember_token'
     ];
 
     /**

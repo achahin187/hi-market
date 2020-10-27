@@ -77,11 +77,7 @@ class ProductController extends Controller
 
         $offers = offer::where('status','active')->get();
 
-
-
-
-
-        return $this->returnData(['supermarkets','offer'],[$supermarkets,$offers]);
+        return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
 
 
     }

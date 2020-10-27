@@ -13,15 +13,49 @@ class CategoriesController extends Controller
 
     use generaltrait;
 
-    public function index()
+    public function supermarketcategories(Request $request)
     {
-        if ($this->getCurrentLang() == 'en') {
-            $categories = Category::select('id','eng_name as name','image')->get();
-        }
-        else {
-            $categories = Category::select('id','arab_name as name','image')->get();
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+            return $this->returnError(402,'no lang');
         }
 
-        return $this->returnData('categories',$categories);
+        $token = $request->header('token');
+
+        $client = Client::where('remember_token',$token)->first();
+
+        if($client)
+        {
+
+            $supermarket_id = json_decode($request->getContent());
+
+            $supermarket = supermarket::find($supermarket_id->id);
+
+            if($supermarket)
+            {
+
+                $categories = Category::select('');
+
+                return $this->returnData(['categories'], [$categories]);
+            }
+            else
+            {
+                if($lang == 'ar')
+                {
+                    return $this->returnError(305,'لم نجد هذا العميل');
+                }
+                return $this->returnError(305 ,'there is no client found');
+            }
+
+        }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError(305,'لم نجد هذا العميل');
+            }
+            return $this->returnError(305 ,'there is no client found');
+        }
     }
 }

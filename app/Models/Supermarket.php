@@ -26,4 +26,8 @@ class Supermarket extends Model
         return $this->hasMany('App\Models\Offer');
     }
 
+    public function categories() {
+        return $this->belongsToMany('App\Models\Category');
+    }
+
 }

@@ -170,11 +170,6 @@ $factory->define(Client::class, function (Faker $faker) {
         'total_points' => $faker->randomElement([100,200,300,400]),
         'address' => $faker->address,
         'mobile_number' => $faker->phoneNumber,
-        'city' => $faker->city,
-        'gender' => $faker->randomElement(['male','female']),
-        'age' => $faker->randomElement([20,30,50,35]),
-        'status' => $faker->randomElement(['inactive','active']),
-        'unique_id' => $faker->randomNumber(),
         'remember_token' => Str::random(10),
     ];
 });

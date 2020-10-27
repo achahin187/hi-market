@@ -14,13 +14,12 @@
                         <h1>DataTables</h1>
                     </div>
 
-                    @if(auth()->user()->can('vendor-create'))
+
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('countries.create')}}">add new country</a></li>
                             </ol>
                         </div>
-                    @endif
 
 
                     <div class="col-12">

@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
 
         factory('App\Models\Point', 70)->create();
 
-        factory('App\Models\Supermarket', 70)->create();
+        $supermarkets = factory('App\Models\Supermarket', 70)->create();
 
         factory('App\Models\Product', 70)->create();
 
@@ -81,6 +81,17 @@ class DatabaseSeeder extends Seeder
         factory('App\Models\Area', 70)->create();
 
         factory('App\Models\Coverage_area', 70)->create();
+
+
+        foreach ($supermarkets as $supermarket) {
+            $category_ids = [];
+
+            $category_ids[] = Product::all()->random()->id;
+            $category_ids[] = Product::all()->random()->id;
+            $category_ids[] = Product::all()->random()->id;
+
+            $supermarket->categories()->sync( $category_ids );
+        }
 
 
 

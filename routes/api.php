@@ -48,6 +48,8 @@
 
         Route::get('getArea','LocationController@index')->name('listArea');
         Route::post('getHomeData','ProductController@homeData')->name('listHome');
+        Route::get('getsupermarketcats','CategoriesController@supermarketcategories')->name('listsupermarketcats');
+        Route::post('getcategoryproducts','CategoriesController@categoryproducts')->name('listcategoryproducts');
     });
 
 

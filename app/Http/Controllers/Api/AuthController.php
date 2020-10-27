@@ -83,7 +83,7 @@ class AuthController extends Controller
     {
 
         $lang = $request->header('lang');
-        $udid = $request->header('udid');
+       // $udid = $request->header('udid');
 
 
         if(!$lang || $lang == ''){
@@ -96,6 +96,7 @@ class AuthController extends Controller
                 return $this->returnError(402,'language is missing');
             }
         }
+
 
         $validator = Validator::make($request->all(), [
             'mobile_number' => ['required'],
@@ -114,6 +115,7 @@ class AuthController extends Controller
             }
         }
 
+
         try {
 
             //login
@@ -121,6 +123,7 @@ class AuthController extends Controller
             $credentials = $request->only(['mobile_number','password']);
 
             $token =  Auth::guard('client-api')->attempt($credentials);
+
 
             if(!$token) {
                 if ($lang == 'ar') {
@@ -134,6 +137,9 @@ class AuthController extends Controller
 
             $client = Auth::guard('client-api')->user();
 
+
+            /*
+
             $device = Client_Devices::where('client_id',$client->id)->where('udid',$udid)->first();
 
 
@@ -144,13 +150,14 @@ class AuthController extends Controller
                     'client_id' => $client->id,
                     'udid' => $udid
                 ]);
-            }
+            }*/
 
 
-            $client->update(['remember_token' => $token]);
+            $client->update(['remember_token' => $token ]);
 
 
-            $client->udid = $udid;
+
+            //$client->udid = $udid;
 
             $msg = "you have been logged in sucessfully";
 
@@ -161,6 +168,7 @@ class AuthController extends Controller
             {
                 $msg = "you have been logged in sucessfully";
             }
+
 
             //return token
             return $this->returnData(['client'] ,[$client] , $msg);
