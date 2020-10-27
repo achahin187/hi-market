@@ -14,9 +14,19 @@ class Area extends Model
 
     protected static $logName = 'area';
 
-    protected static $logAttributes = ['ltn','lan'];
+    protected static $logAttributes = ['name_ar','name_en','city','country','status'];
 
     protected $fillable = [
-        'ltn','lan','created_by','updated_by'
+        'name_ar','name_en','city','country','status','created_by','updated_by'
     ];
+
+
+    public function areacountry() {
+        return $this->belongsTo('App\Models\Country','country');
+    }
+
+
+    public function areacity() {
+        return $this->belongsTo('App\Models\City','city');
+    }
 }

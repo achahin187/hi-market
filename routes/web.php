@@ -67,6 +67,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('notifications', 'Admin\NotificationController');
         Route::resource('measures', 'Admin\UnitController');
         Route::resource('sizes', 'Admin\SizeController');
+        Route::resource('cities', 'Admin\CityController');
+        Route::resource('areas', 'Admin\AreaController');
+        Route::resource('countries', 'Admin\CountryController');
         Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
         Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);
         Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
@@ -76,6 +79,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');
         Route::put('offers/status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
         Route::put('clients/status/{client_id}', 'Admin\ClientController@status')->name('clients.status');
+        Route::put('areas/status/{area_id}', 'Admin\AreaController@status')->name('areas.status');
+        Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
+        Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
 
         Route::group(['prefix' => 'products'],function() {
 

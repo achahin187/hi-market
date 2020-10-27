@@ -3,9 +3,13 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Address;
+use App\Models\Area;
 use App\Models\CartRequest;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Client;
+use App\Models\Country;
+use App\Models\Coverage_area;
 use App\Models\Measures;
 use App\Models\Offer;
 use App\Models\Point;
@@ -294,6 +298,44 @@ $factory->define(\App\Models\Notification::class, function (Faker $faker) {
         'eng_body' => $faker->paragraph,
         'icon' => "12.jpg",
         'flag' => $faker->randomElement([0,1,2])
+    ];
+});
+
+$factory->define(Country::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'numcode' => $faker->randomNumber(),
+        'phonecode' => $faker->randomNumber(),
+        'phonelength' => $faker->randomNumber(),
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(City::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'country' => Country::all()->random()->id,
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(Area::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'country' => Country::all()->random()->id,
+        'city' => City::all()->random()->id,
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(Coverage_area::class, function (Faker $faker) {
+    return [
+        'lat' => $faker->randomNumber(['32.5','37.2','31.3']),
+        'long' => $faker->randomElement(['34.5','35.2','36.12']),
+        'status' => $faker->randomElement(['active','inactive']),
     ];
 });
 

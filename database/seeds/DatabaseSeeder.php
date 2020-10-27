@@ -74,6 +74,14 @@ class DatabaseSeeder extends Seeder
             $order->products()->sync( $products_ids );
         }
 
+        factory('App\Models\Country', 70)->create();
+
+        factory('App\Models\City', 70)->create();
+
+        factory('App\Models\Area', 70)->create();
+
+        factory('App\Models\Coverage_area', 70)->create();
+
 
 
     }

@@ -139,7 +139,7 @@ $settings = App\Models\Setting::all()->first();
                     <img src="{{ asset('dist') }}/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">John Doe</a>
+                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                 </div>
             </div>
 
@@ -181,6 +181,37 @@ $settings = App\Models\Setting::all()->first();
                             </ul>
                         </li>
                     @endif
+
+                    <li class="nav-item has-treeview">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                               location
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{route('countries.index',0)}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>country</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('cities.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>city</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('areas.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>area</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{route('categories.index')}}" class="nav-link">

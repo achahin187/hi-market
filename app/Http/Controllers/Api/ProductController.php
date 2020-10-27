@@ -79,6 +79,8 @@ class ProductController extends Controller
 
 
 
+
+
         return $this->returnData(['supermarkets','offer'],[$supermarkets,$offers]);
 
 
