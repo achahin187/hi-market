@@ -46,9 +46,9 @@ class CountryController extends Controller
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'numcode' => 'required|integer|min:0',
-            'phonecode' => 'required|integer|min:0',
-            'phonelength' => 'required|integer|min:0',
+            'numcode' => 'required|numeric',
+            'phonecode' => 'required|numeric',
+            'phonelength' => 'required|numeric',
             'status' => 'required|string'
         ];
 

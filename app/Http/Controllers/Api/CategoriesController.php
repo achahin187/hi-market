@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
@@ -35,7 +37,7 @@ class CategoriesController extends Controller
             if($supermarket)
             {
 
-                $categories = Category::select('');
+                $categories = Model::Select(DB::raw('SELECT b.arab_name FROM category_supermarket a JOIN categories b ON a.category_id = b.id JOIN supermarkets c ON a.supermarket_id = c.id'));
 
                 return $this->returnData(['categories'], [$categories]);
             }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSupermarketCategoryTable extends Migration
+class CreateCategorySupermarketTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSupermarketCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('supermarket_category', function (Blueprint $table) {
+        Schema::create('category_supermarket', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('supermarket_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
@@ -33,6 +33,6 @@ class CreateSupermarketCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supermarket_category');
+        Schema::dropIfExists('category_supermarket');
     }
 }
