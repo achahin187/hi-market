@@ -46,10 +46,10 @@
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
 
 
-        Route::get('getArea','LocationController@index')->name('listArea');
-        Route::post('getHomeData','ProductController@homeData')->name('listHome');
+        Route::post('getarea','LocationController@index')->name('listArea');
+        Route::get('gethomedata','ProductController@homeData')->name('listHome');
         Route::get('getsupermarketcats','CategoriesController@supermarketcategories')->name('listsupermarketcats');
-        Route::post('getcategoryproducts','CategoriesController@categoryproducts')->name('listcategoryproducts');
+        Route::get('getcategoryproducts','CategoriesController@categoryproducts')->name('listcategoryproducts');
     });
 
 

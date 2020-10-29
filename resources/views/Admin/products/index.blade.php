@@ -55,8 +55,8 @@
                                     <label>show </label>
                                     <select class=" @error('columns') is-invalid @enderror select2"  name="columns[]" data-placeholder="Select a column" style="width: 100%;" required multiple>
 
-                                        <option  value="arab_name">arab name</option>
-                                        <option  value="eng_name">eng name</option>
+                                        <option  value="name_ar">arab name</option>
+                                        <option  value="name_en">eng name</option>
                                         <option  value="arab_description">arab description</option>
                                         <option  value="eng_description">eng description</option>
                                         <option  value="arab_spec">arab spec</option>
@@ -95,10 +95,10 @@
 
                                             @if(isset($columns))
 
-                                                @if(in_array('arab_name',$columns))
+                                                @if(in_array('name_ar',$columns))
                                                     <th>arab name</th>
                                                 @endif
-                                                @if(in_array('eng_name',$columns))
+                                                @if(in_array('name_en',$columns))
                                                     <th>eng name</th>
                                                 @endif
                                                 @if(in_array('arab_description',$columns))
@@ -186,11 +186,11 @@
                                             <tr>
 
                                                 @if(isset($columns))
-                                                    @if(in_array('arab_name',$columns))
-                                                        <td>{{$product->arab_name}}</td>
+                                                    @if(in_array('name_ar',$columns))
+                                                        <td>{{$product->name_ar}}</td>
                                                     @endif
-                                                    @if(in_array('eng_name',$columns))
-                                                        <td>{{$product->eng_name}}</td>
+                                                    @if(in_array('name_en',$columns))
+                                                        <td>{{$product->name_en}}</td>
                                                     @endif
                                                     @if(in_array('arab_description',$columns))
                                                         <td>{{$product->arab_description}}</td>
@@ -308,8 +308,8 @@
 
                                                 @else
 
-                                                    <td>{{$product->arab_name}}</td>
-                                                    <td>{{$product->eng_name}}</td>
+                                                    <td>{{$product->name_ar}}</td>
+                                                    <td>{{$product->name_en}}</td>
                                                     <td>{{$product->priority}}</td>
                                                     <td>{{$product->points}}</td>
                                                     <td>{{$product->price}}</td>

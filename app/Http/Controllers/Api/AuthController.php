@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Model\Client;
 use App\Model\Client_Devices;
+use App\Models\Clientdevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             return $this->returnError(402,Lang::get('message.missingLang'));
         }
 
-        $mobile = $request->mobile;
+        $mobile = $request->mobile_number;
 
         $code = $request->code;
 
@@ -83,7 +84,7 @@ class AuthController extends Controller
     {
 
         $lang = $request->header('lang');
-       // $udid = $request->header('udid');
+        $udid = $request->header('udid');
 
 
         if(!$lang || $lang == ''){
@@ -137,29 +138,8 @@ class AuthController extends Controller
 
             $client = Auth::guard('client-api')->user();
 
+            $client->update(['remember_token' => $token]);
 
-            /*
-
-            $device = Client_Devices::where('client_id',$client->id)->where('udid',$udid)->first();
-
-
-            if($device == null) {
-
-                $client_device = Client_Devices::create([
-
-                    'client_id' => $client->id,
-                    'udid' => $udid
-                ]);
-            }*/
-
-
-            $client->update(['remember_token' => $token ]);
-
-
-
-            //$client->udid = $udid;
-
-            $msg = "you have been logged in sucessfully";
 
             if ($lang == 'ar') {
                 $msg = "لقد تمت عملية تسجيل دخولك بنجاح";
@@ -224,15 +204,6 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-
-            $client_device = Client_Devices::create([
-
-                'client_id' => $client->id,
-                'udid' => $udid
-
-            ]);
-
-
             $token = auth()->guard('client-api')->login($client);
 
             $code = '123456';
@@ -259,7 +230,7 @@ class AuthController extends Controller
             return $this->returnError(402,Lang::get('message.missingLang'));
         }
 
-        $mobile = $request->mobile;
+        $mobile = $request->mobile_number;
 
 
         $client = Client::where('mobile_number',$mobile)->first();

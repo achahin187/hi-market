@@ -15,7 +15,7 @@ class Product extends Model
     protected static $logAttributes = ['arab_name','eng_name','price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','review','eng_spec','arab_spec','rate','exp_date','points','priority','barcode'];
 
     protected $fillable = [
-        'arab_name','eng_name','price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','review','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','created_by','updated_by'
+        'name_ar','name_en','price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','review','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','created_by','updated_by'
     ];
 
     public function category() {

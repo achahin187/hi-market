@@ -61,8 +61,8 @@ class ProductController extends Controller
         $user = auth()->user();
 
         $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'barcode' => ['required','numeric','digits_between:10,16'],
@@ -95,9 +95,9 @@ class ProductController extends Controller
         }
 
 
-        $arab_name = $request->input('arab_name');
+        $arab_name = $request->input('name_ar');
 
-        $eng_name = $request->input('eng_name');
+        $eng_name = $request->input('name_en');
 
         $arab_description = $request->input('arab_description');
 
@@ -169,8 +169,8 @@ class ProductController extends Controller
 
 
         $product = Product::create([
-            'arab_name' => $arab_name,
-            'eng_name' => $eng_name,
+            'name_ar' => $arab_name,
+            'name_en' => $eng_name,
             'price' => $price,
             'points' => $points,
             'category_id' => $category,
@@ -293,8 +293,8 @@ class ProductController extends Controller
         $user = auth()->user();
 
         $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'barcode' => ['required','numeric','digits_between:10,16'],
@@ -328,9 +328,9 @@ class ProductController extends Controller
                 $priority = $request->input('priority');
             }
 
-            $arab_name = $request->input('arab_name');
+            $arab_name = $request->input('name_ar');
 
-            $eng_name = $request->input('eng_name');
+            $eng_name = $request->input('name_en');
 
             $arab_description = $request->input('arab_description');
 

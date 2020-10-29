@@ -56,8 +56,8 @@
                                     <tbody>
                                     @foreach($categories as $category)
                                         <tr>
-                                            <td>{{$category->arab_name}}</td>
-                                            <td>{{$category->eng_name}}</td>
+                                            <td>{{$category->name_ar}}</td>
+                                            <td>{{$category->name_en}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

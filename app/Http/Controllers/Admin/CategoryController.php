@@ -45,16 +45,16 @@ class CategoryController extends Controller
         //
 
         $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         $this->validate($request,$rules);
 
-        $arab_name = $request->input('arab_name');
+        $arab_name = $request->input('name_ar');
 
-        $eng_name = $request->input('eng_name');
+        $eng_name = $request->input('name_en');
 
         $user = auth()->user();
 
@@ -68,8 +68,8 @@ class CategoryController extends Controller
 
             Category::create([
 
-                'arab_name' => $arab_name,
-                'eng_name' => $eng_name,
+                'name_ar' => $arab_name,
+                'name_en' => $eng_name,
                 'image' => $file_to_store,
                 'created_by' => $user->id
             ]);
@@ -78,8 +78,8 @@ class CategoryController extends Controller
         {
             Category::create([
 
-                'arab_name' => $arab_name,
-                'eng_name' => $eng_name,
+                'name_ar' => $arab_name,
+                'name_en' => $eng_name,
                 'created_by' => $user->id
             ]);
         }
@@ -142,8 +142,8 @@ class CategoryController extends Controller
         //
 
         $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ];
 
@@ -169,16 +169,16 @@ class CategoryController extends Controller
                         unlink('category_images/' . $category->image);
                     }
                 }
-                $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $file_to_store , 'updated_by' => $user->id]);
+                $category->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en, 'image' => $file_to_store , 'updated_by' => $user->id]);
             } else {
                 if ($request->has('checkedimage')) {
-                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => $request->input('checkedimage') , 'updated_by' => $user->id]);
+                    $category->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en, 'image' => $request->input('checkedimage') , 'updated_by' => $user->id]);
                 } else {
 
                     if($category->image) {
                         unlink('category_images/' . $category->image);
                     }
-                    $category->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'image' => null , 'updated_by' => $user->id]);
+                    $category->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en, 'image' => null , 'updated_by' => $user->id]);
                 }
 
             }

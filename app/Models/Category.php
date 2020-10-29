@@ -12,10 +12,10 @@ class Category extends Model
 
     protected static $logName = 'category';
 
-    protected static $logAttributes = ['image','arab_name','eng_name',];
+    protected static $logAttributes = ['image','name_ar','name_en',];
 
     protected $fillable = [
-        'image','arab_name','eng_name','created_by','updated_by'
+        'image','name_ar','name_en','created_by','updated_by'
     ];
 
     public function products() {

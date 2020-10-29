@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
-use App\Model\Client;
+use App\Models\Client;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

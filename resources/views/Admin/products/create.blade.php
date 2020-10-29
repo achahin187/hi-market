@@ -91,8 +91,8 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
-                                    <input type="text" value="@if(isset($product)){{$product->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
-                                    @error('arab_name')
+                                    <input type="text" value="@if(isset($product)){{$product->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
+                                    @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -100,8 +100,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
-                                    <input type="text" name="eng_name" value="@if(isset($product)){{$product->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
-                                    @error('eng_name')
+                                    <input type="text" name="name_en" value="@if(isset($product)){{$product->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
+                                    @error('name_en')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -236,13 +236,13 @@
                                         @if(isset($product))
                                             @foreach(\App\Models\Category::all() as $category)
 
-                                                <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->eng_name }}</option>
+                                                <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                             @endforeach
                                         @else
                                             @foreach(\App\Models\Category::all() as $category)
 
-                                                <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
+                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                             @endforeach
 

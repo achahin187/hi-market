@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
@@ -56,28 +58,60 @@ class ProductController extends Controller
     function homedata(Request $request)
     {
         $lang = $request->header('lang');
-        $udid = $request->header('udid');
+
+        $token = $request->header('token');
 
         if (!$lang || $lang == '') {
             return $this->returnError(402, 'language is missing');
         }
 
-        $device = Client_Devices::where('udid', $udid)->first();
+        if($token)
+        {
+            $client = Client::where('remember_token',$token)->first();
 
+            if($client)
+            {
+                if($lang == 'ar')
+                {
+                    $supermarkets = Supermarket::where('status','active')->select('arab_name as name')->get();
 
-        if ($device == null) {
+                    $offers = offer::where('status','active')->select('eng_name as name')->get();
+                }
+                else
+                {
+                    $supermarkets = Supermarket::where('status','active')->select('eng_name as name')->get();
 
-            $client_device = Client_Devices::create([
+                    $offers = offer::where('status','active')->select('eng_name as name')->get();
+                }
 
-                'udid' => $udid
-            ]);
+                return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
+            }
+            else
+            {
+                if($lang == 'ar')
+                {
+                    return $this->returnError(305,'لم نجد هذا العميل');
+                }
+                return $this->returnError(305 ,'there is no client found');
+            }
         }
+        else
+        {
+            if($lang == 'ar')
+            {
+                $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->get();
 
-        $supermarkets = Supermarket::where('status','active')->get();
+                $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+            }
+            else
+            {
+                $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->get();
 
-        $offers = offer::where('status','active')->get();
+                $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+            }
 
-        return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
+            return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
+        }
 
 
     }

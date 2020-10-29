@@ -68,8 +68,8 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'arab_name' => $faker->name,
-        'eng_name' => $faker->name,
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
         'image' => $faker->randomElement([0,1]),
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
@@ -136,8 +136,8 @@ $factory->define(product::class, function (Faker $faker) {
 
     $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
     return [
-        'arab_name' => $faker->name,
-        'eng_name' => $faker->name,
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
         'arab_description' => $faker->paragraph,
         'eng_description' => $faker->paragraph,
         'arab_spec' => $faker->paragraph,

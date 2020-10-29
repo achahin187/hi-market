@@ -78,13 +78,13 @@
                                             @if(isset($vendor))
                                                 @foreach(\App\Models\Category::all() as $category)
 
-                                                    <option <?php if($subcategory->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->eng_name }}</option>
+                                                    <option <?php if($subcategory->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\Category::all() as $category)
 
-                                                    <option value="{{ $category->id }}">{{ $category->eng_name }}</option>
+                                                    <option value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                                 @endforeach
 

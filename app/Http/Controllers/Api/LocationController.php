@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clientdevice;
+use App\Models\Coverage_area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,32 +25,21 @@ class LocationController extends Controller
             return $this->returnError(402, 'language is missing');
         }
 
-        $device = Client_Devices::where('udid', $udid)->first();
 
         $long = $request->long;
 
         $lat = $request->lat;
 
 
-        if ($device == null) {
+        $data = Coverage_area::where('lat', $lat)->where('long', $long)->where('status','active')->first();
 
-            $client_device = Client_Devices::create([
-
-                'udid' => $udid
-            ]);
-        }
-
-        $data = DB::table('areas')
-            ->select('area.*')
-            ->where('lat', $lat)->where('long', $long)
-            ->get();
 
         if ($data)
         {
             if ($lang == 'ar') {
-                return $this->returnSuccessMessage(200, 'العنوان صحيح');
+                return $this->returnSuccessMessage('العنوان صحيح ',200);
             } else {
-                return $this->returnSuccessMessage(200, 'location is valid');
+                return $this->returnSuccessMessage('location is valid', 200);
             }
         }
         else
