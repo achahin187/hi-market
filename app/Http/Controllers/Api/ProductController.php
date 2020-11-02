@@ -87,12 +87,14 @@ class ProductController extends Controller
                 foreach ($supermarkets as $supermarket)
                 {
                     $supermarket->imagepath = asset('images/'.$supermarket->image);
+                    $supermarket->logopath = asset('images/'.$supermarket->image);
                 }
 
                 foreach ($offers as $offer)
                 {
                     $offer->imagepath = asset('images'.$offer->image);
                 }
+
 
                 return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
             }
@@ -123,6 +125,7 @@ class ProductController extends Controller
             foreach ($supermarkets as $supermarket)
             {
                 $supermarket->imagepath = asset('images/'.$supermarket->image);
+                $supermarket->logopath = asset('images/'.$supermarket->image);
             }
 
             foreach ($offers as $offer)
