@@ -75,13 +75,23 @@ class ProductController extends Controller
                 {
                     $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
-                    $offers = offer::where('status','active')->select('arab_name as name','offers.*')->get();
+                    $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode')->get();
                 }
                 else
                 {
                     $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
                     $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+                }
+
+                foreach ($supermarkets as $supermarket)
+                {
+                    $supermarket->imagepath = asset('images/'.$supermarket->image);
+                }
+
+                foreach ($offers as $offer)
+                {
+                    $offer->imagepath = asset('images'.$offer->image);
                 }
 
                 return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);

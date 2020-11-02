@@ -52,6 +52,11 @@ class CategoriesController extends Controller
                         $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
                     }
 
+                    foreach ($categories as $category)
+                    {
+                        $category->imagepath = asset('images/'.$category->image);
+                    }
+
                     return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
                 }
                 else
@@ -89,6 +94,11 @@ class CategoriesController extends Controller
                 else
                 {
                     $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
+                }
+
+                foreach ($categories as $category)
+                {
+                    $category->imagepath = asset('images/'.$category->image);
                 }
 
                 return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
@@ -131,7 +141,7 @@ class CategoriesController extends Controller
 
                 if ($category) {
 
-                    $products = $category->products;
+                    $products = $category->products()->select('name_'.$lang.'as name','products.*')->get();
 
                     foreach ($products as $product)
                     {
@@ -142,6 +152,11 @@ class CategoriesController extends Controller
                                 $product->favourite = 1;
                             }
                         }
+                    }
+
+                    foreach ($products as $product)
+                    {
+                        $product->imagepath = asset('images/'.$product->images);
                     }
 
                     return $this->returnData(['products'], [$products]);
@@ -168,7 +183,7 @@ class CategoriesController extends Controller
 
             if ($category) {
 
-                $products = $category->products;
+                $products = $category->products()->select('name_'.$lang.' as name','products.*')->get();
 
                 foreach ($products as $product)
                 {
@@ -179,6 +194,11 @@ class CategoriesController extends Controller
                             $product->favourite = 1;
                         }
                     }
+                }
+
+                foreach ($products as $product)
+                {
+                    $product->imagepath = asset('images/'.$product->images);
                 }
 
                 return $this->returnData(['products'], [$products]);
