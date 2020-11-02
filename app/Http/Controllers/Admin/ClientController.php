@@ -251,9 +251,9 @@ class ClientController extends Controller
             {
                 $client->update(['status' => 'active']);
             }
-            return redirect('/admin/clients')->withStatus(__('clients status successfully updated.'));
+            return redirect()->back()->withStatus(__('clients status successfully updated.'));
         }
-        return redirect('/admin/clients')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     public function clientorders($client_id)

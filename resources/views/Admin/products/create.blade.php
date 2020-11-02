@@ -250,19 +250,21 @@
 
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>product vendor </label>
-                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                        @if(isset($product))
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
 
-                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                <div class="form-group">
+                                    <label>product subcategory </label>
+                                    <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
+
+                                                <option <?php if($product->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
 
                                             @endforeach
                                         @else
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
+                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
 
-                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+                                                <option value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
 
                                             @endforeach
 
@@ -270,9 +272,10 @@
                                     </select>
                                 </div>
 
+
                                 <div class="form-group">
                                     <label>product supermarket </label>
-                                    <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Supermarket::all() as $supermarket)
 
@@ -291,18 +294,39 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>product subcategory </label>
-                                    <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <label>supermarket branch </label>
+                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
-                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
+                                            @foreach(\App\Models\Branch::all() as $branch)
 
-                                                <option <?php if($product->subcategory->id == $subcategory->id) echo 'selected'; ?> value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
+                                                <option <?php if($product->branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
 
                                             @endforeach
                                         @else
-                                            @foreach(\App\Models\SubCategory::all() as $subcategory)
 
-                                                <option value="{{ $subcategory->id }}">{{ $subcategory->eng_name }}</option>
+                                            @foreach(\App\Models\Branch::all() as $branch)
+
+                                                <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                            @endforeach
+
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>product vendor </label>
+                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
 
                                             @endforeach
 

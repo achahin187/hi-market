@@ -185,8 +185,8 @@ class AreaController extends Controller
             {
                 $area->update(['status' => 'active']);
             }
-            return redirect('/admin/areas')->withStatus(__('area status successfully updated.'));
+            return redirect()->back()->withStatus(__('area status successfully updated.'));
         }
-        return redirect('/admin/areas')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 }

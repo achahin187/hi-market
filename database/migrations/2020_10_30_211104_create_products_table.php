@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('vendor_id')->unsigned();
             $table->bigInteger('supermarket_id')->unsigned();
             $table->bigInteger('subcategory_id')->unsigned();
+            $table->bigInteger('branch_id')->unsigned();
             $table->bigInteger('measure_id')->unsigned();
             $table->bigInteger('size_id')->unsigned();
             $table->unsignedInteger('flag');
@@ -46,6 +47,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('measure_id')->references('id')->on('measures')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade')->onUpdate('cascade');

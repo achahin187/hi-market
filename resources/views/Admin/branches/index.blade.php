@@ -15,7 +15,14 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">add new supermarket</a></li>
+
+                            @if(isset($supermarket))
+                                <li class="breadcrumb-item"><a href="{{route('supermarketbranches.create')}}">add new branch</a></li>
+                            @else
+
+                                <li class="breadcrumb-item"><a href="{{route('branches.create')}}">add new branch</a></li>
+
+                            @endif
                         </ol>
                     </div>
 
@@ -41,7 +48,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Supermarkets</h3>
+                                <h3 class="card-title">branches</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -50,40 +57,41 @@
                                     <tr>
                                         <th>arab_name</th>
                                         <th>eng_name</th>
-                                        <th>commission</th>
-                                        <th>priority</th>
+                                        <th>supermarket</th>
                                         <th>status</th>
                                         <th>products</th>
                                         <th>offers</th>
-                                        <th>branches</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($supermarkets as $supermarket)
+                                    @foreach($branches as $branch)
                                         <tr>
-                                            <td>{{$supermarket->arab_name}}</td>
-                                            <td>{{$supermarket->eng_name}}</td>
-                                            <td>{{$supermarket->commission}}</td>
-                                            <td>{{$supermarket->priority}}</td>
+                                            <td>{{$branch->name_ar}}</td>
+                                            <td>{{$branch->name_en}}</td>
+                                            @if(App::getLocale() == 'ar')
+                                                <td>{{$branch->supermarket->arab_name}}</td>
+                                            @else
+                                                <td>{{$branch->supermarket->eng_name}}</td>
+                                            @endif
                                             <td>
 
-                                                @if($supermarket->status == 'active' )
+                                                @if($branch->status == 'active' )
 
-                                                    <form action="{{ route('supermarket.status', $supermarket->id) }}" method="POST">
+                                                    <form action="{{ route('branch.status', $branch->id) }}" method="POST">
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-success">active</button>
                                                     </form>
 
                                                 @else
 
-                                                    <form action="{{ route('supermarket.status', $supermarket->id) }}" method="POST">
+                                                    <form action="{{ route('branch.status', $branch->id) }}" method="POST">
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch ?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
                                                     </form>
 
                                                 @endif
@@ -91,14 +99,11 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 0]) }}" class="btn btn-info">products</a>
+                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 0]) }}" class="btn btn-info">products</a>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">offers</a>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('supermarket.branches', $supermarket->id) }}" class="btn btn-info">branches</a>
+                                                <a href="{{ route('branch.offers', $branch->id) }}" class="btn btn-info">offers</a>
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -106,11 +111,11 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('supermarkets.destroy', $supermarket->id) }}" method="post">
+                                                        <form action="{{ route('branches.destroy', $branch->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('supermarkets.edit', $supermarket->id) }}">{{ __('edit') }}</a>
+                                                            <a class="dropdown-item" href="{{ route('branches.edit', $branch->id) }}">{{ __('edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 

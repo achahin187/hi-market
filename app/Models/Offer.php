@@ -22,4 +22,8 @@ class Offer extends Model
         return $this->belongsTo('App\Models\Supermarket');
     }
 
+    public function branch() {
+        return $this->belongsTo('App\Models\Branch');
+    }
+
 }

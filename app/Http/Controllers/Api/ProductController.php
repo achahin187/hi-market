@@ -55,7 +55,7 @@ class ProductController extends Controller
         return $this->returnData('products',$all_products);
     }
 
-    function homedata(Request $request)
+    public function homedata(Request $request)
     {
         $lang = $request->header('lang');
 
@@ -73,15 +73,15 @@ class ProductController extends Controller
             {
                 if($lang == 'ar')
                 {
-                    $supermarkets = Supermarket::where('status','active')->select('arab_name as name')->get();
+                    $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
-                    $offers = offer::where('status','active')->select('eng_name as name')->get();
+                    $offers = offer::where('status','active')->select('arab_name as name','offers.*')->get();
                 }
                 else
                 {
-                    $supermarkets = Supermarket::where('status','active')->select('eng_name as name')->get();
+                    $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
-                    $offers = offer::where('status','active')->select('eng_name as name')->get();
+                    $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
                 }
 
                 return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
@@ -99,15 +99,25 @@ class ProductController extends Controller
         {
             if($lang == 'ar')
             {
-                $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->get();
+                $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
-                $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+                $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode')->get();
             }
             else
             {
-                $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->get();
+                $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->orderBy('priority','asc')->get();
 
                 $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+            }
+
+            foreach ($supermarkets as $supermarket)
+            {
+                $supermarket->imagepath = asset('images/'.$supermarket->image);
+            }
+
+            foreach ($offers as $offer)
+            {
+                $offer->imagepath = asset('images'.$offer->image);
             }
 
             return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);

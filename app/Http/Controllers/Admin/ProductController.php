@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Imports\ProductImport;
@@ -565,8 +566,42 @@ class ProductController extends Controller
     {
         //
         $products = Product::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
-        return view('Admin.products.index',compact('products','flag'));
+        return view('Admin.products.index',compact('products','flag','supermarket'));
     }
+
+    public function branchproducts($branch_id,$flag)
+    {
+        //
+        $products = Product::where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
+        return view('Admin.products.index',compact('products','flag','branch'));
+    }
+
+    public function productbranch($id){
+
+
+        //if our chosen id and products table prod_cat_id col match the get first 100 data
+
+        //$request->id here is the id of our chosen option id
+
+        $lang = app()->getLocale();
+
+        $data = Branch::select('name_'.$lang.' as name')->where('supermarket_id',$id)->get();
+        return json_encode($data);//then sent this data to ajax success
+    }
+
+    public function productbranchedit($product_id,$flag,$id){
+
+
+        //if our chosen id and products table prod_cat_id col match the get first 100 data
+
+        //$request->id here is the id of our chosen option id
+
+        $lang = app()->getLocale();
+
+        $data = Branch::select('name_'.$lang.' as name')->where('supermarket_id',$id)->get();
+        return json_encode($data);//then sent this data to ajax success
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -619,9 +654,9 @@ class ProductController extends Controller
             {
                 $product->update(['status' => 'active']);
             }
-            return redirect('/admin/products/0')->withStatus(__('product status successfully updated.'));
+            return redirect()->back()->withStatus(__('product status successfully updated.'));
         }
-        return redirect('/admin/products/0')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     /**

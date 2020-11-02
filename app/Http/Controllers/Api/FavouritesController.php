@@ -14,156 +14,90 @@ class FavouritesController extends Controller
 
     use generaltrait;
 
-    public function addfavourite(Request $request,$flag)
+    public function addfavourite(Request $request)
     {
         //
-        $rules = [
-            'client_id' => 'required|integer',
-            'product_id' => 'required|integer',
-        ];
 
-        $this->validate($request,$rules);
+        $udid = $request->header('udid');
 
-        $client_id = $request->input('client_id');
+        $token = $request->header('token');
 
-        $product_id = $request->input('product_id');
+        $lang = $request->header('lang');
 
-        $client = Client::find($client_id);
+        if(!$lang || $lang == ''){
 
-
-        if($client)
-        {
-            $client->products()->attach($product_id,['flag' => $flag]);
-
-            if($this->getCurrentLang() == 'ar')
+            if ($lang == 'ar') {
+                return $this->returnError(402,'اللغة غير موجودة');
+            }
+            else
             {
-                return $this->returnError('','لقد اصبح هذا المنتج في المفضلات');
+                return $this->returnError(402,'language is missing');
             }
-
-            return $this->returnSuccessMessage('This product have been added to your favourites successfully');
         }
-        else
-        {
-            if($this->getCurrentLang() == 'ar')
+
+
+        $product_id = json_decode($request->getContent())->product_id;
+
+        if($token) {
+
+
+            $client = Client::where('remember_token',$token)->first();
+
+
+            if ($client) {
+
+                $client_devices = DB::table('client_product')->where('udid',$udid)->where('client_id','=',null)->update(['client_id' => $client->id]);
+
+                $client->products()->attach($product_id,['udid' => $udid]);
+
+                if ($lang == 'ar') {
+                    return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات',200);
+                }
+                else {
+                    return $this->returnSuccessMessage('This product have been added to your favourites successfully', 200);
+                }
+            }
+            else
             {
-                return $this->returnError('','لم نجد هذا العميل');
-            }
-            return $this->returnError('','no client exists');
-        }
-
-    }
-
-    public function getfavourites($clientid,$flag)
-    {
-
-        $client = Client::find($clientid);
-
-
-        $favourites = array();
-
-        if($client) {
-            if ($flag == 1) {
-
-                foreach($client->products as $product)
+                if($lang == 'ar')
                 {
-
-                    if($this->getCurrentLang() == 'ar')
-                    {
-
-                        $productarray =
-                        [
-                            'name' => $product->arab_name,
-                            'description' => $product->arab_description,
-                            'rate' => $product->rate,
-                            'price' => $product->price,
-                            'images' => $product->images,
-                            'category' => $product->category->arab_name,
-                            'vendor' => $product->vendor->arab_name
-                        ];
-                    }
-                    else
-                    {
-
-                        $productarray =
-                            [
-                                'name' => $product->eng_name,
-                                'description' => $product->eng_description,
-                                'rate' => $product->rate,
-                                'price' => $product->price,
-                                'images' => $product->images,
-                                'category' => $product->category->eng_name,
-                                'vendor' => $product->vendor->eng_name
-                            ];
-                    }
-                    if($product->pivot->flag == 1)
-                    {
-                        $favourites[] = $productarray;
-                    }
+                    return $this->returnError(400,'لم نجد هذا العميل');
                 }
-
-                if(count($favourites) < 1)
-                {
-                    if($this->getCurrentLang() == 'ar')
-                    {
-                        return $this->returnError('','ليس هناك منتجات في المفضلات');
-                    }
-                    return $this->returnError('4545', 'there is no favourite products for this client');
-                }
-                return $this->returnData('favourites', $favourites);
-            }
-
-            else {
-
-                foreach($client->products as $product)
-                {
-
-                    if($this->getCurrentLang() == 'ar')
-                    {
-
-                        $productarray =
-                            [
-                                'name' => $product->arab_name,
-                                'description' => $product->arab_description,
-                                'rate' => $product->rate,
-                                'price' => $product->price,
-                                'images' => $product->images,
-                                'category' => $product->category->arab_name,
-                                'vendor' => $product->vendor->arab_name
-                            ];
-                    }
-                    else
-                    {
-
-                        $productarray =
-                            [
-                                'name' => $product->eng_name,
-                                'description' => $product->eng_description,
-                                'rate' => $product->rate,
-                                'price' => $product->price,
-                                'images' => $product->images,
-                                'category' => $product->category->eng_name,
-                                'vendor' => $product->vendor->eng_name
-                            ];
-                    }
-                    if($product->pivot->flag == 0)
-                    {
-                        $favourites[] = $productarray;
-                    }
-                }
-                if(count($favourites) < 1)
-                {
-                    return $this->returnError('4545', 'there is no wishlist products for this client');
-                }
-                return $this->returnData('wishlist', $favourites);
+                return $this->returnError(400,'no client exists');
             }
         }
-        else
-        {
-            if($this->getCurrentLang() == 'ar')
+        else {
+
+
+            $client_device = DB::table('client_product')->where('udid',$udid)->where('client_id','!=',null)->first();
+
+
+            if($client_device)
             {
-                return $this->returnError('','لم نجد هذا العميل');
+                $client = Client::find($client_device->client_id);
+
+                $client->products()->attach($product_id,['udid' => $udid]);
+
+                if ($lang == 'ar') {
+                    return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات','');
+                }
+                else {
+                    return $this->returnSuccessMessage('This product have been added to your favourites successfully', '');
+                }
             }
-            return $this->returnError('','no client exists with this id');
+            else
+            {
+                $device = DB::table('client_product')->insert(['udid' => $udid , 'product_id' => $product_id]);
+
+                if ($lang == 'ar') {
+                    return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات','');
+                }
+                else {
+                    return $this->returnSuccessMessage('This product have been added to your favourites successfully', '');
+                }
+            }
+
         }
+
     }
 }

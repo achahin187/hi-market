@@ -15,7 +15,7 @@ class CreateClientProductTable extends Migration
     {
         Schema::create('client_product', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('client_id')->unsigned();
+            $table->bigInteger('client_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned();
             $table->unsignedInteger('udid')->nullable();
             $table->timestamps();

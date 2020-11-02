@@ -13,12 +13,13 @@ $settings = App\Models\Setting::all()->first();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Deliveritto | Dashboard</title>
+
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -40,11 +41,6 @@ $settings = App\Models\Setting::all()->first();
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist') }}/css/adminlte.min.css">
 
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ URL::asset('plugins/daterangepicker/daterangepicker.css') }}">
-
-    <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="{{ URL::asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ URL::asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
@@ -55,9 +51,12 @@ $settings = App\Models\Setting::all()->first();
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ URL::asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ URL::asset('plugins/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ URL::asset('plugins/summernote/summernote-bs4.css') }}">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css">
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -318,13 +317,31 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('supermarkets.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <li class="nav-item has-treeview">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
                                 Supermarkets
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{route('supermarkets.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        list Supermarkets
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('branches.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>branches</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item">
@@ -431,11 +448,11 @@ $settings = App\Models\Setting::all()->first();
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist') }}/js/demo.js"></script>
 
+<!-- Bootstrap4 Duallistbox -->
+<script src="{{ asset('plugins') }}/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+
 <!-- Select2 -->
 <script src="{{ asset('plugins') }}/select2/js/select2.full.min.js"></script>
-
-<!-- date-range-picker -->
-<script src="{{ asset('plugins') }}/daterangepicker/daterangepicker.js"></script>
 
 <!-- bootstrap color picker -->
 <script src="{{ asset('plugins') }}/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
@@ -447,6 +464,11 @@ $settings = App\Models\Setting::all()->first();
 <script src="{{ asset('plugins') }}/moment/moment.min.js"></script>
 
 <script src="{{ asset('plugins') }}/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ asset('plugins') }}/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="{{ asset('plugins') }}/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 
 
 <script>
@@ -584,6 +606,30 @@ $settings = App\Models\Setting::all()->first();
             "responsive": true,
         });
     });
+
+    $(document).ready(function () {
+        $('#supermarket').on('change', function () {
+            let id = $(this).val();
+            $('#branch').empty();
+            $('#branch').append(`<option value="0" disabled selected>Processing...</option>`);
+            $.ajax({
+                type: 'GET',
+                url: 'productbranch/' + id,
+                success: function (response) {
+                    var response = JSON.parse(response);
+                    console.log(response);
+                    $('#branch').empty();
+                    response.forEach(element => {
+                        $('#branch').append(`<option value="${element['id']}">${element['name']}</option>`);
+                    });
+                }
+            });
+        });
+    });
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+
 </script>
 
 
@@ -651,6 +697,9 @@ $settings = App\Models\Setting::all()->first();
         });
     });
 </script> -->
+
+<!-- date-range-picker -->
+<script src="{{ asset('plugins') }}/daterangepicker/daterangepicker.js"></script>
 
 
 

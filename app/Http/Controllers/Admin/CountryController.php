@@ -186,8 +186,8 @@ class CountryController extends Controller
             {
                 $country->update(['status' => 'active']);
             }
-            return redirect('/admin/countries')->withStatus(__('country status successfully updated.'));
+            return redirect()->back()->withStatus(__('country status successfully updated.'));
         }
-        return redirect('/admin/countries')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 }

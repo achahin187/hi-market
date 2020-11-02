@@ -30,4 +30,8 @@ class Supermarket extends Model
         return $this->belongsToMany('App\Models\Category');
     }
 
+    public function branches() {
+        return $this->belongsToMany('App\Models\Branch');
+    }
+
 }

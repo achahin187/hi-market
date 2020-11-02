@@ -170,12 +170,12 @@ class SupermarketController extends Controller
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission ,'image' => $request->input('checkedimage')]);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission ,'priority' => $request->priority,'image' => $request->input('checkedimage')]);
                 } else {
                     if ($supermarket->image != null) {
                         unlink('supermarket_images/' . $supermarket->image);
                     }
-                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission , 'image' => null]);
+                    $supermarket->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name,'commission' => $request->commission ,'priority' => $request->priority, 'image' => null]);
                 }
             }
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
@@ -199,6 +199,9 @@ class SupermarketController extends Controller
 
         if($supermarket)
         {
+            if($supermarket->image != null) {
+                unlink('vendor_images/' . $supermarket->image);
+            }
             $supermarket->delete();
             return redirect('/admin/supermarkets')->withStatus(__('supermarket successfully deleted.'));
         }
@@ -219,9 +222,9 @@ class SupermarketController extends Controller
             {
                 $supermarket->update(['status' => 'active']);
             }
-            return redirect('/admin/supermarkets')->withStatus(__('supermarket status successfully updated.'));
+            return redirect()->back()->withStatus(__('supermarket status successfully updated.'));
         }
-        return redirect('/admin/supermarkets')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     /**

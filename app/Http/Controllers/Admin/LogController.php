@@ -30,15 +30,18 @@ class LogController extends Controller
     public function filter(Request $request,$filter)
     {
 
-
         if($filter == 'user_id') {
 
             $logs = Systemlog::where('causer_id', $request->user_id)->get();
         }
         else
         {
+            $datefrom = date("Y-m-d", strtotime(explode('-',$request->daterange)[0]));
 
-            $logs = Systemlog::whereBetween('created_at',$request->date_range)->get();
+            $dateto = date("Y-m-d", strtotime(explode('-',$request->daterange)[1]));
+
+            $logs = Systemlog::whereBetween('created_at',array($datefrom,$dateto))->get();
+
         }
 
         return view('Admin.systemlogs.index',compact('logs'));

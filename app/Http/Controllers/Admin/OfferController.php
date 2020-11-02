@@ -522,6 +522,13 @@ class OfferController extends Controller
         return view('Admin.dynamic_offers.index',compact('offers'));
     }
 
+    public function branchoffers($branch_id)
+    {
+        //
+        $offers = Offer::where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
+        return view('Admin.dynamic_offers.index',compact('offers'));
+    }
+
     public function status(Request $request,$id)
     {
 
@@ -536,9 +543,9 @@ class OfferController extends Controller
             {
                 $offer->update(['status' => 'active']);
             }
-            return redirect('/admin/offers')->withStatus(__('offer status successfully updated.'));
+            return redirect()->back()->withStatus(__('offer status successfully updated.'));
         }
-        return redirect('/admin/offers')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     /**

@@ -1,0 +1,231 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Branch;
+use Illuminate\Http\Request;
+
+class BranchController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $branches = Branch::orderBy('id', 'desc')->get();
+        return view('Admin.branches.index',compact('branches'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        return view('Admin.branches.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        $rules = [
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'status' => ['required','string'],
+            'supermarket_id' => 'required|integer|min:0',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ];
+
+        $this->validate($request,$rules);
+
+        $arab_name = $request->input('name_ar');
+
+        $eng_name = $request->input('name_en');
+
+        $status = $request->input('status');
+
+        $supermarket = $request->input('supermarket_id');
+
+        if($image = $request->file('image'))
+        {
+            $filename = $image->getClientOriginalName();
+            $fileextension = $image->getClientOriginalExtension();
+            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $image->move('images', $file_to_store);
+
+            Branch::create([
+
+                'name_ar' => $arab_name,
+                'name_en' => $eng_name,
+                'status' => $status,
+                'supermarket_id' => $supermarket,
+                'image' => $file_to_store
+            ]);
+        }
+        else
+        {
+            Branch::create([
+
+                'name_ar' => $arab_name,
+                'name_en' => $eng_name,
+                'status' => $status,
+                'supermarket_id' => $supermarket,
+            ]);
+        }
+
+
+        return redirect('admin/branches')->withStatus(__('branch created successfully'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+        $branch = Branch::find($id);
+
+        if($branch)
+        {
+            return view('Admin.branches.create', compact('branch'));
+        }
+        else
+        {
+            return redirect('admin/branches')->withStatus('no branch have this id');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $rules = [
+            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'supermarket_id' => 'required|integer|min:0',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ];
+
+        $this->validate($request, $rules);
+
+        $branch = Branch::find($id);
+
+        if($branch) {
+
+            if ($file = $request->file('image')) {
+
+                $this->validate($request, $rules);
+
+                $filename = $file->getClientOriginalName();
+                $fileextension = $file->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+                if ($file->move('supermarket_images', $file_to_store)) {
+                    if ($branch->image != null) {
+
+                        unlink('images/' . $branch->image);
+                    }
+                }
+                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $file_to_store]);
+            } else {
+
+                if ($request->has('checkedimage')) {
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $request->input('checkedimage')]);
+                } else {
+                    if ($branch->image != null) {
+                        unlink('images/' . $branch->image);
+                    }
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => null]);
+                }
+            }
+            return redirect('/admin/branches')->withStatus('branch successfully updated.');
+        }
+        else
+        {
+            return redirect('/admin/branches')->withStatus('no branch exist');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        $branch = Branch::find($id);
+
+        if($branch)
+        {
+
+            if($branch->image != null) {
+                unlink('vendor_images/' . $branch->image);
+            }
+
+            $branch->delete();
+            return redirect('/admin/branches')->withStatus(__('branch successfully deleted.'));
+        }
+        return redirect('/admin/branches')->withStatus(__('this id is not in our database'));
+    }
+
+    public function status(Request $request,$id)
+    {
+
+        $branch = Branch::find($id);
+
+        if($branch)
+        {
+            if($branch->status == 'active') {
+                $branch->update(['status' => 'inactive']);
+            }
+            else
+            {
+                $branch->update(['status' => 'active']);
+            }
+            return redirect()->back()->withStatus(__('branch status successfully updated.'));
+        }
+        return redirect()->back()->withStatus(__('this id is not in our database'));
+    }
+
+    public function supermarketbranches($supermarket_id)
+    {
+        //
+        $branches = Branch::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
+        return view('Admin.branches.index',compact('branches','supermarket'));
+    }
+}

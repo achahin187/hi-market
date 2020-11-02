@@ -18,6 +18,9 @@ class CreateSupermarketsTable extends Migration
             $table->string('arab_name');
             $table->string('eng_name');
             $table->string('status')->default('inactive');
+            $table->string('state')->default('open');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->unsignedFloat('commission');
             $table->unsignedInteger('priority');
             $table->string('image')->nullable();

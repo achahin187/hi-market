@@ -40,8 +40,7 @@
         Route::post('add/cv','JobController@add_cv')->name('add_cv');
         Route::get('jobs/view', 'JobController@view_jobs')->name('view_jobs');
         Route::post('jobs/apply', 'JobController@apply_job')->name('apply_job');
-        Route::post('favourites/add/{flag}','FavouritesController@addfavourite');
-        Route::get('favourites/{clientid}/{flag}','FavouritesController@getfavourites');
+        Route::post('favourites/add','FavouritesController@addfavourite');
         Route::get('orders/{client_id}','OrderController@clientorders')->name('client_orders');
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
 

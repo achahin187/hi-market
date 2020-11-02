@@ -35,7 +35,7 @@ class Client extends Authenticatable implements JWTSubject
     ];
 
     public function products() {
-        return $this->belongsToMany('App\Models\Product')->withPivot('flag');
+        return $this->belongsToMany('App\Models\Product')->withPivot('udid');
     }
 
     public function orders() {

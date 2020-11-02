@@ -27,6 +27,8 @@ class CategoriesController extends Controller
 
         $token = $request->header('token');
 
+        $supermarket_id = json_decode($request->getContent())->id;
+
 
         if($token)
         {
@@ -35,21 +37,22 @@ class CategoriesController extends Controller
             if($client)
             {
 
-                $supermarket_id = $request->header('supermarket');
-
                 $supermarket = supermarket::find($supermarket_id);
 
                 if($supermarket) {
 
-                    if ($lang) {
-                        $categories = $supermarket->categories()->select('arab_name as name', 'categories.*')->get();
+                    $categories = $supermarket->categories()->select('id','name_'.$lang.' as name', 'image')->get();
+
+                    if($lang == 'ar')
+                    {
+                        $supermarketname = Supermarket::where('id',$supermarket_id)->select('arab_name as name')->first();
                     }
                     else
                     {
-                        $categories = $supermarket->categories()->select('eng_name as name', 'categories.*')->get();
+                        $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
                     }
 
-                    return $this->returnData(['categories'], [$categories]);
+                    return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
                 }
                 else
                 {
@@ -72,21 +75,23 @@ class CategoriesController extends Controller
         }
         else
         {
-            $supermarket_id = $request->header('supermarket');
 
             $supermarket = supermarket::find($supermarket_id);
 
             if($supermarket) {
 
-                if ($lang) {
-                    $categories = $supermarket->categories()->select('arab_name as name', 'categories.*')->get();
+                $categories = $supermarket->categories()->select('categories.id','name_'.$lang.' as name', 'image')->get();
+
+                if($lang == 'ar')
+                {
+                    $supermarketname = Supermarket::where('id',$supermarket_id)->select('arab_name as name')->first();
                 }
                 else
                 {
-                    $categories = $supermarket->categories()->select('eng_name as name', 'categories.*')->get();
+                    $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
                 }
 
-                return $this->returnData(['categories'], [$categories]);
+                return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
             }
             else
             {
@@ -103,11 +108,16 @@ class CategoriesController extends Controller
     {
         $lang = $request->header('lang');
 
+        $udid = $request->header('udid');
+
         if(!$lang || $lang == ''){
             return $this->returnError(402,'no lang');
         }
 
         $token = $request->header('token');
+
+        $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
+
 
         if($token) {
 
@@ -115,19 +125,23 @@ class CategoriesController extends Controller
 
             if ($client) {
 
-                $category_id = $request->header('category');
+                $category_id = json_decode($request->getContent())->id;
 
                 $category = Category::find($category_id);
 
                 if ($category) {
 
-                    if ($lang == 'ar') {
+                    $products = $category->products;
 
-                        $products = $category->products()->select('arab_name as name', 'categories.*')->get();
-                    }
-                    else
+                    foreach ($products as $product)
                     {
-                        $products = $category->products()->select('eng_name as name', 'categories.*')->get();
+                        foreach ($favproducts as $favproduct)
+                        {
+                            if($product->id == $favproduct->id)
+                            {
+                                $product->favourite = 1;
+                            }
+                        }
                     }
 
                     return $this->returnData(['products'], [$products]);
@@ -148,19 +162,23 @@ class CategoriesController extends Controller
         }
         else
         {
-            $category_id = $request->header('category');
+            $category_id = json_decode($request->getContent())->id;
 
             $category = Category::find($category_id);
 
             if ($category) {
 
-                if ($lang == 'ar') {
+                $products = $category->products;
 
-                    $products = $category->products()->select('arab_name as name', 'categories.*')->get();
-                }
-                else
+                foreach ($products as $product)
                 {
-                    $products = $category->products()->select('eng_name as name', 'categories.*')->get();
+                    foreach ($favproducts as $favproduct)
+                    {
+                        if($product->id == $favproduct->product_id)
+                        {
+                            $product->favourite = 1;
+                        }
+                    }
                 }
 
                 return $this->returnData(['products'], [$products]);

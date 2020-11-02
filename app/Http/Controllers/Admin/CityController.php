@@ -178,8 +178,8 @@ class CityController extends Controller
             {
                 $city->update(['status' => 'active']);
             }
-            return redirect('/admin/cities')->withStatus(__('city status successfully updated.'));
+            return redirect()->back()->withStatus(__('city status successfully updated.'));
         }
-        return redirect('/admin/cities')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 }

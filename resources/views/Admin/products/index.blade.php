@@ -16,7 +16,15 @@
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+
+                                @if(isset($supermarket))
+                                    <li class="breadcrumb-item"><a href="{{route('supermarketproducts.create',0)}}">create new product</a></li>
+                                @elseif(isset($branch))
+                                    li class="breadcrumb-item"><a href="{{route('branchproducts.create',0)}}">create new product</a></li>
+                                @else
+                                    li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+                                @endif
+
                                 <li class="breadcrumb-item"><a href="{{route('products.export')}}">export</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('products.import')}}">import</a></li>
                             </ol>
@@ -69,7 +77,8 @@
                                         <option  value="category_id">categories</option>
                                         <option  value="vendor_id">vendors</option>
                                         <option  value="subcategory_id">subcategories</option>
-                                        <option  value="supermarket_id">supermarkets</option>
+                                        <option  value="supermarket_id">supermarket</option>
+                                        <option  value="branch_id">branch</option>
                                         <option  value="measure_id">measure</option>
                                         <option  value="size_id">size</option>
                                         <option  value="start_date">start date</option>
@@ -137,6 +146,10 @@
                                                 @if(in_array('supermarket_id',$columns))
                                                     <th>supermarket</th>
                                                 @endif
+
+                                                @if(in_array('branch_id',$columns))
+                                                    <th>supermarket</th>
+                                                @endif
                                                 @if(in_array('subcategory_id',$columns))
                                                     <th>subcategory</th>
                                                 @endif
@@ -168,12 +181,11 @@
                                                 <th>arab name</th>
                                                 <th>eng name</th>
                                                 <th>priority</th>
-                                                <th>points</th>
-                                                <th>price</th>
                                                 <th>status</th>
                                                 <th>category</th>
                                                 <th>vendor</th>
                                                 <th>supermarket</th>
+                                                <th>branch</th>
                                                 <th>subcategory</th>
                                                 <th>controls</th>
                                             @endif
@@ -246,6 +258,15 @@
                                                         @endif
 
                                                     @endif
+                                                    @if(in_array('branch_id',$columns))
+
+                                                        @if(App::getLocale() == 'ar')
+                                                            <td>{{$product->branch->name_ar}}</td>
+                                                        @else
+                                                            <td>{{$product->branch->name_en}}</td>
+                                                        @endif
+
+                                                    @endif
                                                     @if(in_array('subcategory_id',$columns))
 
                                                         @if(App::getLocale() == 'ar')
@@ -311,8 +332,6 @@
                                                     <td>{{$product->name_ar}}</td>
                                                     <td>{{$product->name_en}}</td>
                                                     <td>{{$product->priority}}</td>
-                                                    <td>{{$product->points}}</td>
-                                                    <td>{{$product->price}}</td>
                                                     <td>
 
                                                         @if($product->status == 'active' )
@@ -339,9 +358,9 @@
 
                                                     </td>
                                                     @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->category->arab_name}}</td>
+                                                        <td>{{$product->category->name_ar}}</td>
                                                     @else
-                                                        <td>{{$product->category->eng_name}}</td>
+                                                        <td>{{$product->category->name_en}}</td>
                                                     @endif
 
                                                     @if(App::getLocale() == 'ar')
@@ -354,6 +373,12 @@
                                                         <td>{{$product->supermarket->arab_name}}</td>
                                                     @else
                                                         <td>{{$product->supermarket->eng_name}}</td>
+                                                    @endif
+
+                                                    @if(App::getLocale() == 'ar')
+                                                        <td>{{$product->branch->name_ar}}</td>
+                                                    @else
+                                                        <td>{{$product->branch->name_en}}</td>
                                                     @endif
 
                                                     @if(App::getLocale() == 'ar')

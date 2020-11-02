@@ -233,9 +233,9 @@ class PointController extends Controller
             {
                 $point->update(['status' => 'active']);
             }
-            return redirect('/admin/points')->withStatus(__('point status successfully updated.'));
+            return redirect()->back()->withStatus(__('point status successfully updated.'));
         }
-        return redirect('/admin/points')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     /**

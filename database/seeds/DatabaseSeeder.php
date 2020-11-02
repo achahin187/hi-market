@@ -47,6 +47,8 @@ class DatabaseSeeder extends Seeder
 
         $supermarkets = factory('App\Models\Supermarket', 70)->create();
 
+        factory('App\Models\Branch', 70)->create();
+
         factory('App\Models\Product', 70)->create();
 
         factory('App\Models\Offer', 70)->create();

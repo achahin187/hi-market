@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOffersTable extends Migration
+class CreateBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,16 @@ class CreateOffersTable extends Migration
      */
     public function up()
     {
-        Schema::create('offers', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('arab_name');
-            $table->string('eng_name');
-            $table->text('eng_description')->nullable();
-            $table->text('arab_description')->nullable();
+            $table->string('name_ar');
+            $table->string('name_en');
+            $table->string('status')->default('inactive');
             $table->bigInteger('supermarket_id')->unsigned();
-            $table->string('promocode')->nullable();
-            $table->string('offer_type');
-            $table->string('value_type');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->string('status');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
-
 
             $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -42,6 +35,6 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offers');
+        Schema::dropIfExists('branches');
     }
 }

@@ -4,6 +4,7 @@
 
 use App\Models\Address;
 use App\Models\Area;
+use App\Models\Branch;
 use App\Models\CartRequest;
 use App\Models\Category;
 use App\Models\City;
@@ -70,7 +71,18 @@ $factory->define(Category::class, function (Faker $faker) {
     return [
         'name_ar' => $faker->name,
         'name_en' => $faker->name,
-        'image' => $faker->randomElement([0,1]),
+        'image' => 'mohamed.jpg',
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
+$factory->define(Branch::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'status' => $faker->randomElement(['inactive','active']),
+        'supermarket_id' => Supermarket::all()->random()->id,
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
     ];
@@ -107,6 +119,10 @@ $factory->define(Supermarket::class, function (Faker $faker) {
         'arab_name' => $faker->name,
         'eng_name' => $faker->name,
         'status' => $faker->randomElement(['inactive','active']),
+        'state' => $faker->randomElement(['open','closed']),
+        'start_time' => $faker->time(),
+        'end_time' => $faker->time(),
+        'image' => 'mohamed.jpg',
         'priority' => $faker->numberBetween(1,50),
         'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
         'created_by' => User::all()->random()->id,
@@ -146,10 +162,11 @@ $factory->define(product::class, function (Faker $faker) {
         'points' => $faker->randomElement([30,40,10,25,35]),
         'priority' => $faker->numberBetween(1,50),
         'barcode' => $faker->randomNumber(),
-        'images' => $faker->randomElement([0,1]),
+        'images' => 'mohamed.jpg',
         'category_id' => Category::all()->random()->id,
         'vendor_id' => Vendor::all()->random()->id,
         'supermarket_id' => Supermarket::all()->random()->id,
+        'branch_id' => Branch::all()->random()->id,
         'subcategory_id' => SubCategory::all()->random()->id,
         'measure_id' => Measures::all()->random()->id,
         'size_id' => Size::all()->random()->id,
@@ -278,7 +295,9 @@ $factory->define(Offer::class, function (Faker $faker) {
         'value_type' => $faker->randomElement(["free delivery","discount by percentage","free product","discount by value"]),
         'offer_type' => $faker->randomElement(["promocode","navigable"]),
         'supermarket_id' => Supermarket::all()->random()->id,
+        'branch_id' => Branch::all()->random()->id,
         'status' => $faker->randomElement(['inactive','active']),
+        'image' => 'mohamed.jpg',
         'start_date' => $startingDate,
         'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
 
@@ -333,6 +352,8 @@ $factory->define(Coverage_area::class, function (Faker $faker) {
         'status' => $faker->randomElement(['active','inactive']),
     ];
 });
+
+
 
 
 

@@ -66,7 +66,7 @@
                                                     <i class="far fa-calendar-alt"></i>
                                                   </span>
                                                 </div>
-                                                <input type="text" class="form-control float-right datefilter" name="date_range" id="reservation">
+                                                <input type="text" class="form-control float-right datefilter" name="daterange" id="reservation">
                                             </div>
                                             <!-- /.input group -->
                                         </div>

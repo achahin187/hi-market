@@ -70,11 +70,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('cities', 'Admin\CityController');
         Route::resource('areas', 'Admin\AreaController');
         Route::resource('countries', 'Admin\CountryController');
+        Route::resource('branches', 'Admin\BranchController');
         Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
         Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);
         Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
+        Route::put('branches/status/{branch_id}', 'Admin\BranchController@status')->name('branch.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
         Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');
         Route::put('offers/status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
@@ -95,6 +97,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::put('{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
             Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
             Route::delete('{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+            Route::get('create/productbranch/{id}','Admin\ProductController@productbranch')->name('productbranch');
+            Route::get('{product_id?}/{flag?}/edit/productbranch/{id}','Admin\ProductController@productbranchedit')->name('productbranch');
 
         });
 
@@ -133,8 +137,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
         Route::get('supermarkets/products/{supermarket_id}/{flag}', 'Admin\ProductController@supermarketproducts')->name('supermarket.products');
         Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
+        Route::get('supermarkets/branches/{supermarket_id}', 'Admin\BranchController@supermarketbranches')->name('supermarket.branches');
+        Route::get('branches/products/{branch_id}/{flag}', 'Admin\ProductController@branchproducts')->name('branch.products');
+        Route::get('branches/offers/{branch_id}', 'Admin\OfferController@branchoffers')->name('branch.offers');
         Route::get('client/orders/{order_id}', 'Admin\ClientController@clientorders')->name('client.orders');
-
+        Route::get('supermarkets/branches/create', 'Admin\BranchController@addbranch')->name('supermarketbranches.create');
+        Route::get('supermarkets/offers/create', 'Admin\OfferController@addoffer')->name('supermarketoffers.create');
+        Route::get('supermarkets/products/create', 'Admin\OfferController@addoffer')->name('supermarketoffers.create');
 
         //system logs
         Route::get('systemlogs', 'Admin\LogController@index')->name('logs.index');

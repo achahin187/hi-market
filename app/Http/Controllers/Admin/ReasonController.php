@@ -152,9 +152,9 @@ class ReasonController extends Controller
             {
                 $reason->update(['status' => 'active']);
             }
-            return redirect('/admin/reasons')->withStatus(__('reason status successfully updated.'));
+            return redirect()->back()->withStatus(__('reason status successfully updated.'));
         }
-        return redirect('/admin/reasons')->withStatus(__('this id is not in our database'));
+        return redirect()->back()->withStatus(__('this id is not in our database'));
     }
 
     /**

@@ -30,7 +30,6 @@ class LocationController extends Controller
 
         $lat = $request->lat;
 
-
         $data = Coverage_area::where('lat', $lat)->where('long', $long)->where('status','active')->first();
 
 

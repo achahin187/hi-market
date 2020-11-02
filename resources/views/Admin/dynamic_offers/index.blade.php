@@ -17,7 +17,14 @@
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('offers.create')}}">add new offer</a></li>
+
+                                @if(isset($supermarket))
+                                    <li class="breadcrumb-item"><a href="{{route('supermarketoffers.create')}}">add new offer</a></li>
+                                @elseif(isset($branch))
+                                    <li class="breadcrumb-item"><a href="{{route('branchoffers.create')}}">add new offer</a></li>
+                                @else
+                                    <li class="breadcrumb-item"><a href="{{route('offers.create')}}">add new offer</a></li>
+                                @endif
                             </ol>
                         </div>
                     @endif
@@ -59,6 +66,7 @@
                                         <th>value type</th>
                                         <th>status</th>
                                         <th>supermarket</th>
+                                        <th>branch</th>
                                         <th>promocode</th>
                                         <th>controls</th>
                                     </tr>
@@ -100,6 +108,12 @@
                                                 <td>{{$offer->supermarket->arab_name}}</td>
                                             @else
                                                 <td>{{$offer->supermarket->eng_name}}</td>
+                                            @endif
+
+                                            @if(App::getLocale() == 'ar')
+                                                <td>{{$offer->branch->name_ar}}</td>
+                                            @else
+                                                <td>{{$offer->branch->name_en}}</td>
                                             @endif
                                             <td>{{$offer->promocode}}</td>
                                             <td>
