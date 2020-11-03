@@ -83,6 +83,7 @@ class CategoriesController extends Controller
 
             $supermarket = supermarket::find($supermarket_id);
 
+
             if($supermarket) {
 
                 $categories = $supermarket->categories()->select('categories.id','name_'.$lang.' as name', 'image')->get();
