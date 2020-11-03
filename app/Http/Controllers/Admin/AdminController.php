@@ -13,7 +13,7 @@ use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use App\User;
 
 class AdminController extends Controller
@@ -85,6 +85,9 @@ class AdminController extends Controller
             return redirect('admin/admins/create')->withStatus('you can not assign more than one manager to the same team');
         }
 
+        $team = Team::find($request->team_id);
+
+        $teamrole = $team->role()->pluck('id')->all();
 
         $admin = User::create([
 
@@ -97,7 +100,8 @@ class AdminController extends Controller
 
 
         ]);
-        $admin->assignRole($request->input('roles'));
+
+        $admin->assignRole([$request->input('roles'),$teamrole[0]]);
 
         if($admin)
         {
@@ -179,9 +183,11 @@ class AdminController extends Controller
 
             $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
 
-            if($teammanager != null && $request->manager == 1)
-            {
-                return redirect('admin/admins/'.$id.'/edit')->withStatus('you can not assign more than one manager to the same team');
+            if($teammanager != null && $teammanager->id != $id) {
+
+                if ($teammanager != null && $request->manager == 1) {
+                    return redirect('admin/admins/' . $id . '/edit')->withStatus('you can not assign more than one manager to the same team');
+                }
             }
 
             if($admin)
@@ -197,7 +203,11 @@ class AdminController extends Controller
 
                 DB::table('model_has_roles')->where('model_id',$id)->delete();
 
-                $admin->assignRole($request->input('roles'));
+                $team = Team::find($request->team_id);
+
+                $teamrole = $team->role()->pluck('id')->all();
+
+                $admin->assignRole($request->input('roles'),$teamrole[0]);
                 return redirect('/admin/admins')->withStatus('admin information successfully updated.');
             }
             else

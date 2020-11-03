@@ -43,10 +43,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($flag)
+    public function create($flag,$supermarket_id = null)
     {
         //
-        return view('Admin.products.create',compact('flag'));
+        if($supermarket_id != null) {
+            return view('Admin.products.create', compact('flag','supermarket_id'));
+        }
+        else
+        {
+            return view('Admin.products.create', compact('flag'));
+        }
     }
 
     /**
@@ -55,7 +61,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$flag)
+    public function store(Request $request,$flag,$supermarket_id = null)
     {
 
 
@@ -203,6 +209,10 @@ class ProductController extends Controller
                 return redirect('admin/products/1')->withStatus(__('offer created successfully'));
             }
             return redirect('admin/products/0')->withStatus(__('product created successfully'));
+        }
+        elseif ($supermarket_id != null)
+        {
+            return redirect('supermarkets/products/'.$supermarket_id)->withStatus(__('product created successfully'));
         }
         else
         {
@@ -566,7 +576,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
-        return view('Admin.products.index',compact('products','flag','supermarket'));
+        return view('Admin.products.index',compact('products','flag','supermarket_id'));
     }
 
     public function branchproducts($branch_id,$flag)
@@ -576,31 +586,6 @@ class ProductController extends Controller
         return view('Admin.products.index',compact('products','flag','branch'));
     }
 
-    public function productbranch($id){
-
-
-        //if our chosen id and products table prod_cat_id col match the get first 100 data
-
-        //$request->id here is the id of our chosen option id
-
-        $lang = app()->getLocale();
-
-        $data = Branch::select('name_'.$lang.' as name')->where('supermarket_id',$id)->get();
-        return json_encode($data);//then sent this data to ajax success
-    }
-
-    public function productbranchedit($product_id,$flag,$id){
-
-
-        //if our chosen id and products table prod_cat_id col match the get first 100 data
-
-        //$request->id here is the id of our chosen option id
-
-        $lang = app()->getLocale();
-
-        $data = Branch::select('name_'.$lang.' as name')->where('supermarket_id',$id)->get();
-        return json_encode($data);//then sent this data to ajax success
-    }
 
 
     /**

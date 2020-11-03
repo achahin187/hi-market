@@ -21,4 +21,8 @@ class Team extends Model
     public function users() {
         return $this->hasMany('App\User');
     }
+
+    public function role() {
+        return $this->belongsTo('App\Models\Role');
+    }
 }

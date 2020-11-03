@@ -101,6 +101,52 @@
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{__('team.roles')}}</label>
+
+                                        @if(isset($team))
+
+                                            @foreach($roles as $role)
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-radio">
+                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $teamRole)) echo 'checked' ?>>
+
+                                                        @if(App::getLocale() == 'ar')
+
+                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
+
+                                                        @else
+
+                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
+
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                        @else
+
+                                            @foreach($roles as $role)
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-radio">
+                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
+                                                        @if(App::getLocale() == 'ar')
+
+                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
+
+                                                        @else
+
+                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
+
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                        @endif
+
+                                    </div>
+
                                 </div>
                                 <!-- /.card-body -->
 

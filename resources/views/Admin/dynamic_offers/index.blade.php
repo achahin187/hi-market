@@ -19,9 +19,9 @@
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket))
-                                    <li class="breadcrumb-item"><a href="{{route('supermarketoffers.create')}}">add new offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('supermarketoffers.create')}}">add supermarket offer</a></li>
                                 @elseif(isset($branch))
-                                    <li class="breadcrumb-item"><a href="{{route('branchoffers.create')}}">add new offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('branchoffers.create')}}">add branch offer</a></li>
                                 @else
                                     <li class="breadcrumb-item"><a href="{{route('offers.create')}}">add new offer</a></li>
                                 @endif

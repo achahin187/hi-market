@@ -275,11 +275,19 @@
 
                                 <div class="form-group">
                                     <label>product supermarket </label>
-                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) readonly="true" @endif required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Supermarket::all() as $supermarket)
 
                                                 <option <?php if($product->supermarket->id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                            @endforeach
+
+                                        @elseif(isset($supermarket_id))
+
+                                            @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                <option <?php if($supermarket_id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
 
                                             @endforeach
                                         @else
@@ -291,6 +299,7 @@
 
                                         @endif
                                     </select>
+                                    <input type="hidden"
                                 </div>
 
                                 <div class="form-group">

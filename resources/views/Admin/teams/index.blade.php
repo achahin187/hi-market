@@ -54,6 +54,8 @@
                                         <th>Team arab name</th>
                                         <th>Team eng name</th>
                                         <th>no. of members</th>
+                                        <th>role</th>
+                                        <th>Team manager</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -63,6 +65,12 @@
                                             <td>{{$team->arab_name}}</td>
                                             <td>{{$team->eng_name}}</td>
                                             <td>{{count($team->users)}}</td>
+                                            <td>{{$team->role->arab_name}}</td>
+                                            @if(count($team->users) > 0 && count($team->users()->where('manager',1)->get()) > 0)
+                                                <td>{{$team->users()->where('manager',1)->first()->name}}</td>
+                                            @else
+                                                <td>no manager</td>
+                                            @endif
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

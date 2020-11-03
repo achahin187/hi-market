@@ -78,20 +78,23 @@
                                         <tr>
                                             <td>{{$admin->name}}</td>
                                             <td>{{$admin->email}}</td>
+                                            <td>
 
-                                            @foreach($admin->roles as $role)
+                                                @foreach($admin->roles as $role)
 
-                                                @if(App::getLocale() == 'ar')
+                                                    @if(App::getLocale() == 'ar')
 
-                                                    <td>{{$role->arab_name}}</td>
+                                                        [{{$role->arab_name}}]
 
-                                                @else
+                                                    @else
 
-                                                    <td>{{$role->eng_name}}</td>
+                                                        [{{$role->eng_name}}]
 
-                                                @endif
+                                                    @endif
 
-                                            @endforeach
+                                                @endforeach
+
+                                            </td>
 
                                             @if(App::getLocale() == 'ar')
 

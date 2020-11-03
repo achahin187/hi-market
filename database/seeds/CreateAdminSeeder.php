@@ -16,14 +16,17 @@ class CreateAdminSeeder extends Seeder
     {
         //
 
-        factory('App\User', 5)->create();
-
         $role = Role::create([
             'name' => explode(' ','admin')[0],
             'arab_name' => 'مدير',
             'eng_name' => 'admin'
 
         ]);
+
+
+        factory('App\Models\Team', 10)->create();
+
+        factory('App\User', 5)->create();
 
         $permissions = Permission::pluck('id','id')->all();
 

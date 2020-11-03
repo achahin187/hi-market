@@ -46,6 +46,7 @@ $factory->define(Team::class, function (Faker $faker) {
         'eng_name' => $faker->name,
         'arab_description' => $faker->paragraph,
         'eng_description' => $faker->paragraph,
+        'role_id' => 1,
         'created_by' => 1,
         'updated_by' => 1
     ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class TeamController extends Controller
 {
@@ -28,7 +29,9 @@ class TeamController extends Controller
     public function create()
     {
         //
-        return view('Admin.teams.create');
+
+        $roles = Role::orderBy('id', 'desc')->get();
+        return view('Admin.teams.create',compact('roles'));
     }
 
     /**
@@ -45,6 +48,7 @@ class TeamController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'role_id' => 'required|integer|min:0',
         ];
 
         $this->validate($request, $rules);
@@ -64,6 +68,7 @@ class TeamController extends Controller
             'eng_name' => $eng_name,
             'arab_description' => $arab_description,
             'eng_description' => $eng_description,
+            'role_id' => $request->role_id,
             'created_by' => $user->id,
         ]);
 
@@ -109,14 +114,16 @@ class TeamController extends Controller
     {
         //
         $team = team::find($id);
+        $roles = Role::all();
+        $teamRole = $team->role->pluck('name','name')->all();
 
         if($team)
         {
-            return view('Admin.teams.create', compact('team'));
+            return view('Admin.teams.create', compact('team','roles','teamRole'));
         }
         else
         {
-            return redirect('admin/teams')->withStatus('no product have this id');
+            return redirect('admin/teams')->withStatus('no team have this id');
         }
 
     }
@@ -139,6 +146,7 @@ class TeamController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'role_id' => 'required|integer|min:0',
         ];
 
         $this->validate($request, $rules);
@@ -160,6 +168,7 @@ class TeamController extends Controller
                 'eng_name' => $eng_name,
                 'arab_description' => $arab_description,
                 'eng_description' => $eng_description,
+                'role_id' => $request->role_id,
                 'updated_by' => $user->id,
             ]);
             return redirect('/admin/teams')->withStatus('team successfully updated.');

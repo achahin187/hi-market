@@ -16,45 +16,6 @@ class ProductController extends Controller
 
     use generaltrait;
 
-    public function index()
-    {
-
-        $products = Product::all();
-
-
-        foreach($products as $product) {
-
-            if ($this->getCurrentLang() == 'ar') {
-
-                $productarray =
-                    [
-                        'name' => $product->arab_name,
-                        'description' => $product->arab_description,
-                        'rate' => $product->rate,
-                        'price' => $product->price,
-                        'images' => $product->images,
-                        'category' => $product->category->arab_name,
-                        'vendor' => $product->vendor->arab_name
-                    ];
-            } else {
-
-                $productarray =
-                    [
-                        'name' => $product->eng_name,
-                        'description' => $product->eng_description,
-                        'rate' => $product->rate,
-                        'price' => $product->price,
-                        'images' => $product->images,
-                        'category' => $product->category->eng_name,
-                        'vendor' => $product->vendor->eng_name
-                    ];
-            }
-            $all_products [] = $productarray;
-        }
-
-        return $this->returnData('products',$all_products);
-    }
-
     public function homedata(Request $request)
     {
         $lang = $request->header('lang');
@@ -73,15 +34,15 @@ class ProductController extends Controller
             {
                 if($lang == 'ar')
                 {
-                    $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->orderBy('priority','asc')->get();
+                    $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
 
-                    $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode')->get();
+                    $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
                 }
                 else
                 {
-                    $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->orderBy('priority','asc')->get();
+                    $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
 
-                    $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+                    $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
                 }
 
                 foreach ($supermarkets as $supermarket)
@@ -111,15 +72,15 @@ class ProductController extends Controller
         {
             if($lang == 'ar')
             {
-                $supermarkets = Supermarket::where('status','active')->select('arab_name as name','supermarkets.*')->orderBy('priority','asc')->get();
+                $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
 
-                $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode')->get();
+                $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
             }
             else
             {
-                $supermarkets = Supermarket::where('status','active')->select('eng_name as name','supermarkets.*')->orderBy('priority','asc')->get();
+                $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
 
-                $offers = offer::where('status','active')->select('eng_name as name','offers.*')->get();
+                $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
             }
 
             foreach ($supermarkets as $supermarket)

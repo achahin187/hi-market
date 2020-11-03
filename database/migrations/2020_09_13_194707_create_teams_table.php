@@ -19,9 +19,12 @@ class CreateTeamsTable extends Migration
             $table->string('eng_name');
             $table->text('eng_description')->nullable();
             $table->text('arab_description')->nullable();
+            $table->unsignedBigInteger('role_id');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

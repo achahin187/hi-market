@@ -171,4 +171,8 @@ class Role extends Model implements RoleContract
 
         return $this->permissions->contains('id', $permission->id);
     }
+
+    public function teams() {
+        return $this->hasMany('App\Models\Team');
+    }
 }

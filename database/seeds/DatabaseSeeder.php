@@ -15,12 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        factory('App\Models\Team', 10)->create();
-
         $this->call([
             PermissionTableSeeder::class,
             CreateAdminSeeder::class
         ]);
+
 
         factory('App\Models\Category', 70)->create();
 
