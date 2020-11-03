@@ -27,7 +27,7 @@ class CategoriesController extends Controller
 
         $token = $request->header('token');
 
-        $supermarket_id = json_decode($request->getContent())->id;
+        $supermarket_id = $request->id;
 
 
         if($token)
@@ -135,7 +135,7 @@ class CategoriesController extends Controller
 
             if ($client) {
 
-                $category_id = json_decode($request->getContent())->id;
+                $category_id = $request->id;
 
                 $category = Category::find($category_id);
 
