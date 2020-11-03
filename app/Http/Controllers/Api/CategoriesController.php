@@ -127,6 +127,8 @@ class CategoriesController extends Controller
 
         $token = $request->header('token');
 
+        $category_id = $request->id;
+
         $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
 
@@ -136,7 +138,6 @@ class CategoriesController extends Controller
 
             if ($client) {
 
-                $category_id = $request->id;
 
                 $category = Category::find($category_id);
 
@@ -178,7 +179,6 @@ class CategoriesController extends Controller
         }
         else
         {
-            $category_id = json_decode($request->getContent())->id;
 
             $category = Category::find($category_id);
 
