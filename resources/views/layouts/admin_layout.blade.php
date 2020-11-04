@@ -148,7 +148,6 @@ $settings = App\Models\Setting::all()->first();
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-                    @if(auth()->user()->can('product-create') || auth()->user()->can('product-delete') || auth()->user()->can('product-edit') || auth()->user()->can('product-list'))
                         <li class="nav-item has-treeview">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -179,7 +178,6 @@ $settings = App\Models\Setting::all()->first();
                                 </li>
                             </ul>
                         </li>
-                    @endif
 
                     <li class="nav-item has-treeview">
                         <a href="" class="nav-link">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Imports\ProductImport;
@@ -73,7 +74,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new User)->getTable())->ignore(auth()->id())],
+            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'nullable|numeric|min:0',
@@ -318,7 +319,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new User)->getTable())->ignore(auth()->id())],
+            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'required|numeric|min:0',
