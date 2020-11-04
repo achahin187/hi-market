@@ -62,7 +62,7 @@ class CategoriesController extends Controller
                         $category->imagepath = asset('images/'.$category->image);
                     }
 
-                    return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
+                    return $this->returnData(['categories','supermarket','offers'], [$categories,$supermarketname,$offers]);
                 }
                 else
                 {
@@ -97,13 +97,13 @@ class CategoriesController extends Controller
                 {
                     $supermarketname = Supermarket::where('id',$supermarket_id)->select('arab_name as name')->first();
 
-                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
+                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
                 }
                 else
                 {
                     $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
 
-                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
+                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
                 }
 
                 foreach ($categories as $category)
@@ -111,7 +111,12 @@ class CategoriesController extends Controller
                     $category->imagepath = asset('images/'.$category->image);
                 }
 
-                return $this->returnData(['categories','offers','supermarket'], [$categories,$offers,$supermarketname],$msg);
+                foreach ($offers as $offer)
+                {
+                    $offer->imagepath = asset('images/'.$offer->image);
+                }
+
+                return $this->returnData(['categories','offers','supermarket'], [$categories,$offers,$supermarketname]);
             }
             else
             {
