@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Offer;
 use App\Models\Supermarket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -46,10 +47,14 @@ class CategoriesController extends Controller
                     if($lang == 'ar')
                     {
                         $supermarketname = Supermarket::where('id',$supermarket_id)->select('arab_name as name')->first();
+
+                        $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
                     }
                     else
                     {
                         $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
+
+                        $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
                     }
 
                     foreach ($categories as $category)
@@ -91,10 +96,14 @@ class CategoriesController extends Controller
                 if($lang == 'ar')
                 {
                     $supermarketname = Supermarket::where('id',$supermarket_id)->select('arab_name as name')->first();
+
+                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
                 }
                 else
                 {
                     $supermarketname = Supermarket::where('id',$supermarket_id)->select('eng_name as name')->first();
+
+                    $offers = offer::where('status','active')->where('supermarket_id',$supermarket_id)->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
                 }
 
                 foreach ($categories as $category)
@@ -102,7 +111,7 @@ class CategoriesController extends Controller
                     $category->imagepath = asset('images/'.$category->image);
                 }
 
-                return $this->returnData(['categories','supermarket'], [$categories,$supermarketname]);
+                return $this->returnData(['categories','offers','supermarket'], [$categories,$offers,$supermarketname],$msg);
             }
             else
             {

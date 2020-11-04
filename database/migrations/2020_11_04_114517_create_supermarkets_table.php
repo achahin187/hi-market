@@ -19,14 +19,23 @@ class CreateSupermarketsTable extends Migration
             $table->string('eng_name');
             $table->string('status')->default('inactive');
             $table->string('state')->default('open');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->string('start_time');
+            $table->string('end_time');
+            $table->unsignedBigInteger('area_id');
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('country_id');
             $table->unsignedFloat('commission');
             $table->unsignedInteger('priority');
             $table->string('image')->nullable();
+            $table->string('logo_image')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+
+
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

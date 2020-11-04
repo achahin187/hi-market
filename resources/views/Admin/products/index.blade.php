@@ -20,9 +20,9 @@
                                 @if(isset($supermarket_id))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => 0 , 'supermarket_id' => $supermarket_id])}}">add supermarket product</a></li>
                                 @elseif(isset($branch))
-                                    li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">add branch product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">add branch product</a></li>
                                 @else
-                                    li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
                                 @endif
 
                                 <li class="breadcrumb-item"><a href="{{route('products.export')}}">export</a></li>

@@ -109,7 +109,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $teamRole)) echo 'checked' ?>>
+                                                        <input class="custom-control-input" value="{{$role->id}}" type="radio" id="customRadio{{$role->name}}" name="role_id" <?php if(in_array($role->name, $teamRole)) echo 'checked' ?>>
 
                                                         @if(App::getLocale() == 'ar')
 
@@ -129,7 +129,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
+                                                        <input class="custom-control-input" value="{{$role->id}}" type="radio" id="customRadio{{$role->name}}" name="role_id">
                                                         @if(App::getLocale() == 'ar')
 
                                                             <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>

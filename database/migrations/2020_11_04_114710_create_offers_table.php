@@ -35,7 +35,6 @@ class CreateOffersTable extends Migration
 
             $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

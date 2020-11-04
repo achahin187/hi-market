@@ -22,4 +22,8 @@ class City extends Model
     public function citycountry() {
         return $this->belongsTo('App\Models\Country','country');
     }
+
+    public function supermarkets() {
+        return $this->hasMany('App\Models\Supermarket');
+    }
 }

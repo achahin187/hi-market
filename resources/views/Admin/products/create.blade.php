@@ -62,6 +62,10 @@
 
                                     @endif
 
+                                @elseif(isset($supermarket_id))
+
+                                    add supermarket product
+
                                 @else
                                     @if($flag == 0)
 
@@ -79,7 +83,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="@if(isset($product) && !isset($clone)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @elseif(isset($clone) && isset($product)) {{route('productsadd',$flag) }} @else {{route('productsadd',$flag) }}  @endif" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="@if(isset($product) && !isset($clone)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @elseif(isset($clone) && isset($product)) {{route('productsadd',$flag) }} @elseif(isset($supermarket_id)) {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @else {{route('productsadd',$flag) }}  @endif" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             @if(isset($product) && !isset($clone))
@@ -275,7 +279,7 @@
 
                                 <div class="form-group">
                                     <label>product supermarket </label>
-                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) readonly="true" @endif required>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Supermarket::all() as $supermarket)
 
@@ -299,12 +303,16 @@
 
                                         @endif
                                     </select>
-                                    <input type="hidden"
                                 </div>
+
+                                @if(isset($supermarket_id))
+
+                                    <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
+                                @endif
 
                                 <div class="form-group">
                                     <label>supermarket branch </label>
-                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Branch::all() as $branch)
 

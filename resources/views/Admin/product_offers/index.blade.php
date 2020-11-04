@@ -48,14 +48,12 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
+                                        <th>arab name</th>
+                                        <th>eng name</th>
                                         <th>eng_description</th>
                                         <th>arab_description</th>
                                         <th>price</th>
                                         <th>category</th>
-                                        <th>vendor</th>
-                                        <th>barcode</th>
                                         <th>status</th>
                                         <th>start_date</th>
                                         <th>end_date</th>
@@ -65,14 +63,12 @@
                                     <tbody>
                                     @foreach($offers as $offer)
                                         <tr>
-                                            <td>{{$offer->arab_name}}</td>
-                                            <td>{{$offer->eng_name}}</td>
+                                            <td>{{$offer->name_ar}}</td>
+                                            <td>{{$offer->name_en}}</td>
                                             <td>{{$offer->eng_description}}</td>
                                             <td>{{$offer->arab_description}}</td>
                                             <td>{{$offer->price}}</td>
-                                            <td>{{$offer->category->eng_name}}</td>
-                                            <td>{{$offer->vendor->eng_name}}</td>
-                                            <td>{{$offer->barcode}}</td>
+                                            <td>{{$offer->category->name_en}}</td>
                                             <td>{{$offer->status}}</td>
                                             <td>{{$offer->start_date}}</td>
                                             <td>{{$offer->end_date}}</td>

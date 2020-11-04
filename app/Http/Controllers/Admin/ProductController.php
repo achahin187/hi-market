@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Imports\ProductImport;
 use App\Exports\ProductExport;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -72,7 +73,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'barcode' => ['required','numeric','digits_between:10,16'],
+            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new User)->getTable())->ignore(auth()->id())],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'nullable|numeric|min:0',
@@ -80,6 +81,7 @@ class ProductController extends Controller
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
+            'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'required|after:today|date',
             'end_date' => 'required|after:start_date|date',
@@ -124,7 +126,14 @@ class ProductController extends Controller
 
         $vendor = $request->input('vendor_id');
 
-        $supermarket = $request->input('supermarket_id');
+        if($supermarket_id != null)
+        {
+            $supermarket = $supermarket_id;
+        }
+        else
+        {
+            $supermarket = $request->input('supermarket_id');
+        }
 
         $subcategory = $request->input('subcategory_id');
 
@@ -183,6 +192,7 @@ class ProductController extends Controller
             'category_id' => $category,
             'vendor_id' => $vendor,
             'supermarket_id' => $supermarket,
+            'branch_id' => $request->branch_id,
             'subcategory_id' => $subcategory,
             'images' => $images,
             'barcode' => $barcode,
@@ -202,17 +212,17 @@ class ProductController extends Controller
         ]);
 
 
-        if($product)
+        if($product && $supermarket_id == null)
         {
             if($flag == 1)
             {
-                return redirect('admin/products/1')->withStatus(__('offer created successfully'));
+                return redirect('admin/products/1')->withStatus(__('product offer created successfully'));
             }
             return redirect('admin/products/0')->withStatus(__('product created successfully'));
         }
-        elseif ($supermarket_id != null)
+        elseif ($product && $supermarket_id != null)
         {
-            return redirect('supermarkets/products/'.$supermarket_id)->withStatus(__('product created successfully'));
+            return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('product created successfully'));
         }
         else
         {
@@ -308,7 +318,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'barcode' => ['required','numeric','digits_between:10,16'],
+            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new User)->getTable())->ignore(auth()->id())],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'required|numeric|min:0',
@@ -316,6 +326,7 @@ class ProductController extends Controller
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
+            'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'required|after:today|date',
             'end_date' => 'required|after:start_date|date',
@@ -438,6 +449,7 @@ class ProductController extends Controller
                     'category_id' => $category,
                     'vendor_id' => $vendor,
                     'supermarket_id' => $supermarket,
+                    'branch_id' => $request->branch_id,
                     'subcategory_id' => $subcategory,
                     'images' => $images,
                     'barcode' => $barcode,
@@ -494,6 +506,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
+                        'branch_id' => $request->branch_id,
                         'subcategory_id' => $subcategory,
                         'images' => $images,
                         'barcode' => $barcode,
@@ -530,6 +543,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
+                        'branch_id' => $request->branch_id,
                         'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
@@ -583,7 +597,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
-        return view('Admin.products.index',compact('products','flag','branch'));
+        return view('Admin.products.index',compact('products','flag'));
     }
 
 

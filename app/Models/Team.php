@@ -12,10 +12,10 @@ class Team extends Model
 
     protected static $logName = 'teams';
 
-    protected static $logAttributes = ['arab_name','eng_name','arab_description','eng_description'];
+    protected static $logAttributes = ['arab_name','eng_name','arab_description','eng_description','role_id'];
 
     protected $fillable = [
-        'arab_name','eng_name','arab_description','eng_description','created_by','updated_by'
+        'arab_name','eng_name','arab_description','eng_description','created_by','role_id','updated_by'
     ];
 
     public function users() {

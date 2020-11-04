@@ -226,6 +226,6 @@ class BranchController extends Controller
     {
         //
         $branches = Branch::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
-        return view('Admin.branches.index',compact('branches','supermarket'));
+        return view('Admin.branches.index',compact('branches'));
     }
 }

@@ -63,6 +63,7 @@ class TeamController extends Controller
 
         $user = auth()->user();
 
+
         $team = Team::create([
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,

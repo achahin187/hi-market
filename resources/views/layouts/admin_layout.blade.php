@@ -125,9 +125,9 @@ $settings = App\Models\Setting::all()->first();
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{route('home')}}" class="brand-link">
-            <img src="{{ asset('dist') }}/img/AdminLTELogo.png" alt="Food code Logo" class="brand-image img-circle elevation-3"
+            <img src="{{ asset('logo.jpeg') }}" alt="Food code Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Deliveritto</span>
+            <span class="brand-text font-weight-light">Delivertto</span>
         </a>
 
         <!-- Sidebar -->
@@ -272,14 +272,14 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+{{--                    <li class="nav-item">
                         <a href="{{route('requests.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Requests
                             </p>
                         </a>
-                    </li>
+                    </li>--}}
 
                     <li class="nav-item">
                         <a href="{{route('logs.index')}}" class="nav-link">
@@ -371,14 +371,14 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-                    <li class="nav-item">
+{{--                    <li class="nav-item">
                         <a href="{{route('notifications.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Notifications
                             </p>
                         </a>
-                    </li>
+                    </li>--}}
 
 
                         <li class="nav-item">
@@ -390,7 +390,7 @@ $settings = App\Models\Setting::all()->first();
                             </a>
                         </li>
 
-                    @if(auth()->user()->flag == 1)
+{{--                    @if(auth()->user()->flag == 1)
 
                         <li class="nav-item">
                             <a href="{{route('permissions.index')}}" class="nav-link">
@@ -400,7 +400,7 @@ $settings = App\Models\Setting::all()->first();
                                 </p>
                             </a>
                         </li>
-                    @endif
+                    @endif--}}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -416,9 +416,9 @@ $settings = App\Models\Setting::all()->first();
 
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-        <b>Version</b> 3.0.5
+        <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    <strong>Copyright &copy; 2020-2021 <a href="http://adminlte.io">Eramint..com</a>.</strong> All rights
     reserved.
 </footer>
 
@@ -522,7 +522,11 @@ $settings = App\Models\Setting::all()->first();
         )
 
         //Timepicker
-        $('#timepicker').datetimepicker({
+        $('#startpicker').datetimepicker({
+            format: 'LT'
+        })
+
+        $('#endpicker').datetimepicker({
             format: 'LT'
         })
 

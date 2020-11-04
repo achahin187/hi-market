@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.branch_engname')}}</label>
-                                        <input type="text" name="name_en" value="@if(isset($branch)){{$brancht->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
+                                        <input type="text" name="name_en" value="@if(isset($branch)){{$branch->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
                                         @error('name_en')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

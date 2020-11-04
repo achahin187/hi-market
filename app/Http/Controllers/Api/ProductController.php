@@ -91,7 +91,7 @@ class ProductController extends Controller
 
             foreach ($offers as $offer)
             {
-                $offer->imagepath = asset('images'.$offer->image);
+                $offer->imagepath = asset('images/'.$offer->image);
             }
 
             return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);

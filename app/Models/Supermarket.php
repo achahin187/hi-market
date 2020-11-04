@@ -15,7 +15,7 @@ class Supermarket extends Model
     protected static $logAttributes = ['arab_name','eng_name','status','commission','priority','image'];
 
     protected $fillable = [
-        'arab_name','eng_name','status','commission','priority','image','created_by','updated_by'
+        'arab_name','eng_name','status','commission','priority','image','logo_image','area_id','city_id','country_id','start_time','end_time','state','created_by','updated_by'
     ];
 
     public function products() {
@@ -32,6 +32,18 @@ class Supermarket extends Model
 
     public function branches() {
         return $this->belongsToMany('App\Models\Branch');
+    }
+
+    public function area() {
+        return $this->belongsTo('App\Models\Area');
+    }
+
+    public function city() {
+        return $this->belongsTo('App\Models\City');
+    }
+
+    public function country() {
+        return $this->belongsTo('App\Models\Country');
     }
 
 }

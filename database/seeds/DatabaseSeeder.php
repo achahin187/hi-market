@@ -44,6 +44,12 @@ class DatabaseSeeder extends Seeder
 
         factory('App\Models\Point', 70)->create();
 
+        factory('App\Models\Country', 70)->create();
+
+        factory('App\Models\City', 70)->create();
+
+        factory('App\Models\Area', 70)->create();
+
         $supermarkets = factory('App\Models\Supermarket', 70)->create();
 
         factory('App\Models\Branch', 70)->create();
@@ -74,12 +80,6 @@ class DatabaseSeeder extends Seeder
 
             $order->products()->sync( $products_ids );
         }
-
-        factory('App\Models\Country', 70)->create();
-
-        factory('App\Models\City', 70)->create();
-
-        factory('App\Models\Area', 70)->create();
 
         factory('App\Models\Coverage_area', 70)->create();
 

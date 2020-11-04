@@ -115,21 +115,6 @@ $factory->define(Vendor::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Supermarket::class, function (Faker $faker) {
-    return [
-        'arab_name' => $faker->name,
-        'eng_name' => $faker->name,
-        'status' => $faker->randomElement(['inactive','active']),
-        'state' => $faker->randomElement(['open','closed']),
-        'start_time' => $faker->time('h:i'),
-        'end_time' => $faker->time('h:i'),
-        'image' => 'mohamed.jpg',
-        'priority' => $faker->numberBetween(1,50),
-        'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
-        'created_by' => User::all()->random()->id,
-        'updated_by' => User::all()->random()->id
-    ];
-});
 
 
 $factory->define(Measures::class, function (Faker $faker) {
@@ -144,6 +129,56 @@ $factory->define(Measures::class, function (Faker $faker) {
 $factory->define(Size::class, function (Faker $faker) {
     return [
         'value' => $faker->randomElement(['1x24','1x10','1','2','3.5','5','10']),
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
+$factory->define(Country::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->country,
+        'name_en' => $faker->country,
+        'numcode' => $faker->randomNumber(),
+        'phonecode' => $faker->randomNumber(),
+        'phonelength' => $faker->randomNumber(),
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(City::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->city,
+        'name_en' => $faker->city,
+        'country' => Country::all()->random()->id,
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(Area::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->address,
+        'name_en' => $faker->address,
+        'country' => Country::all()->random()->id,
+        'city' => City::all()->random()->id,
+        'status' => $faker->randomElement(['active','inactive']),
+    ];
+});
+
+$factory->define(Supermarket::class, function (Faker $faker) {
+    return [
+        'arab_name' => $faker->name,
+        'eng_name' => $faker->name,
+        'status' => $faker->randomElement(['inactive','active']),
+        'state' => $faker->randomElement(['open','closed']),
+        'start_time' => $faker->time('h:i'),
+        'end_time' => $faker->time('h:i'),
+        'image' => 'mohamed.jpg',
+        'logo_image' => 'mohamed.jpg',
+        'area_id' => Area::all()->random()->id,
+        'city_id' => City::all()->random()->id,
+        'country_id' => Country::all()->random()->id,
+        'priority' => $faker->numberBetween(1,50),
+        'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
     ];
@@ -316,35 +351,6 @@ $factory->define(\App\Models\Notification::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Country::class, function (Faker $faker) {
-    return [
-        'name_ar' => $faker->name,
-        'name_en' => $faker->name,
-        'numcode' => $faker->randomNumber(),
-        'phonecode' => $faker->randomNumber(),
-        'phonelength' => $faker->randomNumber(),
-        'status' => $faker->randomElement(['active','inactive']),
-    ];
-});
-
-$factory->define(City::class, function (Faker $faker) {
-    return [
-        'name_ar' => $faker->name,
-        'name_en' => $faker->name,
-        'country' => Country::all()->random()->id,
-        'status' => $faker->randomElement(['active','inactive']),
-    ];
-});
-
-$factory->define(Area::class, function (Faker $faker) {
-    return [
-        'name_ar' => $faker->name,
-        'name_en' => $faker->name,
-        'country' => Country::all()->random()->id,
-        'city' => City::all()->random()->id,
-        'status' => $faker->randomElement(['active','inactive']),
-    ];
-});
 
 $factory->define(Coverage_area::class, function (Faker $faker) {
     return [

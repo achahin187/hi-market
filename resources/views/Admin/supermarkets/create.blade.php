@@ -53,7 +53,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('supermarket arab name')}}</label>
                                         <input type="text" value="@if(isset($supermarket)){{$supermarket->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                         @error('arab_name')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('supermarket eng name')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($supermarket)){{$supermarket->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('eng_name')
                                         <span class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.product_priority')}}</label>
+                                        <label for="exampleInputPassword1">{{__('priority')}}</label>
                                         <input type="number" name="priority" min="0" @if(isset($supermarket)) value="{{$supermarket->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
                                         @error('priority')
                                         <span class="invalid-feedback" role="alert">
@@ -83,13 +83,114 @@
 
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.product_commission')}}</label>
+                                        <label for="exampleInputPassword1">{{__('commission')}}</label>
                                         <input type="number" name="commission" min="0"  step="0.01" @if(isset($supermarket)) value="{{$supermarket->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
                                         @error('commission')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>area </label>
+                                        <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($supermarket))
+                                                @foreach(\App\Models\Area::all() as $area)
+
+                                                    <option <?php if($supermarket->area->id == $area->id) echo 'selected'; ?> value="{{ $area->id }}">{{ $area->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Area::all() as $area)
+
+                                                    <option value="{{ $area->id }}">{{ $area->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>city </label>
+                                        <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($supermarket))
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option <?php if($supermarket->city->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>country </label>
+                                        <select class=" @error('country_id') is-invalid @enderror select2" name="country_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($supermarket))
+                                                @foreach(\App\Models\Country::all() as $country)
+
+                                                    <option <?php if($supermarket->country->id == $country->id) echo 'selected'; ?> value="{{ $country->id }}">{{ $country->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Country::all() as $country)
+
+                                                    <option value="{{ $country->id }}">{{ $country->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+
+                                            <div class="bootstrap-timepicker">
+                                                <div class="form-group">
+                                                    <label>start time</label>
+
+                                                    <div class="input-group date" id="startpicker" data-target-input="nearest">
+                                                        <input type="text" name="start_time" @if(isset($supermarket)) value="{{$supermarket->start_time}}" @endif class="@error('start_time') is-invalid @enderror form-control datetimepicker-input" data-target="#startpicker"/>
+                                                        <div class="input-group-append" data-target="#startpicker" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.input group -->
+                                                </div>
+                                                <!-- /.form group -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+
+                                            <div class="bootstrap-timepicker">
+                                                <div class="form-group">
+                                                    <label>end time</label>
+
+                                                    <div class="input-group date" id="endpicker" data-target-input="nearest">
+                                                        <input type="text" name="end_time" class="@error('end_time') is-invalid @enderror form-control datetimepicker-input" @if(isset($supermarket)) value="{{$supermarket->end_time}}" @endif data-target="#endpicker"/>
+                                                        <div class="input-group-append" data-target="#endpicker" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.input group -->
+                                                </div>
+                                                <!-- /.form group -->
+                                            </div>
+
+                                        </div>
+
                                     </div>
 
                                     @if(!isset($supermarket))
@@ -115,8 +216,8 @@
 
                                     @if(isset($supermarket) && $supermarket->image != null)
 
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                        <div class="form-group" style="margin-bottom: 10px">
+                                            <label for="exampleInputFile">supermarket image</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -134,8 +235,8 @@
                                         </div>
                                     @else
 
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                        <div class="form-group" style="margin-bottom: 10px">
+                                            <label for="exampleInputFile">supermarket image</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
@@ -149,6 +250,44 @@
 
 
                                     @endif
+
+
+                                    {{--@if(isset($supermarket) && $supermarket->logo_image != null)
+
+                                        <div class="form-group" style="margin-top: 40px">
+                                            <label for="exampleInputFile">supermarket logo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('supermarket_images') }}/{{$supermarket->logo_image}}" class="card-img-top" alt="Course Photo">
+
+                                                    <input type="checkbox" checked style="margin-right:10px;" name="checkedlogoimage" value="{{$supermarket->logo_image}}">
+
+                                                    <input name="logo_image" type="file">
+
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+
+                                        <div class="form-group" style="margin-top: 40px">
+                                            <label for="exampleInputFile">supermarket logo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input name="logo_image" type="file" class="custom-file-input" id="exampleInputFile">
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    @endif--}}
 
                                 </div>
                                 <!-- /.card-body -->

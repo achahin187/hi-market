@@ -174,11 +174,11 @@
                                                                 <option data-price="{{$editproduct->price}}" <?php if($orderproduct->id == $editproduct->id) echo 'selected'; ?> value="{{ $editproduct->id }}">
                                                                     @if(App::getLocale() == 'ar')
 
-                                                                        {{ $editproduct->arab_name }}
+                                                                        {{ $editproduct->name_ar }}
 
                                                                     @else
 
-                                                                        {{ $editproduct->eng_name }}
+                                                                        {{ $editproduct->name_en }}
 
                                                                     @endif
 
@@ -200,11 +200,11 @@
 
                                                                         @if(App::getLocale() == 'ar')
 
-                                                                            {{ $editproduct->arab_name }}
+                                                                            {{ $editproduct->name_ar }}
 
                                                                         @else
 
-                                                                            {{ $editproduct->eng_name }}
+                                                                            {{ $editproduct->name_en }}
 
                                                                         @endif
 
@@ -282,8 +282,8 @@
                                             <tbody>
                                             @foreach($order->products as $orderproduct)
                                                 <tr>
-                                                    <td>{{$orderproduct->arab_name}}</td>
-                                                    <td>{{$orderproduct->eng_name}}</td>
+                                                    <td>{{$orderproduct->name_ar}}</td>
+                                                    <td>{{$orderproduct->name_en}}</td>
                                                     <td>{{$orderproduct->price}}</td>
                                                     <td>{{$orderproduct->pivot->quantity}}</td>
                                                     <td>

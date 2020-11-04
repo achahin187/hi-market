@@ -19,4 +19,8 @@ class Country extends Model
     protected $fillable = [
         'name_ar','name_en','status','numcode','phonecode','phonelength','created_by','updated_by'
     ];
+
+    public function supermarkets() {
+        return $this->hasMany('App\Models\Supermarket');
+    }
 }
