@@ -252,7 +252,6 @@ class SupermarketController extends Controller
             $supermarket->update([
                 'arab_name' => $request->arab_name,
                 'eng_name' => $request->eng_name,
-                'status' => $request->status ,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'commission' => $request->commission ,
