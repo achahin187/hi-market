@@ -58,6 +58,7 @@ class BranchController extends Controller
 
         $supermarket = $request->input('supermarket_id');
 
+
         if($image = $request->file('image'))
         {
             $filename = $image->getClientOriginalName();
@@ -77,6 +78,7 @@ class BranchController extends Controller
         }
         else
         {
+
             Branch::create([
 
                 'name_ar' => $arab_name,
@@ -153,7 +155,7 @@ class BranchController extends Controller
                 $fileextension = $file->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                if ($file->move('supermarket_images', $file_to_store)) {
+                if ($file->move('images', $file_to_store)) {
                     if ($branch->image != null) {
 
                         unlink('images/' . $branch->image);

@@ -13,10 +13,10 @@ class Branch extends Model
 
     protected static $logName = 'supermarket branches';
 
-    protected static $logAttributes = ['name_ar','name_en','status','image'];
+    protected static $logAttributes = ['name_ar','name_en','status','image','supermarket_id'];
 
     protected $fillable = [
-        'name_en','name_ar','status','image','created_by','updated_by'
+        'name_en','name_ar','status','image','supermarket_id','created_by','updated_by'
     ];
 
     public function products() {

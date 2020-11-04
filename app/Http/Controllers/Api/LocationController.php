@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Clientdevice;
 use App\Models\Coverage_area;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class LocationController extends Controller
 
         $lang = $request->header('lang');
         $udid = $request->header('udid');
+        $token = $request->header('token');
 
         if (!$lang || $lang == '') {
             return $this->returnError(402, 'language is missing');
@@ -35,8 +37,27 @@ class LocationController extends Controller
 
         if ($data)
         {
+
+            if($token) {
+
+                $client = Client::where('remember_token', $token)->first();
+
+                if ($client) {
+                    if ($lang == 'ar') {
+                        return $this->returnSuccessMessage('العنوان صحيح ', 200);
+                    } else {
+                        return $this->returnSuccessMessage('location is valid', 200);
+                    }
+                } else {
+                    if ($lang == 'ar') {
+                        return $this->returnError(305, 'لم نجد هذا العميل');
+                    }
+                    return $this->returnError(305, 'there is no client found');
+                }
+            }
+
             if ($lang == 'ar') {
-                return $this->returnSuccessMessage('العنوان صحيح ',200);
+                return $this->returnSuccessMessage('العنوان صحيح ', 200);
             } else {
                 return $this->returnSuccessMessage('location is valid', 200);
             }

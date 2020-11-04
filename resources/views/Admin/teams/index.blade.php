@@ -14,13 +14,11 @@
                         <h1>DataTables</h1>
                     </div>
 
-                    @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('teams.create')}}">create new team</a></li>
                             </ol>
                         </div>
-                    @endif
 
                     <div class="col-12">
 

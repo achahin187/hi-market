@@ -286,9 +286,7 @@ class SupermarketController extends Controller
             if($supermarket->image != null) {
                 unlink('supermarket_images/' . $supermarket->image);
             }
-            if($supermarket->logo_image != null) {
-                unlink('supermarket_images/' . $supermarket->logo_image);
-            }
+
             $supermarket->delete();
             return redirect('/admin/supermarkets')->withStatus(__('supermarket successfully deleted.'));
         }

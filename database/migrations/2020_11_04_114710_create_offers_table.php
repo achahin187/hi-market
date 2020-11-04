@@ -24,7 +24,7 @@ class CreateOffersTable extends Migration
             $table->string('offer_type');
             $table->unsignedBigInteger('supermarket_id')->unsigned();
             $table->unsignedBigInteger('branch_id')->unsigned();
-            $table->text('image')->nullable();
+            $table->string('image')->nullable();
             $table->string('status')->default('active');
             $table->dateTime('start_date');
             $table->dateTime('end_date');

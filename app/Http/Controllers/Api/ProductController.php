@@ -26,37 +26,38 @@ class ProductController extends Controller
             return $this->returnError(402, 'language is missing');
         }
 
+
+        if($lang == 'ar')
+        {
+            $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time','image')->orderBy('priority','asc')->limit(4)->get();
+
+            $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
+        }
+        else
+        {
+            $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time','image')->orderBy('priority','asc')->limit(4)->get();
+
+            $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
+        }
+
+
+        foreach ($supermarkets as $supermarket)
+        {
+            $supermarket->imagepath = asset('images/'.$supermarket->image);
+            $supermarket->logopath = asset('images/'.$supermarket->image);
+        }
+
+        foreach ($offers as $offer)
+        {
+            $offer->imagepath = asset('images/'.$offer->image);
+        }
+
         if($token)
         {
             $client = Client::where('remember_token',$token)->first();
 
             if($client)
             {
-                if($lang == 'ar')
-                {
-                    $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
-
-                    $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
-                }
-                else
-                {
-                    $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
-
-                    $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
-                }
-
-                foreach ($supermarkets as $supermarket)
-                {
-                    $supermarket->imagepath = asset('images/'.$supermarket->image);
-                    $supermarket->logopath = asset('images/'.$supermarket->image);
-                }
-
-                foreach ($offers as $offer)
-                {
-                    $offer->imagepath = asset('images'.$offer->image);
-                }
-
-
                 return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
             }
             else
@@ -70,30 +71,6 @@ class ProductController extends Controller
         }
         else
         {
-            if($lang == 'ar')
-            {
-                $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
-
-                $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type')->limit(4)->get();
-            }
-            else
-            {
-                $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time')->orderBy('priority','asc')->limit(4)->get();
-
-                $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type')->limit(4)->get();
-            }
-
-            foreach ($supermarkets as $supermarket)
-            {
-                $supermarket->imagepath = asset('images/'.$supermarket->image);
-                $supermarket->logopath = asset('images/'.$supermarket->image);
-            }
-
-            foreach ($offers as $offer)
-            {
-                $offer->imagepath = asset('images/'.$offer->image);
-            }
-
             return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
         }
 

@@ -15,7 +15,7 @@ class Offer extends Model
     protected static $logAttributes = ['arab_name','eng_name','arab_description','eng_description','offer_type','promocode','status','end_date','start_date','value_type','supermarket_id'];
 
     protected $fillable = [
-        'arab_name','eng_name','arab_description','eng_description','offer_type','promocode','status','end_date','start_date','value_type','supermarket_id','created_by','updated_by'
+        'arab_name','eng_name','arab_description','eng_description','offer_type','promocode','status','end_date','start_date','value_type','supermarket_id','image','created_by','updated_by'
     ];
 
     public function supermarket() {
