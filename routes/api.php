@@ -17,7 +17,7 @@
     Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
 
         Route::get('products','ProductController@index')->name('listproducts');
-        Route::get('products/{id}','ProductController@productdetails')->name('productdetails');
+        Route::post('product','ProductController@productdetails')->name('productdetails');
         Route::get('products/search/{name}','ProductController@getproductsearch')->name('search');
         Route::get('categories','CategoriesController@index');
         Route::post('register', 'AuthController@register')->name('client.register');
@@ -26,7 +26,7 @@
         Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
         Route::get('social/{flag}', 'AuthController@social')->name('social.auth');
 
-        Route::get('profile/view','ClientController@client_profile')->name('client_profile');
+        Route::post('profile','ClientController@client_profile')->name('client_profile');
         Route::post('profile/update', 'ClientController@updateprofile')->name('profile_update');
         Route::post('add_address','ClientController@add_address')->name('address.store');
         Route::get('get_address/{flag}', 'ClientController@get_address')->name('address.show');
@@ -41,6 +41,7 @@
         Route::get('jobs/view', 'JobController@view_jobs')->name('view_jobs');
         Route::post('jobs/apply', 'JobController@apply_job')->name('apply_job');
         Route::post('favourites/add','FavouritesController@addfavourite');
+        Route::post('favourites/remove','FavouritesController@removefavourites');
         Route::get('orders/{client_id}','OrderController@clientorders')->name('client_orders');
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
 

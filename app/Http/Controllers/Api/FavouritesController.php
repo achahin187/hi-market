@@ -26,17 +26,11 @@ class FavouritesController extends Controller
 
         if(!$lang || $lang == ''){
 
-            if ($lang == 'ar') {
-                return $this->returnError(402,'اللغة غير موجودة');
-            }
-            else
-            {
-                return $this->returnError(402,'language is missing');
-            }
+            return $this->returnError(402,'language is missing');
         }
 
 
-        $product_id = json_decode($request->getContent())->product_id;
+        $product_id = $request->product_id;
 
         if($token) {
 
@@ -100,4 +94,103 @@ class FavouritesController extends Controller
         }
 
     }
+
+    public function getfavourites(Request $request)
+    {
+        //
+
+        $udid = $request->header('udid');
+
+        $token = $request->header('token');
+
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+
+            if ($lang == 'ar') {
+                return $this->returnError(402,'اللغة غير موجودة');
+            }
+            else
+            {
+                return $this->returnError(402,'language is missing');
+            }
+        }
+
+        $product_id = $request->product_id;
+
+        $client = Client::where('remember_token',$token)->first();
+
+
+        if ($client) {
+
+            $favproducts = $client->products()->where('udid',$udid)->select()->get();
+
+            return $this->returnData(['favourite products'], [$favproducts]);
+
+        }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError(400,'لم نجد هذا العميل');
+            }
+            return $this->returnError(400,'no client exists');
+        }
+
+    }
+
+    public function removefavourites(Request $request)
+    {
+        $udid = $request->header('udid');
+
+        $token = $request->header('token');
+
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+
+            if ($lang == 'ar') {
+                return $this->returnError(402,'اللغة غير موجودة');
+            }
+            else
+            {
+                return $this->returnError(402,'language is missing');
+            }
+        }
+
+        $product_id = $request->product_id;
+
+        DB::table('client_product')->where('udid',$udid)->where('product_id',$product_id)->delete();
+
+        if($token) {
+
+            $client = Client::where('remember_token', $token)->first();
+
+            if ($client) {
+
+                if ($lang == 'ar') {
+                    return $this->returnSuccessMessage('لقد تم ازالة المنتج من المفضلات','');
+                }
+                else {
+                    return $this->returnSuccessMessage('This product have been removed from favourites successfully', '');
+                }
+
+            } else {
+                if ($lang == 'ar') {
+                    return $this->returnError(400, 'لم نجد هذا العميل');
+                }
+                return $this->returnError(400, 'no client exists');
+            }
+        }
+        else
+        {
+            if ($lang == 'ar') {
+                return $this->returnSuccessMessage('لقد تم ازالة المنتج من المفضلات','');
+            }
+            else {
+                return $this->returnSuccessMessage('This product have been removed from favourites successfully', '');
+            }
+        }
+    }
+
 }

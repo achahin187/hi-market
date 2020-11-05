@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
 use App\Http\Traits\generaltrait;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -77,48 +78,82 @@ class ProductController extends Controller
 
     }
 
-    public function productdetails($id)
+    public function productdetails(Request $request)
     {
 
-        $product = Product::find($id);
+        $lang = $request->header('lang');
 
-        if($product)
-        {
-            if ($this->getCurrentLang() == 'ar') {
+        $token = $request->header('token');
 
-                $productarray =
-                    [
-                        'name' => $product->arab_name,
-                        'description' => $product->arab_description,
-                        'rate' => $product->rate,
-                        'price' => $product->price,
-                        'images' => $product->images,
-                        'category' => $product->category->arab_name,
-                        'vendor' => $product->vendor->arab_name
-                    ];
-            } else {
+        $udid = $request->header('udid');
 
-                $productarray =
-                    [
-                        'name' => $product->eng_name,
-                        'description' => $product->eng_description,
-                        'rate' => $product->rate,
-                        'price' => $product->price,
-                        'images' => $product->images,
-                        'category' => $product->category->eng_name,
-                        'vendor' => $product->vendor->eng_name
-                    ];
-            }
-            return $this->returnData('product',$productarray);
+        $product_id = $request->id;
+
+        if (!$lang || $lang == '') {
+            return $this->returnError(402, 'language is missing');
         }
-        else {
 
+        if($lang == 'ar') {
+
+            $product_details = Product::where('id',$product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description' ,'arab_spec as specification','price','images')->first();
+        }
+        else
+        {
+            $product_details = Product::where('id',$product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description' ,'arab_spec as specification','price','images')->first();
+        }
+
+        if ($product_details) {
+
+            $product_images = explode(',',$product_details->images);
+
+            $favproduct = DB::table('client_product')->where('udid',$udid)->where('product_id',$product_id)->first();
+
+
+            if($favproduct)
+            {
+                $product_details->favourite = 1;
+            }
+            else
+            {
+                $product_details->favourite = 0;
+            }
+
+            $imagepaths = [];
+
+            foreach ($product_images as $image) {
+                array_push($imagepaths,asset('images/'.$image));
+            }
+
+            $product_details->imagepaths = $imagepaths;
+
+            if($token) {
+
+                $client = Client::where('remember_token', $token)->first();
+
+                if ($client) {
+                    return $this->returnData(['product'], [$product_details]);
+                }
+                else {
+                    if ($lang == 'ar') {
+                        return $this->returnError(305, 'لم نجد هذا العميل');
+                    }
+                    return $this->returnError(305, 'there is no client found');
+                }
+
+            }
+            else {
+                return $this->returnData(['product'], [$product_details]);
+            }
+        }
+        else
+        {
             if($this->getCurrentLang() == 'ar')
             {
                 return $this->returnError('','لا يوجد هذا المنتج');
             }
             return $this->returnError('','there is no product found');
         }
+
     }
 
     public function getproductsearch($value)
