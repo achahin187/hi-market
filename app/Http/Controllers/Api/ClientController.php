@@ -54,16 +54,13 @@ class ClientController extends Controller
 
         $client = Client::where('remember_token',$token)->first();
 
-
         if($client)
         {
 
             $rules = [
                 'name' =>'required|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
-                'email' => 'required|email|regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/',
+                'email' => ['required','email',Rule::unique((new Client)->getTable()),'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                 'mobile_number' => ['required','digits:11',Rule::unique((new Client)->getTable())->ignore($client->id)],
-                'password' => ['required','confirmed'],
-                'password_confirmation' => ['required'],
             ];
 
             $validator = Validator::make($request->all(),$rules);
@@ -80,7 +77,13 @@ class ClientController extends Controller
                 }
             }
 
-            $client->update(['name' => $request->name , 'email' => $request->email , 'mobile_number' => $request->mobile_number]);
+            $client->update([
+                'name' => $request->name ,
+                'email' => $request->email ,
+                'mobile_number' => $request->mobile_number
+            ]);
+
+
             if ($lang == 'ar') {
                 return $this->returnSuccessMessage('لقد تم تعديل بياناتك بنجاح',500);
             }
@@ -91,7 +94,7 @@ class ClientController extends Controller
         }
         else
         {
-            if($this->getCurrentLang() == 'ar')
+            if($lang == 'ar')
             {
                 return $this->returnError(303,'لم نجد هذا العميل');
             }

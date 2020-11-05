@@ -222,6 +222,7 @@ $factory->define(Client::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'total_points' => $faker->randomElement([100,200,300,400]),
         'address' => $faker->address,
+        'image' => 'mohamed.jpg',
         'mobile_number' => $faker->phoneNumber,
         'remember_token' => Str::random(10),
     ];
