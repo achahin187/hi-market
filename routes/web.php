@@ -93,10 +93,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('show/{flag}', 'Admin\ProductController@show')->name('products.show');
             Route::get('create/{flag}/{supermarket_id?}', 'Admin\ProductController@create')->name('products.create');
             Route::post('{flag}/{supermarket_id?}', 'Admin\ProductController@store')->name('productsadd');
-            Route::get('{id}/{flag}/edit', 'Admin\ProductController@edit')->name('products.edit');
-            Route::put('{id}/{flag}/edit', 'Admin\ProductController@update')->name('products.update');
+            Route::get('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@edit')->name('products.edit');
+            Route::put('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@update')->name('products.update');
             Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
-            Route::delete('{id}', 'Admin\ProductController@destroy')->name('products.destroy');
+            Route::delete('{id}/{supermarket_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
             Route::get('create/productbranch/{id}','Admin\ProductController@productbranch')->name('productbranch');
             Route::get('{product_id?}/{flag?}/edit/productbranch/{id}','Admin\ProductController@productbranchedit')->name('productbranch');
 
@@ -106,6 +106,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::get('admins', 'Admin\AdminController@export')->name('admins.export');
             Route::get('products', 'Admin\ProductController@export')->name('products.export');
+            Route::get('products/download', 'Admin\ProductController@download')->name('products.downloadsample');
         });
 
         Route::group(['prefix' => 'import'],function() {
@@ -144,7 +145,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('supermarkets/branches/store/{supermarket_id}', 'Admin\SupermarketController@storebranch')->name('supermarketbranches.store');
         Route::get('supermarkets/offers/create/{supermarket_id}', 'Admin\SupermarketController@addoffer')->name('supermarketoffers.create');
         Route::post('supermarkets/offers/store/{supermarket_id}', 'Admin\SupermarketController@storeoffer')->name('supermarketoffers.store');
-        Route::get('supermarkets/products/create/{supermarket_id}/{flag}', 'Admin\SupermarketController@addproduct')->name('supermarketproducts.create');
+        Route::get('supermarkets/products/create/{supermarket_id}/{flag}', 'Admin\ProductController@create')->name('supermarketproducts.create');
         Route::post('supermarkets/products/store/{supermarket_id}/{flag}', 'Admin\SupermarketController@storeproduct')->name('supermarketproducts.store');
         Route::get('branches/offers/create/{branch_id}', 'Admin\BranchController@addoffer')->name('branchoffers.create');
         Route::post('branches/offers/store/{branch_id}', 'Admin\BranchController@storeoffer')->name('branchoffers.store');

@@ -35,8 +35,8 @@ class CreateProductsTable extends Migration
             $table->bigInteger('size_id')->unsigned();
             $table->unsignedInteger('flag');
             $table->string('status')->default('active');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->dateTime('exp_date');
             $table->string('barcode');
             $table->timestamps();

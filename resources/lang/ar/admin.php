@@ -7,10 +7,32 @@ return [
     'add'=>'إضافة',
     'modify'=>'تعديل',
     'delete'=>'حذف',
-
+    'clone'=>'نسخ',
+    'export'=>'تحميل ملف ',
+    'show' => 'اظهار',
+    'download' => 'تحميل نسخة من الملف المطلوب',
+    'import'=>'رفع ملف ',
     'home' => 'الصفحة الرئيسية',
-
     'lang' => 'ar',
+    'name_ar' => 'الاسم بالعربي',
+    'name_en' => 'الاسم بالنجليزي',
+    'description_ar' => 'الوصف بالعربي',
+    'description_en' => 'الوصف بالانجليزي',
+    'category' => 'القسم',
+    'subcategory' => 'التصنيف الفرعي',
+    'supermarket' => 'سوبر ماركت',
+    'branch' => 'الفرع',
+    'vendor' => 'البائع',
+    'status' => 'الحالة',
+    'measure' => 'وحدة القياس',
+    'size' => 'الحجم',
+    'start_date' => 'تاريخ البداية',
+    'end_date' => 'التاريخ النهاية',
+    'image'=>'صورة المنتج',
+    'active'=>'مفعل',
+    'inactive'=>'غير مفعل',
+    'controls' => 'ادوات التجكم',
+
 
     //Categories
     'categories'=>'الأقسام',
@@ -29,13 +51,16 @@ return [
     //Products
     'products'=>'منتجات',
     'add_product'=>'إضافة منتج جديد',
-    'modify_product'=>'تعديل منتج',
-    'delete_product'=>'حذف منتج',
-    'product_name'=>'اسم منتج',
-    'product_price'=>'سعر المنتج',
-    'product_category'=>'القسم',
-    'product_quantity'=>'الكمية',
-    'product_image'=>'صورة المنتج',
+    'spec_ar'=>'تفاصيل المنتج بالعربي',
+    'spec_en'=>'تفاصيل المنتج بالنجليزي',
+    'review'=>'المراجعات',
+    'price'=>'السعر',
+    'priority'=>'الاولوية',
+    'points'=>'النقاط',
+    'exp_date'=>'تاريخ الصلاحية',
+    'barcode'=>'الرقم التعريفي',
+    'add_supermarket_product' => 'اضافة منتج للسوبر ماركت',
+    'add_branch_product' => 'اضافة منتج للفرع',
 
 
     //Users
@@ -45,8 +70,6 @@ return [
     //roles
     'roles'=>'الأدوار',
     'add_role'=>'إضافة دور جديد',
-    'modify_role'=>'تعديل الدور',
-    'delete_role'=>'حذف الدور',
     'role_name'=>'اسم الدور',
 
 

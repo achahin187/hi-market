@@ -11,22 +11,32 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
                     </div>
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket_id))
-                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => 0 , 'supermarket_id' => $supermarket_id])}}">add supermarket product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => 0 , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
                                 @elseif(isset($branch))
-                                    <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">add branch product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">{{__('admin.add_branch_product')}}</a></li>
                                 @else
-                                    <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">create new product</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">{{__('admin.add_product')}}</a></li>
                                 @endif
 
-                                <li class="breadcrumb-item"><a href="{{route('products.export')}}">export</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('products.import')}}">import</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
+
+                                    <li class="breadcrumb-item">
+
+                                        <a id="link" href="">{{__('admin.import')}}</a>
+
+                                        <form role="form" action="{{route('products.import')}}" method="POST" id="import-form" enctype="multipart/form-data">
+                                            @csrf
+                                            <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
+                                        </form>
+
+                                    </li>
+                                <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>
                             </ol>
                         </div>
 
@@ -52,46 +62,47 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">products</h3>
+                                <h3 class="card-title">{{__('admin.products')}}</h3>
                             </div>
 
                             <form role="form" action="{{route('products.show',$flag) }}" method="GET">
 
                                 @csrf
 
-                                <div class="form-group col-md-9">
-                                    <label>show </label>
-                                    <select class=" @error('columns') is-invalid @enderror select2"  name="columns[]" data-placeholder="Select a column" style="width: 100%;" required multiple>
+                                <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
 
-                                        <option  value="name_ar">arab name</option>
-                                        <option  value="name_en">eng name</option>
-                                        <option  value="arab_description">arab description</option>
-                                        <option  value="eng_description">eng description</option>
-                                        <option  value="arab_spec">arab spec</option>
-                                        <option  value="eng_spec">eng spec</option>
-                                        <option  value="quantity">quantity</option>
-                                        <option  value="review">review</option>
-                                        <option  value="price">price</option>
-                                        <option  value="priority">priority</option>
-                                        <option  value="points">points</option>
-                                        <option  value="category_id">categories</option>
-                                        <option  value="vendor_id">vendors</option>
-                                        <option  value="subcategory_id">subcategories</option>
-                                        <option  value="supermarket_id">supermarket</option>
-                                        <option  value="branch_id">branch</option>
-                                        <option  value="measure_id">measure</option>
-                                        <option  value="size_id">size</option>
-                                        <option  value="start_date">start date</option>
-                                        <option  value="end_date">end date</option>
-                                        <option  value="exp_date">expiration date</option>
-                                        <option  value="status">status</option>
-                                        <option  value="barcode">barcode</option>
-                                    </select>
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <select class=" @error('columns') is-invalid @enderror select2"  name="columns[]" data-placeholder="{{__('admin.show')}}" style="width: 100%;" required multiple>
+
+                                            <option  value="name_ar">{{__('admin.name_ar')}}</option>
+                                            <option  value="name_en">{{__('admin.name_en')}}</option>
+                                            <option  value="arab_description">{{__('admin.description_ar')}}</option>
+                                            <option  value="eng_description">{{__('admin.description_en')}}</option>
+                                            <option  value="arab_spec">{{__('admin.spec_ar')}}</option>
+                                            <option  value="eng_spec">{{__('admin.spec_en')}}</option>
+                                            <option  value="review">{{__('admin.review')}}</option>
+                                            <option  value="price">{{__('admin.price')}}</option>
+                                            <option  value="priority">{{__('admin.priority')}}</option>
+                                            <option  value="points">{{__('admin.points')}}</option>
+                                            <option  value="category_id">{{__('admin.category')}}</option>
+                                            <option  value="vendor_id">{{__('admin.vendor')}}</option>
+                                            <option  value="subcategory_id">{{__('admin.subcategory')}}</option>
+                                            <option  value="supermarket_id">{{__('admin.supermarket')}}</option>
+                                            <option  value="branch_id">{{__('admin.branch')}}</option>
+                                            <option  value="measure_id">{{__('admin.measure')}}</option>
+                                            <option  value="size_id">{{__('admin.size')}}</option>
+                                            <option  value="start_date">{{__('admin.start_date')}}</option>
+                                            <option  value="end_date">{{__('admin.end_date')}}</option>
+                                            <option  value="exp_date">{{__('admin.exp_date')}}</option>
+                                            <option  value="status">{{__('admin.status')}}</option>
+                                            <option  value="barcode">{{__('admin.barcode')}}</option>
+                                        </select>
+                                    </div>
 
 
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary">Show</button>
+                                    <div class="form-group col-md-6">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.show')}}</button>
+                                    </div>
                                 </div>
 
                             </form>
@@ -105,89 +116,86 @@
                                             @if(isset($columns))
 
                                                 @if(in_array('name_ar',$columns))
-                                                    <th>arab name</th>
+                                                    <th>{{__('admin.name_ar')}}</th>
                                                 @endif
                                                 @if(in_array('name_en',$columns))
-                                                    <th>eng name</th>
+                                                    <th>{{__('admin.name_en')}}</th>
                                                 @endif
                                                 @if(in_array('arab_description',$columns))
-                                                    <th>arab description</th>
+                                                    <th>{{__('admin.description_ar')}}</th>
                                                 @endif
                                                 @if(in_array('eng_description',$columns))
-                                                    <th>arab description</th>
+                                                    <th>{{__('admin.description_en')}}</th>
                                                 @endif
                                                 @if(in_array('arab_spec',$columns))
-                                                    <th>arab spec</th>
+                                                    <th>{{__('admin.spec_ar')}}</th>
                                                 @endif
                                                 @if(in_array('eng_spec',$columns))
-                                                    <th>eng spec</th>
-                                                @endif
-                                                @if(in_array('quantity',$columns))
-                                                    <th>quantity</th>
+                                                    <th>{{__('admin.spec_en')}}</th>
                                                 @endif
                                                 @if(in_array('review',$columns))
-                                                    <th>review</th>
+                                                    <th>{{__('admin.review')}}</th>
                                                 @endif
                                                 @if(in_array('priority',$columns))
-                                                    <th>priority</th>
+                                                    <th>{{__('admin.priority')}}</th>
                                                 @endif
                                                 @if(in_array('points',$columns))
-                                                    <th>points</th>
+                                                    <th>{{__('admin.points')}}</th>
                                                 @endif
                                                 @if(in_array('price',$columns))
-                                                    <th>price</th>
+                                                    <th>{{__('admin.price')}}</th>
                                                 @endif
                                                 @if(in_array('category_id',$columns))
-                                                    <th>category</th>
+                                                    <th>{{__('admin.category')}}</th>
                                                 @endif
                                                 @if(in_array('vendor_id',$columns))
-                                                    <th>vendor</th>
+                                                    <th>{{__('admin.vendor')}}</th>
                                                 @endif
                                                 @if(in_array('supermarket_id',$columns))
-                                                    <th>supermarket</th>
+                                                    <th>{{__('admin.supermarket')}}</th>
                                                 @endif
 
                                                 @if(in_array('branch_id',$columns))
-                                                    <th>supermarket</th>
+                                                    <th>{{__('admin.branch')}}</th>
                                                 @endif
                                                 @if(in_array('subcategory_id',$columns))
-                                                    <th>subcategory</th>
+                                                    <th>{{__('admin.subcategory')}}</th>
                                                 @endif
                                                 @if(in_array('measure_id',$columns))
-                                                    <th>measuring unit</th>
+                                                    <th>{{__('admin.measure')}}</th>
                                                 @endif
                                                 @if(in_array('size_id',$columns))
-                                                    <th>size</th>
+                                                    <th>{{__('admin.size')}}</th>
                                                 @endif
                                                 @if(in_array('start_date',$columns))
-                                                    <th>start date</th>
+                                                    <th>{{__('admin.start_date')}}</th>
                                                 @endif
                                                 @if(in_array('end_date',$columns))
-                                                    <th>end date</th>
+                                                    <th>{{__('admin.end_date')}}</th>
                                                 @endif
                                                 @if(in_array('exp_date',$columns))
-                                                    <th>expiration date</th>
+                                                    <th>{{__('admin.exp_date')}}</th>
                                                 @endif
                                                 @if(in_array('status',$columns))
-                                                    <th>status</th>
+                                                    <th>{{__('admin.status')}}</th>
                                                 @endif
                                                 @if(in_array('barcode',$columns))
-                                                    <th>barcode</th>
+                                                    <th>{{__('admin.barcode')}}</th>
                                                 @endif
-                                                <th>controls</th>
+                                                <th>{{__('admin.controls')}}</th>
 
                                             @else
 
-                                                <th>arab name</th>
-                                                <th>eng name</th>
-                                                <th>priority</th>
-                                                <th>status</th>
-                                                <th>category</th>
-                                                <th>vendor</th>
-                                                <th>supermarket</th>
-                                                <th>branch</th>
-                                                <th>subcategory</th>
-                                                <th>controls</th>
+                                                <th>{{__('admin.name_ar')}}</th>
+                                                <th>{{__('admin.name_en')}}</th>
+                                                <th>{{__('admin.priority')}}</th>
+                                                <th>{{__('admin.status')}}</th>
+                                                <th>{{__('admin.category')}}</th>
+                                                <th>{{__('admin.vendor')}}</th>
+                                                <th>{{__('admin.supermarket')}}</th>
+                                                <th>{{__('admin.branch')}}</th>
+                                                <th>{{__('admin.subcategory')}}</th>
+                                                <th>{{__('admin.controls')}}</th>
                                             @endif
 
 
@@ -215,9 +223,6 @@
                                                     @endif
                                                     @if(in_array('eng_spec',$columns))
                                                         <td>{{$product->eng_spec}}</td>
-                                                    @endif
-                                                    @if(in_array('quantity',$columns))
-                                                        <td>{{$product->quantity}}</td>
                                                     @endif
                                                     @if(in_array('review',$columns))
                                                         <td>{{$product->review}}</td>
@@ -306,7 +311,7 @@
 
                                                                         @csrf
                                                                         @method('put')
-                                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">active</button>
+                                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">{{__('admin.active')}}</button>
                                                                     </form>
 
                                                                 @else
@@ -315,7 +320,7 @@
 
                                                                         @csrf
                                                                         @method('put')
-                                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">inactive</button>
+                                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">{{__('admin.inactive')}}</button>
                                                                     </form>
 
                                                                 @endif
@@ -340,7 +345,7 @@
 
                                                                 @csrf
                                                                 @method('put')
-                                                                <button form="active" type="submit" class="btn btn-block btn-outline-success">active</button>
+                                                                <button form="active" type="submit" class="btn btn-block btn-outline-success">{{__('admin.active')}}</button>
                                                             </form>
 
                                                         @else
@@ -349,7 +354,7 @@
 
                                                                 @csrf
                                                                 @method('put')
-                                                                <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">inactive</button>
+                                                                <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">{{__('admin.inactive')}}</button>
                                                             </form>
 
                                                         @endif
@@ -401,13 +406,13 @@
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{__('admin.edit')}}</a>
 
 
-                                                                <a class="dropdown-item" href="{{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }}">{{ __('clone') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }}">{{__('admin.clone')}}</a>
 
 
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
 
                                                         </form>
 

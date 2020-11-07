@@ -224,8 +224,43 @@ $settings = App\Models\Setting::all()->first();
                                 <p>sizes</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('products.index',1)}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Product Offers
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
+            <li class="nav-item has-treeview">
+                <a href="" class="nav-link">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>
+                        Supermarkets
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    <li class="nav-item">
+                        <a href="{{route('supermarkets.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                list Supermarkets
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('branches.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>branches</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="nav-item has-treeview">
                 <a href="" class="nav-link">
@@ -310,14 +345,6 @@ $settings = App\Models\Setting::all()->first();
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{{route('products.index',1)}}" class="nav-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Product Offers
-                    </p>
-                </a>
-            </li>
 
 {{--
             <li class="nav-item">
@@ -363,34 +390,6 @@ $settings = App\Models\Setting::all()->first();
                         Points
                     </p>
                 </a>
-            </li>
-
-
-            <li class="nav-item has-treeview">
-                <a href="" class="nav-link">
-                    <i class="nav-icon fas fa-chart-pie"></i>
-                    <p>
-                        Supermarkets
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-
-                    <li class="nav-item">
-                        <a href="{{route('supermarkets.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                list Supermarkets
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('branches.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>branches</p>
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             <li class="nav-item">

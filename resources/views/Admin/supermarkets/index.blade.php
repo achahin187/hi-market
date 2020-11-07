@@ -95,6 +95,10 @@
                                             </td>
 
                                             <td>
+                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 1]) }}" class="btn btn-info">product offers</a>
+                                            </td>
+
+                                            <td>
                                                 <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">offers</a>
                                             </td>
                                             <td>

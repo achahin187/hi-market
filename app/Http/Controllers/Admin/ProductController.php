@@ -33,8 +33,8 @@ class ProductController extends Controller
         //
         if($flag == 1)
         {
-            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-            return view('Admin.product_offers.index',compact('offers','flag'));
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+            return view('Admin.product_offers.index',compact('products','flag'));
         }
         $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
         return view('Admin.products.index',compact('products','flag'));
@@ -84,8 +84,8 @@ class ProductController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'required|after:today|date',
-            'end_date' => 'required|after:start_date|date',
+            'start_date' => 'after:today|date',
+            'end_date' => 'after:start_date|date',
             'exp_date' => 'required|after:today|date',
             'measure_id' => 'required|integer|min:0',
             'size_id' => 'required|integer|min:0',
@@ -213,25 +213,28 @@ class ProductController extends Controller
         ]);
 
 
-        if($product && $supermarket_id == null)
+        if($product)
         {
-            if($flag == 1)
+            if($supermarket_id != null)
             {
-                return redirect('admin/products/1')->withStatus(__('product offer created successfully'));
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product created successfully'));
             }
-            return redirect('admin/products/0')->withStatus(__('product created successfully'));
-        }
-        elseif ($product && $supermarket_id != null)
-        {
-            return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('product created successfully'));
+            else
+            {
+                return redirect('admin/products/'.$flag)->withStatus(__('product created successfully'));
+            }
         }
         else
         {
-            if($flag == 1)
+
+            if ($supermarket_id != null)
             {
-                return redirect('admin/products/1')->withStatus(__('something wrong happened, try again'));
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product not created'));
             }
-            return redirect('admin/products/0')->withStatus(__('something wrong happened, try again'));
+            else
+            {
+                return redirect('admin/products/'.$flag)->withStatus(__('something wrong happened in product creation '));
+            }
         }
     }
 
@@ -249,8 +252,8 @@ class ProductController extends Controller
 
         if($flag == 1)
         {
-            $offers = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-            return view('Admin.product_offers.index',compact('offers','columns','flag'));
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+            return view('Admin.product_offers.index',compact('products','columns','flag'));
         }
         $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
         return view('Admin.products.index',compact('products','columns','flag'));
@@ -262,40 +265,63 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$flag)
+    public function edit($id,$flag,$supermarket_id = null)
     {
         //
         $product = Product::find($id);
 
         if($product)
         {
-            $productimages = explode(',',$product->images);
-            return view('Admin.products.create', compact('product','productimages','flag'));
+            if($supermarket_id != null)
+            {
+                $productimages = explode(',',$product->images);
+                return view('Admin.products.create', compact('product','productimages','flag','supermarket_id'));
+            }
+            else {
+                $productimages = explode(',', $product->images);
+                return view('Admin.products.create', compact('product', 'productimages', 'flag'));
+            }
         }
         else
         {
-            if($flag == 1)
+            if($supermarket_id != null)
             {
-                return redirect('admin/products/1')->withStatus('no product have this id');
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('no product with this id in the supermarket'));
             }
-            return redirect('admin/products/0')->withStatus('no product have this id');
+            else {
+                return redirect('admin/products/'.$flag)->withStatus(__('no product with this id'));
+            }
         }
     }
 
-    public function clone($id,$flag)
+    public function clone($id,$flag,$supermarket_id = null)
     {
         //
         $product = Product::find($id);
 
         if($product)
         {
-            $clone = true;
-            $productimages = explode(',',$product->images);
-            return view('Admin.products.create', compact('product','productimages','flag','clone'));
+            if($supermarket_id != null)
+            {
+                $clone = true;
+                $productimages = explode(',',$product->images);
+                return view('Admin.products.create', compact('product','productimages','flag','clone','supermarket_id'));
+            }
+            else {
+                $clone = true;
+                $productimages = explode(',', $product->images);
+                return view('Admin.products.create', compact('product', 'productimages', 'flag', 'clone'));
+            }
         }
         else
         {
-            return redirect('admin/products/0')->withStatus('no product have this id');
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('no product with this id in the supermarket'));
+            }
+            else {
+                return redirect('admin/products/'.$flag)->withStatus(__('no product with this id'));
+            }
         }
     }
 
@@ -306,7 +332,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id,$flag)
+    public function update(Request $request,$id,$flag,$supermarket_id = null)
     {
         //
 
@@ -468,13 +494,12 @@ class ProductController extends Controller
                     'updated_by' => $user->id
                 ]);
 
-                if($flag == 1)
+                if($supermarket_id != null)
                 {
-                    return redirect('admin/products/1')->withStatus(__('offer updated successfully'));
+                    return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
                 }
-                else
-                {
-                    return redirect('admin/products/0')->withStatus(__('product updated successfully'));
+                else {
+                    return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
                 }
 
             } else {
@@ -525,13 +550,12 @@ class ProductController extends Controller
                         'updated_by' => $user->id
                     ]);
 
-                    if($flag == 1)
+                    if($supermarket_id != null)
                     {
-                        return redirect('admin/product_offers')->withStatus(__('offer updated successfully'));
+                        return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
                     }
-                    else
-                    {
-                        return redirect('admin/products/0')->withStatus(__('product updated successfully'));
+                    else {
+                        return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
                     }
 
                 } else {
@@ -561,13 +585,12 @@ class ProductController extends Controller
                         'updated_by' => $user->id,
                         'images' => null
                     ]);
-                    if($flag == 1)
+                    if($supermarket_id != null)
                     {
-                        return redirect('admin/product_offers')->withStatus(__('offer updated successfully'));
+                        return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
                     }
-                    else
-                    {
-                        return redirect('admin/products/0')->withStatus(__('product updated successfully'));
+                    else {
+                        return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
                     }
                 }
             }
@@ -575,13 +598,12 @@ class ProductController extends Controller
 
         else
         {
-            if($flag == 1)
+            if($supermarket_id != null)
             {
-                return redirect('admin/products/1')->withStatus(__('no offer exists'));
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('no product with this id in the supermarket'));
             }
-            else
-            {
-                return redirect('admin/products/0')->withStatus(__('no product exists'));
+            else {
+                return redirect('admin/products/'.$flag)->withStatus(__('no product with this id'));
             }
         }
 
@@ -590,7 +612,7 @@ class ProductController extends Controller
     public function supermarketproducts($supermarket_id,$flag)
     {
         //
-        $products = Product::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
+        $products = Product::where('supermarket_id',$supermarket_id)->where('flag',$flag)->orderBy('id', 'desc')->get();
         return view('Admin.products.index',compact('products','flag','supermarket_id'));
     }
 
@@ -609,7 +631,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$supermarket_id = null)
     {
         //
 
@@ -628,13 +650,13 @@ class ProductController extends Controller
 
         $product->delete();
 
-        if($product->flag == 1)
+        if($supermarket_id == null)
         {
-            return redirect('admin/products/1')->withStatus(__('offer deleted successfully'));
+            return redirect('admin/products/'.$product->flag)->withStatus(__('product deleted successfully'));
         }
-        else
+        elseif ($supermarket_id != null)
         {
-            return redirect('admin/products/0')->withStatus(__('product deleted successfully'));
+            return redirect('admin/products/'.$product->flag)->withStatus(__('supermarket product deleted successfully'));
         }
     }
 
@@ -673,10 +695,16 @@ class ProductController extends Controller
     public function import(Request $request)
     {
         $rules = [
-            'images' => 'image|mimes:csv|max:277'
+            'file' => 'file|mimes:csv|max:277'
         ];
         Excel::import(new ProductImport ,request()->file('file'));
 
         return back();
+    }
+
+    public function download()
+    {
+        return response()->download('Book1.xlsx');
+
     }
 }

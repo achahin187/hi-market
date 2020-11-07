@@ -83,7 +83,34 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="@if(isset($product) && !isset($clone)){{route('products.update',['id' => $product->id,'flag' => $product->flag]) }} @elseif(isset($clone) && isset($product)) {{route('productsadd',$flag) }} @elseif(isset($supermarket_id)) {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @else {{route('productsadd',$flag) }}  @endif" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="
+
+                        @if(isset($product) && !isset($clone))
+
+                            {{route('products.update',['id' => $product->id,'flag' => $product->flag]) }}
+
+                        @elseif(isset($product) && isset($supermarket_id))
+
+                            {{route('products.update',['id' => $product->id,'flag' => $product->flag , 'supermarket_id' => $supermarket_id]) }}
+
+                        @elseif(isset($clone) && isset($product))
+
+                            {{route('productsadd',$flag) }}
+
+                        @elseif(isset($supermarket_id))
+
+                            {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }}
+
+                        @else
+
+                            {{route('productsadd',$flag) }}
+
+                        @endif"
+
+
+                              method="POST" enctype="multipart/form-data">
+
+
                             @csrf
 
                             @if(isset($product) && !isset($clone))
@@ -393,28 +420,33 @@
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label>start_date</label>
-                                    <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->start_date)) }}" @endif id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
-
-                                    @error('start_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @if($flag == 1)
 
 
-                                <div class="form-group">
-                                    <label>end_date</label>
-                                    <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->end_date)) }}" @endif name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+                                    <div class="form-group">
+                                        <label>start_date</label>
+                                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->start_date)) }}" @endif id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
-                                    @error('end_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                        @error('start_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>end_date</label>
+                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->end_date)) }}" @endif name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+
+                                        @error('end_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                @endif
 
 
                                 <div class="form-group">
