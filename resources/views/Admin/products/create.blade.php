@@ -38,7 +38,16 @@
                         <div class="card-header">
                             <h3 class="card-title">
 
-                                @if(isset($product) && !isset($clone))
+                                @if(isset($supermarket_id) && !isset($product))
+
+                                    add supermarket product
+
+
+                                @elseif(isset($product) && isset($supermarket_id))
+
+                                    edit supermarket product
+
+                                @elseif(isset($product) && !isset($clone))
 
                                     @if($product->flag == 0)
 
@@ -62,10 +71,6 @@
 
                                     @endif
 
-                                @elseif(isset($supermarket_id))
-
-                                    add supermarket product
-
                                 @else
                                     @if($flag == 0)
 
@@ -85,7 +90,16 @@
                         <!-- form start -->
                         <form role="form" action="
 
-                        @if(isset($product) && !isset($clone))
+
+                        @if(isset($supermarket_id) && !isset($product))
+
+                            {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }}
+
+                        @elseif(isset($supermarket_id) && isset($product))
+
+                            {{route('products.update',['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }}
+
+                        @elseif(isset($product) && !isset($clone))
 
                             {{route('products.update',['id' => $product->id,'flag' => $product->flag]) }}
 
@@ -96,10 +110,6 @@
                         @elseif(isset($clone) && isset($product))
 
                             {{route('productsadd',$flag) }}
-
-                        @elseif(isset($supermarket_id))
-
-                            {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }}
 
                         @else
 

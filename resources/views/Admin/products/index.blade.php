@@ -17,11 +17,11 @@
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket_id))
-                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => 0 , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
                                 @elseif(isset($branch))
                                     <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">{{__('admin.add_branch_product')}}</a></li>
                                 @else
-                                    <li class="breadcrumb-item"><a href="{{route('products.create',0)}}">{{__('admin.add_product')}}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
                                 @endif
 
                                 <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
@@ -65,7 +65,7 @@
                                 <h3 class="card-title">{{__('admin.products')}}</h3>
                             </div>
 
-                            <form role="form" action="{{route('products.show',$flag) }}" method="GET">
+                            <form role="form" action="@if(isset($supermarket_id)) {{route('products.show',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @else {{route('products.show',$flag) }} @endif" method="GET">
 
                                 @csrf
 
@@ -401,12 +401,12 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                                        <form action="@if(isset($supermarket_id)){{ route('products.destroy', ['id' => $product->id,'supermarket_id' => $supermarket_id]) }} @else {{ route('products.destroy', $product->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }}">{{__('admin.edit')}}</a>
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.edit')}}</a>
 
 
                                                                 <a class="dropdown-item" href="{{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }}">{{__('admin.clone')}}</a>

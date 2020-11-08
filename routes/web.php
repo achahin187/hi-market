@@ -90,7 +90,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
             Route::get('{id}/{flag}/clone', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
-            Route::get('show/{flag}', 'Admin\ProductController@show')->name('products.show');
+            Route::get('show/{flag}/{supermarket_id?}', 'Admin\ProductController@show')->name('products.show');
             Route::get('create/{flag}/{supermarket_id?}', 'Admin\ProductController@create')->name('products.create');
             Route::post('{flag}/{supermarket_id?}', 'Admin\ProductController@store')->name('productsadd');
             Route::get('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@edit')->name('products.edit');

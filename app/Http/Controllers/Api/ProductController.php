@@ -45,7 +45,7 @@ class ProductController extends Controller
         foreach ($supermarkets as $supermarket)
         {
             $supermarket->imagepath = asset('images/'.$supermarket->image);
-            $supermarket->logopath = asset('images/'.$supermarket->image);
+            $supermarket->logopath = asset('images/'.$supermarket->logo_image);
         }
 
         foreach ($offers as $offer)

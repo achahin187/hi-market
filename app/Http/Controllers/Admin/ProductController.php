@@ -48,6 +48,7 @@ class ProductController extends Controller
     public function create($flag,$supermarket_id = null)
     {
         //
+
         if($supermarket_id != null) {
             return view('Admin.products.create', compact('flag','supermarket_id'));
         }
@@ -244,19 +245,26 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$flag)
+    public function show(Request $request,$flag,$supermarket_id = null)
     {
         //
 
         $columns = $request->columns;
 
-        if($flag == 1)
+        if($supermarket_id != null)
         {
-            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-            return view('Admin.product_offers.index',compact('products','columns','flag'));
+            $products = Product::where('flag',$flag)->where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
+            return view('Admin.products.index', compact('products', 'columns', 'flag','supermarket_id'));
         }
-        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
-        return view('Admin.products.index',compact('products','columns','flag'));
+        else {
+
+            if ($flag == 1) {
+                $products = Product::where('flag', $flag)->orderBy('id', 'desc')->get();
+                return view('Admin.product_offers.index', compact('products', 'columns', 'flag'));
+            }
+            $products = Product::where('flag', $flag)->orderBy('id', 'desc')->get();
+            return view('Admin.products.index', compact('products', 'columns', 'flag'));
+        }
     }
 
     /**
@@ -345,7 +353,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
+            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore($product->id)],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'required|numeric|min:0',
@@ -355,8 +363,8 @@ class ProductController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'required|after:today|date',
-            'end_date' => 'required|after:start_date|date',
+            'start_date' => 'after:today|date',
+            'end_date' => 'after:start_date|date',
             'exp_date' => 'required|after:today|date',
             'measure_id' => 'required|integer|min:0',
             'size_id' => 'required|integer|min:0',
@@ -469,8 +477,8 @@ class ProductController extends Controller
                 $images = implode(',', $productimages);
 
                 $product->update([
-                    'arab_name' => $arab_name,
-                    'eng_name' => $eng_name,
+                    'name_ar' => $arab_name,
+                    'name_en' => $eng_name,
                     'price' => $price,
                     'points' => $points,
                     'category_id' => $category,
@@ -525,8 +533,8 @@ class ProductController extends Controller
                     $images = implode(',', $productimages);
 
                     $product->update([
-                        'arab_name' => $arab_name,
-                        'eng_name' => $eng_name,
+                        'name_ar' => $arab_name,
+                        'name_en' => $eng_name,
                         'price' => $price,
                         'points' => $points,
                         'category_id' => $category,
@@ -561,8 +569,8 @@ class ProductController extends Controller
                 } else {
 
                     $product->update([
-                        'arab_name' => $arab_name,
-                        'eng_name' => $eng_name,
+                        'name_ar' => $arab_name,
+                        'name_en' => $eng_name,
                         'price' => $price,
                         'points' => $points,
                         'category_id' => $category,
@@ -637,26 +645,36 @@ class ProductController extends Controller
 
         $product = Product::find($id);
 
-        $images = $product->images;
+        if($product) {
 
-        if($images) {
-            $productimages = explode(',', $images);
+            $images = $product->images;
 
-            foreach ($productimages as $image)
+            if ($images) {
+                $productimages = explode(',', $images);
+
+                foreach ($productimages as $image) {
+                    unlink('product_images/' . $image);
+                }
+            }
+
+            $product->delete();
+
+            if($supermarket_id != null)
             {
-                unlink('product_images/'.$image);
+                return redirect()->back()->withStatus(__('supermarket product deleted successfully'));
+            }
+            else {
+                return redirect()->back()->withStatus(__('product deleted successfully'));
             }
         }
-
-        $product->delete();
-
-        if($supermarket_id == null)
+        else
         {
-            return redirect('admin/products/'.$product->flag)->withStatus(__('product deleted successfully'));
-        }
-        elseif ($supermarket_id != null)
-        {
-            return redirect('admin/products/'.$product->flag)->withStatus(__('supermarket product deleted successfully'));
+
+            if ($supermarket_id != null) {
+                return redirect()->back()->withStatus(__('no product with this id in the supermarket'));
+            } else {
+                return redirect()->back()->withStatus(__('no product with this id'));
+            }
         }
     }
 
