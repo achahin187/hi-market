@@ -30,13 +30,13 @@ class ProductController extends Controller
 
         if($lang == 'ar')
         {
-            $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time','image')->orderBy('priority','asc')->limit(4)->get();
+            $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time','image','logo_image')->orderBy('priority','asc')->limit(4)->get();
 
             $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
         }
         else
         {
-            $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time','image')->orderBy('priority','asc')->limit(4)->get();
+            $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time','image','logo_image')->orderBy('priority','asc')->limit(4)->get();
 
             $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
         }
