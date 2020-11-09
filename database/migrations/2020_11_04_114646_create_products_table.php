@@ -23,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->text('arab_spec')->nullable();
             $table->text('review')->nullable();
             $table->unsignedFloat('price')->nullable();
+            $table->unsignedFloat('offer_price')->nullable();
+            $table->unsignedFloat('rate')->nullable();
             $table->unsignedInteger('priority')->nullable();
             $table->text('images')->nullable();
             $table->unsignedInteger('points')->nullable();

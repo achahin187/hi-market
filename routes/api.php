@@ -42,7 +42,7 @@
         Route::post('jobs/apply', 'JobController@apply_job')->name('apply_job');
         Route::post('favourites/add','FavouritesController@addfavourite');
         Route::post('favourites/remove','FavouritesController@removefavourites');
-        Route::get('orders/{client_id}','OrderController@clientorders')->name('client_orders');
+        Route::get('clientorders','OrderController@clientorders')->name('client_orders');
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
 
 

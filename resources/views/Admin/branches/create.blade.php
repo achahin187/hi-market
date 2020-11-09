@@ -14,8 +14,21 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('branches.index')}}">branches</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+
+
+                            @if(isset($supermarket_id))
+
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.branches',$supermarket_id)}}">supermarket branches</a></li>
+                                <li class="breadcrumb-item active">supermarket branch Form</li>
+
+                            @else
+
+                                <li class="breadcrumb-item"><a href="{{route('branches.index')}}">branches</a></li>
+                                <li class="breadcrumb-item active">branch Form</li>
+
+                            @endif
+
+
                         </ol>
                     </div>
                 </div>
@@ -73,11 +86,19 @@
 
                                     <div class="form-group">
                                         <label>branch supermarket </label>
-                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
 
                                                     <option <?php if($branch->supermarket->id == $branch->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                                @endforeach
+
+                                            @elseif(isset($supermarket_id))
+
+                                                @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                    <option <?php if($supermarket_id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
 
                                                 @endforeach
                                             @else
@@ -90,6 +111,11 @@
                                             @endif
                                         </select>
                                     </div>
+
+                                    @if(isset($supermarket_id))
+
+                                        <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
+                                    @endif
 
                                     @if(!isset($branch))
 

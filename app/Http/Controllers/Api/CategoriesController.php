@@ -108,7 +108,6 @@ class CategoriesController extends Controller
 
         $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
-        $category = Category::find($category_id);
 
         if ($category_id) {
 
@@ -118,9 +117,9 @@ class CategoriesController extends Controller
 
                 if ($lang == 'ar') {
 
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price', 'images')->get();
+                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
                 } else {
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price', 'images')->get();
+                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
                 }
 
                 foreach ($products as $product) {
@@ -131,6 +130,7 @@ class CategoriesController extends Controller
                             $product->favourite = 1;
                         }
                     }
+
                     $product->ratings = '170';
                     $product->imagepath = asset('images/' . $product->images);
                 }

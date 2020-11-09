@@ -53,7 +53,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('admins', 'Admin\AdminController', ['except' => ['show']]);
         Route::resource('categories', 'Admin\CategoryController',['except' => ['show']]);
         Route::resource('vendors', 'Admin\VendorController',['except' => ['show']]);
-        Route::resource('offers', 'Admin\OfferController',['except' => ['show']]);
         Route::resource('requests', 'Admin\RequestController');
         Route::resource('reasons', 'Admin\ReasonController');
         Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
@@ -70,7 +69,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('cities', 'Admin\CityController');
         Route::resource('areas', 'Admin\AreaController');
         Route::resource('countries', 'Admin\CountryController');
-        Route::resource('branches', 'Admin\BranchController');
         Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
         Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);
         Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
@@ -99,6 +97,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::delete('{id}/{supermarket_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
             Route::get('create/productbranch/{id}','Admin\ProductController@productbranch')->name('productbranch');
             Route::get('{product_id?}/{flag?}/edit/productbranch/{id}','Admin\ProductController@productbranchedit')->name('productbranch');
+
+        });
+
+        Route::group(['prefix' => 'branches'],function() {
+
+            Route::get('', 'Admin\BranchController@index')->name('branches.index');
+            Route::get('create/{supermarket_id?}', 'Admin\BranchController@create')->name('branches.create');
+            Route::post('{supermarket_id?}', 'Admin\BranchController@store')->name('branches.store');
+            Route::get('{id}/edit/{supermarket_id?}', 'Admin\BranchController@edit')->name('branches.edit');
+            Route::put('{id}/edit/{supermarket_id?}', 'Admin\BranchController@update')->name('branches.update');
+            Route::put('status/{branch_id}', 'Admin\BranchController@status')->name('branch.status');
+            Route::delete('{id}/{supermarket_id?}', 'Admin\BranchController@destroy')->name('branches.destroy');
+
+        });
+
+
+        Route::group(['prefix' => 'offers'],function() {
+
+            Route::get('{flag?}', 'Admin\OfferController@index')->name('offers.index');
+            Route::get('create/{flag}/{supermarket_id?}', 'Admin\ProductController@create')->name('products.create');
+            Route::post('{flag}/{supermarket_id?}', 'Admin\ProductController@store')->name('productsadd');
+            Route::get('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@edit')->name('products.edit');
+            Route::put('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@update')->name('products.update');
+            Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
+            Route::delete('{id}/{supermarket_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
 
         });
 

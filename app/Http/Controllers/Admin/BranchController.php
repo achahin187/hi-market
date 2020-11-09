@@ -25,10 +25,15 @@ class BranchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($supermarket_id = null)
     {
         //
-        return view('Admin.branches.create');
+        if($supermarket_id != null) {
+            return view('Admin.branches.create',compact('supermarket_id'));
+        }
+        else {
+            return view('Admin.branches.create');
+        }
     }
 
     /**
@@ -37,7 +42,7 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$supermarket_id = null)
     {
         //
         $rules = [
@@ -67,7 +72,7 @@ class BranchController extends Controller
 
             $image->move('images', $file_to_store);
 
-            Branch::create([
+            $branch = Branch::create([
 
                 'name_ar' => $arab_name,
                 'name_en' => $eng_name,
@@ -79,7 +84,7 @@ class BranchController extends Controller
         else
         {
 
-            Branch::create([
+           $branch = Branch::create([
 
                 'name_ar' => $arab_name,
                 'name_en' => $eng_name,
@@ -88,8 +93,30 @@ class BranchController extends Controller
             ]);
         }
 
+        if($branch)
+        {
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus(__('supermarket branch created successfully'));
+            }
+            else
+            {
+                return redirect('admin/branches')->withStatus(__('branch created successfully'));
+            }
+        }
+        else
+        {
 
-        return redirect('admin/branches')->withStatus(__('branch created successfully'));
+            if ($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus(__('supermarket branch not created'));
+            }
+            else
+            {
+                return redirect('admin/branches')->withStatus(__('something wrong happened in branch creation '));
+            }
+        }
+
     }
 
     /**
@@ -109,18 +136,30 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$supermarket_id = null)
     {
         //
         $branch = Branch::find($id);
 
         if($branch)
         {
-            return view('Admin.branches.create', compact('branch'));
+            if($supermarket_id != null)
+            {
+                return view('Admin.branches.create', compact('branch','supermarket_id'));
+            }
+            else {
+                return view('Admin.branches.create', compact('branch'));
+            }
         }
         else
         {
-            return redirect('admin/branches')->withStatus('no branch have this id');
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus('no branch have this id');
+            }
+            else {
+                return redirect('admin/branches')->withStatus('no branch have this id');
+            }
         }
     }
 
@@ -131,7 +170,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,$supermarket_id = null)
     {
         //
         $rules = [
@@ -173,11 +212,23 @@ class BranchController extends Controller
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => null]);
                 }
             }
-            return redirect('/admin/branches')->withStatus('branch successfully updated.');
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus('supermarket branch updated successfully');
+            }
+            else {
+                return redirect('admin/branches')->withStatus('branch updated successfully');
+            }
         }
         else
         {
-            return redirect('/admin/branches')->withStatus('no branch exist');
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus('no branch have this id');
+            }
+            else {
+                return redirect('admin/branches')->withStatus('no branch have this id');
+            }
         }
     }
 
@@ -196,13 +247,16 @@ class BranchController extends Controller
         {
 
             if($branch->image != null) {
-                unlink('vendor_images/' . $branch->image);
+                unlink('images/' . $branch->image);
             }
 
             $branch->delete();
-            return redirect('/admin/branches')->withStatus(__('branch successfully deleted.'));
+
+            return redirect()->back()->withStatus(__('supermarket branch deleted successfully'));
         }
-        return redirect('/admin/branches')->withStatus(__('this id is not in our database'));
+        else {
+            return redirect()->back()->withStatus('no branch have this id');
+        }
     }
 
     public function status(Request $request,$id)
@@ -228,6 +282,6 @@ class BranchController extends Controller
     {
         //
         $branches = Branch::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
-        return view('Admin.branches.index',compact('branches'));
+        return view('Admin.branches.index',compact('branches','supermarket_id'));
     }
 }

@@ -27,10 +27,17 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($supermarket_id = null)
     {
         //
-        return view('Admin.dynamic_offers.create');
+        if($supermarket_id != null) {
+
+            return view('Admin.dynamic_offers.create',compact('supermarket_id'));
+        }
+        else
+        {
+            return view('Admin.dynamic_offers.create');
+        }
     }
 
     /**
@@ -39,7 +46,7 @@ class OfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$supermarket_id = null)
     {
 
         $user = auth()->user();
@@ -225,11 +232,23 @@ class OfferController extends Controller
 
         if($offer)
         {
-            return redirect('admin/offers')->withStatus(__('offer created successfully'));
+            if($supermarket_id != null) {
+                return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer created successfully'));
+            }
+            else
+            {
+                return redirect('admin/offers')->withStatus(__('offer created successfully'));
+            }
         }
         else
         {
-            return redirect('admin/offers')->withStatus(__('something wrong happened, try again'));
+            if($supermarket_id != null) {
+                return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer not created , try again'));
+            }
+            else
+            {
+                return redirect('admin/offers')->withStatus(__('offer not created ,try again'));
+            }
         }
 
     }
@@ -241,18 +260,30 @@ class OfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$supermarket_id = null)
     {
         //
         $offer = Offer::find($id);
 
         if($offer)
         {
-            return view('Admin.dynamic_offers.create', compact('offer'));
+            if($supermarket_id != null) {
+                return view('Admin.dynamic_offers.create', compact('offer','supermarket_id'));
+            }
+            else
+            {
+                return view('Admin.dynamic_offers.create', compact('offer'));
+            }
         }
         else
         {
-            return redirect('admin/offers')->withStatus('no offer have this id');
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/offer/'.$supermarket_id)->withStatus('no supermarket offer have this id');
+            }
+            else {
+                return redirect('admin/offers')->withStatus('no offer have this id');
+            }
         }
     }
 
@@ -263,7 +294,7 @@ class OfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id , $supermarket_id = null)
     {
         //
         $user = auth()->user();
@@ -485,11 +516,23 @@ class OfferController extends Controller
 
             }
 
-            return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+            if($supermarket_id != null) {
+                return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer updated successfully'));
+            }
+            else
+            {
+                return redirect('admin/offers')->withStatus(__('offer updated successfully'));
+            }
         }
         else
         {
-            return redirect('admin/offers')->withStatus(__('no offer with this id'));
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/offer/'.$supermarket_id)->withStatus('no supermarket offer have this id');
+            }
+            else {
+                return redirect('admin/offers')->withStatus('no offer have this id');
+            }
         }
 
     }
@@ -508,9 +551,9 @@ class OfferController extends Controller
 
         if($offer) {
             $offer->delete();
-            return redirect('/admin/offers')->withStatus('offer successfully deleted.');
+            return redirect()->back()->withStatus('offer successfully deleted.');
         }
-        return redirect('/admin/offers')->withStatus('no offer with this id.');
+        return redirect()->back()->withStatus('no offer with this id.');
 
 
     }

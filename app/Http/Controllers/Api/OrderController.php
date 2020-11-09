@@ -15,24 +15,44 @@ class OrderController extends Controller
 
     use generaltrait;
 
-    public function clientorders($client_id)
+    public function clientorders(Request $request)
     {
-        $client = Client::find($client_id);
+
+        $udid = $request->header('udid');
+
+        $token = $request->header('token');
+
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+
+            return $this->returnError(402,'language is missing');
+        }
+
+        $client = Client::where('remember_token', $token)->first();
 
         if($client)
         {
+
             if(count($client->orders) > 0) {
 
-                return $this->returnData('orders', $client->orders);
+                return $this->returnData(['orders'], [$client->orders]);
             }
             else
             {
-                return $this->returnError('','there is no orders for this client');
+
+                if ($lang == 'ar') {
+                    return $this->returnError(305,'لا يوجد طلبات لهذا العميل');
+                }
+                return $this->returnError(305, 'there is no orders for this client');
             }
         }
         else
         {
-            return $this->returnError('','there is no client found');
+            if ($lang == 'ar') {
+                return $this->returnError(305, 'لم نجد هذا العميل');
+            }
+            return $this->returnError(305, 'there is no client found');
         }
     }
 

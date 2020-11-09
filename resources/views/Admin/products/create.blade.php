@@ -14,10 +14,12 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if(($flag == 1))
 
-                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">offers</a></li>
-                                <li class="breadcrumb-item active">Offer Form</li>
+                            @if(isset($supermarket_id))
+
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.products',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">supermarket products</a></li>
+                                <li class="breadcrumb-item active">supemarket product Form</li>
+
                             @else
                                 <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">products</a></li>
                                 <li class="breadcrumb-item active">product Form</li>
