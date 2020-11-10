@@ -50,6 +50,7 @@
         Route::get('gethomedata','ProductController@homeData')->name('listHome');
         Route::post('getsupermarketcats','CategoriesController@supermarketcategories')->name('listsupermarketcats');
         Route::post('getcategoryproducts','CategoriesController@categoryproducts')->name('listcategoryproducts');
+        Route::post('supermarketoffers','CategoriesController@supermarketoffers')->name('listcategoryproducts');
     });
 
 

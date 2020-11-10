@@ -101,37 +101,50 @@ class CategoriesController extends Controller
 
         $token = $request->header('token');
 
-        $supermarket_id = $request->id;
+        $udid = $request->header('udid');
 
+        $supermarket_id = $request->supermarket_id;
 
         $supermarket = supermarket::find($supermarket_id);
+
+        $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
 
         if($supermarket) {
 
             if ($lang == 'ar') {
 
-                $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
             } else {
-                $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+            }
+                foreach ($products as $product) {
+
+                    $product->favourite = 0;
+
+                    if (count($favproducts) > 0) {
+
+
+                        foreach ($favproducts as $favproduct) {
+                            if ($product->id == $favproduct->product_id) {
+                                $product->favourite = 1;
+                            }
+                        }
+                    }
+
+                    $product->ratings = '170';
+                    $product->imagepath = asset('images/' . $product->images);
+
             }
 
-            foreach ($categories as $category)
-            {
-                $category->imagepath = asset('images/'.$category->image);
-            }
 
-            foreach ($offers as $offer)
-            {
-                $offer->imagepath = asset('images/'.$offer->image);
-            }
 
             if($token)
             {
                 $client = Client::where('remember_token', $token)->first();
 
                 if ($client) {
-                    return $this->returnData(['categories','offers','supermarket'], [$categories,$offers,$supermarketname]);
+                    return $this->returnData(['products'], [$products]);
                 }
                 else {
                     if ($lang == 'ar') {
@@ -142,7 +155,7 @@ class CategoriesController extends Controller
             }
             else {
 
-                return $this->returnData(['categories', 'offers', 'supermarket'], [$categories, $offers, $supermarketname]);
+                return $this->returnData(['products'], [$products]);
             }
         }
         else
