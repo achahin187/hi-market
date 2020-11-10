@@ -189,7 +189,9 @@ class CategoriesController extends Controller
 
                     $product->favourite = 0;
 
-                    if($favproducts) {
+                    if(count($favproducts) > 0) {
+
+                        print_r($favproducts);die();
 
                         foreach ($favproducts as $favproduct) {
                             if ($product->id == $favproduct->product_id) {
@@ -226,56 +228,6 @@ class CategoriesController extends Controller
                     return $this->returnError(305,'لم نجد هذا القسم');
                 }
                 return $this->returnError(305 ,'there is no category found');
-            }
-        }
-        else
-        {
-            $supermarket = Supermarket::find($supermarket_id);
-
-            if($supermarket) {
-
-                if ($lang == 'ar') {
-                    $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price', 'images')->get();
-                } else {
-                    $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price', 'images')->get();
-                }
-
-                foreach ($products as $product) {
-                    $product->favourite = 0;
-
-                    foreach ($favproducts as $favproduct) {
-                        if ($product->id == $favproduct->id) {
-                            $product->favourite = 1;
-                        }
-                    }
-                    $product->ratings = '170';
-                    $product->imagepath = asset('images/' . $product->images);
-                }
-
-                if ($token) {
-
-                    $client = Client::where('remember_token', $token)->first();
-
-                    if ($client) {
-                        return $this->returnData(['products'], [$products]);
-                    } else {
-                        if ($lang == 'ar') {
-                            return $this->returnError(305, 'لم نجد هذا العميل');
-                        }
-                        return $this->returnError(305, 'there is no client found');
-                    }
-
-                } else {
-                    return $this->returnData(['products'], [$products]);
-                }
-            }
-            else
-            {
-                if($lang == 'ar')
-                {
-                    return $this->returnError(305,'لم نجد هذا سوبر ماركت');
-                }
-                return $this->returnError(305 ,'there is no supermarket found');
             }
         }
     }
