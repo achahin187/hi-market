@@ -114,9 +114,9 @@ class CategoriesController extends Controller
 
             if ($lang == 'ar') {
 
-                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->where('flag',1)->get();
             } else {
-                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->where('flag',1)->get();
             }
                 foreach ($products as $product) {
 
