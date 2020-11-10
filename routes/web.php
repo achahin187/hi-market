@@ -88,13 +88,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
             Route::get('{id}/{flag}/clone', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
-            Route::get('show/{flag}/{supermarket_id?}', 'Admin\ProductController@show')->name('products.show');
-            Route::get('create/{flag}/{supermarket_id?}', 'Admin\ProductController@create')->name('products.create');
-            Route::post('{flag}/{supermarket_id?}', 'Admin\ProductController@store')->name('productsadd');
-            Route::get('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@edit')->name('products.edit');
-            Route::put('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@update')->name('products.update');
+            Route::get('show/{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@show')->name('products.show');
+            Route::get('create/{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@create')->name('products.create');
+            Route::post('{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@store')->name('productsadd');
+            Route::get('{id}/{flag}/edit/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@edit')->name('products.edit');
+            Route::put('{id}/{flag}/edit/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@update')->name('products.update');
             Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
-            Route::delete('{id}/{supermarket_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
+            Route::delete('{id}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
             Route::get('create/productbranch/{id}','Admin\ProductController@productbranch')->name('productbranch');
             Route::get('{product_id?}/{flag?}/edit/productbranch/{id}','Admin\ProductController@productbranchedit')->name('productbranch');
 
@@ -115,13 +115,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::group(['prefix' => 'offers'],function() {
 
-            Route::get('{flag?}', 'Admin\OfferController@index')->name('offers.index');
-            Route::get('create/{flag}/{supermarket_id?}', 'Admin\ProductController@create')->name('products.create');
-            Route::post('{flag}/{supermarket_id?}', 'Admin\ProductController@store')->name('productsadd');
-            Route::get('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@edit')->name('products.edit');
-            Route::put('{id}/{flag}/edit/{supermarket_id?}', 'Admin\ProductController@update')->name('products.update');
-            Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
-            Route::delete('{id}/{supermarket_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
+            Route::get('offers', 'Admin\OfferController@index')->name('offers.index');
+            Route::get('create/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@create')->name('offers.create');
+            Route::post('{supermarket_id?}/{branch_id?}', 'Admin\OfferController@store')->name('offers.store');
+            Route::get('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@edit')->name('offers.edit');
+            Route::put('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@update')->name('offers.update');
+            Route::put('status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
+            Route::delete('{id}/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@destroy')->name('offers.destroy');
 
         });
 
@@ -163,7 +163,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('supermarkets/branches/{supermarket_id}', 'Admin\BranchController@supermarketbranches')->name('supermarket.branches');
         Route::get('branches/products/{branch_id}/{flag}', 'Admin\ProductController@branchproducts')->name('branch.products');
         Route::get('branches/offers/{branch_id}', 'Admin\OfferController@branchoffers')->name('branch.offers');
-        Route::get('client/orders/{order_id}', 'Admin\ClientController@clientorders')->name('client.orders');
 /*        Route::get('supermarkets/branches/create/{supermarket_id}', 'Admin\SupermarketController@addbranch')->name('supermarketbranches.create');
         Route::post('supermarkets/branches/store/{supermarket_id}', 'Admin\SupermarketController@storebranch')->name('supermarketbranches.store');
         Route::get('supermarkets/offers/create/{supermarket_id}', 'Admin\SupermarketController@addoffer')->name('supermarketoffers.create');

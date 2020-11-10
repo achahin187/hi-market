@@ -17,7 +17,7 @@ class CreateClientProductTable extends Migration
             $table->id();
             $table->bigInteger('client_id')->unsigned()->nullable();
             $table->bigInteger('product_id')->unsigned();
-            $table->unsignedInteger('udid')->nullable();
+            $table->string('udid')->nullable();
             $table->timestamps();
 
 

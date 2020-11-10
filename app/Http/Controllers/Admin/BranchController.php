@@ -238,7 +238,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$supermarket_id = null)
     {
         //
         $branch = Branch::find($id);
@@ -252,10 +252,21 @@ class BranchController extends Controller
 
             $branch->delete();
 
-            return redirect()->back()->withStatus(__('supermarket branch deleted successfully'));
+            if($supermarket_id != null)
+            {
+                return redirect()->back()->withStatus(__('supermarket branch deleted successfully'));
+            }
+            else {
+                return redirect()->back()->withStatus(__('branch deleted successfully'));
+            }
         }
         else {
-            return redirect()->back()->withStatus('no branch have this id');
+            if ($supermarket_id != null) {
+                return redirect()->back()->withStatus(__('no branch with this id in the supermarket'));
+            }
+            else {
+                return redirect()->back()->withStatus(__('no branch with this id'));
+            }
         }
     }
 

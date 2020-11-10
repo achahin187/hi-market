@@ -156,7 +156,7 @@
 
                                                     <option value="promocode">promocode</option>
                                                     <option value="navigable">navigable</option>
-
+                                                    <option value="announcement">announcement</option>
                                                 @endif
                                             </select>
                                         </div>
@@ -208,6 +208,44 @@
                                     </span>
                                         @enderror
                                     </div>
+
+
+                                        @if(isset($offer) && $offer->image != null)
+
+                                            <div class="form-group">
+                                                <label for="exampleInputFile">File input</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+
+                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$offer->image}}" class="card-img-top" alt="Course Photo">
+
+                                                        <input type="checkbox" checked style="margin-right:10px;" name="checkedimage" value="{{$offer->image}}">
+
+                                                        <input name="image" accept=".png,.jpg,.jpeg"  type="file">
+
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="">Upload</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+
+                                            <div class="form-group">
+                                                <label for="exampleInputFile">File input</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input name="image" accept=".png,.jpg,.jpeg"  type="file" class="custom-file-input" id="exampleInputFile">
+                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="">Upload</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        @endif
 
                                 </div>
                                 <!-- /.card-body -->

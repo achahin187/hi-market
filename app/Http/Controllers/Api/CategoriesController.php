@@ -90,6 +90,71 @@ class CategoriesController extends Controller
         }
     }
 
+
+    public function supermarketoffers(Request $request)
+    {
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+            return $this->returnError(402,'no lang');
+        }
+
+        $token = $request->header('token');
+
+        $supermarket_id = $request->id;
+
+
+        $supermarket = supermarket::find($supermarket_id);
+
+
+        if($supermarket) {
+
+            if ($lang == 'ar') {
+
+                $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+            } else {
+                $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
+            }
+
+            foreach ($categories as $category)
+            {
+                $category->imagepath = asset('images/'.$category->image);
+            }
+
+            foreach ($offers as $offer)
+            {
+                $offer->imagepath = asset('images/'.$offer->image);
+            }
+
+            if($token)
+            {
+                $client = Client::where('remember_token', $token)->first();
+
+                if ($client) {
+                    return $this->returnData(['categories','offers','supermarket'], [$categories,$offers,$supermarketname]);
+                }
+                else {
+                    if ($lang == 'ar') {
+                        return $this->returnError(305, 'لم نجد هذا العميل');
+                    }
+                    return $this->returnError(305, 'there is no client found');
+                }
+            }
+            else {
+
+                return $this->returnData(['categories', 'offers', 'supermarket'], [$categories, $offers, $supermarketname]);
+            }
+        }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError(305,'لم نجد هذا السوبر ماركت');
+            }
+            return $this->returnError(305 ,'there is no supermarket found');
+        }
+    }
+
     public function categoryproducts(Request $request)
     {
         $lang = $request->header('lang');

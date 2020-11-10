@@ -18,8 +18,8 @@
 
                                 @if(isset($supermarket_id))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
-                                @elseif(isset($branch))
-                                    <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">{{__('admin.add_branch_product')}}</a></li>
+                                @elseif(isset($branch_id))
+                                    <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_product')}}</a></li>
                                 @else
                                     <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
                                 @endif
@@ -65,7 +65,7 @@
                                 <h3 class="card-title">{{__('admin.products')}}</h3>
                             </div>
 
-                            <form role="form" action="@if(isset($supermarket_id)) {{route('products.show',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @else {{route('products.show',$flag) }} @endif" method="GET">
+                            <form role="form" action="@if(isset($supermarket_id)) {{route('products.show',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{route('products.show',['flag' => $flag , 'branch_id' => $branch_id]) }} @else {{route('products.show',$flag) }} @endif" method="GET">
 
                                 @csrf
 

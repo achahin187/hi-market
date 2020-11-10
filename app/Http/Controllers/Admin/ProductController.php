@@ -45,12 +45,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($flag,$supermarket_id = null)
+    public function create($flag,$supermarket_id = null,$branch_id = null)
     {
         //
 
         if($supermarket_id != null) {
             return view('Admin.products.create', compact('flag','supermarket_id'));
+        }
+        elseif ($branch_id != null)
+        {
+            return view('Admin.products.create', compact('flag','branch_id'));
         }
         else
         {
@@ -64,7 +68,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$flag,$supermarket_id = null)
+    public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
 
 
@@ -79,14 +83,15 @@ class ProductController extends Controller
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'nullable|numeric|min:0',
+            'offer_price' => 'sometimes|required|numeric|min:0',
             'points' => 'nullable|integer|min:0',
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'after:today|date',
-            'end_date' => 'after:start_date|date',
+            'start_date' => 'sometimes|required|after:today|date',
+            'end_date' => 'sometimes|required|after:start_date|date',
             'exp_date' => 'required|after:today|date',
             'measure_id' => 'required|integer|min:0',
             'size_id' => 'required|integer|min:0',
@@ -135,6 +140,15 @@ class ProductController extends Controller
         else
         {
             $supermarket = $request->input('supermarket_id');
+        }
+
+        if($branch_id != null)
+        {
+            $branch = $branch_id;
+        }
+        else
+        {
+            $branch = $request->input('branch_id');
         }
 
         $subcategory = $request->input('subcategory_id');
@@ -194,7 +208,7 @@ class ProductController extends Controller
             'category_id' => $category,
             'vendor_id' => $vendor,
             'supermarket_id' => $supermarket,
-            'branch_id' => $request->branch_id,
+            'branch_id' => $branch,
             'subcategory_id' => $subcategory,
             'images' => $images,
             'barcode' => $barcode,
@@ -220,6 +234,10 @@ class ProductController extends Controller
             {
                 return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product created successfully'));
             }
+            elseif ($branch_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$branch_id.'/'.$flag)->withStatus(__('branch product created successfully'));
+            }
             else
             {
                 return redirect('admin/products/'.$flag)->withStatus(__('product created successfully'));
@@ -231,6 +249,10 @@ class ProductController extends Controller
             if ($supermarket_id != null)
             {
                 return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product not created'));
+            }
+            elseif ($branch_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$branch_id.'/'.$flag)->withStatus(__('branch product not created'));
             }
             else
             {
@@ -245,7 +267,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$flag,$supermarket_id = null)
+    public function show(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
 
@@ -255,6 +277,11 @@ class ProductController extends Controller
         {
             $products = Product::where('flag',$flag)->where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
             return view('Admin.products.index', compact('products', 'columns', 'flag','supermarket_id'));
+        }
+        elseif ($branch_id != null)
+        {
+            $products = Product::where('flag',$flag)->where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
+            return view('Admin.products.index', compact('products', 'columns', 'flag','branch_id'));
         }
         else {
 
@@ -273,7 +300,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$flag,$supermarket_id = null)
+    public function edit($id,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
         $product = Product::find($id);
@@ -284,6 +311,11 @@ class ProductController extends Controller
             {
                 $productimages = explode(',',$product->images);
                 return view('Admin.products.create', compact('product','productimages','flag','supermarket_id'));
+            }
+            elseif ($branch_id != null)
+            {
+                $productimages = explode(',',$product->images);
+                return view('Admin.products.create', compact('product','productimages','flag','branch_id'));
             }
             else {
                 $productimages = explode(',', $product->images);
@@ -296,13 +328,17 @@ class ProductController extends Controller
             {
                 return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('no product with this id in the supermarket'));
             }
+            elseif ($branch_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$branch_id.'/'.$flag)->withStatus(__('no product with this id in the branch'));
+            }
             else {
                 return redirect('admin/products/'.$flag)->withStatus(__('no product with this id'));
             }
         }
     }
 
-    public function clone($id,$flag,$supermarket_id = null)
+    public function clone($id,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
         $product = Product::find($id);
@@ -315,6 +351,12 @@ class ProductController extends Controller
                 $productimages = explode(',',$product->images);
                 return view('Admin.products.create', compact('product','productimages','flag','clone','supermarket_id'));
             }
+            elseif ($branch_id != null)
+            {
+                $clone = true;
+                $productimages = explode(',',$product->images);
+                return view('Admin.products.create', compact('product','productimages','flag','clone','branch_id'));
+            }
             else {
                 $clone = true;
                 $productimages = explode(',', $product->images);
@@ -326,6 +368,10 @@ class ProductController extends Controller
             if($supermarket_id != null)
             {
                 return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('no product with this id in the supermarket'));
+            }
+            elseif ($branch_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$branch_id.'/'.$flag)->withStatus(__('no product with this id in the branch'));
             }
             else {
                 return redirect('admin/products/'.$flag)->withStatus(__('no product with this id'));
@@ -340,13 +386,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id,$flag,$supermarket_id = null)
+    public function update(Request $request,$id,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
 
         $product = Product::find($id);
 
         $user = auth()->user();
+
+        if($flag == 1)
 
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -357,15 +405,16 @@ class ProductController extends Controller
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'required|numeric|min:0',
+            'offer_price' => 'sometimes|required|numeric|min:0',
             'points' => 'nullable|integer|min:0',
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'after:today|date',
-            'end_date' => 'after:start_date|date',
-            'exp_date' => 'required|after:today|date',
+            'start_date' => 'sometimes|after:today|date',
+            'end_date' => 'sometimes|required|after:start_date|date',
+            'exp_date' => 'required|required|after:today|date',
             'measure_id' => 'required|integer|min:0',
             'size_id' => 'required|integer|min:0',
             'priority' => 'required|integer|min:0',
@@ -405,8 +454,6 @@ class ProductController extends Controller
 
             $vendor = $request->input('vendor_id');
 
-            $supermarket = $request->input('supermarket_id');
-
             $subcategory = $request->input('subcategory_id');
 
             $barcode = $request->input('barcode');
@@ -433,6 +480,23 @@ class ProductController extends Controller
                 $points == 0;
             }
 
+            if($supermarket_id != null)
+            {
+                $supermarket = $supermarket_id;
+            }
+            else
+            {
+                $supermarket = $request->input('supermarket_id');
+            }
+
+            if($branch_id != null)
+            {
+                $branch = $branch_id;
+            }
+            else
+            {
+                $branch = $request->input('branch_id');
+            }
 
             if ($request->hasFile('images')) {
 
@@ -484,7 +548,7 @@ class ProductController extends Controller
                     'category_id' => $category,
                     'vendor_id' => $vendor,
                     'supermarket_id' => $supermarket,
-                    'branch_id' => $request->branch_id,
+                    'branch_id' => $branch,
                     'subcategory_id' => $subcategory,
                     'images' => $images,
                     'barcode' => $barcode,
@@ -502,13 +566,6 @@ class ProductController extends Controller
                     'updated_by' => $user->id
                 ]);
 
-                if($supermarket_id != null)
-                {
-                    return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
-                }
-                else {
-                    return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
-                }
 
             } else {
 
@@ -540,7 +597,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
-                        'branch_id' => $request->branch_id,
+                        'branch_id' => $branch,
                         'subcategory_id' => $subcategory,
                         'images' => $images,
                         'barcode' => $barcode,
@@ -558,13 +615,6 @@ class ProductController extends Controller
                         'updated_by' => $user->id
                     ]);
 
-                    if($supermarket_id != null)
-                    {
-                        return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
-                    }
-                    else {
-                        return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
-                    }
 
                 } else {
 
@@ -576,7 +626,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
-                        'branch_id' => $request->branch_id,
+                        'branch_id' => $branch,
                         'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
@@ -593,14 +643,18 @@ class ProductController extends Controller
                         'updated_by' => $user->id,
                         'images' => null
                     ]);
-                    if($supermarket_id != null)
-                    {
-                        return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
-                    }
-                    else {
-                        return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
-                    }
                 }
+            }
+            if($supermarket_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$supermarket_id.'/'.$flag)->withStatus(__('supermarket product updated successfully'));
+            }
+            elseif ($branch_id != null)
+            {
+                return redirect('admin/supermarkets/products/'.$branch_id.'/'.$flag)->withStatus(__('branch product updated successfully'));
+            }
+            else {
+                return redirect('admin/products/'.$flag)->withStatus(__('product updated successfully'));
             }
         }
 
@@ -627,8 +681,8 @@ class ProductController extends Controller
     public function branchproducts($branch_id,$flag)
     {
         //
-        $products = Product::where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
-        return view('Admin.products.index',compact('products','flag'));
+        $products = Product::where('branch_id',$branch_id)->where('flag',$flag)->orderBy('id', 'desc')->get();
+        return view('Admin.products.index',compact('products','flag','branch_id'));
     }
 
 
@@ -639,7 +693,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,$supermarket_id = null)
+    public function destroy($id,$supermarket_id = null,$branch_id = null)
     {
         //
 
@@ -663,6 +717,10 @@ class ProductController extends Controller
             {
                 return redirect()->back()->withStatus(__('supermarket product deleted successfully'));
             }
+            elseif ($branch_id != null)
+            {
+                return redirect()->back()->withStatus(__('branch product deleted successfully'));
+            }
             else {
                 return redirect()->back()->withStatus(__('product deleted successfully'));
             }
@@ -672,7 +730,12 @@ class ProductController extends Controller
 
             if ($supermarket_id != null) {
                 return redirect()->back()->withStatus(__('no product with this id in the supermarket'));
-            } else {
+            }
+            elseif ($branch_id != null)
+            {
+                return redirect()->back()->withStatus(__('no product with this id in the branch'));
+            }
+            else {
                 return redirect()->back()->withStatus(__('no product with this id'));
             }
         }

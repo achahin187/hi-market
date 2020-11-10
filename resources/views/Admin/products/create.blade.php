@@ -231,6 +231,19 @@
                                     @enderror
                                 </div>
 
+                                @if($flag == 1)
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
+                                        <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control">
+                                        @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.product_points')}}</label>
                                     <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control">
@@ -349,9 +362,10 @@
                                     <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
                                 @endif
 
+
                                 <div class="form-group">
                                     <label>supermarket branch </label>
-                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Branch::all() as $branch)
 
@@ -369,6 +383,10 @@
                                         @endif
                                     </select>
                                 </div>
+                                @if(isset($branch_id))
+
+                                    <input type="hidden" name="supermarket_id" value="{{$branch_id}}">
+                                @endif
 
                                 <div class="form-group">
                                     <label>product vendor </label>
