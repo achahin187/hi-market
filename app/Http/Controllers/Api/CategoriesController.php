@@ -192,7 +192,7 @@ class CategoriesController extends Controller
                     if($favproducts) {
 
                         foreach ($favproducts as $favproduct) {
-                            if ($product->id == $favproduct->id) {
+                            if ($product->id == $favproduct->product_id) {
                                 $product->favourite = 1;
                             }
                         }
