@@ -191,7 +191,6 @@ class CategoriesController extends Controller
 
                     if(count($favproducts) > 0) {
 
-                        print_r($favproducts);die();
 
                         foreach ($favproducts as $favproduct) {
                             if ($product->id == $favproduct->product_id) {
