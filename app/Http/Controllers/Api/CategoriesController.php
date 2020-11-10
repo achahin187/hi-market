@@ -161,8 +161,6 @@ class CategoriesController extends Controller
 
         $udid = $request->header('udid');
 
-        $supermarket_id = $request->supermarket_id;
-
         if(!$lang || $lang == ''){
             return $this->returnError(402,'no lang');
         }
