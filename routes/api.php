@@ -36,10 +36,6 @@
         Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
         Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
 
-
-        Route::post('add/cv','JobController@add_cv')->name('add_cv');
-        Route::get('jobs/view', 'JobController@view_jobs')->name('view_jobs');
-        Route::post('jobs/apply', 'JobController@apply_job')->name('apply_job');
         Route::post('favourites/add','FavouritesController@addfavourite');
         Route::post('favourites/remove','FavouritesController@removefavourites');
         Route::get('clientorders','OrderController@clientorders')->name('client_orders');
@@ -51,6 +47,8 @@
         Route::post('getsupermarketcats','CategoriesController@supermarketcategories')->name('listsupermarketcats');
         Route::post('getcategoryproducts','CategoriesController@categoryproducts')->name('listcategoryproducts');
         Route::post('supermarketoffers','CategoriesController@supermarketoffers')->name('listcategoryproducts');
+
+        Route::post('clientpoints','ClientController@clientpoints')->name('listcategoryproducts');
     });
 
 

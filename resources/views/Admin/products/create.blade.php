@@ -18,11 +18,17 @@
                             @if(isset($supermarket_id))
 
                                 <li class="breadcrumb-item"><a href="{{route('supermarket.products',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">supermarket products</a></li>
-                                <li class="breadcrumb-item active">supemarket product Form</li>
+                                <li class="breadcrumb-item active">supemarket products form</li>
+
+
+                            @elseif(isset($branch_id))
+
+                                <li class="breadcrumb-item"><a href="{{route('products.index',['flag' => $flag , 'branch_id' => $branch_id])}}">products</a></li>
+                                <li class="breadcrumb-item active">product form</li>
 
                             @else
                                 <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">products</a></li>
-                                <li class="breadcrumb-item active">product Form</li>
+                                <li class="breadcrumb-item active">product form</li>
                             @endif
                         </ol>
                     </div>
@@ -48,6 +54,15 @@
                                 @elseif(isset($product) && isset($supermarket_id))
 
                                     edit supermarket product
+
+                                @elseif(isset($branch_id) && !isset($product))
+
+                                    add branch product
+
+
+                                @elseif(isset($product) && isset($branch_id))
+
+                                    edit branch product
 
                                 @elseif(isset($product) && !isset($clone))
 
@@ -97,21 +112,33 @@
 
                             {{route('productsadd',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }}
 
-                        @elseif(isset($supermarket_id) && isset($product))
+                        @elseif(isset($supermarket_id) && isset($product) && !isset($clone))
 
                             {{route('products.update',['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }}
+
+                        @elseif(isset($branch_id) && !isset($product))
+
+                            {{route('productsadd',['flag' => $flag , 'branch_id' => $branch_id]) }}
+
+                        @elseif(isset($branch_id) && isset($product) && !isset($clone))
+
+                            {{route('products.update',['id' => $product->id,'flag' => $product->flag,'branch_id' => $branch_id]) }}
 
                         @elseif(isset($product) && !isset($clone))
 
                             {{route('products.update',['id' => $product->id,'flag' => $product->flag]) }}
 
-                        @elseif(isset($product) && isset($supermarket_id))
-
-                            {{route('products.update',['id' => $product->id,'flag' => $product->flag , 'supermarket_id' => $supermarket_id]) }}
-
-                        @elseif(isset($clone) && isset($product))
+                        @elseif(isset($clone) && !isset($supermarket_id) && !isset($branch_id) )
 
                             {{route('productsadd',$flag) }}
+
+                        @elseif(isset($clone) && isset($supermarket_id))
+
+                            {{route('productsadd',['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }}
+
+                        @elseif(isset($clone) && isset($branch_id))
+
+                            {{route('productsadd',['id' => $product->id,'flag' => $product->flag,'branch_id' => $branch_id]) }}
 
                         @else
 
@@ -234,9 +261,9 @@
                                 @if($flag == 1)
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
-                                        <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control">
-                                        @error('price')
+                                        <label for="exampleInputPassword1">{{__('admin.product_offer_price')}}</label>
+                                        <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->offer_price}}" @else value="0" @endif class=" @error('offer_price') is-invalid @enderror form-control">
+                                        @error('offer_price')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -372,6 +399,14 @@
                                                 <option <?php if($product->branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
 
                                             @endforeach
+
+                                        @elseif(isset($branch_id))
+                                            @foreach(\App\Models\Branch::all() as $branch)
+
+                                                <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                            @endforeach
+
                                         @else
 
                                             @foreach(\App\Models\Branch::all() as $branch)
@@ -385,7 +420,7 @@
                                 </div>
                                 @if(isset($branch_id))
 
-                                    <input type="hidden" name="supermarket_id" value="{{$branch_id}}">
+                                    <input type="hidden" name="branch_id" value="{{$branch_id}}">
                                 @endif
 
                                 <div class="form-group">

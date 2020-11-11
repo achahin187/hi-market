@@ -165,6 +165,8 @@ class ProductController extends Controller
 
         $size = $request->input('size_id');
 
+        $offer_price = $request->offer_price;
+
 
         if ($price == null) {
             $price = 0;
@@ -204,6 +206,7 @@ class ProductController extends Controller
             'name_ar' => $arab_name,
             'name_en' => $eng_name,
             'price' => $price,
+            'offer_price' => $offer_price,
             'points' => $points,
             'category_id' => $category,
             'vendor_id' => $vendor,
@@ -226,6 +229,7 @@ class ProductController extends Controller
             'size_id' => $size,
             'created_by' => $user->id
         ]);
+
 
 
         if($product)
@@ -343,6 +347,7 @@ class ProductController extends Controller
         //
         $product = Product::find($id);
 
+
         if($product)
         {
             if($supermarket_id != null)
@@ -394,8 +399,6 @@ class ProductController extends Controller
 
         $user = auth()->user();
 
-        if($flag == 1)
-
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -412,7 +415,7 @@ class ProductController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
             'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'sometimes|after:today|date',
+            'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
             'exp_date' => 'required|required|after:today|date',
             'measure_id' => 'required|integer|min:0',

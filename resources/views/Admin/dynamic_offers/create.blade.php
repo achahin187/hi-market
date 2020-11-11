@@ -14,8 +14,21 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            @if(isset($supermarket_id))
+
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.offers',$supermarket_id)}}">supermarket offers</a></li>
+                                <li class="breadcrumb-item active">supermarket offer form</li>
+
+
+                            @elseif(isset($branch_id))
+
+                                <li class="breadcrumb-item"><a href="{{route('branch.offers',$branch_id)}}">branch offers</a></li>
+                                <li class="breadcrumb-item active">branch offer form</li>
+
+                            @else
+                                <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
+                                <li class="breadcrumb-item active">offer form</li>
+                            @endif
                         </ol>
                     </div>
                 </div>
@@ -32,17 +45,61 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                    @if(isset($offer))
+                                    @if(!isset($offer) && isset($supermarket_id))
+
+                                        add supermarket offer
+
+                                    @elseif(isset($offer) && isset($supermarket_id))
+
+                                        edit supermarket offer
+
+                                    @elseif(!isset($offer) && isset($branch_id))
+
+                                        add branch offer
+
+                                    @elseif(isset($offer) && isset($branch_id))
+
+                                        edit branch offer
+
+                                    @elseif(isset($offer))
+
                                         edit offer
+
                                     @else
-                                        create offer
+                                        add offer
 
                                     @endif
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($offer)){{route('offers.update',$offer->id) }} @else {{route('offers.store') }} @endif" method="POST">
+                            <form role="form" action="
+
+                             @if(isset($supermarket_id) && !isset($product))
+
+                                {{route('offers.store',$supermarket_id) }}
+
+                            @elseif(isset($supermarket_id) && isset($product))
+
+                                {{route('offers.update',['id' => $offer->id,'supermarket_id' => $supermarket_id]) }}
+
+                            @elseif(isset($branch_id) && !isset($product))
+
+                                {{route('offers.store',$branch_id) }}
+
+                            @elseif(isset($branch_id) && isset($product))
+
+                                {{route('offers.update',['id' => $offer->id,'branch_id' => $branch_id]) }}
+
+
+                            @else
+
+                                {{route('offers.store') }}
+
+                            @endif
+                                "
+                                  method="POST">
+
                                 @csrf
 
                                 @if(isset($offer))
@@ -100,25 +157,71 @@
                                         @enderror
                                     </div>
 
-                                        <div class="form-group">
-                                            <label>offer supermarket </label>
-                                            <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                                @if(isset($offer))
-                                                    @foreach(\App\Models\Supermarket::all() as $supermarket)
+                                    <div class="form-group">
+                                        <label>offer supermarket </label>
+                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
+                                            @if(isset($offer))
+                                                @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                                        <option <?php if($offer->supermarket->id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                    <option <?php if($offer->supermarket->id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
 
-                                                    @endforeach
-                                                @else
-                                                    @foreach(\App\Models\Supermarket::all() as $supermarket)
+                                                @endforeach
 
-                                                        <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                            @elseif(isset($supermarket_id))
 
-                                                    @endforeach
+                                                @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                                @endif
-                                            </select>
-                                        </div>
+                                                    <option <?php if($supermarket_id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                    <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    @if(isset($supermarket_id))
+
+                                        <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
+                                    @endif
+
+
+                                    <div class="form-group">
+                                        <label>supermarket branch </label>
+                                        <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
+                                            @if(isset($offer))
+                                                @foreach(\App\Models\Branch::all() as $branch)
+
+                                                    <option <?php if($offer->branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                                @endforeach
+
+                                            @elseif(isset($branch_id))
+                                                @foreach(\App\Models\Branch::all() as $branch)
+
+                                                    <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                                @endforeach
+
+                                            @else
+
+                                                @foreach(\App\Models\Branch::all() as $branch)
+
+                                                    <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+                                    @if(isset($branch_id))
+
+                                        <input type="hidden" name="branch_id" value="{{$branch_id}}">
+                                    @endif
 
 
                                     @if(!isset($offer))

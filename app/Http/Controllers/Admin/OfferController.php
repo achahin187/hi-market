@@ -608,14 +608,14 @@ class OfferController extends Controller
     {
         //
         $offers = Offer::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
-        return view('Admin.dynamic_offers.index',compact('offers'));
+        return view('Admin.dynamic_offers.index',compact('offers','supermarket_id'));
     }
 
     public function branchoffers($branch_id)
     {
         //
         $offers = Offer::where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
-        return view('Admin.dynamic_offers.index',compact('offers'));
+        return view('Admin.dynamic_offers.index',compact('offers','branch_id'));
     }
 
     public function status(Request $request,$id)

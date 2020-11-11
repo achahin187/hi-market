@@ -86,7 +86,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::group(['prefix' => 'products'],function() {
 
             Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
-            Route::get('{id}/{flag}/clone', 'Admin\ProductController@clone')->name('products.clone');
+            Route::get('{id}/{flag}/clone/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
             Route::get('show/{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@show')->name('products.show');
             Route::get('create/{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@create')->name('products.create');

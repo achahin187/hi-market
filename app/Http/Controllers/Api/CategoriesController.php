@@ -132,7 +132,11 @@ class CategoriesController extends Controller
                         }
                     }
 
+                    $offer_price = $product->offer_price;
+                    $price = $product->price;
+
                     $product->ratings = '170';
+                    $product->percentage = ($offer_price/$price) * 100;
                     $product->imagepath = asset('images/' . $product->images);
 
             }

@@ -89,61 +89,53 @@ class ProductController extends Controller
 
         $product_id = $request->id;
 
+        $product = Product::find($product_id);
+
         if (!$lang || $lang == '') {
             return $this->returnError(402, 'language is missing');
         }
 
-        if($lang == 'ar') {
+        if($product) {
 
-            $product_details = Product::where('id',$product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description' ,'arab_spec as specification','price','images')->first();
-        }
-        else
-        {
-            $product_details = Product::where('id',$product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description' ,'arab_spec as specification','price','images')->first();
-        }
+            if ($lang == 'ar') {
 
-        if ($product_details) {
-
-            $product_images = explode(',',$product_details->images);
-
-            $favproduct = DB::table('client_product')->where('udid',$udid)->where('product_id',$product_id)->first();
-
-
-            if($favproduct)
-            {
-                $product_details->favourite = 1;
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as specification', 'price','offer_price','rate')->first();
+            } else {
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as specification', 'price','offer_price','rate','exp_date','production_date')->first();
             }
-            else
-            {
+
+            $product_images = explode(',', $product->images);
+
+            $favproduct = DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->first();
+
+
+            if ($favproduct) {
+                $product_details->favourite = 1;
+            } else {
                 $product_details->favourite = 0;
             }
 
-            $imagepaths = [];
+            if ($product->flag == 1)
+            {
+
+                $offer_price = $product->offer_price;
+                $price = $product->price;
+
+                $product_details->offer = 1;
+                $product_details->percentage = ($offer_price/$price) * 100;
+            }
+            else
+            {
+                $product_details->offer = 0;
+            }
+
+                $imagepaths = [];
 
             foreach ($product_images as $image) {
-                array_push($imagepaths,asset('images/'.$image));
+                array_push($imagepaths, asset('images/' . $image));
             }
 
             $product_details->imagepaths = $imagepaths;
-
-            if($token) {
-
-                $client = Client::where('remember_token', $token)->first();
-
-                if ($client) {
-                    return $this->returnData(['product'], [$product_details]);
-                }
-                else {
-                    if ($lang == 'ar') {
-                        return $this->returnError(305, 'لم نجد هذا العميل');
-                    }
-                    return $this->returnError(305, 'there is no client found');
-                }
-
-            }
-            else {
-                return $this->returnData(['product'], [$product_details]);
-            }
         }
         else
         {
@@ -152,6 +144,25 @@ class ProductController extends Controller
                 return $this->returnError('','لا يوجد هذا المنتج');
             }
             return $this->returnError('','there is no product found');
+        }
+
+        if($token) {
+
+            $client = Client::where('remember_token', $token)->first();
+
+            if ($client) {
+                return $this->returnData(['product'], [$product_details]);
+            }
+            else {
+                if ($lang == 'ar') {
+                    return $this->returnError(305, 'لم نجد هذا العميل');
+                }
+                return $this->returnError(305, 'there is no client found');
+            }
+
+        }
+        else {
+            return $this->returnData(['product'], [$product_details]);
         }
 
     }
