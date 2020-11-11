@@ -108,9 +108,16 @@ class ProductController extends Controller
 
             $favproduct = DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->first();
 
+            $names = ['production_date','exp_date','measure' , 'size'];
 
-            $specifications = [$product->production_date,$product->exp_date,'kilo',$product->size->value];
+            $values = [$product->production_date,$product->exp_date,'kilo',$product->size->value];
 
+            $specifications = [];
+
+            for($i=0;$i<count($names);$i++)
+            {
+                array_push($specifications,array('name' => $names[$i] , 'value' => $values[$i]));
+            }
 
             if ($favproduct) {
                 $product_details->favourite = 1;
