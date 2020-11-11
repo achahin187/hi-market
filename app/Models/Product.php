@@ -12,10 +12,10 @@ class Product extends Model
 
     protected static $logName = 'products';
 
-    protected static $logAttributes = ['arab_name','eng_name','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','review','eng_spec','arab_spec','rate','exp_date','points','priority','barcode'];
+    protected static $logAttributes = ['arab_name','eng_name','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','production_date'];
 
     protected $fillable = [
-        'name_ar','name_en','price','offer_price','rate','images','category_id','vendor_id','supermarket_id','branch_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','review','eng_spec','arab_spec','exp_date','points','priority','barcode','created_by','updated_by'
+        'name_ar','name_en','price','offer_price','rate','images','category_id','vendor_id','supermarket_id','branch_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','exp_date','production_date','points','priority','barcode','created_by','updated_by'
     ];
 
     public function category() {
@@ -52,5 +52,10 @@ class Product extends Model
     public function branch() {
         return $this->belongsTo('App\Models\Branch');
     }
+
+    public function clientreviews() {
+        return $this->belongsToMany('App\Models\Client','client_reviews');
+    }
+
 
 }

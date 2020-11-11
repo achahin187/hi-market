@@ -197,6 +197,7 @@ $factory->define(product::class, function (Faker $faker) {
         'price' => $faker->randomElement([30,40]),
         'offer_price' => $faker->randomElement([10,5,15,20]),
         'rate' => $faker->randomElement([4.5,5.5,4,5,3.5]),
+        'ratings' => 172,
         'points' => $faker->randomElement([30,40,10,25,35]),
         'priority' => $faker->numberBetween(1,50),
         'barcode' => $faker->randomNumber(),
@@ -212,7 +213,8 @@ $factory->define(product::class, function (Faker $faker) {
         'status' => $faker->randomElement(['inactive','active']),
         'start_date' => $startingDate,
         'end_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
-        'exp_date'=> $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
+        'production_date' => $startingDate,
+        'exp_date' => $faker->dateTimeBetween($startingDate, $startingDate->format('Y-m-d').' +2 days'),
     ];
 });
 

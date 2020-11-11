@@ -21,10 +21,10 @@ class CreateProductsTable extends Migration
             $table->text('arab_description')->nullable();
             $table->text('eng_spec')->nullable();
             $table->text('arab_spec')->nullable();
-            $table->text('review')->nullable();
             $table->unsignedFloat('price')->nullable();
             $table->unsignedFloat('offer_price')->nullable();
             $table->unsignedFloat('rate')->nullable();
+            $table->unsignedInteger('ratings')->nullable();
             $table->unsignedInteger('priority')->nullable();
             $table->text('images')->nullable();
             $table->unsignedInteger('points')->nullable();
@@ -40,6 +40,7 @@ class CreateProductsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->dateTime('exp_date');
+            $table->dateTime('production_date');
             $table->string('barcode');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

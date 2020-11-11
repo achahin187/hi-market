@@ -99,14 +99,17 @@ class ProductController extends Controller
 
             if ($lang == 'ar') {
 
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as specification', 'price','offer_price','rate')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price','offer_price','rate','points','exp_date','production_date')->first();
             } else {
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as specification', 'price','offer_price','rate','exp_date','production_date')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price','offer_price','rate','points','exp_date','production_date')->first();
             }
 
             $product_images = explode(',', $product->images);
 
             $favproduct = DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->first();
+
+
+            $specifications = [$product->production_date,$product->exp_date,$product->measure->arab_name,$product->size->value];
 
 
             if ($favproduct) {
@@ -136,6 +139,13 @@ class ProductController extends Controller
             }
 
             $product_details->imagepaths = $imagepaths;
+            $product_details->ratings = $product->ratings;
+            $product_details->reviews = $product->clientreviews()->select('client_id','name','review')->get();
+            $product_details->specifications = $specifications;
+            $product_details->category = $product->category->name_ar;
+            $product_details->supermarket = $product->supermarket->arab_name;
+            $product_details->deliver_to = 'cairo';
+            $product_details->delivery_time = '30 minutes';
         }
         else
         {
