@@ -149,8 +149,8 @@ class ProductController extends Controller
             $product_details->ratings = $product->ratings;
             $product_details->reviews = $product->clientreviews()->select('client_id','name','review')->get();
             $product_details->specifications = $specifications;
-            $product_details->category = $product->category->name_ar;
-            $product_details->supermarket = $product->supermarket->arab_name;
+            $product_details->category = $product->category->name_en;
+            $product_details->supermarket = $product->supermarket->eng_name;
             $product_details->deliver_to = 'cairo';
             $product_details->delivery_time = '30 minutes';
         }
