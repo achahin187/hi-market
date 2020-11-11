@@ -109,7 +109,7 @@ class ProductController extends Controller
             $favproduct = DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->first();
 
 
-            $specifications = [$product->production_date,$product->exp_date,$product->measure->arab_name,$product->size->value];
+            $specifications = [$product->production_date,$product->exp_date,'kilo',$product->size->value];
 
 
             if ($favproduct) {
