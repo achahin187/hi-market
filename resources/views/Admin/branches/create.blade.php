@@ -47,6 +47,14 @@
 
                                     @if(isset($branch))
                                         edit branch
+
+                                    @elseif(isset($supermarket_id) && !isset($branch))
+
+                                        add supermarket branch
+
+                                    @elseif(isset($supermarket_id) && isset($branch))
+
+                                        edit supermarket branch
                                     @else
                                         create branch
 
@@ -55,7 +63,32 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($branch)){{route('branches.update',$branch->id) }} @else {{route('branches.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="
+
+
+
+                                @if(isset($branch) && !isset($supermarket_id))
+
+                                    {{route('branches.update',$branch->id) }}
+
+                                @elseif(isset($supermarket_id) && !isset($branch))
+
+                                    {{route('branches.store',$supermarket_id) }}
+
+                                @elseif(isset($supermarket_id) && isset($branch))
+
+                                    {{route('branches.update',['id' => $branch->id,'supermarket_id' => $supermarket_id]) }}
+
+                                @else
+
+                                    {{route('branches.store') }}
+
+
+                                @endif"
+
+                                  method="POST" enctype="multipart/form-data">
+
+
                                 @csrf
 
                                 @if(isset($branch))

@@ -180,7 +180,7 @@ class OrderController extends Controller
                 $order->update(['status' => $request->status,'received_at' => now()]);
             }
             $order->update(['address' => $request->input('address') , 'status' => $request->status , 'delivery_date' => $request->delivery_date , 'driver_id' => $request->driver_id]);
-            return redirect()->route('order_details',$order_id)->withStatus('Order information successfully updated.');
+            return redirect()->route('',$order_id)->withStatus('Order information successfully updated.');
         }
         else
         {
@@ -470,13 +470,13 @@ class OrderController extends Controller
 
         $order = Order::find($order_id);
 
-        $driver_team = Team::where('eng_name','drivers')->first();
+/*        $driver_team = Team::where('eng_name','drivers')->first();
 
-        $drivers = $driver_team->users;
+        $drivers = $driver_team->users;*/
 
         if($order)
         {
-            return view('Admin.orders.show',compact('order','drivers'));
+            return view('Admin.orders.show',compact('order'));
         }
         return redirect('/admin/orders')->withStatus(__('this id is not in our database'));
     }

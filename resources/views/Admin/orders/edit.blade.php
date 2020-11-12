@@ -15,10 +15,6 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
                             <li class="breadcrumb-item active">General Form</li>
-                            @if($order->request != 0)
-
-                                <li class="breadcrumb-item active"> <button type="button" data-toggle="modal" data-target="#showvideo" class="btn btn-primary">cart description</button></li>
-                            @endif
                         </ol>
                     </div>
                     <div class="col-12">
@@ -43,275 +39,358 @@
                     <div class="col-md-12">
                         <!-- general form elements -->
                         <div class="card card-primary">
-                            <div class="card-header">
-                            </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="{{route('order_client.update',$order->id) }} " method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
 
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{{__('client name')}}</label>
-                                            <input type="text" value="{{$order->client->name }}" name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+                            <div class="card-body">
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input type="email" value="{{$order->client->email }} " name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" disabled required>
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                <div class="card card-primary">
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> client mobile number</label>
-                                            <input type="text" value="{{$order->mobile_delivery }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-                                            @error('mobile_number')
-                                            <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> client location</label>
-                                            <input type="text" value="{{$order->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-                                            @error('address')
-                                            <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        @if($order->status == "7" && $order->client_review != null)
-
-                                            <div class="form-group">
-                                                <label>{{__('client review')}}</label>
-                                                <textarea class=" @error('review') is-invalid @enderror form-control" name="review" rows="3" disabled placeholder="Enter ...">
-                                                        {{$order->client_review }}
-                                                </textarea>
-                                                        @error('arab_spec')
-                                                        <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label>review status</label>
-                                                <select class="@error('status') is-invalid @enderror select2" name="review_status" data-placeholder="Select a State" style="width: 100%;" required>
-
-
-                                                    <option value="1" <?php if($order->review_status == '1') echo 'selected'; ?>>approved</option>
-                                                    <option value="0" <?php if($order->review_status == '0') echo 'selected'; ?>>rejected</option>
-
-
-                                                </select>
-
-                                                @error('status')
-                                                <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                                @enderror
-                                            </div>
-
-                                        @endif
-
-
-                                        <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>
+                                    <div class="card-header">
+                                        order client
                                     </div>
-                                </form>
-                                    <!-- /.card-body -->
 
-                                <form role="form" action="@if(isset($orderproduct)){{route('orderproduct.update',['order_id' => $order->id,'product_id' => $orderproduct->id]) }} @else {{route('products.store',$order->id) }} @endif" method="POST" enctype="multipart/form-data">
-
-                                    <div class="card-body">
-
-                                        @if(isset($orderproduct))
-
-                                            <h3>Edit product</h3>
-
-                                        @else
-
-                                            <h3>Add product</h3>
-
-                                        @endif
-
+                                    <form role="form" action="{{route('order_client.update',$order->id) }} " method="POST" enctype="multipart/form-data">
                                         @csrf
+                                        @method('PUT')
 
-                                        @if(isset($orderproduct))
-
-                                            @method('PUT')
-
-                                        @endif
-
-
-                                        <div class="row">
-
-                                            <div class="col-md-3">
-
+                                            <div class="card-body">
                                                 <div class="form-group">
-                                                    <label>select product</label>
-
-                                                        @if(isset($orderproduct))
-
-                                                        <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required disabled>
-
-                                                            @foreach(\App\Models\Product::all() as $editproduct)
-
-                                                                <option data-price="{{$editproduct->price}}" <?php if($orderproduct->id == $editproduct->id) echo 'selected'; ?> value="{{ $editproduct->id }}">
-                                                                    @if(App::getLocale() == 'ar')
-
-                                                                        {{ $editproduct->name_ar }}
-
-                                                                    @else
-
-                                                                        {{ $editproduct->name_en }}
-
-                                                                    @endif
-
-                                                                </option>
-
-                                                            @endforeach
-
-                                                        </select>
-
-                                                        <input type="hidden" name="product_id" value="{{$orderproduct->id}}" />
-
-                                                        @else
-
-                                                            <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                                @foreach(\App\Models\Product::all() as $editproduct)
-
-                                                                    <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
-
-                                                                        @if(App::getLocale() == 'ar')
-
-                                                                            {{ $editproduct->name_ar }}
-
-                                                                        @else
-
-                                                                            {{ $editproduct->name_en }}
-
-                                                                        @endif
-
-                                                                    </option>
-
-                                                                @endforeach
-                                                            </select>
-
-                                                        @endif
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                    <input type="number" name="quantity" min="1" value="@if(isset($orderproduct)){{$quantity}} @endif" class="@error('quantity') is-invalid @enderror form-control quantity" required>
-
-                                                    @error('quantity')
+                                                    <label for="exampleInputEmail1">{{__('client name')}}</label>
+                                                    <input type="text" value="{{$order->client->name }}" name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
+                                                    @error('name')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="exampleInputPassword1">{{__('admin.price')}}</label>
-                                                    <input type="number" name="price" min="0" max="99999.99" class=" @error('price') is-invalid @enderror form-control price" required>
-
-                                                    @error('price')
+                                                    <label for="exampleInputEmail1">Email address</label>
+                                                    <input type="email" value="{{$order->client->email }} " name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" disabled required>
+                                                    @error('email')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">
+                                                    <label for="exampleInputEmail1"> client mobile number</label>
+                                                    <input type="text" value="{{$order->mobile_delivery }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    @error('mobile_number')
+                                                    <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
 
-                                                        @if(isset($orderproduct))
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1"> client location</label>
+                                                    <input type="text" value="{{$order->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    @error('address')
+                                                    <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
 
-                                                            save
+                                                @if($order->status == "7" && $order->client_review != null)
 
-                                                        @else
+                                                    <div class="form-group">
+                                                        <label>{{__('client review')}}</label>
+                                                        <textarea class=" @error('review') is-invalid @enderror form-control" name="review" rows="3" disabled placeholder="Enter ...">
+                                                                {{$order->client_review }}
+                                                        </textarea>
+                                                                @error('arab_spec')
+                                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
 
-                                                            add
 
-                                                        @endif
+                                                    <div class="form-group">
+                                                        <label>review status</label>
+                                                        <select class="@error('status') is-invalid @enderror select2" name="review_status" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                    </button>
+
+                                                            <option value="1" <?php if($order->review_status == '1') echo 'selected'; ?>>approved</option>
+                                                            <option value="0" <?php if($order->review_status == '0') echo 'selected'; ?>>rejected</option>
+
+
+                                                        </select>
+
+                                                        @error('status')
+                                                        <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                        @enderror
+                                                    </div>
+
+                                                @endif
+
+
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
-                                </form>
+
+                                    <div class="card card-primary">
+
+                                        <div class="card-header">
+                                            edit order details
+                                        </div>
+
+                                        <form role="form" action="{{route('orders.update',$order->id) }} " method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
 
 
-                                    <div class="card-body">
-                                        <h3>Order Products</h3>
-                                        <h5>Total : {{$total_price}}</h5>
-                                        <table id="example1" class="table table-bordered table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th>arab_name</th>
-                                                <th>eng_name</th>
-                                                <th>price</th>
-                                                <th>quantity</th>
-                                                <th>controls</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($order->products as $orderproduct)
-                                                <tr>
-                                                    <td>{{$orderproduct->name_ar}}</td>
-                                                    <td>{{$orderproduct->name_en}}</td>
-                                                    <td>{{$orderproduct->price}}</td>
-                                                    <td>{{$orderproduct->pivot->quantity}}</td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
-                                                                <i class="fas fa-ellipsis-v"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                <form action="{{ route('orderproduct.delete',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}" method="post">
-                                                                    @csrf
-                                                                    @method('delete')
+                                            <div class="card-body">
 
-                                                                    <a class="dropdown-item" href="{{ route('orderproduct.edit',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}">{{ __('edit') }}</a>
-                                                                    <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                                </form>
+
+
+
+                                                <div class="form-group">
+                                                    <label>Status</label>
+                                                    <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+
+                                                        <option value="0" <?php if($order->status == '0') echo 'selected'; ?>>new</option>
+                                                        <option value="1" <?php if($order->status == '1') echo 'selected'; ?>>approved</option>
+                                                        <option value="2" <?php if($order->status == '2') echo 'selected'; ?>>prepared</option>
+                                                        <option value="3" <?php if($order->status == '3') echo 'selected'; ?>>shipping</option>
+                                                        <option value="4" <?php if($order->status == '4') echo 'selected'; ?>>shipped</option>
+                                                        <option value="7" <?php if($order->status == '7') echo 'selected'; ?>>received</option>
+
+
+                                                    </select>
+
+                                                    @error('status')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label>{{__('order_address')}}</label>
+                                                    <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
+
+                                                                {{$order->address }}
+                                                        </textarea>
+                                                    @error('address')
+                                                    <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                    @enderror
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <label>delivery_date</label>
+                                                    <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
+
+                                                    @error('delivery_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                        <div class="card card-primary">
+
+                                            <div class="card-header">
+                                                @if(isset($orderproduct))
+
+                                                    Edit product
+
+                                                @else
+
+                                                    Add product
+
+                                                @endif
+
+                                            </div>
+
+                                            <form role="form" action="@if(isset($orderproduct)){{route('orderproduct.update',['order_id' => $order->id,'product_id' => $orderproduct->id]) }} @else {{route('products.store',$order->id) }} @endif" method="POST" enctype="multipart/form-data">
+
+                                                <div class="card-body">
+
+                                                    @csrf
+
+                                                    @if(isset($orderproduct))
+
+                                                        @method('PUT')
+
+                                                    @endif
+
+                                                    <div class="row">
+
+                                                        <div class="col-md-3">
+
+                                                            <div class="form-group">
+                                                                <label>select product</label>
+
+                                                                    @if(isset($orderproduct))
+
+                                                                    <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required disabled>
+
+                                                                        @foreach(\App\Models\Product::all() as $editproduct)
+
+                                                                            <option data-price="{{$editproduct->price}}" <?php if($orderproduct->id == $editproduct->id) echo 'selected'; ?> value="{{ $editproduct->id }}">
+                                                                                @if(App::getLocale() == 'ar')
+
+                                                                                    {{ $editproduct->name_ar }}
+
+                                                                                @else
+
+                                                                                    {{ $editproduct->name_en }}
+
+                                                                                @endif
+
+                                                                            </option>
+
+                                                                        @endforeach
+
+                                                                    </select>
+
+                                                                    <input type="hidden" name="product_id" value="{{$orderproduct->id}}" />
+
+                                                                    @else
+
+                                                                        <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                                            @foreach(\App\Models\Product::all() as $editproduct)
+
+                                                                                <option data-price="{{$editproduct->price}}" value="{{ $editproduct->id }}">
+
+                                                                                    @if(App::getLocale() == 'ar')
+
+                                                                                        {{ $editproduct->name_ar }}
+
+                                                                                    @else
+
+                                                                                        {{ $editproduct->name_en }}
+
+                                                                                    @endif
+
+                                                                                </option>
+
+                                                                            @endforeach
+                                                                        </select>
+
+                                                                    @endif
 
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                </tr>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
+                                                                <input type="number" name="quantity" min="1" value="@if(isset($orderproduct)){{$quantity}} @endif" class="@error('quantity') is-invalid @enderror form-control quantity" required>
+
+                                                                @error('quantity')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">{{__('admin.price')}}</label>
+                                                                <input type="number" name="price" min="0" max="99999.99" class=" @error('price') is-invalid @enderror form-control price" required>
+
+                                                                @error('price')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <button type="submit" style="margin-top: 30px;" class="btn btn-primary">
+
+                                                                    @if(isset($orderproduct))
+
+                                                                        save
+
+                                                                    @else
+
+                                                                        add
+
+                                                                    @endif
+
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="card-body">
+                                                <h5>Total : {{$total_price}}</h5>
+                                                <table id="example1" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>name</th>
+                                                        <th>price</th>
+                                                        <th>quantity</th>
+                                                        <th>supermarket</th>
+                                                        <th>controls</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($order->products as $orderproduct)
+                                                        <tr>
+                                                            <td>{{$orderproduct->name_en}}</td>
+                                                            <td>{{$orderproduct->price}}</td>
+                                                            <td>{{$orderproduct->pivot->quantity}}</td>
+                                                            <td>{{$orderproduct->supermarket->arab_name}}</td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
+                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                                        <form action="{{ route('orderproduct.delete',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}" method="post">
+                                                                            @csrf
+                                                                            @method('delete')
+
+                                                                            <a class="dropdown-item" href="{{ route('orderproduct.edit',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}">{{ __('edit') }}</a>
+                                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
 
 
-                                            @endforeach
+                                                    @endforeach
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
                                 <!-- /.card -->
                             </div>
                         </div>

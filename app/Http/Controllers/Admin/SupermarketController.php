@@ -55,7 +55,7 @@ class SupermarketController extends Controller
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
             'start_time' => ['required','string'],
-            'end_time' => ['required','string'],
+            'end_time' => ['required','string','after:start_time'],
         ];
 
         $this->validate($request,$rules);
@@ -170,7 +170,7 @@ class SupermarketController extends Controller
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
             'start_time' => ['required','string'],
-            'end_time' => ['required','string'],
+            'end_time' => ['required','string','after:start_time'],
         ];
 
         $this->validate($request, $rules);

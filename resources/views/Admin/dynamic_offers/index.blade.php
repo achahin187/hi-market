@@ -21,7 +21,7 @@
                                 @if(isset($supermarket_id))
                                     <li class="breadcrumb-item"><a href="{{route('offers.create',$supermarket_id)}}">add supermarket offer</a></li>
                                 @elseif(isset($branch_id))
-                                    <li class="breadcrumb-item"><a href="{{route('offers.create',$branch_id)}}">add branch offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('offers.create',['supermarket_id' => -1 , 'branch_id' => $branch_id])}}">add branch offer</a></li>
                                 @else
                                     <li class="breadcrumb-item"><a href="{{route('offers.create')}}">add new offer</a></li>
                                 @endif
@@ -122,13 +122,13 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="@if(isset($supermarket_id)) {{ route('products.destroy', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.destroy', ['id' => $offer->id,'branch_id' => $branch_id]) }} @else {{ route('offers.destroy', $offer->id) }} @endif" method="post">
+                                                        <form action="@if(isset($supermarket_id)) {{ route('offers.destroy', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.destroy', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.destroy', $offer->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
 
-                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{ __('edit') }}</a>
 
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>

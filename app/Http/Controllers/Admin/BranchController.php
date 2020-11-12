@@ -45,6 +45,7 @@ class BranchController extends Controller
     public function store(Request $request,$supermarket_id = null)
     {
         //
+
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],

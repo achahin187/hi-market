@@ -23,8 +23,8 @@
 
                             @elseif(isset($branch_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('products.index',['flag' => $flag , 'branch_id' => $branch_id])}}">products</a></li>
-                                <li class="breadcrumb-item active">product form</li>
+                                <li class="breadcrumb-item"><a href="{{route('branch.products',['flag' => $flag , 'branch_id' => $branch_id])}}">branch products</a></li>
+                                <li class="breadcrumb-item active">branch product form</li>
 
                             @else
                                 <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">products</a></li>
@@ -118,11 +118,11 @@
 
                         @elseif(isset($branch_id) && !isset($product))
 
-                            {{route('productsadd',['flag' => $flag , 'branch_id' => $branch_id]) }}
+                            {{route('productsadd',['flag' => $flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}
 
                         @elseif(isset($branch_id) && isset($product) && !isset($clone))
 
-                            {{route('products.update',['id' => $product->id,'flag' => $product->flag,'branch_id' => $branch_id]) }}
+                            {{route('products.update',['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 ,'branch_id' => $branch_id]) }}
 
                         @elseif(isset($product) && !isset($clone))
 
@@ -138,7 +138,7 @@
 
                         @elseif(isset($clone) && isset($branch_id))
 
-                            {{route('productsadd',['id' => $product->id,'flag' => $product->flag,'branch_id' => $branch_id]) }}
+                            {{route('productsadd',['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 ,'branch_id' => $branch_id]) }}
 
                         @else
 
@@ -512,6 +512,18 @@
                                     </div>
 
                                 @endif
+
+
+                                <div class="form-group">
+                                    <label>production_date</label>
+                                    <input type="datetime-local" class=" @error('production_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->production_date)) }}" @endif name="production_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
+
+                                    @error('production_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
 
 
                                 <div class="form-group">

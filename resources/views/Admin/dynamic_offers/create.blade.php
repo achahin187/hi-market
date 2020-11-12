@@ -75,21 +75,21 @@
                             <!-- form start -->
                             <form role="form" action="
 
-                             @if(isset($supermarket_id) && !isset($product))
+                             @if(isset($supermarket_id) && !isset($offer))
 
                                 {{route('offers.store',$supermarket_id) }}
 
-                            @elseif(isset($supermarket_id) && isset($product))
+                            @elseif(isset($supermarket_id) && isset($offer))
 
                                 {{route('offers.update',['id' => $offer->id,'supermarket_id' => $supermarket_id]) }}
 
-                            @elseif(isset($branch_id) && !isset($product))
+                            @elseif(isset($branch_id) && !isset($offer))
 
-                                {{route('offers.store',$branch_id) }}
+                                {{route('offers.store',['supermarket_id' => -1 ,'branch_id' => $branch_id]) }}
 
-                            @elseif(isset($branch_id) && isset($product))
+                            @elseif(isset($branch_id) && isset($offer))
 
-                                {{route('offers.update',['id' => $offer->id,'branch_id' => $branch_id]) }}
+                                {{route('offers.update',['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }}
 
 
                             @else
@@ -98,7 +98,7 @@
 
                             @endif
                                 "
-                                  method="POST">
+                                  method="POST" enctype="multipart/form-data">
 
                                 @csrf
 

@@ -85,7 +85,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::group(['prefix' => 'products'],function() {
 
-            Route::get('upload', 'Admin\ProductController@upload')->name('products.upload');
             Route::get('{id}/{flag}/clone/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
             Route::get('show/{flag}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@show')->name('products.show');
@@ -95,8 +94,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::put('{id}/{flag}/edit/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@update')->name('products.update');
             Route::put('status/{product_id}/{flag}', 'Admin\ProductController@status')->name('product.status');
             Route::delete('{id}/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@destroy')->name('products.destroy');
-            Route::get('create/productbranch/{id}','Admin\ProductController@productbranch')->name('productbranch');
-            Route::get('{product_id?}/{flag?}/edit/productbranch/{id}','Admin\ProductController@productbranchedit')->name('productbranch');
 
         });
 

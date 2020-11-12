@@ -111,10 +111,9 @@
                             @else
 
                                 <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-hover">
+                                    <table id="example1" class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>address</th>
                                             <th>order details</th>
                                             <th>status</th>
                                             <th>cancel</th>
@@ -125,38 +124,37 @@
                                         <tbody>
                                         @foreach($orders as $order)
                                             <tr>
-                                                <td>{{$order->address}}</td>
-                                                <td><a class="btn btn-info" href="{{route('order_details',$order->id)}}">order details</a></td>
+                                                <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
 
                                                 <td>
 
                                                     @if($order->status == '0' )
 
-                                                        <button type="button" data-toggle="modal"   value="{{$order->id}}" class="btn btn-block btn-outline-danger">new</button>
+                                                        <h5>new</h5>
 
                                                     @elseif($order->status == '1' )
 
-                                                        <button type="button" data-toggle="modal"  value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">approved</button>
+                                                        <h5>approved</h5>
 
                                                     @elseif($order->status == '2' )
 
-                                                        <button type="button" data-toggle="modal"   value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">prepared</button>
+                                                        <h5>prepared</h5>
 
                                                     @elseif($order->status == '3' )
 
-                                                        <button type="button" data-toggle="modal"   value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">shipping</button>
+                                                        <h5>shipping</h5>
 
                                                     @elseif($order->status == '4' )
 
-                                                        <button type="button" data-toggle="modal"  value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">shipped</button>
+                                                        <h5>shipped</h5>
 
                                                     @elseif($order->status == '6' )
 
-                                                        <button type="button" data-toggle="modal"  value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">rejected</button>
+                                                        <h5>rejected</h5>
 
                                                     @else
 
-                                                        <button type="button" data-toggle="modal"   value="{{$order->id}}" class="btn btn-block btn-outline-danger cancel">received</button>
+                                                        <h5>received</h5>
 
 
                                                     @endif

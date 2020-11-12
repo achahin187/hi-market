@@ -131,18 +131,24 @@
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('delivery rate')}}</label>
-                                        <input type="text" value="{{$order->delivery_rate}}" name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
-                                        @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+
+                                        @if($order->status == 4 && $order->delivery_rate != null)
 
 
-                                <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{{__('delivery rate')}}</label>
+                                                <input type="text" value="{{$order->delivery_rate}}" name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
+                                                @error('name')
+                                                    <spxan class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </spxan>
+                                                @enderror
+                                            </div>
+
+                                        @endif
+
+
+                                {{--<div class="form-group">
                                     <label>assign driver</label>
 
                                     @if(count($drivers))
@@ -178,7 +184,7 @@
 
                                     @endif
 
-                                </div>
+                                </div>--}}
 
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>

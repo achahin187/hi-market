@@ -30,11 +30,11 @@ class OfferController extends Controller
     public function create($supermarket_id = null,$branch_id = null)
     {
         //
-        if($supermarket_id != null) {
+        if($supermarket_id != null && $supermarket_id != -1) {
 
             return view('Admin.dynamic_offers.create',compact('supermarket_id'));
         }
-        elseif ($branch_id != null)
+        elseif ($branch_id != null && $supermarket_id == -1)
         {
             return view('Admin.dynamic_offers.create',compact('branch_id'));
         }
@@ -55,6 +55,7 @@ class OfferController extends Controller
 
         $user = auth()->user();
 
+
         $rules = [
 
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -62,6 +63,7 @@ class OfferController extends Controller
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'supermarket_id' => 'required|integer|min:0',
+            'branch_id' => 'required|integer|min:0',
             'status' => ['required','string'],
             'offer_type' => ['required','string'],
             'value_type' => ['required','string'],
@@ -237,6 +239,7 @@ class OfferController extends Controller
                 'status' => $request->status,
                 'promocode' => $promocode,
                 'supermarket_id' => $request->supermarket_id,
+                'branch_id' => $request->branch_id,
                 'offer_type' => $request->offer_type,
                 'value_type' => $request->value_type,
                 'start_date' => $request->start_date,
@@ -248,10 +251,10 @@ class OfferController extends Controller
 
         if($offer)
         {
-            if($supermarket_id != null) {
+            if($supermarket_id != null && $supermarket_id != -1) {
                 return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer created successfully'));
             }
-            elseif ($branch_id != null)
+            elseif($branch_id != null && $supermarket_id == -1)
             {
                 return redirect('admin/branches/offers/'.$branch_id)->withStatus(__('branch offer created successfully'));
             }
@@ -262,10 +265,10 @@ class OfferController extends Controller
         }
         else
         {
-            if($supermarket_id != null) {
+            if($supermarket_id != null && $supermarket_id != -1) {
                 return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer not created , try again'));
             }
-            elseif ($branch_id != null)
+            elseif ($branch_id != null && $supermarket_id == -1)
             {
                 return redirect('admin/supermarkets/offers/'.$branch_id)->withStatus(__('branch offer not created , try again'));
             }
@@ -291,10 +294,10 @@ class OfferController extends Controller
 
         if($offer)
         {
-            if($supermarket_id != null) {
+            if($supermarket_id != null && $supermarket_id != -1) {
                 return view('Admin.dynamic_offers.create', compact('offer','supermarket_id'));
             }
-            elseif ($branch_id != null)
+            elseif ($branch_id != null && $supermarket_id == -1)
             {
                 return view('Admin.dynamic_offers.create', compact('offer','branch_id'));
             }
@@ -305,11 +308,11 @@ class OfferController extends Controller
         }
         else
         {
-            if($supermarket_id != null)
+            if($supermarket_id != null && $supermarket_id != -1)
             {
                 return redirect('admin/supermarkets/offer/'.$supermarket_id)->withStatus('no supermarket offer have this id');
             }
-            elseif ($branch_id != null)
+            elseif ($branch_id != null && $supermarket_id == -1)
             {
                 return redirect('admin/branches/offer/'.$branch_id)->withStatus('no branch offer have this id');
             }
@@ -341,6 +344,7 @@ class OfferController extends Controller
                 'arab_description' => ['nullable', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'eng_description' => ['nullable', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'supermarket_id' => 'required|integer|min:0',
+                'branch_id' => 'required|integer|min:0',
                 'offer_type' => 'sometimes|required|string',
                 'value_type' => ['required', 'string'],
                 'start_date' => 'required|after:today',
@@ -490,6 +494,33 @@ class OfferController extends Controller
 
         if($offer)
         {
+            if ($file = $request->file('image')) {
+
+                $this->validate($request, $rules);
+
+                $filename = $file->getClientOriginalName();
+                $fileextension = $file->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+                if ($file->move('images', $file_to_store)) {
+                    if ($offer->image != null) {
+
+                        unlink('images/' . $offer->image);
+                    }
+                }
+                $image = $file_to_store;
+            } else {
+
+                if ($request->has('checkedimage')) {
+                    $image = $request->checkedimage;
+                } else {
+
+                    if ($offer->image != null) {
+                        unlink('images/' . $offer->image);
+                    }
+                    $image = null;
+                }
+            }
 
             if($offer->offer_type == 'navigable') {
 
@@ -506,11 +537,13 @@ class OfferController extends Controller
                     'arab_description' => $request->arab_description,
                     'eng_description' => $request->eng_description,
                     'supermarket_id' => $request->supermarket_id,
+                    'branch_id' => $request->branch_id,
                     'promocode' => $promocode,
                     'offer_type' => $request->offer_type,
                     'value_type' => $request->value_type,
                     'start_date' => $request->start_date,
                     'end_date' => $request->end_date,
+                    'image' => $image,
                     'updated_by' => $user->id
                 ]);
             }
@@ -524,18 +557,20 @@ class OfferController extends Controller
                     'arab_description' => $request->arab_description,
                     'eng_description' => $request->eng_description,
                     'supermarket_id' => $request->supermarket_id,
+                    'branch_id' => $request->branch_id,
                     'value_type' => $request->value_type,
                     'start_date' => $request->start_date,
                     'end_date' => $request->end_date,
+                    'image' => $image,
                     'updated_by' => $user->id
                 ]);
 
             }
 
-            if($supermarket_id != null) {
+            if($supermarket_id != null && $supermarket_id != -1) {
                 return redirect('admin/supermarkets/offers/'.$supermarket_id)->withStatus(__('supermarket offer updated successfully'));
             }
-            elseif($branch_id != null) {
+            elseif($branch_id != null && $supermarket_id == -1) {
                 return redirect('admin/branches/offers/'.$branch_id)->withStatus(__('branch offer updated successfully'));
             }
             else
@@ -545,11 +580,11 @@ class OfferController extends Controller
         }
         else
         {
-            if($supermarket_id != null)
+            if($supermarket_id != null && $supermarket_id != -1)
             {
                 return redirect('admin/supermarkets/offer/'.$supermarket_id)->withStatus('no supermarket offer have this id');
             }
-            elseif($branch_id != null) {
+            elseif($branch_id != null && $supermarket_id == -1) {
                 return redirect('admin/branches/offers/'.$branch_id)->withStatus(__('no branch offer have this id'));
             }
             else {
@@ -573,12 +608,16 @@ class OfferController extends Controller
 
         if($offer) {
 
+            if($offer->image != null) {
+                unlink('images/' . $offer->image);
+            }
+
             $offer->delete();
-            if($supermarket_id != null)
+            if($supermarket_id != null && $supermarket_id != -1)
             {
                 return redirect()->back()->withStatus(__('supermarket product deleted successfully'));
             }
-            elseif ($branch_id != null)
+            elseif ($branch_id != null && $supermarket_id == -1)
             {
                 return redirect()->back()->withStatus(__('branch product deleted successfully'));
             }
@@ -589,10 +628,10 @@ class OfferController extends Controller
         else
         {
 
-            if ($supermarket_id != null) {
+            if ($supermarket_id != null && $supermarket_id != -1) {
                 return redirect()->back()->withStatus(__('no product with this id in the supermarket'));
             }
-            elseif ($branch_id != null)
+            elseif ($branch_id != null && $supermarket_id == -1)
             {
                 return redirect()->back()->withStatus(__('no product with this id in the branch'));
             }

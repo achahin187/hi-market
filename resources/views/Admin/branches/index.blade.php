@@ -103,6 +103,10 @@
                                             </td>
 
                                             <td>
+                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 1]) }}" class="btn btn-info">product offers</a>
+                                            </td>
+
+                                            <td>
                                                 <a href="{{ route('branch.offers', $branch->id) }}" class="btn btn-info">offers</a>
                                             </td>
                                             <td>
@@ -115,7 +119,7 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('branches.edit', $branch->id) }}">{{ __('edit') }}</a>
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('branches.edit', ['id' => $branch->id , 'supermarket_id' => $supermarket_id]) }} @else {{ route('branches.edit', $branch->id) }} @endif ">{{ __('edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 

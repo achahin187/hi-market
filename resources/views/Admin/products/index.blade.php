@@ -19,7 +19,7 @@
                                 @if(isset($supermarket_id))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
                                 @elseif(isset($branch_id))
-                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_product')}}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => -1 , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_product')}}</a></li>
                                 @else
                                     <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
                                 @endif
@@ -65,7 +65,7 @@
                                 <h3 class="card-title">{{__('admin.products')}}</h3>
                             </div>
 
-                            <form role="form" action="@if(isset($supermarket_id)) {{route('products.show',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{route('products.show',['flag' => $flag , 'branch_id' => $branch_id]) }} @else {{route('products.show',$flag) }} @endif" method="GET">
+                            <form role="form" action="@if(isset($supermarket_id)) {{route('products.show',['flag' => $flag , 'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{route('products.show',['flag' => $flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{route('products.show',$flag) }} @endif" method="GET">
 
                                 @csrf
 
@@ -80,7 +80,6 @@
                                             <option  value="eng_description">{{__('admin.description_en')}}</option>
                                             <option  value="arab_spec">{{__('admin.spec_ar')}}</option>
                                             <option  value="eng_spec">{{__('admin.spec_en')}}</option>
-                                            <option  value="review">{{__('admin.review')}}</option>
                                             <option  value="price">{{__('admin.price')}}</option>
                                             <option  value="priority">{{__('admin.priority')}}</option>
                                             <option  value="points">{{__('admin.points')}}</option>
@@ -401,15 +400,15 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="@if(isset($supermarket_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.destroy', ['id' => $product->id,'branch_id' => $branch_id]) }} @else {{ route('products.destroy', $product->id) }} @endif" method="post">
+                                                        <form action="@if(isset($supermarket_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.destroy', $product->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.edit')}}</a>
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.edit')}}</a>
 
 
-                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>
 
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
