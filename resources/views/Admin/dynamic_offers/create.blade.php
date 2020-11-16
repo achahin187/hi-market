@@ -16,18 +16,15 @@
                         <ol class="breadcrumb float-sm-right">
                             @if(isset($supermarket_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('supermarket.offers',$supermarket_id)}}">supermarket offers</a></li>
-                                <li class="breadcrumb-item active">supermarket offer form</li>
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.offers',$supermarket_id)}}">{{__('admin.supermarket_offers')}}</a></li>
 
 
                             @elseif(isset($branch_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('branch.offers',$branch_id)}}">branch offers</a></li>
-                                <li class="breadcrumb-item active">branch offer form</li>
+                                <li class="breadcrumb-item"><a href="{{route('branch.offers',$branch_id)}}">{{__('admin.branch_offers')}}</a></li>
 
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('offers.index')}}">offers</a></li>
-                                <li class="breadcrumb-item active">offer form</li>
+                                <li class="breadcrumb-item"><a href="{{route('offers.index')}}">{{__('admin.offers')}}</a></li>
                             @endif
                         </ol>
                     </div>
@@ -47,26 +44,26 @@
 
                                     @if(!isset($offer) && isset($supermarket_id))
 
-                                        add supermarket offer
+                                        {{__('admin.add_supermarket_offer')}}
 
                                     @elseif(isset($offer) && isset($supermarket_id))
 
-                                        edit supermarket offer
+                                        {{__('admin.edit_supermarket_offer')}}
 
                                     @elseif(!isset($offer) && isset($branch_id))
 
-                                        add branch offer
+                                        {{__('admin.add_branch_offer')}}
 
                                     @elseif(isset($offer) && isset($branch_id))
 
-                                        edit branch offer
+                                        {{__('admin.edit_branch_offer')}}
 
                                     @elseif(isset($offer))
 
-                                        edit offer
+                                        {{__('admin.edit_offer')}}
 
                                     @else
-                                        add offer
+                                        {{__('admin.add_offer')}}
 
                                     @endif
                                 </h3>
@@ -110,7 +107,7 @@
 
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">{{__('offer.arabname')}}</label>
+                                            <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                             <input type="text" value="@if(isset($offer)){{$offer->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                             @error('arab_name')
                                             <span class="invalid-feedback" role="alert">
@@ -119,7 +116,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">{{__('offer.engname')}}</label>
+                                            <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                             <input type="text" name="eng_name" value="@if(isset($offer)){{$offer->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                             @error('eng_name')
                                             <span class="invalid-feedback" role="alert">
@@ -128,7 +125,7 @@
                                             @enderror
                                         </div>
                                     <div class="form-group">
-                                        <label>{{__('offer.arab_description')}}</label>
+                                        <label>{{__('admin.description_ar')}}</label>
                                         <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
 
                                             @if(isset($offer))
@@ -143,7 +140,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>{{__('offer.eng_description')}}</label>
+                                        <label>{{__('admin.description_en')}}</label>
                                         <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
 
                                             @if(isset($offer))
@@ -158,7 +155,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>offer supermarket </label>
+                                        <label>{{__('admin.supermarket')}}</label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                             @if(isset($offer))
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
@@ -191,7 +188,7 @@
 
 
                                     <div class="form-group">
-                                        <label>supermarket branch </label>
+                                        <label>{{__('admin.branch')}} </label>
                                         <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
                                             @if(isset($offer))
                                                 @foreach(\App\Models\Branch::all() as $branch)
@@ -228,11 +225,11 @@
 
 
                                         <div class="form-group">
-                                            <label>Status</label>
+                                            <label>{{__('admin.status')}}</label>
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select offer status" style="width: 100%;" required>
 
-                                                <option value="active">active</option>
-                                                <option value="inactive">inactive</option>
+                                                <option value="active">{{__('admin.active')}}</option>
+                                                <option value="inactive">{{__('admin.inactive')}}</option>
 
                                             </select>
 
@@ -252,14 +249,15 @@
 
                                                 @if(isset($offer))
 
-                                                    <option <?php if($offer->offer_type == "navigable") echo 'selected'; ?> value="navigable">navigable</option>
-                                                    <option <?php if($offer->offer_type == "promocode") echo 'selected'; ?> value="promocode">promocode</option>
+                                                    <option <?php if($offer->offer_type == "navigable") echo 'selected'; ?> value="navigable">{{__('admin.navigable')}}</option>
+                                                    <option <?php if($offer->offer_type == "promocode") echo 'selected'; ?> value="promocode">{{__('admin.promocode')}}</option>
+                                                    <option <?php if($offer->offer_type == "announcement") echo 'selected'; ?> value="annoncement">{{__('admin.announcement')}}</option>
 
                                                 @else
 
-                                                    <option value="promocode">promocode</option>
-                                                    <option value="navigable">navigable</option>
-                                                    <option value="announcement">announcement</option>
+                                                    <option value=navigable">{{__('admin.navigable')}}</option>
+                                                    <option value="promocode">{{__('admin.promocode')}}</option>
+                                                    <option value="announcement">{{__('admin.announcement')}}</option>
                                                 @endif
                                             </select>
                                         </div>
@@ -271,17 +269,17 @@
 
                                             @if(isset($offer))
 
-                                                <option <?php if($offer->value_type == "discount by value") echo 'selected'; ?> value="discount by value">discount by value</option>
-                                                <option <?php if($offer->value_type == "discount by percentage") echo 'selected'; ?> value="discount by percentage">discount by percentage</option>
-                                                <option <?php if($offer->value_type == "free product") echo 'selected'; ?> value="free product">free product</option>
-                                                <option <?php if($offer->value_type == "free delivery") echo 'selected'; ?> value="free delivery">free delivery</option>
+                                                <option <?php if($offer->value_type == "discount by value") echo 'selected'; ?> value="discount by value">{{__('admin.discount_by_value')}}</option>
+                                                <option <?php if($offer->value_type == "discount by percentage") echo 'selected'; ?> value="discount by percentage">{{__('admin.discount_by_percentage')}}</option>
+                                                <option <?php if($offer->value_type == "free product") echo 'selected'; ?> value="free product">{{__('admin.free_product')}}</option>
+                                                <option <?php if($offer->value_type == "free delivery") echo 'selected'; ?> value="free delivery">{{__('admin.free_delivery')}}</option>
 
                                             @else
 
-                                                <option value="discount by value">discount by value</option>
-                                                <option value="discount by percentage">discount by percentage</option>
-                                                <option value="free product">free product</option>
-                                                <option value="free delivery">free delivery</option>
+                                                <option value="discount by value">{{__('admin.discount_by_value')}}</option>
+                                                <option value="discount by percentage">{{__('admin.discount_by_percentage')}}</option>
+                                                <option value="free product">{{__('admin.free_product')}}</option>
+                                                <option value="free delivery">{{__('admin.free_delivery')}}</option>
 
                                             @endif
                                         </select>
