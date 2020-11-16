@@ -1,8 +1,6 @@
 <?php
 
 return [
-    //Site Name
-    'site'=>'Ecommerce',
 
     'lang' => 'en',
 
@@ -11,10 +9,11 @@ return [
     'created_at'=>'Created at',
     'updated_at'=>'Updated at',
     'add'=>'add',
-    'edit'=>'edit',
+    'modify'=>'edit',
     'delete'=>'delete',
     'show'=>'show',
     'export'=>'Export',
+    'clone'=>'clone',
     'download' => 'Download Sample',
     'import'=>'Import',
     'home' => 'Home',
@@ -32,6 +31,11 @@ return [
     'size' => 'size',
     'start_date' => 'start date',
     'end_date' => 'end date',
+    'city' => 'city',
+    'country' => 'country',
+    'area' => 'area',
+    'end_time' => 'end time',
+    'start_time' => 'start time',
     'image'=>'image',
     'active'=>'active',
     'inactive'=>'inactive',
@@ -39,18 +43,9 @@ return [
     'controls' => 'controls',
 
     //Categories
-    'categories'=>'Categories',
-    'add_category'=>'Add New Category',
-    'modify_category'=>'Modify Category',
-    'delete_category'=>'Delete Category',
-    'cat_id'=>'id',
-    'cat_number'=>'Category Number',
-    'cat_name'=>'Category name',
-    'cat_image'=>'Category image',
-    'view_all'=>'View All',
-    'cat_search'=>'Search about a specific category',
-    'no_cat_with_id'=>'There are no categories with this ID',
-    'cat_deleted'=>'The Category Deleted successfully',
+    'categories'=>'categories',
+    'add_category'=>'add category',
+    'edit_category'=>'edit category',
 
 
     //Sub Categories
@@ -105,6 +100,16 @@ return [
     'branches'=>'branches',
     'add_branch'=>'add new branch',
     'edit_branch'=>'edit branch',
+    'add_supermarket_branch' => 'add supermarket branch',
+    'edit_supermarket_branch' => 'edit supermarket branch',
+
+    //areas
+    'areas'=>'areas',
+    'add_area'=>'add area',
+    'edit_area'=>'edit area',
+
+
+
 
 
 

@@ -9,7 +9,6 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
@@ -18,13 +17,11 @@
 
                             @if(isset($supermarket_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('supermarket.branches',$supermarket_id)}}">supermarket branches</a></li>
-                                <li class="breadcrumb-item active">supermarket branch Form</li>
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.branches',$supermarket_id)}}">{{__('admin.supermarket_branches')}}</a></li>
 
                             @else
 
-                                <li class="breadcrumb-item"><a href="{{route('branches.index')}}">branches</a></li>
-                                <li class="breadcrumb-item active">branch Form</li>
+                                <li class="breadcrumb-item"><a href="{{route('branches.index')}}">{{__('admin.branches')}}</a></li>
 
                             @endif
 
@@ -46,17 +43,17 @@
                                 <h3 class="card-title">
 
                                     @if(isset($branch))
-                                        edit branch
+                                        {{__('admin.edit_branch')}}
 
                                     @elseif(isset($supermarket_id) && !isset($branch))
 
-                                        add supermarket branch
+                                        {{__('admin.add_supermarket_branch')}}
 
                                     @elseif(isset($supermarket_id) && isset($branch))
 
-                                        edit supermarket branch
+                                        {{__('admin.edit_supermarket_branch')}}
                                     @else
-                                        create branch
+                                        {{__('admin.add_branch')}}
 
                                     @endif
                                 </h3>
@@ -99,7 +96,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.branch_arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                         <input type="text" value="@if(isset($branch)){{$branch->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
                                         @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -108,7 +105,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.branch_engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                         <input type="text" name="name_en" value="@if(isset($branch)){{$branch->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
                                         @error('name_en')
                                         <span class="invalid-feedback" role="alert">
@@ -118,7 +115,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>branch supermarket </label>
+                                        <label>{{__('admin.supermarket')}} </label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
@@ -153,11 +150,11 @@
                                     @if(!isset($branch))
 
                                         <div class="form-group">
-                                            <label>Status</label>
+                                            <label>{{__('admin.status')}}</label>
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                    <option value="active">active</option>
-                                                    <option value="inactive">inactive</option>
+                                                    <option value="active">{{__('admin.active')}}</option>
+                                                    <option value="inactive">{{__('admin.inactive')}}</option>
 
                                             </select>
 

@@ -24,15 +24,15 @@ return [
     'branch' => 'الفرع',
     'vendor' => 'البائع',
     'status' => 'الحالة',
+    'city' => 'المدينة',
+    'country' => 'البلد',
+    'area' => 'المنطقة',
     'measure' => 'وحدة القياس',
     'size' => 'الحجم',
     'start_date' => 'تاريخ البداية',
     'end_date' => 'التاريخ النهاية',
-    'start_time' => 'وقت ال',
-    'end_time' => 'التاريخ النهاية',
-    'city' => 'تاريخ البداية',
-    'area' => 'التاريخ النهاية',
-    'country' => 'تاريخ البداية',
+    'start_time' => 'وقت الفتح',
+    'end_time' => 'وقت الاغلاق',
     'image'=>'صورة ',
     'active'=>'مفعل',
     'inactive'=>'غير مفعل',
@@ -96,6 +96,14 @@ return [
     'branches'=>'الفروع',
     'add_branch'=>'اضافة فرع',
     'edit_branch'=>'تعديل فرع',
+    'add_supermarket_branch' => 'اضافة فرع للسوبر ماركت',
+    'edit_supermarket_branch' => 'تعديل فرع السوبرماركت',
+
+    //areas
+    'areas'=>'الفروع',
+    'add_area'=>'اضافة منطقة',
+    'edit_area'=>'تعديل المنطقة',
+
 
 
 

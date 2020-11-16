@@ -34,9 +34,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($size))
-                                        edit size
+                                        {{__('admin.edit_size')}}
                                     @else
-                                        create size
+                                        {{__('admin.add_size')}}
 
                                     @endif
                                 </h3>
@@ -55,7 +55,7 @@
                                 <div class="card-body">
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('size value')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.size_value')}}</label>
                                         <input type="text" name="value" value="@if(isset($size)){{$size->value }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('value')
                                         <span class="invalid-feedback" role="alert">
@@ -67,9 +67,19 @@
                                 </div>
                                 <!-- /.card-body -->
 
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                                @if(isset($size))
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                    </div>
+
+                                @else
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
+                                    </div>
+
+                                @endif
                             </form>
                         </div>
 

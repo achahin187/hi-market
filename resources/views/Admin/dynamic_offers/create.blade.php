@@ -244,7 +244,7 @@
                                     @endif
 
                                         <div class="form-group">
-                                            <label>offer Type </label>
+                                            <label>{{__('admin.offer_type')}} </label>
                                             <select class=" @error('offer_type') is-invalid @enderror select2" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required @if(isset($offer) && $offer->offer_type == 'promocode') disabled @endif>
 
                                                 @if(isset($offer))
@@ -264,7 +264,7 @@
 
 
                                     <div class="form-group">
-                                        <label>Value Type </label>
+                                        <label>{{__('admin.value_type')}}</label>
                                         <select class=" @error('value_type') is-invalid @enderror select2" name="value_type" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($offer))
@@ -288,7 +288,7 @@
 
 
                                     <div class="form-group">
-                                        <label>start_date</label>
+                                        <label>{{__('admin.start_date')}}</label>
                                         <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" id="start" name="start_date" @if(isset($offer)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($offer->start_date)) }}" @endif data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
                                         @error('start_date')
@@ -300,7 +300,7 @@
 
 
                                     <div class="form-group">
-                                        <label>end_date</label>
+                                        <label>{{__('admin.end_date')}}</label>
                                         <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($offer)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($offer->end_date)) }}" @endif data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
                                         @error('end_date')
