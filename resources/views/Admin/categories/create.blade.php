@@ -14,8 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.index')}}">categories</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('categories.index')}}">{{__('admin.categories')}}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -33,9 +32,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($category))
-                                        edit category
+                                        {{__('admin.edit_category')}}
                                     @else
-                                        create category
+                                        {{__('admin.add_category')}}
 
                                     @endif
                                 </h3>
@@ -53,7 +52,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('category arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                         <input type="text" value="@if(isset($category)){{$category->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
                                         @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +61,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('category engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                         <input type="text" name="name_en" value="@if(isset($category)){{$category->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
                                         @error('name_en')
                                         <span class="invalid-feedback" role="alert">
@@ -75,7 +74,7 @@
                                     @if(isset($category) && $category->image != null)
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">{{__('admin.image')}}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -112,7 +111,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
                                 </div>
                             </form>
                         </div>

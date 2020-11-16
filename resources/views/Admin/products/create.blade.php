@@ -9,7 +9,6 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
@@ -17,18 +16,18 @@
 
                             @if(isset($supermarket_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('supermarket.products',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">supermarket products</a></li>
-                                <li class="breadcrumb-item active">supemarket products form</li>
+                                <li class="breadcrumb-item"><a href="{{route('supermarket.products',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.supermarket_products')}}</a></li>
+                                <li class="breadcrumb-item active">{{__('admin.supermarket_products')}}</li>
 
 
                             @elseif(isset($branch_id))
 
-                                <li class="breadcrumb-item"><a href="{{route('branch.products',['flag' => $flag , 'branch_id' => $branch_id])}}">branch products</a></li>
-                                <li class="breadcrumb-item active">branch product form</li>
+                                <li class="breadcrumb-item"><a href="{{route('branch.products',['flag' => $flag , 'branch_id' => $branch_id])}}">{{__('admin.branch_products')}}</a></li>
+                                <li class="breadcrumb-item active">{{__('admin.branch_products')}}</li>
 
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">products</a></li>
-                                <li class="breadcrumb-item active">product form</li>
+                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">{{__('admin.products')}}</a></li>
+                                <li class="breadcrumb-item active">{{__('admin.products')}}</li>
                             @endif
                         </ol>
                     </div>
@@ -48,31 +47,31 @@
 
                                 @if(isset($supermarket_id) && !isset($product))
 
-                                    add supermarket product
+                                    {{__('admin.add_supermarket_product')}}
 
 
                                 @elseif(isset($product) && isset($supermarket_id))
 
-                                    edit supermarket product
+                                    {{__('admin.edit_supermarket_product')}}
 
                                 @elseif(isset($branch_id) && !isset($product))
 
-                                    add branch product
+                                    {{__('admin.add_branch_product')}}
 
 
                                 @elseif(isset($product) && isset($branch_id))
 
-                                    edit branch product
+                                    {{__('admin.edit_branch_product')}}
 
                                 @elseif(isset($product) && !isset($clone))
 
                                     @if($product->flag == 0)
 
-                                        edit product
+                                        {{__('admin.edit_product')}}
 
                                     @else
 
-                                        edit offer
+                                        {{__('admin.edit_product')}} {{--edit offer--}}
 
                                     @endif
 
@@ -80,22 +79,22 @@
 
                                     @if($flag == 0)
 
-                                        clone product
+                                        {{__('admin.clone_product')}} {{--clone product--}}
 
                                     @else
 
-                                        clone offer
+                                        {{__('admin.clone_product')}} {{--clone offer--}}
 
                                     @endif
 
                                 @else
                                     @if($flag == 0)
 
-                                        create product
+                                        {{__('admin.add_product')}} {{--add product--}}
 
                                     @else
 
-                                        create offer
+                                        {{__('admin.add_product')}} {{--add offer--}}
 
                                     @endif
 
@@ -160,7 +159,7 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
+                                    <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                     <input type="text" value="@if(isset($product)){{$product->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
                                     @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -169,7 +168,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
+                                    <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                     <input type="text" name="name_en" value="@if(isset($product)){{$product->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
                                     @error('name_en')
                                         <span class="invalid-feedback" role="alert">
@@ -179,7 +178,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.arab_description')}}</label>
+                                    <label>{{__('admin.description_ar')}}</label>
                                     <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
 
                                         @if(isset($product))
@@ -194,7 +193,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.eng_description')}}</label>
+                                    <label>{{__('admin.description_en')}}</label>
                                     <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
 
                                         @if(isset($product))
@@ -209,7 +208,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.arab_spec')}}</label>
+                                    <label>{{__('admin.spec_ar')}}</label>
                                     <textarea class=" @error('arab_spec') is-invalid @enderror form-control" name="arab_spec" rows="3" placeholder="Enter ...">
 
                                         @if(isset($product))
@@ -224,7 +223,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{__('admin.eng_spec')}}</label>
+                                    <label>{{__('admin.spec_en')}}</label>
                                     <textarea class=" @error('eng_spec') is-invalid @enderror form-control" name="eng_spec" rows="3" placeholder="Enter ...">
 
                                         @if(isset($product))
@@ -239,7 +238,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.product_barcode')}}</label>
+                                    <label for="exampleInputEmail1">{{__('admin.barcode')}}</label>
                                     <input type="text" value="@if(isset($product)){{$product->barcode }} @endif" name="barcode" class=" @error('barcode') is-invalid @enderror form-control" required>
                                     @error('barcode')
                                     <span class="invalid-feedback" role="alert">
@@ -249,7 +248,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.product_price')}}</label>
+                                    <label for="exampleInputPassword1">{{__('admin.price')}}</label>
                                     <input type="number" name="price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->price}}" @else value="0" @endif class=" @error('price') is-invalid @enderror form-control">
                                     @error('price')
                                         <span class="invalid-feedback" role="alert">
@@ -261,7 +260,7 @@
                                 @if($flag == 1)
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.product_offer_price')}}</label>
+                                        <label for="exampleInputPassword1">{{__('admin.offer_price')}}</label>
                                         <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->offer_price}}" @else value="0" @endif class=" @error('offer_price') is-invalid @enderror form-control">
                                         @error('offer_price')
                                         <span class="invalid-feedback" role="alert">
@@ -272,7 +271,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.product_points')}}</label>
+                                    <label for="exampleInputPassword1">{{__('admin.points')}}</label>
                                     <input type="number" name="points" min="0" @if(isset($product)) value="{{$product->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control">
                                     @error('points')
                                         <span class="invalid-feedback" role="alert">
@@ -282,7 +281,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.product_priority')}}</label>
+                                    <label for="exampleInputPassword1">{{__('admin.priority')}}</label>
                                     <input type="number" name="priority" min="0" @if(isset($product)) value="{{$product->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" >
                                     @error('priority')
                                         <span class="invalid-feedback" role="alert">
@@ -298,8 +297,8 @@
                                         <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
 
-                                            <option value="active">active</option>
-                                            <option value="inactive">inactive</option>
+                                            <option value="active">{{__('admin.active')}}</option>
+                                            <option value="inactive">{{__('admin.inactive')}}</option>
 
                                         </select>
 
@@ -313,7 +312,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label>product category</label>
+                                    <label>{{__('admin.category')}}</label>
                                     <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                         @if(isset($product))
@@ -336,7 +335,7 @@
 
 
                                 <div class="form-group">
-                                    <label>product subcategory </label>
+                                    <label>{{__('admin.subcategory')}} </label>
                                     <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\SubCategory::all() as $subcategory)
@@ -357,7 +356,7 @@
 
 
                                 <div class="form-group">
-                                    <label>product supermarket </label>
+                                    <label>{{__('admin.supermarket')}} </label>
                                     <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Supermarket::all() as $supermarket)
@@ -391,7 +390,7 @@
 
 
                                 <div class="form-group">
-                                    <label>supermarket branch </label>
+                                    <label>{{__('admin.branch')}} </label>
                                     <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Branch::all() as $branch)
@@ -424,7 +423,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label>product vendor </label>
+                                    <label>{{__('admin.vendor')}} </label>
                                     <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Vendor::all() as $vendor)
@@ -444,7 +443,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>product measuring unit </label>
+                                    <label>{{__('admin.measure')}} </label>
                                     <select class=" @error('measuring_unit') is-invalid @enderror select2" name="measure_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Measures::all() as $measure)
@@ -465,7 +464,7 @@
 
 
                                 <div class="form-group">
-                                    <label>product size </label>
+                                    <label>{{__('admin.size')}} </label>
                                     <select class=" @error('size') is-invalid @enderror select2" name="size_id" data-placeholder="Select a Size" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Size::all() as $size)
@@ -489,7 +488,7 @@
 
 
                                     <div class="form-group">
-                                        <label>start_date</label>
+                                        <label>{{__('admin.start_date')}}</label>
                                         <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control" @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->start_date)) }}" @endif id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
 
                                         @error('start_date')
@@ -501,7 +500,7 @@
 
 
                                     <div class="form-group">
-                                        <label>end_date</label>
+                                        <label>{{__('admin.end_date')}}</label>
                                         <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->end_date)) }}" @endif name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
 
                                         @error('end_date')
@@ -515,7 +514,7 @@
 
 
                                 <div class="form-group">
-                                    <label>production_date</label>
+                                    <label>{{__('admin.production_date')}}</label>
                                     <input type="datetime-local" class=" @error('production_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->production_date)) }}" @endif name="production_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
 
                                     @error('production_date')
@@ -527,7 +526,7 @@
 
 
                                 <div class="form-group">
-                                    <label>exp_date</label>
+                                    <label>{{__('admin.exp_date')}}</label>
                                     <input type="datetime-local" class=" @error('exp_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->exp_date)) }}" @endif name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
 
                                     @error('exp_date')
@@ -541,7 +540,7 @@
                                 @if(isset($product) && !isset($clone))
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
+                                        <label for="exampleInputFile">{{__('admin.image_upload')}}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
 

@@ -44,6 +44,8 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
+
+                                Order Details
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -55,24 +57,9 @@
                                 <div class="card-body">
 
 
-                                    @if($order->status == "8" && $order->delivery_rate != null)
-
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">{{__('delivery rate')}}</label>
-                                            <input type="number" name="price" min="0" max="99999.99" step="0.01"  value="{{$order->delivery_rate}}" class=" @error('price') is-invalid @enderror form-control" required>
-                                            @error('delivery_rate')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-
-                                    @endif
-
-
                                     <div class="form-group">
                                         <label>Status</label>
-                                        <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required disabled>
 
 
                                             <option value="0" <?php if($order->status == '0') echo 'selected'; ?>>new</option>
@@ -95,7 +82,7 @@
 
                                     <div class="form-group">
                                         <label>{{__('order_address')}}</label>
-                                        <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
+                                        <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ..." disabled>
 
                                                     {{$order->address }}
                                             </textarea>
@@ -121,7 +108,7 @@
 
                                     <div class="form-group">
                                         <label>delivery_date</label>
-                                        <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
+                                        <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required disabled>
 
                                         @error('delivery_date')
                                         <span class="invalid-feedback" role="alert">
@@ -132,7 +119,7 @@
 
 
 
-                                        @if($order->status == 4 && $order->delivery_rate != null)
+                                        @if($order->status == 7 && $order->delivery_rate != null)
 
 
                                             <div class="form-group">

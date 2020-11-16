@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.create')}}">create new category</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('categories.create')}}">{{__('admin.add_category')}}</a></li>
                         </ol>
                     </div>
 
@@ -41,16 +41,16 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Categories</h3>
+                                <h3 class="card-title">{{__('admin.categories')}}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
-                                        <th>controls</th>
+                                        <th>{{__('admin.name_ar')}}</th>
+                                        <th>{{__('admin.name_en')}}</th>
+                                        <th>{{__('admin.controls')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -68,8 +68,8 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('categories.edit', $category->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="{{ route('categories.edit', $category->id) }}">{{__('admin.modify')}}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this category?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
                                                         </form>
 
                                                     </div>

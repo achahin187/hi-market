@@ -11,11 +11,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">add new supermarket</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">{{__('admin.add_supermarket')}}</a></li>
                         </ol>
                     </div>
 
@@ -41,22 +40,22 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Supermarkets</h3>
+                                <h3 class="card-title">{{__('admin.supermarkets')}}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
-                                        <th>commission</th>
-                                        <th>priority</th>
-                                        <th>status</th>
-                                        <th>products</th>
-                                        <th>offers</th>
-                                        <th>branches</th>
-                                        <th>controls</th>
+                                        <th>{{__('admin.name_ar')}}</th>
+                                        <th>{{__('admin.name_en')}}</th>
+                                        <th>{{__('admin.commission')}}</th>
+                                        <th>{{__('admin.priority')}}</th>
+                                        <th>{{__('admin.status')}}</th>
+                                        <th>{{__('admin.products')}}</th>
+                                        <th>{{__('admin.offers')}}</th>
+                                        <th>{{__('admin.branches')}}</th>
+                                        <th>{{__('admin.controls')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -74,7 +73,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-success">{{__('admin.active')}}</button>
                                                     </form>
 
                                                 @else
@@ -83,7 +82,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('supermarket.status', $supermarket->id) }}" class="btn btn-block btn-outline-danger">{{__('admin.inactive')}}</button>
                                                     </form>
 
                                                 @endif
@@ -91,18 +90,18 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 0]) }}" class="btn btn-info">products</a>
+                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 0]) }}" class="btn btn-info">{{__('admin.products')}}</a>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 1]) }}" class="btn btn-info">product offers</a>
+                                                <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 1]) }}" class="btn btn-info">{{__('admin.product_offers')}}</a>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">offers</a>
+                                                <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">{{__('admin.offers')}}</a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('supermarket.branches', $supermarket->id) }}" class="btn btn-info">branches</a>
+                                                <a href="{{ route('supermarket.branches', $supermarket->id) }}" class="btn btn-info">{{__('admin.branches')}}</a>
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -114,8 +113,8 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('supermarkets.edit', $supermarket->id) }}">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="{{ route('supermarkets.edit', $supermarket->id) }}">{{__('admin.modify')}}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
                                                         </form>
 
                                                     </div>

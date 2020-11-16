@@ -19,11 +19,11 @@
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket_id))
-                                    <li class="breadcrumb-item"><a href="{{route('offers.create',$supermarket_id)}}">add supermarket offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('offers.create',$supermarket_id)}}">{{__('admin.add_supermarket_offer')}}</a></li>
                                 @elseif(isset($branch_id))
-                                    <li class="breadcrumb-item"><a href="{{route('offers.create',['supermarket_id' => -1 , 'branch_id' => $branch_id])}}">add branch offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('offers.create',['supermarket_id' => -1 , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_offer')}}</a></li>
                                 @else
-                                    <li class="breadcrumb-item"><a href="{{route('offers.create')}}">add new offer</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('offers.create')}}">{{__('admin.add_offer')}}</a></li>
                                 @endif
                             </ol>
                         </div>
@@ -51,24 +51,24 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Admins</h3>
+                                <h3 class="card-title">{{__('admin.offers')}}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>arab name</th>
-                                        <th>eng name</th>
-                                        <th>arab description</th>
-                                        <th>eng description</th>
-                                        <th>offer type</th>
-                                        <th>value type</th>
-                                        <th>status</th>
-                                        <th>supermarket</th>
-                                        <th>branch</th>
-                                        <th>promocode</th>
-                                        <th>controls</th>
+                                        <th>{{__('admin.name_ar')}}</th>
+                                        <th>{{__('admin.name_en')}}</th>
+                                        <th>{{__('admin.description_ar')}}</th>
+                                        <th>{{__('admin.description_en')}}</th>
+                                        <th>{{__('admin.offer_type')}}</th>
+                                        <th>{{__('admin.value_type')}}</th>
+                                        <th>{{__('admin.status')}}</th>
+                                        <th>{{__('admin.supermarket')}}</th>
+                                        <th>{{__('admin.branch')}}</th>
+                                        <th>{{__('admin.promocode')}}</th>
+                                        <th>{{__('admin.controls')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -88,7 +88,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this offer ?") }}') ? this.parentElement.submit() : ''" href="{{ route('offers.status', $offer->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this offer ?") }}') ? this.parentElement.submit() : ''" href="{{ route('offers.status', $offer->id) }}" class="btn btn-block btn-outline-success">{{__('admin.active')}}</button>
                                                     </form>
 
                                                 @else
@@ -97,7 +97,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this offer ?") }}') ? this.parentElement.submit() : ''" href="{{ route('offers.status', $offer->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this offer ?") }}') ? this.parentElement.submit() : ''" href="{{ route('offers.status', $offer->id) }}" class="btn btn-block btn-outline-danger">{{__('admin.inactive')}}</button>
                                                     </form>
 
                                                 @endif
@@ -128,10 +128,10 @@
 
 
 
-                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{__('admin.modify')}}</a>
 
 
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
 
                                                         </form>
 

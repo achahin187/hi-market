@@ -60,20 +60,14 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>address</th>
-                                        <th>order details</th>
-                                        <th>status</th>
+                                        <th>order ID</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($cancelledorders as $order)
                                         <tr>
-                                            <td>{{$order->address}}</td>
-                                            <td><a class="btn btn-info" href="{{route('order_details',$order->id)}}">order details</a></td>
-                                            <td>
-                                                <button type="button" disabled class="btn btn-block btn-outline-danger">cancelled</button>
-                                            </td>
+                                            <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -114,7 +108,7 @@
                                     <table id="example1" class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>order details</th>
+                                            <th>order ID</th>
                                             <th>status</th>
                                             <th>cancel</th>
                                             <th>reject</th>

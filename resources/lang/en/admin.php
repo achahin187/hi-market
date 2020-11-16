@@ -35,6 +35,7 @@ return [
     'image'=>'image',
     'active'=>'active',
     'inactive'=>'inactive',
+    'commission' => 'commission',
     'controls' => 'controls',
 
     //Categories
@@ -67,18 +68,44 @@ return [
     'SubCatDeleted'=>'The Sub Category Deleted successfully',
 
     //Products
-    'products'=>'Products',
+    'products'=>'products',
+    'product_offers'=>'product offers',
     'add_product'=>'add product',
+    'edit_product'=>'edit product',
+    'clone_product' => 'clone product',
     'spec_ar'=>'spec_ar',
     'spec_en'=>'spec_en',
     'review'=>'review',
     'price'=>'price',
+    'offer_price'=>'price',
     'priority'=>'priority',
     'points'=>'points',
     'exp_date'=>'expire date',
+    'production_date'=>'production date',
     'barcode'=>'barcode',
     'add_supermarket_product' => 'add supermarket product',
+    'edit_supermarket_product' => 'edit supermarket product',
     'add_branch_product' => 'add branch product',
+    'edit_branch_product' => 'edit branch product',
+    'supermarket_products' => 'supermarket products',
+    'branch_products' => 'branch products',
+
+
+    //offers
+    'offers'=>'offers',
+    'add_offer'=>'add new offer',
+    'edit_offer'=>'edit offer',
+
+    //supermarkets
+    'supermarkets'=>'supermarkets',
+    'add_supermarket'=>'add new supermarket',
+    'edit_supermarket'=>'edit supermarket',
+
+    //branches
+    'branches'=>'branches',
+    'add_branch'=>'add new branch',
+    'edit_branch'=>'edit branch',
+
 
 
     //Users

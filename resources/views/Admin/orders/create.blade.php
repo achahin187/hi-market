@@ -45,24 +45,45 @@
                             <form role="form" action="{{route('orders.store',$request->id) }}" method="POST" enctype="multipart/form-data">
 
                                 @csrf
+
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('client name')}}</label>
-                                        <input type="text" value="{{$request->client->name }}" name="name" class=" @error('name') is-invalid @enderror form-control" required>
+                                        <input type="text"  name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Request Address</label>
-                                        <input type="text" value="{{$request->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" disabled required>
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> client mobile number</label>
+                                        <input type="text" name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        @error('mobile_number')
+                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> client location</label>
+                                        <input type="text" name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('address')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                         @enderror
                                     </div>
 

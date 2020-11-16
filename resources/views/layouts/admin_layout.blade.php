@@ -276,90 +276,95 @@ $settings = App\Models\Setting::all()->first();
 
                     @endif
 
-                    @if(auth()->user()->can('admin-create') || auth()->user()->can('admin-delete') || auth()->user()->can('admin-edit') || auth()->user()->can('admin-list'))
+
+                    @if(auth()->user()->flag == 1)
+
+                        @if(auth()->user()->can('admin-create') || auth()->user()->can('admin-delete') || auth()->user()->can('admin-edit') || auth()->user()->can('admin-list'))
+
+                            <li class="nav-item">
+                                <a href="{{route('admins.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Admins
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
 
                         <li class="nav-item">
-                            <a href="{{route('admins.index')}}" class="nav-link">
+                            <a href="{{route('orders.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Admins
+                                    Orders
                                 </p>
                             </a>
                         </li>
+
+    {{--                    <li class="nav-item">
+                            <a href="{{route('requests.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Requests
+                                </p>
+                            </a>
+                        </li>--}}
+
+                        <li class="nav-item">
+                            <a href="{{route('logs.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    system logs
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('settings.edit',$settings->id)}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Settings
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('reasons.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Reasons
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('points.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Points
+                                </p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="{{route('teams.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    teams
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('clients.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    clients
+                                </p>
+                            </a>
+                        </li>
+
                     @endif
-
-                    <li class="nav-item">
-                        <a href="{{route('orders.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Orders
-                            </p>
-                        </a>
-                    </li>
-
-{{--                    <li class="nav-item">
-                        <a href="{{route('requests.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Requests
-                            </p>
-                        </a>
-                    </li>--}}
-
-                    <li class="nav-item">
-                        <a href="{{route('logs.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                system logs
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{route('settings.edit',$settings->id)}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Settings
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{route('reasons.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Reasons
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{route('points.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Points
-                            </p>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="{{route('teams.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                teams
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{route('clients.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                clients
-                            </p>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a href="{{route('offers.index')}}" class="nav-link">
@@ -379,6 +384,8 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>--}}
 
+                    @if(auth()->user()->flag == 1)
+
 
                         <li class="nav-item">
                             <a href="{{route('roles.index')}}" class="nav-link">
@@ -388,6 +395,8 @@ $settings = App\Models\Setting::all()->first();
                                 </p>
                             </a>
                         </li>
+
+                    @endif
 
 {{--                    @if(auth()->user()->flag == 1)
 

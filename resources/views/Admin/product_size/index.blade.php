@@ -11,7 +11,6 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div style="margin-bottom: 5px" class="col-sm-6">
-                        <h1>DataTables</h1>
                     </div>
 
 
@@ -91,7 +90,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>size value</th>

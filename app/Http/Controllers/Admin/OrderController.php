@@ -20,7 +20,6 @@ class OrderController extends Controller
     public function index($cancel = false)
     {
         //
-
         $setting = Setting::all()->first();
 
         if($cancel) {
@@ -84,7 +83,9 @@ class OrderController extends Controller
                 'request' => $request_id
             ]);
 
-            $total_price = 0;
+            $total_product_offers_price = 0;
+
+            $total_products_price = 0;
 
             $cart_request->update(['converted' => 1]);
 
@@ -94,11 +95,15 @@ class OrderController extends Controller
 
             $order->products()->attach($product->id,['quantity' => $quantity,'price' => $price]);
 
-            foreach ($order->products as $product)
+            foreach ($order->products()->where('flag',0)->get() as $product)
             {
-                $total_price = $total_price + $product->pivot->price;
+                $total_products_price = $total_products_price + $product->pivot->price;
             }
-            return view('Admin.orders.edit',compact('order','request','total_price'));
+            foreach ($order->products()->where('flag',1)->get() as $product)
+            {
+                $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
+            }
+            return view('Admin.orders.edit',compact('order','request','total_product_offers_price','total_products_price'));
         }
         else
         {
@@ -112,18 +117,24 @@ class OrderController extends Controller
         //
         $order = Order::find($order_id);
 
-        $total_price = 0;
+        $total_product_offers_price = 0;
+
+        $total_products_price = 0;
 
         if($order)
         {
 
             $request = CartRequest::find($order->request);
 
-            foreach ($order->products as $product)
+            foreach ($order->products()->where('flag',0)->get() as $product)
             {
-                $total_price = $total_price + $product->pivot->price;
+                $total_products_price = $total_products_price + $product->pivot->price;
             }
-            return view('Admin.orders.edit', compact('order','total_price','request'));
+            foreach ($order->products()->where('flag',1)->get() as $product)
+            {
+                $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
+            }
+            return view('Admin.orders.edit', compact('order','total_products_price','total_product_offers_price','request'));
 
         }
         else
@@ -243,23 +254,31 @@ class OrderController extends Controller
 
         $order = Order::find($order_id);
 
-        $total_price = 0;
+        $total_product_offers_price = 0;
+
+        $total_products_price = 0;
 
         if($orderproduct != null && $order != null)
         {
 
             $request = CartRequest::find($order->request);
 
-            foreach ($order->products as $product)
+
+            foreach ($order->products()->where('flag',0)->get() as $product)
             {
-                $total_price = $total_price + $product->pivot->price;
+                $total_products_price = $total_products_price + $product->pivot->price;
+
                 if($orderproduct->id == $product->id)
                 {
                     $quantity = $product->pivot->quantity;
                 }
             }
+            foreach ($order->products()->where('flag',1)->get() as $product)
+            {
+                $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
+            }
 
-            return view('Admin.orders.edit', compact('orderproduct','order','quantity','total_price','request'));
+            return view('Admin.orders.edit', compact('orderproduct','order','quantity','total_products_price','total_product_offers_price','request'));
         }
         else
         {

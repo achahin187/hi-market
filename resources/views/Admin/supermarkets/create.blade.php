@@ -14,8 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarkets.index')}}">supermarkets</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('supermarkets.index')}}">{{__('admin.supermarkets')}}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -33,9 +32,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($supermarket))
-                                        edit supermarket
+                                        {{__('admin.edit_supermarket')}}
                                     @else
-                                        create supermarket
+                                        {{__('admin.add_supermarket')}}
 
                                     @endif
                                 </h3>
@@ -53,7 +52,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('supermarket arab name')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                         <input type="text" value="@if(isset($supermarket)){{$supermarket->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
                                         @error('arab_name')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +61,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('supermarket eng name')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($supermarket)){{$supermarket->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
                                         @error('eng_name')
                                         <span class="invalid-feedback" role="alert">
@@ -72,7 +71,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('priority')}}</label>
+                                        <label for="exampleInputPassword1">{{__('admin.priority')}}</label>
                                         <input type="number" name="priority" min="0" @if(isset($supermarket)) value="{{$supermarket->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
                                         @error('priority')
                                         <span class="invalid-feedback" role="alert">
@@ -83,7 +82,7 @@
 
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('commission')}}</label>
+                                        <label for="exampleInputPassword1">{{__('admin.commission')}}</label>
                                         <input type="number" name="commission" min="0"  step="0.01" @if(isset($supermarket)) value="{{$supermarket->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
                                         @error('commission')
                                         <span class="invalid-feedback" role="alert">
@@ -93,7 +92,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>area </label>
+                                        <label>{{__('admin.area')}} </label>
                                         <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($supermarket))
                                                 @foreach(\App\Models\Area::all() as $area)
@@ -113,7 +112,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>city </label>
+                                        <label>{{__('admin.city')}} </label>
                                         <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($supermarket))
                                                 @foreach(\App\Models\City::all() as $city)
@@ -133,7 +132,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>country </label>
+                                        <label>{{__('admin.country')}} </label>
                                         <select class=" @error('country_id') is-invalid @enderror select2" name="country_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($supermarket))
                                                 @foreach(\App\Models\Country::all() as $country)
@@ -158,7 +157,7 @@
 
                                             <div class="bootstrap-timepicker">
                                                 <div class="form-group">
-                                                    <label>start time</label>
+                                                    <label>{{__('admin.start_time')}}</label>
 
                                                     <div class="input-group date" id="startpicker" data-target-input="nearest">
                                                         <input type="text" name="start_time" @if(isset($supermarket)) value="{{$supermarket->start_time}}" @endif class="@error('start_time') is-invalid @enderror form-control datetimepicker-input" data-target="#startpicker"/>
@@ -176,7 +175,7 @@
 
                                             <div class="bootstrap-timepicker">
                                                 <div class="form-group">
-                                                    <label>end time</label>
+                                                    <label>{{__('admin.end_time')}}</label>
 
                                                     <div class="input-group date" id="endpicker" data-target-input="nearest">
                                                         <input type="text" name="end_time" class="@error('end_time') is-invalid @enderror form-control datetimepicker-input" @if(isset($supermarket)) value="{{$supermarket->end_time}}" @endif data-target="#endpicker"/>
@@ -196,11 +195,11 @@
                                     @if(!isset($supermarket))
 
                                         <div class="form-group">
-                                            <label>Status</label>
+                                            <label>{{__('admin.status')}}</label>
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                    <option value="active">active</option>
-                                                    <option value="inactive">inactive</option>
+                                                    <option value="active">{{__('admin.active')}}</option>
+                                                    <option value="inactive">{{__('admin.inactive')}}</option>
 
                                             </select>
 
@@ -217,7 +216,7 @@
                                     @if(isset($supermarket) && $supermarket->image != null)
 
                                         <div class="form-group" style="margin-bottom: 10px">
-                                            <label for="exampleInputFile">supermarket image</label>
+                                            <label for="exampleInputFile">{{__('admin.image')}}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -236,7 +235,7 @@
                                     @else
 
                                         <div class="form-group" style="margin-bottom: 10px">
-                                            <label for="exampleInputFile">supermarket image</label>
+                                            <label for="exampleInputFile">{{__('admin.image')}}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">

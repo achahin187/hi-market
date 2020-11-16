@@ -14,8 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('areas.index')}}">Areas</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('areas.index')}}">{{__('admin.areas')}}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -33,9 +32,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($area))
-                                        edit area
+                                        {{__('admin.edit_area')}}
                                     @else
-                                        create area
+                                        {{__('admin.add_area')}}
 
                                     @endif
                                 </h3>
@@ -53,7 +52,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                         <input type="text" value="@if(isset($area)){{$area->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
                                         @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -62,7 +61,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('engname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
                                         <input type="text" value="@if(isset($area)){{$area->name_en }} @endif" name="name_en" class=" @error('name_en') is-invalid @enderror form-control" required>
                                         @error('name_en')
                                         <span class="invalid-feedback" role="alert">
@@ -73,7 +72,7 @@
 
 
                                     <div class="form-group">
-                                        <label>city</label>
+                                        <label>{{__('admin.city')}}</label>
                                         <select class=" @error('city') is-invalid @enderror select2"  name="city" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($area))
@@ -95,7 +94,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>country</label>
+                                        <label>{{__('admin.country')}}</label>
                                         <select class=" @error('country') is-invalid @enderror select2"  name="country" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($area))
@@ -119,11 +118,11 @@
                                     @if(!isset($area))
 
                                         <div class="form-group">
-                                            <label>area status</label>
+                                            <label>{{__('admin.status')}}</label>
                                             <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                <option value="active">active</option>
-                                                <option value="inactive">inactive</option>
+                                                <option value="active">{{__('admin.active')}}</option>
+                                                <option value="inactive">{{__('admin.inactive')}}</option>
 
                                             </select>
                                         </div>
@@ -134,7 +133,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
                                 </div>
                             </form>
                         </div>

@@ -11,16 +11,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
 
                             @if(isset($supermarket_id))
-                                <li class="breadcrumb-item"><a href="{{route('branches.create',$supermarket_id)}}">add supermarket branch</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('branches.create',$supermarket_id)}}">{{__('admin.add_supermarket_branch')}}</a></li>
                             @else
 
-                                <li class="breadcrumb-item"><a href="{{route('branches.create')}}">add new branch</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('branches.create')}}">{{__('admin.add_branch')}}</a></li>
 
                             @endif
                         </ol>
@@ -48,20 +47,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">branches</h3>
+                                <h3 class="card-title">{{__('admin.branches')}}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
-                                        <th>supermarket</th>
-                                        <th>status</th>
-                                        <th>products</th>
-                                        <th>offers</th>
-                                        <th>controls</th>
+                                        <th>{{__('admin.name_ar')}}</th>
+                                        <th>{{__('admin.name_en')}}</th>
+                                        <th>{{__('admin.supermarket')}}</th>
+                                        <th>{{__('admin.status')}}</th>
+                                        <th>{{__('admin.products')}}</th>
+                                        <th>{{__('admin.offers')}}</th>
+                                        <th>{{__('admin.controls')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -82,7 +81,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-success">active</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-success">{{__('admin.active')}}</button>
                                                     </form>
 
                                                 @else
@@ -91,7 +90,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch ?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-danger">inactive</button>
+                                                        <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this branch ?") }}') ? this.parentElement.submit() : ''" href="{{ route('branch.status', $branch->id) }}" class="btn btn-block btn-outline-danger">{{__('admin.inactive')}}</button>
                                                     </form>
 
                                                 @endif
@@ -99,15 +98,15 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 0]) }}" class="btn btn-info">products</a>
+                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 0]) }}" class="btn btn-info">{{__('admin.products')}}</a>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 1]) }}" class="btn btn-info">product offers</a>
+                                                <a href="{{ route('branch.products', ['branch_id' => $branch->id , 'flag' => 1]) }}" class="btn btn-info">{{__('admin.product_offers')}}</a>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('branch.offers', $branch->id) }}" class="btn btn-info">offers</a>
+                                                <a href="{{ route('branch.offers', $branch->id) }}" class="btn btn-info">{{__('admin.offers')}}</a>
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -119,8 +118,8 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('branches.edit', ['id' => $branch->id , 'supermarket_id' => $supermarket_id]) }} @else {{ route('branches.edit', $branch->id) }} @endif ">{{ __('edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('branches.edit', ['id' => $branch->id , 'supermarket_id' => $supermarket_id]) }} @else {{ route('branches.edit', $branch->id) }} @endif ">{{__('admin.modify')}}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
                                                         </form>
 
                                                     </div>
