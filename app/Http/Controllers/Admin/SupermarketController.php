@@ -55,7 +55,7 @@ class SupermarketController extends Controller
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
             'start_time' => ['required','string'],
-            'end_time' => ['required','string','after:start_time'],
+            'end_time' => ['required','string'],
         ];
 
         $this->validate($request,$rules);
@@ -170,7 +170,7 @@ class SupermarketController extends Controller
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
             'start_time' => ['required','string'],
-            'end_time' => ['required','string','after:start_time'],
+            'end_time' => ['required','string'],
         ];
 
         $this->validate($request, $rules);
@@ -195,10 +195,10 @@ class SupermarketController extends Controller
             } else {
 
                 if ($request->has('checkedimage')) {
+                    $file_to_store = $request->checkedimage;
                         $supermarket->update([
                             'arab_name' => $request->arab_name,
                             'eng_name' => $request->eng_name,
-                            'status' => $request->status ,
                             'start_time' => $request->start_time,
                             'end_time' => $request->end_time,
                             'commission' => $request->commission ,
@@ -206,7 +206,7 @@ class SupermarketController extends Controller
                             'area_id' => $request->area_id,
                             'city_id' => $request->city_id,
                             'country_id' => $request->country_id,
-                            'image' => $request->checkedimage,
+                            'image' => $file_to_store,
                         ]);
                 } else {
                     if ($supermarket->image != null) {

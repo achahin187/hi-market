@@ -178,7 +178,7 @@ $settings = App\Models\Setting::all()->first();
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('products.index',1)}}" class="nav-link">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <i class="far fa-circle nav-icon"></i>
                                         <p>
                                             Product Offers
                                         </p>

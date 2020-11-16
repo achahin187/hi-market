@@ -72,7 +72,7 @@ return [
     'spec_en'=>'spec_en',
     'review'=>'review',
     'price'=>'price',
-    'offer_price'=>'price',
+    'offer_price'=>'offer price',
     'priority'=>'priority',
     'points'=>'points',
     'exp_date'=>'expire date',

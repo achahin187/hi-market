@@ -92,6 +92,7 @@
                                             <option  value="size_id">{{__('admin.size')}}</option>
                                             <option  value="start_date">{{__('admin.start_date')}}</option>
                                             <option  value="end_date">{{__('admin.end_date')}}</option>
+                                            <option  value="production_date">{{__('admin.production_date')}}</option>
                                             <option  value="exp_date">{{__('admin.exp_date')}}</option>
                                             <option  value="status">{{__('admin.status')}}</option>
                                             <option  value="barcode">{{__('admin.barcode')}}</option>
@@ -171,6 +172,9 @@
                                                 @endif
                                                 @if(in_array('end_date',$columns))
                                                     <th>{{__('admin.end_date')}}</th>
+                                                @endif
+                                                @if(in_array('production_date',$columns))
+                                                    <th>{{__('admin.production_date')}}</th>
                                                 @endif
                                                 @if(in_array('exp_date',$columns))
                                                     <th>{{__('admin.exp_date')}}</th>
@@ -293,10 +297,25 @@
                                                         <td>{{$product->size->value}}</td>
                                                     @endif
                                                     @if(in_array('start_date',$columns))
-                                                        <td>{{$product->start_date}}</td>
+
+                                                        @if($flag == 1)
+                                                            <td>{{$product->start_date}}</td>
+
+                                                        @else
+                                                            <td>doesn't have start date</td>
+                                                        @endif
+
                                                     @endif
                                                     @if(in_array('end_date',$columns))
-                                                        <td>{{$product->end_date}}</td>
+                                                            @if($flag == 1)
+                                                                <td>{{$product->end_date}}</td>
+
+                                                            @else
+                                                                <td>doesn't have end date</td>
+                                                            @endif
+                                                    @endif
+                                                    @if(in_array('production_date',$columns))
+                                                        <td>{{$product->production_date}}</td>
                                                     @endif
                                                     @if(in_array('exp_date',$columns))
                                                         <td>{{$product->exp_date}}</td>
