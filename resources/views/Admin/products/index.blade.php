@@ -24,7 +24,7 @@
                                     <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
                                 @endif
 
-                                <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
+{{--                                <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
 
                                     <li class="breadcrumb-item">
 
@@ -36,7 +36,7 @@
                                         </form>
 
                                     </li>
-                                <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>--}}
                             </ol>
                         </div>
 
