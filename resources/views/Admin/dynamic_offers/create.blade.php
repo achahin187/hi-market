@@ -200,7 +200,20 @@
                                             @elseif(isset($branch_id))
                                                 @foreach(\App\Models\Branch::all() as $branch)
 
-                                                    <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+                                                    <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">
+
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $branch->name_en }}
+
+                                                        @else
+
+                                                            {{ $branch->name_ar }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
 
@@ -208,7 +221,19 @@
 
                                                 @foreach(\App\Models\Branch::all() as $branch)
 
-                                                    <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+                                                    <option value="{{ $branch->id }}">
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $branch->name_en }}
+
+                                                        @else
+
+                                                            {{ $branch->name_ar }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
 

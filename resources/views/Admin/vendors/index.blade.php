@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+
                     </div>
 
                     @if(auth()->user()->can('vendor-create'))

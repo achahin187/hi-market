@@ -128,13 +128,39 @@
 
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                                    <option <?php if($supermarket_id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                    <option <?php if($supermarket_id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">
+
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $supermarket->eng_name }}
+
+                                                        @else
+
+                                                            {{ $supermarket->arab_name }}
+
+                                                        @endif
+
+
+                                                    </option>
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                                    <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                    <option value="{{ $supermarket->id }}">
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $supermarket->eng_name }}
+
+                                                        @else
+
+                                                            {{ $supermarket->arab_name }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
 
@@ -208,9 +234,19 @@
                                 </div>
                                 <!-- /.card-body -->
 
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                                @if(isset($branch))
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                    </div>
+
+                                @else
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
+                                    </div>
+
+                                @endif
                             </form>
                         </div>
                         <!-- /.card -->

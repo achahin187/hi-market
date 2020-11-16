@@ -108,6 +108,16 @@ return [
     'add_area'=>'add area',
     'edit_area'=>'edit area',
 
+    //cities
+    'cities'=>'cities',
+    'add_city'=>'add city',
+    'edit_city'=>'edit city',
+
+    //countries
+    'countries'=>'countries',
+    'add_country'=>'add country',
+    'edit_country'=>'edit country',
+
 
 
 

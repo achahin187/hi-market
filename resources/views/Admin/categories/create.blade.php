@@ -9,7 +9,6 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
@@ -110,9 +109,19 @@
                                 </div>
                                 <!-- /.card-body -->
 
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
-                                </div>
+                                @if(isset($category))
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                    </div>
+
+                                @else
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
+                                    </div>
+
+                                @endif
                             </form>
                         </div>
                         <!-- /.card -->

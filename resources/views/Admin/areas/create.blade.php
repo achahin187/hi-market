@@ -78,13 +78,38 @@
                                             @if(isset($area))
                                                 @foreach(\App\Models\City::where('status','active')->get() as $city)
 
-                                                    <option <?php if($area->areacity->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
+                                                    <option <?php if($area->areacity->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $city->name_en }}
+
+                                                        @else
+
+                                                            {{ $city->name_ar }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\City::where('status','active')->get() as $city)
 
-                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+                                                    <option value="{{ $city->id }}">
+
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $city->name_en }}
+
+                                                        @else
+
+                                                            {{ $city->name_ar }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
 
@@ -100,13 +125,38 @@
                                             @if(isset($area))
                                                 @foreach(\App\Models\Country::where('status','active')->get() as $country)
 
-                                                    <option <?php if($area->areacountry->id == $country->id) echo 'selected'; ?> value="{{ $country->id }}">{{ $country->name_ar }}</option>
+                                                    <option <?php if($area->areacountry->id == $country->id) echo 'selected'; ?> value="{{ $country->id }}">
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $country->name_en }}
+
+                                                        @else
+
+                                                            {{ $country->name_ar }}
+
+                                                        @endif
+
+
+                                                    </option>
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\Country::where('status','active')->get() as $country)
 
-                                                    <option value="{{ $country->id }}">{{ $country->name_en }}</option>
+                                                    <option value="{{ $country->id }}">
+
+                                                        @if(App::getLocale() == 'en')
+
+                                                            {{ $country->name_en }}
+
+                                                        @else
+
+                                                            {{ $country->name_ar }}
+
+                                                        @endif
+
+                                                    </option>
 
                                                 @endforeach
 
@@ -132,9 +182,19 @@
                                 </div>
                                 <!-- /.card-body -->
 
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
-                                </div>
+                                @if(isset($area))
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                    </div>
+
+                                @else
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.add')}}</button>
+                                    </div>
+
+                                @endif
                             </form>
                         </div>
                         <!-- /.card -->

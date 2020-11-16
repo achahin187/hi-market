@@ -104,7 +104,10 @@ return [
     'add_area'=>'اضافة منطقة',
     'edit_area'=>'تعديل المنطقة',
 
-
+    //cities
+    'cities'=>'المدن',
+    'add_city'=>'اضافة مدينة',
+    'edit_city'=>'تعديل المدينة',
 
 
     //Users
