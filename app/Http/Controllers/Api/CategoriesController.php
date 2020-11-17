@@ -145,14 +145,13 @@ class CategoriesController extends Controller
 
                     if($lang == 'ar')
                     {
-                        $product->category = $product->category->name_ar;
+                        $product->categoryname = $product->category->name_ar;
                     }
                     else
                     {
-                        $product->category = $product->category->name_en;
+                        $product->categoryname = $product->category->name_en;
                     }
 
-                    $product->category = 1;
 
                     $product->imagepath = asset('images/' . $product->images);
 
@@ -245,11 +244,11 @@ class CategoriesController extends Controller
 
                     if($lang == 'ar')
                     {
-                        $product->category = $product->category->name_ar;
+                        $product->categoryname = $product->category->name_ar;
                     }
                     else
                     {
-                        $product->category = $product->category->name_en;
+                        $product->categoryname = $product->category->name_en;
                     }
 
                     $product->imagepath = asset('images/' . $product->images);
