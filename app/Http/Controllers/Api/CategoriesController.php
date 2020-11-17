@@ -152,6 +152,8 @@ class CategoriesController extends Controller
                         $product->category = $product->category->name_en;
                     }
 
+                    $product->category = 1;
+
                     $product->imagepath = asset('images/' . $product->images);
 
             }
