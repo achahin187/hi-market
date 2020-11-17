@@ -242,9 +242,9 @@
                                                     @if(in_array('category_id',$columns))
 
                                                         @if(App::getLocale() == 'ar')
-                                                            <td>{{$product->category->arab_name}}</td>
+                                                            <td>{{$product->category->name_ar}}</td>
                                                         @else
-                                                            <td>{{$product->category->eng_name}}</td>
+                                                            <td>{{$product->category->name_en}}</td>
                                                         @endif
 
                                                     @endif
