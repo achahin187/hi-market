@@ -141,6 +141,8 @@ class CategoriesController extends Controller
 
                     $product->ratings = '170';
 
+                    $product->categoryname = 1;
+
                     if($lang == 'ar')
                     {
                         $product->categoryname = $product->category->name_ar;
