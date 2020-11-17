@@ -139,9 +139,6 @@ class CategoriesController extends Controller
 
                     $product->percentage = ($offer_price / $price) * 100;
 
-                    $product->ratings = '170';
-
-                    $product->categoryname = 'fghfh';
 
                     if($lang == 'ar')
                     {
