@@ -132,8 +132,14 @@ class CategoriesController extends Controller
                         }
                     }
 
-                    $offer_price = $product->offer_price;
-                    $price = $product->price;
+                    if($product->flag == 1) {
+
+                        $offer_price = $product->offer_price;
+
+                        $price = $product->price;
+
+                        $product->percentage = ($offer_price / $price) * 100;
+                    }
 
                     $product->ratings = '170';
 
@@ -146,7 +152,6 @@ class CategoriesController extends Controller
                         $product->category = $product->category->name_en;
                     }
 
-                    $product->percentage = ($offer_price/$price) * 100;
                     $product->imagepath = asset('images/' . $product->images);
 
             }
