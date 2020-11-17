@@ -132,14 +132,12 @@ class CategoriesController extends Controller
                         }
                     }
 
-                    if($product->flag == 1) {
 
-                        $offer_price = $product->offer_price;
+                    $offer_price = $product->offer_price;
 
-                        $price = $product->price;
+                    $price = $product->price;
 
-                        $product->percentage = ($offer_price / $price) * 100;
-                    }
+                    $product->percentage = ($offer_price / $price) * 100;
 
                     $product->ratings = '170';
 
@@ -232,13 +230,11 @@ class CategoriesController extends Controller
                         }
                     }
 
-                    if($product->flag == 1) {
 
-                        $offer_price = $product->offer_price;
-                        $price = $product->price;
+                    $offer_price = $product->offer_price;
+                    $price = $product->price;
 
-                        $product->percentage = ($offer_price / $price) * 100;
-                    }
+                    $product->percentage = ($offer_price / $price) * 100;
 
                     $product->ratings = '170';
 
