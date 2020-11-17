@@ -141,11 +141,11 @@ class CategoriesController extends Controller
 
                     if($lang == 'ar')
                     {
-                        $product->categoryname = $product->category->name_ar;
+                        $product->categoryname = $product->category;
                     }
                     else
                     {
-                        $product->categoryname = $product->category->name_en;
+                        $product->categoryname = $product->category;
                     }
 
 

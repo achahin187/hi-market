@@ -42,7 +42,7 @@ class PointController extends Controller
 
         $this->validate($request,$rules);
 
-        $points = Point::orderBy('id', 'desc')->get();
+/*        $points = Point::orderBy('id', 'desc')->get();
 
         foreach ($points as $oldpoint) {
 
@@ -50,9 +50,8 @@ class PointController extends Controller
 
                 return redirect('/admin/points')->withStatus('this range have been chosen already');
             }
-        }
+        }*/
 
-        if($request->type == 1) {
             $point = Point::create([
 
                 'points' => $request->input('points'),
@@ -64,24 +63,10 @@ class PointController extends Controller
                 'end_date' => $request->input('end_date'),
                 'created_by' => $user->id
             ]);
-        }
-
-        else
-        {
-            $point = Point::create([
-
-                'from' => $request->input('from'),
-                'to' => $request->input('to'),
-                'value' => $request->input('value'),
-                'type' => $request->input('type'),
-                'status' => $request->input('status'),
-                'created_by' => $user->id
-            ]);
-        }
 
         if($point)
         {
-            return redirect('admin/points')->withStatus('range successfully created');
+            return redirect('admin/points')->withStatus('point successfully created');
         }
         else
         {
@@ -96,15 +81,13 @@ class PointController extends Controller
         //
         $point = Point::find($id);
 
-        $points = Point::orderBy('id', 'desc')->paginate(10);
-
         if($point)
         {
-            return view('Admin.points.create', compact('point','points'));
+            return view('Admin.points.create', compact('point'));
         }
         else
         {
-            return redirect('admin/points')->withStatus('no range have this id');
+            return redirect('admin/points')->withStatus('no point have this id');
         }
     }
 
@@ -119,40 +102,28 @@ class PointController extends Controller
     {
         $user = auth()->user();
 
-        if($request->type == 0) {
 
             $rules = [
-                'from' => ['required', 'min:0', 'integer'],
-                'to' => ['required', 'min:0', 'integer', 'gt:from'],
-                'value' => ['required', 'min:0', 'numeric'],
+                'points' => ['required', 'min:1', 'integer'],
                 'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'after:today',
-                'end_date' => 'after:start_date'
+                'offer_type' => ['sometimes','string'],
+                'value' => ['required', 'min:0', 'numeric'],
+                'status' => ['required','string'],
+                'start_date' => 'sometimes|after:today',
+                'end_date' => 'sometimes|after:start_date|date'
             ];
 
-        }
-        else
-        {
-            $rules = [
-                'from' => ['required', 'min:0', 'integer'],
-                'to' => ['required', 'min:0', 'integer', 'gt:from'],
-                'value' => ['required', 'min:0', 'numeric'],
-                'type' => ['required', 'min:0', 'integer'],
-                'start_date' => 'after:today',
-                'end_date' => 'after:start_date'
-            ];
-        }
 
         $this->validate($request, $rules);
 
         $point = Point::find($id);
 
-        $points = Point::orderBy('id', 'desc')->paginate(10);
+//        $points = Point::orderBy('id', 'desc')->get();
 
 
         if($point) {
 
-            if($point->from != $request->from || $point->to != $request->to) {
+/*            if($point->from != $request->from || $point->to != $request->to) {
 
                 foreach ($points as $oldpoint) {
 
@@ -163,40 +134,28 @@ class PointController extends Controller
 
                     if ($request->input('from') < $oldpoint->to) {
 
-                        return redirect('/admin/points')->withStatus('this range have been chosen already');
+                        return redirect('/admin/points')->withStatus('this point have been chosen already');
                     }
                 }
-            }
+            }*/
 
 
-            if($request->type == 1) {
 
                 $point->update([
 
-                    'from' => $request->input('from'),
-                    'to' => $request->input('to'),
+                    'points' => $request->input('points'),
                     'value' => $request->input('value'),
                     'type' => $request->input('type'),
+                    'offer_type' => $request->input('offer_type'),
+                    'status' => $request->input('status'),
                     'start_date' => $request->input('start_date'),
                     'end_date' => $request->input('end_date'),
                     'updated_by' => $user->id
                 ]);
-            }
-            else
-            {
-                $point->update([
 
-                    'from' => $request->input('from'),
-                    'to' => $request->input('to'),
-                    'value' => $request->input('value'),
-                    'type' => $request->input('type'),
-                    'start_date' => null,
-                    'end_date' => null,
-                    'updated_by' => $user->id
-                ]);
-            }
 
-            return redirect('/admin/points')->withStatus('range successfully updated.');
+
+            return redirect('/admin/points')->withStatus('point successfully updated.');
         }
         else
         {
