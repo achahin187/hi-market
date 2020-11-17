@@ -93,14 +93,7 @@ class CategoriesController extends Controller
 
     public function supermarketoffers(Request $request)
     {
-
-    }
-
-    public function categoryproducts(Request $request)
-    {
         $lang = $request->header('lang');
-
-        $udid = $request->header('udid');
 
         if(!$lang || $lang == ''){
             return $this->returnError(402,'no lang');
@@ -108,31 +101,28 @@ class CategoriesController extends Controller
 
         $token = $request->header('token');
 
-        $category_id = $request->category_id;
+        $udid = $request->header('udid');
+
+        $supermarket_id = $request->supermarket_id;
+
+        $supermarket = supermarket::find($supermarket_id);
 
         $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
 
-        if ($category_id) {
+        if($supermarket) {
 
-            $category = Category::find($category_id);
+            if ($lang == 'ar') {
 
-            if($category) {
-
-                if ($lang == 'ar') {
-
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
-                } else {
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
-                }
-
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->where('flag',1)->get();
+            } else {
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->where('flag',1)->get();
+            }
                 foreach ($products as $product) {
 
                     $product->favourite = 0;
 
-                    if(count($favproducts) > 0) {
-
-
+                    if (count($favproducts) > 0) {
                         foreach ($favproducts as $favproduct) {
                             if ($product->id == $favproduct->product_id) {
                                 $product->favourite = 1;
@@ -142,6 +132,7 @@ class CategoriesController extends Controller
 
 
                     $offer_price = $product->offer_price;
+
                     $price = $product->price;
 
                     $product->percentage = ($offer_price / $price) * 100;
@@ -157,34 +148,44 @@ class CategoriesController extends Controller
                         $product->categoryname = $product->category->name_en;
                     }
 
+
                     $product->imagepath = asset('images/' . $product->images);
-                }
 
-                if ($token) {
+            }
 
-                    $client = Client::where('remember_token', $token)->first();
 
-                    if ($client) {
-                        return $this->returnData(['products'], [$products]);
-                    } else {
-                        if ($lang == 'ar') {
-                            return $this->returnError(305, 'لم نجد هذا العميل');
-                        }
-                        return $this->returnError(305, 'there is no client found');
-                    }
 
-                } else {
+            if($token)
+            {
+                $client = Client::where('remember_token', $token)->first();
+
+                if ($client) {
                     return $this->returnData(['products'], [$products]);
                 }
-            }
-            else
-            {
-                if($lang == 'ar')
-                {
-                    return $this->returnError(305,'لم نجد هذا القسم');
+                else {
+                    if ($lang == 'ar') {
+                        return $this->returnError(305, 'لم نجد هذا العميل');
+                    }
+                    return $this->returnError(305, 'there is no client found');
                 }
-                return $this->returnError(305 ,'there is no category found');
+            }
+            else {
+
+                return $this->returnData(['products'], [$products]);
             }
         }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError(305,'لم نجد هذا السوبر ماركت');
+            }
+            return $this->returnError(305 ,'there is no supermarket found');
+        }
+    }
+
+    public function categoryproducts(Request $request)
+    {
+
     }
 }
