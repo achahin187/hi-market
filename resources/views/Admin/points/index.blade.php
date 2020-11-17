@@ -52,9 +52,9 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>from</th>
-                                        <th>to</th>
+                                        <th>points</th>
                                         <th>type</th>
+                                        <th>offer_type</th>
                                         <th>value</th>
                                         <th>status</th>
                                         <th>start date</th>
@@ -65,13 +65,15 @@
                                     <tbody>
                                     @foreach($points as $point)
                                         <tr>
-                                            <td>{{$point->from}}</td>
-                                            <td>{{$point->to}}</td>
+                                            <td>{{$point->points}}</td>
                                             <td>
                                                 @if($point->type == 0)
 
                                                     discount
 
+                                                @elseif($point->type == 1)
+
+                                                    value
                                                 @else
 
                                                     gift

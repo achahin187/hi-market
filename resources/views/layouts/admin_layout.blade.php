@@ -276,9 +276,6 @@ $settings = App\Models\Setting::all()->first();
 
                     @endif
 
-
-                    @if(auth()->user()->flag == 1)
-
                         @if(auth()->user()->can('admin-create') || auth()->user()->can('admin-delete') || auth()->user()->can('admin-edit') || auth()->user()->can('admin-list'))
 
                             <li class="nav-item">
@@ -364,7 +361,6 @@ $settings = App\Models\Setting::all()->first();
                             </a>
                         </li>
 
-                    @endif
 
                     <li class="nav-item">
                         <a href="{{route('offers.index')}}" class="nav-link">
@@ -384,7 +380,6 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>--}}
 
-                    @if(auth()->user()->flag == 1)
 
 
                         <li class="nav-item">
@@ -396,9 +391,6 @@ $settings = App\Models\Setting::all()->first();
                             </a>
                         </li>
 
-                    @endif
-
-{{--                    @if(auth()->user()->flag == 1)
 
                         <li class="nav-item">
                             <a href="{{route('permissions.index')}}" class="nav-link">
@@ -408,7 +400,6 @@ $settings = App\Models\Setting::all()->first();
                                 </p>
                             </a>
                         </li>
-                    @endif--}}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -569,6 +560,16 @@ $settings = App\Models\Setting::all()->first();
             let total_price = product_price * quantity;
 
             $('.price').val(total_price);
+        });
+
+        $('.quantityoffer').on('change', function () {
+
+            let product_price = $('.productoffer').find(':selected').data('price');
+            let quantity = $(this).val();
+
+            let total_price = product_price * quantity;
+
+            $('.priceoffer').val(total_price);
         });
 
         $('#cancel').on('click', function(){

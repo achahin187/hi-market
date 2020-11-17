@@ -91,6 +91,29 @@
                                         @enderror
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label>{{__('admin.category')}}</label>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
+
+                                            @if(isset($supermarket))
+                                                @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option <?php if(in_array($category->id,$category_ids)) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+
+                                        </select>
+                                    </div>
+
                                     <div class="form-group">
                                         <label>{{__('admin.area')}} </label>
                                         <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
@@ -220,7 +243,7 @@
                                             <div class="input-group">
                                                 <div class="custom-file">
 
-                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('supermarket_images') }}/{{$supermarket->image}}" class="card-img-top" alt="Course Photo">
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$supermarket->image}}" class="card-img-top" alt="Course Photo">
 
                                                     <input type="checkbox" checked style="margin-right:10px;" name="checkedimage" value="{{$supermarket->image}}">
 
@@ -251,16 +274,16 @@
                                     @endif
 
 
-                                    {{--@if(isset($supermarket) && $supermarket->logo_image != null)
+                                    @if(isset($supermarket) && $supermarket->logo_image != null)
 
                                         <div class="form-group" style="margin-top: 40px">
                                             <label for="exampleInputFile">supermarket logo</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
-                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('supermarket_images') }}/{{$supermarket->logo_image}}" class="card-img-top" alt="Course Photo">
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$supermarket->logo_image}}" class="card-img-top" alt="Course Photo">
 
-                                                    <input type="checkbox" checked style="margin-right:10px;" name="checkedlogoimage" value="{{$supermarket->logo_image}}">
+                                                    <input type="checkbox" checked style="margin-right:10px;" name="checkedlogo" value="{{$supermarket->logo_image}}">
 
                                                     <input name="logo_image" type="file">
 
@@ -286,7 +309,7 @@
                                         </div>
 
 
-                                    @endif--}}
+                                    @endif
 
                                 </div>
                                 <!-- /.card-body -->

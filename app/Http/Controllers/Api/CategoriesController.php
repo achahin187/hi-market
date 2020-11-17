@@ -123,8 +123,6 @@ class CategoriesController extends Controller
                     $product->favourite = 0;
 
                     if (count($favproducts) > 0) {
-
-
                         foreach ($favproducts as $favproduct) {
                             if ($product->id == $favproduct->product_id) {
                                 $product->favourite = 1;
@@ -132,11 +130,25 @@ class CategoriesController extends Controller
                         }
                     }
 
+
                     $offer_price = $product->offer_price;
+
                     $price = $product->price;
 
+                    $product->percentage = ($offer_price / $price) * 100;
+
                     $product->ratings = '170';
-                    $product->percentage = ($offer_price/$price) * 100;
+
+                    if($lang == 'ar')
+                    {
+                        $product->categoryname = $product->category;
+                    }
+                    else
+                    {
+                        $product->categoryname = $product->category;
+                    }
+
+
                     $product->imagepath = asset('images/' . $product->images);
 
             }
@@ -174,77 +186,6 @@ class CategoriesController extends Controller
 
     public function categoryproducts(Request $request)
     {
-        $lang = $request->header('lang');
 
-        $udid = $request->header('udid');
-
-        if(!$lang || $lang == ''){
-            return $this->returnError(402,'no lang');
-        }
-
-        $token = $request->header('token');
-
-        $category_id = $request->category_id;
-
-        $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
-
-
-        if ($category_id) {
-
-            $category = Category::find($category_id);
-
-            if($category) {
-
-                if ($lang == 'ar') {
-
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
-                } else {
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag')->where('status','active')->get();
-                }
-
-                foreach ($products as $product) {
-
-                    $product->favourite = 0;
-
-                    if(count($favproducts) > 0) {
-
-
-                        foreach ($favproducts as $favproduct) {
-                            if ($product->id == $favproduct->product_id) {
-                                $product->favourite = 1;
-                            }
-                        }
-                    }
-
-                    $product->ratings = '170';
-                    $product->imagepath = asset('images/' . $product->images);
-                }
-
-                if ($token) {
-
-                    $client = Client::where('remember_token', $token)->first();
-
-                    if ($client) {
-                        return $this->returnData(['products'], [$products]);
-                    } else {
-                        if ($lang == 'ar') {
-                            return $this->returnError(305, 'لم نجد هذا العميل');
-                        }
-                        return $this->returnError(305, 'there is no client found');
-                    }
-
-                } else {
-                    return $this->returnData(['products'], [$products]);
-                }
-            }
-            else
-            {
-                if($lang == 'ar')
-                {
-                    return $this->returnError(305,'لم نجد هذا القسم');
-                }
-                return $this->returnError(305 ,'there is no category found');
-            }
-        }
     }
 }

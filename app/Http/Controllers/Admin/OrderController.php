@@ -34,19 +34,10 @@ class OrderController extends Controller
         }
     }
 
-    public function create($request_id)
+    public function create()
     {
-        //
-        $request = CartRequest::find($request_id);
 
-        if($request)
-        {
-            return view('Admin.orders.create', compact('request'));
-        }
-        else
-        {
-            return redirect('admin/requests')->withStatus('no request have this id');
-        }
+
 
     }
 
@@ -121,8 +112,11 @@ class OrderController extends Controller
 
         $total_products_price = 0;
 
+
+
         if($order)
         {
+
 
             $request = CartRequest::find($order->request);
 
@@ -250,7 +244,7 @@ class OrderController extends Controller
     {
         //
 
-        $orderproduct = Product::find($product_id);
+        $productorder = Product::find($product_id);
 
         $order = Order::find($order_id);
 
@@ -258,7 +252,8 @@ class OrderController extends Controller
 
         $total_products_price = 0;
 
-        if($orderproduct != null && $order != null)
+
+        if($productorder != null && $order != null)
         {
 
             $request = CartRequest::find($order->request);
@@ -268,7 +263,7 @@ class OrderController extends Controller
             {
                 $total_products_price = $total_products_price + $product->pivot->price;
 
-                if($orderproduct->id == $product->id)
+                if($productorder->id == $product->id)
                 {
                     $quantity = $product->pivot->quantity;
                 }
@@ -276,9 +271,21 @@ class OrderController extends Controller
             foreach ($order->products()->where('flag',1)->get() as $product)
             {
                 $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
+
+                $offer = true;
+
+                if($productorder->id == $product->id)
+                {
+                    $quantity = $product->pivot->quantity;
+                }
             }
 
-            return view('Admin.orders.edit', compact('orderproduct','order','quantity','total_products_price','total_product_offers_price','request'));
+        if($productorder->flag == 1)
+        {
+            return view('Admin.orders.edit', compact('productorder','offer','order','quantity','total_products_price','total_product_offers_price','request'));
+        }
+
+            return view('Admin.orders.edit', compact('productorder','order','quantity','total_products_price','total_product_offers_price','request'));
         }
         else
         {
@@ -308,6 +315,7 @@ class OrderController extends Controller
         $this->validate($request,$rules);
 
         $price = $request->input('price');
+
 
         $quantity = $request->input('quantity');
 

@@ -48,6 +48,7 @@ class SupermarketController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
             'commission' => ['required','min:0','numeric'],
+            'categories' => ['required'],
             'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -76,7 +77,7 @@ class SupermarketController extends Controller
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $image->move('supermarket_images', $file_to_store);
+            $image->move('images', $file_to_store);
 
         }
         else
@@ -84,21 +85,22 @@ class SupermarketController extends Controller
             $file_to_store = null;
         }
 
-        /*if($logoimage = $request->file('logo_image'))
+        if($logoimage = $request->file('logo_image'))
         {
+
             $filename = $logoimage->getClientOriginalName();
             $fileextension = $logoimage->getClientOriginalExtension();
             $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $image->move('supermarket_images', $logo);
+            $logoimage->move('images', $logo);
 
         }
         else
         {
             $logo = null;
-        }*/
+        }
 
-        Supermarket::create([
+        $supermarket = Supermarket::create([
 
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
@@ -111,7 +113,11 @@ class SupermarketController extends Controller
             'commission' => $commission,
             'priority' => $priority,
             'image' => $file_to_store,
+            'logo_image' => $logo,
         ]);
+
+
+        $supermarket->categories()->sync($request->categories);
 
 
         return redirect('admin/supermarkets')->withStatus(__('supermarket created successfully'));
@@ -141,7 +147,12 @@ class SupermarketController extends Controller
 
         if($supermarket)
         {
-            return view('Admin.supermarkets.create', compact('supermarket'));
+            $category_ids = [];
+            foreach ($supermarket->categories as $category)
+            {
+                $category_ids[] = $category->id;
+            }
+            return view('Admin.supermarkets.create', compact('supermarket','category_ids'));
         }
         else
         {
@@ -165,7 +176,9 @@ class SupermarketController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'commission' => ['required','min:0','numeric'],
             'priority' => ['required','min:0','integer'],
+            'categories' => ['required'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'area_id' => 'required|integer|min:0',
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
@@ -189,65 +202,44 @@ class SupermarketController extends Controller
                 if ($file->move('supermarket_images', $file_to_store)) {
                     if ($supermarket->image != null) {
 
-                        unlink('supermarket_images/' . $supermarket->image);
+                        unlink('images/' . $supermarket->image);
                     }
                 }
             } else {
 
                 if ($request->has('checkedimage')) {
                     $file_to_store = $request->checkedimage;
-                        $supermarket->update([
-                            'arab_name' => $request->arab_name,
-                            'eng_name' => $request->eng_name,
-                            'start_time' => $request->start_time,
-                            'end_time' => $request->end_time,
-                            'commission' => $request->commission ,
-                            'priority' => $request->priority ,
-                            'area_id' => $request->area_id,
-                            'city_id' => $request->city_id,
-                            'country_id' => $request->country_id,
-                            'image' => $file_to_store,
-                        ]);
                 } else {
                     if ($supermarket->image != null) {
-                        unlink('supermarket_images/' . $supermarket->image);
+                        unlink('images/' . $supermarket->image);
                     }
                     $file_to_store = null;
                 }
             }
 
-            /*if ($logoimage = $request->file('logo_image') ) {
+            if ($logoimage = $request->file('logo_image') ) {
 
                 $filename = $logoimage->getClientOriginalName();
                 $fileextension = $logoimage->getClientOriginalExtension();
                 $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                if ($file->move('supermarket_images', $logo)) {
+                if ($logoimage->move('images', $logo)) {
                     if ($supermarket->logo_image != null) {
 
-                        unlink('supermarket_images/' . $supermarket->logo_image);
+                        unlink('images/' . $supermarket->logo_image);
                     }
                 }
             } else {
 
-                if ($request->has('checkedimage')) {
-                    $supermarket->update([
-                        'arab_name' => $request->arab_name,
-                        'eng_name' => $request->eng_name,
-                        'commission' => $request->commission ,
-                        'priority' => $request->priority,
-                        'image' => $request->input('checkedlogoimage'),
-                        'logo_image' => $request->input('checkedlogoimage')
-                    ]);
-
-                    return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
+                if ($request->has('checkedlogo')) {
+                    $logo = $request->checkedlogo;
                 } else {
                     if ($supermarket->logo_image != null) {
-                        unlink('supermarket_images/' . $supermarket->logo_image);
+                        unlink('images/' . $supermarket->logo_image);
                     }
                     $logo = null;
                 }
-            }*/
+            }
 
             $supermarket->update([
                 'arab_name' => $request->arab_name,
@@ -260,7 +252,10 @@ class SupermarketController extends Controller
                 'city_id' => $request->city_id,
                 'country_id' => $request->country_id,
                 'image' => $file_to_store,
+                'logo_image' => $logo
             ]);
+
+            $supermarket->categories()->sync($request->categories);
 
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
         }
@@ -284,7 +279,11 @@ class SupermarketController extends Controller
         if($supermarket)
         {
             if($supermarket->image != null) {
-                unlink('supermarket_images/' . $supermarket->image);
+                unlink('images/' . $supermarket->image);
+            }
+
+            if($supermarket->logo_image != null) {
+                unlink('images/' . $supermarket->logo_image);
             }
 
             $supermarket->delete();

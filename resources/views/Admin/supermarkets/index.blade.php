@@ -53,6 +53,7 @@
                                         <th>{{__('admin.priority')}}</th>
                                         <th>{{__('admin.status')}}</th>
                                         <th>{{__('admin.products')}}</th>
+                                        <th>{{__('admin.product_offers')}}</th>
                                         <th>{{__('admin.offers')}}</th>
                                         <th>{{__('admin.branches')}}</th>
                                         <th>{{__('admin.controls')}}</th>
