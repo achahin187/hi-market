@@ -136,6 +136,16 @@ class CategoriesController extends Controller
                     $price = $product->price;
 
                     $product->ratings = '170';
+
+                    if($lang == 'ar')
+                    {
+                        $product->category = $product->category->name_ar;
+                    }
+                    else
+                    {
+                        $product->category = $product->category->name_en;
+                    }
+
                     $product->percentage = ($offer_price/$price) * 100;
                     $product->imagepath = asset('images/' . $product->images);
 
@@ -216,7 +226,25 @@ class CategoriesController extends Controller
                         }
                     }
 
+                    if($product->flag == 1) {
+
+                        $offer_price = $product->offer_price;
+                        $price = $product->price;
+
+                        $product->percentage = ($offer_price / $price) * 100;
+                    }
+
                     $product->ratings = '170';
+
+                    if($lang == 'ar')
+                    {
+                        $product->category = $product->category->name_ar;
+                    }
+                    else
+                    {
+                        $product->category = $product->category->name_en;
+                    }
+
                     $product->imagepath = asset('images/' . $product->images);
                 }
 

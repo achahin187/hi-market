@@ -30,39 +30,24 @@ class PointController extends Controller
 
         $user = auth()->user();
 
-        if($request->type == 0) {
-
-            $rules = [
-                'from' => ['required', 'min:0', 'integer'],
-                'to' => ['required', 'min:0', 'integer', 'gt:from'],
-                'value' => ['required', 'min:0', 'numeric'],
-                'type' => ['required', 'min:0', 'integer'],
-                'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'after:today',
-                'end_date' => 'after:start_date|date'
-            ];
-
-        }
-        else
-        {
-            $rules = [
-                'from' => ['required', 'min:0', 'integer'],
-                'to' => ['required', 'min:0', 'integer', 'gt:from'],
-                'value' => ['required', 'min:0', 'numeric'],
-                'type' => ['required', 'min:0', 'integer'],
-                'status' => ['required', 'min:0', 'string'],
-                'start_date' => 'required|after:today',
-                'end_date' => 'required|after:start_date'
-            ];
-        }
+        $rules = [
+            'points' => ['required', 'min:1', 'integer'],
+            'type' => ['required', 'min:0', 'integer'],
+            'offer_type' => ['sometimes','string'],
+            'value' => ['required', 'min:0', 'numeric'],
+            'status' => ['required','string'],
+            'start_date' => 'sometimes|after:today',
+            'end_date' => 'sometimes|after:start_date|date'
+        ];
 
         $this->validate($request,$rules);
 
-        $points = Point::orderBy('id', 'desc')->paginate(10);
+        $points = Point::orderBy('id', 'desc')->get();
 
         foreach ($points as $oldpoint) {
 
             if ($request->input('from') < $oldpoint->to) {
+
                 return redirect('/admin/points')->withStatus('this range have been chosen already');
             }
         }
@@ -70,10 +55,10 @@ class PointController extends Controller
         if($request->type == 1) {
             $point = Point::create([
 
-                'from' => $request->input('from'),
-                'to' => $request->input('to'),
+                'points' => $request->input('points'),
                 'value' => $request->input('value'),
                 'type' => $request->input('type'),
+                'offer_type' => $request->input('offer_type'),
                 'status' => $request->input('status'),
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),

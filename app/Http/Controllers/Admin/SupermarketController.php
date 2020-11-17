@@ -48,6 +48,7 @@ class SupermarketController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
             'commission' => ['required','min:0','numeric'],
+            'categories' => ['required'],
             'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -91,7 +92,7 @@ class SupermarketController extends Controller
             $fileextension = $logoimage->getClientOriginalExtension();
             $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $logoimage->move('supermarket_images', $logo);
+            $logoimage->move('images', $logo);
 
         }
         else
@@ -99,7 +100,7 @@ class SupermarketController extends Controller
             $logo = null;
         }
 
-        Supermarket::create([
+        $supermarket = Supermarket::create([
 
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
@@ -114,6 +115,9 @@ class SupermarketController extends Controller
             'image' => $file_to_store,
             'logo_image' => $logo,
         ]);
+
+
+        $supermarket->categories()->sync($request->categories);
 
 
         return redirect('admin/supermarkets')->withStatus(__('supermarket created successfully'));
@@ -143,8 +147,12 @@ class SupermarketController extends Controller
 
         if($supermarket)
         {
-            dd($supermarket->categories);
-            return view('Admin.supermarkets.create', compact('supermarket'));
+            $category_ids = [];
+            foreach ($supermarket->categories as $category)
+            {
+                $category_ids[] = $category->id;
+            }
+            return view('Admin.supermarkets.create', compact('supermarket','category_ids'));
         }
         else
         {
@@ -168,6 +176,7 @@ class SupermarketController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'commission' => ['required','min:0','numeric'],
             'priority' => ['required','min:0','integer'],
+            'categories' => ['required'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'area_id' => 'required|integer|min:0',
@@ -245,6 +254,8 @@ class SupermarketController extends Controller
                 'image' => $file_to_store,
                 'logo_image' => $logo
             ]);
+
+            $supermarket->categories()->sync($request->categories);
 
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
         }

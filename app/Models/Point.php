@@ -12,9 +12,9 @@ class Point extends Model
 
     protected static $logName = 'points';
 
-    protected static $logAttributes = ['from','to','type','value','status','end_date','start_date'];
+    protected static $logAttributes = ['points','type','value','status','end_date','start_date'];
 
     protected $fillable = [
-        'from','to','type','value','status','end_date','start_date','created_by','updated_by'
+        'points','type','value','status','end_date','start_date','created_by','updated_by'
     ];
 }

@@ -562,6 +562,16 @@ $settings = App\Models\Setting::all()->first();
             $('.price').val(total_price);
         });
 
+        $('.quantityoffer').on('change', function () {
+
+            let product_price = $('.productoffer').find(':selected').data('price');
+            let quantity = $(this).val();
+
+            let total_price = product_price * quantity;
+
+            $('.priceoffer').val(total_price);
+        });
+
         $('#cancel').on('click', function(){
 
             let ordervalue = $(this).val();

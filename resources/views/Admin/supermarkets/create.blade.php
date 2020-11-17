@@ -94,12 +94,12 @@
 
                                     <div class="form-group">
                                         <label>{{__('admin.category')}}</label>
-                                        <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required multiple>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
 
                                             @if(isset($supermarket))
                                                 @foreach(\App\Models\Category::all() as $category)
 
-                                                    <option <?php if(in_array($category->id,$supermarket->categories)) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                                    <option <?php if(in_array($category->id,$category_ids)) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                                 @endforeach
                                             @else
