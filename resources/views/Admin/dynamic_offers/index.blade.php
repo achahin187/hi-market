@@ -65,9 +65,6 @@
                                         <th>{{__('admin.offer_type')}}</th>
                                         <th>{{__('admin.value_type')}}</th>
                                         <th>{{__('admin.status')}}</th>
-                                        <th>{{__('admin.supermarket')}}</th>
-                                        <th>{{__('admin.branch')}}</th>
-                                        <th>{{__('admin.promocode')}}</th>
                                         <th>{{__('admin.controls')}}</th>
                                     </tr>
                                     </thead>
@@ -104,18 +101,6 @@
 
 
                                             </td>
-                                            @if(App::getLocale() == 'ar')
-                                                <td>{{$offer->supermarket->arab_name}}</td>
-                                            @else
-                                                <td>{{$offer->supermarket->eng_name}}</td>
-                                            @endif
-
-                                            @if(App::getLocale() == 'ar')
-                                                <td>{{$offer->branch->name_ar}}</td>
-                                            @else
-                                                <td>{{$offer->branch->name_en}}</td>
-                                            @endif
-                                            <td>{{$offer->promocode}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

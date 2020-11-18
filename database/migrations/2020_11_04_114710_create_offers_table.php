@@ -19,9 +19,11 @@ class CreateOffersTable extends Migration
             $table->string('eng_name');
             $table->text('eng_description')->nullable();
             $table->text('arab_description')->nullable();
+            $table->string('value_type')->nullable();
+            $table->string('offer_type')->nullable();
+            $table->unsignedFloat('money')->nullable();
+            $table->unsignedBigInteger('points')->nullable();
             $table->string('promocode')->nullable();
-            $table->string('value_type');
-            $table->string('offer_type');
             $table->unsignedBigInteger('supermarket_id')->unsigned();
             $table->unsignedBigInteger('branch_id')->unsigned();
             $table->string('image')->nullable();

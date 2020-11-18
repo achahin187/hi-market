@@ -183,6 +183,30 @@
                                                 </div>
 
 
+
+                                                <div class="form-group">
+                                                    <label>Status</label>
+                                                    <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+
+
+                                                        <option value="0" <?php if($order->status == '0') echo 'selected'; ?>>new</option>
+                                                        <option value="1" <?php if($order->status == '1') echo 'selected'; ?>>approved</option>
+                                                        <option value="2" <?php if($order->status == '2') echo 'selected'; ?>>prepared</option>
+                                                        <option value="3" <?php if($order->status == '3') echo 'selected'; ?>>shipping</option>
+                                                        <option value="4" <?php if($order->status == '4') echo 'selected'; ?>>shipped</option>
+                                                        <option value="7" <?php if($order->status == '7') echo 'selected'; ?>>received</option>
+
+
+                                                    </select>
+
+                                                    @error('status')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+
+
                                                 <div class="form-group">
                                                     <label>{{__('order_address')}}</label>
                                                     <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">

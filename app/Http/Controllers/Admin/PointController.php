@@ -42,6 +42,25 @@ class PointController extends Controller
 
         $this->validate($request,$rules);
 
+        if($request->type == 2)
+        {
+            $offer_type = $request->offer_type;
+        }
+        else
+        {
+            $offer_type = 'not an offer';
+        }
+
+        if($request->has('start_date'))
+        {
+            $start = $request->start_date;
+        }
+        else
+        {
+            $start = now();
+        }
+
+
 /*        $points = Point::orderBy('id', 'desc')->get();
 
         foreach ($points as $oldpoint) {
@@ -57,12 +76,13 @@ class PointController extends Controller
                 'points' => $request->input('points'),
                 'value' => $request->input('value'),
                 'type' => $request->input('type'),
-                'offer_type' => $request->input('offer_type'),
+                'offer_type' => $offer_type,
                 'status' => $request->input('status'),
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),
                 'created_by' => $user->id
             ]);
+
 
         if($point)
         {
@@ -108,7 +128,6 @@ class PointController extends Controller
                 'type' => ['required', 'min:0', 'integer'],
                 'offer_type' => ['sometimes','string'],
                 'value' => ['required', 'min:0', 'numeric'],
-                'status' => ['required','string'],
                 'start_date' => 'sometimes|after:today',
                 'end_date' => 'sometimes|after:start_date|date'
             ];
@@ -117,6 +136,16 @@ class PointController extends Controller
         $this->validate($request, $rules);
 
         $point = Point::find($id);
+
+        if($request->type == 2)
+        {
+            $offer_type = $request->offer_type;
+        }
+        else
+        {
+            $offer_type = 'not an offer';
+        }
+
 
 //        $points = Point::orderBy('id', 'desc')->get();
 
@@ -146,8 +175,7 @@ class PointController extends Controller
                     'points' => $request->input('points'),
                     'value' => $request->input('value'),
                     'type' => $request->input('type'),
-                    'offer_type' => $request->input('offer_type'),
-                    'status' => $request->input('status'),
+                    'offer_type' => $offer_type,
                     'start_date' => $request->input('start_date'),
                     'end_date' => $request->input('end_date'),
                     'updated_by' => $user->id
