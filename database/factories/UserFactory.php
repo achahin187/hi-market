@@ -302,8 +302,8 @@ $factory->define(Point::class, function (Faker $faker) {
 
     $startingDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
     return [
-        'from' => $faker->randomElement([100,200,300]),
-        'to' => $faker->randomElement([400,500,600]),
+        'points' => $faker->randomElement([25,50,100,200,300]),
+        'offer_type' => $faker->randomElement(['value','percentage']),
         'type' => $faker->randomElement([0,1]),
         'value' => $faker->randomElement([30,40,50]),
         'status' => $faker->randomElement(['inactive','active']),

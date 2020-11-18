@@ -114,9 +114,9 @@ class CategoriesController extends Controller
 
             if ($lang == 'ar') {
 
-                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->where('flag',1)->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price as old_price','offer_price as price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->where('flag',1)->get();
             } else {
-                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->where('flag',1)->get();
+                $products = $supermarket->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price as old_price','offer_price as price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->where('flag',1)->get();
             }
                 foreach ($products as $product) {
 
@@ -207,9 +207,9 @@ class CategoriesController extends Controller
 
                 if ($lang == 'ar') {
 
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->get();
+                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price as old_price','offer_price as price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->get();
                 } else {
-                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->get();
+                    $products = $category->products()->select('id', 'name_' . $lang . ' as name', 'eng_description as description', 'price as old_price','offer_price as price','images','rate','flag','ratings','category_id','supermarket_id')->where('status','active')->get();
                 }
 
                 foreach ($products as $product) {
