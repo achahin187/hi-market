@@ -133,6 +133,8 @@ class CategoriesController extends Controller
 
                     $offer_price = $product->offer_price;
 
+                    $product->offer = $product->offer_price;
+
                     $price = $product->price;
 
                     $product->percentage = ($offer_price / $price) * 100;
