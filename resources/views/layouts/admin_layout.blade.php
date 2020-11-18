@@ -589,6 +589,63 @@ $settings = App\Models\Setting::all()->first();
 
         });
 
+        $('.type').on('change', function(){
+
+            let type = $(this).val();
+
+
+            if(type == 2)
+            {
+                $('.offer_type').css('display','block');
+                $(".offer_type").prop("disabled", false);
+            }
+            else
+            {
+                $('.offer_type').css('display','none');
+                $(".offer_type").prop("disabled", true);
+            }
+
+        });
+
+        $('.offer').on('change', function(){
+
+            let type = $(this).val();
+
+
+            if(type == 'points')
+            {
+                $('.money').css('display','block');
+                $(".money").prop("disabled", false);
+                $('.points').css('display','block');
+                $(".points").prop("disabled", false);
+                $('.value_type').css('display','block');
+                $('.value_type').prop("disabled",true);
+                $('.promocode').css('display','none');
+                $(".promocode").prop("disabled", true);
+            }
+            else if(type == 'promocode')
+            {
+                $('.promocode').css('display','block');
+                $(".promocode").prop("disabled", false);
+                $('.money').css('display','none');
+                $(".money").prop("disabled", true);
+                $('.points').css('display','none');
+                $(".points").prop("disabled", true);
+            }
+            else
+            {
+                $('.value_type').css('display','block');
+                $(".value_type").prop("disabled", false);
+                $('.money').css('display','none');
+                $(".money").prop("disabled", true);
+                $('.points').css('display','none');
+                $(".points").prop("disabled", true);
+                $('.promocode').css('display','none');
+                $(".promocode").prop("disabled", true);
+            }
+
+        });
+
         $(".datefilter").on('change',function(){
 
             $("#datefilter").submit();

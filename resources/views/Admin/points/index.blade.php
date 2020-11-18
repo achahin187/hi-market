@@ -82,6 +82,23 @@
 
 
                                             </td>
+                                            <td>
+
+                                                @if($point->offer_type == 'value')
+
+                                                    value
+                                                @elseif($point->offer_type == 'percentage')
+
+                                                    percentage
+
+                                                @else
+
+                                                    not an offer
+
+                                                @endif
+
+
+                                            </td>
                                             <td>{{$point->value}}</td>
                                             <td>
 

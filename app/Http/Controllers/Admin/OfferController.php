@@ -53,6 +53,8 @@ class OfferController extends Controller
     public function store(Request $request,$supermarket_id = null,$branch_id = null)
     {
 
+        dd($request);
+
         $user = auth()->user();
 
 
@@ -66,6 +68,9 @@ class OfferController extends Controller
             'branch_id' => 'required|integer|min:0',
             'status' => ['required','string'],
             'offer_type' => ['required','string'],
+            'money' => ['sometimes','required','numeric','min:0'],
+            'points' => ['sometimes','required','integer','min:0'],
+            'promocode' => [],
             'value_type' => ['required','string'],
             'start_date' => 'required|after:today',
             'end_date' => 'required|after:start_date',

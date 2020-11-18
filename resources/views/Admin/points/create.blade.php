@@ -59,7 +59,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.points')}}</label>
-                                    <input type="number" name="points" min="0" @if(isset($point)) value="{{$point->to}}" @else value="0" @endif class=" @error('to') is-invalid @enderror form-control" >
+                                    <input type="number" name="points" min="0" @if(isset($point)) value="{{$point->points}}" @else value="1" @endif class=" @error('to') is-invalid @enderror form-control" >
                                     @error('to')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -68,25 +68,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.points_value')}}</label>
-                                    <input type="number" name="value" min="0" step="0.01" @if(isset($point)) value="{{$point->value}}" @else value="0" @endif class=" @error('value') is-invalid @enderror form-control" >
-                                    @error('value')
-                                    <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                                    @enderror
-                                </div>
-
-
-                                <div class="form-group">
                                     <label>type </label>
-                                    <select class="@error('type') is-invalid @enderror select2" name="type" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select class="@error('type') is-invalid @enderror select2 type" name="type" data-placeholder="Select a State" style="width: 100%;" required>
 
 
                                         @if(isset($point))
 
                                             <option <?php if($point->type == 0) echo 'selected'; ?> value="0">discount</option>
-                                            <option <?php if($point->type == 1) echo 'selected'; ?> value="1">gift</option>
+                                            <option <?php if($point->type == 1) echo 'selected'; ?> value="1">value</option>
                                             <option <?php if($point->type == 2) echo 'selected'; ?> value="2">offer</option>
 
                                         @else
@@ -105,6 +94,45 @@
                                     </span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group offer_type" style="display: none">
+                                    <label>offer type </label>
+                                    <select class="@error('offer_type') is-invalid @enderror select2" name="offer_type" data-placeholder="Select a State" style="width: 100%;display: none" required>
+
+
+                                        @if(isset($point))
+
+                                            <option <?php if($point->offer_type == 'percentage') echo 'selected'; ?> value="percentage">percentage</option>
+                                            <option <?php if($point->offer_type == 'value') echo 'selected'; ?> value="value">value</option>
+
+                                        @else
+
+                                            <option value="percentage">percentage</option>
+                                            <option value="value">value</option>
+
+                                        @endif
+
+                                    </select>
+
+                                    @error('offer_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">{{__('admin.points_value')}}</label>
+                                    <input type="number" name="value" min="0" step="0.01" @if(isset($point)) value="{{$point->value}}" @else value="0" @endif class=" @error('value') is-invalid @enderror form-control" required>
+                                    @error('value')
+                                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                                    @enderror
+                                </div>
+
+
+
 
                                 @if(!isset($point))
 
@@ -141,7 +169,7 @@
 
                                 <div class="form-group">
                                     <label>end_date</label>
-                                    <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($point)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($point->end_date)) }}" @endif data-placeholder="Select a point end_date" style="width: 100%;" >
+                                    <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" @if(isset($point)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($point->end_date)) }}" @endif data-placeholder="Select a point end_date" style="width: 100%;" required>
 
                                     @error('end_date')
                                     <span class="invalid-feedback" role="alert">
