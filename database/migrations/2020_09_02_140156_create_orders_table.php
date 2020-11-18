@@ -25,7 +25,6 @@ class CreateOrdersTable extends Migration
             $table->unsignedFloat('order_price')->nullable();
             $table->unsignedInteger('status');
             $table->bigInteger('client_id')->unsigned();
-            $table->unsignedInteger('driver_id')->nullable();
             $table->unsignedInteger('request');
             $table->dateTime('approved_at')->nullable();
             $table->dateTime('prepared_at')->nullable();
@@ -37,6 +36,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('admin_cancellation')->default(0);
             $table->bigInteger('reason_id')->unsigned()->nullable();
             $table->text('notes')->nullable();
+            $table->unsignedInteger('user_id')->nullalbe();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

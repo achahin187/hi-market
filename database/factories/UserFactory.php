@@ -284,7 +284,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'rate' => $faker->randomElement([4.5,5.5,4,5,3.5]),
         'mobile_delivery' => $faker->phoneNumber,
         'client_review' => $faker->text,
-        'driver_id' => User::all()->random()->id,
+        
         'approved_at' => $faker->dateTime,
         'prepared_at' => $faker->dateTime,
         'shipping_at' => $faker->dateTime,
