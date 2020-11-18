@@ -292,7 +292,13 @@ $settings = App\Models\Setting::all()->first();
                     </li>
                 </ul>
             </li>
-
+            {{-- delivery --}}
+             <li class="nav-item">
+                  <a href="{{route('delivery.index')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>delivery</p>
+                  </a>
+              </li>
             <li class="nav-item">
                 <a href="{{route('categories.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>

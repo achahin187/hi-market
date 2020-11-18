@@ -213,6 +213,14 @@ $settings = App\Models\Setting::all()->first();
                             </li>
                         </ul>
                     </li>
+                    {{-- delivery admin --}}
+                     <li class="nav-item">
+                        <a href="{{route('delivery.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>delivery</p>
+                        </a>
+                    </li>
+
 
                     <li class="nav-item has-treeview">
                         <a href="" class="nav-link">
