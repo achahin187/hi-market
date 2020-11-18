@@ -76,7 +76,7 @@
                                                     value
                                                 @else
 
-                                                    gift
+                                                    offer
 
                                                 @endif
 

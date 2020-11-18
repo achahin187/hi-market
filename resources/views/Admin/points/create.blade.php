@@ -56,23 +56,14 @@
 
                             <div class="card-body">
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.points_from')}}</label>
-                                    <input type="number" name="from" min="0" @if(isset($point)) value="{{$point->from}}" @else value="0" @endif class=" @error('from') is-invalid @enderror form-control" >
-                                    @error('from')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">{{__('admin.points_to')}}</label>
-                                    <input type="number" name="to" min="0" @if(isset($point)) value="{{$point->to}}" @else value="0" @endif class=" @error('to') is-invalid @enderror form-control" >
+                                    <label for="exampleInputPassword1">{{__('admin.points')}}</label>
+                                    <input type="number" name="points" min="0" @if(isset($point)) value="{{$point->to}}" @else value="0" @endif class=" @error('to') is-invalid @enderror form-control" >
                                     @error('to')
                                     <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
 
@@ -96,11 +87,13 @@
 
                                             <option <?php if($point->type == 0) echo 'selected'; ?> value="0">discount</option>
                                             <option <?php if($point->type == 1) echo 'selected'; ?> value="1">gift</option>
+                                            <option <?php if($point->type == 2) echo 'selected'; ?> value="2">offer</option>
 
                                         @else
 
                                             <option value="0">discount</option>
-                                            <option value="1">gift</option>\
+                                            <option value="1">value</option>
+                                            <option value="2">offer</option>
 
                                         @endif
 
