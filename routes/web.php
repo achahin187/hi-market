@@ -69,8 +69,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('cities', 'Admin\CityController');
         Route::resource('areas', 'Admin\AreaController');
         Route::resource('countries', 'Admin\CountryController');
-        #delivery 
-        Route::get('delivery', 'Admin\DeliveryController@index')->name('delivery.index');
+        Route::resource('delivery', 'Admin\DeliveryController');
+
 
         Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
         Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);
@@ -180,11 +180,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
 
-      
 
-         
 
-  
+
+
+
     });
 
 });

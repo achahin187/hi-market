@@ -111,7 +111,7 @@
                                             <th>order ID</th>
                                             <th>status</th>
                                             <th>cancel</th>
-                                            <th>reject</th>
+                                            <th>rollback</th>
                                             <th>controls</th>
                                         </tr>
                                         </thead>
@@ -146,6 +146,23 @@
 
                                                         <h5>rejected</h5>
 
+                                                    @elseif($order->status == '7' )
+
+                                                        <h5>approved-rollback</h5>
+
+                                                    @elseif($order->status == '8' )
+
+                                                        <h5>prepared-rollback</h5>
+
+                                                    @elseif($order->status == '9' )
+
+                                                        <h5>shipping-rollback</h5>
+
+                                                    @elseif($order->status == '10' )
+
+                                                        <h5>shipped-rollback</h5>
+
+
                                                     @else
 
                                                         <h5>received</h5>
@@ -161,23 +178,22 @@
 
                                                     @if($order->status < $setting->cancellation)
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-block btn-outline-danger">cancel</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-danger">cancel</button>
 
                                                     @else
-                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-block btn-outline-danger">cancel</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">cancel</button>
                                                     @endif
 
                                                 </td>
+
                                                 <td>
 
-                                                    @if($order->status == 6)
+                                                    @if($order->status >= 1)
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-reject-{{ $order->id }}" value="{{$order->id}}" disabled class="btn btn-block btn-outline-danger">reject</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-info">rollback</button>
 
                                                     @else
-
-                                                        <button type="button" data-toggle="modal" data-target="#my-reject-{{ $order->id }}" value="{{$order->id}}" class="btn btn-block btn-outline-danger">reject</button>
-
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btninfo">rollback</button>
                                                     @endif
 
                                                 </td>
@@ -253,7 +269,7 @@
                                             </div>
 
 
-                                            <div class="modal fade" id="my-reject-{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal fade" id="my-rollback-{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">

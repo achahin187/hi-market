@@ -14,24 +14,12 @@
                         <h1>DataTables</h1>
                     </div>
 
-                    @if(auth()->user()->can('admin-create'))
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                               
-                             
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
 
-                                    @csrf
-
-                                    <input type="file" name="file" accept=".csv"/>
-
-                                    <button type="submit" class="btn btn-primary">import</button>
-
-                                </form>
-                            </ol>
-                        </div>
-
-                        -->
-                    @endif
+                            <li class="breadcrumb-item"><a href="{{route('points.create')}}">add new driver</a></li>
+                        </ol>
+                    </div>
 
                     <div class="col-12">
 
@@ -65,9 +53,7 @@
                                         <th>name</th>
                                         <th>email</th>
                                         <th>Role</th>
-                           
                                         <th>status</th>
-                                    
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -94,7 +80,7 @@
                                             </td>
 
 
-                                               
+
 
 
                                             @if($admin->orders->count() == 0)
@@ -106,7 +92,26 @@
                                                 <td>not available</td>
 
                                             @endif
-                                            
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                        <form action="{{ route('delivery.destroy', $driver->id) }}" method="post">
+                                                            @csrf
+                                                            @method('delete')
+
+                                                            <a class="dropdown-item" href="{{ route('delivery.edit', $driver->id) }}">{{ __('edit') }}</a>
+
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this driver?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     @endforeach
 

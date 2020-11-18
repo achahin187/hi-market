@@ -147,6 +147,7 @@ class OrderController extends Controller
         $rules = [
             'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','min:0','integer'],
+            'driver' => ['required','min:0','integer'],
             'delivery_date' => 'required|after:today',
             'driver_id' => 'nullable|min:0|integer'
         ];
