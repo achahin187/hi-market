@@ -101,7 +101,7 @@ class ProductController extends Controller
 
                 $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price as old_price','offer_price as price','rate','points','exp_date','production_date')->first();
             } else {
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price','offer_price','rate','points','exp_date','production_date')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price as old_price','offer_price as price','rate','points','exp_date','production_date')->first();
             }
 
             $product_images = explode(',', $product->images);
