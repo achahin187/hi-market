@@ -218,7 +218,7 @@ $settings = App\Models\Setting::all()->first();
 
                     @endif
 
-                    @if(auth()->user()->hasRole(['admin','delivery_manager']))
+                    @if(auth()->user()->hasRole(['admin','delivery-manager']))
                          <li class="nav-item">
                             <a href="{{route('delivery.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -227,7 +227,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
-                    @if(auth()->user()->hasRole(['admin','delivery_manager']))
+                    @if(auth()->user()->hasRole(['admin']))
 
 
                         <li class="nav-item has-treeview">
@@ -300,7 +300,7 @@ $settings = App\Models\Setting::all()->first();
 
                     @endif
 
-                    @if(auth()->user()->role('delivery'))
+                    @if(auth()->user()->role(['admin','delivery']))
                         <li class="nav-item">
                             <a href="{{route('orders.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -411,6 +411,8 @@ $settings = App\Models\Setting::all()->first();
 
                     @endif
 
+                    @if(auth()->user()->hasRole('developer'))
+
 
                         <li class="nav-item">
                             <a href="{{route('permissions.index')}}" class="nav-link">
@@ -420,6 +422,8 @@ $settings = App\Models\Setting::all()->first();
                                 </p>
                             </a>
                         </li>
+
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

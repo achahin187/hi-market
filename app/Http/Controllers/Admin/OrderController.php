@@ -29,7 +29,15 @@ class OrderController extends Controller
         }
         else
         {
-            $orders = Order::whereIn('status',array(0,1,2,3,4,6,7,8))->orderBy('id', 'desc')->paginate(10);
+            if(auth()->user()->hasRole('delivery'))
+            {
+                $orders = auth()->user()->orders;
+            }
+            else
+            {
+                $orders = Order::whereIn('status',array(0,1,2,3,4,6,7,8))->orderBy('id', 'desc')->paginate(10);
+            }
+
             return view('Admin.orders.index', compact('orders', 'setting'));
         }
     }
