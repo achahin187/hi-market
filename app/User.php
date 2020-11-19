@@ -46,4 +46,9 @@ class User extends Authenticatable
     public function team() {
         return $this->belongsTo('App\Models\Team');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }

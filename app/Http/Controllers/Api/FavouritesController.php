@@ -33,6 +33,9 @@ class FavouritesController extends Controller
         $product_id = $request->product_id;
         $flag = $request->flag;
 
+        // flag = 1 add
+        //flag = 0 remove
+
         if($flag == 1) {
 
             if ($token) {
@@ -166,6 +169,6 @@ class FavouritesController extends Controller
         }
 
     }
-    
+
 
 }

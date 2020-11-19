@@ -184,6 +184,46 @@
 
 
                                                 <div class="form-group">
+                                                    <label>assign driver</label>
+                                                  <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;" required>
+
+                                                        @if($order->user != null)
+                                                            @foreach(\App\User::role(['delivery'])->where('manager',0)->get() as $driver)
+
+                                                                <option <?php if($order->user->id == $driver->id) echo 'selected'; ?> value="{{ $driver->id }}">
+
+                                                                        {{ $driver->name }}
+
+                                                                </option>
+
+                                                            @endforeach
+                                                        @else
+                                                            @foreach(\App\User::role('delivery')->where('manager',0)->get() as $driver)
+
+                                                                <option value="{{ $driver->id }}">
+
+
+                                                                        {{ $driver->name }}
+
+
+                                                                </option>
+
+                                                            @endforeach
+
+                                                        @endif
+
+
+                                                    </select>
+
+                                                    @error('driver')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+
+
+                                                <div class="form-group">
                                                     <label>{{__('order_address')}}</label>
                                                     <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
 

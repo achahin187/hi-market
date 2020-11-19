@@ -268,29 +268,61 @@
 
                                     @endif
 
-                                        <div class="form-group">
-                                            <label>{{__('admin.offer_type')}} </label>
-                                            <select class=" @error('offer_type') is-invalid @enderror select2" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required @if(isset($offer) && $offer->offer_type == 'promocode') disabled @endif>
-
-                                                @if(isset($offer))
-
-                                                    <option <?php if($offer->offer_type == "navigable") echo 'selected'; ?> value="navigable">{{__('admin.navigable')}}</option>
-                                                    <option <?php if($offer->offer_type == "promocode") echo 'selected'; ?> value="promocode">{{__('admin.promocode')}}</option>
-                                                    <option <?php if($offer->offer_type == "announcement") echo 'selected'; ?> value="annoncement">{{__('admin.announcement')}}</option>
-
-                                                @else
-
-                                                    <option value=navigable">{{__('admin.navigable')}}</option>
-                                                    <option value="promocode">{{__('admin.promocode')}}</option>
-                                                    <option value="announcement">{{__('admin.announcement')}}</option>
-                                                @endif
-                                            </select>
-                                        </div>
-
-
                                     <div class="form-group">
+                                        <label>{{__('admin.offer_type')}} </label>
+                                        <select class=" @error('offer_type') is-invalid @enderror select2 offer" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required @if(isset($offer) && $offer->offer_type == 'promocode') disabled @endif>
+
+                                            @if(isset($offer))
+
+                                                <option <?php if($offer->offer_type == "navigable") echo 'selected'; ?> value="navigable">{{__('admin.navigable')}}</option>
+                                                <option <?php if($offer->offer_type == "promocode") echo 'selected'; ?> value="promocode">{{__('admin.promocode')}}</option>
+                                                <option <?php if($offer->offer_type == "announcement") echo 'selected'; ?> value="annoncement">{{__('admin.announcement')}}</option>
+                                                <option <?php if($offer->offer_type == "points") echo 'selected'; ?> value="annoncement">{{__('admin.points')}}</option>
+
+                                            @else
+
+                                                <option value=navigable">{{__('admin.navigable')}}</option>
+                                                <option value="promocode">{{__('admin.promocode')}}</option>
+                                                <option value="announcement">{{__('admin.announcement')}}</option>
+                                                <option value="points">{{__('admin.points')}}</option>
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group money" style="display: none ">
+                                        <label for="exampleInputPassword1">{{__('admin.money')}}</label>
+                                        <input type="number" name="money" min="1" step="0.01" @if(isset($point)) value="{{$point->money}}" @else value="0" @endif class=" @error('money') is-invalid @enderror form-control" required>
+                                        @error('value')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group points" style="display: none">
+                                        <label for="exampleInputPassword1">{{__('admin.points')}}</label>
+                                        <input type="number" name="points" min="1" @if(isset($point)) value="{{$point->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control" required>
+                                        @error('value')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group promocode" style="display: none">
+                                        <label for="exampleInputPassword1">{{__('admin.promocode')}}</label>
+                                        <input type="text" name="promocode"  @if(isset($point)) value="{{$point->promocode}}" @else value="0" @endif class=" @error('promocode') is-invalid @enderror form-control" required>
+                                        @error('promocode')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group value_type" style="display: none">
                                         <label>{{__('admin.value_type')}}</label>
-                                        <select class=" @error('value_type') is-invalid @enderror select2" name="value_type" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('value_type') is-invalid @enderror select2" name="value_type" data-placeholder="Select a State" style="width: 100%;display: none" required>
 
                                             @if(isset($offer))
 

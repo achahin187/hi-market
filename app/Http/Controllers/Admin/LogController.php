@@ -38,6 +38,7 @@ class LogController extends Controller
         {
             $datefrom = date("Y-m-d", strtotime(explode('-',$request->daterange)[0]));
 
+
             $dateto = date("Y-m-d", strtotime(explode('-',$request->daterange)[1]));
 
             $logs = Systemlog::whereBetween('created_at',array($datefrom,$dateto))->get();

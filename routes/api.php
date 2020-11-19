@@ -40,6 +40,7 @@
         Route::post('favourites/remove','FavouritesController@removefavourites');
         Route::get('clientorders','OrderController@clientorders')->name('client_orders');
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
+        Route::get('cart','OrderController@addcart')->name('order_details');
 
 
         Route::post('getarea','LocationController@index')->name('listArea');
@@ -49,6 +50,7 @@
         Route::post('supermarketoffers','CategoriesController@supermarketoffers')->name('listcategoryproducts');
 
         Route::post('clientpoints','ClientController@clientpoints')->name('listcategoryproducts');
+        Route::post('clientaddresses','ClientController@clientaddresses')->name('listcategoryproducts');
     });
 
 
