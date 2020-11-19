@@ -52,7 +52,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($driver)){{route('driver.update',$driver->id) }} @else {{route('drivers.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action="@if(isset($driver)){{route('delivery.update',$driver->id) }} @else {{route('delivery.store') }} @endif" method="POST" enctype="multipart/form-data">
                                 @csrf
 
                                 @if(isset($driver))
@@ -106,7 +106,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
+                                                        <input class="custom-control-input" value="{{$role->name}}" checked type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
 
                                                         @if(App::getLocale() == 'ar')
 
@@ -126,7 +126,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
+                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" checked name="roles">
                                                         @if(App::getLocale() == 'ar')
 
                                                             <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
@@ -147,22 +147,23 @@
                                     <div class="form-group">
                                         <label>driver team </label>
                                         <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($delivery))
+                                            @if(isset($driver))
                                                 @foreach(\App\Models\Team::where('eng_name','delivery')->get() as $team)
 
                                                     @if(App::getLocale() == 'ar')
 
-                                                        <option <?php if($delivery->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
+                                                        <option <?php if($driver->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
 
                                                     @else
 
-                                                        <option <?php if($delivery->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
+                                                        <option <?php if($driver->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
 
                                                     @endif
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\Team::where('eng_name','delivery')->get() as $team)
+
 
                                                     @if(App::getLocale() == 'ar')
 

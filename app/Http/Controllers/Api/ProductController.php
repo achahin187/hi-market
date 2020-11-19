@@ -146,6 +146,7 @@ class ProductController extends Controller
             }
 
             $product_details->imagepaths = $imagepaths;
+            $product_details->image = $imagepaths[0];
             $product_details->ratings = $product->ratings;
             $product_details->reviews = $product->clientreviews()->select('client_id','name','review')->get();
             $product_details->specifications = $specifications;

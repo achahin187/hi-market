@@ -131,6 +131,35 @@ class ClientController extends Controller
         }
     }
 
+    public function clientaddresses(Request $request)
+    {
+        $udid = $request->header('udid');
+
+        $token = $request->header('token');
+
+        $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+
+            return $this->returnError(402,'language is missing');
+        }
+
+        $client = Client::where('remember_token',$token)->first();
+
+        if($client)
+        {
+            return $this->returnData(['client addresses'],[$client->addresses]);
+        }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError(305,'لم نجد هذا العميل');
+            }
+            return $this->returnError(305 ,'there is no client found');
+        }
+    }
+
     public function resetpassword(Request $request)
     {
 

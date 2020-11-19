@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Team;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\User;
+
 class DeliveryController extends Controller
 {
     /**
@@ -16,8 +20,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-
-        $delivery = User::role(['admin'])->orderBy('id', 'desc')->get();
+        $delivery = User::role(['delivery'])->orderBy('id', 'desc')->get();
 
         return view('admin.delivery.index',compact('delivery'));
     }
@@ -29,7 +32,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('eng_name','delivery')->first();
+        $roles = Role::where('eng_name','delivery')->get();
         return view('admin.delivery.create',compact('roles'));
     }
 
@@ -80,16 +83,6 @@ class DeliveryController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -97,13 +90,19 @@ class DeliveryController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        if ($user) {
+        $driver = User::find($id);
+        $roles = Role::all();
+        $userRole = $driver->roles->pluck('name','name')->all();
 
-            return view('User.delivery.create',compact('User') );
-        }else{
-            return redirect()->route('delivery.index')->withStatus('حذث خطاء ما');
+        if($driver)
+        {
+            return view('Admin.delivery.create', compact('driver','roles','userRole'));
+        }
+        else
+        {
+            return redirect('admin/delivery')->withStatus('no product have this id');
         }
     }
 

@@ -36,7 +36,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('admin_cancellation')->default(0);
             $table->bigInteger('reason_id')->unsigned()->nullable();
             $table->text('notes')->nullable();
-            $table->unsignedInteger('user_id')->nullalbe();
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

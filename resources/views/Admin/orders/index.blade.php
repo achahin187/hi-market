@@ -273,7 +273,7 @@
                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">reject Order</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Rollback Order</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -288,7 +288,7 @@
                                                                     <input type="hidden" value="{{$order->id}}" name="order_id">
 
                                                                     <div class="form-group">
-                                                                        <label>Cancellation Reason</label>
+                                                                        <label>Rollback Reason</label>
                                                                         <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                                             @foreach(\App\Models\Reason::where('status','active')->get() as $reason)

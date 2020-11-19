@@ -17,7 +17,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
 
-                            <li class="breadcrumb-item"><a href="{{route('points.create')}}">add new driver</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('delivery.create')}}">add new driver</a></li>
                         </ol>
                     </div>
 
@@ -54,16 +54,17 @@
                                         <th>email</th>
                                         <th>Role</th>
                                         <th>status</th>
+                                        <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($delivery as $admin)
+                                    @foreach($delivery as $driver)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
+                                            <td>{{$driver->name}}</td>
+                                            <td>{{$driver->email}}</td>
                                             <td>
 
-                                                @foreach($admin->roles as $role)
+                                                @foreach($driver->roles as $role)
 
                                                     @if(App::getLocale() == 'ar')
 
@@ -80,10 +81,7 @@
                                             </td>
 
 
-
-
-
-                                            @if($admin->orders->count() == 0)
+                                            @if($driver->orders->count() == 0)
 
                                                 <td>available</td>
 

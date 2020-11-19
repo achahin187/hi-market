@@ -485,7 +485,21 @@ class OrderController extends Controller
             }
             else
             {
-                $order->update(['status' => 6, 'rejected_at' => now(), 'admin_cancellation' => 1, 'notes' => $request->notes]);
+                if($order->status == 1) {
+                    $order->update(['status' => 7, 'notes' => $request->notes]);
+                }
+                elseif($order->status == 2)
+                {
+                    $order->update(['status' => 8, 'notes' => $request->notes]);
+                }
+                elseif($order->status == 3)
+                {
+                    $order->update(['status' => 9, 'notes' => $request->notes]);
+                }
+                elseif($order->status == 4)
+                {
+                    $order->update(['status' => 10, 'notes' => $request->notes]);
+                }
                 return redirect('/admin/orders')->withStatus(__('order status successfully rejected.'));
             }
         }
