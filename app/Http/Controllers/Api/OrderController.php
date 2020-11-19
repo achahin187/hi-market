@@ -184,20 +184,22 @@ class OrderController extends Controller
 
         $category_ids = $request->category_ids;
 
+        $imagepaths = [];
+
+        $fav_ids = [];
+
         $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
 
         if ($lang == 'ar') {
-            $similar_products = Product::whereIn('category_id',$categories)->select('id','images')->get();
+            $similar_products = Product::whereIn('category_id',$categories)->where('supermarket_id',$supermarket_id)->select('id','images')->get();
         } else {
-            $similar_products = Product::whereIn('category_id',$categories)->select('id','images')->get();
+            $similar_products = Product::whereIn('category_id',$categories)->where('supermarket_id',$supermarket_id)->select('id','images')->get();
         }
 
         foreach ($similar_products as $product) {
 
             $product_images = explode(',',$product->images);
-
-            $imagepaths = [];
 
             foreach ($product_images as $image) {
                 array_push($imagepaths, asset('images/' . $image));
@@ -207,7 +209,36 @@ class OrderController extends Controller
 
         }
 
+        foreach ($favproducts as $product)
+        {
+            array_push($fav_ids, $product->product_id);
+        }
 
+        if ($lang == 'ar') {
+            $wishlist = Product::whereIn('id',$fav_ids)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
+        } else {
+            $wishlist = Product::whereIn('id',$fav_ids)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
+        }
+
+        foreach ($wishlist as $product) {
+
+
+            $offer_price = $product->offer_price;
+            $price = $product->price;
+
+            $product->percentage = ($offer_price / $price) * 100;
+
+            $product->imagepath = asset('images/' . $product->images);
+
+            if($lang == 'ar')
+            {
+                $product->categoryname = $product->category->name_ar;
+            }
+            else
+            {
+                $product->categoryname = $product->category->name_en;
+            }
+        }
 
         if ($token) {
 
@@ -223,7 +254,7 @@ class OrderController extends Controller
             }
 
         } else {
-            return $this->returnData(['similar products'], [$similar_products]);
+            return $this->returnData(['similar products','wishlist'], [$similar_products,$wishlist]);
         }
     }
 
