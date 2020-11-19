@@ -17,7 +17,9 @@
 
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
+                            @if(Auth()->user()->hasRole(['admin','delivery-manager']))
                             <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+                            @endif
                         </ol>
                     </div>
 
