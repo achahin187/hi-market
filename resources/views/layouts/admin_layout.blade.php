@@ -148,6 +148,8 @@ $settings = App\Models\Setting::all()->first();
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
+                    @if(auth()->user()->hasRole('admin'))
+
                         <li class="nav-item has-treeview">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -187,91 +189,96 @@ $settings = App\Models\Setting::all()->first();
                             </ul>
                         </li>
 
-                    <li class="nav-item has-treeview">
-                        <a href="" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
-                            <p>
-                                Supermarkets
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Supermarkets
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
 
-                            <li class="nav-item">
-                                <a href="{{route('supermarkets.index')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        list Supermarkets
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('branches.index')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>branches</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    {{-- delivery admin --}}
-                     <li class="nav-item">
-                        <a href="{{route('delivery.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>delivery</p>
-                        </a>
-                    </li>
+                                <li class="nav-item">
+                                    <a href="{{route('supermarkets.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            list Supermarkets
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('branches.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>branches</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    @endif
+
+                    @if(auth()->user()->hasRole(['admin','delivery_manager']))
+                         <li class="nav-item">
+                            <a href="{{route('delivery.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>delivery</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->hasRole(['admin','delivery_manager']))
 
 
-                    <li class="nav-item has-treeview">
-                        <a href="" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
-                            <p>
-                               location
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                   location
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
 
-                            <li class="nav-item">
-                                <a href="{{route('countries.index',0)}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>country</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('cities.index')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>city</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('areas.index')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>area</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                                <li class="nav-item">
+                                    <a href="{{route('countries.index',0)}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>country</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('cities.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>city</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('areas.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>area</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('categories.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                categories
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('categories.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    categories
+                                </p>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('subcategories.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                subcategories
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('subcategories.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    subcategories
+                                </p>
+                            </a>
+                        </li>
 
-                    @if(auth()->user()->can('vendor-create') || auth()->user()->can('vendor-delete') || auth()->user()->can('vendor-edit') || auth()->user()->can('vendor-list'))
 
                         <li class="nav-item">
                             <a href="{{route('vendors.index')}}" class="nav-link">
@@ -282,20 +289,18 @@ $settings = App\Models\Setting::all()->first();
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{route('admins.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Admins
+                                </p>
+                            </a>
+                        </li>
+
                     @endif
 
-                        @if(auth()->user()->can('admin-create') || auth()->user()->can('admin-delete') || auth()->user()->can('admin-edit') || auth()->user()->can('admin-list'))
-
-                            <li class="nav-item">
-                                <a href="{{route('admins.index')}}" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Admins
-                                    </p>
-                                </a>
-                            </li>
-                        @endif
-
+                    @if(auth()->user()->role('delivery'))
                         <li class="nav-item">
                             <a href="{{route('orders.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -305,99 +310,106 @@ $settings = App\Models\Setting::all()->first();
                             </a>
                         </li>
 
-    {{--                    <li class="nav-item">
-                            <a href="{{route('requests.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Requests
-                                </p>
-                            </a>
-                        </li>--}}
-
-                        <li class="nav-item">
-                            <a href="{{route('logs.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    system logs
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{route('settings.edit',$settings->id)}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Settings
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{route('reasons.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Reasons
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{route('points.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Points
-                                </p>
-                            </a>
-                        </li>
+                    @endif
 
 
-                        <li class="nav-item">
-                            <a href="{{route('teams.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    teams
-                                </p>
-                            </a>
-                        </li>
+            {{--                    <li class="nav-item">
+                                    <a href="{{route('requests.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Requests
+                                        </p>
+                                    </a>
+                                </li>--}}
 
-                        <li class="nav-item">
-                            <a href="{{route('clients.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    clients
-                                </p>
-                            </a>
-                        </li>
+                    @
+
+                                <li class="nav-item">
+                                    <a href="{{route('logs.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            system logs
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('settings.edit',$settings->id)}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Settings
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('reasons.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Reasons
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('points.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Points
+                                        </p>
+                                    </a>
+                                </li>
 
 
-                    <li class="nav-item">
-                        <a href="{{route('offers.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                offers
-                            </p>
-                        </a>
-                    </li>
+                                <li class="nav-item">
+                                    <a href="{{route('teams.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            teams
+                                        </p>
+                                    </a>
+                                </li>
 
-{{--                    <li class="nav-item">
-                        <a href="{{route('notifications.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Notifications
-                            </p>
-                        </a>
-                    </li>--}}
+                                <li class="nav-item">
+                                    <a href="{{route('clients.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            clients
+                                        </p>
+                                    </a>
+                                </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{route('offers.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        offers
+                                    </p>
+                                </a>
+                            </li>
+
+            {{--                    <li class="nav-item">
+                                <a href="{{route('notifications.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Notifications
+                                    </p>
+                                </a>
+                            </li>--}}
 
 
 
-                        <li class="nav-item">
-                            <a href="{{route('roles.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Roles
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{route('roles.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Roles
+                                    </p>
+                                </a>
+                            </li>
+
+                    @endif
 
 
                         <li class="nav-item">
