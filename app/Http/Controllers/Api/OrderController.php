@@ -233,10 +233,12 @@ class OrderController extends Controller
             if($lang == 'ar')
             {
                 $product->categoryname = $product->category->name_ar;
+                $product->supermarketname = $product->supermarket->arab_name;
             }
             else
             {
                 $product->categoryname = $product->category->name_en;
+                $product->supermarketname = $product->supermarket->eng_name;
             }
         }
 
