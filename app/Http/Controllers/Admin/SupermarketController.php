@@ -758,9 +758,9 @@ class SupermarketController extends Controller
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function export()
+     public function export() 
     {
-        return Excel::download(new SupermarketExport , 'supermarkets.csv');
+        return Excel::download(new SuperMarketExport, 'users.xlsx');
     }
 
     /**
