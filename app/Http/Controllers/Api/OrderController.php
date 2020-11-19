@@ -7,6 +7,7 @@ use App\Http\Traits\generaltrait;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
@@ -214,6 +215,8 @@ class OrderController extends Controller
             array_push($fav_ids, $product->product_id);
         }
 
+        $setting = Setting::select('delivery')->first();
+
         if ($lang == 'ar') {
             $wishlist = Product::whereIn('id',$fav_ids)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
         } else {
@@ -256,7 +259,7 @@ class OrderController extends Controller
             }
 
         } else {
-            return $this->returnData(['similar products','wishlist'], [$similar_products,$wishlist]);
+            return $this->returnData(['similar products','wishlist','setting'], [$similar_products,$wishlist,$setting->delivery]);
         }
     }
 
