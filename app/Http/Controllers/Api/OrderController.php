@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Models\Client;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 
 class OrderController extends Controller
@@ -171,6 +173,8 @@ class OrderController extends Controller
 
         $category_ids = $request->category_ids;
 
+        $categories = explode(',',$category_ids);
+
         $supermarket_id = $request->supermarket_id;
 
 
@@ -178,78 +182,49 @@ class OrderController extends Controller
             return $this->returnError(402, 'language is missing');
         }
 
-        $device = Client_Devices::where('udid', $udid)->get();
+        $category_ids = $request->category_ids;
+
+        $favproducts = DB::table('client_product')->where('udid',$udid)->select('product_id')->get();
 
 
-        if (!$lang || $lang == '') {
-            return $this->returnError(402, Lang::get('message.missingLang'));
+        if ($lang == 'ar') {
+            $similar_products = Product::whereIn('category_id',$categories)->select('id','images')->get();
+        } else {
+            $similar_products = Product::whereIn('category_id',$categories)->select('id','images')->get();
         }
 
-        $order_details = json_decode($request->getContent());
+        foreach ($similar_products as $product) {
 
+            $product_images = explode(',',$product->images);
 
-        if($token) {
+            $imagepaths = [];
 
-            $client = \App\Model\Client::where('remember_token',$token)->first();
-
-
-            if($client) {
-
-                $order = \App\Model\Order::create([
-
-                    'num' => "sdsadf3244",
-                    'client_id' => $client->id,
-                    'restId' => $order_details->rest_id,
-                    'address' => $order_details->address,
-                    'lat' => $order_details->lat,
-                    'long' => $order_details->long,
-                    'delivery_date' => $order_details->date,
-                    'delivery_fees' => $order_details->delivery_fees,
-                    'coupon' => $order_details->coupon,
-                    'discount' => $order_details->discount,
-                    'status' => 0,
-                    'final_total' => $order_details->final_total
-                ]);
+            foreach ($product_images as $image) {
+                array_push($imagepaths, asset('images/' . $image));
             }
 
+            $product->imagepaths = $imagepaths;
+
         }
 
 
-        if($order)
-        {
 
+        if ($token) {
 
-            foreach($order_details->products as $product)
-            {
+            $client = Client::where('remember_token', $token)->first();
 
-                $order->products()->attach($product->id,['quantity' => $product->quantity, 'price' => $product->price]);
-
-                if($order_details->flag == 1) {
-
-                    foreach ($product->addons as $addon) {
-                        $order->productaddons()->attach($addon->id, ['quantity' => $addon->quantity, 'price' => $addon->price]);
-                    }
+            if ($client) {
+                return $this->returnData(['similar products'], [$similar_products]);
+            } else {
+                if ($lang == 'ar') {
+                    return $this->returnError(305, 'لم نجد هذا العميل');
                 }
-
+                return $this->returnError(305, 'there is no client found');
             }
 
-            if ($lang == 'ar') {
-                return $this->returnSuccessMessage('لقد تم إضافةالطلب', 500);
-            }
-            else
-            {
-                return $this->returnSuccessMessage('The order has been completed successfully' , 500);
-            }
-        }
-        else
-        {
-            if ($lang == 'ar') {
-                return $this->returnError(300, 'هناك خطأ ما');
-            }
-            else
-            {
-                return $this->returnError(300, 'something wrong happened');
-            }
+        } else {
+            return $this->returnData(['similar products'], [$similar_products]);
         }
     }
+
 }
