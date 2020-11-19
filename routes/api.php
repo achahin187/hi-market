@@ -40,7 +40,7 @@
         Route::post('favourites/remove','FavouritesController@removefavourites');
         Route::get('clientorders','OrderController@clientorders')->name('client_orders');
         Route::get('order/{order_id}','OrderController@getorder')->name('order_details');
-        Route::get('cart','OrderController@addcart')->name('order_details');
+        Route::post('cart','OrderController@addcart')->name('order_details');
 
 
         Route::post('getarea','LocationController@index')->name('listArea');

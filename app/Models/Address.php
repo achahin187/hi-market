@@ -10,6 +10,8 @@ class Address extends Model
     //
     use LogsActivity;
 
+    protected $table = 'addresses';
+
     protected static $logName = 'address';
 
     protected static $logAttributes = ['description','client_id'];
