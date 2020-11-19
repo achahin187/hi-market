@@ -48,6 +48,10 @@ class Supermarket extends Model
         return $this->belongsTo('App\Models\Country');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User','created_by','id');
+    }
+
     public function scopeSelection($query)
     {
         return $query->select('arab_name','eng_name','commission','start_time','end_time','state');

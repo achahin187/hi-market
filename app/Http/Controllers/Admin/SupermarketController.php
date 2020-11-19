@@ -8,7 +8,8 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
-
+use Excel;
+use App\Exports\SuperMarketExport;
 class SupermarketController extends Controller
 {
     /**
@@ -760,7 +761,7 @@ class SupermarketController extends Controller
      */
      public function export() 
     {
-        return Excel::download(new SuperMarketExport, 'users.xlsx');
+        return Excel::download(new SuperMarketExport, 'supermarket.xlsx');
     }
 
     /**
