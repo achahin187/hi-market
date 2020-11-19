@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\User;
+use DB;
 
 class DeliveryController extends Controller
 {
+
+
+
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:admin-list|admin-create|admin-edit|admin-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:admin-create', ['only' => ['create','store']]);
+        $this->middleware('permission:admin-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:admin-delete', ['only' => ['destroy']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -49,15 +61,15 @@ class DeliveryController extends Controller
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-            'password_confirmation' => ['required', 'min:8'],
+            'password' => ['required', 'min:8', 'confirmed', 'max:50'],
+           
         ];
 
         $this->validate($request,$rules);
 
 
         $team = Team::find($request->team_id);
-
+        
         $teamrole = $team->role()->pluck('id')->all();
 
         $admin = User::create([
@@ -66,7 +78,6 @@ class DeliveryController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'team_id' => $request->team_id,
-            'manager' => $request->manager,
             'created_by' => $user->id
         ]);
 
@@ -92,8 +103,9 @@ class DeliveryController extends Controller
      */
     public function edit($id)
     {
-        $driver = User::find($id);
-        $roles = Role::all();
+        $driver = User::find($id);   
+        $roles = Role::Wherein('name', ['delivery', 'driver'])->get();
+        
         $userRole = $driver->roles->pluck('name','name')->all();
 
         if($driver)
@@ -138,7 +150,6 @@ class DeliveryController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'team_id' => $request->team_id,
-                    'manager' => $request->manager,
                     'updated_by' => $user->id
                 ]);
 
@@ -180,7 +191,6 @@ class DeliveryController extends Controller
                     'email' => $request->email ,
                     'password' => $password,
                     'team_id' => $request->team_id,
-                    'manager' => $request->manager,
                     'updated_by' => $user->id
 
                 ]);
