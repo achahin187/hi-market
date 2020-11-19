@@ -195,17 +195,19 @@ class OrderController extends Controller
 
         foreach ($similar_products as $product) {
 
-            $imagepaths =
+            $product_images = explode(',',$product->images);
 
-            print_r($product);die();
+            $imagepaths = [];
 
-            foreach ($product->images as $image) {
+            foreach ($product_images as $image) {
                 array_push($imagepaths, asset('images/' . $image));
             }
 
             $product->imagepaths = $imagepaths;
 
         }
+
+
 
         if ($token) {
 
@@ -221,7 +223,7 @@ class OrderController extends Controller
             }
 
         } else {
-            return $this->returnData(['products'], [$similar_products]);
+            return $this->returnData(['similar products'], [$similar_products]);
         }
     }
 
