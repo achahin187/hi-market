@@ -33,7 +33,7 @@ class DeliveryController extends Controller
     {
         $delivery = User::role(['delivery','driver'])->orderBy('id', 'desc')->get();
 
-        return view('admin.delivery.index',compact('delivery'));
+        return view('Admin.delivery.index',compact('delivery'));
     }
 
     /**
@@ -43,7 +43,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $roles = Role::whereIn('eng_name',['delivery','driver'])->get();
+        $roles = Role::whereIn('eng_name',['driver'])->get();
         return view('admin.delivery.create',compact('roles'));
     }
 

@@ -268,7 +268,7 @@
 
 
                                     <!--third card-->
-                             @if(Auth()->user()->hasRole(['admin']))
+                             @if(Auth()->user()->hasRole(['admin', 'delivery-manager']))
 
                                         <div class="card card-primary">
 
