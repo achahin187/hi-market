@@ -53,8 +53,6 @@ class OfferController extends Controller
     public function store(Request $request,$supermarket_id = null,$branch_id = null)
     {
 
-        dd($request);
-
         $user = auth()->user();
 
 

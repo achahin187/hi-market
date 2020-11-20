@@ -101,7 +101,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.roles')}}</label>
 
-                                        @if(isset($delivery))
+                                        @if(isset($driver))
 
                                             @foreach($roles as $role)
                                                 <div class="form-group">

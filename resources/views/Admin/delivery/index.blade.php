@@ -87,9 +87,10 @@
 
                                             @else
 
-                                                <td>{{ __('admin.not_available') }}</td>
+                                                <td>{{count($driver->orders)}} orders</td>
 
                                             @endif
+
 
                                             <td>
                                                 <div class="dropdown">

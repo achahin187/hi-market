@@ -31,7 +31,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $delivery = User::role(['delivery','driver'])->orderBy('id', 'desc')->get();
+        $delivery = User::role(['driver'])->orderBy('id', 'desc')->get();
 
         return view('Admin.delivery.index',compact('delivery'));
     }
@@ -106,6 +106,7 @@ class DeliveryController extends Controller
         $roles = Role::Wherein('name', ['delivery', 'driver'])->get();
 
         $userRole = $driver->roles->pluck('name','name')->all();
+
 
         if($driver)
         {
