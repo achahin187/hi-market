@@ -44,7 +44,7 @@ class DeliveryController extends Controller
     public function create()
     {
         $roles = Role::whereIn('eng_name',['driver'])->get();
-        return view('admin.delivery.create',compact('roles'));
+        return view('Admin.delivery.create',compact('roles'));
     }
 
     /**
