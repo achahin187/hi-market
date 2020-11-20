@@ -36,17 +36,17 @@ class OrderController extends Controller
         }
         else
         {
-            if(auth()->user()->hasRole('delivery'))
+            if(auth()->user()->hasRole(['delivery','driver']))
             {
-                $orders = auth()->user()->orders->whereIn('status',array(2,3,4,6,7,8,9,10));
+                $orders = auth()->user()->orders->whereNotIn('status',array(0,1,5))->get();
             }
             elseif(auth()->user()->hasRole(['delivery','delivery-manager']))
             {
-                $orders = Order::whereIn('status',array(0,1,2,3,4,6,7,8))->orderBy('id', 'desc')->paginate(10);
+                $orders = Order::whereNotIn('status',array(0,1,5))->get();
             }
             else
             {
-                $orders = Order::whereIn('status',array(0,1,2,3,4,6,7,8))->orderBy('id', 'desc')->paginate(10);
+                $orders = Order::where('status','!=',5)->get();
             }
 
             return view('Admin.orders.index', compact('orders', 'setting'));
