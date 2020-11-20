@@ -5,7 +5,7 @@ return [
     'created_at'=>'تاريخ الانشاء',
     'updated_at'=>'تاريخ التعديل',
     'add'=>'إضافة',
-    'modify'=>'تعديل',
+    'edit'=>'تعديل',
     'delete'=>'حذف',
     'clone'=>'نسخ',
     'export'=>'تحميل ملف ',
@@ -111,8 +111,20 @@ return [
 
 
     //Users
-    'users'=> 'Users',
-    'add_user'=>'Add New User',
+    'users'=> 'المستخدمين',
+    'add_user'=>'hqhtm lsjo]l',
+
+    //Delivery
+    'delivery'=> 'التوصيل',
+    'add_driver'=> 'اضافة سائق',
+    'edit_driver'=> 'تعديل سائق',
+    'delete_driver'=> 'حذف سائق',
+    'Confirm New Password'=> 'التاكد من الرقم السرى',
+    'password'=> 'الرقم السرى',
+    'team' => 'فريق',
+    
+    'available'=> 'متاح',
+    'not_available'=> 'غير متاح',
 
     //roles
     'roles'=>'الأدوار',
@@ -122,6 +134,24 @@ return [
 
     //Error messages
     'name_Required'=>'يجب إدخال الإسم',
-    'image_Required'=>'يجب تنزيل صورة'
+    'image_Required'=>'يجب تنزيل صورة',
+
+
+    
+    //cloums
+    'name' => 'الاسم',
+    'email' => 'البريد الالكترونى',
+    'role' => 'وظيفة',
+    'status' => 'الحالة',
+    'controls' => 'التحكم',
+
+
+
+    //mesages
+    'created_successfully' => 'تم الاضافة بنجاح',
+    'update_successfully' => 'تم التعديل بنجاح',
+    'deleted_successfully' => 'تم  الحذف بنجاح',
+    'something_wrong' => 'حذث خطاء ما يرجى المحاولة مرة اخرى',
+    'not_id' => 'هذا الرقم غير موجود',
 
 ];

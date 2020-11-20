@@ -49,7 +49,7 @@ class AdminController extends Controller
     {
         //
 
-        $roles = Role::orderBy('id', 'desc')->paginate(10);
+        $roles = Role::whereNotIn('eng_name',['delivery','delivery-manager','driver'])->get();
         return view('Admin.admins.create',compact('roles'));
     }
 
@@ -140,7 +140,7 @@ class AdminController extends Controller
         //
 
         $admin = User::find($id);
-        $roles = Role::all();
+        $roles = Role::whereNotIn('eng_name',['delivery','delivery-manager','driver'])->get();
         $userRole = $admin->roles->pluck('name','name')->all();
 
         if($admin)
@@ -174,7 +174,7 @@ class AdminController extends Controller
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'roles' => 'required',
+                'roles[]' => 'required',
                 'team_id' => 'required|integer|min:0',
                 'manager' => 'required|integer|min:0'
             ];

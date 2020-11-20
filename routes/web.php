@@ -77,6 +77,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
+        //export supermarket    
+        Route::get('supermarket/export/', 'Admin\SupermarketController@export')->name('supermarket.export');
+
         Route::put('branches/status/{branch_id}', 'Admin\BranchController@status')->name('branch.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
         Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');

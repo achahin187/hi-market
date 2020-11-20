@@ -8,7 +8,8 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
-
+use Excel;
+use App\Exports\SuperMarketExport;
 class SupermarketController extends Controller
 {
     /**
@@ -758,9 +759,9 @@ class SupermarketController extends Controller
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function export()
+     public function export() 
     {
-        return Excel::download(new SupermarketExport , 'supermarkets.csv');
+        return Excel::download(new SuperMarketExport, 'supermarket.xlsx');
     }
 
     /**

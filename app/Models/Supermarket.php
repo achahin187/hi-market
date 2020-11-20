@@ -18,6 +18,8 @@ class Supermarket extends Model
         'arab_name','eng_name','status','commission','priority','image','logo_image','area_id','city_id','country_id','start_time','end_time','state','created_by','updated_by'
     ];
 
+
+
     public function products() {
         return $this->hasMany('App\Models\Product');
     }
@@ -46,4 +48,12 @@ class Supermarket extends Model
         return $this->belongsTo('App\Models\Country');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User','created_by','id');
+    }
+
+    public function scopeSelection($query)
+    {
+        return $query->select('arab_name','eng_name','commission','start_time','end_time','state');
+    }
 }

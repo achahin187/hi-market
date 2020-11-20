@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\User;
+use DB;
 
 class DeliveryController extends Controller
 {
+
+
+/*    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:admin-list|admin-create|admin-edit|admin-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:admin-create', ['only' => ['create','store']]);
+        $this->middleware('permission:admin-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:admin-delete', ['only' => ['destroy']]);
+    }*/
+
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +31,9 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $delivery = User::role(['delivery'])->orderBy('id', 'desc')->get();
+        $delivery = User::role(['delivery','driver'])->orderBy('id', 'desc')->get();
 
-        return view('admin.delivery.index',compact('delivery'));
+        return view('Admin.delivery.index',compact('delivery'));
     }
 
     /**
@@ -32,8 +43,8 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('eng_name','delivery')->get();
-        return view('admin.delivery.create',compact('roles'));
+        $roles = Role::whereIn('eng_name',['driver'])->get();
+        return view('Admin.delivery.create',compact('roles'));
     }
 
     /**
@@ -49,8 +60,8 @@ class DeliveryController extends Controller
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-            'password_confirmation' => ['required', 'min:8'],
+            'password' => ['required', 'min:8', 'confirmed', 'max:50'],
+
         ];
 
         $this->validate($request,$rules);
@@ -66,7 +77,6 @@ class DeliveryController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'team_id' => $request->team_id,
-            'manager' => $request->manager,
             'created_by' => $user->id
         ]);
 
@@ -74,11 +84,11 @@ class DeliveryController extends Controller
 
         if($admin)
         {
-            return redirect('admin/delivery')->withStatus('delivery successfully created');
+            return redirect('admin/delivery')->withStatus(trans('admin.successfully_created'));
         }
         else
         {
-            return redirect('admin/delivery')->withStatus('something went wrong, try again');
+            return redirect('admin/delivery')->withStatus(trans('admin.something went wrong, try again'));
         }
 
     }
@@ -93,7 +103,8 @@ class DeliveryController extends Controller
     public function edit($id)
     {
         $driver = User::find($id);
-        $roles = Role::all();
+        $roles = Role::Wherein('name', ['delivery', 'driver'])->get();
+
         $userRole = $driver->roles->pluck('name','name')->all();
 
         if($driver)
@@ -102,7 +113,7 @@ class DeliveryController extends Controller
         }
         else
         {
-            return redirect('admin/delivery')->withStatus('no product have this id');
+            return redirect('admin/delivery')->withStatus(trans('admin.not_id'));
         }
     }
 
@@ -138,7 +149,6 @@ class DeliveryController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'team_id' => $request->team_id,
-                    'manager' => $request->manager,
                     'updated_by' => $user->id
                 ]);
 
@@ -149,11 +159,11 @@ class DeliveryController extends Controller
                 $teamrole = $team->role()->pluck('id')->all();
 
                 $admin->assignRole($request->input('roles'),$teamrole[0]);
-                return redirect('/admin/delivery')->withStatus('delivery information successfully updated.');
+                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
             }
             else
             {
-                return redirect('admin/delivery')->withStatus('no delivery with this id');
+                return redirect('admin/delivery')->withStatus(trans('admin.not_id'));
             }
         }
         else {
@@ -180,7 +190,6 @@ class DeliveryController extends Controller
                     'email' => $request->email ,
                     'password' => $password,
                     'team_id' => $request->team_id,
-                    'manager' => $request->manager,
                     'updated_by' => $user->id
 
                 ]);
@@ -188,11 +197,11 @@ class DeliveryController extends Controller
                 DB::table('model_has_roles')->where('model_id',$id)->delete();
 
                 $admin->assignRole($request->input('roles'));
-                return redirect('/admin/delivery')->withStatus('delivery information successfully updated.');
+                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
             }
             else
             {
-                return redirect('admin/delivery')->withStatus('no delivery with this id');
+                return redirect('admin/delivery')->withStatus(trans('admin.no_id'));
             }
         }
     }
@@ -210,8 +219,8 @@ class DeliveryController extends Controller
         if($admin)
         {
             $admin->delete();
-            return redirect('/admin/delivery')->withStatus(__('delivery successfully deleted.'));
+            return redirect('/admin/delivery')->withStatus(trans('admin.deleted_successfully'));
         }
-        return redirect('/admin/delivery')->withStatus(__('this id is not in our database'));
+        return redirect('/admin/delivery')->withStatus(trans('admin.not_id'));
     }
 }

@@ -15,6 +15,11 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">{{__('admin.add_supermarket')}}</a></li>
+
+                             <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">{{__('admin.import')}}</a></li>
+
+                              <li class="breadcrumb-item"><a href="{{route('supermarket.export')}}">{{__('admin.export')}}</a></li>
+
                         </ol>
                     </div>
 

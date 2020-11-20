@@ -17,7 +17,9 @@
 
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
+                            @if(Auth()->user()->hasRole(['admin','delivery-manager']))
                             <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+                            @endif
                         </ol>
                     </div>
 
@@ -122,53 +124,17 @@
 
                                                 <td>
 
-                                                    @if($order->status == '0' )
+                                                    <?php $status = ['new' => 0,'approved' => 1,'prepared' => 2,'shipping' => 3,'shipped' => 4,'rejected' => 6,'approved-rollback' => 7,'prepared-rollback' => 8 , 'shipping-rollback' => 9 , 'shipped-rollback' => 10];?>
 
-                                                        <h5>new</h5>
+                                                    @foreach ($status as $index => $state)
 
-                                                    @elseif($order->status == '1' )
+                                                            @if($order->status == $state )
 
-                                                        <h5>approved</h5>
+                                                                <h5>{{$index}}</h5>
 
-                                                    @elseif($order->status == '2' )
+                                                            @endif
 
-                                                        <h5>prepared</h5>
-
-                                                    @elseif($order->status == '3' )
-
-                                                        <h5>shipping</h5>
-
-                                                    @elseif($order->status == '4' )
-
-                                                        <h5>shipped</h5>
-
-                                                    @elseif($order->status == '6' )
-
-                                                        <h5>rejected</h5>
-
-                                                    @elseif($order->status == '7' )
-
-                                                        <h5>approved-rollback</h5>
-
-                                                    @elseif($order->status == '8' )
-
-                                                        <h5>prepared-rollback</h5>
-
-                                                    @elseif($order->status == '9' )
-
-                                                        <h5>shipping-rollback</h5>
-
-                                                    @elseif($order->status == '10' )
-
-                                                        <h5>shipped-rollback</h5>
-
-
-                                                    @else
-
-                                                        <h5>received</h5>
-
-
-                                                    @endif
+                                                        @endforeach
 
 
                                                 </td>
@@ -188,9 +154,9 @@
 
                                                 <td>
 
-                                                    @if($order->status >= 1)
+                                                    @if(in_array($order->status,[1,2,3,4,5,6]) )
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-info">rollback</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-info">rollback</button>
 
                                                     @else
                                                         <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btninfo">rollback</button>
@@ -279,7 +245,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{ route('orders.cancel','reject') }}" method="POST">
+                                                            <form action="{{ route('orders.cancel','rollback') }}" method="POST">
 
                                                                 @csrf
 
