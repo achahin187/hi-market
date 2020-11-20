@@ -184,38 +184,38 @@
 
                                                 @endif
 
-                                                @if(Auth()->user()->hasRole(['admin','delivery-manager', 'delivery']))
-                                                <div class="form-group">
-                                                    <label>assign driver</label>
-                                                  <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;" required>
+                                                @if(Auth()->user()->hasRole(['admin','delivery-manager']) && $order->status >= 2)
+                                                    <div class="form-group">
+                                                        <label>assign driver</label>
+                                                      <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                        @if($order->user != null)
-                                                            @foreach(\App\User::role(['delivery'])->where('manager',0)->get() as $driver)
+                                                            @if($order->user != null)
+                                                                @foreach(\App\User::role(['delivery'])->where('manager',0)->get() as $driver)
 
-                                                                <option <?php if($order->user->id == $driver->id) echo 'selected'; ?> value="{{ $driver->id }}">
+                                                                    <option <?php if($order->user->id == $driver->id) echo 'selected'; ?> value="{{ $driver->id }}">
 
-                                                                        {{ $driver->name }}
+                                                                            {{ $driver->name }}
 
-                                                                </option>
+                                                                    </option>
 
-                                                            @endforeach
-                                                        @else
-                                                            @foreach(\App\User::role('delivery')->where('manager',0)->get() as $driver)
+                                                                @endforeach
+                                                            @else
+                                                                @foreach(\App\User::role('delivery')->where('manager',0)->get() as $driver)
 
-                                                                <option value="{{ $driver->id }}">
-
-
-                                                                        {{ $driver->name }}
+                                                                    <option value="{{ $driver->id }}">
 
 
-                                                                </option>
-
-                                                            @endforeach
-
-                                                        @endif
+                                                                            {{ $driver->name }}
 
 
-                                                    </select>
+                                                                    </option>
+
+                                                                @endforeach
+
+                                                            @endif
+
+
+                                                        </select>
 
                                                     @error('driver')
                                                     <span class="invalid-feedback" role="alert">
@@ -263,7 +263,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                 @endif   
+                                 @endif
 
 
 
@@ -644,7 +644,7 @@
                     </div>
                 </section>
 
-       
+
 
 
     @endsection

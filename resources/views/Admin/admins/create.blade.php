@@ -107,17 +107,11 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
+                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
 
-                                                        @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
-                                                        @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
-                                                        @endif
+                                                        <label class="form-check-label">
+                                                                {{$role->name}}
+                                                        </label>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -127,15 +121,12 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" value="{{$role->name}}" type="radio" id="customRadio{{$role->name}}" name="roles">
+                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox" id="customRadio{{$role->name}}" name="roles[]">
+
                                                         @if(App::getLocale() == 'ar')
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->arab_name}}</label>
-
+                                                            {{$role->arab_name}}
                                                         @else
-
-                                                            <label for="customRadio{{$role->name}}" class="custom-control-label">{{$role->eng_name}}</label>
-
+                                                            {{$role->eng_name}}
                                                         @endif
                                                     </div>
                                                 </div>
