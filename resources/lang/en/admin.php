@@ -4,14 +4,40 @@ return [
 
     'lang' => 'en',
 
+    'name' => 'name',
+    'email' => 'email',
+    'role' => 'role',
+    'status' => 'status',
+    'controls' => 'controls',
+
+
+     //Delivery
+    'delivery'=> 'delivery',
+    'add_driver'=> 'add driver',
+    'not_available'=> 'not available',
+    'available'=> 'available',
+    'edit_driver'=> 'edit_driver',
+    'delete_driver'=> 'delete_driver',
+    'Confirm New Password'=> 'Confirm New Password',
+    'password'=> 'password',
+    'team' => 'team',
+
+    //mesages
+    'created_successfully' => 'created successfully',
+    'update_successfully' => 'update successfully',
+    'deleted_successfully' => 'deleted successfully',
+    'something_wrong' => 'something wrong please try again',
+    'not_id' => 'this id is not right',
+
+    
 
     'welcome' => 'Welcome to our application',
     'created_at'=>'Created at',
     'updated_at'=>'Updated at',
     'add'=>'add',
-    'modify'=>'edit',
-    'delete'=>'delete',
     'show'=>'show',
+    'delete'=>'delete',
+    'edit'=>'edit',
     'export'=>'Export',
     'clone'=>'clone',
     'download' => 'Download Sample',
