@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->bigInteger('team_id')->unsigned()->nullable();
-            $table->unsignedInteger('manager')->default(0);
             $table->unsignedInteger('flag')->default(0);
             $table->rememberToken()->nullable();
             $table->timestamps();
@@ -28,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
 
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');  
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }

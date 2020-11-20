@@ -107,7 +107,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox" id="customRadio{{$role->name}}" name="roles" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
+                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
 
                                                         <label class="form-check-label">
                                                                 {{$role->name}}
@@ -121,7 +121,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox" id="customRadio{{$role->name}}" name="roles[]">
+                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]">
 
                                                         @if(App::getLocale() == 'ar')
                                                             {{$role->arab_name}}
@@ -172,24 +172,6 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>manager</label>
-                                        <select class=" @error('manager') is-invalid @enderror select2"  name="manager" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                            @if(isset($admin))
-
-                                                <option  <?php if($admin->manager == '1') echo 'selected'; ?> value="1">true</option>
-                                                <option <?php if($admin->manager == '0') echo 'selected'; ?> value="0">false</option>
-
-                                            @else
-
-                                                <option value="1">true</option>
-                                                <option value="0">false</option>
-
-                                            @endif
-
-                                        </select>
-                                    </div>
 
                                 </div>
                                 <!-- /.card-body -->

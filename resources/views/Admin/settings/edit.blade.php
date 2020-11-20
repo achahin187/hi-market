@@ -101,6 +101,9 @@
                                             <option <?php if($setting->cancellation == 0) echo 'selected'; ?> value="0">new</option>
                                             <option <?php if($setting->cancellation == 1) echo 'selected'; ?> value="1">approved</option>
                                             <option <?php if($setting->cancellation == 2) echo 'selected'; ?> value="2">prepared</option>
+                                            <option <?php if($setting->cancellation == 3) echo 'selected'; ?> value="3">shipping</option>
+                                            <option <?php if($setting->cancellation == 4) echo 'selected'; ?> value="4">shipped</option>
+                                            <option <?php if($setting->cancellation == 6) echo 'selected'; ?> value="6">received</option>
 
                                         </select>
                                     </div>
