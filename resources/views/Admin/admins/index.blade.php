@@ -69,7 +69,6 @@
                                         <th>email</th>
                                         <th>Role</th>
                                         <th>Team</th>
-                                        <th>manager</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
@@ -106,15 +105,6 @@
 
                                             @endif
 
-                                            @if($admin->manager == 1)
-
-                                                <td>manager</td>
-
-                                            @else
-
-                                                <td>employee</td>
-
-                                            @endif
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">

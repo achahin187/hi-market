@@ -270,7 +270,7 @@
 
                                     <div class="form-group">
                                         <label>{{__('admin.offer_type')}} </label>
-                                        <select class=" @error('offer_type') is-invalid @enderror select2 offer" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required @if(isset($offer) && $offer->offer_type == 'promocode') disabled @endif>
+                                        <select class=" @error('offer_type') is-invalid @enderror select2 offer" name="offer_type" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($offer))
 
@@ -291,7 +291,7 @@
 
                                     <div class="form-group money" style="display: none ">
                                         <label for="exampleInputPassword1">{{__('admin.money')}}</label>
-                                        <input type="number" name="money" min="1" step="0.01" @if(isset($point)) value="{{$point->money}}" @else value="0" @endif class=" @error('money') is-invalid @enderror form-control" required>
+                                        <input type="number" name="money" min="1" step="0.01" @if(isset($offer)) value="{{$offer->money}}" @endif class=" @error('money') is-invalid @enderror form-control">
                                         @error('value')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -301,7 +301,7 @@
 
                                     <div class="form-group points" style="display: none">
                                         <label for="exampleInputPassword1">{{__('admin.points')}}</label>
-                                        <input type="number" name="points" min="1" @if(isset($point)) value="{{$point->points}}" @else value="0" @endif class=" @error('points') is-invalid @enderror form-control" required>
+                                        <input type="number" name="points" min="1" @if(isset($offer)) value="{{$offer->points}}" @endif class=" @error('points') is-invalid @enderror form-control">
                                         @error('value')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -311,7 +311,7 @@
 
                                     <div class="form-group promocode" style="display: none">
                                         <label for="exampleInputPassword1">{{__('admin.promocode')}}</label>
-                                        <input type="text" name="promocode"  @if(isset($point)) value="{{$point->promocode}}" @else value="0" @endif class=" @error('promocode') is-invalid @enderror form-control" required>
+                                        <input type="text" name="promocode"  @if(isset($offer)) value="{{$offer->promocode}}" @endif class=" @error('promocode') is-invalid @enderror form-control">
                                         @error('promocode')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

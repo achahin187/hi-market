@@ -241,7 +241,7 @@ $settings = App\Models\Setting::all()->first();
                             <ul class="nav nav-treeview">
 
                                 <li class="nav-item">
-                                    <a href="{{route('countries.index',0)}}" class="nav-link">
+                                    <a href="{{route('countries.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>country</p>
                                     </a>

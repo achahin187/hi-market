@@ -87,7 +87,7 @@
 
                                             @else
 
-                                                <td>{{count($driver->orders)}} orders</td>
+                                                <td><a href="{{route('orders.index',['driver_id'=>$driver->id])}}">{{count($driver->orders)}} orders</a></td>
 
                                             @endif
 

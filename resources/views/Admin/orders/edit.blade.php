@@ -1,8 +1,6 @@
 @extends('layouts.admin_layout')
 
 @section('content')
-
-
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -46,7 +44,7 @@
 
 
                                 <!--first card-->
-                            @if(Auth()->user()->hasRole('admin'))
+                            @if(Auth()->user()->hasRole(['admin','delivery-manager']))
                                 <div class="card card-primary">
 
                                     <div class="card-header">
@@ -143,7 +141,7 @@
 
                             @endif
                                 <!--second card-->
-                                 @if(Auth()->user()->hasRole(['admin', 'delivery', 'driver' ,'delivery-manager']))
+                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']))
                                     <div class="card card-primary">
 
                                         <div class="card-header">
@@ -158,7 +156,7 @@
                                             <div class="card-body">
 
 
-                                                @if(Auth()->user()->hasRole(['admin','delivery-manager', 'delivery','driver']))
+                                                @if(Auth()->user()->can('order-status'))
 
                                                 <div class="form-group">
                                                     <label>Status</label>
@@ -170,7 +168,7 @@
                                                         <option value="2" <?php if($order->status == '2') echo 'selected'; ?>>prepared</option>
                                                         <option value="3" <?php if($order->status == '3') echo 'selected'; ?>>shipping</option>
                                                         <option value="4" <?php if($order->status == '4') echo 'selected'; ?>>shipped</option>
-                                                        <option value="7" <?php if($order->status == '7') echo 'selected'; ?>>received</option>
+                                                        <option value="7" <?php if($order->status == '6') echo 'selected'; ?>>received</option>
 
 
                                                     </select>
@@ -184,10 +182,10 @@
 
                                                 @endif
 
-                                                @if(Auth()->user()->hasRole(['admin','delivery-manager']) && $order->status >= 2)
+                                                @if(auth()->user()->can('order-driver') && $order->status >= 2)
                                                     <div class="form-group">
                                                         <label>assign driver</label>
-                                                      <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;" required>
+                                                      <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;">
 
                                                             @if($order->user != null)
                                                                 @foreach(\App\User::role(['delivery'])->where('manager',0)->get() as $driver)
@@ -225,7 +223,7 @@
                                                 </div>
                                                 @endif
 
-                                                 @if(Auth()->user()->hasRole(['admin','delivery-manager', 'delivery', 'driver']))
+                                                 @if(Auth()->user()->can('order-address'))
                                                 <div class="form-group">
                                                     <label>{{__('order_address')}}</label>
                                                     <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
@@ -241,7 +239,7 @@
                                                 @endif
 
 
-                                                @if(Auth()->user()->hasRole(['admin','delivery-manager', 'delivery', 'driver']))
+                                                @if(Auth()->user()->can('order-date'))
                                                 <div class="form-group">
                                                     <label>delivery_date</label>
                                                     <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
@@ -255,10 +253,10 @@
                                                 @endif
 
 
-                                                @if(Auth()->user()->hasRole(['admin', 'delivery-manager', 'delivery']))
-                                                <div class="card-footer">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                </div>
+                                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address']))
+                                                    <div class="card-footer">
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </form>
