@@ -11,13 +11,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ trans('admin.delivery') }}</h1>
                     </div>
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
 
-                            <li class="breadcrumb-item"><a href="{{route('delivery.create')}}">add new driver</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('delivery.create')}}">{{ trans('admin.add_driver') }}</a></li>
                         </ol>
                     </div>
 
@@ -43,18 +43,18 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">delivery</h3>
+                                <h3 class="card-title">{{ __('admin.delivery') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>email</th>
-                                        <th>Role</th>
-                                        <th>status</th>
-                                        <th>controls</th>
+                                        <th>{{ __('admin.name') }}</th>
+                                        <th>{{ __('admin.email') }}</th>
+                                        <th>{{ __('admin.role') }}</th>
+                                        <th>{{ __('admin.status') }}</th>
+                                        <th>{{ __('admin.controls') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -83,11 +83,11 @@
 
                                             @if($driver->orders->count() == 0)
 
-                                                <td>available</td>
+                                                <td>{{ __('admin.available') }}</td>
 
                                             @else
 
-                                                <td>not available</td>
+                                                <td>{{ __('admin.not_available') }}</td>
 
                                             @endif
 
@@ -101,9 +101,9 @@
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('delivery.edit', $driver->id) }}">{{ __('edit') }}</a>
+                                                            <a class="dropdown-item" href="{{ route('delivery.edit', $driver->id) }}">{{ __('admin.edit') }}</a>
 
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this driver?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this driver?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                         </form>
 
                                                     </div>

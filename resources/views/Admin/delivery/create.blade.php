@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.add_driver') }}</h1>
                         @include('includes.errors')
                         <div class="col-12">
 
@@ -25,8 +25,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}">admins</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}">{{ __('admin.delivery') }}</a></li>
+                            <li class="breadcrumb-item active">{{ isset($driver) ?  __('admin.edit_driver') : __('admin.add_driver') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -44,9 +44,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($driver))
-                                        edit driver
+                                       {{ __('admin.edit_driver') }}
                                     @else
-                                        create driver
+                                         {{ __('admin.add_driver') }}
                                     @endif
                                 </h3>
                             </div>
@@ -63,7 +63,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name')}}</label>
                                         <input type="text" value="@if(isset($driver)){{$driver->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
+                                        <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
                                         <input type="email" value="@if(isset($driver)){{$driver->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
+                                        <label for="exampleInputPassword1">{{ __('admin.password') }}</label>
                                         <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password" >
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -93,8 +93,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" >
+                                        <label class="form-control-label" for="input-password-confirmation">{{ __('admin.Confirm New Password') }}</label>
+                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.Confirm New Password') }}" >
                                     </div>
 
 
@@ -137,7 +137,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>driver team </label>
+                                        <label>{{ __('admin.team') }} </label>
                                         <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($driver))
                                                 @foreach(\App\Models\Team::where('eng_name','delivery')->get() as $team)
@@ -177,7 +177,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">{{ isset($driver) ? __('admin.edit') :__('admin.add') }}</button>
                                 </div>
                             </form>
                         </div>

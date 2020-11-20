@@ -84,11 +84,11 @@ class DeliveryController extends Controller
 
         if($admin)
         {
-            return redirect('admin/delivery')->withStatus('delivery successfully created');
+            return redirect('admin/delivery')->withStatus(trans('admin.successfully_created'));
         }
         else
         {
-            return redirect('admin/delivery')->withStatus('something went wrong, try again');
+            return redirect('admin/delivery')->withStatus(trans('admin.something went wrong, try again'));
         }
 
     }
@@ -113,7 +113,7 @@ class DeliveryController extends Controller
         }
         else
         {
-            return redirect('admin/delivery')->withStatus('no product have this id');
+            return redirect('admin/delivery')->withStatus(trans('admin.not_id'));
         }
     }
 
@@ -159,11 +159,11 @@ class DeliveryController extends Controller
                 $teamrole = $team->role()->pluck('id')->all();
 
                 $admin->assignRole($request->input('roles'),$teamrole[0]);
-                return redirect('/admin/delivery')->withStatus('delivery information successfully updated.');
+                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
             }
             else
             {
-                return redirect('admin/delivery')->withStatus('no delivery with this id');
+                return redirect('admin/delivery')->withStatus(trans('admin.not_id'));
             }
         }
         else {
@@ -197,11 +197,11 @@ class DeliveryController extends Controller
                 DB::table('model_has_roles')->where('model_id',$id)->delete();
 
                 $admin->assignRole($request->input('roles'));
-                return redirect('/admin/delivery')->withStatus('delivery information successfully updated.');
+                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
             }
             else
             {
-                return redirect('admin/delivery')->withStatus('no delivery with this id');
+                return redirect('admin/delivery')->withStatus(trans('admin.no_id'));
             }
         }
     }
@@ -219,8 +219,8 @@ class DeliveryController extends Controller
         if($admin)
         {
             $admin->delete();
-            return redirect('/admin/delivery')->withStatus(__('delivery successfully deleted.'));
+            return redirect('/admin/delivery')->withStatus(trans('admin.deleted_successfully'));
         }
-        return redirect('/admin/delivery')->withStatus(__('this id is not in our database'));
+        return redirect('/admin/delivery')->withStatus(trans('admin.not_id'));
     }
 }
