@@ -146,6 +146,22 @@ class OrderController extends Controller
 
     }
 
+     public function assignorder($order_id)
+    {
+         $order = Order::find($order_id);
+
+/*        $driver_team = Team::where('eng_name','drivers')->first();
+
+        $drivers = $driver_team->users;*/
+
+        if($order)
+        {
+            return view('Admin.orders.assign',compact('order'));
+        }
+        return redirect('/admin/orders')->withStatus(__('this id is not in our database'));
+
+    }
+
     public function updateorder(Request $request,$order_id)
     {
         //
