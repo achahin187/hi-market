@@ -166,6 +166,22 @@ class OrderController extends Controller
 
     }
 
+     public function assignorder($order_id)
+    {
+         $order = Order::find($order_id);
+
+/*        $driver_team = Team::where('eng_name','drivers')->first();
+
+        $drivers = $driver_team->users;*/
+
+        if($order)
+        {
+            return view('Admin.orders.assign',compact('order'));
+        }
+        return redirect('/admin/orders')->withStatus(__('this id is not in our database'));
+
+    }
+
     public function updateorder(Request $request,$order_id)
     {
         //
@@ -374,7 +390,6 @@ class OrderController extends Controller
         //
         $order = Order::find($order_id);
 
-
         $rules = [
             'product_id' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:1'
@@ -392,7 +407,6 @@ class OrderController extends Controller
             $product_id = $request->input('product_id');
 
             $product = Product::find($product_id);
-
 
             foreach ($order->products as $orderproduct)
             {

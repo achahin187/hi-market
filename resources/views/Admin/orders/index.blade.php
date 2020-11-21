@@ -111,6 +111,7 @@
                                         <thead>
                                         <tr>
                                             <th>order ID</th>
+                                            <th>assign to</th>
                                             <th>status</th>
                                             <th>cancel</th>
                                             <th>rollback</th>
@@ -125,6 +126,8 @@
                                             <tr>
                                                 <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
 
+                                                 <td>{{ $order->user->name ?? 'not assign'}}</td>
+
                                                 <td>
 
                                                     <?php $status = ['new' => 0,'approved' => 1,'prepared' => 2,'shipping' => 3,'shipped' => 4,'received' => 6,'approved-rollback' => 7,'prepared-rollback' => 8 , 'shipping-rollback' => 9 , 'shipped-rollback' => 10];?>
@@ -136,8 +139,9 @@
                                                                 <h5>{{$index}}</h5>
 
                                                             @endif
-
+                                                   
                                                         @endforeach
+                                                        
 
 
                                                 </td>
@@ -181,9 +185,18 @@
                                                                         <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
                                                                     @endif
 
+                                                                    <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
+
                                                                     @if(auth()->user()->hasRole(['admin','delivery-manager']))
                                                                         <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                                     @endif
+
+
+                                                               
+
+                                                                 
+
+                                                            </form>
                                                                 </form>
 
                                                             </div>

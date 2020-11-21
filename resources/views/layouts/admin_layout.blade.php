@@ -101,10 +101,11 @@ $settings = App\Models\Setting::all()->first();
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
+                    @can('edit-profile')
                     <a class="dropdown-item" href="{{ route('profile.edit') }}">
                         {{ __('Profile') }}
                     </a>
+                    @endcan
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
