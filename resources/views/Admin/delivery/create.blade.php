@@ -92,11 +92,11 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
+                                   {{--  <div class="form-group">
                                         <label class="form-control-label" for="input-password-confirmation">{{ __('admin.Confirm New Password') }}</label>
                                         <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.Confirm New Password') }}" >
                                     </div>
-
+ --}}
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.roles')}}</label>
