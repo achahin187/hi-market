@@ -152,7 +152,8 @@ class ClientController extends Controller
 
             foreach ($addresses as $address)
             {
-                $address->client = $client;
+                $address->name = $client->name;
+                $address->mobile_number = $client->mobile_number;
             }
             return $this->returnData(['client addresses'],[$addresses]);
         }
