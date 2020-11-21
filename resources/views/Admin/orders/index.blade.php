@@ -111,6 +111,7 @@
                                         <thead>
                                         <tr>
                                             <th>order ID</th>
+                                            <th>assign to</th>
                                             <th>status</th>
                                             <th>cancel</th>
                                             <th>rollback</th>
@@ -125,6 +126,8 @@
                                             <tr>
                                                 <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
 
+                                                 <td>{{ $order->user->name ?? 'not assign'}}</td>
+
                                                 <td>
 
                                                     <?php $status = ['new' => 0,'approved' => 1,'prepared' => 2,'shipping' => 3,'shipped' => 4,'received' => 6,'approved-rollback' => 7,'prepared-rollback' => 8 , 'shipping-rollback' => 9 , 'shipped-rollback' => 10];?>
@@ -137,9 +140,35 @@
 
                                                             @endif
 
+<<<<<<< HEAD
+                                                    @elseif($order->status == '7' )
+
+                                                        <h5>approved-rollback</h5>
+
+                                                    @elseif($order->status == '8' )
+
+                                                        <h5>prepared-rollback</h5>
+
+                                                    @elseif($order->status == '9' )
+
+                                                        <h5>shipping-rollback</h5>
+
+                                                    @elseif($order->status == '10' )
+
+                                                        <h5>shipped-rollback</h5>
+
+
+                                                    @else
+
+                                                        <h5>received</h5>
+
+
+                                                    @endif
+=======
                                                         @endforeach
 
 
+>>>>>>> 0579eae8085ec06ae707358fd7b2a9e4fa9cfa2a
                                                 </td>
 
 
@@ -177,9 +206,18 @@
                                                                     @csrf
                                                                     @method('delete')
 
+<<<<<<< HEAD
+                                                                <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+
+                                                                 <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
+
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                            </form>
+=======
                                                                     @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']))
                                                                         <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
                                                                     @endif
+>>>>>>> 0579eae8085ec06ae707358fd7b2a9e4fa9cfa2a
 
                                                                     @if(auth()->user()->hasRole(['admin','delivery-manager']))
                                                                         <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>

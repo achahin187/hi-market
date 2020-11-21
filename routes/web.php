@@ -148,6 +148,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');
+
+            Route::get('{order_id}/assign', 'Admin\OrderController@assignorder')->name('orders.assign');
+            
             Route::put('{order_id}', 'Admin\OrderController@updateorder')->name('orders.update');
             Route::put('order_client/{order_id}', 'Admin\OrderController@updateclient')->name('order_client.update');
             Route::post('products/add/{order_id}', 'Admin\OrderController@addproduct')->name('products.store');
