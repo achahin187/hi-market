@@ -148,8 +148,13 @@ class ClientController extends Controller
 
         if($client)
         {
-            $addresses = $client->addresses()->select('description')->get();
-            return $this->returnData(['client addresses','client'],[$addresses,$client]);
+            $addresses = $client->addresses()->select('id','description')->get();
+
+            foreach ($addresses as $address)
+            {
+                $address->client = $client;
+            }
+            return $this->returnData(['client addresses'],[$addresses]);
         }
         else
         {
