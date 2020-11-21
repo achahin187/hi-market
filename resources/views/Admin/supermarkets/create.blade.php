@@ -259,15 +259,11 @@
 
                                         <div class="form-group" style="margin-bottom: 10px">
                                             <label for="exampleInputFile">{{__('admin.image')}}</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
-                                            </div>
+                                       
+                                             <div class="form-group">
+                                                <label for="exampleFormControlFile1">Choose file</label>
+                                                <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
                                         </div>
 
 
@@ -298,13 +294,12 @@
                                         <div class="form-group" style="margin-top: 40px">
                                             <label for="exampleInputFile">supermarket logo</label>
                                             <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input name="logo_image" type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
+                                               
+                                                  <div class="form-group">
+                                                <label for="exampleFormControlFile1">Choose file</label>
+                                                <input type="file"  name="logo_image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
+
                                             </div>
                                         </div>
 
