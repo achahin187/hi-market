@@ -49,7 +49,7 @@ class AdminController extends Controller
     {
         //
 
-        $roles = Role::orderBy('id', 'desc')->paginate(10);
+        $roles = Role::whereNotIn('eng_name',['delivery','driver'])->get();
         return view('Admin.admins.create',compact('roles'));
     }
 
@@ -71,19 +71,10 @@ class AdminController extends Controller
             'password_confirmation' => ['required', 'min:8'],
             'roles' => 'required',
             'team_id' => 'required|integer|min:0',
-            'manager' => 'required|integer|min:0'
         ];
 
         $this->validate($request,$rules);
 
-
-        $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
-
-
-        if($teammanager != null && $request->manager == 1)
-        {
-            return redirect('admin/admins/create')->withStatus('you can not assign more than one manager to the same team');
-        }
 
         $team = Team::find($request->team_id);
 
@@ -95,7 +86,6 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'team_id' => $request->team_id,
-            'manager' => $request->manager,
             'created_by' => $user->id
 
 
@@ -140,7 +130,7 @@ class AdminController extends Controller
         //
 
         $admin = User::find($id);
-        $roles = Role::all();
+        $roles = Role::whereNotIn('eng_name',['delivery','driver'])->get();
         $userRole = $admin->roles->pluck('name','name')->all();
 
         if($admin)
@@ -176,19 +166,10 @@ class AdminController extends Controller
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                 'roles' => 'required',
                 'team_id' => 'required|integer|min:0',
-                'manager' => 'required|integer|min:0'
             ];
 
             $this->validate($request,$rules);
 
-            $teammanager = User::where(['team_id' => $request->team_id , 'manager' => 1])->first();
-
-            if($teammanager != null && $teammanager->id != $id) {
-
-                if ($teammanager != null && $request->manager == 1) {
-                    return redirect('admin/admins/' . $id . '/edit')->withStatus('you can not assign more than one manager to the same team');
-                }
-            }
 
             if($admin)
             {
@@ -197,7 +178,6 @@ class AdminController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'team_id' => $request->team_id,
-                    'manager' => $request->manager,
                     'updated_by' => $user->id
                 ]);
 
@@ -223,7 +203,6 @@ class AdminController extends Controller
                 'password_confirmation' => ['required', 'min:8'],
                 'roles' => 'required',
                 'team_id' => 'required|integer|min:0',
-                'manager' => 'required|integer|min:0'
             ];
 
             $this->validate($request,$rules);
@@ -241,7 +220,6 @@ class AdminController extends Controller
                         'email' => $request->email ,
                         'password' => $password,
                         'team_id' => $request->team_id,
-                        'manager' => $request->manager,
                         'updated_by' => $user->id
 
                     ]);

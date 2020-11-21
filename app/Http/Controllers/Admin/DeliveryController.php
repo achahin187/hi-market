@@ -16,7 +16,6 @@ class DeliveryController extends Controller
 {
 
 
-
 /*    public function __construct() {
         $this->middleware('auth');
         $this->middleware('permission:admin-list|admin-create|admin-edit|admin-delete', ['only' => ['index','show']]);
@@ -32,7 +31,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $delivery = User::role(['delivery'])->orderBy('id', 'desc')->get();
+        $delivery = User::role(['driver'])->orderBy('id', 'desc')->get();
 
         return view('Admin.delivery.index',compact('delivery'));
     }
@@ -44,7 +43,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('eng_name','delivery')->get();
+        $roles = Role::whereIn('eng_name',['driver'])->get();
         return view('Admin.delivery.create',compact('roles'));
     }
 
@@ -107,6 +106,7 @@ class DeliveryController extends Controller
         $roles = Role::Wherein('name', ['delivery', 'driver'])->get();
 
         $userRole = $driver->roles->pluck('name','name')->all();
+
 
         if($driver)
         {

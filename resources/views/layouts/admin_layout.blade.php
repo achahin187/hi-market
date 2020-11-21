@@ -222,7 +222,7 @@ $settings = App\Models\Setting::all()->first();
                     @if(auth()->user()->hasRole(['admin','delivery-manager']))
                          <li class="nav-item">
                             <a href="{{route('delivery.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>delivery</p>
                             </a>
                         </li>
@@ -242,7 +242,7 @@ $settings = App\Models\Setting::all()->first();
                             <ul class="nav nav-treeview">
 
                                 <li class="nav-item">
-                                    <a href="{{route('countries.index',0)}}" class="nav-link">
+                                    <a href="{{route('countries.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>country</p>
                                     </a>

@@ -24,18 +24,38 @@ class OrderController extends Controller
 
         if($cancel) {
 
-            $cancelledorders = Order::where('status',5)->orderBy('id', 'desc')->paginate(10);
-            return view('Admin.orders.index', compact('cancelledorders'));
-        }
-        else
-        {
             if(auth()->user()->hasRole('delivery'))
             {
-                $orders = auth()->user()->orders;
+                $cancelledorders = auth()->user()->orders()->where('status',5)->orderBy('id', 'desc')->paginate(10);
             }
             else
             {
-                $orders = Order::whereIn('status',array(0,1,2,3,4,6,7,8))->orderBy('id', 'desc')->paginate(10);
+                $cancelledorders = Order::where('status',5)->orderBy('id', 'desc')->paginate(10);
+            }
+            return view('Admin.orders.index', compact('cancelledorders'));
+        }
+        elseif(request()->driver_id)
+        {
+
+            $driver = User::find(request()->driver_id);
+
+            $orders = $driver->orders()->whereNotIn('status',array(0,1,5))->get();
+
+            return view('Admin.orders.index',compact('orders','setting','driver'));
+        }
+        else
+        {
+            if(auth()->user()->hasRole(['driver']))
+            {
+                $orders = auth()->user()->orders()->whereNotIn('status',array(0,1,5))->get();
+            }
+            elseif(auth()->user()->hasRole(['delivery-manager']))
+            {
+                $orders = Order::whereNotIn('status',array(0,1,5))->get();
+            }
+            else
+            {
+                $orders = Order::where('status','!=',5)->get();
             }
 
             return view('Admin.orders.index', compact('orders', 'setting'));
@@ -171,12 +191,12 @@ class OrderController extends Controller
         $rules = [
             'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','min:0','integer'],
-            'driver' => ['required','min:0','integer'],
+            'driver' => ['sometimes','required','min:0','integer'],
             'delivery_date' => 'required|after:today',
-            'driver_id' => 'nullable|min:0|integer'
         ];
 
         $this->validate($request,$rules);
+
 
 
         if($order)
@@ -201,20 +221,18 @@ class OrderController extends Controller
             {
                 $order->update(['status' => $request->status,'shipped_at' => now()]);
             }
-            elseif($request->status == 6)
-            {
-                $order->update(['status' => $request->status,'rejected_at' => now()]);
-            }
             else
             {
                 $order->update(['status' => $request->status,'received_at' => now()]);
             }
-            $order->update(['address' => $request->input('address') , 'status' => $request->status , 'delivery_date' => $request->delivery_date , 'driver_id' => $request->driver_id]);
-            return redirect()->route('',$order_id)->withStatus('Order information successfully updated.');
+
+
+            $order->update(['address' => $request->input('address') , 'status' => $request->status , 'delivery_date' => $request->delivery_date , 'user_id' =>  in_array($request->status,[0,1]) ? null : $request->driver]);
+            return redirect()->route('orders.edit',$order_id)->withStatus('Order information successfully updated.');
         }
         else
         {
-            return redirect()->route('order_details',$order_id)->withStatus('no id found');
+            return redirect()->route('orders.edit',$order_id)->withStatus('no id found');
         }
 
     }
@@ -504,7 +522,7 @@ class OrderController extends Controller
         {
 
             if($flag == 'cancel') {
-                $order->update(['status' => 5, 'cancelled_at' => now(), 'admin_cancellation' => 1, 'notes' => $request->notes]);
+                $order->update(['status' => 5, 'cancelled_at' => now(), 'admin_cancellation' => 1, 'notes' => $request->notes , 'user_id' => null]);
                 return redirect('/admin/orders')->withStatus(__('order status successfully cancelled.'));
             }
             else
@@ -524,7 +542,7 @@ class OrderController extends Controller
                 {
                     $order->update(['status' => 10, 'notes' => $request->notes]);
                 }
-                return redirect('/admin/orders')->withStatus(__('order status successfully rejected.'));
+                return redirect('/admin/orders')->withStatus(__('order status successfully rolled back.'));
             }
         }
         return redirect('/admin/orders')->withStatus(__('this id is not in our database'));

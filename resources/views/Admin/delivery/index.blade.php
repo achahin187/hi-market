@@ -87,9 +87,10 @@
 
                                             @else
 
-                                                <td>{{ __('admin.not_available') }}</td>
+                                                <td><a href="{{route('orders.index',['driver_id'=>$driver->id])}}">{{count($driver->orders)}} orders</a></td>
 
                                             @endif
+
 
                                             <td>
                                                 <div class="dropdown">

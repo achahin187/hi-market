@@ -18,7 +18,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
                             @if(Auth()->user()->hasRole(['admin','delivery-manager']))
-                            <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
                             @endif
                         </ol>
                     </div>
@@ -115,7 +115,10 @@
                                             <th>status</th>
                                             <th>cancel</th>
                                             <th>rollback</th>
-                                            <th>controls</th>
+
+                                            @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
+                                                <th>controls</th>
+                                            @endif
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -127,30 +130,17 @@
 
                                                 <td>
 
-                                                    @if($order->status == '0' )
+                                                    <?php $status = ['new' => 0,'approved' => 1,'prepared' => 2,'shipping' => 3,'shipped' => 4,'received' => 6,'approved-rollback' => 7,'prepared-rollback' => 8 , 'shipping-rollback' => 9 , 'shipped-rollback' => 10];?>
 
-                                                        <h5>new</h5>
+                                                    @foreach ($status as $index => $state)
 
-                                                    @elseif($order->status == '1' )
+                                                            @if($order->status == $state )
 
-                                                        <h5>approved</h5>
+                                                                <h5>{{$index}}</h5>
 
-                                                    @elseif($order->status == '2' )
+                                                            @endif
 
-                                                        <h5>prepared</h5>
-
-                                                    @elseif($order->status == '3' )
-
-                                                        <h5>shipping</h5>
-
-                                                    @elseif($order->status == '4' )
-
-                                                        <h5>shipped</h5>
-
-                                                    @elseif($order->status == '6' )
-
-                                                        <h5>rejected</h5>
-
+<<<<<<< HEAD
                                                     @elseif($order->status == '7' )
 
                                                         <h5>approved-rollback</h5>
@@ -174,52 +164,70 @@
 
 
                                                     @endif
+=======
+                                                        @endforeach
+
+
+>>>>>>> 0579eae8085ec06ae707358fd7b2a9e4fa9cfa2a
                                                 </td>
 
 
                                                 <td>
 
-                                                    @if($order->status < $setting->cancellation)
+                                                    @if($order->status >= $setting->cancellation || auth()->user()->hasRole('driver'))
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-danger">cancel</button>
-
-                                                    @else
                                                         <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">cancel</button>
-                                                    @endif
-
-                                                </td>
-
-                                                <td>
-
-                                                    @if($order->status >= 1)
-
-                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  value="{{$order->id}}" class="btn btn-info">rollback</button>
 
                                                     @else
-                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btninfo">rollback</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" value="{{$order->id}}" class="btn btn-danger">cancel</button>
                                                     @endif
 
                                                 </td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            <form action="{{ route('orders.delete', $order->id) }}" method="post">
-                                                                @csrf
-                                                                @method('delete')
 
+                                                <td>
+
+                                                    @if(in_array($order->status,[1,2,3,4,6]) )
+
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" value="{{$order->id}}" class="btn btn-info">rollback</button>
+
+                                                    @else
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" disabled value="{{$order->id}}" class="btn btn-info">rollback</button>
+                                                    @endif
+
+                                                </td>
+                                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                                <form action="{{ route('orders.delete', $order->id) }}" method="post">
+                                                                    @csrf
+                                                                    @method('delete')
+
+<<<<<<< HEAD
                                                                 <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
 
                                                                  <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                             </form>
+=======
+                                                                    @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']))
+                                                                        <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+                                                                    @endif
+>>>>>>> 0579eae8085ec06ae707358fd7b2a9e4fa9cfa2a
 
+                                                                    @if(auth()->user()->hasRole(['admin','delivery-manager']))
+                                                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                    @endif
+                                                                </form>
+
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                @endif
                                             </tr>
 
                                             <div class="modal fade" id="my-modal-{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -285,7 +293,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{ route('orders.cancel','reject') }}" method="POST">
+                                                            <form action="{{ route('orders.cancel','rollback') }}" method="POST">
 
                                                                 @csrf
 
@@ -319,7 +327,7 @@
                                                                 </div>
 
                                                                 <div class="card-footer">
-                                                                    <button type="submit"  class="btn btn-primary">reject order</button>
+                                                                    <button type="submit"  class="btn btn-primary">rollback order</button>
                                                                 </div>
                                                             </form>
                                                         </div>
