@@ -390,7 +390,6 @@ class OrderController extends Controller
         //
         $order = Order::find($order_id);
 
-
         $rules = [
             'product_id' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:1'
@@ -408,7 +407,6 @@ class OrderController extends Controller
             $product_id = $request->input('product_id');
 
             $product = Product::find($product_id);
-
 
             foreach ($order->products as $orderproduct)
             {
