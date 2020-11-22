@@ -313,12 +313,12 @@ $factory->define(Point::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Role::class, function (Faker $faker) {
-    return [
-        'name' => $faker->randomElement(['delivery','admin']),
+// $factory->define(Role::class, function (Faker $faker) {
+//     return [
+//         'name' => $faker->randomElement(['delivery','admin']),
 
-    ];
-});
+//     ];
+// });
 
 $factory->define(Offer::class, function (Faker $faker) {
 
