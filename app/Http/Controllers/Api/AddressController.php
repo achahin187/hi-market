@@ -10,15 +10,15 @@ class AddressController extends Controller
 {
     use generaltrait;
 
-    public function addAddress(Request $request)
-    {
+    // public function addAddress(Request $request)
+    // {
 
-    	$request->validate([
-    		'lat' => 'required',
-    		'lon' => 'required',
-    		'location' => 'string|required',
-    		'status' => 'required|boolean',
-    		'additional' => 'required',
-    	]);
-    }
+    // 	$request->validate([
+    // 		'lat' => 'required',
+    // 		'lon' => 'required',
+    // 		'location' => 'string|required',
+    // 		'status' => 'required|boolean',
+    // 		'additional' => 'required',
+    // 	]);
+    // }
 }

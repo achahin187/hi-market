@@ -16,6 +16,7 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->text('description');
+            $table->boolean('default');
             $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
