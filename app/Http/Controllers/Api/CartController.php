@@ -16,11 +16,13 @@ class CartController extends Controller
     public function sendPromoCode(Request $request)
     {
     	$request->validate([
-    		'promoCode' => 'required'
+    		'promoCode'       => 'required',
+            'supermarket_id'  => 'required'
     	]);
 
     	$getDisount = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->first();
 
+        if ($getDisount) {
 
     		switch ($getDisount) {
 
@@ -33,7 +35,7 @@ class CartController extends Controller
     				break;
 
     			case $getDisount->value_type == 'free delivery':
-    				return $this->returnData(['deliveryFees', 'type'],[0, $getDisount->value_type  ]);
+    				return $this->returnData(['discount', 'type'],[0, $getDisount->value_type  ]);
     				break;
     			
     			default:
@@ -41,6 +43,9 @@ class CartController extends Controller
     				break;
     		}//end case
 
+        }else{
+            return response()->json('Not Found',404);
+        }
     
 
     }//end function
