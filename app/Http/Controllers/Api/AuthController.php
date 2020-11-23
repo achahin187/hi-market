@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
-use App\Model\Client;
-use App\Model\Client_Devices;
+use App\Models\Client;
+use App\Models\Client_Devices;
 use App\Models\Clientdevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -179,14 +179,14 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'mobile_number' => ['required','digits:11',Rule::unique((new Client)->getTable())],
-            'email' => ['nullable','email', Rule::unique((new Client)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'mobile_number' => ['required' , 'digits:11' , Rule::unique('clients', 'email')],
+            'email' => ['nullable','email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required'],
         ]);
 
         if($validator->fails()) {
-
-            if ($lang == 'ar') {
+          
+            if ($lang == 'ar') {    
                 return $this->returnError(300, 'بيانات الدخول غير صحيحة');
             }
             else
