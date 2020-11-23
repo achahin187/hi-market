@@ -62,7 +62,7 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
         'team_id' => Team::all()->random()->id,
         'flag' => $faker->randomElement([0,1]),
-        'manager' => $faker->randomElement([0,1]),
+        //'manager' => $faker->randomElement([0,1]),
         'created_by' => 1,
         'updated_by' => 1
     ];
