@@ -155,6 +155,7 @@ class ClientController extends Controller
                 $address->name = $client->name;
                 $address->mobile_number = $client->mobile_number;
                 $address->default = $address->default;
+                $address->address_lable = $address->address_lable;
 
             }
             return $this->returnData(['client addresses'],[$addresses]);
