@@ -51,6 +51,10 @@
 
         Route::post('clientpoints','ClientController@clientpoints')->name('listcategoryproducts');
         Route::post('clientaddresses','ClientController@clientaddresses')->name('listcategoryproducts');
+
+        //sendPromoCode
+        Route::post('sendPromoCode','CartController@sendPromoCode');
+
     });
 
 

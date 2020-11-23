@@ -124,6 +124,9 @@ class AuthController extends Controller
             $credentials = $request->only(['mobile_number','password']);
 
             $token =  Auth::guard('client-api')->attempt($credentials);
+            
+        
+          
 
 
             if(!$token) {
@@ -138,6 +141,7 @@ class AuthController extends Controller
 
             $client = Auth::guard('client-api')->user();
 
+
             $client->update(['remember_token' => $token]);
 
 
@@ -151,7 +155,7 @@ class AuthController extends Controller
 
 
             //return token
-            return $this->returnData(['client'] ,[$client] , $msg);
+            return $this->returnData(['client', 'token'] ,[$client, $token] , $msg);
 
         }catch (\Exception $ex){
             return $this->returnError($ex->getCode(), $ex->getMessage());
@@ -185,7 +189,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()) {
-          
+
             if ($lang == 'ar') {    
                 return $this->returnError(300, 'بيانات الدخول غير صحيحة');
             }
@@ -218,7 +222,7 @@ class AuthController extends Controller
 
             $msg = "you have been registered sucessfully";
 
-            return $this->returnData(['client'], [$client] , $msg);
+            return $this->returnData(['client', 'token'], [$client, $token] , $msg);
         }
     }
 
