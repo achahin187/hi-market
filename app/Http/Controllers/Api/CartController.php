@@ -19,7 +19,7 @@ class CartController extends Controller
     		'promoCode' => 'required'
     	]);
 
-    		$getDisount = Offer::Where('promocode', $request->promoCode)->first();
+    	$getDisount = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->first();
 
 
     		switch ($getDisount) {
@@ -33,7 +33,7 @@ class CartController extends Controller
     				break;
 
     			case $getDisount->value_type == 'free delivery':
-    				return $this->returnData(['discount', 'type'],[0, $getDisount->value_type  ]);
+    				return $this->returnData(['deliveryFees', 'type'],[0, $getDisount->value_type  ]);
     				break;
     			
     			default:
