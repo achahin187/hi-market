@@ -9,15 +9,16 @@ use App\Models\Vendor;
 
 class VendorController extends Controller
 {
-/*
+
+
+
     function __construct()
     {
-        $this->middleware('permission:vendor-list|vendor-create|vendor-edit|vendor-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:vendor-create', ['only' => ['create','store']]);
-        $this->middleware('permission:vendor-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:vendor-delete', ['only' => ['destroy']]);
-    }*/
-
+        $this->middleware('permission:show-vendor', ['only' => ['index']]);
+        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

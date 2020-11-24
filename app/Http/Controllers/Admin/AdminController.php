@@ -19,14 +19,13 @@ use App\User;
 class AdminController extends Controller
 {
 
-/*
-    public function __construct() {
-        $this->middleware('auth');
-        $this->middleware('permission:admin-list|admin-create|admin-edit|admin-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:admin-create', ['only' => ['create','store']]);
-        $this->middleware('permission:admin-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:admin-delete', ['only' => ['destroy']]);
-    }*/
+    function __construct()
+    {
+        $this->middleware('permission:show-admin', ['only' => ['index']]);
+        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

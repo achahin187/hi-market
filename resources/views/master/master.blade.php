@@ -1,6 +1,7 @@
 
 <?php
 $settings = App\Models\Setting::all()->first();
+    
 
 ?>
 
@@ -140,6 +141,7 @@ $settings = App\Models\Setting::all()->first();
 
             </ul>
 
+
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
 
@@ -171,6 +173,8 @@ $settings = App\Models\Setting::all()->first();
         </nav>
   <!-- /.navbar -->
 
+
+
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -198,7 +202,7 @@ $settings = App\Models\Setting::all()->first();
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-            @if(auth()->user()->hasRole('admin'))
+            @if(auth()->user()->can('show-supermarketProduct'))
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
@@ -237,6 +241,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     </ul>
                 </li>
+            @endif    
 
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
@@ -297,7 +302,7 @@ $settings = App\Models\Setting::all()->first();
                 </li>
                 {{-- delivery --}}
 
-            @endif
+          
 
             @if(auth()->user()->hasRole(['admin','delivery-manager']))
                  <li class="nav-item">
