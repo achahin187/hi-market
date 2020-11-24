@@ -387,7 +387,10 @@ class ClientController extends Controller
       
         if ($address) {
             $address->delete();
+            return $this->returnSuccessMessage('delted successfully');
+        }else{
+            return $this->returnError('','id not found');
+
         }
-        return $this->returnSuccessMessage('delted successfully');
     }
 }
