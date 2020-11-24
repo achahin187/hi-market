@@ -47,9 +47,10 @@ class AddressController extends Controller
              }
 
              $address = $request->address;
+             $label = $request->label;
              $address_id = $request->address_id;
 
-             Address::where('client_id',$client->id)->where('id',$address_id)->update(['description' => $address]);
+             Address::where('client_id',$client->id)->where('id',$address_id)->update(['description' => $address,'address_lable' => $label]);
 
              if ($lang == 'ar') {
                  return $this->returnSuccessMessage('لقد تم تعديل العنوان بنجاح', 200);
@@ -88,6 +89,7 @@ class AddressController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
+                'label' => ['required','not_regex:/([%\$#\*<>]+)/'],
             ]);
 
             if($validator->fails()) {
@@ -102,8 +104,9 @@ class AddressController extends Controller
             }
 
             $address = $request->address;
+            $label = $request->label;
 
-            Address::create(['description' => $address]);
+            Address::create(['description' => $address,'address_lable' => $label]);
 
             if ($lang == 'ar') {
                 return $this->returnSuccessMessage('لقد تم اضافة العنوان بنجاح', 200);
