@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Models\Client;
+use App\Models\Address;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -378,5 +379,15 @@ class ClientController extends Controller
             }
             return $this->returnError('','there is no client found');
         }
+    }
+
+    public function delete_address(Request $request)
+    {
+        $address = Address::find($request->id);
+      
+        if ($address) {
+            $address->delete();
+        }
+        return $this->returnSuccessMessage('delted successfully');
     }
 }
