@@ -218,9 +218,9 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
         if ($lang == 'ar') {
-            $wishlist = Product::whereIn('id',$fav_ids)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
+            $wishlist = Product::whereIn('id',$fav_ids)->where('supermarket_id',$supermarket_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
         } else {
-            $wishlist = Product::whereIn('id',$fav_ids)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
+            $wishlist = Product::whereIn('id',$fav_ids)->where('supermarket_id',$supermarket_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'price','offer_price','images','rate','flag','ratings','category_id','supermarket_id')->get();
         }
 
         foreach ($wishlist as $product) {
