@@ -51,12 +51,17 @@
 
         Route::post('clientpoints','ClientController@clientpoints')->name('listcategoryproducts');
         Route::post('clientaddresses','ClientController@clientaddresses')->name('listcategoryproducts');
-        //address
-        Route::post('deleteAddress','ClientController@delete_address')->name('listcategoryproducts');
 
 
         //sendPromoCode
         Route::post('sendPromoCode','CartController@sendPromoCode');
+
+    });
+
+
+     Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
+        //address
+        Route::post('deleteAddress','ClientController@delete_address')->name('listcategoryproducts');
 
     });
 
