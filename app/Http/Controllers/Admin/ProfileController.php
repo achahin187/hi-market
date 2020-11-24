@@ -9,7 +9,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
-{
+{   
+
+
+    function __construct()
+    {
+        $this->middleware('permission:show-profile', ['only' => ['index']]);
+        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     /**
      * Show the form for editing the profile.
      *
