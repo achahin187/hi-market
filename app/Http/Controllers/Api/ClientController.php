@@ -383,14 +383,33 @@ class ClientController extends Controller
 
     public function delete_address(Request $request)
     {
-        $address = Address::find($request->id);
-      
-        if ($address) {
-            $address->delete();
-            return $this->returnSuccessMessage('delted successfully');
-        }else{
-            return $this->returnError(404,'id not found');
+        
+        $token = $request->header('token');
 
+        $client = Client::where('remember_token',$token)->first();
+
+
+        if($client)
+        {
+            $address = Address::find($request->id);
+
+            if ($address) {
+
+                $address->delete();
+
+                return $this->returnSuccessMessage('delted successfully');
+            }else{
+
+                return $this->returnError(404,'id not found');
+
+            }
+
+        }else{
+
+
+            return $this->returnError(401,'Unauthorized');
+            
         }
+
     }
 }
