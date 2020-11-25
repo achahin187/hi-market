@@ -186,10 +186,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
 
+    
 
-
-
-
+        
+            Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
 
     });
 

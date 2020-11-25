@@ -102,6 +102,11 @@ class PermissionTableSeeder extends Seeder
             'logs-delete',
             'logs-edit',
 
+            'offer-list',
+            'offer-create',
+            'offer-delete',
+            'offer-edit',
+
             
 
 

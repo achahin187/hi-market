@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+
 class ClientController extends Controller
 {
     //
@@ -312,9 +313,9 @@ class ClientController extends Controller
             $validator = Validator::make($request->all(), [
                 'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'label'   => ['required', 'string'],
-                'default' => ['boolean'],
-                'lat'     => ['required,sting'],
-                'lon'     => ['required, string'],
+                'default' => 'boolean',
+                'lat'     => ['required','sting'],
+                'lon'     => ['required', 'string'],
             ]);
 
 
