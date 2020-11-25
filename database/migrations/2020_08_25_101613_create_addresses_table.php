@@ -18,6 +18,9 @@ class CreateAddressesTable extends Migration
             $table->text('description');
             $table->boolean('default');
             $table->string('address_lable');
+            $table->string('lat');
+            $table->string('lon');
+            $table->string('address_lable');
             $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
