@@ -376,15 +376,17 @@
                                                             @method('delete')
 
 
-                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.modify')}}</a>
-
-
-                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>
-
 
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
 
                                                         </form>
+                                                        @if(auth()->user()->can('product-edit')) 
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.modify')}}</a>
+                                                        @endif
+
+                                                       @if(auth()->user()->can('product-clone')) 
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>\
+                                                        @endif    
 
                                                     </div>
                                                 </div>
