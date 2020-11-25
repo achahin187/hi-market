@@ -17,15 +17,23 @@
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket_id))
+                                      @if(auth()->user()->can('product-create')) 
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
+                                    @endif
                                 @elseif(isset($branch_id))
+                                 @if(auth()->user()->can('branches-create')) 
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => -1 , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_product')}}</a></li>
+                                 @endif    
                                 @else
+                                     @if(auth()->user()->can('product-create')) 
                                     <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
+                                    @endif
                                 @endif
 
+                                @if(auth()->user()->can('product-export')) 
                                 <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
-
+                                @endif
+                                @if(auth()->user()->can('product-import')) 
                                     <li class="breadcrumb-item">
 
                                         <a id="link" href="">{{__('admin.import')}}</a>
@@ -34,9 +42,12 @@
                                             @csrf
                                             <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
                                         </form>
-
                                     </li>
+                                @endif
+                                
+                                @if(auth()->user()->can('product-download'))    
                                 <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>
+                                @endif
                             </ol>
                         </div>
 
@@ -91,10 +102,7 @@
                                     "production_date",
                                     "exp_date",
                                     "status",
-                                    "barcode"
-
-
-                                ];?>
+                                    "barcode"];?>
 
                                 <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
 
@@ -151,7 +159,9 @@
                                                 @endforeach
 
                                             @endif
+                                            @if(auth()->user()->hasAnyPermission(['product-delete','product-edit'])) 
                                             <th>controls</th>
+                                            @endif
 
                                         </tr>
                                     </thead>

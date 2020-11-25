@@ -16,10 +16,10 @@ class SupermarketController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-allsupermarket', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:supermarket-list', ['only' => ['index']]);
+        $this->middleware('permission:supermarket-create', ['only' => ['create','store']]);
+        $this->middleware('permission:supermarket-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:supermarket-delete', ['only' => ['destroy']]);
     }
     
     /**

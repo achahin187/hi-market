@@ -13,10 +13,10 @@ class CategoryController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-mainCategory', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:mainCategory-list', ['only' => ['index']]);
+        $this->middleware('permission:mainCategory-create', ['only' => ['create','store']]);
+        $this->middleware('permission:mainCategory-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:mainCategory-delete', ['only' => ['destroy']]);
     }
 
 

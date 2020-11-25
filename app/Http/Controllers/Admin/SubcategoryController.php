@@ -12,10 +12,10 @@ class SubcategoryController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-subCategory', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:subCategory-list', ['only' => ['index']]);
+        $this->middleware('permission:subCategory-create', ['only' => ['create','store']]);
+        $this->middleware('permission:subCategory-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:subCategory-delete', ['only' => ['destroy']]);
     }
 
     /**
