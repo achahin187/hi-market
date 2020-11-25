@@ -16,11 +16,12 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->boolean('default');
+            $table->boolean('default')->default(0);
             $table->string('address_lable');
             $table->string('lat');
             $table->string('lon');
             $table->string('address_lable');
+            $table->text('additional')->nullable();
             $table->bigInteger('client_id')->unsigned();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

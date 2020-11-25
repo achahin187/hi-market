@@ -16,10 +16,7 @@ class Address extends Model
 
     protected static $logAttributes = ['description','client_id'];
 
-    protected $fillable = [
-        'description','client_id','created_by','updated_by'
-    ];
-
+    protected $guarded = []; 
     public function client()
     {
         return $this->belongsTo('App\Models\Client');

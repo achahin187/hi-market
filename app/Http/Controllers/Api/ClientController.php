@@ -335,7 +335,6 @@ class ClientController extends Controller
             $default = $request->default;
             $lat = $request->lat;
             $lon = $request->lon;
-            $lon = $request->lon;
             $additional = $request->additional;
 
             Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon, 
