@@ -314,8 +314,9 @@ class ClientController extends Controller
                 'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'label'   => ['required', 'string'],
                 'default' => 'boolean',
-                'lat'     => ['required','sting'],
+                'lat'     => ['required','string'],
                 'lon'     => ['required', 'string'],
+                'additional'     => ['nullable'],
             ]);
 
 
@@ -334,8 +335,11 @@ class ClientController extends Controller
             $default = $request->default;
             $lat = $request->lat;
             $lon = $request->lon;
+            $lon = $request->lon;
+            $additional = $request->additional;
 
-            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon]);
+            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon, 
+                'additional'=>$additional]);
 
             if ($address) {
                 if ($this->getCurrentLang() == 'ar') {
