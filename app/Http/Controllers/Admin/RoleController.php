@@ -122,7 +122,7 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
-        $name = explode(' ',$request->input('eng_name'))[0];
+       
         $arab_name = $request->input('arab_name');
         $eng_name = $request->input('eng_name');
 
@@ -131,7 +131,7 @@ class RoleController extends Controller
 
 
         if($role) {
-            $role->update(['name' => $name , 'arab_name' => $arab_name , 'eng_name' => $eng_name]);;
+            $role->update(['name' => $eng_name , 'arab_name' => $arab_name , 'eng_name' => $eng_name]);;
             $role->syncPermissions($request->input('permission'));
             return redirect('/admin/roles')->withStatus(__('role successfully updated.'));
         }

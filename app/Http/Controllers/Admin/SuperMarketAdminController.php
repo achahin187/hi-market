@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\Team;
 class SuperMarketAdminController extends Controller
 {
 
@@ -34,7 +37,8 @@ class SuperMarketAdminController extends Controller
      */
     public function create()
     {
-        //
+
+        return view($this->blade.__FUNCTION__);
     }
 
     /**
@@ -44,8 +48,25 @@ class SuperMarketAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+        
     {
-        //
+        $request->validate([
+            'name' =>'required|string',
+            'email' =>'required|email',
+            'password' =>'required|min:8',
+            
+        ]);
+        $user = $this->model::create(request()->all());
+    
+        $role = Role::where('name','supermarket admin' )->first();
+
+        $assignRole = $user->assignRole($role);
+
+        $Permissions = $role->permissions;
+            
+        $user->givePermissionTo($Permissions);
+        
+        return redirect()->back();
     }
 
     /**
@@ -67,7 +88,8 @@ class SuperMarketAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supermarket = $this->model::find($id);
+        return view($this->blade.__FUNCTION__,compact("supermarket"));
     }
 
     /**
@@ -79,7 +101,10 @@ class SuperMarketAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $supermarket = $this->model::find($id);
+        $supermarket->update(request()->all());
+        return view($this->blade.__FUNCTION__);
     }
 
     /**
