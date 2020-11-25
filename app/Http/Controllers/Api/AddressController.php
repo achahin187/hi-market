@@ -88,7 +88,7 @@ class AddressController extends Controller
 
         // if($client)
         // {
-        //     $validator = Validator::make($request->all(), [
+        //     $validator = \Validator::make($request->all(), [
         //         'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
         //         'label' => ['required','not_regex:/([%\$#\*<>]+)/'],
 

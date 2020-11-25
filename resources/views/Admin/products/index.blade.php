@@ -317,6 +317,7 @@
                                                 <td>{{$product->name_ar}}</td>
                                                 <td>{{$product->name_en}}</td>
                                                 <td>{{$product->priority}}</td>
+                                                @if(auth()->user()->can('product-active'))
                                                 <td>
 
                                                     @if($product->status == 'active' )
@@ -338,10 +339,8 @@
                                                         </form>
 
                                                     @endif
-
-
-
                                                 </td>
+                                                @endif
                                                 @if(App::getLocale() == 'ar')
                                                     <td>{{$product->category->name_ar}}</td>
                                                 @else
@@ -364,13 +363,14 @@
 
                                             @endif
 
-
+                                            @if(auth()->user()->hasAnyPermission(['product-delete','product-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                          @if(auth()->user()->can('product-delete')) 
                                                         <form action="@if(isset($supermarket_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.destroy', $product->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
@@ -380,6 +380,7 @@
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
 
                                                         </form>
+                                                        @endif
                                                         @if(auth()->user()->can('product-edit')) 
                                                             <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.modify')}}</a>
                                                         @endif
@@ -391,6 +392,7 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
 

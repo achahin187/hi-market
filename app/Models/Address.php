@@ -17,6 +17,9 @@ class Address extends Model
     protected static $logAttributes = ['description','client_id'];
 
     protected $guarded = []; 
+
+
+    
     public function client()
     {
         return $this->belongsTo('App\Models\Client');

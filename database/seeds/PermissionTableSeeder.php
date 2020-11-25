@@ -25,6 +25,11 @@ class PermissionTableSeeder extends Seeder
             'product-create',
             'product-edit',
             'product-delete',
+            'product-clone',
+            'product-export',
+            'product-import',
+            'product-download',
+            'product-active',
 
             'admin-list',
             'admin-create',
