@@ -323,7 +323,12 @@ class ClientController extends Controller
                 }
             }
 
-            $address = Address::create($request->all());
+            $address = $request->address;
+            $label = $request->label;
+            $client_id = $client->id;
+            $default = $request->default;
+
+            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default]);
 
             if ($address) {
                 if ($this->getCurrentLang() == 'ar') {
