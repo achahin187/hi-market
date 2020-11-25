@@ -306,11 +306,15 @@ class ClientController extends Controller
 
         $client = Client::where('remember_token',$token)->first();
 
-
+        
         if($client) {
 
             $validator = Validator::make($request->all(), [
                 'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                'label'   => ['required', 'string'],
+                'default' => ['boolean'],
+                'lat'     => ['required,sting'],
+                'lon'     => ['required, string'],
             ]);
 
 
@@ -327,8 +331,10 @@ class ClientController extends Controller
             $label = $request->label;
             $client_id = $client->id;
             $default = $request->default;
+            $lat = $request->lat;
+            $lon = $request->lon;
 
-            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default]);
+            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon]);
 
             if ($address) {
                 if ($this->getCurrentLang() == 'ar') {

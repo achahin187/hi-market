@@ -15,7 +15,7 @@ class RoleController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-role', ['only' => ['index']]);
+        //$this->middleware('permission:show-role', ['only' => ['index']]);
         // $this->middleware('permission:product-create', ['only' => ['create','store']]);
         // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
         // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
@@ -40,7 +40,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        $permissions = Permission::select('group_name_en','group_name_ar')->groupBy('group_name_en','group_name_ar')->get();
+        $permissions = Permission::all();
         return view('Admin.roles.create',compact('permissions'));
     }
 
@@ -97,7 +97,7 @@ class RoleController extends Controller
     {
         //
         $role = Role::find($id);
-        $permissions = Permission::select('group_name_en','group_name_ar')->groupBy('group_name_en','group_name_ar')->get();
+          $permissions = Permission::all();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();

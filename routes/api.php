@@ -62,7 +62,8 @@
 
      Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
         //address
-        Route::post('deleteAddress','ClientController@delete_address')->name('listcategoryproducts');
+        Route::post('deleteAddress','ClientController@delete_address');
+        Route::post('updateaddress','AddressController@updateaddress');
 
     });
 

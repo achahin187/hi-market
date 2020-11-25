@@ -75,29 +75,34 @@ class PermissionTableSeeder extends Seeder
             'point-list',
             'point-create',
             'point-delete',
-            'point-edit'
+            'point-edit',
 
             'team-list',
             'team-create',
             'team-delete',
-            'team-edit'
+            'team-edit',
 
             'client-list',
             'client-create',
             'client-delete',
-            'client-edit'
+            'client-edit',
 
             'location-list',
             'location-create',
             'location-delete',
-            'location-edit'
+            'location-edit',
 
             'delivery-list',
             'delivery-create',
             'delivery-delete',
-            'delivery-edit'
+            'delivery-edit',
 
-            location delivery logs
+            'logs-list',
+            'logs-create',
+            'logs-delete',
+            'logs-edit',
+
+            
 
 
         ];

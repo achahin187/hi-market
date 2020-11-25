@@ -75,18 +75,11 @@
                                         <label for="exampleInputEmail1">{{__('admin.role.permissions')}}</label>
 
                                         @if(isset($role))
+                                        <div class="row">
                                             @foreach($permissions as $permission)
-                                                <div class="form-check" style="margin-bottom: 10px">
-                                                    <label class="form-check-label">
 
-                                                        @if(App::getLocale() == 'ar')
-                                                            {{$permission->group_name_ar}}
-                                                        @else
-                                                            {{$permission->group_name_en}}
-                                                        @endif
-                                                    </label>
-                                                    <div class="row">
-                                                        @foreach(\App\Models\Permission::where('group_name_en',$permission->group_name_en)->get() as $permission)
+                                              
+                                                        <div class="col-md-3">
                                                             <div class="form-check" style="margin-left: 20px">
                                                                 <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox" <?php if(in_array($permission->id, $rolePermissions)) echo 'checked' ?>>
                                                                 <label class="form-check-label">
@@ -98,12 +91,11 @@
                                                                     @endif
                                                                 </label>
                                                             </div>
-
-                                                        @endforeach
-                                                    </div>
-                                                </div>
+                                                        </div>
+                                               
 
                                             @endforeach
+                                        </div>
 
                                         @else
                                             @foreach($permissions as $permission)
