@@ -150,7 +150,7 @@ $settings = App\Models\Setting::all()->first();
                          with font-awesome or any other icon font library -->
 
                    
-                    @if(auth()->user()->can('role-list')) 
+                    @if(auth()->user()->can('product-list')) 
                     {{-- product --}}    
                         <li class="nav-item has-treeview">
                             <a href="" class="nav-link">
@@ -212,12 +212,16 @@ $settings = App\Models\Setting::all()->first();
                                         </p>
                                     </a>
                                 </li>
+                        @if(auth()->user()->can('branche-list'))   
+
                                 <li class="nav-item">
                                     <a href="{{route('branches.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>branches</p>
                                     </a>
                                 </li>
+
+                        @endif            
                             </ul>
                         </li>
                     @endif

@@ -152,7 +152,17 @@ class ClientController extends Controller
         {
             $addresses = $client->addresses()->select('id','description','default','address_lable','lat','lon')->get();
 
-         
+            // foreach ($addresses as $address)
+            // {
+            //     $address->name = $client->name;
+            //     $address->mobile_number = $client->mobile_number;
+            //     $address->default = $address->default;
+            //     $address->address_lable = $address->address_lable;
+            //     $address->lat = $address->lat;
+            //     $address->lon = $address->lon;
+
+            // }
+            
             return $this->returnData(['client addresses'],[$addresses]);
         }
         else
@@ -335,9 +345,9 @@ class ClientController extends Controller
 
             if ($address) {
                 if ($this->getCurrentLang() == 'ar') {
-                    return $this->returnSuccessMessage('لقد اضفت هذا العنوان بنجاح ');
+                    return $this->returnSuccessMessage('لقد اضفت هذا العنوان بنجاح ',200);
                 }
-                return $this->returnSuccessMessage('This address have been added successfully');
+                return $this->returnSuccessMessage('This address have been added successfully',200);
             } else {
                 if ($this->getCurrentLang() == 'ar') {
                     return $this->returnError('', 'هناك مشكلة في اضافة العنوان , حاول مرة اخري');

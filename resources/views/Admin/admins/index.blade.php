@@ -19,21 +19,8 @@
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('admins.create')}}">add new admin</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('admins.export')}}">export</a></li>
-
-                                <!--
-                                <form action="{{route('admins.import') }}" method="POST" enctype="multipart/form-data">
-
-                                    @csrf
-
-                                    <input type="file" name="file" accept=".csv"/>
-
-                                    <button type="submit" class="btn btn-primary">import</button>
-
-                                </form>
                             </ol>
                         </div>
-
-                        -->
                     @endif
 
                     <div class="col-12">
@@ -69,7 +56,9 @@
                                         <th>email</th>
                                         <th>Role</th>
                                         <th>Team</th>
+                                        @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit'])) 
                                         <th>controls</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -92,37 +81,41 @@
                                                     @endif
 
                                                 @endforeach
-
                                             </td>
+
 
                                             @if(App::getLocale() == 'ar')
 
-                                                {{-- <td>{{$admin->team->arab_name}}</td> --}}
+                                                <td>{{$admin->team->arab_name ?? ""}}</td>
 
                                             @else
 
-                                               {{--  <td>{{$admin->team->eng_name}}</td> --}}
+                                                <td>{{$admin->team->eng_name ?? ''}}</td>
 
                                             @endif
-
+                                            @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit']))  
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                    @if(auth()->user()->can('admin-delete'))    
                                                         <form action="{{ route('admins.destroy', $admin->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
-
+                                                    @endif    
+                                                    @if(auth()->user()->can('admin-edit'))
+                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                    @endif            
                                                     </div>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
 
