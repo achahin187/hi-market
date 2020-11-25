@@ -310,7 +310,7 @@ class ClientController extends Controller
         
         if($client) {
 
-            $validator = Validator::make($request->all(), [
+            $validator = \Validator::make($request->all(), [
                 'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'label'   => ['required', 'string'],
                 'default' => 'boolean',
