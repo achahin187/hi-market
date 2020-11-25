@@ -28,6 +28,7 @@
 
         Route::post('profile','ClientController@client_profile')->name('client_profile');
         Route::post('profile/update', 'ClientController@updateprofile')->name('profile_update');
+        //address
         Route::post('add_address','ClientController@add_address')->name('address.store');
         Route::get('get_address/{flag}', 'ClientController@get_address')->name('address.show');
 

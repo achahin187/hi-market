@@ -85,43 +85,46 @@ class AddressController extends Controller
 
         $client = Client::where('remember_token',$token)->select('id','mobile_number','name')->first();
 
-        if($client)
-        {
-            $validator = Validator::make($request->all(), [
-                'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
-                'label' => ['required','not_regex:/([%\$#\*<>]+)/'],
-            ]);
+        // if($client)
+        // {
+        //     $validator = Validator::make($request->all(), [
+        //         'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
+        //         'label' => ['required','not_regex:/([%\$#\*<>]+)/'],
 
-            if($validator->fails()) {
+        //     ]);
 
-                if ($lang == 'ar') {
-                    return $this->returnError(400, 'بيانات الدخول غير صحيحة');
-                }
-                else
-                {
-                    return $this->returnError(400, 'These data is not valid');
-                }
-            }
+        //     if($validator->fails()) {
+
+        //         if ($lang == 'ar') {
+        //             return $this->returnError(400, 'بيانات الدخول غير صحيحة');
+        //         }
+        //         else
+        //         {
+        //             return $this->returnError(400, 'These data is not valid');
+        //         }
+        //     }
 
             $address = $request->address;
             $label = $request->label;
+            $client_id = 1;//$client->id;
+            $default = $request->default;
 
-            Address::create(['description' => $address,'address_lable' => $label]);
+            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default]);
 
             if ($lang == 'ar') {
                 return $this->returnSuccessMessage('لقد تم اضافة العنوان بنجاح', 200);
             } else {
                 return $this->returnSuccessMessage('This address have been added successfully', 200);
             }
-        }
-        else
-        {
-            if($lang == 'ar')
-            {
-                return $this->returnError(305,'لم نجد هذا العميل');
-            }
-            return $this->returnError(305 ,'there is no client found');
-        }
+        // }
+        // else
+        // {
+        //     if($lang == 'ar')
+        //     {
+        //         return $this->returnError(305,'لم نجد هذا العميل');
+        //     }
+        //     return $this->returnError(305 ,'there is no client found');
+        // }
 
     }
 
