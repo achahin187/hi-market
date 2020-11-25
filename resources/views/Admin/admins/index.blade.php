@@ -97,11 +97,11 @@
 
                                             @if(App::getLocale() == 'ar')
 
-                                                <td>{{$admin->team->arab_name}}</td>
+                                                {{-- <td>{{$admin->team->arab_name}}</td> --}}
 
                                             @else
 
-                                                <td>{{$admin->team->eng_name}}</td>
+                                               {{--  <td>{{$admin->team->eng_name}}</td> --}}
 
                                             @endif
 
