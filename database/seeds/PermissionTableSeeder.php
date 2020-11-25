@@ -112,6 +112,13 @@ class PermissionTableSeeder extends Seeder
 
         ];
 
+        $roles = [
+            'supermarket_admin',
+            'super_admin',
+            'delivery_admin',
+            'driver',
+        ];
+
         foreach ($permissions as $permission) {
             Permission::create([
                 'name' => $permission,
@@ -121,5 +128,15 @@ class PermissionTableSeeder extends Seeder
                 'group_name_en' => explode('-', $permission)[0]
             ]);
         }
+
+         foreach ($roles as $role) {
+            Role::create([
+                'name' => $role,
+                'guard_name' => 'web',
+                'arab_name' => $role,
+                'eng_name' => $role,
+            ]);
+        }
+
     }
 }
