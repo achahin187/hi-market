@@ -105,12 +105,14 @@ class AddressController extends Controller
         //         }
         //     }
 
-            $address = $request->address;
-            $label = $request->label;
-            $client_id = 1;//$client->id;
-            $default = $request->default;
+            $address    = $request->address;
+            $label      = $request->label;
+            $client_id  = $client->id;
+            $default    = $request->default;
+            $name       = $request->name;
+            $phone      = $request->phone;
 
-            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default]);
+            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default,'name'=>$name, 'phone'=>$phone]);
 
             if ($lang == 'ar') {
                 return $this->returnSuccessMessage('لقد تم اضافة العنوان بنجاح', 200);
