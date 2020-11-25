@@ -17,6 +17,12 @@ class SuperMarketAdminController extends Controller
     {
         $this->model = 'App\User' ;
         $this->blade = 'Admin.supermarket_admin.' ;
+        $this->route = 'supermarket-admins.' ;
+
+        $this->middleware('permission:supermarket-list', ['only' => ['index']]);
+        $this->middleware('permission:supermarket-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,6 +32,7 @@ class SuperMarketAdminController extends Controller
     public function index()
     {
         $supermarket_admins = $this->model::Role('supermarket admin')->get();
+
     
         return view('Admin.supermarket_admin.index')->with('supermarket_admins',$supermarket_admins);
     }
@@ -66,7 +73,7 @@ class SuperMarketAdminController extends Controller
             
         $user->givePermissionTo($Permissions);
         
-        return redirect()->back();
+        return redirect()->route($this->route.'index');
     }
 
     /**
@@ -101,10 +108,14 @@ class SuperMarketAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+       $request->validate([
+            'name' =>'required|string',
+            'email' =>'required|email',
+        ]);;
         $supermarket = $this->model::find($id);
         $supermarket->update(request()->all());
-        return view($this->blade.__FUNCTION__);
+
+        return redirect()->route($this->route.'index');
     }
 
     /**
@@ -115,6 +126,12 @@ class SuperMarketAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supermarket_admin = User::find($id);
+        if ($supermarket_admin) {
+            $supermarket_admin->delete();
+            return redirect()->route($this->route.'index');
+        }else{
+            return redirect()->route($this->route.'index');
+        }
     }
 }

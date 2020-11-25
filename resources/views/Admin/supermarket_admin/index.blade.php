@@ -53,27 +53,27 @@
                                     <tr>
                                         <th>name</th>
                                         <th>email</th>
-                                        <th>team</th>
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($supermarket_admins as $admin)
+                                @if(isset($supermarket_admins))        
+                                    @foreach($supermarket_admins as $supermarket_admin)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
+                                            <td>{{$supermarket_admin->name}}</td>
+                                            <td>{{$supermarket_admin->email}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="post">
+                                                        <form action="{{ route('supermarket-admins.destroy', $supermarket_admin->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('supermarket-admins.edit', $supermarket_admin->id) }}">{{ __('edit') }}</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
@@ -83,7 +83,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
+                                @endif
                                     </tbody>
                                 </table>
                             </div>

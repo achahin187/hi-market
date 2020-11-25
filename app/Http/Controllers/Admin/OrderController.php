@@ -18,7 +18,7 @@ class OrderController extends Controller
     //
     function __construct()
     {
-        $this->middleware('permission:show-order', ['only' => ['index']]);
+        $this->middleware('permission:order-list', ['only' => ['index']]);
         // $this->middleware('permission:product-create', ['only' => ['create','store']]);
         // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
         // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
