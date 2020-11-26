@@ -461,6 +461,7 @@ class ClientController extends Controller
             if(count($client->addresses) >= 1)
             {
                 $address = $client->addresses()->where('id',$request->address_id)->first();
+                
                 $request_data = $request->except('address_id');
                 $address->update($request_data);
 
