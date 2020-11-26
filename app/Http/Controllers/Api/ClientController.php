@@ -319,11 +319,13 @@ class ClientController extends Controller
             $validator = \Validator::make($request->all(), [
                 'address'        => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'label'          => ['required', 'string'],
-                'label'          => ['required', 'string'],
                 'default'        => ['boolean'],
                 'lat'            => ['required','string'],
                 'lon'            => ['required', 'string'],
                 'additional'     => ['nullable'],
+                 'govern'        => ['required|string'],
+                 'name'          => ['required|string'],
+                 'phone'         => ['required|string'],
             ]);
 
 
@@ -458,6 +460,30 @@ class ClientController extends Controller
 
         if($client)
         {
+
+            $validator = \Validator::make($request->all(), [
+                'address'        => ['min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                'label'          => ['string'],
+                'default'        => ['boolean'],
+                'lat'            => ['string'],
+                'lon'            => ['string'],
+                'govern'         => ['string'],
+                'additional'     => ['nullable'],
+                'govern'         => ['string'],
+                'name'           => ['string'],
+                'phone'          => ['string'],
+            ]);
+
+
+            if ($validator->fails()) {
+
+                if ($lang == 'ar') {
+                    return $this->returnError(300, 'بيانات الدخول غير صحيحة');
+                } else {
+                    return $this->returnError(300, 'These data is not valid');
+                }
+            }   }
+
             if(count($client->addresses) >= 1)
             {
                 $address = $client->addresses()->where('id',$request->address_id)->first();
@@ -465,6 +491,7 @@ class ClientController extends Controller
                     
                 $request_data = $request->except('address_id');
                 $address->update($request_data);
+                
                 }else{
                     if($lang == 'ar')
                     {
