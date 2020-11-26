@@ -312,7 +312,7 @@ class ClientController extends Controller
         $client = Client::where('remember_token',$token)->first();
 
         
-        if(!$client) {
+        if($client) {
 
             $validator = \Validator::make($request->all(), [
                 'address'        => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
