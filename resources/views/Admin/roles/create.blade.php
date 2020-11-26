@@ -80,20 +80,20 @@
                                     
                                          
 
-                                            <div class="row">
+                                            <div class=" row form-group mb-30">
                                     @foreach($permissions as $permission)
-                                                  <div class="col-md-12">
+                                                  
                                             
                                                 @if(  explode("-", $permission->name)[1] == 'list' )
 
-                                                    <div class="form-group">
+                                                  
 
-                                                     <label for="exampleFormControlInput1"> {{ explode("-", $permission->name)[0] }}
+                                                     <label class="col-md-12 control-label mb-10 text-left"> {{ explode("-", $permission->name)[0] }}
                                                      </label>
            
-                                                    </div>
+                                                  
                                                 @endif
-                                            </div>
+                                            
                                       
 
 
@@ -117,7 +117,44 @@
 
 
                                         @else
-                                            @foreach($permissions as $permission)
+
+
+                                            <div class=" row form-group mb-30">
+                                    @foreach($permissions as $permission)
+                                                  
+                                            
+                                                @if(  explode("-", $permission->name)[1] == 'list' )
+
+                                                  
+
+                                                     <label class="col-md-12 control-label mb-10 text-left"> {{ explode("-", $permission->name)[0] }}
+                                                     </label>
+           
+                                                  
+                                                @endif
+                                            
+                                      
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-check" style="margin-left: 20px">
+                                                    <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox" >
+                                                    <label class="form-check-label">
+
+                                                        @if(App()->getLocale() == 'ar')
+                                                            {{$permission->arab_name}}
+                                                        @else
+                                                            {{$permission->eng_name}}
+                                                        @endif
+                                                    </label>
+                                                </div>
+                                            </div>
+                                                 
+                                      @endforeach
+                                        </div>
+                                               
+
+                                          {{--   @foreach($permissions as $permission)
                                                 <div class="form-check" style="margin-bottom: 10px">
                                                     <label class="form-check-label">
 
@@ -145,7 +182,7 @@
                                                     </div>
                                                 </div>
 
-                                            @endforeach
+                                            @endforeach --}}
 
                                         @endif
 

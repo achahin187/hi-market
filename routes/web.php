@@ -89,6 +89,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
         Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
 
+
+
+            Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');
         Route::group(['prefix' => 'products'],function() {
 
             Route::get('{id}/{flag}/clone/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@clone')->name('products.clone');

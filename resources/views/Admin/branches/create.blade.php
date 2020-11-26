@@ -197,7 +197,7 @@
                                     @if(isset($branch) && $branch->image != null)
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">Photo</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -216,7 +216,7 @@
                                     @else
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">Photo</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">

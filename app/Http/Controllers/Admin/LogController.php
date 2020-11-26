@@ -11,10 +11,10 @@ class LogController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-logs', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:logs-list', ['only' => ['index']]);
+        $this->middleware('permission:logs-create', ['only' => ['create','store']]);
+        $this->middleware('permission:logs-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:logs-delete', ['only' => ['destroy']]);
     }
 
     /**

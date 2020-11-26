@@ -10,10 +10,10 @@ class OfferController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:show-offer', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:offer-list', ['only' => ['index']]);
+        $this->middleware('permission:offer-create', ['only' => ['create','store']]);
+        $this->middleware('permission:offer-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:offer-delete', ['only' => ['destroy']]);
     }
 
     /**

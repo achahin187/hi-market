@@ -11,10 +11,10 @@ class BranchController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-location', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:branches-list', ['only' => ['index']]);
+        $this->middleware('permission:branches-create', ['only' => ['create','store']]);
+        $this->middleware('permission:branches-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:branches-delete', ['only' => ['destroy']]);
     }
 
     /**

@@ -44,7 +44,7 @@
 
 
                                 <!--first card-->
-                            @if(Auth()->user()->hasRole(['admin','delivery-manager']))
+                            {{-- @if(Auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                 <div class="card card-primary">
 
                                     <div class="card-header">
@@ -139,9 +139,9 @@
                                         </form>
                                     </div>
 
-                            @endif
+                          {{--   @endif --}}
                                 <!--second card-->
-                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']))
+                                {{-- @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver'])) --}}
                                     <div class="card card-primary">
 
                                         <div class="card-header">
@@ -156,7 +156,7 @@
                                             <div class="card-body">
 
 
-                                                @if(Auth()->user()->can('order-status'))
+                                                {{-- @if(Auth()->user()->can('order-status')) --}}
 
                                                 <div class="form-group">
                                                     <label>Status</label>
@@ -180,15 +180,15 @@
                                                     @enderror
                                                 </div>
 
-                                                @endif
-
-                                                @if(auth()->user()->can('order-driver') && $order->status >= 2)
+                                                {{-- @endif
+ --}}
+                                              {{--   @if(auth()->user()->can('order-driver') && $order->status >= 2) --}}
                                                     <div class="form-group">
                                                         <label>assign driver</label>
                                                       <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;">
 
                                                             @if($order->user != null)
-                                                                @foreach(\App\User::role(['delivery'])->where('manager',0)->get() as $driver)
+                                                                @foreach(\App\User::role(['driver'])->get() as $driver)
 
                                                                     <option <?php if($order->user->id == $driver->id) echo 'selected'; ?> value="{{ $driver->id }}">
 
@@ -198,7 +198,7 @@
 
                                                                 @endforeach
                                                             @else
-                                                                @foreach(\App\User::role('delivery')->where('manager',0)->get() as $driver)
+                                                                @foreach(\App\User::role('driver')->get() as $driver)
 
                                                                     <option value="{{ $driver->id }}">
 
@@ -221,9 +221,9 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                @endif
+                                             {{--    @endif --}}
 
-                                                 @if(Auth()->user()->can('order-address'))
+                                              {{--    @if(Auth()->user()->can('order-address')) --}}
                                                 <div class="form-group">
                                                     <label>{{__('order_address')}}</label>
                                                     <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
@@ -236,12 +236,12 @@
                                                             </span>
                                                     @enderror
                                                 </div>
-                                                @endif
+                                               {{--  @endif --}}
 
 
-                                                @if(Auth()->user()->can('order-date'))
+                                               {{--  @if(Auth()->user()->can('order-date')) --}}
                                                 <div class="form-group">
-                                                    <label>delivery_date</label>
+                                                    <label>schedule-delivery_date</label>
                                                     <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
 
                                                     @error('delivery_date')
@@ -250,23 +250,23 @@
                                                     </span>
                                                     @enderror
                                                 </div>
-                                                @endif
+                                                {{-- @endif --}}
 
 
-                                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address']))
+                                               {{--  @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address'])) --}}
                                                     <div class="card-footer">
                                                         <button type="submit" class="btn btn-primary">Save</button>
                                                     </div>
-                                                @endif
+                                               {{--  @endif --}}
                                             </div>
                                         </form>
                                     </div>
-                                 @endif
+                                {{--  @endif --}}
 
 
 
                                     <!--third card-->
-                             @if(Auth()->user()->hasRole(['admin', 'delivery-manager']))
+                             {{-- @if(Auth()->user()->hasRole(['admin', 'delivery-manager'])) --}}
 
                                         <div class="card card-primary">
 
@@ -634,7 +634,7 @@
                                     </div>
 
 
-                            @endif
+                           {{--  @endif --}}
 
                                 <!-- /.card -->
                             </div>

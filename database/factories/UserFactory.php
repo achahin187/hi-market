@@ -237,7 +237,16 @@ $factory->define(Client::class, function (Faker $faker) {
 $factory->define(Address::class, function (Faker $faker) {
     return [
         'description' => $faker->paragraph,
+        'name' => $faker->name,
+        'phone' => '01060487345',
+        'default' => 1,
+        'address_lable' => 'home',
+        'lat' => 10225-2544,
+        'lon' => 102545-215,
+        'govern' => $faker->name,
+        'additional' => $faker->paragraph,
         'client_id' => Client::all()->random()->id,
+
     ];
 });
 

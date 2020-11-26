@@ -212,7 +212,7 @@ $settings = App\Models\Setting::all()->first();
                                         </p>
                                     </a>
                                 </li>
-                        @if(auth()->user()->can('branche-list'))   
+                        @if(auth()->user()->can('branches-list'))   
 
                                 <li class="nav-item">
                                     <a href="{{route('branches.index')}}" class="nav-link">

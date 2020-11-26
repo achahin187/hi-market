@@ -37,24 +37,24 @@ class CreateAdminSeeder extends Seeder
         //     $user->assignRole([$role->id]);
         // }
 
-         $user = \App\Models\Team::create([
+        //  $user = \App\Models\Team::create([
 
-            'arab_name' => 'سوبر ادمن',
-            'eng_name'  => 'super_admin',
-            'eng_description'  => 'super_admin',
-            'arab_description'  => 'super_admin',
-            'role_id'  => 1,
-        ]);
+        //     'arab_name' => 'سوبر ادمن',
+        //     'eng_name'  => 'super_admin',
+        //     'eng_description'  => 'super_admin',
+        //     'arab_description'  => 'super_admin',
+        //     'role_id'  => 1,
+        // ]);
 
-        $user = \App\User::create([
+        // $user = \App\User::create([
 
-            'name' => 'super',
-            'email'  => 'super_admin@delvirtto.com',
-            'team_id'      =>1,
-            'password'   =>  '123456789',
-        ]);
+        //     'name' => 'super',
+        //     'email'  => 'super_admin@delvirtto.com',
+        //     'team_id'      =>1,
+        //     'password'   =>  '123456789',
+        // ]);
 
-        $user->assignRole('super_admin');
+        // $user->assignRole('super_admin');
 
     }
 }

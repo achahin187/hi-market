@@ -26,7 +26,6 @@ class PermissionTableSeeder extends Seeder
             'product-create',
             'product-edit',
             'product-delete',
-
             'product-clone',
             'product-export',
             'product-import',
@@ -38,36 +37,53 @@ class PermissionTableSeeder extends Seeder
             'admin-create',
             'admin-delete',
             'admin-edit',
+            'admin-active',
 
             'vendor-list',
             'vendor-create',
             'vendor-delete',
             'vendor-edit',
+            'vendor-active',
+
 
             'order-list',
             'order-create',
             'order-delete',
             'order-edit',
+            'order-edit-client-info',
+            'order-edit-client-product',
+            'order-edit-client-orderStatus',
+            'order-edit-client-orderCancel',
 
             'supermarket-list',
             'supermarket-create',
             'supermarket-delete',
-            'supermarket-edit',
+            'supermarket-edit', 
+            'supermarket-active', 
+
+            'supermarketAdmin-list',
+            'supermarketAdmin-create',
+            'supermarketAdmin-delete',
+            'supermarketAdmin-edit',
+            'supermarketAdmin-active', //do
 
             'branches-list',
             'branches-create',
             'branches-delete',
             'branches-edit',
+            'branches-active',
 
             'mainCategory-list',
             'mainCategory-create',
             'mainCategory-delete',
             'mainCategory-edit',
+            'mainCategory-active',
 
             'subCategory-list',
             'subCategory-create',
             'subCategory-delete',
             'subCategory-edit',
+            'subCategory-active',
 
             'setting-list',
             'setting-create',
@@ -79,31 +95,37 @@ class PermissionTableSeeder extends Seeder
             'reason-create',
             'reason-delete',
             'reason-edit',
+            'reason-active',
 
             'point-list',
             'point-create',
             'point-delete',
             'point-edit',
+            'point-active',
 
             'team-list',
             'team-create',
             'team-delete',
             'team-edit',
+            'team-active',
 
             'client-list',
             'client-create',
             'client-delete',
             'client-edit',
+            'client-active',
 
             'location-list',
             'location-create',
             'location-delete',
             'location-edit',
+            'location-active',
 
             'delivery-list',
             'delivery-create',
             'delivery-delete',
             'delivery-edit',
+            'delivery-active',
 
             'logs-list',
             'logs-create',
@@ -114,6 +136,7 @@ class PermissionTableSeeder extends Seeder
             'offer-create',
             'offer-delete',
             'offer-edit',
+            'offer-active',
         ];
 
         $roles = [

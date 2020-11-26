@@ -17,7 +17,9 @@
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
+                                @if(auth()->user()->can('supermarketAdmin-create'))
                                 <li class="breadcrumb-item"><a href="{{route('supermarket-admins.create')}}">create new SuperMarket Admin</a></li>
+                                @endif
                             </ol>
                         </div>
 
@@ -53,7 +55,9 @@
                                     <tr>
                                         <th>name</th>
                                         <th>email</th>
+                                    @if(auth()->user()->hasAnyPermission(['supermarketAdmin-delete','supermarketAdmin-edit']))
                                         <th>controls</th>
+                                    @endif    
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -62,25 +66,30 @@
                                         <tr>
                                             <td>{{$supermarket_admin->name}}</td>
                                             <td>{{$supermarket_admin->email}}</td>
+                                        @if(auth()->user()->hasAnyPermission(['supermarketAdmin-delete','supermarketAdmin-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                    @if(auth()->user()->can('supermarketAdmin-delete'))
                                                         <form action="{{ route('supermarket-admins.destroy', $supermarket_admin->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('supermarket-admins.edit', $supermarket_admin->id) }}">{{ __('edit') }}</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
-
+                                                    @endif
+                                                    @if(auth()->user()->can('supermarketAdmin-edit'))
+                                                                <a class="dropdown-item" href="{{ route('supermarket-admins.edit', $supermarket_admin->id) }}">{{ __('edit') }}</a>
+                                                    @endif            
                                                     </div>
                                                 </div>
                                             </td>
+                                        @endif    
                                         </tr>
                                     @endforeach
                                 @endif

@@ -71,7 +71,7 @@
                                             <td>{{$client->gender}}</td>
                                             <td>{{$client->city}}</td>
                                             <td>{{$client->mobile_number}}</td>
-                                            <td><a href="{{route('client.orders',$client->id)}}" class="btn btn-info">client orders</a></td>
+                                            <td><a href="{{route('client.orders',['client_id'=>$client->id])}}" class="btn btn-info">client orders</a></td>
                                             <td>
 
                                                 @if($client->status == 'active' )

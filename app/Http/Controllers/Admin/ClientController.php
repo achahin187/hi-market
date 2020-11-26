@@ -15,10 +15,10 @@ class ClientController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-client', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:client-list', ['only' => ['index']]);
+        $this->middleware('permission:client-create', ['only' => ['create','store']]);
+        $this->middleware('permission:client-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:client-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -267,8 +267,7 @@ class ClientController extends Controller
 
     public function clientorders($client_id)
     {
-        //
-        $setting = Setting::all()->first();
+                $setting = Setting::all()->first();
 
         $orders = Order::where('client_id',$client_id)->orderBy('id', 'desc')->get();
         return view('Admin.orders.index',compact('orders','setting'));

@@ -14,11 +14,11 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+                            @if(auth()->user()->can('supermarket-create'))
                             <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">{{__('admin.add_supermarket')}}</a></li>
+                            @endif
 
-                             <li class="breadcrumb-item"><a href="{{route('supermarkets.create')}}">{{__('admin.import')}}</a></li>
-
-                              <li class="breadcrumb-item"><a href="{{route('supermarket.export')}}">{{__('admin.export')}}</a></li>
+                       
 
                         </ol>
                     </div>
@@ -56,7 +56,9 @@
                                         <th>{{__('admin.name_en')}}</th>
                                         <th>{{__('admin.commission')}}</th>
                                         <th>{{__('admin.priority')}}</th>
+                                    @if(auth()->user()->can('supermarket-active'))
                                         <th>{{__('admin.status')}}</th>
+                                    @endif    
                                         <th>{{__('admin.products')}}</th>
                                         <th>{{__('admin.product_offers')}}</th>
                                         <th>{{__('admin.offers')}}</th>
@@ -71,6 +73,7 @@
                                             <td>{{$supermarket->eng_name}}</td>
                                             <td>{{$supermarket->commission}}</td>
                                             <td>{{$supermarket->priority}}</td>
+                                             @if(auth()->user()->can('supermarket-active'))
                                             <td>
 
                                                 @if($supermarket->status == 'active' )
@@ -92,9 +95,8 @@
                                                     </form>
 
                                                 @endif
-
-
                                             </td>
+                                            @endif
                                             <td>
                                                 <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 0]) }}" class="btn btn-info">{{__('admin.products')}}</a>
                                             </td>
@@ -109,23 +111,32 @@
                                             <td>
                                                 <a href="{{ route('supermarket.branches', $supermarket->id) }}" class="btn btn-info">{{__('admin.branches')}}</a>
                                             </td>
+                                    @if(auth()->user()->hasAnyPermission(['supermarket-delete','supermarket-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                     @if(auth()->user()->can('supermarket-delete'))    
                                                         <form action="{{ route('supermarkets.destroy', $supermarket->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('supermarkets.edit', $supermarket->id) }}">{{__('admin.modify')}}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this supermarket?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
                                                         </form>
+                                                    @endif    
+                                                   @if(auth()->user()->can('supermarket-edit'))  
+                                                            <a class="dropdown-item" href="{{ route('supermarkets.edit', $supermarket->id) }}">{{__('admin.edit')}}</a>
+                                                    @endif         
 
                                                     </div>
                                                 </div>
                                             </td>
+
+                                     @endif       
+
+
                                         </tr>
 
                                     @endforeach

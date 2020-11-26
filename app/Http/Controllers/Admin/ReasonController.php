@@ -12,10 +12,10 @@ class ReasonController extends Controller
 
      function __construct()
     {
-        $this->middleware('permission:show-reason', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:reason-list', ['only' => ['index']]);
+        $this->middleware('permission:reason-create', ['only' => ['create','store']]);
+        $this->middleware('permission:reason-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:reason-delete', ['only' => ['destroy']]);
     }
     
     /**

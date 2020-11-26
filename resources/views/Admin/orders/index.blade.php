@@ -17,8 +17,10 @@
 
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
-                            @if(Auth()->user()->hasRole(['admin','delivery-manager']))
                                 <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+
+                            @if(auth()->user()->can('order-create'))
+                             <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">Add manual order</a></li>
                             @endif
                         </ol>
                     </div>
@@ -115,10 +117,10 @@
                                             <th>status</th>
                                             <th>cancel</th>
                                             <th>rollback</th>
+                                            <th>controls</th>
 
-                                            @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
-                                                <th>controls</th>
-                                            @endif
+                                          {{--   @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
+                                            @endif --}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -170,7 +172,7 @@
                                                     @endif
 
                                                 </td>
-                                                @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
+                                               {{--  @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -181,15 +183,15 @@
                                                                     @csrf
                                                                     @method('delete')
 
-                                                                    @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']))
+                                                                    {{-- @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver'])) --}}
                                                                         <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
-                                                                    @endif
+                                                                    {{-- @endif --}}
 
                                                                     <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
 
-                                                                    @if(auth()->user()->hasRole(['admin','delivery-manager']))
+                                                                   {{--  @if(auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                                                         <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                                    @endif
+                                                                    {{-- @endif --}}
 
 
                                                                
@@ -202,7 +204,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                @endif
+                                                {{-- @endif --}}
                                             </tr>
 
                                             <div class="modal fade" id="my-modal-{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

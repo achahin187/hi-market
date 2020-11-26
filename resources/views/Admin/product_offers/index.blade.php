@@ -84,9 +84,9 @@
                                             <option  value="price">{{__('admin.price')}}</option>
                                             <option  value="priority">{{__('admin.priority')}}</option>
                                             <option  value="points">{{__('admin.points')}}</option>
-                                            <option  value="category_id">{{__('admin.category')}}</option>
+                                           {{--  <option  value="category_id">{{__('admin.category')}}</option> --}}
                                             <option  value="vendor_id">{{__('admin.vendor')}}</option>
-                                            <option  value="subcategory_id">{{__('admin.subcategory')}}</option>
+                                           {{--  <option  value="subcategory_id">{{__('admin.subcategory')}}</option> --}}
                                             <option  value="supermarket_id">{{__('admin.supermarket')}}</option>
                                             <option  value="branch_id">{{__('admin.branch')}}</option>
                                             <option  value="measure_id">{{__('admin.measure')}}</option>
@@ -145,9 +145,9 @@
                                             @if(in_array('price',$columns))
                                                 <th>{{__('admin.price')}}</th>
                                             @endif
-                                            @if(in_array('category_id',$columns))
+                                           {{--  @if(in_array('category_id',$columns))
                                                 <th>{{__('admin.category')}}</th>
-                                            @endif
+                                            @endif --}}
                                             @if(in_array('vendor_id',$columns))
                                                 <th>{{__('admin.vendor')}}</th>
                                             @endif
@@ -158,9 +158,9 @@
                                             @if(in_array('branch_id',$columns))
                                                 <th>{{__('admin.branch')}}</th>
                                             @endif
-                                            @if(in_array('subcategory_id',$columns))
+                                           {{--  @if(in_array('subcategory_id',$columns))
                                                 <th>{{__('admin.subcategory')}}</th>
-                                            @endif
+                                            @endif --}}
                                             @if(in_array('measure_id',$columns))
                                                 <th>{{__('admin.measure')}}</th>
                                             @endif
@@ -190,11 +190,11 @@
                                             <th>{{__('admin.name_en')}}</th>
                                             <th>{{__('admin.priority')}}</th>
                                             <th>{{__('admin.status')}}</th>
-                                            <th>{{__('admin.category')}}</th>
+                                           {{--  <th>{{__('admin.category')}}</th> --}}
                                             <th>{{__('admin.vendor')}}</th>
                                             <th>{{__('admin.supermarket')}}</th>
                                             <th>{{__('admin.branch')}}</th>
-                                            <th>{{__('admin.subcategory')}}</th>
+                                         {{--    <th>{{__('admin.subcategory')}}</th> --}}
                                             <th>{{__('admin.controls')}}</th>
                                         @endif
 
@@ -236,7 +236,7 @@
                                                 @if(in_array('price',$columns))
                                                     <td>{{$product->price}}</td>
                                                 @endif
-                                                @if(in_array('category_id',$columns))
+                                               {{--  @if(in_array('category_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
                                                         <td>{{$product->category->arab_name}}</td>
@@ -244,7 +244,7 @@
                                                         <td>{{$product->category->eng_name}}</td>
                                                     @endif
 
-                                                @endif
+                                                @endif --}}
                                                 @if(in_array('vendor_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
@@ -272,7 +272,7 @@
                                                     @endif
 
                                                 @endif
-                                                @if(in_array('subcategory_id',$columns))
+                                                {{-- @if(in_array('subcategory_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
                                                         <td>{{$product->subcategory->arab_name}}</td>
@@ -280,7 +280,7 @@
                                                         <td>{{$product->subcategory->eng_name}}</td>
                                                     @endif
 
-                                                @endif
+                                                @endif --}}
                                                 @if(in_array('measure_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
@@ -362,11 +362,11 @@
 
 
                                                 </td>
-                                                @if(App::getLocale() == 'ar')
+                                           {{--      @if(App::getLocale() == 'ar')
                                                     <td>{{$product->category->name_ar}}</td>
                                                 @else
                                                     <td>{{$product->category->name_en}}</td>
-                                                @endif
+                                                @endif --}}
 
                                                 @if(App::getLocale() == 'ar')
                                                     <td>{{$product->vendor->arab_name}}</td>
@@ -386,11 +386,11 @@
                                                     <td>{{$product->branch->name_en}}</td>
                                                 @endif
 
-                                                @if(App::getLocale() == 'ar')
+                                               {{--  @if(App::getLocale() == 'ar')
                                                     <td>{{$product->subcategory->arab_name}}</td>
                                                 @else
                                                     <td>{{$product->subcategory->eng_name}}</td>
-                                                @endif
+                                                @endif --}}
 
                                             @endif
 
