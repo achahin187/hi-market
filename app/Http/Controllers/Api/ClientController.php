@@ -150,7 +150,7 @@ class ClientController extends Controller
 
         if($client)
         {
-            $addresses = $client->addresses()->select('id','name','phone','description','default','address_lable','lat','lon','govern','addresses')->get();
+            $addresses = $client->addresses()->select('id','name','phone','description','default','address_lable','lat','lon','govern','additional')->get();
 
             foreach ($addresses as $address)
             {
@@ -161,6 +161,8 @@ class ClientController extends Controller
                 $address->address_lable = $address->address_lable;
                 $address->lat = $address->lat;
                 $address->lon = $address->lon;
+                $address->govern = $address->govern;
+                $address->additional = $address->additional;
 
             }
             
