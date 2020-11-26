@@ -461,9 +461,19 @@ class ClientController extends Controller
             if(count($client->addresses) >= 1)
             {
                 $address = $client->addresses()->where('id',$request->address_id)->first();
-                
+                if ($address) {
+                    
                 $request_data = $request->except('address_id');
                 $address->update($request_data);
+                }else{
+                    if($lang == 'ar')
+                    {
+                        return $this->returnError(404,'العنوان غير موجود');
+                    }else{
+
+                        return $this->returnError(404,'address not dound');
+                    }
+                }
 
                 if($lang == 'ar')
                 {
