@@ -460,24 +460,26 @@ class ClientController extends Controller
         {
             if(count($client->addresses) >= 1)
             {
-                $client->address()->where('id',$request->address_id)->get();
-                dd($client);
+                $address = $client->addresses()->where('id',$request->address_id)->first();
+                $request_data = $request->except('address_id');
+                $address->update($request_data);
 
                 if($lang == 'ar')
                 {
-                    return $this->returnError('','ليس هناك عناوين مسجلة باسمك');
+                    return $this->returnSuccessMessage('تم التعديل بنجاح',200);
+                }else{
+                    return $this->returnSuccessMessage('updated successfully', 200);
                 }
-                return $this->returnError('','there is no addresses for this client registered');
             }
-            //return $this->returnData(['client_addresses'],[$client->addresses]);
+           
         }
         else
         {
             if($lang == 'ar')
             {
-                return $this->returnError('','لم نجد هذا العميل');
+                return $this->returnError(404,'لم نجد هذا العميل');
             }
-            return $this->returnError('','there is no client found');
+            return $this->returnError(404,'there is no client found');
         }
     }
 }
