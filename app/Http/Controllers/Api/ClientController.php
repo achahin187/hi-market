@@ -371,14 +371,15 @@ class ClientController extends Controller
         {
             if($this->getCurrentLang() == 'ar')
             {
-                return $this->returnError(205,'لم نجد هذا العميل');
+                return $this->returnError(404,'لم نجد هذا العميل');
             }
-            return $this->returnError(205,'there is no client found');
+            return $this->returnError(404,'there is no client found');
         }
     }
 
     public function get_address(Request $request)
     {
+
         $lang = $request->header('lang');
 
         if(!$lang || $lang == ''){
@@ -441,5 +442,42 @@ class ClientController extends Controller
             
         }
 
+    }
+
+    public function update_address(Request $request)
+    {
+         $lang = $request->header('lang');
+
+        if(!$lang || $lang == ''){
+            return $this->returnError(402,Lang::get('message.missingLang'));
+        }
+
+        $token = $request->header('token');
+
+        $client = Client::where('remember_token',$token)->first();
+
+        if($client)
+        {
+            if(count($client->addresses) >= 1)
+            {
+                $client->address()->where('id',$request->address_id)->get();
+                dd($client);
+
+                if($lang == 'ar')
+                {
+                    return $this->returnError('','ليس هناك عناوين مسجلة باسمك');
+                }
+                return $this->returnError('','there is no addresses for this client registered');
+            }
+            //return $this->returnData(['client_addresses'],[$client->addresses]);
+        }
+        else
+        {
+            if($lang == 'ar')
+            {
+                return $this->returnError('','لم نجد هذا العميل');
+            }
+            return $this->returnError('','there is no client found');
+        }
     }
 }

@@ -56,6 +56,8 @@
 
         //sendPromoCode
         Route::post('sendPromoCode','CartController@sendPromoCode');
+        
+        Route::post('updateaddress','ClientController@update_address');
 
     });
 
@@ -63,7 +65,6 @@
      Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
         //address
         Route::post('deleteAddress','ClientController@delete_address');
-        Route::post('updateaddress','AddressController@updateaddress');
 
     });
 

@@ -31,7 +31,7 @@ class SuperMarketAdminController extends Controller
      */
     public function index()
     {
-        $supermarket_admins = $this->model::Role('supermarket admin')->get();
+        $supermarket_admins = $this->model::Role('supermarket_admin')->get();
 
     
         return view('Admin.supermarket_admin.index')->with('supermarket_admins',$supermarket_admins);
@@ -66,7 +66,7 @@ class SuperMarketAdminController extends Controller
         
         $user = $this->model::create(request()->all());
     
-        $role = Role::where('name','supermarket admin' )->first();
+        $role = Role::where('name','supermarket_admin' )->first();
 
         $assignRole = $user->assignRole($role);
 
