@@ -155,6 +155,7 @@ class ClientController extends Controller
             // foreach ($addresses as $address)
             // {
             //     $address->name = $client->name;
+            //     $address->name = $client->name;
             //     $address->mobile_number = $client->mobile_number;
             //     $address->default = $address->default;
             //     $address->address_lable = $address->address_lable;
@@ -314,11 +315,11 @@ class ClientController extends Controller
         if($client) {
 
             $validator = \Validator::make($request->all(), [
-                'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-                'label'   => ['required', 'string'],
-                'default' => 'boolean',
-                'lat'     => ['required','string'],
-                'lon'     => ['required', 'string'],
+                'address'        => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                'label'          => ['required', 'string'],
+                'default'        => ['boolean'],
+                'lat'            => ['required','string'],
+                'lon'            => ['required', 'string'],
                 'additional'     => ['nullable'],
             ]);
 
@@ -332,15 +333,17 @@ class ClientController extends Controller
                 }
             }
 
-            $address = $request->address;
-            $label = $request->label;
-            $client_id = $client->id;
-            $default = $request->default;
-            $lat = $request->lat;
-            $lon = $request->lon;
+            $name       = $request->name;
+            $phone      = $request->phone;
+            $address    = $request->address;
+            $label      = $request->label;
+            $client_id  = $client->id;
+            $default    = $request->default;
+            $lat        = $request->lat;
+            $lon        = $request->lon;
             $additional = $request->additional;
 
-            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon, 
+            Address::create(['name'=>$name, 'phone'=>$phone, 'description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default, 'lat'=>$lat, 'lon'=>$lon, 
                 'additional'=>$additional]);
 
             if ($address) {

@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>edit role</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
@@ -75,27 +75,46 @@
                                         <label for="exampleInputEmail1">{{__('admin.role.permissions')}}</label>
 
                                         @if(isset($role))
-                                        <div class="row">
-                                            @foreach($permissions as $permission)
 
-                                              
-                                                        <div class="col-md-3">
-                                                            <div class="form-check" style="margin-left: 20px">
-                                                                <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox" <?php if(in_array($permission->id, $rolePermissions)) echo 'checked' ?>>
-                                                                <label class="form-check-label">
 
-                                                                    @if(App::getLocale() == 'ar')
-                                                                        {{$permission->arab_name}}
-                                                                    @else
-                                                                        {{$permission->eng_name}}
-                                                                    @endif
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                    
+                                         
+
+                                            <div class="row">
+                                    @foreach($permissions as $permission)
+                                                  <div class="col-md-12">
+                                            
+                                                @if(  explode("-", $permission->name)[1] == 'list' )
+
+                                                    <div class="form-group">
+
+                                                     <label for="exampleFormControlInput1"> {{ explode("-", $permission->name)[0] }}
+                                                     </label>
+           
+                                                    </div>
+                                                @endif
+                                            </div>
+                                      
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-check" style="margin-left: 20px">
+                                                    <input value="{{$permission->name}}" class="form-check-input" name="permission[]" type="checkbox" <?php if(in_array($permission->id, $rolePermissions)) echo 'checked' ?>>
+                                                    <label class="form-check-label">
+
+                                                        @if(App()->getLocale() == 'ar')
+                                                            {{$permission->arab_name}}
+                                                        @else
+                                                            {{$permission->eng_name}}
+                                                        @endif
+                                                    </label>
+                                                </div>
+                                            </div>
+                                                 
+                                      @endforeach
+                                        </div>
                                                
 
-                                            @endforeach
-                                        </div>
 
                                         @else
                                             @foreach($permissions as $permission)
