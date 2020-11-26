@@ -317,6 +317,7 @@ class ClientController extends Controller
             $validator = \Validator::make($request->all(), [
                 'address'        => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                 'label'          => ['required', 'string'],
+                'label'          => ['required', 'string'],
                 'default'        => ['boolean'],
                 'lat'            => ['required','string'],
                 'lon'            => ['required', 'string'],
@@ -343,12 +344,13 @@ class ClientController extends Controller
             $lat        = $request->lat;
             $lon        = $request->lon;
             $additional = $request->additional;
+            $govern     = $request->govern;
        
             Address::create([
                 'name'=>$name, 'phone'=>$phone, 'description' => $address,
                 'address_lable' => $label, 'client_id'=> $client_id,
                  'default' => $default, 'lat'=>$lat, 'lon'=>$lon, 
-                'additional'=>$additional
+                'additional'=>$additional,'govern'=>$govern,
             ]);
 
             if ($address) {
