@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Permission;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -25,11 +26,13 @@ class PermissionTableSeeder extends Seeder
             'product-create',
             'product-edit',
             'product-delete',
+
             'product-clone',
             'product-export',
             'product-import',
             'product-download',
             'product-active',
+
 
             'admin-list',
             'admin-create',
@@ -111,15 +114,12 @@ class PermissionTableSeeder extends Seeder
             'offer-create',
             'offer-delete',
             'offer-edit',
-
-            
-
-
         ];
 
         $roles = [
-            'supermarket_admin',
             'super_admin',
+            'admin',
+            'supermarket_admin',
             'delivery_admin',
             'driver',
         ];
@@ -141,7 +141,39 @@ class PermissionTableSeeder extends Seeder
                 'arab_name' => $role,
                 'eng_name' => $role,
             ]);
+        }   
+
+
+         $team = \App\Models\Team::create([
+
+            'arab_name' => 'سوبر ادمن',
+            'eng_name'  => 'super_admin',
+            'eng_description'  => 'super_admin',
+            'arab_description'  => 'super_admin',
+            'role_id'  => 1,
+        ]);
+
+
+         $user = \App\User::create([
+
+            'name' => 'super',
+            'email'  => 'super_admin@delvirtto.com',
+            'team_id'      =>1,
+            'password'   =>  '123456789',
+        ]);
+
+        $role = \App\Models\Role::where('name','super_admin' )->first();
+        $all_permissions = \App\Models\Permission::all();
+
+        $assignRole = $user->assignRole($role);
+
+        foreach ($all_permissions as  $value) {
+            
+            $role->givePermissionTo($value);
         }
 
+        $Permissions = $role->permissions;
+            
+        $user->givePermissionTo($all_permissions);
     }
 }

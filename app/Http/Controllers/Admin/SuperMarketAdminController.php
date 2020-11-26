@@ -63,6 +63,7 @@ class SuperMarketAdminController extends Controller
             'password' =>'required|min:8',
             
         ]);
+        
         $user = $this->model::create(request()->all());
     
         $role = Role::where('name','supermarket admin' )->first();
