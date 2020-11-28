@@ -23,11 +23,11 @@
 
                             </li> --}}
                             @if(auth()->user()->can('order-show-cancel'))
-                                <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">{{ __('admin.CancelledOrders') }}</a></li>
                             @endif    
 
                             @if(auth()->user()->can('order-create'))
-                             <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">Add manual order</a></li>
+                             <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">{{ __('admin.add_order') }}</a></li>
                             @endif
                         </ol>
                     </div>
@@ -71,7 +71,7 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>order ID</th>
+                                        <th>{{ __('admin.order_id') }}</th>
                                         @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))        
                                         <th>{{ __('admin.controls') }}</th>
                                 @endif        
@@ -126,16 +126,16 @@
                                     <table id="example1" class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>order ID</th>
-                                            <th>assign to</th>
-                                            <th>status</th>
+                                            <th>{{ __('admin.order_id') }}</th>
+                                            <th>{{ __('admin.assign_to') }}</th>
+                                            <th>{{ __('admin.status') }}</th>
 
                                             @if(auth()->user()->can('orders-cancel'))
-                                            <th>cancel</th>
+                                            <th>{{ __('admin.cancel') }}</th>
                                             @endif
 
                                             @if(auth()->user()->can('orders-rollback'))
-                                            <th>rollback</th>
+                                            <th>{{ __('admin.rollback') }}</th>
                                             @endif
 
                                         @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))    <th>{{ __('admin.controls') }}</th>
@@ -175,10 +175,10 @@
 
                                                     @if($order->status >= $setting->cancellation || auth()->user()->hasRole('driver'))
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">cancel</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
 
                                                     @else
-                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" value="{{$order->id}}" class="btn btn-danger">cancel</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
                                                     @endif
 
                                                 </td>
@@ -189,10 +189,10 @@
 
                                                     @if(in_array($order->status,[1,2,3,4,6]) )
 
-                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" value="{{$order->id}}" class="btn btn-info">rollback</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" value="{{$order->id}}" class="btn btn-info">{{ __('admin.rollback') }}</button>
 
                                                     @else
-                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" disabled value="{{$order->id}}" class="btn btn-info">rollback</button>
+                                                        <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" disabled value="{{$order->id}}" class="btn btn-info">{{ __('admin.rollback') }}</button>
                                                     @endif
 
                                                 </td>
@@ -213,7 +213,7 @@
 
 
                                                                    {{--  @if(auth()->user()->hasRole(['admin','delivery-manager'])) --}}
-                                                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                                     {{-- @endif --}}
                                                             </form>
                                                               @if(auth()->user()->can('orders-assign'))
@@ -221,7 +221,7 @@
                                                                     <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
                                                               @endif      
                                                           @if(auth()->user()->can('order-edit'))
-                                                                        <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+                                                                        <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('admin.edit') }}</a>
                                                           @endif              
 
                                                             </div>
@@ -234,7 +234,7 @@
                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">{{ __('admin.CancelledOrders') }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -274,7 +274,7 @@
                                                                 </div>
 
                                                                 <div class="card-footer">
-                                                                    <button type="submit"  class="btn btn-primary">cancel order</button>
+                                                                    <button type="submit"  class="btn btn-primary">{{ __('admin.cancel') }}</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -287,7 +287,7 @@
                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Rollback Order</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">{{ __('admin.rollback') }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -302,7 +302,7 @@
                                                                     <input type="hidden" value="{{$order->id}}" name="order_id">
 
                                                                     <div class="form-group">
-                                                                        <label>Rollback Reason</label>
+                                                                        <label>{{ __('admin.Rollback_Reason') }}</label>
                                                                         <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                                             @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
@@ -315,7 +315,7 @@
                                                                     </div>
 
                                                                     <div class="form-group">
-                                                                        <label>Notes</label>
+                                                                        <label>{{ __('admin.Notes') }}</label>
                                                                         <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ..."></textarea>
 
                                                                         @error('notes')
@@ -327,7 +327,7 @@
                                                                 </div>
 
                                                                 <div class="card-footer">
-                                                                    <button type="submit"  class="btn btn-primary">rollback order</button>
+                                                                    <button type="submit"  class="btn btn-primary">{{ __('admin.rollback') }}</button>
                                                                 </div>
                                                             </form>
                                                         </div>

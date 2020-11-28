@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.edit') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">{{ __('admin.orders') }}</a></li>
+                            <li class="breadcrumb-item active">{{ __('admin.edit_order') }}</li>
                         </ol>
                     </div>
                     <div class="col-12">
@@ -48,7 +48,7 @@
                                 <div class="card card-primary">
 
                                     <div class="card-header">
-                                        order client
+                                         {{ __('admin.clients') }}
                                     </div>
 
                                     <form role="form" action="{{route('order_client.update',$order->id) }} " method="POST" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
 
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">{{__('client name')}}</label>
+                                                    <label for="exampleInputEmail1">{{__('admin.name')}}</label>
                                                     <input type="text" value="{{$order->client->name }}" name="name" class=" @error('name') is-invalid @enderror form-control" disabled required>
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
+                                                    <label for="exampleInputEmail1">{{__('admin.email')  }}</label>
                                                     <input type="email" value="{{$order->client->email }} " name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" disabled required>
                                                     @error('email')
                                                     <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1"> client mobile number</label>
+                                                    <label for="exampleInputEmail1"> {{__('admin.phone')  }}</label>
                                                     <input type="text" value="{{$order->mobile_delivery }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('mobile_number')
                                                     <span class="invalid-feedback" role="alert">
@@ -87,7 +87,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1"> client location</label>
+                                                    <label for="exampleInputEmail1"> {{ __('admin.location') }}</label>
                                                     <input type="text" value="{{$order->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('address')
                                                     <span class="invalid-feedback" role="alert">
@@ -133,7 +133,7 @@
 
 
                                                 <div class="card-footer">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                    <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -145,7 +145,7 @@
                                     <div class="card card-primary">
 
                                         <div class="card-header">
-                                            edit order details
+                                            {{ __('admin.edit_order') }}
                                         </div>
 
                                         <form role="form" action="{{route('orders.update',$order->id) }} " method="POST" enctype="multipart/form-data">
@@ -159,7 +159,7 @@
                                                 {{-- @if(Auth()->user()->can('order-status')) --}}
 
                                                 <div class="form-group">
-                                                    <label>Status</label>
+                                                    <label>{{ __('admin.status') }}</label>
                                                     <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
 
@@ -184,7 +184,7 @@
  --}}
                                               {{--   @if(auth()->user()->can('order-driver') && $order->status >= 2) --}}
                                                     <div class="form-group">
-                                                        <label>assign driver</label>
+                                                        <label>{{ __('admin.assign_driver') }}</label>
                                                       <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;">
 
                                                             @if($order->user != null)
@@ -225,7 +225,7 @@
 
                                               {{--    @if(Auth()->user()->can('order-address')) --}}
                                                 <div class="form-group">
-                                                    <label>{{__('order_address')}}</label>
+                                                    <label>{{__('admin.order_address')}}</label>
                                                     <textarea class=" @error('address') is-invalid @enderror form-control" name="address" rows="3" placeholder="Enter ...">
 
                                                                 {{$order->address }}
@@ -241,7 +241,7 @@
 
                                                {{--  @if(Auth()->user()->can('order-date')) --}}
                                                 <div class="form-group">
-                                                    <label>schedule-delivery_date</label>
+                                                    <label>{{ __('admin.schedule-delivery_date') }}</label>
                                                     <input type="datetime-local" class=" @error('delivery_date') is-invalid @enderror form-control"  @if(isset($order)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($order->delivery_date)) }}" @endif name="delivery_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
 
                                                     @error('delivery_date')
@@ -255,7 +255,7 @@
 
                                                {{--  @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address'])) --}}
                                                     <div class="card-footer">
-                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
                                                     </div>
                                                {{--  @endif --}}
                                             </div>
@@ -273,11 +273,11 @@
                                             <div class="card-header">
                                                 @if(isset($productorder) && isset($order) && !isset($offer))
 
-                                                    Edit product
+                                                    {{ __('admin.add_product') }}
 
                                                 @else
 
-                                                    Add product
+                                                    {{ __('admin.edit_product') }}
 
                                                 @endif
 
@@ -301,7 +301,7 @@
 
                                                             <div class="form-group">
 
-                                                                <label>select product</label>
+                                                                <label>{{ __('admin.select_product') }}</label>
 
                                                                     @if(isset($productorder) && !isset($offer))
 
@@ -388,11 +388,11 @@
 
                                                                     @if(isset($productorder) && !isset($offer))
 
-                                                                        save
+                                                                        {{ __('admin.add') }}
 
                                                                     @else
 
-                                                                        add
+                                                                           {{ __('admin.add') }}
 
                                                                     @endif
 
@@ -404,15 +404,15 @@
                                             </form>
 
                                             <div class="card-body">
-                                                <h5>Total : {{$total_products_price}}</h5>
+                                                <h5>{{ __('admin.total') }} : {{$total_products_price}}</h5>
                                                 <table id="example1" class="table table-bordered table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>name</th>
-                                                        <th>price</th>
-                                                        <th>quantity</th>
-                                                        <th>supermarket</th>
-                                                        <th>controls</th>
+                                                        <th>{{ __('admin.name') }}</th>
+                                                        <th>{{ __('admin.price') }}</th>
+                                                        <th>{{ __('admin.quantity') }}</th>
+                                                        <th>{{ __('admin.supermarket') }}</th>
+                                                        <th>{{ __('admin.controls') }}</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -456,11 +456,11 @@
                                             <div class="card-header">
                                                 @if(isset($productorder) && isset($order) && isset($offer))
 
-                                                    Edit product offers
+                                                    {{ __('admin.Edit product offers') }}
 
                                                 @else
 
-                                                    Add product offer
+                                                    {{ __('admin.Add product offer') }}
 
                                                 @endif
 
@@ -484,7 +484,7 @@
 
                                                             <div class="form-group">
 
-                                                                <label>select product</label>
+                                                                <label>{{ __('admin.select_product') }}</label>
 
                                                                 @if(isset($productorder) && isset($offer))
 
@@ -571,11 +571,11 @@
 
                                                                     @if(isset($productorder) && isset($offer))
 
-                                                                        save
+                                                                        {{ __('admin.add') }}
 
                                                                     @else
 
-                                                                        add
+                                                                       {{ __('admin.add') }}
 
                                                                     @endif
 
@@ -587,15 +587,15 @@
                                             </form>
 
                                             <div class="card-body">
-                                                <h5>Total : {{$total_product_offers_price}}</h5>
+                                                <h5>{{ __('admin.total') }} : {{$total_product_offers_price}}</h5>
                                                 <table id="example1" class="table table-bordered table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>name</th>
-                                                        <th>price</th>
-                                                        <th>quantity</th>
-                                                        <th>supermarket</th>
-                                                        <th>controls</th>
+                                                        <th>{{ __('admin.name') }}</th>
+                                                        <th>{{ __('admin.price') }}</th>
+                                                        <th>{{ __('admin.quantity') }}</th>
+                                                        <th>{{ __('admin.supermarket') }}</th>
+                                                        <th>{{ __('admin.controls') }}</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -615,8 +615,8 @@
                                                                             @csrf
                                                                             @method('delete')
 
-                                                                            <a class="dropdown-item" href="{{ route('orderproduct.edit',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}">{{ __('edit') }}</a>
-                                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                            <a class="dropdown-item" href="{{ route('orderproduct.edit',['order_id' => $order->id,'product_id' => $orderproduct->id]) }}">{{ __('admin.edit') }}</a>
+                                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this product?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                                         </form>
 
                                                                     </div>

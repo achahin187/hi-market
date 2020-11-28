@@ -31,6 +31,9 @@ return [
     'measure' => 'وحدة القياس',
     'add_measure' => 'اضافة وحدة قياس',
     'size' => 'الحجم',
+    'size_value' => 'المقاس',
+    'add_size' => 'اضافة مقاس',
+    'edit_size' => 'تعديل المقاس',
     'start_date' => 'تاريخ البداية',
     'end_date' => 'التاريخ النهاية',
     'start_time' => 'وقت الفتح',
@@ -61,6 +64,10 @@ return [
     'product_offers'=>'عروض المنتجات',
     'list_products'=>'كل المنتجات',
     'add_product'=>'إضافة منتج جديد',
+    'select_product'=>'اخترر منتج',
+    'quantity' => 'كمية',
+    'total' => 'المجموع',
+    'order_address' => 'عنوان الاوردر',
     'edit_product'=>'تعديل منتج',
     'clone_product' => 'نسخ المنتج',
     'spec_ar'=>'تفاصيل المنتج بالعربي',
@@ -85,12 +92,17 @@ return [
     'offers'=>'عروض',
     'add_offer'=>'إضافة عرض جديد',
     'edit_offer'=>'تعديل عرض',
-
+    'Add_product_offer' => 'اضافة منتج بعرض',
+    'Edit_product_offer' => 'تعديل منتج بعرض',
     //offers
-    'orders'=>'عروض',
-    'add_order'=>'إضافة عرض جديد',
-    'edit_order'=>'تعديل عرض',
+    'orders'=>'الاوردارات',
+    'add_order'=>'اضافة اوردر ',
+    'edit_order'=> 'تعديل اوردر',
 
+    'phone'=>'الهاتف',
+    'location'=>'المكان',
+    'assign_driver'=>'اشير الى سائق',
+    "schedule-delivery_date" => 'جدولة وقت التوصيل', 
 
     //system log
     'logs'=>'سجلات النظام',
@@ -116,7 +128,27 @@ return [
     'branch_id'=>'الفروع -اى دى',
     'measure_id'=>'وحدة القياس - اى دى',
     'size_id'=>'المقاسات-اى دى',
+    'edit_measure'=> 'تعديل وحدة القياس',
+    'logo'=>'لوجو',
 
+    'Notes' => 'اضافات',
+    //orders
+    'CancelledOrders'=>'الاوردارات الملغية',
+    'Cancellation_Reason'=>'سبب الالغاء',
+    'order_id' => 'اوردر اى دى',
+    'assign_to'=> 'مشار الى',
+    'rollback' => 'تراجع ',
+    'Rollback_Reason' => 'سبب الرجوع',
+
+    'cancel' => 'الغاء',
+    //        
+     'vendor_create' => 'اضافة بائع',
+     'add_vendor' => 'اضافة بائع',
+     'vendor_edit' => 'تعديل بائع',
+     'vendors' => 'البائعين',
+     'sponser' => 'راعى',
+     'product_arabname' => 'اسم المنتج باللغة العربية',
+    'product_engname' => 'اسم المنتج بالغة الانجليزية',
     //supermarkets
     'supermarkets'=>'سوبر ماركت',
     'supermarket_admin'=>'مشرفين السوبر ماركت',
@@ -149,6 +181,7 @@ return [
 
     //clients
     'client' => 'العملاء',
+    'clients' => 'العميل',
 
     //Delivery
     'delivery'=> 'التوصيل',

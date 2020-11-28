@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{__('admin.add_supermarket')}}</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
@@ -273,7 +273,7 @@
                                     @if(isset($supermarket) && $supermarket->logo_image != null)
 
                                         <div class="form-group" style="margin-top: 40px">
-                                            <label for="exampleInputFile">supermarket logo</label>
+                                            <label for="exampleInputFile"> {{ __('admin.logo') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -292,7 +292,7 @@
                                     @else
 
                                         <div class="form-group" style="margin-top: 40px">
-                                            <label for="exampleInputFile">supermarket logo</label>
+                                            <label for="exampleInputFile">{{ __('admin.logo') }}</label>
                                             <div class="input-group">
                                                
                                                   <div class="form-group">
@@ -310,7 +310,12 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                  @if(isset($supermarket))  
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.edit') }}</button>
+                                  @else
+                                  
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
+                                  @endif  
                                 </div>
                             </form>
                         </div>

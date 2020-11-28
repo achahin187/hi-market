@@ -33,7 +33,7 @@
                                 <h3 class="card-title">
 
                                     @if(isset($unit))
-                                        edit measuring unit
+                                       {{ 'admin.measuring' }}
                                     @else
                                         create measuring unit
 

@@ -599,7 +599,15 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                  @if(isset($product) && !isset($clone))
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('admin.edit') }}
+                                </button>
+                                @else
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('admin.add') }}
+                                </button>
+                                @endif
                             </div>
                         </form>
                     </div>

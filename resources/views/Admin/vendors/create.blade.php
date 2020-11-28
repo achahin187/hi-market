@@ -9,13 +9,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.add_vendor') }}</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('vendors.index')}}">vendors</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('vendors.index')}}">{{ __('admin.vendors') }}</a></li>
+                            <li class="breadcrumb-item active">{{ __('admin.add_vendor') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -33,9 +33,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($vendor))
-                                        edit vendor
+                                        {{ __('admin.vendor_edit') }}
                                     @else
-                                        create vendor
+                                        {{ __('admin.add_vendor') }}
 
                                     @endif
                                 </h3>
@@ -73,7 +73,7 @@
 
 
                                     <div class="form-group">
-                                        <label>vendor category</label>
+                                        <label> {{ __('admin.category') }}</label>
                                         <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($vendor))
@@ -95,7 +95,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>vendor subcategory</label>
+                                        <label> {{ __('admin.subcategory') }}</label>
                                         <select class=" @error('subcategory_id') is-invalid @enderror select2"  name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($vendor))
@@ -117,7 +117,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>status</label>
+                                        <label>{{ __('admin.status') }}</label>
                                         <select class=" @error('sponsor') is-invalid @enderror select2"  name="sponsor" style="width: 100%;" required>
 
                                             @if(isset($vendor))
@@ -127,8 +127,8 @@
 
                                             @else
 
-                                                <option value="1">sponsor</option>
-                                                <option value="0">vendor</option>
+                                                <option value="1">{{ __('admin.sponsor') }}</option>
+                                                <option value="0">{{ __('vendor') }}</option>
 
                                             @endif
 
@@ -139,7 +139,7 @@
                                     @if(isset($vendor) && $vendor->image != null)
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -158,7 +158,7 @@
                                     @else
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
@@ -177,7 +177,15 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    @if(isset($vendor) && $vendor->image != null)
+
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.edit') }}</button>
+
+                                    @else
+
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
+
+                                    @endif
                                 </div>
                             </form>
                         </div>

@@ -382,7 +382,7 @@
                                                         </form>
                                                         @endif
                                                         @if(auth()->user()->can('product-edit')) 
-                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.modify')}}</a>
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.edit')}}</a>
                                                         @endif
 
                                                        @if(auth()->user()->can('product-clone')) 

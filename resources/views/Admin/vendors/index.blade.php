@@ -11,13 +11,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.vendors') }}</h1>
+                        <h1>{{ __('admin.vendor') }}</h1>
                     </div>
 
                     @if(auth()->user()->can('vendor-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">create new vendor</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">{{ __('admin.vendor_create') }}</a></li>
                             </ol>
                         </div>
                     @endif
@@ -45,18 +45,18 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Vendors</h3>
+                                <h3 class="card-title">{{ __('admin.vendors') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>arab_name</th>
-                                        <th>eng_name</th>
-                                        <th>category</th>
-                                        <th>subcategory</th>
-                                        <th>status</th>
+                                        <th>{{ __('admin.name_ar') }}</th>
+                                        <th>{{ __('admin.name_en') }}</th>
+                                        <th>{{ __('admin.category') }}</th>
+                                        <th>{{ __('admin.subcategory') }}</th>
+                                        <th>{{ __('admin.status') }}</th>
                                 @if(auth()->user()->hasAnyPermission(['vendor-delete','vendor-edit']))
                                         <th>{{__('admin.controls')}}</th>
                                  @endif  
@@ -72,11 +72,11 @@
                                             <td>
                                                 @if($vendor->sponsor == 1 )
 
-                                                    sponsor
+                                                   {{ __('admin.sponser') }}
 
                                                 @else
 
-                                                    vendor
+                                                    {{ __('admin.vendor') }}
 
                                                 @endif
 
