@@ -72,30 +72,37 @@
                                     <thead>
                                     <tr>
                                         <th>order ID</th>
-                                        <th>controls</th>
+                                        @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))        
+                                        <th>{{ __('admin.controls') }}</th>
+                                @endif        
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($cancelledorders as $order)
                                         <tr>
                                             <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
+
+                                            @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                 @if(auth()->user()->can('order-delete'))        
                                                         <form action="{{ route('orders.delete', $order->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
-
-                                                            <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
-
+                                                 @endif       
+                                                  @if(auth()->user()->can('order-edit'))           
+                                                            <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+                                                  @endif              
                                                     </div>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
 
