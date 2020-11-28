@@ -38,6 +38,7 @@ class PermissionTableSeeder extends Seeder
             'admin-delete',
             'admin-edit',
             'admin-active',
+          
 
             'vendor-list',
             'vendor-create',
@@ -50,6 +51,12 @@ class PermissionTableSeeder extends Seeder
             'order-create',
             'order-delete',
             'order-edit',
+            'order-cancel',
+            'order-rollback',
+            'order-assign',
+            'order-show-cancel',
+            'order-edit-cancel',
+            'order-delete-cancel',
             'order-edit-client-info',
             'order-edit-client-product',
             'order-edit-client-orderStatus',
@@ -137,6 +144,8 @@ class PermissionTableSeeder extends Seeder
             'offer-delete',
             'offer-edit',
             'offer-active',
+
+
         ];
 
         $roles = [
@@ -190,13 +199,13 @@ class PermissionTableSeeder extends Seeder
 
         $assignRole = $user->assignRole($role);
 
-        foreach ($all_permissions as  $value) {
+        // foreach ($all_permissions as  $value) {
             
-            $role->givePermissionTo($value);
-        }
+            $role->givePermissionTo($all_permissions);
+       //
 
-        $Permissions = $role->permissions;
+        // $Permissions = $role->permissions;
             
-        $user->givePermissionTo($all_permissions);
+        // $user->givePermissionTo($all_permissions);
     }
 }

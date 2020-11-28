@@ -246,9 +246,11 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif    
 
-                    @if(auth()->user()->can('supermarket-list'))
+                   
+                    @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list']))
                     {{-- supermarket --}} 
                         <li class="nav-item has-treeview">
+                            
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -256,6 +258,8 @@ $settings = App\Models\Setting::all()->first();
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+
+                           
                             <ul class="nav nav-treeview">
 
                                 <li class="nav-item">
@@ -266,14 +270,16 @@ $settings = App\Models\Setting::all()->first();
                                         </p>
                                     </a>
                                 </li>
-                             @if(auth()->user()->can('branches-list'))     
+
+
                                 <li class="nav-item">
                                     <a href="{{route('branches.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>branches</p>
                                     </a>
                                 </li>
-                              @endif  
+
+                                   
                             </ul>
                         </li>
                     @endif

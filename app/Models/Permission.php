@@ -13,11 +13,12 @@ use Spatie\Permission\Guard;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
+use Spatie\Permission\Models\Permission as BasePermission;
 
-class Permission extends Model implements PermissionContract
+class Permission extends BasePermission 
 {
     //
-    use HasRoles;
+    //use HasRoles;
     use RefreshesPermissionCache;
     use LogsActivity;
 

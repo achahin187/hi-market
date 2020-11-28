@@ -67,6 +67,9 @@ $settings = App\Models\Setting::all()->first();
 
     @endif
 
+     {{-- leaflet --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css"  data-require="leaflet@0.7.3" data-semver="0.7.3" />
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -101,7 +104,7 @@ $settings = App\Models\Setting::all()->first();
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    @can('edit-profile')
+                    @can('admin-edit')
                     <a class="dropdown-item" href="{{ route('profile.edit') }}">
                         {{ __('Profile') }}
                     </a>
@@ -191,10 +194,12 @@ $settings = App\Models\Setting::all()->first();
                             </ul>
                         </li>
                     @endif    
-
-                    @if(auth()->user()->can('supermarket-list'))
+ 
+                  @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list']))
                     {{-- supermarket --}} 
                         <li class="nav-item has-treeview">
+                            
+                      
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -202,8 +207,11 @@ $settings = App\Models\Setting::all()->first();
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            
 
+                           
+                            <ul class="nav nav-treeview">
+                                @if(auth()->user()->can('supermarket-list'))
                                 <li class="nav-item">
                                     <a href="{{route('supermarkets.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -212,19 +220,22 @@ $settings = App\Models\Setting::all()->first();
                                         </p>
                                     </a>
                                 </li>
-                        @if(auth()->user()->can('branches-list'))   
+                                @endif
 
+                             @if(auth()->user()->can('branches-list'))
                                 <li class="nav-item">
                                     <a href="{{route('branches.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>branches</p>
                                     </a>
                                 </li>
+                            @endif    
 
-                        @endif            
+                                   
                             </ul>
                         </li>
                     @endif
+
 
                     @if(auth()->user()->can('delivery-list'))
                       {{-- supermarket --}} 
@@ -499,6 +510,7 @@ $settings = App\Models\Setting::all()->first();
 
 <!-- jQuery -->
 <script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" data-require="leaflet@0.7.3" data-semver="0.7.3"></script>
 
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -852,6 +864,7 @@ $settings = App\Models\Setting::all()->first();
 <script src="{{ asset('plugins') }}/daterangepicker/daterangepicker.js"></script>
 
 
+@stack('scripts')
 
 </body>
 </html>

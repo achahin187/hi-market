@@ -16,8 +16,9 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-
+                        @if(auth()->user()->can('delivery-create'))
                             <li class="breadcrumb-item"><a href="{{route('delivery.create')}}">{{ trans('admin.add_driver') }}</a></li>
+                        @endif    
                         </ol>
                     </div>
 
@@ -53,8 +54,12 @@
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.role') }}</th>
-                                        <th>{{ __('admin.status') }}</th>
+                                @if(auth()->user()->can('delivery-active'))         
+                                        <th>{{ __('admin.status') }}</th> 
+                                @endif          
+                                @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))        
                                         <th>{{ __('admin.controls') }}</th>
+                                @endif        
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -91,25 +96,29 @@
 
                                             @endif
 
-
+                                @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))            
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                  @if(auth()->user()->can('delivery-delete'))        
                                                         <form action="{{ route('delivery.destroy', $driver->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('delivery.edit', $driver->id) }}">{{ __('admin.edit') }}</a>
-
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this driver?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                         </form>
+                                                @endif        
 
+                                                  @if(auth()->user()->can('delivery-edit'))
+                                                            <a class="dropdown-item" href="{{ route('delivery.edit', $driver->id) }}">{{ __('admin.edit') }}</a>
+                                                   @endif         
                                                     </div>
                                                 </div>
                                             </td>
+                                @endif            
 
                                         </tr>
                                     @endforeach

@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-
+                        <h1>{{ __('admin.vendors') }}</h1>
                     </div>
 
                     @if(auth()->user()->can('vendor-create'))
@@ -57,7 +57,9 @@
                                         <th>category</th>
                                         <th>subcategory</th>
                                         <th>status</th>
-                                        <th>controls</th>
+                                @if(auth()->user()->hasAnyPermission(['vendor-delete','vendor-edit']))
+                                        <th>{{__('admin.controls')}}</th>
+                                 @endif  
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -79,27 +81,33 @@
                                                 @endif
 
                                             </td>
+                                 @if(auth()->user()->hasAnyPermission(['vendor-delete','vendor-edit']))            
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                 @if(auth()->user()->can('vendor-delete'))        
                                                         <form action="{{ route('vendors.destroy', $vendor->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                                <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
 
 
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
 
                                                         </form>
-
+                                                 @endif       
+                                                     @if(auth()->user()->can('vendor-edit'))    
+                                                                <a class="dropdown-item" href="{{ route('vendors.edit', $vendor->id) }}">{{ __('edit') }}</a>
+                                                      @endif          
                                                     </div>
                                                 </div>
                                             </td>
+
+                                 @endif           
                                         </tr>
                                     @endforeach
 

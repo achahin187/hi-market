@@ -16,13 +16,13 @@
                         <ol class="breadcrumb float-sm-right">
                             @if(auth()->user()->can('branches-list'))
 
-                            @if(isset($supermarket_id))
-                                <li class="breadcrumb-item"><a href="{{route('branches.create',$supermarket_id)}}">{{__('admin.add_supermarket_branch')}}</a></li>
-                            @else
+                                @if(isset($supermarket_id))
+                                    <li class="breadcrumb-item"><a href="{{route('branches.create',$supermarket_id)}}">{{__('admin.add_supermarket_branch')}}</a></li>
+                                @else
 
-                                <li class="breadcrumb-item"><a href="{{route('branches.create')}}">{{__('admin.add_branch')}}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('branches.create')}}">{{__('admin.add_branch')}}</a></li>
 
-                            @endif
+                                @endif
 
                             @endif
                         </ol>
@@ -60,15 +60,19 @@
                                         <th>{{__('admin.name_ar')}}</th>
                                         <th>{{__('admin.name_en')}}</th>
                                         <th>{{__('admin.supermarket')}}</th>
+
                                     @if(auth()->user()->can('branches-active'))
                                         <th>{{__('admin.status')}}</th>
                                     @endif    
+
                                         <th>{{__('admin.products')}}</th>
                                         <th>{{__('admin.product_offers')}}</th>
                                         <th>{{__('admin.offers')}}</th>
+
                                 @if(auth()->user()->hasAnyPermission(['branches-delete','branches-edit']))        
                                         <th>{{__('admin.controls')}}</th>
-                                @endif        
+                                @endif    
+                                    
                                     </tr>
                                     </thead>
                                     <tbody>

@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <h1>DataTables</h1>
                     </div>
-
+                    
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">

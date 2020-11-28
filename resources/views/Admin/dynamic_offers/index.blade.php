@@ -14,7 +14,8 @@
 
                     </div>
 
-                    @if(auth()->user()->can('admin-create'))
+                    @if(auth()->user()->can('offer-create'))
+
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
 
@@ -27,6 +28,7 @@
                                 @endif
                             </ol>
                         </div>
+
                     @endif
 
                     <div class="col-12">
@@ -64,8 +66,12 @@
                                         <th>{{__('admin.description_en')}}</th>
                                         <th>{{__('admin.offer_type')}}</th>
                                         <th>{{__('admin.value_type')}}</th>
-                                        <th>{{__('admin.status')}}</th>
-                                        <th>{{__('admin.controls')}}</th>
+                                    @if(auth()->user()->can('offer-active'))         
+                                        <th>{{ __('admin.status') }}</th> 
+                                    @endif          
+                                @if(auth()->user()->hasAnyPermission(['offer-delete','offer-edit']))        
+                                        <th>{{ __('admin.controls') }}</th>
+                                @endif        
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -77,6 +83,8 @@
                                             <td>{{\Str::limit($offer->eng_description,20)}}</td>
                                             <td>{{$offer->offer_type}}</td>
                                             <td>{{$offer->value_type}}</td>
+
+                                        @if(auth()->user()->can('offer-active'))        
                                             <td>
 
                                                 @if($offer->status == 'active' )
@@ -98,31 +106,37 @@
                                                     </form>
 
                                                 @endif
-
-
                                             </td>
+                                        @endif    
+                                     @if(auth()->user()->hasAnyPermission(['offer-delete','offer-edit']))     
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                  @if(auth()->user()->can('offer-delete'))         
                                                         <form action="@if(isset($supermarket_id)) {{ route('offers.destroy', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.destroy', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.destroy', $offer->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
 
-                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{__('admin.edit')}}</a>
-
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>
 
                                                         </form>
+                                                  @endif
+
+                                                    @if(auth()->user()->can('offer-edit'))       
+
+                                                                <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('offers.edit', ['id' => $offer->id,'supermarket_id' => -1,'branch_id' => $branch_id]) }} @else {{ route('offers.edit', $offer->id) }} @endif">{{__('admin.edit')}}</a>
+                                                    @endif            
 
                                                     </div>
                                                 </div>
                                             </td>
+                                     @endif       
                                         </tr>
                                     @endforeach
 

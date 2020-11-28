@@ -11,11 +11,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('admin.reasons') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+                            @if(auth()->user()->can('reason-create'))
                             <li class="breadcrumb-item"><a href="{{route('reasons.create')}}">create new reason</a></li>
+                            @endif
                         </ol>
                     </div>
 
@@ -41,7 +43,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">products</h3>
+                                <h3 class="card-title">{{ __('admin.reasons') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -50,8 +52,13 @@
                                     <tr>
                                         <th>eng reason</th>
                                         <th>arab reason</th>
-                                        <th>status</th>
-                                        <th>controls</th>
+
+                                        @if(auth()->user()->can('reason-active'))
+                                        <th>{{ __('admin.status') }}</th>
+                                        @endif
+
+                                     @if(auth()->user()->hasAnyPermission(['reason-delete','reason-edit']))    <th>{{ __('admin.controls') }}</th>
+                                      @endif   
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,6 +66,7 @@
                                         <tr>
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
+                                        @if(auth()->user()->can('reason-active'))     
                                             <td>
 
                                                 @if($reason->status == 'active' )
@@ -80,9 +88,9 @@
                                                     </form>
 
                                                 @endif
-
-
                                             </td>
+                                        @endif
+                                        @if(auth()->user()->can('reason-edit'))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -95,6 +103,7 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                        @endif
                                         </tr>
                                     @endforeach
 

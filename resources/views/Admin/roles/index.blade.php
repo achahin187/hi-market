@@ -11,13 +11,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('roles') }}</h1>
                     </div>
 
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
+                                @if(auth()->user()->can('role-create'))
                                 <li class="breadcrumb-item"><a href="{{route('roles.create')}}">create new role</a></li>
+                                @endif
                             </ol>
                         </div>
 
@@ -53,7 +55,8 @@
                                     <tr>
                                         <th>arab_name</th>
                                         <th>eng_name</th>
-                                        <th>controls</th>
+                                      @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))    <th>{{ __('admin.controls') }}</th>
+                                      @endif 
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -61,25 +64,31 @@
                                         <tr>
                                             <td>{{$role->arab_name}}</td>
                                             <td>{{$role->eng_name}}</td>
+                                    @if(auth()->user()->hasAnyPermission(['role-delete','role-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                  @if(auth()->user()->can('role-delete'))        
                                                         <form action="{{ route('roles.destroy', $role->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}">{{ __('edit') }}</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
+                                                    @endif
 
+                                                      @if(auth()->user()->can('role-edit'))
+                                                                <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}">{{ __('edit') }}</a>
+                                                       @endif         
                                                     </div>
                                                 </div>
                                             </td>
+                                    @endif        
                                         </tr>
                                     @endforeach
 

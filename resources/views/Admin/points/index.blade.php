@@ -11,14 +11,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('admin.points') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
 
                             @if(!isset($point))
-
+                              @if(auth()->user()->can('point-create'))
                                 <li class="breadcrumb-item"><a href="{{route('points.create')}}">add new points</a></li>
+                              @endif  
                             @endif
                         </ol>
                     </div>
@@ -56,10 +57,13 @@
                                         <th>type</th>
                                         <th>offer_type</th>
                                         <th>value</th>
+                                        @if(auth()->user()->can('point-active'))
                                         <th>status</th>
+                                        @endif
                                         <th>start date</th>
                                         <th>end date</th>
-                                        <th>controls</th>
+                                      @if(auth()->user()->hasAnyPermission(['point-delete','point-edit']))  <th>{{ __('admin.controls') }}</th>
+                                      @endif  
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -100,6 +104,7 @@
 
                                             </td>
                                             <td>{{$point->value}}</td>
+                                            @if(auth()->user()->can('point-active'))
                                             <td>
 
                                                 @if($point->status == 'active' )
@@ -121,28 +126,35 @@
                                                     </form>
 
                                                 @endif
-
-
                                             </td>
+                                            @endif
                                             <td>{{$point->start_date}}</td>
                                             <td>{{$point->end_date}}</td>
+                                              @if(auth()->user()->hasAnyPermission(['point-delete','point-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                    @if(auth()->user()->can('point-delete'))    
                                                         <form action="{{ route('points.destroy', $point->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                            <a class="dropdown-item" href="{{ route('points.edit',$point->id) }}">{{ __('edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this range?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
+                                                    @endif
+                                                    
+                                                    @if(auth()->user()->can('point-edit'))    
+
+                                                            <a class="dropdown-item" href="{{ route('points.edit',$point->id) }}">{{ __('edit') }}</a>
+                                                    @endif        
 
                                                     </div>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
 

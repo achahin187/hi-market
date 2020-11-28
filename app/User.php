@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Hash;
+
 class User extends Authenticatable
 {
     use Notifiable;

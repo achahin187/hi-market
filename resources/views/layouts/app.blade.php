@@ -26,6 +26,9 @@
         <link rel="stylesheet" href="{{ asset('css') }}/custom.css">
 
     @endif
+     {{-- leaflet --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css"  data-require="leaflet@0.7.3" data-semver="0.7.3" />
+
 </head>
 <body>
     <div id="app">

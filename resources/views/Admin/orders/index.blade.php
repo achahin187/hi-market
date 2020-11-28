@@ -11,13 +11,20 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('admin.orders') }}</h1>
                     </div>
                     <div class="col-sm-6">
 
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
+
+                            {{-- <li class="breadcrumb-item">
+
+                                <a href="{{route('orders.index')}}">Orders</a>
+
+                            </li> --}}
+                            @if(auth()->user()->can('order-show-cancel'))
                                 <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">CancelledOrders</a></li>
+                            @endif    
 
                             @if(auth()->user()->can('order-create'))
                              <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">Add manual order</a></li>
@@ -50,11 +57,11 @@
 
                                 @if(isset($cancelledorders))
 
-                                    Cancelled Orders
+                                   {{  __('admin.cancelled_orders') }}
 
                                 @else
 
-                                    Orders
+                                    {{ __('admin.orders') }}
 
                                 @endif
                             </div>
@@ -115,9 +122,17 @@
                                             <th>order ID</th>
                                             <th>assign to</th>
                                             <th>status</th>
+
+                                            @if(auth()->user()->can('orders-cancel'))
                                             <th>cancel</th>
+                                            @endif
+
+                                            @if(auth()->user()->can('orders-rollback'))
                                             <th>rollback</th>
-                                            <th>controls</th>
+                                            @endif
+
+                                        @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))    <th>{{ __('admin.controls') }}</th>
+                                          @endif   
 
                                           {{--   @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))
                                             @endif --}}
@@ -148,7 +163,7 @@
 
                                                 </td>
 
-
+                                                  @if(auth()->user()->can('orders-cancel'))
                                                 <td>
 
                                                     @if($order->status >= $setting->cancellation || auth()->user()->hasRole('driver'))
@@ -161,6 +176,8 @@
 
                                                 </td>
 
+                                                @endif
+                                             @if(auth()->user()->can('orders-rollback'))
                                                 <td>
 
                                                     @if(in_array($order->status,[1,2,3,4,6]) )
@@ -172,6 +189,7 @@
                                                     @endif
 
                                                 </td>
+                                             @endif   
                                                {{--  @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                                     <td>
                                                         <div class="dropdown">
@@ -184,22 +202,20 @@
                                                                     @method('delete')
 
                                                                     {{-- @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver'])) --}}
-                                                                        <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
                                                                     {{-- @endif --}}
 
-                                                                    <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
 
                                                                    {{--  @if(auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                                                         <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                                     {{-- @endif --}}
-
-
-                                                               
-
-                                                                 
-
                                                             </form>
-                                                                </form>
+                                                              @if(auth()->user()->can('orders-assign'))
+                                                                
+                                                                    <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
+                                                              @endif      
+                                                          @if(auth()->user()->can('order-edit'))
+                                                                        <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('edit') }}</a>
+                                                          @endif              
 
                                                             </div>
                                                         </div>

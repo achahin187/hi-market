@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -115,7 +116,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd($request->input('permission'));
         $this->validate($request, [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -133,6 +134,8 @@ class RoleController extends Controller
         if($role) {
             $role->update(['name' => $eng_name , 'arab_name' => $arab_name , 'eng_name' => $eng_name]);;
             $role->syncPermissions($request->input('permission'));
+
+           
             return redirect('/admin/roles')->withStatus(__('role successfully updated.'));
         }
         return redirect('/admin/roles')->withStatus(__('something wrong happenned'));

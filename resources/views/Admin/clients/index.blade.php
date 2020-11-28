@@ -14,7 +14,7 @@
                         <h1>DataTables</h1>
                     </div>
 
-                    @if(auth()->user()->can('admin-create'))
+                    @if(auth()->user()->can('client-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('clients.create')}}">add new client</a></li>
@@ -58,8 +58,12 @@
                                         <th>city</th>
                                         <th>mobile number</th>
                                         <th>client orders</th>
+                                @if(auth()->user()->can('client-active'))         
                                         <th>status</th>
-                                        <th>controls</th>
+                                @endif        
+                                @if(auth()->user()->hasAnyPermission(['client-delete','client-edit']))        
+                                        <th>{{__('admin.controls')}}</th>
+                                @endif    
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -72,6 +76,8 @@
                                             <td>{{$client->city}}</td>
                                             <td>{{$client->mobile_number}}</td>
                                             <td><a href="{{route('client.orders',['client_id'=>$client->id])}}" class="btn btn-info">client orders</a></td>
+
+                                         @if(auth()->user()->can('client-active'))    
                                             <td>
 
                                                 @if($client->status == 'active' )
@@ -93,27 +99,32 @@
                                                     </form>
 
                                                 @endif
-
-
                                             </td>
+                                        @endif    
+                                    @if(auth()->user()->hasAnyPermission(['client-delete','client-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                     @if(auth()->user()->can('client-delete'))    
                                                         <form action="{{ route('clients.destroy', $client->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                                <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">{{ __('edit') }}</a>
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this client?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
+                                                    @endif    
 
+                                                    @if(auth()->user()->can('client-edit'))
+                                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">{{ __('edit') }}</a>
+                                                     @endif   
                                                     </div>
                                                 </div>
                                             </td>
+                                    @endif        
                                         </tr>
                                     @endforeach
 

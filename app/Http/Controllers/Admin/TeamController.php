@@ -14,10 +14,10 @@ class TeamController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:show-team', ['only' => ['index']]);
-        // $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:team-list', ['only' => ['index']]);
+        $this->middleware('permission:team-create', ['only' => ['create','store']]);
+        $this->middleware('permission:team-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:team-delete', ['only' => ['destroy']]);
     }
 
     /**

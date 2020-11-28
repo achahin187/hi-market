@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Contracts\Role as RoleContract;
+use Spatie\Permission\Models\Role as BaseRole;
 use Spatie\Permission\Exceptions\GuardDoesNotMatch;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -14,12 +15,13 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
 
-class Role extends Model implements RoleContract
+class Role extends BaseRole 
 {
     //
 
 
-    use HasPermissions;
+    //use HasPermissions;
+    //use HasRoles;
     use RefreshesPermissionCache;
     use LogsActivity;
 
@@ -59,15 +61,15 @@ class Role extends Model implements RoleContract
     /**
      * A role may be given various permissions.
      */
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            config('permission.models.permission'),
-            config('permission.table_names.role_has_permissions'),
-            'role_id',
-            'permission_id'
-        );
-    }
+    // public function permissions(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(
+    //         config('permission.models.permission'),
+    //         config('permission.table_names.role_has_permissions'),
+    //         'role_id',
+    //         'permission_id'
+    //     );
+    // }
 
     /**
      * A role belongs to some users of the model associated with its guard.

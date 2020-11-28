@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
+
+
+
+     function __construct()
+    {
+        $this->middleware('permission:product-list', ['only' => ['index']]);
+        $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

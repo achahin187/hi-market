@@ -63,7 +63,9 @@
                                         <th>{{__('admin.product_offers')}}</th>
                                         <th>{{__('admin.offers')}}</th>
                                         <th>{{__('admin.branches')}}</th>
+                                 @if(auth()->user()->hasAnyPermission(['supermarket-delete','supermarket-edit']))
                                         <th>{{__('admin.controls')}}</th>
+                                 @endif       
                                     </tr>
                                     </thead>
                                     <tbody>
