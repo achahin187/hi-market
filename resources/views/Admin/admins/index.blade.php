@@ -11,14 +11,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('admin.admin') }}</h1>
                     </div>
                     
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">add new admin</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('admins.export')}}">export</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">{{ __('admin.add') }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('admins.export')}}">{{ __('admin.export') }}</a></li>
                             </ol>
                         </div>
                     @endif
@@ -45,19 +45,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Admins</h3>
+                                <h3 class="card-title">{{ __('admin.admin') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>email</th>
-                                        <th>Role</th>
-                                        <th>Team</th>
+                                        <th>{{ __('admin.name') }}</th>
+                                        <th>{{ __('admin.email') }}</th>
+                                        <th>{{ __('admin.role') }}</th>
+                                        <th>{{ __('admin.team') }}</th>
                                         @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit'])) 
-                                        <th>controls</th>
+                                        <th> {{ __('admin.controls') }}</th>
                                         @endif
                                     </tr>
                                     </thead>

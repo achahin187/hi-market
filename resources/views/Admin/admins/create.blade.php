@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1> {{ __('admin.add') }}</h1>
                         @include('includes.errors')
                         <div class="col-12">
 
@@ -25,8 +25,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}">admins</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('admins.index')}}"> {{ __('admin.dashboard') }}</a></li>
+                            <li class="breadcrumb-item active"> {{ __('admin.add_admin') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -44,9 +44,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($admin))
-                                        edit admin
+                                         {{ __('admin.edit') }}
                                     @else
-                                        create admin
+                                        {{ __('admin.add') }}
 
                                     @endif
                                 </h3>
@@ -64,7 +64,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('arabname')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name')}}</label>
                                         <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
+                                        <label for="exampleInputEmail1"> {{ __('admin.email') }}</label>
                                         <input type="email" value="@if(isset($admin)){{$admin->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
+                                        <label for="exampleInputPassword1"> {{ __('admin.password') }}</label>
                                         <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -94,8 +94,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" value="">
+                                        <label class="form-control-label" for="input-password-confirmation">{{ __('admin.confirm_password') }}</label>
+                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.confirm_password') }}" value="">
                                     </div>
 
 
@@ -118,15 +118,16 @@
 
                                         @else
 
-                                            @foreach($roles as $role)
+                                            @foreach($roles->where('name','admin') as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control custom-radio">
                                                         <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]">
 
                                                         @if(App::getLocale() == 'ar')
-                                                            {{$role->arab_name}}
+                                                         <label class="form-check-label" for="exampleCheck1">{{$role->arab_name}}</label>
+                                                           
                                                         @else
-                                                            {{$role->eng_name}}
+                                                            <label class="form-check-label" for="exampleCheck1">{{$role->eng_name}}</label>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -137,7 +138,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>admin team </label>
+                                        <label> {{ __('admin.team') }} </label>
                                         <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($admin))
                                                 @foreach(\App\Models\Team::all() as $team)
@@ -177,7 +178,16 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                                @if(isset($admin))
+                                    <button type="submit" class="btn btn-primary"> {{ __('admin.edit') }}</button>
+
+                                @else
+                                 <button type="submit" class="btn btn-primary"> {{ __('admin.add') }}</button>
+
+                                @endif
+
                                 </div>
                             </form>
                         </div>

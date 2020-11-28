@@ -22,6 +22,36 @@ return [
     'password'=> 'password',
     'team' => 'team',
 
+    //name 
+
+    'name_ar' => 'Arabic Name',
+    'name_en' => 'English Name',
+     //Admin
+    'admin' => 'Admin',
+    'export' => 'Export',
+
+    //supermarket_admin
+    'supermarket_admin'=>'supermarket Admin',
+
+    //locations
+    'locations' => 'locations',
+
+    //setting
+    'setting' => 'setting',
+
+    //reasons
+    'reasons' =>'reasons',
+
+    //reasons
+    'logs' =>'system logs',
+
+
+    //reasons
+    'orders' =>'orders',
+
+    //clients
+    'client'=> 'clients',
+
     //mesages
     'created_successfully' => 'created successfully',
     'update_successfully' => 'update successfully',
@@ -43,8 +73,7 @@ return [
     'download' => 'Download Sample',
     'import'=>'Import',
     'home' => 'Home',
-    'name_ar' => 'name_ar',
-    'name_en' => 'name_en',
+
     'description_ar' => 'description_ar',
     'description_en' => 'description_en',
     'category' => 'category',
@@ -87,6 +116,20 @@ return [
     'SubCatsearch'=>'Search about a specific Sub category',
     'NoSubCatWithId'=>'There are no Sub categories with this ID',
     'SubCatDeleted'=>'The Sub Category Deleted successfully',
+     'add_measure' => 'add measure',
+
+    'arab_description'=>'Arabic description',
+    'eng_description'=>'English description',
+    'arab_spec'=>'Arabic specs',
+    'eng_spec'=>'English specs',
+    'category_id'=>' category_id',
+    'vendor_id'=>'vandor_id',
+    'subcategory_id'=>'subcategory_id',
+    'supermarket_id'=>'supermarket_id',
+    'branch_id'=>'branch_id',
+    'measure_id'=>'measure_id',
+    'size_id'=>'size_id',
+
 
     //Products
     'products'=>'products',

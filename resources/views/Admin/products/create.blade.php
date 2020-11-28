@@ -26,7 +26,7 @@
                                 <li class="breadcrumb-item active">{{__('admin.branch_products')}}</li>
 
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">{{__('admin.products')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">{{__('admin.add_product')}}</a></li>
                                 <li class="breadcrumb-item active">{{__('admin.products')}}</li>
                             @endif
                         </ol>

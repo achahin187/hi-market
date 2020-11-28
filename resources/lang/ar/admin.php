@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dashboard' => 'الرئيسية',
     'welcome' => 'أهلا و مرحبا بكم في موقعنا',
     'created_at'=>'تاريخ الانشاء',
     'updated_at'=>'تاريخ التعديل',
@@ -28,6 +29,7 @@ return [
     'country' => 'البلد',
     'area' => 'المنطقة',
     'measure' => 'وحدة القياس',
+    'add_measure' => 'اضافة وحدة قياس',
     'size' => 'الحجم',
     'start_date' => 'تاريخ البداية',
     'end_date' => 'التاريخ النهاية',
@@ -55,8 +57,9 @@ return [
     'cat_deleted'=>'لقد تم حذف القسم بنجاح',
 
     //Products
-    'products'=>'منتجات',
+    'products'=>'المنتجات',
     'product_offers'=>'عروض المنتجات',
+    'list_products'=>'كل المنتجات',
     'add_product'=>'إضافة منتج جديد',
     'edit_product'=>'تعديل منتج',
     'clone_product' => 'نسخ المنتج',
@@ -83,11 +86,41 @@ return [
     'add_offer'=>'إضافة عرض جديد',
     'edit_offer'=>'تعديل عرض',
 
+    //offers
+    'orders'=>'عروض',
+    'add_order'=>'إضافة عرض جديد',
+    'edit_order'=>'تعديل عرض',
 
 
+    //system log
+    'logs'=>'سجلات النظام',
+   
+    //setting
+    'setting'=>'الاعدادات',
+
+    //reasons
+    'reasons'=>'الاسباب',
+
+    'arab_description'=>'التفاصيل بالعربية',
+    'eng_description'=>'التفاصيل بالانجليزية',
+    'description_ar'=>'التفاصيل بالعربية',
+    'description_en'=>'التفاصيل بالانجليزية',
+    'arab_spec'=>'الوصف بالعربية',
+    'eng_spec'=>'الوصف بالانجليزية',
+    'spec_ar'=>'الوصف بالعربية',
+    'spec_en'=>'الوصف بالانجليزية',
+    'category_id'=>' القسم -اىدى',
+    'vendor_id'=>'المتجر -اى دى',
+    'subcategory_id'=>'القسم الفرى -اى دى',
+    'supermarket_id'=>'سوبر ماركت -اى دى',
+    'branch_id'=>'الفروع -اى دى',
+    'measure_id'=>'وحدة القياس - اى دى',
+    'size_id'=>'المقاسات-اى دى',
 
     //supermarkets
     'supermarkets'=>'سوبر ماركت',
+    'supermarket_admin'=>'مشرفين السوبر ماركت',
+    'all_supermarkets'=>'جميع السوبر اركتس',
     'add_supermarket'=>'إضافة سوبر ماركت جديد',
     'edit_supermarket'=>'تعديل بيانات السوبر ماركت',
 
@@ -114,12 +147,15 @@ return [
     'users'=> 'المستخدمين',
     'add_user'=>'hqhtm lsjo]l',
 
+    //clients
+    'client' => 'العملاء',
+
     //Delivery
     'delivery'=> 'التوصيل',
     'add_driver'=> 'اضافة سائق',
     'edit_driver'=> 'تعديل سائق',
     'delete_driver'=> 'حذف سائق',
-    'Confirm New Password'=> 'التاكد من الرقم السرى',
+    'confirm_password'=> 'التاكد من الرقم السرى',
     'password'=> 'الرقم السرى',
     'team' => 'فريق',
     
@@ -136,7 +172,8 @@ return [
     'name_Required'=>'يجب إدخال الإسم',
     'image_Required'=>'يجب تنزيل صورة',
 
-
+    //locations 
+    'locations' => 'الاماكن',
     
     //cloums
     'name' => 'الاسم',
@@ -145,6 +182,12 @@ return [
     'status' => 'الحالة',
     'controls' => 'التحكم',
 
+    //Admin
+    'admin' => 'المشرفين',
+    'add_admin' => 'اضافة مشرف',
+    'export' => 'تصدير',
+    
+    
 
 
     //mesages

@@ -79,7 +79,7 @@
                                 @if(isset($unit))
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                        <button type="submit" class="btn btn-primary">{{__('admin.edit')}}</button>
                                     </div>
 
                                 @else
@@ -133,7 +133,7 @@
                                                             @method('delete')
 
 
-                                                                <a class="dropdown-item" href="{{ route('measures.edit', $unit->id) }}">{{__('admin.modify')}}</a>
+                                                                <a class="dropdown-item" href="{{ route('measures.edit', $unit->id) }}">{{__('admin.edit')}}</a>
 
 
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{__('admin.delete')}}</button>

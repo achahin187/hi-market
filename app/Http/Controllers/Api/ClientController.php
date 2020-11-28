@@ -478,11 +478,12 @@ class ClientController extends Controller
             if ($validator->fails()) {
 
                 if ($lang == 'ar') {
-                    return $this->returnError(300, 'بيانات الدخول غير صحيحة');
+                        return $this->returnError(300, 'بيانات الدخول غير صحيحة');
                 } else {
                     return $this->returnError(300, 'These data is not valid');
                 }
-            }   }
+            }   
+            
 
             if(count($client->addresses) >= 1)
             {

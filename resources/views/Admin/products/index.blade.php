@@ -81,28 +81,28 @@
                                 @csrf
 
                                 <?php $cols = [
-                                    "name_ar",
-                                    "name_en",
-                                    "arab_description",
-                                    "eng_description",
-                                    "arab_spec",
-                                    "eng_spec",
-                                    "price",
-                                    "priority",
-                                    "points",
-                                    "category_id",
-                                    "vendor_id",
-                                    "subcategory_id",
-                                    "supermarket_id",
-                                    "branch_id",
-                                    "measure_id",
-                                    "size_id",
-                                    "start_date",
-                                    "end_date",
-                                    "production_date",
-                                    "exp_date",
-                                    "status",
-                                    "barcode"];?>
+                                    trans('admin.name_ar'),
+                                    trans('admin.name_en'),
+                                    trans('admin.arab_description'),
+                                    trans('admin.eng_description'),
+                                    trans('admin.arab_spec'),
+                                    trans('admin.eng_spec'),
+                                    trans('admin.price'),
+                                    trans('admin.priority'),
+                                    trans('admin.points'),
+                                    trans('admin.category_id'),
+                                    trans('admin.vendor_id'),
+                                    trans('admin.subcategory_id'),
+                                    trans('admin.supermarket_id'),
+                                    trans('admin.branch_id'),
+                                    trans('admin.measure_id'),
+                                    trans('admin.size_id'),
+                                    trans('admin.start_date'),
+                                    trans('admin.end_date'),
+                                    trans('admin.production_date'),
+                                    trans('admin.exp_date'),
+                                    trans('admin.status'),
+                                    trans('admin.barcode')];?>
 
                                 <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
 
@@ -111,7 +111,7 @@
 
                                             @foreach($cols as $col)
 
-                                                <option  value="{{$col}}">{{__('admin.'.$col)}}</option>
+                                                <option  value="{{$col}}">{{__($col)}}</option>
 
                                             @endforeach
 
@@ -140,27 +140,27 @@
 
 
                                                     @if(in_array($col,$columns))
-                                                        <th>{{__('admin.'.$col)}}</th>
+                                                        <th>{{__($col)}}</th>
                                                     @endif
 
                                                 @endforeach
 
                                             @else
 
-                                                <?php $main_cols = ['name_ar','name_en','priority','status','category','supermarket','branch'];?>
+                                                <?php $main_cols = [trans('admin.name_ar'),trans('admin.name_en'),trans('admin.priority'),trans('admin.status'),trans('admin.category'),trans('admin.supermarket'),trans('admin.branch')];?>
 
                                                 @foreach($main_cols as $main_col)
 
 
 
-                                                        <th>{{__('admin.'.$main_col)}}</th>
+                                                        <th>{{__($main_col)}}</th>
 
 
                                                 @endforeach
 
                                             @endif
                                             @if(auth()->user()->hasAnyPermission(['product-delete','product-edit'])) 
-                                            <th>controls</th>
+                                            <th>{{ __('admin.controls') }}</th>
                                             @endif
 
                                         </tr>

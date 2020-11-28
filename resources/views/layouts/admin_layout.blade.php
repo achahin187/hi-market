@@ -159,7 +159,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
-                                    products
+                                     {{ __('admin.products') }}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -168,26 +168,26 @@ $settings = App\Models\Setting::all()->first();
                                 <li class="nav-item">
                                     <a href="{{route('products.index',0)}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>list of products</p>
+                                        <p>{{ __('admin.list_products') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('measures.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>measuring units</p>
+                                       <p>{{ __('admin.measure') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('sizes.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>sizes</p>
+                                        <p>{{ __('admin.size') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('products.index',1)}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
-                                            Product Offers
+                                           {{ __('admin.product_offers') }}
                                         </p>
                                     </a>
                                 </li>
@@ -203,7 +203,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
-                                    Supermarkets
+                                    {{ __('admin.supermarkets') }}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -216,7 +216,7 @@ $settings = App\Models\Setting::all()->first();
                                     <a href="{{route('supermarkets.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
-                                            list Supermarkets
+                                            {{ __('admin.all_supermarkets') }}
                                         </p>
                                     </a>
                                 </li>
@@ -226,7 +226,7 @@ $settings = App\Models\Setting::all()->first();
                                 <li class="nav-item">
                                     <a href="{{route('branches.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>branches</p>
+                                        <p>{{ __('admin.branches') }}</p>
                                     </a>
                                 </li>
                             @endif    
@@ -242,7 +242,7 @@ $settings = App\Models\Setting::all()->first();
                          <li class="nav-item">
                             <a href="{{route('delivery.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>delivery</p>
+                                <p>{{ __('admin.delivery') }}</p>
                             </a>
                         </li>
                     @endif
@@ -254,7 +254,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
-                                   location
+                                 {{ __('admin.locations') }}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -263,19 +263,19 @@ $settings = App\Models\Setting::all()->first();
                                 <li class="nav-item">
                                     <a href="{{route('countries.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>country</p>
+                                        <p>{{ __('admin.country') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('cities.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>city</p>
+                                        <p>{{ __('admin.city') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('areas.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>area</p>
+                                        <p>{{ __('admin.area') }}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -288,7 +288,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="{{route('categories.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    categories
+                                    {{ __('admin.category') }}
                                 </p>
                             </a>
                         </li>
@@ -300,7 +300,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="{{route('subcategories.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    subcategories
+                                     {{ __('admin.subcategory') }}
                                 </p>
                             </a>
                         </li>
@@ -312,7 +312,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="{{route('vendors.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Vendors
+                                    {{ __('admin.vendor') }}
                                 </p>
                             </a>
                         </li>
@@ -324,7 +324,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="{{route('admins.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Admins
+                                    {{ __('admin.admin') }}
                                 </p>
                             </a>
                         </li>
@@ -338,7 +338,7 @@ $settings = App\Models\Setting::all()->first();
                             <a href="{{route('orders.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Orders
+                                    {{ __('admin.orders') }}
                                 </p>
                             </a>
                         </li>
@@ -352,20 +352,20 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('logs.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        system logs
+                                        {{ __('admin.logs') }}
                                     </p>
                                 </a>
                             </li>
                         @endif    
 
 
-                       @if(auth()->user()->can('supermarket-list'))
-                            {{-- logs --}}
+                       @if(auth()->user()->can('supermarketAdmin-list'))
+                            {{-- supermarket-admin --}}
                             <li class="nav-item">
                                 <a href="{{route('supermarket-admins.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        super market admin
+                                        {{ __('admin.supermarket_admin') }}
                                     </p>
                                 </a>
                             </li>
@@ -377,7 +377,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('settings.edit',$settings->id??"")}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Settings
+                                       {{ __('admin.setting') }}
                                     </p>
                                 </a>
                             </li>
@@ -389,7 +389,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('reasons.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Reasons
+                                        {{ __('admin.reasons') }}
                                     </p>
                                 </a>
                             </li>
@@ -401,7 +401,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('points.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Points
+                                        {{ __('admin.points') }}
                                     </p>
                                 </a>
                             </li>
@@ -413,7 +413,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('teams.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        teams
+                                        {{ __('admin.team') }}
                                     </p>
                                 </a>
                             </li>
@@ -425,7 +425,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('clients.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        clients
+                                        {{ __('admin.client') }}
                                     </p>
                                 </a>
                             </li>
@@ -437,7 +437,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('offers.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        offers
+                                        {{ __('admin.offers') }}
                                     </p>
                                 </a>
                             </li>
@@ -450,7 +450,7 @@ $settings = App\Models\Setting::all()->first();
                                 <a href="{{route('roles.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Roles
+                                        {{ __('admin.roles') }}
                                     </p>
                                 </a>
                             </li>
