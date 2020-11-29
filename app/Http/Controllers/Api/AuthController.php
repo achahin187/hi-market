@@ -184,7 +184,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required' , 'digits:11' , Rule::unique('clients', 'email')],
-            'email' => ['nullable','email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'email' => ['required','email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required'],
         ]);
 

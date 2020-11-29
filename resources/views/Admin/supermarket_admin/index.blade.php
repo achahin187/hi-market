@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.SuperMarket Admin') }}</h1>
+                        <h1>{{ __('admin.supermarket_admin') }}</h1>
                     </div>
 
 
@@ -46,17 +46,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">admins</h3>
+                                <h3 class="card-title">{{ __('admin.supermarket_admin') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>email</th>
+                                        <th>{{ __('admin.name') }}</th>
+                                        <th>{{ __('admin.email') }}</th>
                                     @if(auth()->user()->hasAnyPermission(['supermarketAdmin-delete','supermarketAdmin-edit']))
-                                        <th>controls</th>
+                                        <th>{{ __('admin.controls') }}</th>
                                     @endif    
                                     </tr>
                                     </thead>

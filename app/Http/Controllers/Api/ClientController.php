@@ -146,7 +146,7 @@ class ClientController extends Controller
             return $this->returnError(402,'language is missing');
         }
 
-        $client = Client::where('remember_token',$token)->select('id','mobile_number','name')->first();
+        $client = Client::where('remember_token',$token)->first();
 
         if($client)
         {

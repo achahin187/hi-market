@@ -34,6 +34,8 @@ return [
 
     //supermarket_admin
     'supermarket_admin'=>'supermarket Admin',
+    'add_supermarket_admin'=>'add supermarket admin',
+    'all_supermarkets'=>'all supermarkets',
 
     //locations
     'locations' => 'locations',

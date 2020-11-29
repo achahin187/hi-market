@@ -198,6 +198,7 @@ return [
     'add_user'=>'hqhtm lsjo]l',
 
     'add_supermarket_admin'=>'اضافة مشرف سوبر ماركت',
+
     //clients
     'client' => 'العملاء',
     'clients' => 'العميل',
