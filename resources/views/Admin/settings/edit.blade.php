@@ -9,13 +9,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.setting') }}</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.index')}}">categories</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            
+                            <li class="breadcrumb-item active">{{ __('admin.setting') }}</li>
                         </ol>
                     </div>
                     <div class="col-12">
@@ -43,7 +43,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                    order settings
+                                   {{ __('admin.order_setting') }}
                                 </h3>
 
                             </div>
@@ -56,17 +56,17 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>tax</label>
+                                        <label>{{ __('admin.tax') }}</label>
                                         <select class=" @error('tax') is-invalid @enderror select2"  name="tax" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                <option <?php if($setting->tax == 1) echo 'selected'; ?> value="1">percentage</option>
-                                                <option <?php if($setting->tax == 0) echo 'selected'; ?> value="0">value</option>
+                                                <option <?php if($setting->tax == 1) echo 'selected'; ?> value="1">{{ __('admin.percentage') }}</option>
+                                                <option <?php if($setting->tax == 0) echo 'selected'; ?> value="0">{{ __('admin.value') }}</option>
 
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('tax_value')}}</label>
+                                        <label for="exampleInputPassword1">{{__('admin.tax_value')}}</label>
                                         <input type="number" min="0" step="0.01" name="tax_value" value="{{$setting->tax_value}}" class=" @error('tax_value') is-invalid @enderror form-control" >
                                         @error('tax_value')
                                         <span class="invalid-feedback" role="alert">
@@ -76,7 +76,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>tax on product</label>
+                                        <label>{{ __('admin.tax_on_product') }}</label>
                                         <select class=" @error('tax_on_product') is-invalid @enderror select2"  name="tax_on_product" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                 <option <?php if($setting->tax_on_product == 1) echo 'selected'; ?> value="1">product price contains tax</option>

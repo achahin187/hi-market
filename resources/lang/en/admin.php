@@ -22,6 +22,8 @@ return [
     'password'=> 'password',
     'team' => 'team',
 
+
+    'order_setting' => 'order setting',
     //name 
 
     'name_ar' => 'Arabic Name',
@@ -59,6 +61,12 @@ return [
      'select_product' => 'select product',
      'quantity' => 'quantity',
     'total' => 'total',
+    'tax' => 'tax',
+    'percentage' => 'percentage',
+    
+    'tax_on_product'=>'tax on product',
+    'tax_value' =>'tax_value',
+    'value' => 'value',
     'order_address' => 'order address',
     //mesages
     'created_successfully' => 'created successfully',

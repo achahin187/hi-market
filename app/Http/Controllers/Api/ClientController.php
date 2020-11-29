@@ -323,9 +323,9 @@ class ClientController extends Controller
                 'lat'            => ['required','string'],
                 'lon'            => ['required', 'string'],
                 'additional'     => ['nullable'],
-                 'govern'        => ['required|string'],
-                 'name'          => ['required|string'],
-                 'phone'         => ['required|string'],
+                 'govern'        => 'required|string',
+                 'name'          => 'required|string',
+                 'phone'         => 'required|string',
             ]);
 
 

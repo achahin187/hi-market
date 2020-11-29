@@ -45,6 +45,15 @@ return [
     'controls' => 'ادوات التجكم',
 
 
+    'order_setting' => 'اعدادات الاوردر',
+    'tax' => 'الضرائب',
+    'tax_value' => 'قيمة الضرائب',
+    'tax_on_product'=>'الضرائب على المنتج',
+    'product_price_contains_tax' =>'سعر المنتج يحتوى على ضرائب',
+    'product_price_doesnt_contain_tax' =>'سعر المنتج لا يحتوى على ضؤائب',
+    'percentage' => 'النسبة المئوية',
+    'value' => 'القيمة',
+
     //Categories
     'categories'=>'الأقسام',
     'add_category'=>'إضافة قسم جديد',
