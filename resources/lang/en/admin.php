@@ -51,6 +51,8 @@ return [
     //reasons
     'orders' =>'orders',
 
+    'list_product'=>'list product',
+
     //clients
     'client'=> 'clients',
     'clients'=> 'client',
@@ -63,11 +65,20 @@ return [
     'total' => 'total',
     'tax' => 'tax',
     'percentage' => 'percentage',
+    'user' => 'user',
     
     'tax_on_product'=>'tax on product',
     'tax_value' =>'tax_value',
     'value' => 'value',
     'order_address' => 'order address',
+    'product_price_contains_tax' =>'product price contains tax',
+    'product_price_doesnt_contain_tax' =>'product price doesnt contain tax',
+    'Cancellation_disabled_when_order' =>'Cancellation disabled when order',
+    'delivery_money' =>'delivery Money',
+    'Date_range' =>'Date range',
+    'no_user' =>'no user',
+    'subject_type' =>'subject type',
+    'description' =>'description',
     //mesages
     'created_successfully' => 'created successfully',
     'update_successfully' => 'update successfully',

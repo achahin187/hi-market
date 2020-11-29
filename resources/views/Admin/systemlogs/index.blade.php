@@ -16,7 +16,7 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('logs.index')}}">system logs</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('logs.index')}}">{{ __('admin.logs') }}</a></li>
                         </ol>
                     </div>
 
@@ -42,7 +42,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">System Logs</h3>
+                                <h3 class="card-title">{{ __('admin.logs') }}</h3>
                             </div>
 
 
@@ -58,7 +58,7 @@
 
 
                                         <div class="form-group col-md-6">
-                                            <label>Date range:</label>
+                                            <label>{{ __('admin.Date_range') }}:</label>
 
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -84,10 +84,10 @@
 
 
                                         <div class="form-group col-md-6">
-                                            <label>users </label>
+                                            <label>{{ __('admin.users') }} </label>
                                             <select class=" @error('user_id') is-invalid @enderror select2 filteruser" name="user_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                <option>no user</option>
+                                                <option>{{ __('admin.no_user') }}</option>
                                                     @foreach(\App\User::all() as $user)
 
                                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -106,12 +106,12 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>log name</th>
-                                        <th>description</th>
-                                        <th>subject_type</th>
-                                        <th>user name</th>
-                                        <th>user email</th>
-                                        <th>date</th>
+                                        <th> {{ __('admin.name') }}</th>
+                                        <th>{{ __('admin.description') }}</th>
+                                        <th>{{ __('admin.subject_type') }}</th>
+                                        <th>{{ __('admin.user') }}</th>
+                                        <th>{{ __('admin.email') }}</th>
+                                        <th>{{ __('admin.Date_range') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +125,7 @@
                                                 @if($log->causer_id)
                                                     {{App\User::where('id',$log->causer_id)->first()->name}}
                                                 @else
-                                                    no user
+                                                    {{ __('admin.no_user') }}
                                                 @endif
 
                                             </td>
@@ -134,7 +134,7 @@
                                                 @if($log->causer_id)
                                                     {{App\User::where('id',$log->causer_id)->first()->email}}
                                                 @else
-                                                    no user
+                                                    {{ __('admin.no_user') }}
                                                 @endif
 
                                             </td>

@@ -168,7 +168,7 @@ $settings = App\Models\Setting::all()->first();
                                 <li class="nav-item">
                                     <a href="{{route('products.index',0)}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ __('admin.list_products') }}</p>
+                                        <p>{{ __('admin.list_product') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

@@ -51,6 +51,11 @@ return [
     'tax_on_product'=>'الضرائب على المنتج',
     'product_price_contains_tax' =>'سعر المنتج يحتوى على ضرائب',
     'product_price_doesnt_contain_tax' =>'سعر المنتج لا يحتوى على ضؤائب',
+    'Cancellation_disabled_when_order' =>'الغاء  زر الالغاء عندما يكون الاوردر ',
+    'delivery_money'=>'رسوف التوصيل',
+    'Date_range' => 'التوقيت',
+    'no_user'=> 'لا يوجد مستخدم',
+    'subject_type'=> 'النوع',
     'percentage' => 'النسبة المئوية',
     'value' => 'القيمة',
 
@@ -123,6 +128,7 @@ return [
     'reasons'=>'الاسباب',
 
     'arab_description'=>'التفاصيل بالعربية',
+    'description'=>'التفاصيل بالعربية',
     'eng_description'=>'التفاصيل بالانجليزية',
     'description_ar'=>'التفاصيل بالعربية',
     'description_en'=>'التفاصيل بالانجليزية',
@@ -178,6 +184,8 @@ return [
     'add_area'=>'اضافة منطقة',
     'edit_area'=>'تعديل المنطقة',
 
+
+    'list_product'=> 'المنتجات',
     //cities
     'cities'=>'المدن',
     'add_city'=>'اضافة مدينة',
@@ -186,8 +194,10 @@ return [
 
     //Users
     'users'=> 'المستخدمين',
+    'user'=> 'المستخدمين',
     'add_user'=>'hqhtm lsjo]l',
 
+    'add_supermarket_admin'=>'اضافة مشرف سوبر ماركت',
     //clients
     'client' => 'العملاء',
     'clients' => 'العميل',

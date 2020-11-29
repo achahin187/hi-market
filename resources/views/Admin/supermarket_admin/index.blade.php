@@ -18,7 +18,7 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @if(auth()->user()->can('supermarketAdmin-create'))
-                                <li class="breadcrumb-item"><a href="{{route('supermarket-admins.create')}}">create new SuperMarket Admin</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('supermarket-admins.create')}}">{{ __('admin.add_supermarket_admin') }}</a></li>
                                 @endif
                             </ol>
                         </div>

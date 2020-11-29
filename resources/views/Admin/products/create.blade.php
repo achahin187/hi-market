@@ -525,6 +525,18 @@
                                 </div>
 
 
+                                    <div class="form-group">
+                                        <label>{{__('admin.end_date')}}</label>
+                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"   value="{{old('time') }}" name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+
+                                        @error('end_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
                                 <div class="form-group">
                                     <label>{{__('admin.exp_date')}}</label>
                                     <input type="datetime-local" class=" @error('exp_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->exp_date)) }}" @endif name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>

@@ -79,13 +79,17 @@
                                         <label>{{ __('admin.tax_on_product') }}</label>
                                         <select class=" @error('tax_on_product') is-invalid @enderror select2"  name="tax_on_product" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                <option <?php if($setting->tax_on_product == 1) echo 'selected'; ?> value="1">product price contains tax</option>
-                                                <option <?php if($setting->tax_on_product == 0) echo 'selected'; ?> value="0">product price doesn't contain tax</option>
+                                                <option <?php if($setting->tax_on_product == 1) echo 'selected'; ?> value="1">
+                                                    {{ __('admin.product_price_contain_tax') }}
+                                                </option>
+                                                <option <?php if($setting->tax_on_product == 0) echo 'selected'; ?> value="0">
+                                                       {{ __('admin.product_price_doesnt_contain_tax') }}
+                                                </option>
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>delivery</label>
+                                        <label>{{ __('admin.delivery_money') }}</label>
                                         <input type="number" min="0" step="0.01" name="delivery" value="{{$setting->delivery}}" class=" @error('delivery') is-invalid @enderror form-control" >
                                         @error('delivery')
                                             <span class="invalid-feedback" role="alert">
@@ -95,7 +99,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Cancellation disabled when order</label>
+                                        <label>{{ __('admin.Cancellation_disabled_when_order') }}</label>
                                         <select class=" @error('tax') is-invalid @enderror select2"  name="cancellation" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             <option <?php if($setting->cancellation == 0) echo 'selected'; ?> value="0">new</option>
@@ -111,7 +115,7 @@
                                     @if($setting->splash != null)
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">{{__('admin.image')  }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -130,7 +134,7 @@
                                     @else
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">{{__('admin.image')  }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="splash" type="file" class="custom-file-input" id="exampleInputFile">
@@ -151,7 +155,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.edit') }}</button>
                                 </div>
                             </form>
                         </div>
