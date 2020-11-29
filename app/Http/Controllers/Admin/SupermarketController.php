@@ -59,15 +59,15 @@ class SupermarketController extends Controller
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
             'commission' => ['required','min:0','numeric'],
-            'categories' => ['required'],
-            'priority' => ['required','min:0','integer'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'area_id' => 'required|integer|min:0',
-            'city_id' => 'required|integer|min:0',
-            'country_id' => 'required|integer|min:0',
-            'start_time' => ['required','string'],
-            'end_time' => ['required','string'],
+            //'categories' => ['required'],
+            //'priority' => ['required','min:0','integer'],
+            //'area_id' => 'required|integer|min:0',
+            //'city_id' => 'required|integer|min:0',
+            //'country_id' => 'required|integer|min:0',
+            //'start_time' => ['required','string'],
+            //'end_time' => ['required','string'],
         ];
 
         $this->validate($request,$rules);
@@ -80,7 +80,7 @@ class SupermarketController extends Controller
 
         $commission = $request->input('commission');
 
-        $priority = $request->input('priority');
+        //$priority = $request->input('priority');
 
         if($image = $request->file('image'))
         {
@@ -116,19 +116,19 @@ class SupermarketController extends Controller
             'arab_name' => $arab_name,
             'eng_name' => $eng_name,
             'status' => $status,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'area_id' => $request->area_id,
-            'city_id' => $request->city_id,
-            'country_id' => $request->country_id,
             'commission' => $commission,
-            'priority' => $priority,
             'image' => $file_to_store,
             'logo_image' => $logo,
+            // 'priority' => $priority,
+            // 'start_time' => $request->start_time,
+            // 'end_time' => $request->end_time,
+            // 'area_id' => $request->area_id,
+            // 'city_id' => $request->city_id,
+            // 'country_id' => $request->country_id,
         ]);
 
 
-        $supermarket->categories()->sync($request->categories);
+        //$supermarket->categories()->sync($request->categories);
 
 
         return redirect('admin/supermarkets')->withStatus(__('supermarket created successfully'));
@@ -181,20 +181,21 @@ class SupermarketController extends Controller
     public function update(Request $request, $id)
     {
         //
+       
 
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'commission' => ['required','min:0','numeric'],
-            'priority' => ['required','min:0','integer'],
-            'categories' => ['required'],
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'logo_image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'area_id' => 'required|integer|min:0',
-            'city_id' => 'required|integer|min:0',
-            'country_id' => 'required|integer|min:0',
-            'start_time' => ['required','string'],
-            'end_time' => ['required','string'],
+            // 'priority' => ['required','min:0','integer'],
+            // 'categories' => ['required'],
+            // 'area_id' => 'required|integer|min:0',
+            // 'city_id' => 'required|integer|min:0',
+            // 'country_id' => 'required|integer|min:0',
+            // 'start_time' => ['required','string'],
+            // 'end_time' => ['required','string'],
         ];
 
         $this->validate($request, $rules);
@@ -255,18 +256,18 @@ class SupermarketController extends Controller
             $supermarket->update([
                 'arab_name' => $request->arab_name,
                 'eng_name' => $request->eng_name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
                 'commission' => $request->commission ,
-                'priority' => $request->priority ,
-                'area_id' => $request->area_id,
-                'city_id' => $request->city_id,
-                'country_id' => $request->country_id,
                 'image' => $file_to_store,
-                'logo_image' => $logo
+                 'logo_image' => $logo,
+                //'end_time' => $request->end_time,
+                // 'start_time' => $request->start_time,
+                // 'priority' => $request->priority ,
+                // 'area_id' => $request->area_id,
+                // 'city_id' => $request->city_id,
+                // 'country_id' => $request->country_id,
             ]);
 
-            $supermarket->categories()->sync($request->categories);
+            //$supermarket->categories()->sync($request->categories);
 
             return redirect('/admin/supermarkets')->withStatus('supermarket successfully updated.');
         }

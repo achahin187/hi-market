@@ -15,9 +15,7 @@ class Branch extends Model
 
     protected static $logAttributes = ['name_ar','name_en','status','image','supermarket_id'];
 
-    protected $fillable = [
-        'name_en','name_ar','status','image','supermarket_id','created_by','updated_by'
-    ];
+    protected $guarded = []; 
 
     public function products() {
         return $this->hasMany('App\Models\Product');
@@ -30,4 +28,22 @@ class Branch extends Model
     public function offers() {
         return $this->hasMany('App\Models\Offer');
     }
+
+
+    public function categories() {
+        return $this->belongsToMany('App\Models\Category','category_supermarket','');
+    }
+
+     public function area() {
+        return $this->belongsTo('App\Models\Area');
+    }
+
+    public function city() {
+        return $this->belongsTo('App\Models\City');
+    }
+
+    public function country() {
+        return $this->belongsTo('App\Models\Country');
+    }
+
 }

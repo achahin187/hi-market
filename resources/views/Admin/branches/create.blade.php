@@ -168,6 +168,152 @@
                                         </select>
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label>{{__('admin.category')}}</label>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
+
+                                            @if(isset($branch))
+                                                @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option <?php if(in_array($category->id,$category_ids)) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+
+                                        </select>
+                                    </div> 
+
+                                     <div class="form-group">
+                                        <label>{{__('admin.area')}} </label>
+                                        <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($branch))
+                                                @foreach(\App\Models\Area::all() as $area)
+
+                                                    <option <?php if($branch->area->id == $area->id) echo 'selected'; ?> value="{{ $area->id }}">{{ $area->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Area::all() as $area)
+
+                                                    <option value="{{ $area->id }}">{{ $area->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{{__('admin.city')}} </label>
+                                        <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($branch))
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option <?php if($branch->city->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{{__('admin.country')}} </label>
+                                        <select class=" @error('country_id') is-invalid @enderror select2" name="country_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($branch))
+                                                @foreach(\App\Models\Country::all() as $country)
+
+                                                    <option <?php if($branch->country->id == $country->id) echo 'selected'; ?> value="{{ $country->id }}">{{ $country->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\Country::all() as $country)
+
+                                                    <option value="{{ $country->id }}">{{ $country->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div> 
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.priority')}}</label>
+                                        <input type="number" name="priority" min="0" @if(isset($branch)) value="{{$branch->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
+                                        @error('priority')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                          <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.commission')}}</label>
+                                        <input type="number" name="commission" min="0"  step="0.01" @if(isset($branch)) value="{{$branch->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
+                                        @error('commission')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+
+                                            <div class="bootstrap-timepicker">
+                                                <div class="form-group">
+                                                    <label>{{__('admin.start_time')}}</label>
+
+                                                    <div class="input-group date" id="startpicker" data-target-input="nearest">
+                                                        <input type="text" name="start_time" @if(isset($branch)) value="{{$branch->start_time}}" @endif class="@error('start_time') is-invalid @enderror form-control datetimepicker-input" data-target="#startpicker"/>
+                                                        <div class="input-group-append" data-target="#startpicker" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.input group -->
+                                                </div>
+                                                <!-- /.form group -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+
+                                            <div class="bootstrap-timepicker">
+                                                <div class="form-group">
+                                                    <label>{{__('admin.end_time')}}</label>
+
+                                                    <div class="input-group date" id="endpicker" data-target-input="nearest">
+                                                        <input type="text" name="end_time" class="@error('end_time') is-invalid @enderror form-control datetimepicker-input" @if(isset($branch)) value="{{$branch->end_time}}" @endif data-target="#endpicker"/>
+                                                        <div class="input-group-append" data-target="#endpicker" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.input group -->
+                                                </div>
+                                                <!-- /.form group -->
+                                            </div>
+
+                                        </div>
+
+                                    </div> 
+
+
                                     @if(isset($supermarket_id))
 
                                         <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
@@ -194,6 +340,7 @@
                                     @endif
 
 
+
                                     @if(isset($branch) && $branch->image != null)
 
                                         <div class="form-group">
@@ -208,28 +355,74 @@
                                                     <input name="image" type="file">
 
                                                 </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                     @else
 
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Photo</label>
+                                {{--         <div class="form-group">
+                                            <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    <label class="custom-file-label" for="exampleInputFile">{{ __('admin.image') }}</label>
                                                 </div>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text" id="">Upload</span>
                                                 </div>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="form-group" style="margin-top: 40px">
+                                            
+                                            <div class="input-group">
+                                               
+                                                  <div class="form-group">
+                                                <label for="exampleFormControlFile1">{{ __('admin.image') }}</label>
+                                                <input type="file"  name="image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
+
                                             </div>
                                         </div>
 
 
                                     @endif
+
+
+                                    @if(isset($branch) && $branch->logo != null)
+
+                                        <div class="form-group" style="margin-top: 40px">
+                                            <label for="exampleInputFile"> {{ __('admin.logo') }}</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$branch->logo}}" class="card-img-top" alt="Course Photo">
+
+                                                    <input type="checkbox" checked style="margin-right:10px;" name="checkedlogo" value="{{$branch->logo}}">
+
+                                                    <input name="logo_image" type="file">
+
+                                                </div>
+                                              
+                                            </div>
+                                        </div>
+                                    @else
+
+                                        <div class="form-group" style="margin-top: 40px">
+                                            
+                                            <div class="input-group">
+                                               
+                                                  <div class="form-group">
+                                                <label for="exampleFormControlFile1">{{ __('admin.logo') }}</label>
+                                                <input type="file"  name="logo_image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    @endif
+
 
                                 </div>
                                 <!-- /.card-body -->
@@ -237,7 +430,7 @@
                                 @if(isset($branch))
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                        <button type="submit" class="btn btn-primary">{{__('admin.edit')}}</button>
                                     </div>
 
                                 @else

@@ -70,7 +70,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
+                                   {{--  <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.priority')}}</label>
                                         <input type="number" name="priority" min="0" @if(isset($supermarket)) value="{{$supermarket->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
                                         @error('priority')
@@ -78,7 +78,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="form-group">
@@ -92,7 +92,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                   {{--  <div class="form-group">
                                         <label>{{__('admin.category')}}</label>
                                         <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
 
@@ -112,9 +112,9 @@
                                             @endif
 
                                         </select>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="form-group">
+                                  {{--   <div class="form-group">
                                         <label>{{__('admin.area')}} </label>
                                         <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($supermarket))
@@ -172,8 +172,8 @@
 
                                             @endif
                                         </select>
-                                    </div>
-
+                                    </div> --}}
+{{-- 
                                     <div class="row">
 
                                         <div class="col-md-4">
@@ -213,7 +213,7 @@
 
                                         </div>
 
-                                    </div>
+                                    </div> --}}
 
                                     @if(!isset($supermarket))
 
