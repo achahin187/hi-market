@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarket-admins.index')}}">{{ __('admin.supermarket_admin') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('supermarket-admins.index')}}">{{ __('admin.delivery_admin') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
                     </div>
