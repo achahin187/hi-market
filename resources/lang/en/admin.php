@@ -30,6 +30,7 @@ return [
     'category_managment' => 'Category Managment',
     'supermarket_management' => 'Markets Management',
     'delivery_management' => 'Delivery Management',
+    'add_delivery_admin' => 'Add Delivery Admin',
     //name 
 
     'name_ar' => 'Arabic Name',
