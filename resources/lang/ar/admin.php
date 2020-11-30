@@ -53,6 +53,7 @@ return [
     'supermarket_management' => 'ادارة السوبر ماركت',
     'delivery_management' => 'ادارة التوصيل',
     'add_delivery_admin' => 'اضافة دليفيرى ادمن',
+    'delivery_admin' => 'مديرين التوصيل',
    
     
 
