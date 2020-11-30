@@ -59,7 +59,7 @@ class SuperMarketAdminController extends Controller
     {
         $request->validate([
             'name' =>'required|string',
-            'email' =>'required|email',
+            'email' =>'required|email|unique:users',
             'password' =>'required|min:8',
             
         ]);

@@ -55,7 +55,7 @@
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.role') }}</th>
-                                        <th>{{ __('admin.team') }}</th>
+                                        {{-- <th>{{ __('admin.team') }}</th> --}}
                                         @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit'])) 
                                         <th> {{ __('admin.controls') }}</th>
                                         @endif
@@ -84,7 +84,7 @@
                                             </td>
 
 
-                                            @if(App::getLocale() == 'ar')
+                                           {{--  @if(App::getLocale() == 'ar')
 
                                                 <td>{{$admin->team->arab_name ?? ""}}</td>
 
@@ -92,7 +92,7 @@
 
                                                 <td>{{$admin->team->eng_name ?? ''}}</td>
 
-                                            @endif
+                                            @endif --}}
                                             @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit']))  
                                             <td>
                                                 <div class="dropdown">
