@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.add_client') }}</h1>
                         @include('includes.errors')
                         <div class="col-12">
 
@@ -25,8 +25,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('clients.index')}}">clients</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item"><a href="{{route('clients.index')}}">{{ __('admin.clients') }}</a></li>
+                            <li class="breadcrumb-item active">{{ __('admin.add_client') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -44,9 +44,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($client))
-                                        edit client
+                                        {{ __('admin.edit') }}
                                     @else
-                                        create client
+                                        {{ __('admin.add') }}
 
                                     @endif
                                 </h3>
@@ -64,7 +64,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('name')}}</label>
+                                        <label for="exampleInputEmail1">{{__('admin.name')}}</label>
                                         <input type="text" value="@if(isset($client)){{$client->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
+                                        <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
                                         <input type="email" value="@if(isset($client)){{$client->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1"> client address</label>
+                                        <label for="exampleInputEmail1">{{ __('admin.address') }}</label>
                                         <input type="text" value="@if(isset($client)){{$client->address }}@endif " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter address" required>
                                         @error('address')
                                         <span class="invalid-feedback" role="alert">
@@ -94,7 +94,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1"> client city</label>
+                                        <label for="exampleInputEmail1"> {{ __('admin.city') }}</label>
                                         <input type="text" value="@if(isset($client)){{$client->city }}@endif " name="city" class="@error('city') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter city" required>
                                         @error('city')
                                         <span class="invalid-feedback" role="alert">
@@ -104,7 +104,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1"> client mobile number</label>
+                                        <label for="exampleInputEmail1"> {{ __('admin.phone') }}</label>
                                         <input type="text" value="@if(isset($client)){{$client->mobile_number }} @endif" name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('mobile_number')
                                         <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('age')}}</label>
+                                        <label for="exampleInputPassword1">{{__('admin.age')}}</label>
                                         <input type="number" name="age" min="1" @if(isset($client)) value="{{$client->age}}" @else value="1" @endif class=" @error('age') is-invalid @enderror form-control">
                                         @error('age')
                                         <span class="invalid-feedback" role="alert">
@@ -128,7 +128,7 @@
 
 
                                         <div class="form-group">
-                                            <label>gender</label>
+                                            <label>{{ __('admin.gender') }}</label>
                                             <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                 <option value="male" <?php if($client->status == 'male') echo 'selected'; ?>>male</option>
@@ -147,7 +147,7 @@
 
 
                                         <div class="form-group">
-                                            <label>gender</label>
+                                            <label>{{ __('admin.gender') }}</label>
                                             <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
 
                                                 <option value="male">male</option>
@@ -169,12 +169,12 @@
                                     @if(!isset($client))
 
                                         <div class="form-group">
-                                            <label>Status</label>
+                                            <label>{{ __('admin.status') }}</label>
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
 
-                                                <option value="active">active</option>
-                                                <option value="inactive">inactive</option>
+                                                <option value="active">{{ __('admin.active') }}</option>
+                                                <option value="inactive">{{ __('admin.inactive') }}</option>
 
                                             </select>
 
@@ -188,7 +188,7 @@
                                     @endif
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
+                                        <label for="exampleInputPassword1">{{ __('admin.password') }}</label>
                                         <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -199,13 +199,19 @@
 
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('Confirm New Password') }}" value="">
+                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.confirm_password') }}" value="">
                                     </div>
 
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                      @if(isset($client))
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.edit') }}</button>
+                                    @else
+
+                              <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
+
+                                    @endif
                                 </div>
                             </form>
                         </div>

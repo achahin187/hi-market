@@ -11,13 +11,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>{{ __('admin.client') }}</h1>
                     </div>
 
                     @if(auth()->user()->can('client-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('clients.create')}}">add new client</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('clients.create')}}">{{ __('admin.add_client') }}</a></li>
                             </ol>
                         </div>
                     @endif
@@ -44,22 +44,22 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Clients</h3>
+                                <h3 class="card-title">{{ __('admin.client') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>email</th>
-                                        <th>address</th>
-                                        <th>gender</th>
-                                        <th>city</th>
-                                        <th>mobile number</th>
-                                        <th>client orders</th>
+                                        <th>{{ __('admin.name') }}</th>
+                                        <th>{{ __('admin.email') }}</th>
+                                        <th>{{ __('admin.address') }}</th>
+                                        <th>{{ __('admin.gender') }}</th>
+                                        <th>{{ __('admin.city') }}</th>
+                                        <th>{{ __('admin.phone') }}</th>
+                                        <th>{{ __('admin.orders') }}</th>
                                 @if(auth()->user()->can('client-active'))         
-                                        <th>status</th>
+                                        <th>{{ __('admin.status') }}</th>
                                 @endif        
                                 @if(auth()->user()->hasAnyPermission(['client-delete','client-edit']))        
                                         <th>{{__('admin.controls')}}</th>
@@ -75,7 +75,7 @@
                                             <td>{{$client->gender}}</td>
                                             <td>{{$client->city}}</td>
                                             <td>{{$client->mobile_number}}</td>
-                                            <td><a href="{{route('client.orders',['client_id'=>$client->id])}}" class="btn btn-info">client orders</a></td>
+                                            <td><a href="{{route('client.orders',['client_id'=>$client->id])}}" class="btn btn-info">{{ __('admin.orders') }}</a></td>
 
                                          @if(auth()->user()->can('client-active'))    
                                             <td>
@@ -86,7 +86,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">active</button>
+                                                        <button form="active" type="submit" class="btn btn-block btn-outline-success">{{__('admin.active')  }}</button>
                                                     </form>
 
                                                 @else
@@ -95,7 +95,7 @@
 
                                                         @csrf
                                                         @method('put')
-                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">inactive</button>
+                                                        <button type="submit" form="in-active" class="btn btn-block btn-outline-danger">{{ __('admin.inactive') }}</button>
                                                     </form>
 
                                                 @endif
@@ -114,12 +114,12 @@
                                                             @method('delete')
 
 
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this client?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this client?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                         </form>
                                                     @endif    
 
                                                     @if(auth()->user()->can('client-edit'))
-                                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">{{ __('edit') }}</a>
+                                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">{{ __('admin.edit') }}</a>
                                                      @endif   
                                                     </div>
                                                 </div>

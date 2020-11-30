@@ -125,11 +125,7 @@ class ClientController extends Controller
         }
         else
         {
-            if($lang == 'ar')
-            {
-                return $this->returnError(305,'لم نجد هذا العميل');
-            }
-            return $this->returnError(305 ,'there is no client found');
+           
         }
     }
 

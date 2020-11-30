@@ -42,8 +42,14 @@ return [
     'active'=>'مفعل',
     'inactive'=>'غير مفعل',
     'commission' => 'النسبة',
+    'gender' => 'النوع',
     'controls' => 'ادوات التجكم',
+    'address' => 'العنوان',
+    'add_client'=>'اضافة عميل جديد',
 
+    'admin_managment'=>'الادارة',
+    'location_managment' => 'ادارة الامكان',
+    'category_managment' => 'ادارة الاقسام',
 
     'order_setting' => 'اعدادات الاوردر',
     'tax' => 'الضرائب',

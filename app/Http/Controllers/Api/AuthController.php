@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use JWTAuth;
 
 class AuthController extends Controller
 {
@@ -207,8 +208,12 @@ class AuthController extends Controller
                 'mobile_number' => $request->mobile_number,
                 'password' => Hash::make($request->password),
             ]);
+            
+            $credentials = $request->only(['mobile_number','password']);
 
-            $token = auth()->guard('client-api')->login($client);
+            $token =  Auth::guard('client-api')->attempt($credentials);
+
+           
 
             $code = '123456';
 

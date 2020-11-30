@@ -80,17 +80,12 @@ class PermissionTableSeeder extends Seeder
             'branches-edit',
             'branches-active',
 
-            'mainCategory-list',
-            'mainCategory-create',
-            'mainCategory-delete',
-            'mainCategory-edit',
-            'mainCategory-active',
+            'category-list',
+            'category-create',
+            'category-delete',
+            'category-edit',
+            'category-active',
 
-            'subCategory-list',
-            'subCategory-create',
-            'subCategory-delete',
-            'subCategory-edit',
-            'subCategory-active',
 
             'setting-list',
             'setting-create',

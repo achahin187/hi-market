@@ -21,9 +21,13 @@ return [
     'Confirm New Password'=> 'Confirm New Password',
     'password'=> 'password',
     'team' => 'team',
-
-
+    'address'=>'address',
+    'gender'=>'gender',
+    'add_client' => 'Add New Client',
+    'admin_managment'=>'Admin Managment',
     'order_setting' => 'order setting',
+    'location_managment' => 'Location Managment',
+    'category_managment' => 'category Managment',
     //name 
 
     'name_ar' => 'Arabic Name',
