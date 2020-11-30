@@ -86,7 +86,40 @@
                                     </div>
                                   
 
+                                   
+                                <div class="form-group">
+                                    <label>{{__('admin.supermarket')}} </label>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                      
 
+                                            @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                            @endforeach
+
+                                 
+                                    </select>
+                                </div>
+
+                              
+
+
+                                <div class="form-group">
+                                    <label>{{__('admin.branch')}} </label>
+                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                       
+                                     
+                                            @foreach(\App\Models\Branch::all() as $branch)
+
+                                                <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                            @endforeach
+
+                                        
+                                    </select>
+                                </div>
+                              
                                  
 
 
