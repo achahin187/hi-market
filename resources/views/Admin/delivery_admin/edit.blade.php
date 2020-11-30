@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('categories.index')}}">delivery admin</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('delivery-admins.index')}}">delivery admin</a></li>
                             <li class="breadcrumb-item active">edit </li>
                         </ol>
                     </div>
