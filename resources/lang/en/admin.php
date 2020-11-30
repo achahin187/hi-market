@@ -27,7 +27,8 @@ return [
     'admin_managment'=>'Admin Managment',
     'order_setting' => 'order setting',
     'location_managment' => 'Location Managment',
-    'category_managment' => 'category Managment',
+    'category_managment' => 'Category Managment',
+    'supermarket_management' => 'Markets Management',
     //name 
 
     'name_ar' => 'Arabic Name',

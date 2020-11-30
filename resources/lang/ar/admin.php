@@ -50,6 +50,7 @@ return [
     'admin_managment'=>'الادارة',
     'location_managment' => 'ادارة الامكان',
     'category_managment' => 'ادارة الاقسام',
+    'supermarket_management' => 'ادارة السوبر ماركت',
 
     'order_setting' => 'اعدادات الاوردر',
     'tax' => 'الضرائب',
