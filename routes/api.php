@@ -14,7 +14,7 @@
     |
     */
 
-    Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
+    Route::group(['namespace' => 'Api'],function () {
 
         Route::get('products','ProductController@index')->name('listproducts');
         Route::post('product','ProductController@productdetails')->name('productdetails');
@@ -56,7 +56,7 @@
 
         //sendPromoCode
         Route::post('sendPromoCode','CartController@sendPromoCode');
-        
+
         Route::post('updateaddress','ClientController@update_address');
 
     });

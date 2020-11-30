@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class checklang
+class Checklang
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,12 @@ class checklang
      */
     public function handle($request, Closure $next)
     {
-        app()->setLocale('en');
 
-        if(isset($_GET['lang']) && $_GET['lang'] == 'ar')
+
+        if(request("lang"))
         {
+            app()->setLocale(request("lang"));
+        }else{
             app()->setLocale('ar');
         }
         return $next($request);

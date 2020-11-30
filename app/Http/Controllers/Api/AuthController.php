@@ -20,13 +20,13 @@ class AuthController extends Controller
     //
     use generaltrait;
 
-    public function send_sms($name,$mobile,$msg,$lang)
+    public function send_sms($name, $mobile, $msg, $lang)
     {
-        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=NVV2TzQxTHl5cThvcVFzWmozMEkwWWxxczRKT0k1VTRrUHNkaDJ0ZDhZcUtoMlN5WXBIcUVpekl2SlpZ5f4a28289ba33&name='.$name.'&message='.$msg.'&numbers='.$mobile.'&sender='.$name.'&language='.$lang;
+        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=NVV2TzQxTHl5cThvcVFzWmozMEkwWWxxczRKT0k1VTRrUHNkaDJ0ZDhZcUtoMlN5WXBIcUVpekl2SlpZ5f4a28289ba33&name=' . $name . '&message=' . $msg . '&numbers=' . $mobile . '&sender=' . $name . '&language=' . $lang;
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('get',$url);
+        $response = $client->request('get', $url);
     }
 
     public function verifycode(Request $request)
@@ -34,48 +34,41 @@ class AuthController extends Controller
 
         $lang = $request->header('lang');
 
-        if(!$lang || $lang == ''){
-            return $this->returnError(402,Lang::get('message.missingLang'));
+        if (!$lang || $lang == '') {
+            return $this->returnError(402, Lang::get('message.missingLang'));
         }
 
         $mobile = $request->mobile_number;
 
         $code = $request->code;
 
-        $client = Client::where('mobile_number',$mobile)->first();
+        $client = Client::where('mobile_number', $mobile)->first();
 
-        if($client) {
+        if ($client) {
 
             if ($client->activation_code == $code) {
 
                 if ($lang == 'ar') {
-                    return $this->returnData(['client'] ,[$client] , 'الكود صحيح');
-                }
-                else
-                {
-                    return $this->returnData(['client'] ,[$client] , 'the code is valid');
+                    return $this->returnData(['client'], [$client], 'الكود صحيح');
+                } else {
+                    return $this->returnData(['client'], [$client], 'the code is valid');
                 }
 
             } else {
 
                 if ($lang == 'ar') {
                     return $this->returnError(300, 'الكود الذي أدخلته غير صحيح تأكد من الكود في الرسالة');
-                }
-                else
-                {
+                } else {
                     return $this->returnError(300, 'this code is invalid please check the code sent to your mobile');
                 }
 
             }
-        }
-        else
-        {
+        } else {
 
-            if($this->getCurrentLang() == 'ar')
-            {
-                return $this->returnError(300,'لم نجد هذا العميل');
+            if ($this->getCurrentLang() == 'ar') {
+                return $this->returnError(300, 'لم نجد هذا العميل');
             }
-            return $this->returnError(300,'there is no client found');
+            return $this->returnError(300, 'there is no client found');
 
         }
 
@@ -84,20 +77,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-        $lang = $request->header('lang');
+
         $udid = $request->header('udid');
-
-
-        if(!$lang || $lang == ''){
-
-            if ($lang == 'ar') {
-                return $this->returnError(402,'اللغة غير موجودة');
-            }
-            else
-            {
-                return $this->returnError(402,'language is missing');
-            }
-        }
 
 
         $validator = Validator::make($request->all(), [
@@ -106,61 +87,25 @@ class AuthController extends Controller
         ]);
 
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
 
-            if ($lang == 'ar') {
-                return $this->returnError(400, 'بيانات الدخول غير صحيحة');
-            }
-            else
-            {
-                return $this->returnError(400, 'These data is not valid');
-            }
+            return $this->returnValidationError(422, $validator);
+
+
         }
 
 
-        try {
-
-            //login
-
-            $credentials = $request->only(['mobile_number','password']);
-
-            $token =  Auth::guard('client-api')->attempt($credentials);
-            
-        
-          
+        //login
 
 
-            if(!$token) {
-                if ($lang == 'ar') {
-                    return $this->returnError(300, 'بيانات الدخول غير موجودة');
-                }
-                else
-                {
-                    return $this->returnError(300, 'These credentials are not in our records');
-                }
-            }
-
-            $client = Auth::guard('client-api')->user();
-
-
-            $client->update(['remember_token' => $token]);
-
-
-            if ($lang == 'ar') {
-                $msg = "لقد تمت عملية تسجيل دخولك بنجاح";
-            }
-            else
-            {
-                $msg = "you have been logged in sucessfully";
-            }
-
-
-            //return token
-            return $this->returnData(['client', 'token'] ,[$client, $token] , $msg);
-
-        }catch (\Exception $ex){
-            return $this->returnError($ex->getCode(), $ex->getMessage());
+        if (auth("client-web")->attempt(["mobile_number" => $request->mobile_number, "password" => $request->password])) {
+            $client = Auth::guard('client-web')->user();
+            $token = $client->createToken("hi-market")->accessToken;
+            $msg = "you have been logged in successfully";
+            return $this->returnData(['client', 'token'], [$client, $token], $msg);
         }
+
+        return $this->returnError(422, 'These credentials are not in our records');
 
 
     }
@@ -168,152 +113,104 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $lang = $request->header('lang');
+
         $udid = $request->header('udid');
 
-        if(!$lang || $lang == ''){
-
-            if ($lang == 'ar') {
-                return $this->returnError(402,'اللغة غير موجودة');
-            }
-            else
-            {
-                return $this->returnError(402,'language is missing');
-            }
-        }
-
         $validator = Validator::make($request->all(), [
-            'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'mobile_number' => ['required' , 'digits:11' , Rule::unique('clients', 'email')],
-            'email' => ['required','email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+            'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'email')],
+            'email' => ['required', 'email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
             'password' => ['required'],
         ]);
 
-        if($validator->fails()) {
-
-            if ($lang == 'ar') {    
-                return $this->returnError(300, 'بيانات الدخول غير صحيحة');
-            }
-            else
-            {
-                return $this->returnError(300, 'These data is not valid');
-            }
+        if ($validator->fails()) {
+            return $this->returnValidationError(422, $validator);
         }
 
-        else
-        {
-            $client = Client::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'mobile_number' => $request->mobile_number,
-                'password' => Hash::make($request->password),
-            ]);
-            
-            $credentials = $request->only(['mobile_number','password']);
 
-            $token =  Auth::guard('client-api')->attempt($credentials);
-
-           
-
-            $code = '123456';
-
-            $client->update(['remember_token' => $token ,'activation_code' => $code ]);
+        $client = Client::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile_number' => $request->mobile_number,
+            'password' => Hash::make($request->password),
+        ]);
 
 
-            $activation_msg = 'your activation code is'.$code;
+        $accessToken = $client->createToken("hi-market")->accessToken;
 
 
-            $this->send_sms('Eramint',$request->mobile_number,$activation_msg,$lang);
+        $code = '123456';
 
-            $msg = "you have been registered sucessfully";
+        $client->update(['activation_code' => $code]);
 
-            return $this->returnData(['client', 'token'], [$client, $token] , $msg);
-        }
+
+        $activation_msg = 'your activation code is' . $code;
+
+
+        $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+
+        $msg = "you have been registered sucessfully";
+
+        return $this->returnData(['client', 'token'], [$client, $accessToken], $msg);
+
     }
 
     public function forgetpassword(Request $request)
     {
         $lang = $request->header('lang');
 
-        if(!$lang || $lang == ''){
-            return $this->returnError(402,Lang::get('message.missingLang'));
-        }
-
         $mobile = $request->mobile_number;
 
 
-        $client = Client::where('mobile_number',$mobile)->first();
+        $client = Client::where('mobile_number', $mobile)->firstOrFail();
 
 
-        if($client) {
+        $code = '123456';
 
-            $code = '123456';
+        $client->update(['activation_code' => $code]);
 
-            $client->update(['activation_code' => $code ]);
+        $activation_msg = 'your activation code is ' . $code;
 
-            $activation_msg = 'your activation code is '.$code;
-
-            $this->send_sms('Eramint',$mobile,$activation_msg,$lang);
+        $this->send_sms('Eramint', $mobile, $activation_msg, $lang);
 
 
-            if ($lang == 'ar') {
-                $msg = "لقد تم ارسال كود الي رقم حضرتك";
-            }
-            else
-            {
-                $msg = "we sent an activation code to verify your mobile number";
-            }
-
-            return $this->returnData(['code'], [$code] , $msg);
-
+        if ($lang == 'ar') {
+            $msg = "لقد تم ارسال كود الي رقم حضرتك";
+        } else {
+            $msg = "we sent an activation code to verify your mobile number";
         }
-        else
-        {
-            if($this->getCurrentLang() == 'ar')
-            {
-                return $this->returnError(300,'لم نجد هذا العميل');
-            }
-            return $this->returnError(300,'there is no client found');
-        }
+
+        return $this->returnData(['code'], [$code], $msg);
+
+
     }
 
-    public function social(Request $request,$flag)
+    public function social(Request $request, $flag)
     {
 
-        $lang = $request->header('lang');
+
         $udid = $request->header('udid');
 
-        if(!$lang || $lang == ''){
-            return $this->returnError(402,Lang::get('message.missingLang'));
-        }
 
         $email = $request->email;
 
-        $client = Client::where('email',$email)->first();
+        $client = Client::where('email', $email)->first();
 
-        if($flag == 0)
-        {
-            if ($lang == 'ar') {
-                $data = $this->returnData(['client'], [$client], 'لقد تم تسجيل الدخول بنجاح');
-            } else {
-                $data = $this->returnData(['client'], [$client], 'you have been logged in successfully');
-            }
-        }
-        else
-        {
-            if ($lang == 'ar') {
-                $data = $this->returnData(['client'], [$client],'لقد تم تسجيل معلوماتك بنجاح');
-            } else {
-                $data = $this->returnData(['client'], [$client], 'you have been registered successfully');
-            }
+        if ($flag == 0) {
+
+            $data = $this->returnData(['client'], [$client], 'you have been logged in successfully');
+
+        } else {
+
+
+            $data = $this->returnData(['client'], [$client], 'you have been registered successfully');
+
         }
 
-        if($client) {
+        if ($client) {
 
             return $data;
-        }
-        else
-        {
+        } else {
             $client = Client::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -331,7 +228,7 @@ class AuthController extends Controller
 
             $token = auth()->guard('client-api')->login($client);
 
-            $client->update(['remember_token' => $token , 'status' => 0]);
+            $client->update(['status' => 0]);
 
             return $data;
         }
@@ -345,8 +242,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
-        return response()->json(['message'=>'Successfully logged out']);
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     protected function respondWithToken($token)
