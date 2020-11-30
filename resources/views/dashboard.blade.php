@@ -1,8 +1,10 @@
 @extends('master.master')
 
 @section('content')
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ URL::asset('dist/js/pages/dashboard.js') }}"></script>
+     @if(auth()->user()->hasRole('super_admin'))
     <div class="row">
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -65,8 +67,10 @@
         </div>
         <!-- ./col -->
     </div>
+    @endif
     <!-- /.row -->
     <!-- Main row -->
+    @if(auth()->user()->hasRole('supser_admin'))
     <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
@@ -584,6 +588,7 @@
         </section>
         <!-- right col -->
     </div>
+    @endif
     <script>
         $().ready(function(){
             HidefloatButton()
