@@ -191,8 +191,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
     
 
-        
+            //supermarket-admins
             Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
+            //delivery-admins
+            Route::resource('delivery-admins','Admin\DeliveryManagerController');
 
     });
 

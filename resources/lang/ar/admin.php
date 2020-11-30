@@ -51,6 +51,12 @@ return [
     'location_managment' => 'ادارة الامكان',
     'category_managment' => 'ادارة الاقسام',
     'supermarket_management' => 'ادارة السوبر ماركت',
+    'delivery_management' => 'ادارة التوصيل',
+    'add_delivery_admin' => 'اضافة دليفيرى ادمن',
+    'delivery_admin' => 'مديرين التوصيل',
+   
+    
+
 
     'order_setting' => 'اعدادات الاوردر',
     'tax' => 'الضرائب',

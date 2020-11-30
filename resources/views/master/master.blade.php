@@ -225,7 +225,7 @@ $settings = App\Models\Setting::all()->first();
                                         <a href="{{route('admins.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>
-                                                 Admin List
+                                                  {{__('admin.admin')}}
                                             </p>
                                         </a>
                                     </li>
@@ -241,7 +241,19 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                 @endif    
+                                 @endif  
+
+                                 {{-- admin --}}
+                                @if(auth()->user()->can('delivery-list'))
+                                    <li class="nav-item">
+                                        <a href="{{route('delivery-admins.index')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                  {{__('admin.delivery_management')}}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endif  
 
                                  {{-- client --}}
                                 @if(auth()->user()->can('client-list'))

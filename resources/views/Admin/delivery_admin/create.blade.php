@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarket-admins.index')}}">{{ __('admin.delivery_management') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('delivery-admins.index')}}">{{ __('admin.delivery_admin') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
                     </div>
@@ -50,7 +50,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($admin)){{route('supermarket-admins.update',$admin->id) }} @else {{route('supermarket-admins.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action=" {{route('delivery-admins.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
 
@@ -86,7 +86,40 @@
                                     </div>
                                   
 
+                                   
+                                <div class="form-group">
+                                    <label>{{__('admin.supermarket')}} </label>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                      
 
+                                            @foreach(\App\Models\Supermarket::all() as $supermarket)
+
+                                                <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+
+                                            @endforeach
+
+                                 
+                                    </select>
+                                </div>
+
+                              
+
+
+                                <div class="form-group">
+                                    <label>{{__('admin.branch')}} </label>
+                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                       
+                                     
+                                            @foreach(\App\Models\Branch::all() as $branch)
+
+                                                <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                            @endforeach
+
+                                        
+                                    </select>
+                                </div>
+                              
                                  
 
 

@@ -11,22 +11,23 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.admin') }}</h1>
+                        <h1>{{ __('admin.delivery_admin') }}</h1>
                     </div>
-                    
-                    @if(auth()->user()->can('admin-create'))
+
+
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">{{ __('admin.add') }}</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('admins.export')}}">{{ __('admin.export') }}</a></li>
+                                @if(auth()->user()->can('delivery-create'))
+                                <li class="breadcrumb-item"><a href="{{route('delivery-admins.create')}}">{{ __('admin.add_delivery_admin') }}</a></li>
+                                @endif
                             </ol>
                         </div>
-                    @endif
+
 
                     <div class="col-12">
 
                         @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <div class="alert alert-success alert-dismissible fade show" admin="alert">
                                 {{ session('status') }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -45,7 +46,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.admin') }}</h3>
+                                <h3 class="card-title">{{ __('admin.delivery_admin') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -54,71 +55,44 @@
                                     <tr>
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
-                                        <th>{{ __('admin.role') }}</th>
-                                        {{-- <th>{{ __('admin.team') }}</th> --}}
-                                        @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit'])) 
-                                        <th> {{ __('admin.controls') }}</th>
-                                        @endif
+                                    @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                        <th>{{ __('admin.controls') }}</th>
+                                    @endif    
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($admins as $admin)
+                                @if(isset($delivery_admins))        
+                                    @foreach($delivery_admins as $delivery_admin)
                                         <tr>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
-                                            <td>
-
-                                                @foreach($admin->roles as $role)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        [{{$role->arab_name}}]
-
-                                                    @else
-
-                                                        [{{$role->eng_name}}]
-
-                                                    @endif
-
-                                                @endforeach
-                                            </td>
-
-
-                                           {{--  @if(App::getLocale() == 'ar')
-
-                                                <td>{{$admin->team->arab_name ?? ""}}</td>
-
-                                            @else
-
-                                                <td>{{$admin->team->eng_name ?? ''}}</td>
-
-                                            @endif --}}
-                                            @if(auth()->user()->hasAnyPermission(['admin-delete','admin-edit']))  
+                                            <td>{{$delivery_admin->name}}</td>
+                                            <td>{{$delivery_admin->email}}</td>
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if(auth()->user()->can('admin-delete'))    
-                                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="post">
+                                                    @if(auth()->user()->can('delivery-delete'))
+                                                        <form action="{{ route('delivery-admins.destroy', $delivery_admin->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
 
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this admin?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
-                                                    @endif    
-                                                    @if(auth()->user()->can('admin-edit'))
-                                                                <a class="dropdown-item" href="{{ route('admins.edit', $admin->id) }}">{{ __('edit') }}</a>
+                                                    @endif
+                                                    @if(auth()->user()->can('delivery-edit'))
+                                                                <a class="dropdown-item" href="{{ route('delivery-admins.edit', $delivery_admin->id) }}">{{ __('edit') }}</a>
                                                     @endif            
                                                     </div>
                                                 </div>
                                             </td>
-                                            @endif
+                                        @endif    
                                         </tr>
                                     @endforeach
-
+                                @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -136,4 +110,6 @@
     </div>
 
 @endsection
+
+
 

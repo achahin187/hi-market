@@ -4,25 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Models\Permission;
+use App\Models\Admin;
 use App\Models\Role;
-use App\Models\Team;
-class SuperMarketAdminController extends Controller
+class DeliveryManagerController extends Controller
 {
-
-    public $model;
+      public $model;
 
     public function __construct()
     {
         $this->model = 'App\User' ;
-        $this->blade = 'Admin.supermarket_admin.' ;
-        $this->route = 'supermarket-admins.' ;
+        $this->blade = 'Admin.delivery_admin.' ;
+        $this->route = 'delivery-admins.' ;
 
-        $this->middleware('permission:supermarket-list', ['only' => ['index']]);
-        $this->middleware('permission:supermarket-create', ['only' => ['create','store']]);
-        $this->middleware('permission:supermarket-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:supermarket-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:delivery-list', ['only' => ['index']]);
+        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
+        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -31,10 +28,11 @@ class SuperMarketAdminController extends Controller
      */
     public function index()
     {
-        $supermarket_admins = $this->model::Role('supermarket_admin')->get();
+         $delivery_admins = $this->model::Role('delivery_admin')->get();
 
-    
-        return view('Admin.supermarket_admin.index')->with('supermarket_admins',$supermarket_admins);
+
+        
+        return view($this->blade.'.index')->with('delivery_admins',$delivery_admins);
     }
 
     /**
@@ -44,8 +42,7 @@ class SuperMarketAdminController extends Controller
      */
     public function create()
     {
-
-        return view($this->blade.__FUNCTION__);
+         return view($this->blade.__FUNCTION__);
     }
 
     /**
@@ -55,7 +52,6 @@ class SuperMarketAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-        
     {
         $request->validate([
             'name' =>'required|string',
@@ -66,8 +62,8 @@ class SuperMarketAdminController extends Controller
         
         $user = $this->model::create(request()->all());
     
-        $role = Role::where('name','supermarket_admin' )->first();
-
+        $role = Role::where('name','delivery_admin' )->first();
+        
         $assignRole = $user->assignRole($role);
 
         $Permissions = $role->permissions;
@@ -96,8 +92,9 @@ class SuperMarketAdminController extends Controller
      */
     public function edit($id)
     {
-        $supermarket = $this->model::find($id);
-        return view($this->blade.__FUNCTION__,compact("supermarket"));
+         $delivery = $this->model::find($id);
+       
+        return view($this->blade.__FUNCTION__,compact("delivery"));
     }
 
     /**
@@ -109,12 +106,12 @@ class SuperMarketAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $request->validate([
+         $request->validate([
             'name' =>'required|string',
             'email' =>'required|email',
         ]);;
-        $supermarket = $this->model::find($id);
-        $supermarket->update(request()->all());
+        $delivery = $this->model::find($id);
+        $delivery->update(request()->all());
 
         return redirect()->route($this->route.'index');
     }
@@ -127,9 +124,9 @@ class SuperMarketAdminController extends Controller
      */
     public function destroy($id)
     {
-        $supermarket_admin = User::find($id);
-        if ($supermarket_admin) {
-            $supermarket_admin->delete();
+          $delivery_admin = User::find($id);
+        if ($delivery_admin) {
+            $delivery_admin->delete();
             return redirect()->route($this->route.'index');
         }else{
             return redirect()->route($this->route.'index');
