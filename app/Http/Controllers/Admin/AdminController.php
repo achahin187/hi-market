@@ -48,7 +48,8 @@ class AdminController extends Controller
     {
         //
 
-        $roles = Role::whereNotIn('eng_name',['delivery','driver'])->get();
+        $roles = Role::whereNotIn('eng_name',['super_admin','supermarket_admin','delivery_admin'])->get();
+      
         return view('Admin.admins.create',compact('roles'));
     }
 
@@ -66,31 +67,34 @@ class AdminController extends Controller
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-            'password_confirmation' => ['required', 'min:8'],
-            'roles' => 'required',
-            'team_id' => 'required|integer|min:0',
+            'password' => ['required', 'min:8','max:50'],
+            'role' => 'required',
+            
         ];
 
         $this->validate($request,$rules);
 
+     
+        $role = Role::where('name',$request->role )->first();
+        $assignRole = $user->assignRole($role);
 
-        $team = Team::find($request->team_id);
+        $Permissions = $role->permissions;
+            
+        $user->givePermissionTo($Permissions);
 
-        $teamrole = $team->role()->pluck('id')->all();
+       
 
         $admin = User::create([
 
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'team_id' => $request->team_id,
             'created_by' => $user->id
 
 
         ]);
 
-        $admin->assignRole([$request->input('roles'),$teamrole[0]]);
+      
 
         if($admin)
         {
@@ -129,7 +133,7 @@ class AdminController extends Controller
         //
 
         $admin = User::find($id);
-        $roles = Role::whereNotIn('eng_name',['delivery','driver'])->get();
+        $roles = Role::whereNotIn('eng_name',['super_admin','supermarket_admin','delivery_admin'])->get();
         $userRole = $admin->roles->pluck('name','name')->all();
 
         if($admin)
