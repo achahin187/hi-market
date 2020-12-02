@@ -39,12 +39,12 @@ class CartController extends Controller
     				break;
     			
     			default:
-    				return response()->json(['msg'=>'this type not avilable']);
+    				return $this->returnError(404, 'this type not avilable');
     				break;
     		}//end case
 
         }else{
-            return response()->json('Not Found',404);
+            return $this->returnError(404, 'not Found');
         }
     
 
