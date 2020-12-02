@@ -170,6 +170,14 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request_data = $request->all();
+
+        if ($request->password == null) {
+            $request_data = $request->except('password');
+
+        }
+
+    
 
         $user = auth()->user();
 
@@ -180,8 +188,8 @@ class AdminController extends Controller
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'roles' => 'required',
-                'team_id' => 'required|integer|min:0',
+                'role' => 'required',
+                
             ];
 
             $this->validate($request,$rules);
@@ -193,17 +201,14 @@ class AdminController extends Controller
                 $admin->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'team_id' => $request->team_id,
                     'updated_by' => $user->id
                 ]);
 
-                DB::table('model_has_roles')->where('model_id',$id)->delete();
+                //DB::table('model_has_roles')->where('model_id',$id)->delete();
+                 DB::table('model_has_roles')->where('model_id',$id)->delete();
 
-                $team = Team::find($request->team_id);
+                $admin->assignRole($request->input('role'));
 
-                $teamrole = $team->role()->pluck('id')->all();
-
-                $admin->assignRole($request->input('roles'),$teamrole[0]);
                 return redirect('/admin/admins')->withStatus('admin information successfully updated.');
             }
             else
@@ -215,10 +220,9 @@ class AdminController extends Controller
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'password' => ['required', 'min:8', 'confirmed', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-                'password_confirmation' => ['required', 'min:8'],
-                'roles' => 'required',
-                'team_id' => 'required|integer|min:0',
+                'password' => ['required', 'min:8', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+       
+                'role' => 'required',
             ];
 
             $this->validate($request,$rules);
