@@ -62,7 +62,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
 
-      dd($request->role);
+    
 
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
