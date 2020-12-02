@@ -13,124 +13,68 @@ class AddressController extends Controller
 {
     use generaltrait;
 
-     public function updateaddress(Request $request)
-     {
+    public function __construct()
+    {
+        if (\request("Authorization")) {
+            $this->middleware("auth:client-api");
+        }
+    }
 
-         $udid = $request->header('udid');
+    public function updateaddress(Request $request)
+    {
 
-         $token = $request->header('token');
 
-         $lang = $request->header('lang');
+        $client = getUser();
 
-         if(!$lang || $lang == ''){
 
-             return $this->returnError(402,'language is missing');
-         }
+        $validator = Validator::make($request->all(), [
+            'address' => ['required', 'not_regex:/([%\$#\*<>]+)/'],
 
-         $client = Client::where('remember_token',$token)->select('id','mobile_number','name')->first();
+        ]);
 
-         if($client)
-         {
-             $validator = Validator::make($request->all(), [
-                 'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
-             ]);
+        if ($validator->fails()) {
 
-             if($validator->fails()) {
 
-                 if ($lang == 'ar') {
-                     return $this->returnError(400, 'بيانات الدخول غير صحيحة');
-                 }
-                 else
-                 {
-                     return $this->returnError(400, 'These data is not valid');
-                 }
-             }
+            return $this->returnValidationError(422, $validator);
+        }
 
-             $address = $request->address;
-             $label = $request->label;
-             $default = $request->default;
-             $address_id = $request->address_id;
 
-             Address::where('client_id',$client->id)->where('id',$address_id)->update(['description' => $address,'address_lable' => $label, 'default'=> $default]);
+        $address = $request->address;
+        $label = $request->label;
+        $default = $request->default;
+        $address_id = $request->address_id;
 
-             if ($lang == 'ar') {
-                 return $this->returnSuccessMessage('لقد تم تعديل العنوان بنجاح', 200);
-             } else {
-                 return $this->returnSuccessMessage('This address have been updated successfully', 200);
-             }
-         }
-         else
-         {
-             if($lang == 'ar')
-             {
-                 return $this->returnError(305,'لم نجد هذا العميل');
-             }
-             return $this->returnError(305 ,'there is no client found');
-         }
+        Address::where('client_id', $client->id)->where('id', $address_id)->update(['description' => $address, 'address_lable' => $label, 'default' => $default]);
 
-     }
+
+        return $this->returnSuccessMessage('This address have been updated successfully', 200);
+
+
+    }
 
     public function addaddress(Request $request)
     {
 
-        $udid = $request->header('udid');
 
-        $token = $request->header('token');
 
-        $lang = $request->header('lang');
 
-        if(!$lang || $lang == ''){
+       $client=getUser();
 
-            return $this->returnError(402,'language is missing');
-        }
 
-        $client = Client::where('remember_token',$token)->select('id','mobile_number','name')->first();
+        $address = $request->address;
+        $label = $request->label;
+        $client_id = $client->id;
+        $default = $request->default;
+        $name = $request->name;
+        $phone = $request->phone;
 
-        // if($client)
-        // {
-        //     $validator = \Validator::make($request->all(), [
-        //         'address' => ['required','not_regex:/([%\$#\*<>]+)/'],
-        //         'label' => ['required','not_regex:/([%\$#\*<>]+)/'],
+        Address::create(['description' => $address, 'address_lable' => $label, 'client_id' => $client_id, 'default' => $default, 'name' => $name, 'phone' => $phone]);
 
-        //     ]);
 
-        //     if($validator->fails()) {
+        return $this->returnSuccessMessage('This address have been added successfully', 200);
 
-        //         if ($lang == 'ar') {
-        //             return $this->returnError(400, 'بيانات الدخول غير صحيحة');
-        //         }
-        //         else
-        //         {
-        //             return $this->returnError(400, 'These data is not valid');
-        //         }
-        //     }
-
-            $address    = $request->address;
-            $label      = $request->label;
-            $client_id  = $client->id;
-            $default    = $request->default;
-            $name       = $request->name;
-            $phone      = $request->phone;
-
-            Address::create(['description' => $address,'address_lable' => $label, 'client_id'=> $client_id, 'default' => $default,'name'=>$name, 'phone'=>$phone]);
-
-            if ($lang == 'ar') {
-                return $this->returnSuccessMessage('لقد تم اضافة العنوان بنجاح', 200);
-            } else {
-                return $this->returnSuccessMessage('This address have been added successfully', 200);
-            }
-        // }
-        // else
-        // {
-        //     if($lang == 'ar')
-        //     {
-        //         return $this->returnError(305,'لم نجد هذا العميل');
-        //     }
-        //     return $this->returnError(305 ,'there is no client found');
-        // }
 
     }
-
 
 
 }

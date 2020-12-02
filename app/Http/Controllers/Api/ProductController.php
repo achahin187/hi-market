@@ -16,63 +16,43 @@ class ProductController extends Controller
     //
 
     use generaltrait;
+public function __construct()
+{
+    if (\request("Authorization"))
+    {
+        $this->middleware("auth:client-api");
+    }
+}
 
     public function homedata(Request $request)
     {
-        $lang = $request->header('lang');
 
-        $token = $request->header('token');
 
-        if (!$lang || $lang == '') {
-            return $this->returnError(402, 'language is missing');
+        $supermarkets = Supermarket::where('status', 'active')->select('id', 'arab_name as name', 'state', 'start_time', 'end_time', 'image', 'logo_image')->orderBy('priority', 'asc')->limit(10)->get();
+
+        $offers = offer::where('status', 'active')->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->limit(4)->get();
+
+
+        foreach ($supermarkets as $supermarket) {
+            $supermarket->imagepath = asset('images/' . $supermarket->image);
+            $supermarket->logopath = asset('images/' . $supermarket->logo_image);
         }
 
-
-        if($lang == 'ar')
-        {
-            $supermarkets = Supermarket::where('status','active')->select('id','arab_name as name','state','start_time','end_time','image','logo_image')->orderBy('priority','asc')->limit(10)->get();
-
-            $offers = offer::where('status','active')->select('id','arab_name as name','arab_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
-        }
-        else
-        {
-            $supermarkets = Supermarket::where('status','active')->select('id','eng_name as name','state','start_time','end_time','image','logo_image')->orderBy('priority','asc')->limit(10)->get();
-
-            $offers = offer::where('status','active')->select('id','eng_name as name','eng_description as description','promocode','offer_type','value_type','image')->limit(4)->get();
+        foreach ($offers as $offer) {
+            $offer->imagepath = asset('images/' . $offer->image);
         }
 
+        if (auth("client-web")->check()) {
+            $client = auth("client-web")->user();
 
-        foreach ($supermarkets as $supermarket)
-        {
-            $supermarket->imagepath = asset('images/'.$supermarket->image);
-            $supermarket->logopath = asset('images/'.$supermarket->logo_image);
-        }
+            if ($client) {
+                return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
+            } else {
 
-        foreach ($offers as $offer)
-        {
-            $offer->imagepath = asset('images/'.$offer->image);
-        }
-
-        if($token)
-        {
-            $client = Client::where('remember_token',$token)->first();
-
-            if($client)
-            {
-                return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
+                return $this->returnError(305, 'there is no client found');
             }
-            else
-            {
-                if($lang == 'ar')
-                {
-                    return $this->returnError(305,'لم نجد هذا العميل');
-                }
-                return $this->returnError(305 ,'there is no client found');
-            }
-        }
-        else
-        {
-            return $this->returnData(['supermarkets','offers'],[$supermarkets,$offers]);
+        } else {
+            return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
         }
 
 
@@ -95,28 +75,27 @@ class ProductController extends Controller
             return $this->returnError(402, 'language is missing');
         }
 
-        if($product) {
+        if ($product) {
 
             if ($lang == 'ar') {
 
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price','offer_price','rate','points','exp_date','production_date')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             } else {
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price','offer_price','rate','points','exp_date','production_date')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             }
 
             $product_images = explode(',', $product->images);
 
             $favproduct = DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->first();
 
-            $names = ['production_date','exp_date','measure' , 'size'];
+            $names = ['production_date', 'exp_date', 'measure', 'size'];
 
-            $values = [$product->production_date,$product->exp_date,'kilo',$product->size->value];
+            $values = [$product->production_date, $product->exp_date, 'kilo', $product->size->value];
 
             $specifications = [];
 
-            for($i=0;$i<count($names);$i++)
-            {
-                array_push($specifications,array('name' => $names[$i] , 'value' => $values[$i]));
+            for ($i = 0; $i < count($names); $i++) {
+                array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
             }
 
             if ($favproduct) {
@@ -125,21 +104,18 @@ class ProductController extends Controller
                 $product_details->favourite = 0;
             }
 
-            if ($product->flag == 1)
-            {
+            if ($product->flag == 1) {
 
                 $offer_price = $product->offer_price;
                 $price = $product->price;
 
                 $product_details->offer = 1;
-                $product_details->percentage = ($offer_price/$price) * 100;
-            }
-            else
-            {
+                $product_details->percentage = ($offer_price / $price) * 100;
+            } else {
                 $product_details->offer = 0;
             }
 
-                $imagepaths = [];
+            $imagepaths = [];
 
             foreach ($product_images as $image) {
                 array_push($imagepaths, asset('images/' . $image));
@@ -148,38 +124,33 @@ class ProductController extends Controller
             $product_details->imagepaths = $imagepaths;
             $product_details->image = $imagepaths[0];
             $product_details->ratings = $product->ratings;
-            $product_details->reviews = $product->clientreviews()->select('client_id','name','review')->get();
+            $product_details->reviews = $product->clientreviews()->select('client_id', 'name', 'review')->get();
             $product_details->specifications = $specifications;
             $product_details->category = $product->category->name_en;
             $product_details->supermarket = $product->supermarket->eng_name;
             $product_details->deliver_to = 'cairo';
             $product_details->delivery_time = '30 minutes';
-        }
-        else
-        {
-            if($this->getCurrentLang() == 'ar')
-            {
-                return $this->returnError('','لا يوجد هذا المنتج');
+        } else {
+            if ($this->getCurrentLang() == 'ar') {
+                return $this->returnError('', 'لا يوجد هذا المنتج');
             }
-            return $this->returnError('','there is no product found');
+            return $this->returnError('', 'there is no product found');
         }
 
-        if($token) {
+        if ($token) {
 
             $client = Client::where('remember_token', $token)->first();
 
             if ($client) {
                 return $this->returnData(['product'], [$product_details]);
-            }
-            else {
+            } else {
                 if ($lang == 'ar') {
                     return $this->returnError(305, 'لم نجد هذا العميل');
                 }
                 return $this->returnError(305, 'there is no client found');
             }
 
-        }
-        else {
+        } else {
             return $this->returnData(['product'], [$product_details]);
         }
 
@@ -190,20 +161,16 @@ class ProductController extends Controller
 
         $type = intval($value);
 
-        if(strlen($type) < 10 )
-        {
-            $products = Product::where('arab_name','LIKE','%'.$value."%")->orWhere('eng_name','LIKE','%'.$value."%")->get();
+        if (strlen($type) < 10) {
+            $products = Product::where('arab_name', 'LIKE', '%' . $value . "%")->orWhere('eng_name', 'LIKE', '%' . $value . "%")->get();
 
-            if(count($products) < 1)
-            {
-                if($this->getCurrentLang() == 'ar')
-                {
-                    return $this->returnError('','ليس هناك منتج بهذا الاسم');
+            if (count($products) < 1) {
+                if ($this->getCurrentLang() == 'ar') {
+                    return $this->returnError('', 'ليس هناك منتج بهذا الاسم');
                 }
-                return $this->returnError('','there is no product found');
-            }
-            else {
-                foreach($products as $product) {
+                return $this->returnError('', 'there is no product found');
+            } else {
+                foreach ($products as $product) {
 
                     if ($this->getCurrentLang() == 'ar') {
 
@@ -233,16 +200,12 @@ class ProductController extends Controller
                     $all_products [] = $productarray;
                 }
 
-                return $this->returnData('products',$all_products);
+                return $this->returnData('products', $all_products);
             }
-        }
+        } else {
+            $product = Product::where('barcode', $value)->first();
 
-        else
-        {
-            $product = Product::where('barcode',$value)->first();
-
-            if($product)
-            {
+            if ($product) {
                 if ($this->getCurrentLang() == 'ar') {
 
                     $productarray =
@@ -268,10 +231,9 @@ class ProductController extends Controller
                             'vendor' => $product->vendor->eng_name
                         ];
                 }
-                return $this->returnData('product',$productarray);
-            }
-            else {
-                return $this->returnError('','there is no product found');
+                return $this->returnData('product', $productarray);
+            } else {
+                return $this->returnError('', 'there is no product found');
             }
 
 

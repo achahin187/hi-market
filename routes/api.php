@@ -1,7 +1,8 @@
 <?php
 
     use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@
     });
 
 
-     Route::group(['middleware' => ['api'],'namespace' => 'Api'],function () {
+     Route::group(['namespace' => 'Api'],function () {
         //address
         Route::post('deleteAddress','ClientController@delete_address');
 
