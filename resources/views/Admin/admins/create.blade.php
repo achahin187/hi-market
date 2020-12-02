@@ -85,7 +85,9 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1"> {{ __('admin.password') }}</label>
-                                        <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+
+                                        <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password" value="">
+
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
