@@ -32,47 +32,37 @@ class AuthController extends Controller
     public function verifycode(Request $request)
     {
 
-        $lang = $request->header('lang');
-
-        if (!$lang || $lang == '') {
-            return $this->returnError(402, Lang::get('message.missingLang'));
-        }
 
         $mobile = $request->mobile_number;
 
         $code = $request->code;
 
-        $client = Client::where('mobile_number', $mobile)->first();
 
-        if ($client) {
+        try {
+            $client = Client::where('mobile_number', $mobile)->firstOrFail();
+        } catch (\Exception $e) {
+            return $this->returnError(404, "Client Not Found");
+        }
 
-            if ($client->activation_code == $code) {
+        if ($client->activation_code == $code) {
 
-                if ($lang == 'ar') {
-                    return $this->returnData(['client'], [$client], 'الكود صحيح');
-                } else {
-                    return $this->returnData(['client'], [$client], 'the code is valid');
-                }
 
-            } else {
+            return $this->returnData(['client'], [$client], 'the code is valid');
 
-                if ($lang == 'ar') {
-                    return $this->returnError(300, 'الكود الذي أدخلته غير صحيح تأكد من الكود في الرسالة');
-                } else {
-                    return $this->returnError(300, 'this code is invalid please check the code sent to your mobile');
-                }
 
-            }
         } else {
 
-            if ($this->getCurrentLang() == 'ar') {
-                return $this->returnError(300, 'لم نجد هذا العميل');
-            }
-            return $this->returnError(300, 'there is no client found');
+
+            return $this->returnError(422, 'this code is invalid please check the code sent to your mobile');
+
 
         }
 
+
+        return $this->returnError(404, 'there is no client found');
+
     }
+
 
     public function login(Request $request)
     {
@@ -133,11 +123,12 @@ class AuthController extends Controller
             'email' => $request->email,
             'mobile_number' => $request->mobile_number,
             'password' => Hash::make($request->password),
+            "unique_id" => $udid
         ]);
 
 
         $accessToken = $client->createToken("hi-market")->accessToken;
-
+        $client->update(["remember_token" => $accessToken]);
 
         $code = '123456';
 
@@ -157,12 +148,15 @@ class AuthController extends Controller
 
     public function forgetpassword(Request $request)
     {
-        $lang = $request->header('lang');
+
 
         $mobile = $request->mobile_number;
+        try {
+            $client = Client::where('mobile_number', $mobile)->firstOrFail();
 
-
-        $client = Client::where('mobile_number', $mobile)->firstOrFail();
+        } catch (\Exception $e) {
+            return $this->returnError(404, "Client Not Found");
+        }
 
 
         $code = '123456';
@@ -171,14 +165,10 @@ class AuthController extends Controller
 
         $activation_msg = 'your activation code is ' . $code;
 
-        $this->send_sms('Eramint', $mobile, $activation_msg, $lang);
+        $this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
 
+        $msg = "we sent an activation code to verify your mobile number";
 
-        if ($lang == 'ar') {
-            $msg = "لقد تم ارسال كود الي رقم حضرتك";
-        } else {
-            $msg = "we sent an activation code to verify your mobile number";
-        }
 
         return $this->returnData(['code'], [$code], $msg);
 
@@ -226,8 +216,6 @@ class AuthController extends Controller
             ]);
 
 
-            $token = auth()->guard('client-api')->login($client);
-
             $client->update(['status' => 0]);
 
             return $data;
@@ -242,7 +230,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        auth("client-api")->user()->tokens()->delete();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
