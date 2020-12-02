@@ -34,7 +34,9 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $admins = User::where('flag',0)->orderBy('id', 'desc')->get();
+        //$admins = User::where('flag',0)->orderBy('id', 'desc')->get();
+
+        $admins =  User::where('flag',0)->orderBy('id', 'desc')->get();
 
         return view('Admin.admins.index',compact('admins'));
     }
