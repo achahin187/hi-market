@@ -93,10 +93,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('admin.confirm_password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.confirm_password') }}" value="">
-                                    </div>
+                                    
 
 
                                     <div class="form-group">
@@ -106,8 +103,8 @@
 
                                             @foreach($roles as $role)
                                                 <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
+                                                    <div class="custom-control">
+                                                        <input  value="{{$role->name}}" type="radio"  name="role" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
 
                                                         <label class="form-check-label">
                                                                 {{$role->name}}
@@ -118,10 +115,10 @@
 
                                         @else
 
-                                            @foreach($roles->where('name','admin') as $role)
+                                            @foreach($roles as $role)
                                                 <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]">
+                                                    <div class="custom-control ">
+                                                        <input value="{{$role->name}}" type="radio"  name="role">
 
                                                         @if(App::getLocale() == 'ar')
                                                          <label class="form-check-label" for="exampleCheck1">{{$role->arab_name}}</label>
@@ -137,42 +134,7 @@
 
                                     </div>
 
-                                    <div class="form-group">
-                                        <label> {{ __('admin.team') }} </label>
-                                        <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($admin))
-                                                @foreach(\App\Models\Team::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option <?php if($admin->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Team::all() as $team)
-
-                                                    @if(App::getLocale() == 'ar')
-
-                                                        <option value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div>
-
+                                  
 
                                 </div>
                                 <!-- /.card-body -->

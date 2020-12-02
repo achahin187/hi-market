@@ -11,7 +11,7 @@ class BranchController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:branches-list', ['only' => ['index']]);
+        $this->middleware('permission:branches-list', ['only' => ['index','supermarketbranches']]);
         $this->middleware('permission:branches-create', ['only' => ['create','store']]);
         $this->middleware('permission:branches-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:branches-delete', ['only' => ['destroy']]);
