@@ -103,8 +103,8 @@
 
                                             @foreach($roles as $role)
                                                 <div class="form-group">
-                                                    <div class="custom-control ">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="role" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
+                                                    <div class="custom-control">
+                                                        <input  value="{{$role->name}}" type="radio"  name="role" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
 
                                                         <label class="form-check-label">
                                                                 {{$role->name}}
@@ -118,7 +118,7 @@
                                             @foreach($roles as $role)
                                                 <div class="form-group">
                                                     <div class="custom-control ">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="role">
+                                                        <input value="{{$role->name}}" type="radio"  name="role">
 
                                                         @if(App::getLocale() == 'ar')
                                                          <label class="form-check-label" for="exampleCheck1">{{$role->arab_name}}</label>

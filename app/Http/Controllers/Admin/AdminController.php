@@ -62,7 +62,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
 
-        $user = auth()->user();
+      dd($request->role);
 
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -76,35 +76,46 @@ class AdminController extends Controller
 
      
         $role = Role::where('name',$request->role )->first();
-        $assignRole = $user->assignRole($role);
 
-        $Permissions = $role->permissions;
-            
-        $user->givePermissionTo($Permissions);
 
+            if (isset($role->permissions)) {
+
+                $admin = User::create([
+
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'created_by' => auth()->user()->id
+
+
+                ]);
+
+                $assignRole = $admin->assignRole($role);
+
+                $Permissions = $role->permissions;
+                    
+                $admin->givePermissionTo($Permissions);
+
+
+           
+
+
+          
+
+                if($admin)
+                {
+                    return redirect('admin/admins')->withStatus('admin successfully created');
+                }
+                else
+                {
+                    return redirect('admin/admins')->withStatus('something went wrong, try again');
+                }
+
+            }else{
+
+                return redirect('admin/admins')->withStatus('You must Choose Permission for this role first');
+            }
        
-
-        $admin = User::create([
-
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'created_by' => $user->id
-
-
-        ]);
-
-      
-
-        if($admin)
-        {
-            return redirect('admin/admins')->withStatus('admin successfully created');
-        }
-        else
-        {
-            return redirect('admin/admins')->withStatus('something went wrong, try again');
-        }
-
 
     }
 
