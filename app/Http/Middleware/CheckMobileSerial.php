@@ -22,15 +22,6 @@ class CheckMobileSerial
         $client = Client::where("unique_id", $request->header("udid"))->count();
         if (!request()->header("Authorization") && !$request->header("udid")) {
             return $this->returnError(401, "please pass Authorization header or udid");
-        } elseif (request()->header("udid") && $client != 0) {
-
-            return response()->json(
-                [
-                    "success" => false,
-                    "status" => "Client Not Exists"
-                ],
-                404
-            );
         }
 
         return $next($request);

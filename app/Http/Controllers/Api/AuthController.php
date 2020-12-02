@@ -59,7 +59,7 @@ class AuthController extends Controller
         }
 
 
-        return $this->returnError(404, 'there is no client found');
+     
 
     }
 
@@ -128,7 +128,7 @@ class AuthController extends Controller
 
 
         $accessToken = $client->createToken("hi-market")->accessToken;
-        $client->update(["remember_token" => $accessToken]);
+
 
         $code = '123456';
 
