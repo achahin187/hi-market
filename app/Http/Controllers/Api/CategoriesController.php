@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\generaltrait;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Branch;
 use App\Models\Offer;
 use App\Models\Supermarket;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +35,7 @@ class CategoriesController extends Controller
         $supermarket_id = $request->id;
 
         try {
-            $supermarket = supermarket::findOrFail($supermarket_id);
+            $supermarket = Branch::findOrFail($supermarket_id);
 
         } catch (\Exception $exception) {
             return $this->returnError(404, "SuperMarket Not Found");
