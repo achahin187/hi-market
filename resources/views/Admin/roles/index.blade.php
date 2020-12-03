@@ -20,6 +20,10 @@
                                 @if(auth()->user()->can('role-create'))
                                 <li class="breadcrumb-item"><a href="{{route('roles.create')}}">create new role</a></li>
                                 @endif
+
+                                @if(auth()->user()->can('admin-create'))
+                                <li class="breadcrumb-item"><a href="{{route('admins.create')}}">create new admin</a></li>
+                                @endif
                             </ol>
                         </div>
 
