@@ -99,11 +99,11 @@ public function __construct()
                 array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
             }
 
-            if (isset($favproduct)) {
-                $product_details->favourite = 1;
-            } else {
-                $product_details->favourite = 0;
-            }
+            // if (isset($favproduct)) {
+            //     $product_details->favourite = 1;
+            // } else {
+            //     $product_details->favourite = 0;
+            // }
 
             if ($product->flag == 1) {
 
