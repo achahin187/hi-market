@@ -96,7 +96,7 @@ class AdminController extends Controller
 
                 $Permissions = $role->permissions;
                     
-                $admin->givePermissionTo($Permissions);
+                //$admin->givePermissionTo($Permissions);
 
 
            
@@ -247,6 +247,7 @@ class AdminController extends Controller
                     DB::table('model_has_roles')->where('model_id',$id)->delete();
 
                     $admin->assignRole($request->input('role'));
+
                     return redirect('/admin/admins')->withStatus('admin information successfully updated.');
                 }
                 else

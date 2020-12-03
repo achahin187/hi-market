@@ -66,7 +66,7 @@ public function __construct()
 
          $client = getUser();
 
-        // $udid = $request->header('udid');
+         $udid = $request->header('udid');
 
         $product_id = $request->id;
 
