@@ -62,11 +62,11 @@ public function __construct()
     public function productdetails(Request $request)
     {
 
-        $lang = $request->header('lang');
+        // $lang = $request->header('lang');
 
-        $token = $request->header('token');
+         $client = getUser();
 
-        $udid = $request->header('udid');
+        // $udid = $request->header('udid');
 
         $product_id = $request->id;
 
@@ -138,9 +138,9 @@ public function __construct()
             return $this->returnError('', 'there is no product found');
         }
 
-        if ($token) {
+        if ($client) {
 
-            $client = Client::where('remember_token', $token)->first();
+          
 
             if ($client) {
                 return $this->returnData(['product'], [$product_details]);
