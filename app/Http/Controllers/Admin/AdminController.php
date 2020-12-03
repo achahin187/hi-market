@@ -228,7 +228,7 @@ class AdminController extends Controller
             $this->validate($request,$rules);
 
 
-            $password = password_hash($request->password,PASSWORD_DEFAULT);
+        
 
 
                 if($admin)
@@ -238,7 +238,7 @@ class AdminController extends Controller
 
                         'name' => $request->name ,
                         'email' => $request->email ,
-                        'password' => $password,
+                        'password' => $request->password,
                         'team_id' => $request->team_id,
                         'updated_by' => $user->id
 
