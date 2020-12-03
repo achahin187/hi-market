@@ -57,7 +57,8 @@
                                         <th>{{ __('admin.status') }}</th>
                                         @endif
 
-                                     @if(auth()->user()->hasAnyPermission(['reason-delete','reason-edit']))    <th>{{ __('admin.controls') }}</th>
+                                     @if(auth()->user()->hasAnyPermission(['reason-delete','reason-edit']))   
+                                      <th>{{ __('admin.controls') }}</th>
                                       @endif   
                                     </tr>
                                     </thead>
@@ -66,6 +67,7 @@
                                         <tr>
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
+                                            
                                         @if(auth()->user()->can('reason-active'))     
                                             <td>
 

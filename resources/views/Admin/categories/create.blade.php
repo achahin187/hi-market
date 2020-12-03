@@ -84,24 +84,25 @@
                                                     <input name="image" accept=".png,.jpg,.jpeg"  type="file">
 
                                                 </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     @else
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input name="image" accept=".png,.jpg,.jpeg"  type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
-                                            </div>
+                                           
+                                            
+
+
+                                        <div class="form-group" style="margin-bottom: 10px">
+                                            <label for="exampleInputFile">{{__('admin.image')}}</label>
+                                       
+                                             <div class="form-group">
+                                               
+                                                <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
+                                        </div>
+
                                         </div>
 
 
@@ -112,7 +113,7 @@
                                 @if(isset($category))
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                        <button type="submit" class="btn btn-primary">{{__('admin.edit')}}</button>
                                     </div>
 
                                 @else
