@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                         @if(auth()->user()->can('mainCategory-list'))    
+                         @if(auth()->user()->can('category-list'))    
                             <li class="breadcrumb-item"><a href="{{route('categories.create')}}">{{__('admin.add_category')}}</a></li>
                          @endif    
                         </ol>
@@ -52,7 +52,7 @@
                                     <tr>
                                         <th>{{__('admin.name_ar')}}</th>
                                         <th>{{__('admin.name_en')}}</th>
-                                @if(auth()->user()->hasAnyPermission(['branches-delete','branches-edit']))        
+                                @if(auth()->user()->hasAnyPermission(['category-delete','category-edit']))        
                                         <th>{{__('admin.controls')}}</th>
                                 @endif    
                                     </tr>
@@ -62,14 +62,14 @@
                                         <tr>
                                             <td>{{$category->name_ar}}</td>
                                             <td>{{$category->name_en}}</td>
-                                @if(auth()->user()->hasAnyPermission(['branches-delete','branches-edit']))    
+                                @if(auth()->user()->hasAnyPermission(['category-delete','category-edit']))    
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                 @if(auth()->user()->can('mainCategory-delete'))           
+                                                 @if(auth()->user()->can('category-delete'))           
                                                         <form action="{{ route('categories.destroy', $category->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
@@ -78,7 +78,7 @@
                                                         </form>
                                                 @endif
 
-                                                 @if(auth()->user()->can('mainCategory-edit'))           
+                                                 @if(auth()->user()->can('category-edit'))           
 
                                                             <a class="dropdown-item" href="{{ route('categories.edit', $category->id) }}">{{__('admin.edit')}}</a>
                                                  @endif            
