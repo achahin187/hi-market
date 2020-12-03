@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Offer;
 use App\Models\Product;
+use App\Models\Branch;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
 use App\Http\Traits\generaltrait;
@@ -26,9 +27,9 @@ public function __construct()
 
     public function homedata(Request $request)
     {
-        // Add Rate And Address Branch ++
+        // Add Rate And Address Branch ++.
         // Change to Branch
-        $supermarkets = Supermarket::where('status', 'active')->select('id', 'arab_name as name', 'state', 'start_time', 'end_time', 'image', 'logo_image')->orderBy('priority', 'asc')->limit(10)->get();
+        $supermarkets = Branch::where('status', 'active')->select('id', 'arab_name as name', 'state', 'start_time', 'end_time', 'image', 'logo_image')->orderBy('priority', 'asc')->limit(10)->get();
 
         $offers = offer::where('status', 'active')->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->limit(4)->get();
 
