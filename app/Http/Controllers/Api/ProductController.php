@@ -80,7 +80,7 @@ public function __construct()
 
             if ($lang == 'ar') {
 
-                $product_details = Product::where('status','active')->where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
+                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             } else {
                 $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             }
@@ -99,11 +99,11 @@ public function __construct()
                 array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
             }
 
-            // if (isset($favproduct)) {
-            //     $product_details->favourite = 1;
-            // } else {
-            //     $product_details->favourite = 0;
-            // }
+            if (isset($favproduct)) {
+                $product_details->favourite = 1;
+            } else {
+                $product_details->favourite = 0;
+            }
 
             if ($product->flag == 1) {
 
