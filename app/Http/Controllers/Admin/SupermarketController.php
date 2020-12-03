@@ -158,11 +158,11 @@ class SupermarketController extends Controller
 
         if($supermarket)
         {
-            $category_ids = [];
-            foreach ($supermarket->categories as $category)
-            {
-                $category_ids[] = $category->id;
-            }
+            // $category_ids = [];
+            // foreach ($supermarket->categories as $category)
+            // {
+            //     $category_ids[] = $category->id;
+            // }
             return view('Admin.supermarkets.create', compact('supermarket','category_ids'));
         }
         else

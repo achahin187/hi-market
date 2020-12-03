@@ -58,12 +58,11 @@ class SizeController extends Controller
 
         $user = auth()->user();
 
-
-        $rules = [
-            'value' => ['required','not_regex:/([%\$#\*<>]+)/'],
-        ];
-
-        $this->validate($request,$rules);
+    
+        $request->validate([
+            'value' => ['required','numeric','not_regex:/([%\$#\*<>]+)/','min:1'],
+        ]);
+     
 
         $size = Size::create([
 

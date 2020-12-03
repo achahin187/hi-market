@@ -9,13 +9,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>General Form</h1>
+                        <h1>{{ __('admin.sizes') }}</h1>
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('sizes.index')}}">sizes</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            <li class="breadcrumb-item active">{{ __('admin.sizes') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -33,9 +33,9 @@
                                 <h3 class="card-title">
 
                                     @if(isset($size))
-                                        edit size
+                                        {{ __('admin.edit') }}
                                     @else
-                                        create size
+                                        {{ __('admin.add') }}
 
                                     @endif
                                 </h3>
@@ -67,7 +67,16 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                     @if(isset($size))
+
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.edit') }}</button>
+                                    
+
+                                    @else
+
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
+
+                                    @endif
                                 </div>
                             </form>
                         </div>

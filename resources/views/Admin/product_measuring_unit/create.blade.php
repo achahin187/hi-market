@@ -15,7 +15,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('measures.index')}}">measuring units</a></li>
-                            <li class="breadcrumb-item active">General Form</li>
+                            
                         </ol>
                     </div>
                 </div>

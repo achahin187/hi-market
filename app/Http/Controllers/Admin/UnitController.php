@@ -57,8 +57,8 @@ class UnitController extends Controller
 
 
         $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/','regex:/[^a-zA-Z0-9]+/'],
+            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/', 'regex:/[^a-zA-Z0-9]+/'],
         ];
 
         $this->validate($request,$rules);

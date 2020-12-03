@@ -56,7 +56,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.size_value')}}</label>
-                                        <input type="text" name="value" value="@if(isset($size)){{$size->value }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
+                                        <input type="text" name="value" value="@if(isset($size)){{$size->value }} @endif" class=" @error('value') is-invalid @enderror form-control" required>
                                         @error('value')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -70,7 +70,7 @@
                                 @if(isset($size))
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">{{__('admin.modify')}}</button>
+                                        <button type="submit" class="btn btn-primary">{{__('admin.edit')}}</button>
                                     </div>
 
                                 @else

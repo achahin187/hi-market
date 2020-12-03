@@ -55,8 +55,8 @@ class CategoryController extends Controller
         //
 
         $rules = [
-            'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_ar' => ['required','string','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'name_en' => ['required','string','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ];
 
