@@ -47,7 +47,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-hover">
+                                <table id="example1" style="table-layout: fixed;" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>eng reason</th>
@@ -67,7 +67,7 @@
                                         <tr>
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
-                                            
+
                                         @if(auth()->user()->can('reason-active'))     
                                             <td>
 
