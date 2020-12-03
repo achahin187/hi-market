@@ -291,13 +291,13 @@ class SupermarketController extends Controller
         if($supermarket)
         {
             if($supermarket->image != null) {
-                $image_path = base_path('public/images'.$supermarket->image);  
+                $image_path = base_path('public/images/'.$supermarket->image);  
                 unlink($image_path);
             }
 
             if($supermarket->logo != null) {
                 
-                $image_path = base_path('public/images'.$supermarket->logo);  
+                $image_path = base_path('public/images/'.$supermarket->logo);  
                 unlink($image_path);
             }
 
