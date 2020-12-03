@@ -60,7 +60,9 @@
                                     @endif    
                                         <th>{{__('admin.products')}}</th>
                                         <th>{{__('admin.product_offers')}}</th>
+                                        @if(auth()->user()->can('offer-list'))
                                         <th>{{__('admin.offers')}}</th>
+                                        @endif
                                         <th>{{__('admin.branches')}}</th>
                                  @if(auth()->user()->hasAnyPermission(['supermarket-delete','supermarket-edit']))
                                         <th>{{__('admin.controls')}}</th>
@@ -104,10 +106,11 @@
                                             <td>
                                                 <a href="{{ route('supermarket.products', ['supermarket_id' => $supermarket->id , 'flag' => 1]) }}" class="btn btn-info">{{__('admin.product_offers')}}</a>
                                             </td>
-
+@if(auth()->user()->can('offer-list'))
                                             <td>
                                                 <a href="{{ route('supermarket.offers', $supermarket->id) }}" class="btn btn-info">{{__('admin.offers')}}</a>
                                             </td>
+@endif                                            
                                             <td>
                                                 <a href="{{ route('supermarket.branches', $supermarket->id) }}" class="btn btn-info">{{__('admin.branches')}}</a>
                                             </td>
