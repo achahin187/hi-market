@@ -9,7 +9,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
+                        @if(isset($supermarket))
+                        
+                        <h1>{{__('admin.edit_supermarket')}}</h1>
+                        @else
+                          
                         <h1>{{__('admin.add_supermarket')}}</h1>
+
+                        @endif
                         @include('includes.errors')
                     </div>
                     <div class="col-sm-6">
