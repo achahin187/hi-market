@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('verifycode', 'AuthController@verifycode')->name('profile_update');
         Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
         Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
-         )};
+          });
 
     Route::group(['namespace' => 'Api','middleware'=>'check_mobile_serial'],function () {
 
