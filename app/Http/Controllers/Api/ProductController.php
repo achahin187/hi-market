@@ -65,7 +65,7 @@ public function __construct()
          $lang = app()->getLocale();
 
          $client = getUser();
-
+        ;
          $udid = $request->header('udid');
 
         $product_id = $request->id;
