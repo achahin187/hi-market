@@ -101,9 +101,9 @@
                                     trans('admin.end_date'),
                                     trans('admin.production_date'),
                                     trans('admin.exp_date'),
-                                    if(auth()->user()->can('product-active'))
+
                                     trans('admin.status'),
-                                    endif
+                                   
                                     trans('admin.barcode')];?>
 
                                 <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
@@ -148,10 +148,10 @@
                                                 @endforeach
 
                                             @else
+                                                {{-- trans('admin.status') --}}
 
                                                 <?php $main_cols = [trans('admin.name_ar'),trans('admin.name_en'),trans('admin.priority'),
-                                                trans('admin.status')
-                                                ,trans('admin.category'),trans('admin.supermarket'),trans('admin.branch')];?>
+                                                trans('admin.category'),trans('admin.supermarket'),trans('admin.branch')];?>
 
                                                 @foreach($main_cols as $main_col)
 
