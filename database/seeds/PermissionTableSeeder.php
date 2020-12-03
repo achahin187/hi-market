@@ -54,7 +54,7 @@ class PermissionTableSeeder extends Seeder
             'order-cancel',
             'order-rollback',
             'order-assign',
-            'order-show-canceled-orders',
+            'order-show-canceled-orders ',
             'order-edit-cancel',
             'order-delete-cancel',
             'order-edit-client-info',
@@ -91,7 +91,6 @@ class PermissionTableSeeder extends Seeder
     
             'reason-list',
             'reason-create',
-            'reason-delete',
             'reason-edit',
             'reason-active',
 
