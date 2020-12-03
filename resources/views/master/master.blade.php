@@ -380,14 +380,14 @@ $settings = App\Models\Setting::all()->first();
                                                 </li>
                                           
                                                 {{-- sub category --}}
-                                                <li class="nav-item">
+                                               {{--  <li class="nav-item">
                                                     <a href="{{route('subcategories.index')}}" class="nav-link">
                                                         <i class="far fa-circle nav-icon"></i>
                                                         <p>
                                                              {{ __('admin.subcategory') }}
                                                         </p>
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                              
                                         
                                                   {{-- measures --}}
