@@ -163,7 +163,7 @@ class SupermarketController extends Controller
             // {
             //     $category_ids[] = $category->id;
             // }
-            return view('Admin.supermarkets.create', compact('supermarket','category_ids'));
+            return view('Admin.supermarkets.create', compact('supermarket'));
         }
         else
         {
