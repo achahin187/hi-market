@@ -62,7 +62,7 @@ public function __construct()
     public function productdetails(Request $request)
     {
 
-        // $lang = $request->header('lang');
+         $lang = app()->getLocale();
 
          $client = getUser();
 

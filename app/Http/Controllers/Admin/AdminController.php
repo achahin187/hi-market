@@ -220,7 +220,7 @@ class AdminController extends Controller
             $rules = [
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'password' => ['required', 'min:8', 'different:old_password', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+                'password' => ['required', 'min:8', 'different:old_password'],
        
                 'role' => 'required',
             ];
