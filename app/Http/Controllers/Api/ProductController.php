@@ -99,7 +99,7 @@ public function __construct()
                 array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
             }
 
-            if ($favproduct) {
+            if (isset($favproduct)) {
                 $product_details->favourite = 1;
             } else {
                 $product_details->favourite = 0;
