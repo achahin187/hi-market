@@ -19,8 +19,10 @@ class CheckMobileSerial
      */
     public function handle($request, Closure $next)
     {
-        $client = Client::where("unique_id", $request->header("udid"))->count();
+        
+
         if (!request()->header("Authorization") && !$request->header("udid")) {
+
             return $this->returnError(401, "please pass Authorization header or udid");
         }
 

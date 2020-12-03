@@ -15,15 +15,24 @@ use Illuminate\Support\Facades\Route;
     |
     */
 
-    Route::group(['namespace' => 'Api'],function () {
+        Route::group(['namespace' => 'Api'],function () {
+
+            Route::post('register', 'AuthController@register')->name('client.register');
+            Route::post('login', 'AuthController@login')->name('client.login');
+            Route::post('forgetpassword','AuthController@forgetpassword')->name('forgetpassword');
+        Route::post('verifycode', 'AuthController@verifycode')->name('profile_update');
+        Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
+        Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
+         )};
+
+    Route::group(['namespace' => 'Api','middleware'=>'check_mobile_serial'],function () {
+
+        Route::get('logout', 'AuthController@logout')->name('logout');
 
         Route::get('products','ProductController@index')->name('listproducts');
         Route::post('product','ProductController@productdetails')->name('productdetails');
         Route::get('products/search/{name}','ProductController@getproductsearch')->name('search');
         Route::get('categories','CategoriesController@index');
-        Route::post('register', 'AuthController@register')->name('client.register');
-        Route::post('login', 'AuthController@login')->name('client.login');
-        Route::get('logout', 'AuthController@logout')->name('logout');
         Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
         Route::get('social/{flag}', 'AuthController@social')->name('social.auth');
 
@@ -33,10 +42,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('add_address','ClientController@add_address')->name('address.store');
         Route::get('get_address/{flag}', 'ClientController@get_address')->name('address.show');
 
-        Route::post('forgetpassword','AuthController@forgetpassword')->name('forgetpassword');
-        Route::post('verifycode', 'AuthController@verifycode')->name('profile_update');
-        Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
-        Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
+        
 
         Route::post('favourites/add','FavouritesController@addfavourite');
         Route::post('favourites/remove','FavouritesController@removefavourites');
