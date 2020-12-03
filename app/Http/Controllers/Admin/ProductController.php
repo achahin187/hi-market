@@ -89,7 +89,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
-            'subcategory_id' => 'required|integer|min:0',
+           // 'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
             'production_date' => 'required|after:today|date',
@@ -145,7 +145,7 @@ class ProductController extends Controller
             $branch = $request->input('branch_id');
         }
 
-        $subcategory = $request->input('subcategory_id');
+        //$subcategory = $request->input('subcategory_id');
 
         $barcode = $request->input('barcode');
 
@@ -207,7 +207,7 @@ class ProductController extends Controller
             'vendor_id' => $vendor,
             'supermarket_id' => $supermarket,
             'branch_id' => $branch,
-            'subcategory_id' => $subcategory,
+            //'subcategory_id' => $subcategory,
             'images' => $images,
             'barcode' => $barcode,
             'arab_description' => $arab_description,
@@ -410,7 +410,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|integer|min:0',
-            'subcategory_id' => 'required|integer|min:0',
+            //'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
             'exp_date' => 'required|after:today|date',
@@ -454,7 +454,7 @@ class ProductController extends Controller
 
             $vendor = $request->input('vendor_id');
 
-            $subcategory = $request->input('subcategory_id');
+            //$subcategory = $request->input('subcategory_id');
 
             $barcode = $request->input('barcode');
 
@@ -549,7 +549,7 @@ class ProductController extends Controller
                     'vendor_id' => $vendor,
                     'supermarket_id' => $supermarket,
                     'branch_id' => $branch,
-                    'subcategory_id' => $subcategory,
+                    //'subcategory_id' => $subcategory,
                     'images' => $images,
                     'barcode' => $barcode,
                     'arab_description' => $arab_description,
@@ -599,7 +599,7 @@ class ProductController extends Controller
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
                         'branch_id' => $branch,
-                        'subcategory_id' => $subcategory,
+                        //'subcategory_id' => $subcategory,
                         'images' => $images,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
@@ -629,7 +629,7 @@ class ProductController extends Controller
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
                         'branch_id' => $branch,
-                        'subcategory_id' => $subcategory,
+                        //'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
                         'eng_description' => $eng_description,

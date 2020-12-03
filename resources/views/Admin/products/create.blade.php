@@ -334,7 +334,7 @@
                                 </div>
 
 
-                                <div class="form-group">
+                               {{--  <div class="form-group">
                                     <label>{{__('admin.subcategory')}} </label>
                                     <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
@@ -352,7 +352,7 @@
 
                                         @endif
                                     </select>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="form-group">
