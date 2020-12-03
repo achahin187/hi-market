@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Supermarket;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -38,11 +39,15 @@ class BranchController extends Controller
     {
         //
         if($supermarket_id != null) {
+
+         
             return view('Admin.branches.create',compact('supermarket_id'));
         }
         else {
             return view('Admin.branches.create');
         }
+
+
     }
 
     /**
@@ -60,7 +65,15 @@ class BranchController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
             'supermarket_id' => 'required|integer|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'commission' => ['required','min:0','numeric'],
+            'categories' => ['required'],
+            'priority' => ['required','min:0','integer'],
+            'area_id' => 'required|integer|min:0',
+            'city_id' => 'required|integer|min:0',
+            'country_id' => 'required|integer|min:0',
+            'start_time' => ['required','string'],
+            'end_time' => ['required','string'],
         ];
 
         $this->validate($request,$rules);
@@ -73,6 +86,10 @@ class BranchController extends Controller
 
         $supermarket = $request->input('supermarket_id');
 
+
+        $commission = $request->input('commission');
+
+        $priority = $request->input('priority');
 
         if($image = $request->file('image'))
         {
@@ -88,19 +105,42 @@ class BranchController extends Controller
                 'name_en' => $eng_name,
                 'status' => $status,
                 'supermarket_id' => $supermarket,
-                'image' => $file_to_store
+                'image' => $file_to_store,
+                'priority' => $priority,
+                 'commission' => $commission,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'area_id' => $request->area_id,
+                'city_id' => $request->city_id,
+                'country_id' => $request->country_id,
             ]);
+            $branch->categories()->sync($request->categories);
         }
         else
         {
+             if($logoimage = $request->file('logo_image'))
+        {
 
+            $filename = $logoimage->getClientOriginalName();
+            $fileextension = $logoimage->getClientOriginalExtension();
+            $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $logoimage->move('images', $logo);
+
+        }
+        else
+        {
+            $logo = null;
+        }
            $branch = Branch::create([
 
                 'name_ar' => $arab_name,
                 'name_en' => $eng_name,
                 'status' => $status,
                 'supermarket_id' => $supermarket,
+                'logo' => $logo,
             ]);
+            $branch->categories()->sync($request->categories);
         }
 
         if($branch)
@@ -153,12 +193,21 @@ class BranchController extends Controller
 
         if($branch)
         {
+
+            $supermarket = Branch::find($id);
+            $category_ids = [];
+            foreach ($supermarket->categories as $category)
+            {
+                $category_ids[] = $category->id;
+            }
+               
+
             if($supermarket_id != null)
             {
                 return view('Admin.branches.create', compact('branch','supermarket_id'));
             }
             else {
-                return view('Admin.branches.create', compact('branch'));
+                return view('Admin.branches.create', compact('branch','category_ids'));
             }
         }
         else
@@ -182,7 +231,7 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id,$supermarket_id = null)
     {
-        //
+         
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -211,25 +260,64 @@ class BranchController extends Controller
                     }
                 }
                 $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $file_to_store]);
+
+                   $branch->categories()->sync($request->categories);
+
             } else {
 
                 if ($request->has('checkedimage')) {
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $request->input('checkedimage')]);
+                       $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->image != null) {
                         unlink('images/' . $branch->image);
                     }
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => null]);
+                       $branch->categories()->sync($request->categories);
                 }
             }
-            if($supermarket_id != null)
-            {
-                return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus('supermarket branch updated successfully');
+
+            /*logo*/
+            if ($logoimage = $request->file('logo_image') ) {
+
+                 $filename = $logoimage->getClientOriginalName();
+                $fileextension = $logoimage->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+             if ($logoimage->move('images', $file_to_store)) {
+                    if ($branch->logo != null) {
+
+                        unlink('images/' . $branch->logo);
+                    }
+                }
+
+                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => $file_to_store]);
+                   $branch->categories()->sync($request->categories);
+              }else {
+
+                if ($request->has('checkedlogo')) {
+                   
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => $request->input('checkedlogo')]);
+                       $branch->categories()->sync($request->categories);
+                } else {
+                    if ($branch->logo != null) {
+                        unlink('images/' . $branch->logo);
+                    }
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => null]);
+                       $branch->categories()->sync($request->categories);
+                }
             }
-            else {
-                return redirect('admin/branches')->withStatus('branch updated successfully');
-            }
+
+                if($supermarket_id != null)
+                {
+                    return redirect('admin/supermarkets/branches/'.$supermarket_id)->withStatus('supermarket branch updated successfully');
+                }
+                else {
+                    return redirect('admin/branches')->withStatus('branch updated successfully');
+                }
         }
+
+
         else
         {
             if($supermarket_id != null)

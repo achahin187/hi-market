@@ -55,7 +55,6 @@
                                         <th>{{__('admin.name_ar')}}</th>
                                         <th>{{__('admin.name_en')}}</th>
                                         <th>{{__('admin.commission')}}</th>
-                                        <th>{{__('admin.priority')}}</th>
                                     @if(auth()->user()->can('supermarket-active'))
                                         <th>{{__('admin.status')}}</th>
                                     @endif    
@@ -74,7 +73,6 @@
                                             <td>{{$supermarket->arab_name}}</td>
                                             <td>{{$supermarket->eng_name}}</td>
                                             <td>{{$supermarket->commission}}</td>
-                                            <td>{{$supermarket->priority}}</td>
                                              @if(auth()->user()->can('supermarket-active'))
                                             <td>
 
