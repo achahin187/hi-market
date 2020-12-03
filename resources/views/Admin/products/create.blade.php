@@ -26,7 +26,7 @@
                                 <li class="breadcrumb-item active">{{__('admin.branch_products')}}</li>
 
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">{{__('admin.add_product')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.index',$flag)}}">{{__('admin.products')}}</a></li>
                                 <li class="breadcrumb-item active">{{__('admin.products')}}</li>
                             @endif
                         </ol>
@@ -334,7 +334,7 @@
                                 </div>
 
 
-                               {{--  <div class="form-group">
+                            {{--     <div class="form-group">
                                     <label>{{__('admin.subcategory')}} </label>
                                     <select class=" @error('subcategory_id') is-invalid @enderror select2" name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
@@ -355,7 +355,7 @@
                                 </div> --}}
 
 
-                                <div class="form-group">
+                              {{--   <div class="form-group">
                                     <label>{{__('admin.supermarket')}} </label>
                                     <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($supermarket_id)) disabled @endif required>
                                         @if(isset($product))
@@ -382,7 +382,7 @@
                                         @endif
                                     </select>
                                 </div>
-
+ --}}
                                 @if(isset($supermarket_id))
 
                                     <input type="hidden" name="supermarket_id" value="{{$supermarket_id}}">
@@ -393,6 +393,7 @@
                                     <label>{{__('admin.branch')}} </label>
                                     <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
                                         @if(isset($product))
+
                                             @foreach(\App\Models\Branch::all() as $branch)
 
                                                 <option <?php if($product->branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
@@ -407,16 +408,27 @@
                                             @endforeach
 
                                         @else
+                                        
+                                         <option value="1">
+                                                    clothes
+                                                </option> 
 
-                                            @foreach(\App\Models\Branch::all() as $branch)
+                                               
+                                                     {{-- 
+                                              @foreach(\App\Models\Branch::all() as $branch)
 
-                                                <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+                                                <option value="{{ $branch->id }}">
+                                                    {{ $branch->name_en }}
+                                                </option> --}}
 
-                                            @endforeach
+
+
+                                          {{--   @endforeach --}}
 
                                         @endif
                                     </select>
                                 </div>
+
                                 @if(isset($branch_id))
 
                                     <input type="hidden" name="branch_id" value="{{$branch_id}}">
@@ -525,18 +537,6 @@
                                 </div>
 
 
-                                    <div class="form-group">
-                                        <label>{{__('admin.end_date')}}</label>
-                                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"   value="{{old('time') }}" name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
-
-                                        @error('end_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-
-
                                 <div class="form-group">
                                     <label>{{__('admin.exp_date')}}</label>
                                     <input type="datetime-local" class=" @error('exp_date') is-invalid @enderror form-control"  @if(isset($product)) value="{{old('time')?? date('Y-m-d\TH:i', strtotime($product->exp_date)) }}" @endif name="exp_date" data-placeholder="Select a expiration date" style="width: 100%;" required>
@@ -611,15 +611,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                  @if(isset($product) && !isset($clone))
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('admin.edit') }}
-                                </button>
-                                @else
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('admin.add') }}
-                                </button>
-                                @endif
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>

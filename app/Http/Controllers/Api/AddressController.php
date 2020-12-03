@@ -16,7 +16,9 @@ class AddressController extends Controller
     public function __construct()
     {
         if (\request()->header("Authorization")) {
+
             $this->middleware("auth:client-api");
+            
         }
     }
 
@@ -40,7 +42,7 @@ class AddressController extends Controller
 
 
         $address = $request->address;
-        $label = $request->label;
+        $label   = $request->label;
         $default = $request->default;
         $address_id = $request->address_id;
 

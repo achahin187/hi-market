@@ -22,7 +22,7 @@
                                 <a href="{{route('orders.index')}}">Orders</a>
 
                             </li> --}}
-                            @if(auth()->user()->can('order-show-cancel'))
+                            @if(auth()->user()->can('order-show-canceled-orders'))
                                 <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">{{ __('admin.CancelledOrders') }}</a></li>
                             @endif    
 
@@ -138,7 +138,8 @@
                                             <th>{{ __('admin.rollback') }}</th>
                                             @endif
 
-                                        @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))    <th>{{ __('admin.controls') }}</th>
+                                        @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))   
+                                         <th>{{ __('admin.controls') }}</th>
                                           @endif   
 
                                           {{--   @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))

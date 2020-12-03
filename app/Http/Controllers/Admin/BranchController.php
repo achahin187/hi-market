@@ -118,20 +118,20 @@ class BranchController extends Controller
         }
         else
         {
-             if($logoimage = $request->file('logo_image'))
-        {
+            if($logoimage = $request->file('logo_image'))
+            {
 
-            $filename = $logoimage->getClientOriginalName();
-            $fileextension = $logoimage->getClientOriginalExtension();
-            $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+                $filename = $logoimage->getClientOriginalName();
+                $fileextension = $logoimage->getClientOriginalExtension();
+                $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $logoimage->move('images', $logo);
+                $logoimage->move('images', $logo);
 
-        }
-        else
-        {
-            $logo = null;
-        }
+            }
+            else
+            {
+                $logo = null;
+            }
            $branch = Branch::create([
 
                 'name_ar' => $arab_name,

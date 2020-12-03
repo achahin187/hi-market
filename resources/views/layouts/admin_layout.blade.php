@@ -394,7 +394,7 @@ $settings = App\Models\Setting::all()->first();
                                     </li>
                                 @endif   
 
-                                    @if(auth()->user()->can('vendor-list'))
+                                @if(auth()->user()->can('vendor-list'))
                                 {{-- Vendors --}}
                                     <li class="nav-item">
                                         <a href="{{route('vendors.index')}}" class="nav-link">

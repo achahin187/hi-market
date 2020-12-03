@@ -65,7 +65,7 @@ public function __construct()
          $lang = app()->getLocale();
 
          $client = getUser();
-        ;
+        
          $udid = $request->header('udid');
 
         $product_id = $request->id;
@@ -80,7 +80,7 @@ public function __construct()
 
             if ($lang == 'ar') {
 
-                $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
+                $product_details = Product::where('status','active')->where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             } else {
                 $product_details = Product::where('id', $product_id)->select('id', 'name_' . $lang . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
             }

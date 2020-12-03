@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
-
+        dd($request->all());
 
         $user = auth()->user();
 
@@ -88,7 +88,7 @@ class ProductController extends Controller
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
-            'branch_id' => 'required|integer|min:0',
+            'branch_id'     => 'required|array',
            // 'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
@@ -140,10 +140,7 @@ class ProductController extends Controller
         {
             $branch = $branch_id;
         }
-        else
-        {
-            $branch = $request->input('branch_id');
-        }
+       
 
         //$subcategory = $request->input('subcategory_id');
 
@@ -206,7 +203,6 @@ class ProductController extends Controller
             'category_id' => $category,
             'vendor_id' => $vendor,
             'supermarket_id' => $supermarket,
-            'branch_id' => $branch,
             //'subcategory_id' => $subcategory,
             'images' => $images,
             'barcode' => $barcode,
@@ -226,7 +222,7 @@ class ProductController extends Controller
             'created_by' => $user->id
         ]);
 
-
+        $product->branches()->sync($branch_id);
 
         if($product)
         {

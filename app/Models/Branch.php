@@ -34,6 +34,11 @@ class Branch extends Model
         return $this->belongsToMany('App\Models\Category','category_supermarket','');
     }
 
+    public function products() {
+        return $this->belongsToMany('App\Models\Product','product_supermarket');
+    }
+
+
      public function area() {
         return $this->belongsTo('App\Models\Area');
     }
