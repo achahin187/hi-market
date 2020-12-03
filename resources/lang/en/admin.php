@@ -32,6 +32,9 @@ return [
     'delivery_management' => 'Delivery Management',
     'add_delivery_admin' => 'Add Delivery Admin',
     'delivery_admin' => 'Delivery Admin',
+
+    'add_admin' => 'Add Admin',
+    'dashboard' => 'dashboard',
     //name 
 
     'name_ar' => 'Arabic Name',
