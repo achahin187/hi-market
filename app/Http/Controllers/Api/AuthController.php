@@ -127,7 +127,7 @@ class AuthController extends Controller
         ]);
 
 
-        $accessToken = $client->createToken("hi-market")->accessToken;
+        //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
         $code = '123456';
@@ -142,7 +142,7 @@ class AuthController extends Controller
 
         $msg = "you have been registered sucessfully";
 
-        return $this->returnData(['client', 'token'], [$client, $accessToken], $msg);
+        return $this->returnData(['client'], [$client], $msg);
 
     }
 

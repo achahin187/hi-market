@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Client extends Authenticatable
 {
-    //
+    
     use LogsActivity,HasApiTokens;
 
 
