@@ -335,7 +335,7 @@
                                         <div class="form-group">
                                             <label>{{__('admin.status')}}</label>
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
-
+ 
                                                     <option value="active">{{__('admin.active')}}</option>
                                                     <option value="inactive">{{__('admin.inactive')}}</option>
 
@@ -349,6 +349,27 @@
                                         </div>
 
                                     @endif
+
+                                      @if(isset($branch))
+
+                                        <div class="form-group">
+                                            <label>{{__('admin.status')}}</label>
+                                            <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+ 
+                                                    <option value="active" {{ $branch->status == 'active' ? 'selected' :'' }}>{{__('admin.active')}}</option>
+                                                    <option value="inactive" {{ $branch->status == 'inactive' ? 'selected' :'' }}>{{__('admin.inactive')}}</option>
+
+                                            </select>
+
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    @endif
+
 
 
 

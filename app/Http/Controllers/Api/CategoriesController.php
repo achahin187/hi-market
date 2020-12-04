@@ -34,22 +34,22 @@ class CategoriesController extends Controller
 
 
 
-        $supermarket_id = $request->id;
+        $branch_id = $request->id;
 
         try {
-            $supermarket = Branch::findOrFail($supermarket_id);
+            $branch = Branch::findOrFail($branch_id);
 
         } catch (\Exception $exception) {
             return $this->returnError(404, "SuperMarket Not Found");
         }
 
 
-        $categories = $supermarket->categories()->get();
+        $categories = $branch->categories()->get();
 
 
-        $supermarketname = Supermarket::where('id', $supermarket_id)->select('arab_name as name')->first();
+        $branchname = Supermarket::where('id', $branch_id)->select('arab_name as name')->first();
 
-        $offers = offer::where('status', 'active')->where('supermarket_id', $supermarket_id)->where('supermarket_id', $supermarket_id)->limit(4)->get();
+        $offers = offer::where('status', 'active')->where('branch_id', $branch_id)->limit(4)->get();
 
 
         foreach ($categories as $category) {
@@ -66,7 +66,7 @@ class CategoriesController extends Controller
           "categories"=>CategoryResource::collection($categories),
             "offers"=>OfferResource::collection($offers),
             "supermarket"=>[
-                "name"=>$supermarket->name
+                "name"=>$branch->name
             ]
         ]);
 
