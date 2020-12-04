@@ -95,7 +95,7 @@ class PermissionTableSeeder extends Seeder
             'reason-create',
             'reason-edit',
             'reason-active',
-            "reason-delete",
+            //"reason-delete",
 
             'point-list',
             'point-create',
