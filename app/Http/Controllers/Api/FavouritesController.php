@@ -20,8 +20,8 @@ class FavouritesController extends Controller
 
         $udid = $request->header('udid');
 
-        $token = $request->header('token');
 
+        $token = $request->header('token');
         $lang = $request->header('lang');
 
         if(!$lang || $lang == ''){
@@ -78,7 +78,7 @@ class FavouritesController extends Controller
                         return $this->returnSuccessMessage('This product have been added to your favourites successfully', '');
                     }
                 } else {
-                    
+
                     $device = DB::table('client_product')->insert(['udid' => $udid, 'product_id' => $product_id]);
 
                     if ($lang == 'ar') {
