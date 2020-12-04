@@ -87,9 +87,9 @@
                                     'eng_description',
                                     'arab_spec',
                                     'eng_spec',
-                                    'price'
+                                    'price',
                                     'priority',
-                                    'points'
+                                    'points',
                                     'category_id',
                                     'vendor_id',
                                     'subcategory_id',
