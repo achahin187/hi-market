@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Http\Traits\generaltrait;
 use App\Models\Category;
 use App\Models\Client;
@@ -82,7 +83,7 @@ class CategoriesController extends Controller
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
 
-        $products = $supermarket->products()->select('id', 'name_' . app()->getLocale() . ' as name', 'arab_description as description', 'price', 'offer_price', 'images', 'rate', 'flag', 'ratings', 'category_id', 'supermarket_id')->where('status', 'active')->where('flag', 1)->get();
+        $products = $supermarket->products()->where('status', 'active')->where('flag', 1)->get();
 
         foreach ($products as $product) {
 
@@ -122,7 +123,6 @@ class CategoriesController extends Controller
     public function categoryproducts(Request $request)
     {
 
-
         $udid = $request->header('udid');
 
 
@@ -138,7 +138,7 @@ class CategoriesController extends Controller
             if ($category) {
 
 
-                $products = $category->products()->select('id', 'name_' . app()->getLocale() . ' as name', 'eng_description as description', 'price', 'offer_price', 'images', 'rate', 'flag', 'ratings', 'category_id', 'supermarket_id')->where('status', 'active')->get();
+                $products = $category->products()->where('status', 'active')->get();
 
 
                 foreach ($products as $product) {
@@ -168,10 +168,13 @@ class CategoriesController extends Controller
                 }
 
 
-
-
-
-                return $this->returnData(['products'], [$products]);
+                return response()->json([
+                    "status"=>true,
+                   "msg"=>"",
+                   "data"=>[
+                       "products"=>ProductResource::collection($products)
+                   ]
+                ]);
 
 
             }

@@ -30,16 +30,9 @@ class OrderController extends Controller
 
         $udid = $request->header('udid');
 
-        $token = $request->header('token');
 
-        $lang = $request->header('lang');
 
-        if (!$lang || $lang == '') {
-
-            return $this->returnError(402, 'language is missing');
-        }
-
-        $client = Client::where('remember_token', $token)->first();
+        $client =getUser();
 
         if ($client) {
 
@@ -48,16 +41,12 @@ class OrderController extends Controller
                 return $this->returnData(['orders'], [$client->orders]);
             } else {
 
-                if ($lang == 'ar') {
-                    return $this->returnError(305, 'لا يوجد طلبات لهذا العميل');
-                }
-                return $this->returnError(305, 'there is no orders for this client');
+
+                return $this->returnError(404, 'there is no orders for this client');
             }
         } else {
-            if ($lang == 'ar') {
-                return $this->returnError(305, 'لم نجد هذا العميل');
-            }
-            return $this->returnError(305, 'there is no client found');
+
+            return $this->returnError(404, 'there is no client found');
         }
     }
 

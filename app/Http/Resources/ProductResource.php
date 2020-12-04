@@ -30,6 +30,11 @@ class ProductResource extends JsonResource
             "category_name"=>$this->category->name,
             "category_id"=>$this->category_id,
             "flag"=>$this->flag,
+            "supermarket_id"=>$this->supermarkt_id,
+            "favourite"=>$this->favourite,
+            "percentage"=>$this->percentage,
+            "imagepath"=>$this->imagepath,
+            "category"=>$this->category
 
         ];
     }
