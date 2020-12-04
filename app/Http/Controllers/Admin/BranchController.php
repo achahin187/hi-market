@@ -148,6 +148,7 @@ class BranchController extends Controller
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'area_id' => $request->area_id,
+                 'rating' => $request->rating,
                 'city_id' => $request->city_id,
                 'country_id' => $request->country_id,
             ]);
