@@ -169,7 +169,7 @@ $factory->define(Branch::class, function (Faker $faker) {
         'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
         'priority' => $faker->numberBetween(1,50),
         'image' => 'image.png',
-        'logo_image' => 'logo.png', 
+        'logo' => 'logo.png', 
         'country_id' => Country::all()->random()->id,
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
