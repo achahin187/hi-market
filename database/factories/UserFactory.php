@@ -78,16 +78,7 @@ $factory->define(Category::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Branch::class, function (Faker $faker) {
-    return [
-        'name_ar' => $faker->name,
-        'name_en' => $faker->name,
-        'status' => $faker->randomElement(['inactive','active']),
-        'supermarket_id' => Supermarket::all()->random()->id,
-        'created_by' => User::all()->random()->id,
-        'updated_by' => User::all()->random()->id
-    ];
-});
+
 
 $factory->define(SubCategory::class, function (Faker $faker) {
     return [
@@ -164,20 +155,34 @@ $factory->define(Area::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(Branch::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'status' => $faker->randomElement(['inactive','active']),
+        'supermarket_id' => Supermarket::all()->random()->id,
+        'state' => $faker->randomElement(['open','closed']),
+        'start_time' => $faker->time('h:i').'PM',
+        'end_time' => $faker->time('h:i').'PM',
+        'area_id' => Area::all()->random()->id,
+        'city_id' => City::all()->random()->id,
+        'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
+        'priority' => $faker->numberBetween(1,50),
+        'image' => 'image.png',
+        'logo_image' => 'logo.png', 
+        'country_id' => Country::all()->random()->id,
+        'created_by' => User::all()->random()->id,
+        'updated_by' => User::all()->random()->id
+    ];
+});
+
 $factory->define(Supermarket::class, function (Faker $faker) {
     return [
         'arab_name' => $faker->name,
         'eng_name' => $faker->name,
         'status' => $faker->randomElement(['inactive','active']),
-        'state' => $faker->randomElement(['open','closed']),
-        'start_time' => $faker->time('h:i').'PM',
-        'end_time' => $faker->time('h:i').'PM',
         'image' => 'image.png',
         'logo_image' => 'logo.png',
-        'area_id' => Area::all()->random()->id,
-        'city_id' => City::all()->random()->id,
-        'country_id' => Country::all()->random()->id,
-        'priority' => $faker->numberBetween(1,50),
         'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
