@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Models\Client;
 use App\Models\Offer;
 use App\Models\Product;
@@ -73,6 +74,7 @@ class ProductController extends Controller
                 "status" => "Product Not Found"
             ], 404);
         }
+        $product->update(["views" => $product->views == null ? 1 : $product->views + 1]);
 
 
         $product_details = Product::where('id', $product_id)->select('id', 'name_' . app()->getLocale() . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
@@ -124,7 +126,6 @@ class ProductController extends Controller
         $product_details->supermarket = $product->supermarket->eng_name;
         $product_details->deliver_to = 'cairo';
         $product_details->delivery_time = '30 minutes';
-
 
 
         return $this->returnData(['product'], [$product_details]);
@@ -215,5 +216,11 @@ class ProductController extends Controller
 
         }
 
+    }
+
+    public function filter()
+    {
+        $products = Product::where("branch_id", \request("branch_id"))->filter()->paginate();
+        return ["success" => true, "products" => ProductResource::collection($products), "more" => $products->hasMorePages()];
     }
 }

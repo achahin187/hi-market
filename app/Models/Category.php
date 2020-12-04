@@ -33,4 +33,8 @@ class Category extends Model
     public function supermarkets() {
         return $this->belongsToMany('App\Models\Supermarket');
     }
+    public function getNameAttribute()
+    {
+        return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
+    }
 }

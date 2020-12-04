@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
         Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
             Route::get('products/search/{name}','ProductController@getproductsearch')->name('search');
+            Route::get("products/filter","ProductController@filter");
           });
 
     Route::group(['namespace' => 'Api','middleware'=>'check_mobile_serial'],function () {
