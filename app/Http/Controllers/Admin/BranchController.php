@@ -60,7 +60,9 @@ class BranchController extends Controller
     {
         //
 
-        $rules = [
+      
+
+        $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
@@ -68,15 +70,16 @@ class BranchController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'commission' => ['required','min:0','numeric'],
             'categories' => ['required'],
+            'rating' => ['required'],
             'priority' => ['required','min:0','integer'],
             'area_id' => 'required|integer|min:0',
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
             'start_time' => ['required','string'],
-            'end_time' => ['required','string'],
-        ];
+            'end_time' => ['required','string'],        
 
-        $this->validate($request,$rules);
+
+        ]);
 
         $arab_name = $request->input('name_ar');
 
@@ -112,6 +115,7 @@ class BranchController extends Controller
                 'end_time' => $request->end_time,
                 'area_id' => $request->area_id,
                 'city_id' => $request->city_id,
+                'rating' => $request->rating,
                 'country_id' => $request->country_id,
             ]);
             $branch->categories()->sync($request->categories);

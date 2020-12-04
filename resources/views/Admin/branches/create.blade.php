@@ -262,8 +262,19 @@
                                         @enderror
                                     </div>
 
-                                          <div class="form-group">
+                                    <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.commission')}}</label>
+                                        <input type="number" name="commission" min="0"  step="0.01" @if(isset($branch)) value="{{$branch->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
+                                        @error('commission')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.rating')}}</label>
                                         <input type="number" name="commission" min="0"  step="0.01" @if(isset($branch)) value="{{$branch->commission}}" @else value="0" @endif class=" @error('commission') is-invalid @enderror form-control" required>
                                         @error('commission')
                                         <span class="invalid-feedback" role="alert">

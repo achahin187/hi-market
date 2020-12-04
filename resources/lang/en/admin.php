@@ -34,6 +34,7 @@ return [
     'delivery_admin' => 'Delivery Admin',
 
     'add_admin' => 'Add Admin',
+    'rating' => 'Rating',
     'dashboard' => 'dashboard',
     //name 
 
