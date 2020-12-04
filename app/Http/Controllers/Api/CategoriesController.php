@@ -50,7 +50,7 @@ class CategoriesController extends Controller
         ->get();
 
 
-        $supermarketname = Branch::where('id', $supermarket_id)->select('arab_name as name')->first();
+        $supermarketname = Branch::where('id', $supermarket_id)->select('name_'.app()->getLocale().' as name')->first();
 
         $offers = offer::where('status', 'active')->where('supermarket_id', $supermarket_id)->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->where('supermarket_id', $supermarket_id)->limit(4)->get();
 
