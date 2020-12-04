@@ -45,7 +45,7 @@ class CategoriesController extends Controller
 
         $categories = $supermarket->categories()
         ->select('categories.id',
-         'name_'.app()->getLocale().' as name',
+         'name_ar as name',
           'image')
         ->get();
 
