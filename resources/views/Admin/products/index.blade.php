@@ -111,7 +111,7 @@
 
                                             @foreach($cols as $col)
 
-                                                <option  value="{{$col}}">{{__($col)}}</option>
+                                                <option  value="{{$col}}">{{__('admin.'.$col)}}</option>
 
                                             @endforeach
 
