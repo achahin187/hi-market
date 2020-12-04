@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use App\Pipeline\CreatedAt;
+use App\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Product extends Model
 {
     //
-    use LogsActivity;
+    use LogsActivity,HasFilter;
+    protected $queryFilters= [
+        CreatedAt::class
+    ];
 
     protected static $logName = 'products';
 

@@ -169,7 +169,7 @@ $factory->define(Branch::class, function (Faker $faker) {
         'commission' => $faker->randomElement([10.5,10.6,15,20,25,35]),
         'priority' => $faker->numberBetween(1,50),
         'image' => 'image.png',
-        'logo' => 'logo.png', 
+        'logo' => 'logo.png',
         'country_id' => Country::all()->random()->id,
         'created_by' => User::all()->random()->id,
         'updated_by' => User::all()->random()->id
@@ -211,7 +211,7 @@ $factory->define(product::class, function (Faker $faker) {
         'vendor_id' => Vendor::all()->random()->id,
         'supermarket_id' => Supermarket::all()->random()->id,
         'branch_id' => Branch::all()->random()->id,
-        'subcategory_id' => SubCategory::all()->random()->id,
+
         'measure_id' => Measures::all()->random()->id,
         'size_id' => Size::all()->random()->id,
         'flag' => $faker->randomElement([1,0]),
@@ -298,7 +298,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'rate' => $faker->randomElement([4.5,5.5,4,5,3.5]),
         'mobile_delivery' => $faker->phoneNumber,
         'client_review' => $faker->text,
-        
+
         'approved_at' => $faker->dateTime,
         'prepared_at' => $faker->dateTime,
         'shipping_at' => $faker->dateTime,

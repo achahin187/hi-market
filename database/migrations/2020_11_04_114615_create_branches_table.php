@@ -25,7 +25,6 @@ class CreateBranchesTable extends Migration
             $table->string('logo')->nullable();
             $table->timestamps();
 
-           
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
