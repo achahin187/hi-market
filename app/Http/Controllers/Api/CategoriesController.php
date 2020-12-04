@@ -33,29 +33,30 @@ class CategoriesController extends Controller
 
         $client = auth("client-api")->user();
 
-        $supermarket_id = $request->id;
+        $branch_id = $request->id;
 
         try {
-            $supermarket = Branch::findOrFail($supermarket_id);
+            $branch = Branch::findOrFail($branch_id);
 
         } catch (\Exception $exception) {
             return $this->returnError(404, "SuperMarket Not Found");
         }
 
 
-        $categories = $supermarket->categories()
+        $categories = $branch->categories()
         ->select('categories.id',
-         'name_ar as name',
+         'name_'.app()->getLocale(). ' as name',
           'image')
         ->get();
 
 
-        $supermarketname = Branch::where('id', $supermarket_id)->select('name_'.app()->getLocale().' as name')->first();
+        $branchname = Branch::where('id', $branch_id)->select('name_'.app()->getLocale().' as name')->first();
 
-        $offers = offer::where('status', 'active')->where('supermarket_id', $supermarket_id)->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->where('supermarket_id', $supermarket_id)->limit(4)->get();
+        $offers = offer::where('status', 'active')->where('branch_id', $branch_id)->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->where('branch_id', $branch_id)->limit(4)->get();
 
 
         foreach ($categories as $category) {
+            $category->name = $category['name_'.app()->getLocale()]
             $category->imagepath = asset('images/' . $category->image);
         }
 
@@ -64,7 +65,7 @@ class CategoriesController extends Controller
         }
 
 
-        return $this->returnData(['categories', 'offers', 'supermarket'], [$categories, $offers, $supermarketname]);
+        return $this->returnData(['categories', 'offers', 'supermarket'], [$categories, $offers, $branchname]);
 
 
     }

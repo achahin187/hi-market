@@ -86,7 +86,7 @@ class PermissionTableSeeder extends Seeder
             'category-create',
             'category-delete',
             'category-edit',
-            'category-active',
+            // 'category-active',
 
 
             'setting-list',
