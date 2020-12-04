@@ -71,7 +71,7 @@ class BranchController extends Controller
             'commission' => ['required','min:0','numeric'],
             'categories' => ['required'],
             'rating' => ['required'],
-            'priority' => ['required','min:0','integer'],
+            'priority' => ['required','min:1','integer'],
             'area_id' => 'required|integer|min:0',
             'city_id' => 'required|integer|min:0',
             'country_id' => 'required|integer|min:0',
