@@ -140,7 +140,7 @@
 
 
                                                     @if(in_array($col,$columns))
-                                                        <th>{{__($col)}}</th>
+                                                        <th>{{__('admin.'.$col)}}</th>
                                                     @endif
 
                                                 @endforeach
