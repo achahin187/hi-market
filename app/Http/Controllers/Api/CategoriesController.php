@@ -56,7 +56,7 @@ class CategoriesController extends Controller
 
 
         foreach ($categories as $category) {
-            $category->name = $category['name_'.app()->getLocale()]
+            $category->name = $category['name_'.app()->getLocale()];
             $category->imagepath = asset('images/' . $category->image);
         }
 
