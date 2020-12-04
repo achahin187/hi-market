@@ -72,7 +72,7 @@ class SuperMarketAdminController extends Controller
 
         $Permissions = $role->permissions;
             
-        $user->givePermissionTo($Permissions);
+        //$user->givePermissionTo($Permissions);
         
         return redirect()->route($this->route.'index');
     }
