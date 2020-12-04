@@ -13,7 +13,7 @@ class UnitController extends Controller
 
      function __construct()
     {
-         $this->middleware('permission:category-list', ['only' => ['index']]);
+        $this->middleware('permission:category-list', ['only' => ['index']]);
         $this->middleware('permission:category-list', ['only' => ['create','store']]);
         $this->middleware('permission:category-list', ['only' => ['edit','update']]);
         $this->middleware('permission:category-list', ['only' => ['destroy']]);

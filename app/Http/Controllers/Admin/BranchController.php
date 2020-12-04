@@ -283,7 +283,21 @@ class BranchController extends Controller
                         unlink('images/' . $branch->image);
                     }
                 }
-                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $file_to_store]);
+                $branch->update([
+                'name_ar' => $request->name_ar,
+                'name_en' => $request->name_en,
+                'supermarket_id' => $request->supermarket_id,
+                'image' => $file_to_store,
+                'priority' => $priority,
+                'status' => $status,
+                'commission' => $commission,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'area_id' => $request->area_id,
+                 'rating' => $request->rating,
+                'city_id' => $request->city_id,
+                'country_id' => $request->country_id,
+            ]);
 
                    $branch->categories()->sync($request->categories);
 
