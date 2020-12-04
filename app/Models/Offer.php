@@ -43,8 +43,8 @@ class Offer extends Model
         return app()->getLocale() == "en" ? $this->eng_description : $this->arab_description;
     }
 
-      public function geNameAttribute()
+      public function getNameAttribute()
     {
-        return app()->getLocale() == "en" ? $this->arab_name : $this->eng_name;
+        return app()->getLocale() == "en" ? $this->eng_name  : $this->arab_name;
     }
 }
