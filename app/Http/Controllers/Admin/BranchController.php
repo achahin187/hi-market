@@ -110,7 +110,7 @@ class BranchController extends Controller
                 'supermarket_id' => $supermarket,
                 'image' => $file_to_store,
                 'priority' => $priority,
-                 'commission' => $commission,
+                'commission' => $commission,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'area_id' => $request->area_id,
@@ -244,14 +244,26 @@ class BranchController extends Controller
     public function update(Request $request, $id,$supermarket_id = null)
     {
 
-        $rules = [
+           $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+            'status' => ['required','string'],
             'supermarket_id' => 'required|integer|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ];
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'commission' => ['required','min:1','numeric'],
+            'categories' => ['required'],
+            'rating' => ['required','min:1','max:5'],
+            'priority' => ['required','min:1','integer'],
+            'area_id' => 'required|integer|min:0',
+            'city_id' => 'required|integer|min:0',
+            'country_id' => 'required|integer|min:0',
+            'start_time' => ['required','string'],
+            'end_time' => ['required','string'],        
 
-        $this->validate($request, $rules);
+
+        ]);
+
+    
 
         $branch = Branch::find($id);
 
