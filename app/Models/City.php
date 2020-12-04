@@ -26,4 +26,8 @@ class City extends Model
     public function supermarkets() {
         return $this->hasMany('App\Models\Supermarket');
     }
+    protected function getNameAttribute()
+    {
+        return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
+    }
 }

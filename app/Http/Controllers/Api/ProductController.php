@@ -9,6 +9,7 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Branch;
 use App\Models\Supermarket;
+use App\Models\Udid;
 use Illuminate\Http\Request;
 use App\Http\Traits\generaltrait;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,7 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $supermarkets = Branch::where('status', 'active')->select('id', 'name_' . App()->getlocale() . ' as name', 'state', 'start_time', 'end_time', 'image', 'logo')->orderBy('priority', 'asc')->limit(10)->get();
+        $supermarkets = Branch::where('status', 'active')->select('id', 'name_' . App()->getlocale() . ' as name', 'state', 'start_time', 'end_time', 'image', 'logo', "rating", "city_id")->orderBy('priority', 'asc')->limit(10)->get();
 
         $offers = offer::where('status', 'active')->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->limit(4)->get();
 
@@ -38,14 +39,15 @@ class ProductController extends Controller
         foreach ($supermarkets as $supermarket) {
             $supermarket->imagepath = asset('images/' . $supermarket->image);
             $supermarket->logopath = asset('images/' . $supermarket->logo_image);
+            $supermarket->town = $supermarket->city->name;
         }
 
         foreach ($offers as $offer) {
             $offer->imagepath = asset('images/' . $offer->image);
         }
 
-        if (auth("client-web")->check()) {
-            $client = auth("client-web")->user();
+        if (auth("client-api")->check()) {
+            $client = auth("client-api")->user();
 
             if ($client) {
                 return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
@@ -54,6 +56,10 @@ class ProductController extends Controller
                 return $this->returnError(305, 'there is no client found');
             }
         } else {
+            Udid::where("body",$request->header("udid"))->updateOrCreate([
+                "body" => $request->header("udid"),
+
+            ]);
             return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
         }
 

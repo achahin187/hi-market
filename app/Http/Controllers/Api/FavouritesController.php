@@ -28,10 +28,9 @@ class FavouritesController extends Controller
         //flag = 0 remove
 
         if ($flag == 1) {
-
+            #check if user login
             if (auth("client-api")->check()) {
-
-
+                #check if asset client udid and client id == null update client id
                 $client_devices = DB::table('client_product')
                     ->where('udid', $udid)
                     ->where('client_id', '=', null)

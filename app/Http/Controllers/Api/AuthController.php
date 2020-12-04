@@ -7,6 +7,7 @@ use App\Http\Traits\generaltrait;
 use App\Models\Client;
 use App\Models\Client_Devices;
 use App\Models\Clientdevice;
+use App\Models\Udid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -57,8 +58,6 @@ class AuthController extends Controller
 
 
         }
-
-
 
 
     }
@@ -117,14 +116,20 @@ class AuthController extends Controller
             return $this->returnValidationError(422, $validator);
         }
 
-
-        $client = Client::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile_number' => $request->mobile_number,
-            'password' => Hash::make($request->password),
-            "unique_id" => $udid
-        ]);
+        try {
+            $client = Client::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile_number' => $request->mobile_number,
+                'password' => Hash::make($request->password),
+                "unique_id" => Udid::where("body", $udid)->firstOrFail()->body
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                "success" => false,
+                "status" => "Udid required"
+            ]);
+        }
 
 
         //$accessToken = $client->createToken("hi-market")->accessToken;

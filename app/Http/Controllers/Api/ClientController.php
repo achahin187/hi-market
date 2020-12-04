@@ -24,10 +24,9 @@ class ClientController extends Controller
     public function __construct()
     {
 
-        if (\request()->header("Authorization")) {
 
             $this->middleware("auth:client-api");
-        }
+
     }
 
     public function client_profile(Request $request)
@@ -50,17 +49,17 @@ class ClientController extends Controller
 
         $rules = [
             'name' => 'required|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
-            'email' => ['required', 'email', Rule::unique((new Client)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'email' => ['required', 'email', Rule::unique((new Client)->getTable()),],
             'mobile_number' => ['required', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
         ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = \Validator::make($request->all(), $rules);
 
 
         if ($validator->fails()) {
 
 
-            return $this->returnError(422, 'These data is not valid');
+            return $this->returnError(422, $validator->errors()->first());
 
         }
 
@@ -208,7 +207,7 @@ class ClientController extends Controller
         if ($validator->fails()) {
 
 
-            return $this->returnError(300, 'These data is not valid');
+            return $this->returnError(300, $validator->errors()->first());
 
         }
 
@@ -232,7 +231,7 @@ class ClientController extends Controller
         ]);
 
 
-        return $this->returnError('', 'something wrong happened');
+        return $this->returnSuccessMessage("address created successfully", 200);
 
 
     }
@@ -316,7 +315,9 @@ class ClientController extends Controller
             $address = $client->addresses()->where('id', $request->address_id)->first();
             if ($address) {
 
-                $request_data = $request->except('address_id');
+                $request_data = $request->except('address_id',"address","label");
+                $request_data["address_lable"]= $request->label;
+                $request_data["name"]= $request->address;
                 $address->update($request_data);
 
             } else {

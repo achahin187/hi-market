@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->unsignedInteger('total_points')->nullable();
             $table->string('address')->nullable();
             $table->string('mobile_number')->nullable();
-            $table->unsignedInteger('unique_id')->nullable();
+            $table->string('unique_id')->nullable();
             $table->string('activation_code')->nullable();
             $table->string('image')->nullable();
             $table->rememberToken();

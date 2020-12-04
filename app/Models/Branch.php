@@ -15,7 +15,7 @@ class Branch extends Model
 
     protected static $logAttributes = ['name_ar','name_en','status','image','supermarket_id'];
 
-    protected $guarded = []; 
+    protected $guarded = [];
 
     public function products() {
         return $this->hasMany('App\Models\Product');
