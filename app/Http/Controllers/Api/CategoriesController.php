@@ -66,7 +66,8 @@ class CategoriesController extends Controller
           "categories"=>CategoryResource::collection($categories),
             "offers"=>OfferResource::collection($offers),
             "supermarket"=>[
-                "name"=>$branch->name
+                'id'  => $branch->id,
+                "name"=>$branch->name,
             ]
         ]);
 
