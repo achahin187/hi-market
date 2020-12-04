@@ -14,7 +14,7 @@ class CreateBranchesTable extends Migration
     public function up()
     {
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+         $table->id();
             $table->string('name_ar');
             $table->string('name_en');
             $table->string('status')->default('inactive');
@@ -24,6 +24,7 @@ class CreateBranchesTable extends Migration
             $table->string('image')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
+
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
