@@ -74,7 +74,9 @@ class ProductController extends Controller
 
         $user = auth()->user();
 
-        $rules = [
+      
+
+        $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
@@ -99,9 +101,7 @@ class ProductController extends Controller
             'priority' => 'required|integer|min:0',
             'images' => 'nullable',
             'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
-        ];
-
-        $this->validate($request, $rules);
+        ]);
 
         $priority = $request->input('priority');
 

@@ -19,6 +19,7 @@ class CreateBranchesTable extends Migration
             $table->string('name_en');
             $table->string('status')->default('inactive');
             $table->unsignedFloat('commission');
+            
             $table->bigInteger('supermarket_id')->unsigned();
             $table->unsignedInteger('priority');
             $table->string('image')->nullable();
@@ -32,6 +33,9 @@ class CreateBranchesTable extends Migration
             $table->string('state')->default('open');
             $table->string('start_time');
             $table->string('end_time');
+            
+            $table->string('rating');
+
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('country_id');

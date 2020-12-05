@@ -31,7 +31,7 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $supermarkets = Branch::where('status', 'active')->select('id', 'name_' . App()->getlocale() . ' as name', 'state', 'start_time', 'end_time', 'image', 'logo', "rating", "city_id")->orderBy('priority', 'asc')->limit(10)->get();
+        $supermarkets = Branch::where('status', 'active')->select('id', 'name_'. App()->getlocale() . ' as name', 'state', 'start_time', 'end_time', 'image', 'logo', "rating", "city_id")->orderBy('priority', 'asc')->limit(10)->get();
 
         $offers = offer::where('status', 'active')->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->limit(4)->get();
 
