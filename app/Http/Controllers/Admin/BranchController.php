@@ -70,7 +70,7 @@ class BranchController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'commission' => ['required','min:0','numeric'],
             'categories' => ['required'],
-            'rating' => ['required'],
+            'rating' => ['required','min:1','max:5'],
             'priority' => ['required','min:1','integer'],
             'area_id' => 'required|integer|min:0',
             'city_id' => 'required|integer|min:0',

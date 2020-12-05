@@ -87,9 +87,9 @@
                                     'eng_description',
                                     'arab_spec',
                                     'eng_spec',
-                                    'price'
+                                    'price',
                                     'priority',
-                                    'points'
+                                    'points',
                                     'category_id',
                                     'vendor_id',
                                     'subcategory_id',
@@ -111,7 +111,7 @@
 
                                             @foreach($cols as $col)
 
-                                                <option  value="{{$col}}">{{__($col)}}</option>
+                                                <option  value="{{$col}}">{{__('admin.'.$col)}}</option>
 
                                             @endforeach
 
@@ -140,7 +140,7 @@
 
 
                                                     @if(in_array($col,$columns))
-                                                        <th>{{__($col)}}</th>
+                                                        <th>{{__('admin.'.$col)}}</th>
                                                     @endif
 
                                                 @endforeach
