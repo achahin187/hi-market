@@ -305,8 +305,7 @@ class ClientController extends Controller
 
         if ($validator->fails()) {
 
-
-            return $this->returnError(300, 'These data is not valid');
+           return $this->returnError(300, 'These data is not valid');
 
         }
 

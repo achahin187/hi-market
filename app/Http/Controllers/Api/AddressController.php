@@ -18,7 +18,7 @@ class AddressController extends Controller
         if (\request()->header("Authorization")) {
 
             $this->middleware("auth:client-api");
-            
+
         }
     }
 
@@ -57,10 +57,7 @@ class AddressController extends Controller
     public function addaddress(Request $request)
     {
 
-
-
-
-       $client=getUser();
+       $client= getUser();
 
 
         $address = $request->address;
