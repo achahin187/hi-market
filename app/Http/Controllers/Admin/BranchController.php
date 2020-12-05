@@ -26,7 +26,7 @@ class BranchController extends Controller
     public function index()
     {
         //
-        $branches = Branch::orderBy('id', 'desc')->get();
+        $branches = Branch::orderBy('id', 'desc')->has("area")->has("city")->has("country")->get();
         return view('Admin.branches.index',compact('branches'));
     }
 
@@ -40,7 +40,7 @@ class BranchController extends Controller
         //
         if($supermarket_id != null) {
 
-         
+
             return view('Admin.branches.create',compact('supermarket_id'));
         }
         else {
@@ -200,7 +200,7 @@ class BranchController extends Controller
             {
                 $category_ids[] = $category->id;
             }
-               
+
 
             if($supermarket_id != null)
             {
@@ -231,7 +231,7 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id,$supermarket_id = null)
     {
-         
+
         $rules = [
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -296,7 +296,7 @@ class BranchController extends Controller
               }else {
 
                 if ($request->has('checkedlogo')) {
-                   
+
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => $request->input('checkedlogo')]);
                        $branch->categories()->sync($request->categories);
                 } else {

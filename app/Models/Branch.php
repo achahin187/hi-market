@@ -31,7 +31,7 @@ class Branch extends Model
 
 
     public function categories() {
-        return $this->belongsToMany('App\Models\Category','category_supermarket','');
+        return $this->belongsToMany('App\Models\Category','category_supermarket',"supermarket_id");
     }
 
     public function product() {
