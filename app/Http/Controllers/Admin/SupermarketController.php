@@ -21,7 +21,7 @@ class SupermarketController extends Controller
         $this->middleware('permission:supermarket-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:supermarket-delete', ['only' => ['destroy']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -181,7 +181,7 @@ class SupermarketController extends Controller
     public function update(Request $request, $id)
     {
         //
-       
+
 
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -291,14 +291,22 @@ class SupermarketController extends Controller
         if($supermarket)
         {
             if($supermarket->image != null) {
-                $image_path = base_path('public/images/'.$supermarket->image);  
+                $image_path = base_path('public/images/'.$supermarket->image);
+                if(file_exists($image_path))
+                {
                 unlink($image_path);
+
+                }
             }
 
             if($supermarket->logo != null) {
-                
-                $image_path = base_path('public/images/'.$supermarket->logo);  
+
+                $image_path = base_path('public/images/'.$supermarket->logo);
+                if(file_exists($image_path))
+                {
                 unlink($image_path);
+
+                }
             }
 
             $supermarket->delete();
@@ -773,7 +781,7 @@ class SupermarketController extends Controller
     /**
      * @return \Illuminate\Support\Collection
      */
-     public function export() 
+     public function export()
     {
         return Excel::download(new SuperMarketExport, 'supermarket.xlsx');
     }

@@ -8,7 +8,7 @@ use App\Photo;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
-{   
+{
 
 
     function __construct()
