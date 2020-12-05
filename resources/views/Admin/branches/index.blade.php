@@ -142,7 +142,7 @@
                                                                    href="@if(isset($supermarket_id)) {{ route('branches.edit', ['id' => $branch->id , 'supermarket_id' => $supermarket_id]) }} @else {{ route('branches.edit', $branch->id) }} @endif ">{{__('admin.edit')}}</a>
                                                             @endif
                                                             @can("branches-active")
-                                                                @if($branch->status)
+                                                                @if($branch->status == "active")
                                                                     <form
                                                                         action="{{ route('branch.status', $branch->id) }}"
                                                                         method="POST">
