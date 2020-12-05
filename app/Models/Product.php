@@ -73,6 +73,7 @@ class Product extends Model
     }
     protected function getNameAttribute()
     {
+
         return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
     }
     protected function getDescriptionAttribute()
