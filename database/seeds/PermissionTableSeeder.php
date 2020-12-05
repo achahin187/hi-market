@@ -14,7 +14,9 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         //
-
+//       $deleted = Role::whereNotNull("id")->delete();
+//
+//        Permission::whereNotNull("id")->delete();
         $permissions = [
 
             'role-list',
@@ -38,7 +40,7 @@ class PermissionTableSeeder extends Seeder
             'admin-delete',
             'admin-edit',
             'admin-active',
-          
+
 
             'vendor-list',
             'vendor-create',
@@ -65,8 +67,8 @@ class PermissionTableSeeder extends Seeder
             'supermarket-list',
             'supermarket-create',
             'supermarket-delete',
-            'supermarket-edit', 
-            'supermarket-active', 
+            'supermarket-edit',
+            'supermarket-active',
 
             'supermarketAdmin-list',
             'supermarketAdmin-create',
@@ -88,11 +90,12 @@ class PermissionTableSeeder extends Seeder
 
 
             'setting-list',
-    
+
             'reason-list',
             'reason-create',
             'reason-edit',
             'reason-active',
+            "reason-delete",
 
             'point-list',
             'point-create',
@@ -147,6 +150,7 @@ class PermissionTableSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
+
             Permission::create([
                 'name' => $permission,
                 'arab_name' => 'اسم العربي',
@@ -154,48 +158,49 @@ class PermissionTableSeeder extends Seeder
                 'group_name_ar' => $permission,
                 'group_name_en' => explode('-', $permission)[0]
             ]);
+
         }
 
-         foreach ($roles as $role) {
+        foreach ($roles as $role) {
             Role::create([
                 'name' => $role,
                 'guard_name' => 'web',
                 'arab_name' => $role,
                 'eng_name' => $role,
             ]);
-        }   
+        }
 
 
-         $team = \App\Models\Team::create([
+        $team = \App\Models\Team::create([
 
             'arab_name' => 'سوبر ادمن',
-            'eng_name'  => 'super_admin',
-            'eng_description'  => 'super_admin',
-            'arab_description'  => 'super_admin',
-            'role_id'  => 1,
+            'eng_name' => 'super_admin',
+            'eng_description' => 'super_admin',
+            'arab_description' => 'super_admin',
+            'role_id' => 1,
         ]);
 
 
-         $user = \App\User::create([
+        $user = \App\User::create([
 
             'name' => 'super',
-            'email'  => 'super_admin@delvirtto.com',
-            'team_id'      =>1,
-            'password'   =>  '123456789',
+            'email' => 'super_admin@delvirtto.com',
+            'team_id' => 1,
+            'password' => '123456789',
         ]);
 
-        $role = \App\Models\Role::where('name','super_admin' )->first();
+        $role = \App\Models\Role::where('name', 'super_admin')->first();
         $all_permissions = \App\Models\Permission::all();
 
         $assignRole = $user->assignRole($role);
 
         // foreach ($all_permissions as  $value) {
-            
-            $role->givePermissionTo($all_permissions);
-       //
+
+        $role->givePermissionTo($all_permissions);
+        //
 
         // $Permissions = $role->permissions;
-            
+
         // $user->givePermissionTo($all_permissions);
     }
 }

@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Reason;
 use Illuminate\Http\Request;
 
+
 class ReasonController extends Controller
 {
 
 
-     function __construct()
+    function __construct()
     {
         $this->middleware('permission:reason-list', ['only' => ['index']]);
-        $this->middleware('permission:reason-create', ['only' => ['create','store']]);
-        $this->middleware('permission:reason-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:reason-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:reason-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:reason-delete', ['only' => ['destroy']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +28,7 @@ class ReasonController extends Controller
     {
         //
         $reasons = Reason::orderBy('id', 'desc')->get();
-        return view('Admin.reasons.index',compact('reasons'));
+        return view('Admin.reasons.index', compact('reasons'));
     }
 
     /**
@@ -44,7 +45,7 @@ class ReasonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,12 +53,12 @@ class ReasonController extends Controller
         $user = auth()->user();
 
         $rules = [
-            'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'arab_reason' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+            'eng_reason' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'status' => 'required|string'
         ];
 
-        $this->validate($request,$rules);
+        $this->validate($request, $rules);
 
         $arab_reason = $request->input('arab_reason');
 
@@ -73,12 +74,9 @@ class ReasonController extends Controller
             'created_by' => $user->id
         ]);
 
-        if($reason)
-        {
+        if ($reason) {
             return redirect('admin/reasons')->withStatus(__('reason created successfully'));
-        }
-        else
-        {
+        } else {
             return redirect('admin/reasons')->withStatus(__('error happened , try again'));
         }
 
@@ -87,7 +85,7 @@ class ReasonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -98,7 +96,7 @@ class ReasonController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -106,12 +104,9 @@ class ReasonController extends Controller
         //'
         $reason = Reason::findOrFail($id);
 
-        if($reason)
-        {
+        if ($reason) {
             return view('Admin.reasons.create', compact('reason'));
-        }
-        else
-        {
+        } else {
             return redirect('admin/reasons')->withStatus('no reason have this id');
         }
     }
@@ -119,8 +114,8 @@ class ReasonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -129,37 +124,42 @@ class ReasonController extends Controller
         $user = auth()->user();
 
         $rules = [
-            'arab_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'eng_reason' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'arab_reason' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+            'eng_reason' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
         ];
 
         $this->validate($request, $rules);
 
         $reason = Reason::find($id);
 
-        if($reason)
-        {
-            $reason->update(['arab_reason' => $request->arab_reason, 'eng_reason' => $request->eng_reason , 'updated_by' => $user->id]);
+        if ($reason) {
+            $reason->update(['arab_reason' => $request->arab_reason, 'eng_reason' => $request->eng_reason, 'updated_by' => $user->id]);
             return redirect('/admin/reasons')->withStatus('reason successfully updated.');
-        }
-        else
-        {
+        } else {
             return redirect('/admin/reasons')->withStatus('no reason exist');
         }
     }
 
-    public function status(Request $request,$id)
+    public function destroy($id)
+    {
+
+        try {
+            Reason::where("id", $id)->delete();
+            return redirect()->route("reasons.index")->withStaus("Reason Deleted");
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function status(Request $request, $id)
     {
 
         $reason = Reason::find($id);
 
-        if($reason)
-        {
-            if($reason->status == 'active') {
+        if ($reason) {
+            if ($reason->status == 'active') {
                 $reason->update(['status' => 'inactive']);
-            }
-            else
-            {
+            } else {
                 $reason->update(['status' => 'active']);
             }
             return redirect()->back()->withStatus(__('reason status successfully updated.'));
@@ -172,7 +172,7 @@ class ReasonController extends Controller
      */
     public function export()
     {
-        return Excel::download(new AdminExport , 'admins.csv');
+        return Excel::download(new AdminExport, 'admins.csv');
     }
 
     /**
@@ -183,7 +183,7 @@ class ReasonController extends Controller
         $rules = [
             'images' => 'image|mimes:csv|max:277'
         ];
-        Excel::import(new AdminImport ,request()->file('file'));
+        Excel::import(new AdminImport, request()->file('file'));
 
         return back();
     }

@@ -172,7 +172,8 @@ $factory->define(Branch::class, function (Faker $faker) {
         'logo' => 'logo.png',
         'country_id' => Country::all()->random()->id,
         'created_by' => User::all()->random()->id,
-        'updated_by' => User::all()->random()->id
+        'updated_by' => User::all()->random()->id,
+        "rating"=>$faker->randomFloat()
     ];
 });
 

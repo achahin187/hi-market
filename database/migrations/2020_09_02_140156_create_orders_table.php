@@ -40,7 +40,6 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
-
             $table->foreign('client_id')->references('id')->on('clients')->onUpdate('no action')->onDelete('no action');
             $table->foreign('reason_id')->references('id')->on('reasons')->onUpdate('no action')->onDelete('no action');
         });

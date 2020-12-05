@@ -57,9 +57,9 @@
                                         <th>{{ __('admin.status') }}</th>
                                         @endif
 
-                                     @if(auth()->user()->hasAnyPermission(['reason-delete','reason-edit']))   
+                                     @if(auth()->user()->hasAnyPermission(['reason-delete','reason-edit']))
                                       <th>{{ __('admin.controls') }}</th>
-                                      @endif   
+                                      @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -68,7 +68,7 @@
                                             <td>{{$reason->eng_reason}}</td>
                                             <td>{{$reason->arab_reason}}</td>
 
-                                        @if(auth()->user()->can('reason-active'))     
+                                        @if(auth()->user()->can('reason-active'))
                                             <td>
 
                                                 @if($reason->status == 'active' )
@@ -92,7 +92,7 @@
                                                 @endif
                                             </td>
                                         @endif
-                                        @if(auth()->user()->can('reason-edit'))
+
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -100,12 +100,25 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 
+                                                        @if(auth()->user()->can('reason-edit'))
                                                         <a class="dropdown-item" href="{{ route('reasons.edit',$reason->id) }}">{{ __('edit') }}</a>
-
+                                                        @endif
+                                                        @can("reason-delete")
+                                                            <form action="{{route("reasons.destroy",$reason->id)}}" method="post">
+                                                                @method("delete")
+                                                                @csrf
+                                                                <button  type="submit" class=" dropdown-item btn btn-danger">Delete</button>
+                                                            </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </td>
-                                        @endif
+
+
+
+
+
+
                                         </tr>
                                     @endforeach
 
