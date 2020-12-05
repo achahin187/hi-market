@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\OfferResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Traits\generaltrait;
 use App\Models\Category;
@@ -31,7 +33,6 @@ class CategoriesController extends Controller
     {
 
 
-        $client = auth("client-api")->user();
 
         $supermarket_id = $request->id;
 
@@ -43,12 +44,12 @@ class CategoriesController extends Controller
         }
 
 
-        $categories = $supermarket->categories()->select('categories.id', 'name_' . app()->getLocale() . ' as name', 'image')->get();
+        $categories = $supermarket->categories()->get();
 
 
         $supermarketname = Supermarket::where('id', $supermarket_id)->select('arab_name as name')->first();
 
-        $offers = offer::where('status', 'active')->where('supermarket_id', $supermarket_id)->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->where('supermarket_id', $supermarket_id)->limit(4)->get();
+        $offers = offer::where('status', 'active')->where('supermarket_id', $supermarket_id)->where('supermarket_id', $supermarket_id)->limit(4)->get();
 
 
         foreach ($categories as $category) {
@@ -60,7 +61,14 @@ class CategoriesController extends Controller
         }
 
 
-        return $this->returnData(['categories', 'offers', 'supermarket'], [$categories, $offers, $supermarketname]);
+        return response()->json([
+          "status"=>true,
+          "categories"=>CategoryResource::collection($categories),
+            "offers"=>OfferResource::collection($offers),
+            "supermarket"=>[
+                "name"=>$supermarket->name
+            ]
+        ]);
 
 
     }

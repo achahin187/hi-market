@@ -15,13 +15,13 @@ class CreateCategorySupermarketTable extends Migration
     {
         Schema::create('category_supermarket', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('supermarket_id')->unsigned();
+            $table->bigInteger('branch_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
             $table->unsignedInteger('flag')->nullable();
             $table->timestamps();
 
 
-            $table->foreign('supermarket_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('branch_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
