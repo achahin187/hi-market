@@ -69,7 +69,11 @@ class ProductController extends Controller
                 "body" => $request->header("udid"),
 
             ]);
-            return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
+           
+                return [
+                    'supermarkets' => HomeDataResource::collection($supermarkets),
+                    'offers'       => OfferResource::collection($offers),
+                ];
         }
 
 
