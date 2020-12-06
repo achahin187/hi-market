@@ -158,7 +158,7 @@ class ProductController extends Controller
         $type = intval($value);
 
         if (strlen($type) < 10) {
-            $products = Product::where('arab_name', 'LIKE', '%' . $value . "%")->orWhere('eng_name', 'LIKE', '%' . $value . "%")->get();
+            $products = Product::where('name_en', 'LIKE', '%' . $value . "%")->orWhere('name_ar', 'LIKE', '%' . $value . "%")->get();
 
             if (count($products) < 1) {
                 if ($this->getCurrentLang() == 'ar') {
