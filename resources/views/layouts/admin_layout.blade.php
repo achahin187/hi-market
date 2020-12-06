@@ -886,7 +886,7 @@ $settings = App\Models\Setting::all()->first();
 
 
 @stack('scripts')
-
+@yield('scripts')
 </body>
 </html>
 

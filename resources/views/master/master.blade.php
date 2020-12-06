@@ -674,4 +674,7 @@ $settings = App\Models\Setting::all()->first();
 }(jQuery));
 </script>
 
+@yield('scripts')
+
+
 </html>

@@ -51,7 +51,11 @@
 
                                 @endif
 
+                                
+
+
                                 <div class="card-body">
+
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.product_arabname')}}</label>
                                         <input type="text" value="@if(isset($vendor)){{$vendor->arab_name }} @endif" name="arab_name" class=" @error('arab_name') is-invalid @enderror form-control" required>
@@ -61,6 +65,7 @@
                                         </span>
                                         @enderror
                                     </div>
+                                
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.product_engname')}}</label>
                                         <input type="text" name="eng_name" value="@if(isset($vendor)){{$vendor->eng_name }} @endif" class=" @error('eng_name') is-invalid @enderror form-control" required>
@@ -71,12 +76,13 @@
                                         @enderror
                                     </div>
 
-
+{{-- 
                                     <div class="form-group">
                                         <label> {{ __('admin.category') }}</label>
                                         <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
 
                                             @if(isset($vendor))
+
                                                 @foreach(\App\Models\Category::all() as $category)
 
                                                     <option <?php if($vendor->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
@@ -84,7 +90,6 @@
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\Category::all() as $category)
-
                                                     <option value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                                 @endforeach
@@ -92,8 +97,8 @@
                                             @endif
 
                                         </select>
-                                    </div>
-
+                                    </div> --}}
+{{-- 
                                     <div class="form-group">
                                         <label> {{ __('admin.subcategory') }}</label>
                                         <select class=" @error('subcategory_id') is-invalid @enderror select2"  name="subcategory_id" data-placeholder="Select a State" style="width: 100%;" required>
@@ -114,7 +119,7 @@
                                             @endif
 
                                         </select>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group">
                                         <label>{{ __('admin.status') }}</label>
@@ -122,13 +127,13 @@
 
                                             @if(isset($vendor))
 
-                                                <option  <?php if($vendor->sponsor == 'sponsor') echo 'selected'; ?> value="1">sponsor</option>
-                                                <option <?php if($vendor->sponsor == 'vendor') echo 'selected'; ?> value="0">vendor</option>
+                                                <option <?php if($vendor->sponsor == 'vendor') echo 'selected'; ?> value="0">{{ __('admin.vendor') }}</option>
+                                                <option  <?php if($vendor->sponsor == 'sponsor') echo 'selected'; ?> value="1">{{ __('admin.sponser') }}</option>
 
                                             @else
 
-                                                <option value="1">{{ __('admin.sponsor') }}</option>
-                                                <option value="0">{{ __('vendor') }}</option>
+                                                <option value="0">{{ __('admin.vendor') }}</option>
+                                                <option value="1">{{ __('admin.sponser') }}</option>
 
                                             @endif
 
@@ -139,7 +144,7 @@
                                     @if(isset($vendor) && $vendor->image != null)
 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">{{ __('admin.image') }}</label>
+                                            <label for="exampleInputFile">{{ __('admin.logo') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
 
@@ -150,25 +155,31 @@
                                                     <input name="image" type="file">
 
                                                 </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
                                             </div>
                                         </div>
                                     @else
-
+{{-- 
                                         <div class="form-group">
-                                            <label for="exampleInputFile">{{ __('admin.image') }}</label>
+                                            <label for="exampleInputFile">{{ __('admin.logo') }}</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                   
                                                 </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
+                                               
                                             </div>
+                                        </div> --}}
+
+                                    <div class="form-group">    
+                                        <div class="form-group" style="margin-bottom: 10px">
+                                            <label for="exampleInputFile">{{__('admin.logo')}}</label>
+                                       
+                                             <div class="form-group">
+                                               
+                                                <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
                                         </div>
+                                    </div>
 
 
                                     @endif

@@ -54,8 +54,8 @@
                                     <tr>
                                         <th>{{ __('admin.name_ar') }}</th>
                                         <th>{{ __('admin.name_en') }}</th>
-                                        <th>{{ __('admin.category') }}</th>
-                                        <th>{{ __('admin.subcategory') }}</th>
+                             
+                                  
                                         <th>{{ __('admin.status') }}</th>
                                 @if(auth()->user()->hasAnyPermission(['vendor-delete','vendor-edit']))
                                         <th>{{__('admin.controls')}}</th>
@@ -67,8 +67,7 @@
                                         <tr>
                                             <td>{{$vendor->arab_name}}</td>
                                             <td>{{$vendor->eng_name}}</td>
-                                            <td>{{$vendor->category->name_en}}</td>
-                                            <td>{{$vendor->subcategory->eng_name}}</td>
+                                   
                                             <td>
                                                 @if($vendor->sponsor == 1 )
 

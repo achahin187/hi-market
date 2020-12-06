@@ -157,7 +157,97 @@
 
                             @endif
 
+
                             <div class="card-body">
+
+                            @if(isset($product))
+                                  <div class="form-group">
+                                        <label>{{ __('admin.supermarket') }}</label>
+                                        
+                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                          
+                                            @foreach($superMarkets  as $supermarket)
+                                                <option <?php if($product->supermarket_id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>
+                                               {{ $supermarket->name }}</option>
+                                            @endforeach    
+                                                
+                                        </select>
+                                    </div>
+                                @else
+
+                                  <div class="form-group">
+                                        <label>{{ __('admin.supermarket') }}</label>
+                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
+                                            <option> please select supermarket</option>
+                                            @foreach($superMarkets  as $supermarket)
+                                                <option value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
+                                            @endforeach    
+                                                
+                                        </select>
+                                    </div>
+
+
+                                @endif
+
+
+
+
+
+                               <div class="form-group">
+                                <label>{{__('admin.branch')}} </label>
+                                <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required multiple>
+
+                                    @if(isset($product))
+
+                                        @foreach(\App\Models\Branch::all() as $branch)
+
+                                            <option  {{ $product->branches->where('id', $branch->id)->count() != 0 ?  'selected' : ""  }} value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                        @endforeach
+
+                                    @elseif(isset($branch_id))
+                                        @foreach(\App\Models\Branch::all() as $branch)
+
+                                            <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+
+                                        @endforeach
+
+                                    @else
+                                    
+                                    @foreach(\App\Models\Branch::all() as $branch)
+
+                                            <option ></option>
+
+                                        @endforeach
+
+                                    @endif
+
+                                </select>
+                            </div>
+
+
+
+                                <div class="form-group">
+                                    <label>{{__('admin.vendor')}} </label>
+                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+                                        @else
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+
+                                        @endif
+                                    </select>
+                                </div>
+
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
                                     <input type="text" value="@if(isset($product)){{$product->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
@@ -389,30 +479,7 @@
                                 @endif
 
 
-                                <div class="form-group">
-                                    <label>{{__('admin.branch')}} </label>
-                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required>
-                                        @if(isset($product))
-
-                                            @foreach(\App\Models\Branch::all() as $branch)
-
-                                                <option <?php if($product->branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
-
-                                            @endforeach
-
-                                        @elseif(isset($branch_id))
-                                            @foreach(\App\Models\Branch::all() as $branch)
-
-                                                <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
-
-                                            @endforeach
-
-                                        @else
-                                        
-                                         <option value="1">
-                                                    clothes
-                                                </option> 
-
+                             
                                                
                                                      {{-- 
                                               @foreach(\App\Models\Branch::all() as $branch)
@@ -425,34 +492,15 @@
 
                                           {{--   @endforeach --}}
 
-                                        @endif
-                                    </select>
-                                </div>
+                                        
+ 
+ 
 
                                 @if(isset($branch_id))
 
                                     <input type="hidden" name="branch_id" value="{{$branch_id}}">
                                 @endif
 
-                                <div class="form-group">
-                                    <label>{{__('admin.vendor')}} </label>
-                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                        @if(isset($product))
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                            @endforeach
-                                        @else
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                            @endforeach
-
-                                        @endif
-                                    </select>
-                                </div>
 
                                 <div class="form-group">
                                     <label>{{__('admin.measure')}} </label>
@@ -581,29 +629,25 @@
                                 @elseif(isset($product) && isset($clone))
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
+                                        <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                               
                                             </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 @else
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
+                                        <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                <input name="images[]" multiple type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
+                                              
                                             </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                 @endif
@@ -624,4 +668,20 @@
 
 @endsection
 
+@push('scripts')
+<script type="text/javascript">
+        $("#supermarket_1").change(function(){
+            $.ajax({
+                url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    
+                    data.forEach(function(x){
 
+                    $('#branches').append(new Option(x.name_ar,x.id,true,true));
+                    })
+                }
+            });
+        });
+    </script>
+@endpush

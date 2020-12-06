@@ -62,9 +62,9 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Order');
     }
 
-    public function branch() {
-        return $this->belongsTo('App\Models\Branch');
-    }
+    // public function branch() {
+    //     return $this->belongsTo('App\Models\Branch');
+    // }
 
     public function clientreviews() {
         return $this->belongsToMany('App\Models\Client','client_reviews');
@@ -73,6 +73,9 @@ class Product extends Model
     public function branches() {
         return $this->belongsToMany('App\Models\Branch','product_supermarket');
     }
+
+ 
+
     protected function getNameAttribute()
     {
 

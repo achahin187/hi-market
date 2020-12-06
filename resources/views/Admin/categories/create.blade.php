@@ -89,11 +89,7 @@
                                         </div>
                                     @else
 
-                                        <div class="form-group">
-                                           
-                                            
-
-
+                                    <div class="form-group">    
                                         <div class="form-group" style="margin-bottom: 10px">
                                             <label for="exampleInputFile">{{__('admin.image')}}</label>
                                        
@@ -102,8 +98,7 @@
                                                 <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
                                               </div>
                                         </div>
-
-                                        </div>
+                                    </div>
 
 
                                     @endif

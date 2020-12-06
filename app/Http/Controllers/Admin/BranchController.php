@@ -57,9 +57,8 @@ class BranchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$supermarket_id = null)
-    {
-        //
-
+    {   
+        dd($request->all());
       
 
         $request->validate([
@@ -118,6 +117,7 @@ class BranchController extends Controller
                 'rating' => $request->rating,
                 'country_id' => $request->country_id,
             ]);
+
             $branch->categories()->sync($request->categories);
         }
         else
@@ -152,6 +152,7 @@ class BranchController extends Controller
                 'city_id' => $request->city_id,
                 'country_id' => $request->country_id,
             ]);
+
             $branch->categories()->sync($request->categories);
         }
 

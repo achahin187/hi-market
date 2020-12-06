@@ -23,9 +23,10 @@
                             @else
                                 <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">{{__('admin.add_product')}}</a></li>
                             @endif
-
+                             @if(auth()->user()->can('product-export')) 
                             <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
-
+                            @endif
+                            @if(auth()->user()->can('product-import')) 
                             <li class="breadcrumb-item">
 
                                 <a id="link" href="">{{__('admin.import')}}</a>
@@ -36,7 +37,10 @@
                                 </form>
 
                             </li>
+                            @endif
+                            @if(auth()->user()->can('product-download')) 
                             <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>
+                            @endif
                         </ol>
                     </div>
 
@@ -94,7 +98,9 @@
                                             <option  value="start_date">{{__('admin.start_date')}}</option>
                                             <option  value="end_date">{{__('admin.end_date')}}</option>
                                             <option  value="exp_date">{{__('admin.exp_date')}}</option>
+                                             @if(auth()->user()->can('product-active')) 
                                             <option  value="status">{{__('admin.status')}}</option>
+                                            @endif
                                             <option  value="barcode">{{__('admin.barcode')}}</option>
                                         </select>
                                     </div>
@@ -182,20 +188,26 @@
                                             @if(in_array('barcode',$columns))
                                                 <th>{{__('admin.barcode')}}</th>
                                             @endif
+                                              @if(auth()->user()->hasAnyPermission(['product-edit','product-delete','product-clone']))
                                             <th>{{__('admin.controls')}}</th>
+                                            @endif
 
                                         @else
 
                                             <th>{{__('admin.name_ar')}}</th>
                                             <th>{{__('admin.name_en')}}</th>
                                             <th>{{__('admin.priority')}}</th>
+                                                @if(auth()->user()->can('product-active'))
                                             <th>{{__('admin.status')}}</th>
+                                            @endif
                                            {{--  <th>{{__('admin.category')}}</th> --}}
                                             <th>{{__('admin.vendor')}}</th>
                                             <th>{{__('admin.supermarket')}}</th>
                                             <th>{{__('admin.branch')}}</th>
                                          {{--    <th>{{__('admin.subcategory')}}</th> --}}
+                                             @if(auth()->user()->hasAnyPermission(['product-edit','product-delete','product-clone']))
                                             <th>{{__('admin.controls')}}</th>
+                                            @endif
                                         @endif
 
 

@@ -356,12 +356,12 @@
                                                     <td>{{$product->supermarket->eng_name}}</td>
                                                 @endif
 
-                                                @if(App::getLocale() == 'ar')
+                                               {{--  @if(App::getLocale() == 'ar')
                                                     <td>{{$product->branch->name_ar}}</td>
                                                 @else
                                                     <td>{{$product->branch->name_en}}</td>
                                                 @endif
-
+ --}}
 
                                             @endif
 
