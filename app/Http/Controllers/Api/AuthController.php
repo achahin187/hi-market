@@ -67,7 +67,7 @@ class AuthController extends Controller
     {
 
 
-        $udid = $request->header('udid');
+
 
 
         $validator = Validator::make($request->all(), [
