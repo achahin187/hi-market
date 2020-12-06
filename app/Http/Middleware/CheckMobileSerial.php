@@ -2,13 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use Closure;
 
 class CheckMobileSerial
 {
-    use generaltrait;
+    use GeneralTrait;
 
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class CheckMobileSerial
      */
     public function handle($request, Closure $next)
     {
-        
+
 
         if (!request()->header("Authorization") && !$request->header("udid")) {
 

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Offer;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 
 class CartController extends Controller
 {
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {

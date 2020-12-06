@@ -152,11 +152,11 @@ $settings = App\Models\Setting::all()->first();
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-                    
+
             @if(auth()->user()->hasAnyPermission(['admin-list','supermarketAdmin-list','client-list','point-list','branches-list', 'reason-list', 'logs-list']))
 
-                      <li class="nav-item has-treeview">     
-                      
+                      <li class="nav-item has-treeview">
+
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -164,8 +164,8 @@ $settings = App\Models\Setting::all()->first();
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                        
-                           
+
+
                             <ul class="nav nav-treeview">
 
                                 {{-- admin --}}
@@ -190,7 +190,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                 @endif 
+                                 @endif
 
                                    {{-- delivery-admin --}}
                                 @if(auth()->user()->can('delivery-list'))
@@ -202,7 +202,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif     
+                                @endif
 
                                  {{-- client --}}
                                 @if(auth()->user()->can('client-list'))
@@ -215,7 +215,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif    
+                                @endif
                                 {{-- role --}}
                                 @if(auth()->user()->can('role-list'))
                                     <li class="nav-item">
@@ -226,7 +226,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif 
+                                @endif
 
                                 {{-- point --}}
                                 @if(auth()->user()->can('point-list'))
@@ -238,7 +238,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif  
+                                @endif
 
                                 {{-- reason --}}
                                 @if(auth()->user()->can('reason-list'))
@@ -250,7 +250,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif  
+                                @endif
 
                                 {{-- logs --}}
                                 @if(auth()->user()->can('logs-list'))
@@ -262,10 +262,10 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif      
+                                @endif
 
                             </ul>
-                          </li> 
+                          </li>
                 @endif
                              {{-- location --}}
                           @if(auth()->user()->can('location-list'))
@@ -300,12 +300,12 @@ $settings = App\Models\Setting::all()->first();
                                     </li>
                                 </ul>
                             </li>
-                          @endif   
+                          @endif
                            {{-- category --}}
                           @if(auth()->user()->can('category-list'))
 
                                   <li class="nav-item has-treeview">
-                                        
+
                                         <a href="" class="nav-link">
                                             <i class="nav-icon fas fa-chart-pie"></i>
                                             <p>
@@ -313,9 +313,9 @@ $settings = App\Models\Setting::all()->first();
                                                 <i class="right fas fa-angle-left"></i>
                                             </p>
                                         </a>
-                                        
 
-                                       
+
+
                                         <ul class="nav nav-treeview">
 
                                                 {{-- main category --}}
@@ -327,7 +327,7 @@ $settings = App\Models\Setting::all()->first();
                                                         </p>
                                                     </a>
                                                 </li>
-                                          
+
                                                 {{-- sub category --}}
                                                {{--  <li class="nav-item">
                                                     <a href="{{route('subcategories.index')}}" class="nav-link">
@@ -337,8 +337,8 @@ $settings = App\Models\Setting::all()->first();
                                                         </p>
                                                     </a>
                                                 </li> --}}
-                                             
-                                        
+
+
                                                   {{-- measures --}}
                                                  <li class="nav-item">
                                                     <a href="{{route('measures.index')}}" class="nav-link">
@@ -355,14 +355,14 @@ $settings = App\Models\Setting::all()->first();
                                                     </a>
                                                 </li>
                                         </ul>
-                                    </li> 
-                          @endif                        
-                          
+                                    </li>
+                          @endif
+
                           @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list','vendor-list','product-list','offer-list']))
-                           {{-- supermarket --}} 
+                           {{-- supermarket --}}
                             <li class="nav-item has-treeview">
-                                
-                          
+
+
                                 <a href="" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>
@@ -370,9 +370,9 @@ $settings = App\Models\Setting::all()->first();
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                                
 
-                               
+
+
                                 <ul class="nav nav-treeview">
                                     @if(auth()->user()->can('supermarket-list'))
                                     <li class="nav-item">
@@ -392,7 +392,7 @@ $settings = App\Models\Setting::all()->first();
                                             <p>{{ __('admin.branches') }}</p>
                                         </a>
                                     </li>
-                                @endif   
+                                @endif
 
                                 @if(auth()->user()->can('vendor-list'))
                                 {{-- Vendors --}}
@@ -404,7 +404,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                 @endif 
+                                 @endif
                                  @if(auth()->user()->can('product-list'))
                                   <li class="nav-item">
                                         <a href="{{route('products.index',0)}}" class="nav-link">
@@ -412,7 +412,7 @@ $settings = App\Models\Setting::all()->first();
                                             <p>{{ __('admin.list_product') }}</p>
                                         </a>
                                     </li>
-                                   
+
                                     <li class="nav-item">
                                         <a href="{{route('products.index',1)}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -421,7 +421,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                  @endif  
+                                  @endif
 
                                 @if(auth()->user()->can('offer-list'))
                                    {{-- offer --}}
@@ -433,22 +433,32 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif    
+                                @endif
 
-                                       
+
                                 </ul>
                             </li>
                           @endif
-                            
+
                            {{-- delivery --}}
                            @if(auth()->user()->can('delivery-list'))
-                          {{-- delivery --}} 
+                          {{-- delivery --}}
                              <li class="nav-item">
                                 <a href="{{route('delivery.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>{{ __('admin.delivery') }}</p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('delivery-companies.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        {{__('admin.companies')}}
+                                    </p>
+                                </a>
+                            </li>
+
                            @endif
 
                            {{-- Orders --}}
@@ -462,7 +472,7 @@ $settings = App\Models\Setting::all()->first();
                                 </a>
                             </li>
                            @endif
-                        
+
                            {{-- setting --}}
                            @if(auth()->user()->can('setting-list'))
                             <li class="nav-item">
@@ -473,8 +483,8 @@ $settings = App\Models\Setting::all()->first();
                                     </p>
                                 </a>
                             </li>
-                           @endif 
- 
+                           @endif
+
 
 
 

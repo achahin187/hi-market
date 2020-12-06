@@ -11,7 +11,7 @@ use App\Models\Branch;
 use App\Models\Supermarket;
 use App\Models\Udid;
 use Illuminate\Http\Request;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\HomeDataResource;
 use App\Http\Resources\OfferResource;
@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {
@@ -52,13 +52,13 @@ class ProductController extends Controller
             $client = auth("client-api")->user();
 
             if ($client) {
-              
+
 
                 return ['data'=>[
                     'supermarkets' => HomeDataResource::collection($supermarkets),
                     'offers'       => OfferResource::collection($offers),
                 ]];
-                    
+
 
             } else {
 
@@ -69,7 +69,7 @@ class ProductController extends Controller
                 "body" => $request->header("udid"),
 
             ]);
-           
+
                 return ['data'=>[
                     'supermarkets' => HomeDataResource::collection($supermarkets),
                     'offers'       => OfferResource::collection($offers),

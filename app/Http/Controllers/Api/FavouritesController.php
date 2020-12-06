@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +12,16 @@ class FavouritesController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function addfavourite(Request $request)
     {
-        //
-
+        $validation = \Validator::make($request->all(), [
+            "product_id" => "required"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $udid = $request->header('udid');
         $product_id = $request->product_id;
         $flag = $request->flag;
@@ -53,7 +57,7 @@ class FavouritesController extends Controller
                     $client = Client::find($client_device->client_id);
 
                     $client->products()->attach($product_id, ['udid' => $udid]);
-
+//return $client->products;
                     return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات', '');
 
                 } else {
@@ -83,10 +87,9 @@ class FavouritesController extends Controller
 
         if ($client) {
 
-            $favproducts = $client->products()->where( function ($query) {
-                if($udid  =\request()->header("udid"))
-                {
-                    $query->where("udid",$udid);
+            $favproducts = $client->products()->where(function ($query) {
+                if ($udid = \request()->header("udid")) {
+                    $query->where("udid", $udid);
                 };
             })->select()->get();
 

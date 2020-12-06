@@ -78,7 +78,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'Admin\ProfileController@password']);
 
         Route::put('status/{supermarket_id}', 'Admin\SupermarketController@status')->name('supermarket.status');
-        //export supermarket    
+        //export supermarket
         Route::get('supermarket/export/', 'Admin\SupermarketController@export')->name('supermarket.export');
 
         Route::put('branches/status/{branch_id}', 'Admin\BranchController@status')->name('branch.status');
@@ -154,7 +154,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');
 
             Route::get('{order_id}/assign', 'Admin\OrderController@assignorder')->name('orders.assign');
-            
+
             Route::put('{order_id}', 'Admin\OrderController@updateorder')->name('orders.update');
             Route::put('order_client/{order_id}', 'Admin\OrderController@updateclient')->name('order_client.update');
             Route::post('products/add/{order_id}', 'Admin\OrderController@addproduct')->name('products.store');
@@ -190,12 +190,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
 
-    
+
 
             //supermarket-admins
             Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
             //delivery-admins
             Route::resource('delivery-admins','Admin\DeliveryManagerController');
+            Route::resource("delivery-companies","Admin\DeliveryCompanyController");
 
     });
 

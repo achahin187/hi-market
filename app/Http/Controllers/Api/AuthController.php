@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Client_Devices;
 use App\Models\Clientdevice;
@@ -19,7 +19,7 @@ use JWTAuth;
 class AuthController extends Controller
 {
     //
-    use generaltrait;
+    use GeneralTrait;
 
     public function send_sms($name, $mobile, $msg, $lang)
     {
@@ -48,7 +48,7 @@ class AuthController extends Controller
         if ($client->activation_code == $code) {
 
 
-            return $this->returnData(['client'], [$client], 'the code is valid');
+            return $this->returnData(['client',"token"], [$client,$client->createToken("hi-market")->accessToken], 'the code is valid');
 
 
         } else {
@@ -67,7 +67,7 @@ class AuthController extends Controller
     {
 
 
-        $udid = $request->header('udid');
+
 
 
         $validator = Validator::make($request->all(), [
@@ -122,12 +122,15 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'mobile_number' => $request->mobile_number,
                 'password' => Hash::make($request->password),
-                "unique_id" => Udid::where("body", $udid)->firstOrFail()->body
+                "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                    "body"=>request()->header("udid")
+                ])->body
             ]);
         } catch (\Exception $exception) {
+
             return response()->json([
                 "success" => false,
-                "status" => "Udid required"
+                "status" => "Client Not Exists With this Udid"
             ]);
         }
 
@@ -147,7 +150,7 @@ class AuthController extends Controller
 
         $msg = "you have been registered sucessfully";
 
-        return $this->returnData(['client'], [$client], $msg);
+        return $this->returnData(['client',"token"], [$client,$client->createToken("hi-market")->accessToken], $msg);
 
     }
 

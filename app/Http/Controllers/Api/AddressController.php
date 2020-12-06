@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Validator;
 
 class AddressController extends Controller
 {
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {
