@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarket-admins.index')}}">{{ __('admin.delivery_management') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('delivery-companies.index')}}">{{ __('admin.delivery_companies') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
                     </div>
@@ -43,21 +43,21 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                        {{ __('admin.add_delivery_admin') }}
+                                        {{ __('admin.add_delivery_company') }}
 
-                                    
+
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action="@if(isset($admin)){{route('supermarket-admins.update',$admin->id) }} @else {{route('supermarket-admins.store') }} @endif" method="POST" enctype="multipart/form-data">
+                            <form role="form" action=" {{route('delivery-companies.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
 
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.name')}}</label>
-                                        <input type="text" value="@if(isset($admin)){{$admin->name }} @endif" name="name" class=" @error('name') is-invalid @enderror form-control" required>
+                                        <input type="text"  name="name" class=" @error('name') is-invalid @enderror form-control" required>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -67,14 +67,26 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
-                                        <input type="email" value="@if(isset($admin)){{$admin->email }} @endif" name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        <input type="email"  name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <input id="status" type="checkbox" name="status">
+                                        @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id" id="branc" class="form-control"></select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.password')  }}</label>
                                         <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
@@ -84,10 +96,10 @@
                                             </span>
                                         @enderror
                                     </div>
-                                  
 
 
-                                 
+
+
 
 
 

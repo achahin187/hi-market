@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DeliveryCompany;
+
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
+use App\Models\DeliveryCompany;
 use Illuminate\Http\Request;
 
 class DeliveryCompanyController extends Controller
@@ -16,23 +18,24 @@ class DeliveryCompanyController extends Controller
     public function index()
     {
         $deliveryCompanies = DeliveryCompany::paginate();
-        return view("Admin.delivery_companies.index",compact("deliveryCompanies"));
+        return view("Admin.delivery_companies.index", compact("deliveryCompanies"));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        $branches = Branch::all();
+        return view("Admin.delivery_companies.create", compact("branches"));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +46,7 @@ class DeliveryCompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +57,7 @@ class DeliveryCompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,8 +68,8 @@ class DeliveryCompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,7 +80,7 @@ class DeliveryCompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

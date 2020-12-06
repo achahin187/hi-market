@@ -17,8 +17,8 @@
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                @if(auth()->user()->can('delivery_company-list'))
-                                <li class="breadcrumb-item"><a href="{{route('companies.create')}}">{{ __('admin.create_delivery_admin') }}</a></li>
+                                @if(auth()->user()->can('delivery-list'))
+                                <li class="breadcrumb-item"><a href="{{route('delivery-companies.create')}}">{{ __('admin.create_delivery_admin') }}</a></li>
                                 @endif
                             </ol>
                         </div>
@@ -55,7 +55,8 @@
                                     <tr>
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
-                                    @if(auth()->user()->hasAnyPermission(['delivery_company-delete','delivery_company-edit']))
+                                        <th>{{ __('admin.status') }}</th>
+                                    @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                         <th>{{ __('admin.controls') }}</th>
                                     @endif
                                     </tr>
@@ -66,7 +67,12 @@
                                         <tr>
                                             <td>{{$deliveryCompany->name}}</td>
                                             <td>{{$deliveryCompany->email}}</td>
-                                        @if(auth()->user()->hasAnyPermission(['delivery_company-delete','delivery_company-edit']))
+                                            <td>{{$deliveryCompany->comission}}</td>
+                                            <td>{{$deliveryCompany->comission}}</td>
+                                            <td>{{$deliveryCompany->branch->name}}</td>
+
+                                            <td>{{$deliveryCompany->status ? __("delivery_company.status.auto_approve") : __("delivery_company.status.approve") }} </td>
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
@@ -74,7 +80,7 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                                     @if(auth()->user()->can('delivery_company-delete'))
-                                                        <form action="{{ route('companies.destroy', $deliveryCompany->id) }}" method="post">
+                                                        <form action="{{ route('delivery-companies.destroy', $deliveryCompany->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
@@ -84,7 +90,7 @@
                                                         </form>
                                                     @endif
                                                     @if(auth()->user()->can('delivery_company-edit'))
-                                                                <a class="dropdown-item" href="{{ route('companies.edit', $deliveryCompany->id) }}">{{ __('edit') }}</a>
+                                                                <a class="dropdown-item" href="{{ route('delivery-companies.edit', $deliveryCompany->id) }}">{{ __('edit') }}</a>
                                                     @endif
                                                     </div>
                                                 </div>
