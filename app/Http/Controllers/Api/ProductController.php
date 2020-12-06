@@ -54,10 +54,10 @@ class ProductController extends Controller
             if ($client) {
               
 
-                return [
+                return ['data'=>[
                     'supermarkets' => HomeDataResource::collection($supermarkets),
                     'offers'       => OfferResource::collection($offers),
-                ];
+                ]];
                     
 
             } else {
@@ -70,10 +70,10 @@ class ProductController extends Controller
 
             ]);
            
-                return [
+                return ['data'=>[
                     'supermarkets' => HomeDataResource::collection($supermarkets),
                     'offers'       => OfferResource::collection($offers),
-                ];
+                ]];
         }
 
 
