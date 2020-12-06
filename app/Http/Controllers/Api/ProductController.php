@@ -13,6 +13,8 @@ use App\Models\Udid;
 use Illuminate\Http\Request;
 use App\Http\Traits\generaltrait;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\HomeDataResource;
+use App\Http\Resources\OfferResource;
 
 class ProductController extends Controller
 {
@@ -31,9 +33,9 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $supermarkets = Branch::where('status', 'active')->select('id', 'name_'. App()->getlocale() . ' as name', 'state', 'start_time', 'end_time', 'image', 'logo', "rating", "city_id")->orderBy('priority', 'asc')->limit(10)->get();
+        $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(10)->get();
 
-        $offers = offer::where('status', 'active')->select('id', 'arab_name as name', 'arab_description as description', 'promocode', 'offer_type', 'value_type', 'image')->limit(4)->get();
+        $offers = offer::where('status', 'active')->limit(4)->get();
 
 
         foreach ($supermarkets as $supermarket) {
@@ -50,7 +52,14 @@ class ProductController extends Controller
             $client = auth("client-api")->user();
 
             if ($client) {
-                return $this->returnData(['supermarkets', 'offers'], [$supermarkets, $offers]);
+              
+
+                return [
+                    'supermarkets' => HomeDataResource::collection($supermarkets),
+                    'offers'       => OfferResource::collection($offers),
+                ]
+                    
+
             } else {
 
                 return $this->returnError(305, 'there is no client found');
