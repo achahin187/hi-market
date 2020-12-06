@@ -56,5 +56,7 @@ class CreateAdminSeeder extends Seeder
 
         // $user->assignRole('super_admin');
 
+       
+
     }
 }

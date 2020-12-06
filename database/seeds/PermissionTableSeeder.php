@@ -138,12 +138,10 @@ class PermissionTableSeeder extends Seeder
             'offer-edit',
             'offer-active',
 
-
         ];
 
         $roles = [
             'super_admin',
-            'admin',
             'supermarket_admin',
             'delivery_admin',
             'driver',
@@ -184,7 +182,7 @@ class PermissionTableSeeder extends Seeder
         $user = \App\User::create([
 
             'name' => 'super',
-            'email' => 'super_admin@delvirtto.com',
+            'email' => 'super_admin@delivertto.com',
             'team_id' => 1,
             'password' => '123456789',
         ]);
