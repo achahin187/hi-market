@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
 use App\Rules\CurrentPasswordCheckRule;
@@ -19,7 +19,7 @@ class ClientController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {

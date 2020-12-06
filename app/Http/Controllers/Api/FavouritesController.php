@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +12,7 @@ class FavouritesController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function addfavourite(Request $request)
     {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
@@ -16,7 +16,7 @@ class OrderController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {

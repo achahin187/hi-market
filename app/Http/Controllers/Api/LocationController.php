@@ -9,12 +9,12 @@ use App\Models\Coverage_area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 
 class LocationController extends Controller
 {
     //
-    use generaltrait;
+    use GeneralTrait;
 
     function index(Request $request)
     {

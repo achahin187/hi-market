@@ -3,7 +3,7 @@
 
 namespace App\Http\Traits;
 
-trait generaltrait
+trait GeneralTrait
 {
 
         public function getCurrentLang()

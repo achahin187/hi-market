@@ -25,8 +25,8 @@
         "spatie/laravel-permission": "^3.16",
         "tymon/jwt-auth": "^1.0",
         "infyomlabs/laravel-generator": "6.0.x-dev",
-        "infyomlabs/adminlte-templates": "6.0.x-dev",
-        "doctrine/dbal": "~2.3"
+        "infyomlabs/adminlte-templates": "6.0.x-dev"
+
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

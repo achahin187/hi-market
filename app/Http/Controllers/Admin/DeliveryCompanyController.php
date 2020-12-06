@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DeliveryCompany;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,11 +11,12 @@ class DeliveryCompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $deliveryCompanies = DeliveryCompany::paginate();
+        return view("Admin.delivery_companies.index",compact("deliveryCompanies"));
     }
 
     /**

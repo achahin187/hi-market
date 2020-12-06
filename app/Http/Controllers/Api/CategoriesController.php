@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\OfferResource;
 use App\Http\Resources\ProductResource;
-use App\Http\Traits\generaltrait;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Branch;
@@ -20,7 +20,7 @@ class CategoriesController extends Controller
 {
     //
 
-    use generaltrait;
+    use GeneralTrait;
 
     public function __construct()
     {
