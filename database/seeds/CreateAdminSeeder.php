@@ -56,5 +56,20 @@ class CreateAdminSeeder extends Seeder
 
         // $user->assignRole('super_admin');
 
+        $factory->define(User::class, function (Faker $faker) {
+        return [
+            'name' => $faker->name,
+            'email' => $faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password' => bcrypt('123456789'),//'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'team_id' => Team::all()->random()->id,
+            'flag' => $faker->randomElement([0,1]),
+            //'manager' => $faker->randomElement([0,1]),
+            'created_by' => 1,
+            'updated_by' => 1
+        ];
+    });
+
     }
 }

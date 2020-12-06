@@ -143,7 +143,6 @@ class PermissionTableSeeder extends Seeder
 
         $roles = [
             'super_admin',
-            'admin',
             'supermarket_admin',
             'delivery_admin',
             'driver',
