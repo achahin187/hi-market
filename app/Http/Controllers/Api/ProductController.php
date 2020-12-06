@@ -57,7 +57,7 @@ class ProductController extends Controller
                 return [
                     'supermarkets' => HomeDataResource::collection($supermarkets),
                     'offers'       => OfferResource::collection($offers),
-                ]
+                ];
                     
 
             } else {
