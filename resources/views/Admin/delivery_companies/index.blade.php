@@ -15,13 +15,15 @@
                     </div>
 
 
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                @if(auth()->user()->can('delivery-list'))
-                                <li class="breadcrumb-item"><a href="{{route('delivery-companies.create')}}">{{ __('admin.create_delivery_admin') }}</a></li>
-                                @endif
-                            </ol>
-                        </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            @if(auth()->user()->can('delivery-list'))
+                                <li class="breadcrumb-item"><a
+                                        href="{{route('delivery-companies.create')}}">{{ __('admin.create_delivery_admin') }}</a>
+                                </li>
+                            @endif
+                        </ol>
+                    </div>
 
 
                     <div class="col-12">
@@ -56,9 +58,12 @@
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.status') }}</th>
-                                    @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
-                                        <th>{{ __('admin.controls') }}</th>
-                                    @endif
+                                        <th>{{ __('admin.commission') }}</th>
+                                        <th>{{ __('admin.branch_name') }}</th>
+
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            <th>{{ __('admin.controls') }}</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -67,35 +72,41 @@
                                         <tr>
                                             <td>{{$deliveryCompany->name}}</td>
                                             <td>{{$deliveryCompany->email}}</td>
-                                            <td>{{$deliveryCompany->comission}}</td>
-                                            <td>{{$deliveryCompany->comission}}</td>
+                                            <td>{{$deliveryCompany->status ? __("delivery_company.status.auto_approve") : __("delivery_company.status.approve") }} </td>
+
+                                            <td>{{$deliveryCompany->commission}}</td>
                                             <td>{{$deliveryCompany->branch->name}}</td>
 
-                                            <td>{{$deliveryCompany->status ? __("delivery_company.status.auto_approve") : __("delivery_company.status.approve") }} </td>
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if(auth()->user()->can('delivery_company-delete'))
-                                                        <form action="{{ route('delivery-companies.destroy', $deliveryCompany->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
+                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"
+                                                                class="drop-down-button">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            @if(auth()->user()->can('delivery-delete'))
+                                                                <form
+                                                                    action="{{ route('delivery-companies.destroy', $deliveryCompany->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('delete')
 
 
+                                                                    <button type="button" class="dropdown-item"
+                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                </form>
+                                                            @endif
+                                                            @if(auth()->user()->can('delivery-edit'))
+                                                                <a class="dropdown-item"
+                                                                   href="{{ route('delivery-companies.edit', $deliveryCompany->id) }}">{{ __('edit') }}</a>
+                                                            @endif
 
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                        </form>
-                                                    @endif
-                                                    @if(auth()->user()->can('delivery_company-edit'))
-                                                                <a class="dropdown-item" href="{{ route('delivery-companies.edit', $deliveryCompany->id) }}">{{ __('edit') }}</a>
-                                                    @endif
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        @endif
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
 

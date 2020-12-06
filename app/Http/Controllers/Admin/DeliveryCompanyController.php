@@ -36,11 +36,19 @@ class DeliveryCompanyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name_ar" => "required",
+            "name_en" => "required",
+            "phone_number" => "required|digits:11",
+            "commission" => "required|integer",
+            "branch_id" => "required|exists:branches,id"
+        ]);
+        DeliveryCompany::create($request->all());
+        return redirect()->route("delivery-companies.index");
     }
 
     /**
@@ -62,7 +70,9 @@ class DeliveryCompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $branches = Branch::all();
+        $delivery = DeliveryCompany::find($id);
+        return view("Admin.delivery_companies.edit", compact("branches","delivery"))->withStatus("success");
     }
 
     /**
@@ -74,7 +84,9 @@ class DeliveryCompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $company = DeliveryCompany::find($id);
+        $company->update(request()->all());
+        return redirect()->route("delivery-companies.index")->withStatus("updated");
     }
 
     /**
@@ -85,6 +97,13 @@ class DeliveryCompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $delivery = DeliveryCompany::find($id);
+            $delivery->delete();
+            return redirect()->route("delivery-companies.index")->withStatus("deleted");
+        }catch (\Exception $e)
+        {
+            return redirect()->route("delivery-companies.index")->withStatus("Something Went Wrong");
+        }
     }
 }

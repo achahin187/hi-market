@@ -25,7 +25,9 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('delivery-companies.index')}}">{{ __('admin.delivery_companies') }}</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{route('delivery-companies.index')}}">{{ __('admin.delivery_companies') }}</a>
+                            </li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
                     </div>
@@ -43,40 +45,53 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                        {{ __('admin.add_delivery_company') }}
+                                    {{ __('admin.add_delivery_company') }}
 
 
                                 </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action=" {{route('delivery-companies.store') }}" method="POST" enctype="multipart/form-data">
+                            <form role="form" action=" {{route('delivery-companies.store') }}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
 
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.name')}}</label>
-                                        <input type="text"  name="name" class=" @error('name') is-invalid @enderror form-control" required>
+                                        <label for="exampleInputEmail1">Name Ar</label>
+                                        <input type="text" value="{{old("name_ar")}}" name="name_ar"
+                                               class=" @error('name_ar') is-invalid @enderror form-control" required>
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Name En</label>
+                                        <input type="text" value="{{old("name_en")}}" name="name_en"
+                                               class=" @error('name_en') is-invalid @enderror form-control" required>
+                                        @error('name_en')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
-                                        <input type="email"  name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                        <input type="email" value="{{old("email")}}" name="email"
+                                               class="@error('email') is-invalid @enderror form-control"
+                                               id="exampleInputEmail1" placeholder="Enter email" required>
                                         @error('email')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Status</label>
-                                        <input id="status" type="checkbox" name="status">
+                                        <input id="status" value="{{old("status") ?? 1}}"  type="checkbox" name="status">
                                         @error('status')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -84,22 +99,22 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="branch">Branch</label>
-                                        <select name="branch_id" id="branc" class="form-control"></select>
+                                        <label for="phone_number">Phone Number</label>
+                                        <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.password')  }}</label>
-                                        <input type="password" class="@error('password') is-invalid @enderror form-control" id="exampleInputPassword1" name="password" placeholder="Password">
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <label for="commission">Commission</label>
+                                        <input id="commission" name="commission" value="{{old("commission")}}" type="number" class="form-control">
                                     </div>
-
-
-
-
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id" id="branch" class="form-control">
+                                            @foreach($branches as $branch)
+                                                <option @if(old("branch_id") == $branch->id) selected
+                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
 
 
@@ -118,6 +133,6 @@
         </section>
 
 
-    @endsection
+@endsection
 
 
