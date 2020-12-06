@@ -34,7 +34,7 @@ class CreateBranchesTable extends Migration
             $table->string('start_time');
             $table->string('end_time');
             
-            $table->string('rating');
+         
 
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('city_id');
