@@ -138,7 +138,6 @@ class PermissionTableSeeder extends Seeder
             'offer-edit',
             'offer-active',
 
-
         ];
 
         $roles = [
