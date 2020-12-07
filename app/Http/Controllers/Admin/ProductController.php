@@ -688,7 +688,7 @@ class ProductController extends Controller
     }
 
     public function branchproducts($branch_id,$flag)
-    {   dd($flag , $branch_id);
+    {  // dd($flag , $branch_id);
         
         // $product = Product::all();
 
@@ -697,7 +697,7 @@ class ProductController extends Controller
         //             ->orderBy('id', 'desc')
         //             ->get();
 
-        $products = Product::where('flag',$flag)->WhereHas('branches', function ($q){
+        $products = Product::where('flag',$flag)->WhereHas('branches', function ($q) use ($branch_id){
             $q->whereIn('branch_id',$branch_id)->get();
         });          
 
