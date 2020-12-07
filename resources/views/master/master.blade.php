@@ -248,6 +248,7 @@ $settings = App\Models\Setting::all()->first();
 
                                 {{-- admin --}}
                                 @if(auth()->user()->can('delivery-list'))
+                                
                                     <li class="nav-item">
                                         <a href="{{route('delivery-admins.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -256,6 +257,17 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
+
+                                     <li class="nav-item">
+                                        <a href="{{route('delivery-companies.index')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                {{__('admin.delivery_company')}}
+                                            </p>
+                                        </a>
+                                    </li>
+
+
 
 
                                 @endif
