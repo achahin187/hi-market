@@ -75,6 +75,7 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Branch','product_supermarket');
     }
 
+    
 
 
     protected function getNameAttribute()

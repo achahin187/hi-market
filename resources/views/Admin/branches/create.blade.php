@@ -209,7 +209,7 @@
                                         </select>
                                     </div> 
  --}}
-
+                                  @if(isset($branch))
                                      <div class="form-group">
 
                                         <label>{{ __('admin.category') }}</label>
@@ -217,17 +217,39 @@
                                         <select 
                                         class=" @error('categories') is-invalid @enderror select2" name="categories[]"  style="width: 100%;" 
                                         multiple>
-                                      
-                        @foreach(\App\Models\Category::all() as $category)
+                                              
+                                     @foreach(\App\Models\Category::all() as $category)
 
-                            <option value="{{ $category->id }}" {{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                {{ $category->name_en }}
-                            </option>
+                                        <option value="{{ $category->id }}" {{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $category->name_en }}
+                                        </option>
 
-                            @endforeach   
+                                    @endforeach   
                                                 
                                         </select>
                                     </div>
+                                    @else
+
+                                      <div class="form-group">
+
+                                        <label>{{ __('admin.category') }}</label>
+                                        
+                                        <select 
+                                        class=" @error('categories') is-invalid @enderror select2" name="categories[]"  style="width: 100%;" 
+                                        multiple>
+                                              
+                                        @foreach(\App\Models\Category::all() as $category)
+
+                                            <option value="{{ $category->id }}" >
+                                                {{ $category->name_en }}
+                                            </option>
+
+                                        @endforeach   
+                                                
+                                        </select>
+                                    </div>
+
+                                    @endif
 
 
                                      <div class="form-group">

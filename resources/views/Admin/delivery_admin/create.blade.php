@@ -88,13 +88,30 @@
 
                                    
                                 <div class="form-group">
-                                    <label>{{__('admin.supermarket')}} </label>
+                                    <label>{{__('admin.company')}} </label>
                                     <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
                                       
 
-                                            @foreach(\App\Models\Supermarket::all() as $supermarket)
+                                            @foreach(\App\Models\DeliveryCompany::all() as $companies)
 
-                                                <option value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                <option value="{{ $companies->id }}">{{ $companies->name_ar }}</option>
+
+                                            @endforeach
+
+                                 
+                                    </select>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>{{__('admin.city')}} </label>
+                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                      
+
+                                            @foreach(\App\Models\City::all() as $cities)
+
+                                                <option value="{{ $cities->id }}">{{ $cities->name_ar }}</option>
 
                                             @endforeach
 
@@ -105,20 +122,6 @@
                               
 
 
-                                <div class="form-group">
-                                    <label>{{__('admin.branch')}} </label>
-                                    <select id="branch" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                       
-                                     
-                                            @foreach(\App\Models\Branch::all() as $branch)
-
-                                                <option value="{{ $branch->id }}">{{ $branch->name_en }}</option>
-
-                                            @endforeach
-
-                                        
-                                    </select>
-                                </div>
                               
                                  
 
