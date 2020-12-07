@@ -150,9 +150,7 @@ class VendorController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'category_id' => 'required|integer|min:0',
             'sponsor' => 'required|integer|min:0',
-            'subcategory_id' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
@@ -177,17 +175,32 @@ class VendorController extends Controller
                         unlink('vendor_images/' . $vendor->image);
                     }
                 }
-                $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id,'sponsor' => $request->sponsor ,'image' => $file_to_store]);
+                $vendor->update([
+                     'arab_name' => $request->arab_name,
+                     'eng_name' => $request->eng_name,
+                     'sponsor' => $request->sponsor ,
+                     'image' => $file_to_store
+                 ]);
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
+                    $vendor->update([
+                      'arab_name' => $request->arab_name,
+                      'eng_name' => $request->eng_name,
+                      'sponsor' => $request->sponsor ,
+                      'image' => $request->input('checkedimage')
+                  ]);
                 } else {
 
                     if ($vendor->image != null) {
                         unlink('vendor_images/' . $vendor->image);
                     }
-                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id, 'sponsor' => $request->sponsor , 'image' => null]);
+                    $vendor->update([
+                       'arab_name' => $request->arab_name,
+                       'eng_name' => $request->eng_name,
+                       'sponsor' => $request->sponsor , 
+                       'image' => null
+                   ]);
                 }
             }
             return redirect('/admin/vendors')->withStatus('vendor successfully updated.');
