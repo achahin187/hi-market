@@ -74,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
-
+        dd($request->all());
 
         $user = auth()->user();
 
