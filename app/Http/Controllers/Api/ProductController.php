@@ -140,7 +140,7 @@ class ProductController extends Controller
         $product_details->delivery_time = '30 minutes';
 
 
-        return $this->returnData(['product'], [$product_details]);
+        return $this->returnData(['product'], [new ProductResource($product_details)]);
     }
 
     public function getproductsearch($value)
