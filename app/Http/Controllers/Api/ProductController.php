@@ -95,7 +95,7 @@ class ProductController extends Controller
         $product->update(["views" => $product->views == null ? 1 : $product->views + 1]);
 
 
-        $product_details = Product::where('id', $product_id)->select('id', 'name_' . app()->getLocale() . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
+        $product_details = Product::where('id', $product_id)->first();
 
 
         $product_images = explode(',', $product->images);
