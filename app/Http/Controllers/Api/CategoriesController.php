@@ -98,7 +98,7 @@ class CategoriesController extends Controller
         $favproducts = DB::table('client_product')
             ->where('udid', $udid)
             ->where("supermarket_id",$request->supermarket_id)
-            ->where("category_id",$request->category_id)->select('product_id')->get();
+           ->select('product_id')->get();
 
 
         $products = $supermarket->products()->where('status', 'active')->where('flag', 1)->get();
