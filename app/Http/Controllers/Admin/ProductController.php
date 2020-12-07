@@ -596,7 +596,7 @@ class ProductController extends Controller
                     'measuring_unit' => $measuring_unit,
                     'size' => $size,
                     'updated_by' => $user->id
-                    'updated_by' => $user->id
+           
                 ]);
 
 
