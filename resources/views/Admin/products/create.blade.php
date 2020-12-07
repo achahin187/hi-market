@@ -497,11 +497,11 @@
  
  
 
-                                @if(isset($branch_id))
+                               {{--  @if(isset($branch_id))
 
                                     <input type="hidden" name="branch_id" value="{{$branch_id}}">
                                 @endif
-
+ --}}
 
                                 <div class="form-group">
                                     <label>{{__('admin.measure')}} </label>
@@ -679,7 +679,7 @@
                     $('#branches').html('');
                     data.forEach(function(x){
                         console.log(x.id);
-                    $('#branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
                     })
                 }
             });
