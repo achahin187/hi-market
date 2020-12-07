@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Client;
 use App\Models\Offer;
@@ -35,7 +36,7 @@ class ProductController extends Controller
         // Change to Branch
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(10)->get();
 
-        $offers = offer::where('status', 'active')->limit(4)->get();
+        $offers = Product::where('status', 'active')->where("flag",1)->limit(4)->get();
 
 
         foreach ($supermarkets as $supermarket) {
@@ -95,7 +96,7 @@ class ProductController extends Controller
         $product->update(["views" => $product->views == null ? 1 : $product->views + 1]);
 
 
-        $product_details = Product::where('id', $product_id)->select('id', 'name_' . app()->getLocale() . ' as name', 'arab_description as description', 'arab_spec as overview', 'price', 'offer_price', 'rate', 'points', 'exp_date', 'production_date')->first();
+        $product_details = Product::where('id', $product_id)->first();
 
 
         $product_images = explode(',', $product->images);
@@ -146,7 +147,7 @@ class ProductController extends Controller
         $product_details->delivery_time = '30 minutes';
 
 
-        return $this->returnData(['product'], [new ProductResource($product_details)]);
+        return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
     public function getproductsearch($value)
