@@ -71,8 +71,8 @@ class ProductController extends Controller
             ]);
 
             return ['data' => [
-                'supermarkets' => HomeDataResource::collection($supermarkets),
-                'offers' => OfferResource::collection($offers),
+                'supermarkets'  => HomeDataResource::collection($supermarkets),
+                'offers'        => OfferResource::collection($offers),
             ]];
         }
 
@@ -148,8 +148,6 @@ class ProductController extends Controller
 
 
         return $this->returnData(['product'], [$product_details]);
-
-
     }
 
     public function getproductsearch($value)
@@ -232,7 +230,6 @@ class ProductController extends Controller
 
 
         }
-
     }
 
     public function filter()

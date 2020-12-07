@@ -46,7 +46,7 @@ class CategoriesController extends Controller
 
         $categories = $branch->categories()->get();
 
-
+    
         $branchname = Supermarket::where('id', $branch_id)->select('arab_name as name')->first();
 
         $offers = offer::where('status', 'active')->where('branch_id', $branch_id)->limit(4)->get();
@@ -63,8 +63,8 @@ class CategoriesController extends Controller
 
         return response()->json([
           "status"=>true,
-          "categories"=>CategoryResource::collection($categories),
-            "offers"=>OfferResource::collection($offers),
+          "categories" => CategoryResource::collection($categories),
+            "offers"   => OfferResource::collection($offers),
             "supermarket"=>[
                 'id'  => $branch->id,
                 "name"=>$branch->name,
