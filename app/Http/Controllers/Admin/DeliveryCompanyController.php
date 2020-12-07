@@ -43,15 +43,19 @@ class DeliveryCompanyController extends Controller
         $request->validate([
             "name_ar" => "required",
             "name_en" => "required",
-            "phone_number" => "required|digits:11",
+            "phone_number.0" => "required|digits:11",
             "commission" => "required|integer",
             "branch_id" => "required|exists:branches,id"
         ]);
-        DeliveryCompany::create($request->all());
+
+        $request_data = $request->all();
+        $request_data['phone_number'] = array_filter($request->phone_number);
+
+        DeliveryCompany::create($request_data);
         return redirect()->route("delivery-companies.index");
     }
 
-    /**
+    /**  
      * Display the specified resource.
      *
      * @param int $id
@@ -85,7 +89,11 @@ class DeliveryCompanyController extends Controller
     public function update(Request $request, $id)
     {
         $company = DeliveryCompany::find($id);
-        $company->update(request()->all());
+
+        $request_data = $request->all();
+        $request_data['phone'] = array_filter($request->phone_number);
+        
+        $company->update($request_data);
         return redirect()->route("delivery-companies.index")->withStatus("updated");
     }
 

@@ -209,6 +209,7 @@
                                         </select>
                                     </div> 
  --}}
+
                                      <div class="form-group">
 
                                         <label>{{ __('admin.category') }}</label>
@@ -219,9 +220,9 @@
                                       
                         @foreach(\App\Models\Category::all() as $category)
 
-<option value="{{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}">
-    {{ $category->name_en }}
-</option>
+                            <option value="{{ $category->id }}" {{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                {{ $category->name_en }}
+                            </option>
 
                             @endforeach   
                                                 

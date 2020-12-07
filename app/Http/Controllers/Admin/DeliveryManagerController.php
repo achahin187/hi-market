@@ -29,8 +29,6 @@ class DeliveryManagerController extends Controller
     public function index()
     {
          $delivery_admins = $this->model::Role('delivery_admin')->get();
-
-
         
         return view($this->blade.'.index')->with('delivery_admins',$delivery_admins);
     }
