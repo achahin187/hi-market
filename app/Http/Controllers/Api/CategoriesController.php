@@ -86,7 +86,7 @@ class CategoriesController extends Controller
         $supermarket_id = $request->supermarket_id;
         try {
 
-            $supermarket = supermarket::findOrFail($supermarket_id);
+            $supermarket = Branch::findOrFail($supermarket_id);
         } catch (\Exception $e) {
             return $this->returnError(404, "Super Market Not Found");
         }
