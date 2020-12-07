@@ -44,7 +44,7 @@
 
 
                                 <!--first card-->
-                            {{-- @if(Auth()->user()->hasRole(['admin','delivery-manager'])) --}}
+                            @if(Auth()->user()->can('order-edit-client-info'))
                                 <div class="card card-primary">
 
                                     <div class="card-header">
@@ -139,9 +139,11 @@
                                         </form>
                                     </div>
 
-                          {{--   @endif --}}
+                            @endif
+                            
                                 <!--second card-->
                                 {{-- @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver'])) --}}
+                                  @if(Auth()->user()->can('order-edit-client-product'))
                                     <div class="card card-primary">
 
                                         <div class="card-header">
@@ -261,12 +263,12 @@
                                             </div>
                                         </form>
                                     </div>
-                                {{--  @endif --}}
+                                 @endif
 
 
 
                                     <!--third card-->
-                             {{-- @if(Auth()->user()->hasRole(['admin', 'delivery-manager'])) --}}
+                             @if(Auth()->user()->can('order-edit-client-product'))
 
                                         <div class="card card-primary">
 
@@ -448,6 +450,7 @@
                                                 </table>
                                             </div>
                                         </div>
+                             @endif           
 
                                         <!--fourth card-->
 

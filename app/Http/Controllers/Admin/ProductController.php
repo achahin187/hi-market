@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Barcode;
 use App\Models\Supermarket;
 use App\Imports\ProductImport;
 use App\Exports\ProductExport;
@@ -85,6 +86,7 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            // 'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
             'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
@@ -196,35 +198,57 @@ class ProductController extends Controller
         }
 
 
+        $barcodes = Product::Where('supermarket_id',$supermarket)->get()->toArray();
+        $haveBarcode = in_array($barcode, $barcodes);
+
+        if ($haveBarcode) {
+         return redirect('admin/products/'.$flag)->withStatus(__('product is already exist '));
+            
+        }else{
+              
+            $product = Product::create([
+                'name_ar' => $arab_name,
+                'name_en' => $eng_name,
+                'price' => $price,
+                'offer_price' => $offer_price,
+                'points' => $points,
+                'category_id' => $category,
+                'vendor_id' => $vendor,
+                'supermarket_id' => $supermarket,
+                //'subcategory_id' => $subcategory,
+                'images' => $images,
+                'barcode' => $barcode,
+                'arab_description' => $arab_description,
+                'eng_description' => $eng_description,
+                'arab_spec' => $arab_spec,
+                'eng_spec' => $eng_spec,
+                'flag' => $flag,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'exp_date' => $exp_date,
+                'production_date' => $request->production_date,
+                'priority' => $priority,
+                'quantity' => $quantity,
+                'measure_id' => $measuring_unit,
+                'size_id' => $size,
+                'created_by' => $user->id
+            ]);
+        }
 
 
-        $product = Product::create([
-            'name_ar' => $arab_name,
-            'name_en' => $eng_name,
-            'price' => $price,
-            'offer_price' => $offer_price,
-            'points' => $points,
-            'category_id' => $category,
-            'vendor_id' => $vendor,
-            'supermarket_id' => $supermarket,
-            //'subcategory_id' => $subcategory,
-            'images' => $images,
-            'barcode' => $barcode,
-            'arab_description' => $arab_description,
-            'eng_description' => $eng_description,
-            'arab_spec' => $arab_spec,
-            'eng_spec' => $eng_spec,
-            'flag' => $flag,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'exp_date' => $exp_date,
-            'production_date' => $request->production_date,
-            'priority' => $priority,
-            'quantity' => $quantity,
-            'measure_id' => $measuring_unit,
-            'size_id' => $size,
-            'created_by' => $user->id
-        ]);
+        // $haveBarcode = Barcode::Where('supermarket_id',$supermarket)->get()->toArray();
+        // $search = in_array($barcode, $haveBarcode);
+     
+      
+
+        // foreach ($barcodes as $key => $barcodes) {
+        //     if ($barcodee->barcode == $barcode) {
+        //         dd($barcodee->barcode , $barcode);
+        //     }
+        // }
+     
+   
+      
 
         $product->branches()->sync($request->branch_id);
 
