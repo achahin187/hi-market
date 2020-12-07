@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Vendor;
+use App\Models\Supermarket;
 
 class VendorController extends Controller
 {
@@ -39,7 +40,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        //
+     
         return view('Admin.vendors.create');
     }
 
@@ -52,22 +53,14 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         //
-        $rules = [
-            'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'sponsor' => 'required|integer|min:0',
-            'category_id' => 'required|integer|min:0',
-            'subcategory_id' => 'required|integer|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ];
+  
+        $request->validate([
+        'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+        'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+        'sponsor' => 'required|integer|min:0',
+        'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
 
-        $this->validate($request,$rules);
-
-        $arab_name = $request->input('arab_name');
-
-        $eng_name = $request->input('eng_name');
-
-        $sponsor = $request->input('sponsor');
 
         if($image = $request->file('image'))
         {
@@ -79,11 +72,9 @@ class VendorController extends Controller
 
             Vendor::create([
 
-                'arab_name' => $arab_name,
-                'eng_name' => $eng_name,
-                'sponsor' => $sponsor,
-                'category_id' => $request->category_id,
-                'subcategory_id' => $request->subcategory_id,
+                'arab_name' => $request->input('arab_name'),
+                'eng_name' => $request->input('eng_name'),
+                'sponsor' => $request->input('sponsor'),
                 'image' => $file_to_store
             ]);
         }
@@ -91,11 +82,10 @@ class VendorController extends Controller
         {
             Vendor::create([
 
-                'arab_name' => $arab_name,
-                'eng_name' => $eng_name,
-                'sponsor' => $sponsor,
-                'category_id' => $request->category_id,
-                'subcategory_id' => $request->subcategory_id,
+                'arab_name' => $request->input('arab_name'),
+                'eng_name' => $request->input('eng_name'),
+                'sponsor' => $request->input('sponsor'),
+              
             ]);
         }
 
@@ -160,9 +150,7 @@ class VendorController extends Controller
         $rules = [
             'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'category_id' => 'required|integer|min:0',
             'sponsor' => 'required|integer|min:0',
-            'subcategory_id' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
@@ -187,17 +175,32 @@ class VendorController extends Controller
                         unlink('vendor_images/' . $vendor->image);
                     }
                 }
-                $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id,'sponsor' => $request->sponsor ,'image' => $file_to_store]);
+                $vendor->update([
+                     'arab_name' => $request->arab_name,
+                     'eng_name' => $request->eng_name,
+                     'sponsor' => $request->sponsor ,
+                     'image' => $file_to_store
+                 ]);
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id, 'sponsor' => $request->sponsor ,'image' => $request->input('checkedimage')]);
+                    $vendor->update([
+                      'arab_name' => $request->arab_name,
+                      'eng_name' => $request->eng_name,
+                      'sponsor' => $request->sponsor ,
+                      'image' => $request->input('checkedimage')
+                  ]);
                 } else {
 
                     if ($vendor->image != null) {
                         unlink('vendor_images/' . $vendor->image);
                     }
-                    $vendor->update(['arab_name' => $request->arab_name, 'eng_name' => $request->eng_name, 'category_id' => $request->category_id,'subcategory_id' => $request->subcategory_id, 'sponsor' => $request->sponsor , 'image' => null]);
+                    $vendor->update([
+                       'arab_name' => $request->arab_name,
+                       'eng_name' => $request->eng_name,
+                       'sponsor' => $request->sponsor , 
+                       'image' => null
+                   ]);
                 }
             }
             return redirect('/admin/vendors')->withStatus('vendor successfully updated.');

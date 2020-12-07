@@ -71,6 +71,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('countries', 'Admin\CountryController');
         Route::resource('delivery', 'Admin\DeliveryController');
 
+        Route::get('get-supermarket-branches', 'Admin\ProductController@supermarketBranch')->name('get_supermarket_branches');
 
         Route::get('profile', ['as' => 'profile.edit', 'uses' => 'Admin\ProfileController@edit']);
         Route::put('profile', ['as' => 'profile.update', 'uses' => 'Admin\ProfileController@update']);

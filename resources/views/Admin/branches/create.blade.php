@@ -171,7 +171,7 @@
 
                                     <div class="form-group">
                                         <label>{{__('admin.category')}}</label>
-                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;"  multiple>
 
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Category::all() as $category)

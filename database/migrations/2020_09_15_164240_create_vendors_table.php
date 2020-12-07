@@ -18,8 +18,8 @@ class CreateVendorsTable extends Migration
             $table->string('arab_name');
             $table->string('eng_name');
             $table->string('image')->nullable();
-            $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('subcategory_id')->unsigned();
+            // $table->bigInteger('category_id')->unsigned();
+            //$table->bigInteger('subcategory_id')->unsigned();
             $table->unsignedInteger('sponsor');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

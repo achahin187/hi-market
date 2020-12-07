@@ -57,9 +57,8 @@ class BranchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$supermarket_id = null)
-    {
-        //
-
+    {   
+     
       
 
         $request->validate([
@@ -69,12 +68,12 @@ class BranchController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'commission' => ['required','min:0','numeric'],
-            'categories' => ['required'],
+            'categories' => ['required','array'],
             'rating' => ['required','min:1','max:5'],
             'priority' => ['required','min:1','integer'],
-            'area_id' => 'required|integer|min:0',
-            'city_id' => 'required|integer|min:0',
-            'country_id' => 'required|integer|min:0',
+            'area_id' => 'integer|min:0',
+            'city_id' => 'integer|min:0',
+            'country_id' => 'integer|min:0',
             'start_time' => ['required','string'],
             'end_time' => ['required','string'],        
 
@@ -118,6 +117,7 @@ class BranchController extends Controller
                 'rating' => $request->rating,
                 'country_id' => $request->country_id,
             ]);
+
             $branch->categories()->sync($request->categories);
         }
         else
@@ -152,6 +152,7 @@ class BranchController extends Controller
                 'city_id' => $request->city_id,
                 'country_id' => $request->country_id,
             ]);
+
             $branch->categories()->sync($request->categories);
         }
 

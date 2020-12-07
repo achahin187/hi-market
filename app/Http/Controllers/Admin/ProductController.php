@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Supermarket;
 use App\Imports\ProductImport;
 use App\Exports\ProductExport;
 use Illuminate\Validation\Rule;
@@ -58,7 +59,8 @@ class ProductController extends Controller
         }
         else
         {
-            return view('Admin.products.create', compact('flag'));
+            $superMarkets = Supermarket::all();
+            return view('Admin.products.create', compact('flag','superMarkets'));
         }
     }
 
@@ -222,7 +224,7 @@ class ProductController extends Controller
             'created_by' => $user->id
         ]);
 
-        $product->branches()->sync($branch_id);
+        $product->branches()->sync($request->branch_id);
 
         if($product)
         {
@@ -300,22 +302,23 @@ class ProductController extends Controller
     {
         //
         $product = Product::find($id);
+        $superMarkets = Supermarket::all();
 
         if($product)
         {
             if($supermarket_id != null && $supermarket_id != -1)
             {
                 $productimages = explode(',',$product->images);
-                return view('Admin.products.create', compact('product','productimages','flag','supermarket_id'));
+                return view('Admin.products.create', compact('product','productimages','flag','supermarket_id','superMarkets'));
             }
             elseif ($branch_id != null && $supermarket_id == -1)
             {
                 $productimages = explode(',',$product->images);
-                return view('Admin.products.create', compact('product','productimages','flag','branch_id'));
+                return view('Admin.products.create', compact('product','productimages','flag','branch_id','superMarkets'));
             }
             else {
                 $productimages = explode(',', $product->images);
-                return view('Admin.products.create', compact('product', 'productimages', 'flag'));
+                return view('Admin.products.create', compact('product', 'productimages', 'flag','superMarkets'));
             }
         }
         else
@@ -405,7 +408,7 @@ class ProductController extends Controller
             'vendor_id' => 'required|integer|min:0',
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
-            'branch_id' => 'required|integer|min:0',
+            'branch_id' => 'required|array',
             //'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
@@ -594,7 +597,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
-                        'branch_id' => $branch,
+                        
                         //'subcategory_id' => $subcategory,
                         'images' => $images,
                         'barcode' => $barcode,
@@ -612,7 +615,7 @@ class ProductController extends Controller
                         'size' => $size,
                         'updated_by' => $user->id
                     ]);
-
+                         $product->branches()->sync($request->branch_id);
 
                 } else {
 
@@ -624,7 +627,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
-                        'branch_id' => $branch,
+                      
                         //'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
@@ -642,6 +645,7 @@ class ProductController extends Controller
                         'updated_by' => $user->id,
                         'images' => null
                     ]);
+                         $product->branches()->sync($request->branch_id);
                 }
             }
             if($supermarket_id != null && $supermarket_id != -1)
@@ -790,5 +794,13 @@ class ProductController extends Controller
     {
         return response()->download('Book1.xlsx');
 
+    }
+
+    public function supermarketBranch(Request $request)
+    {
+        $superMarket = $request->supermarket_id;
+        $branches = Branch::Where('supermarket_id',$superMarket)->get();
+
+        return response()->json($branches);
     }
 }

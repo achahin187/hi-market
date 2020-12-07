@@ -21,7 +21,7 @@ class CreateCategorySupermarketTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('branch_id')->references('id')->on('supermarkets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
