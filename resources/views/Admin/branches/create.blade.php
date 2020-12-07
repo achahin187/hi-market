@@ -216,14 +216,14 @@
                                         <select 
                                         class=" @error('categories') is-invalid @enderror select2" name="categories[]"  style="width: 100%;" 
                                         multiple>
-                                          
-                            @foreach(\App\Models\Category::all() as $category)
+                                      
+                        @foreach(\App\Models\Category::all() as $category)
 
-                                    <option value="{{ in_array( $category->id, $branch->categories->pluck('id'))}}">
-                                        {{ $category->name_en }}
-                                    </option>
+<option value="{{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}">
+    {{ $category->name_en }}
+</option>
 
-                                @endforeach   
+                            @endforeach   
                                                 
                                         </select>
                                     </div>
