@@ -90,7 +90,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="status">Status</label>
+                                        <label for="status">Auto Approve</label>
                                         <input id="status" value="{{old("status") ?? 1}}" @if($delivery->status) checked @endif type="checkbox" name="status">
                                         @error('status')
                                         <span class="invalid-feedback" role="alert">
