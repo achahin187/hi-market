@@ -219,7 +219,7 @@
                                           
                             @foreach(\App\Models\Category::all() as $category)
 
-                                    <option value="{{ in_array($branch->categories->pluck('id'), $category->id)}}">
+                                    <option value="{{ in_array( $category->id, $branch->categories->pluck('id'))}}">
                                         {{ $category->name_en }}
                                     </option>
 
