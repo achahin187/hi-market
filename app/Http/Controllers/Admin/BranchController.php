@@ -255,9 +255,9 @@ class BranchController extends Controller
             'categories' => ['required'],
             'rating' => ['required','min:1','max:5'],
             'priority' => ['required','min:1','integer'],
-            'area_id' => 'required|integer|min:0',
-            'city_id' => 'required|integer|min:0',
-            'country_id' => 'required|integer|min:0',
+            'area_id' => 'integer|min:0',
+            'city_id' => 'integer|min:0',
+            'country_id' => 'integer|min:0',
             'start_time' => ['required','string'],
             'end_time' => ['required','string'],        
 
