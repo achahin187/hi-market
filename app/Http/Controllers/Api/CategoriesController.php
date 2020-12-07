@@ -81,6 +81,10 @@ class CategoriesController extends Controller
     public function supermarketoffers(Request $request)
     {
 
+        $validation = \Validator::make($request->all(),[
+            "supermarket_id"=>"required",
+            "category_id"=>"required"
+        ]);
         $udid = $request->header('udid');
 
         $supermarket_id = $request->supermarket_id;
@@ -91,7 +95,10 @@ class CategoriesController extends Controller
             return $this->returnError(404, "Super Market Not Found");
         }
 
-        $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
+        $favproducts = DB::table('client_product')
+            ->where('udid', $udid)
+            ->where("supermarket_id",$request->supermarket_id)
+            ->where("category_id",$request->category_id)->select('product_id')->get();
 
 
         $products = $supermarket->products()->where('status', 'active')->where('flag', 1)->get();
@@ -126,7 +133,7 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products'], [ProductResource::collection($products)]);
+        return $this->returnData(['products'], [CategoryProductResource::collection($products)]);
 
 
     }
