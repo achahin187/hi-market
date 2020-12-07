@@ -195,7 +195,7 @@
 
                                <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
-                                <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;" @if(isset($branch_id)) disabled @endif  multiple>
+                                <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
 
                                     @if(isset($product))
 
