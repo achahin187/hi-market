@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Client;
 use App\Models\Offer;
@@ -146,7 +147,7 @@ class ProductController extends Controller
         $product_details->delivery_time = '30 minutes';
 
 
-        return $this->returnData(['product'], [new ProductResource($product_details)]);
+        return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
     public function getproductsearch($value)
