@@ -98,10 +98,18 @@
                                             </span>
                                         @enderror
                                     </div>
+{{-- 
                                     <div class="form-group">
                                         <label for="phone_number">Phone Number</label>
                                         <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
-                                    </div>
+                                    </div> --}}
+
+                                      @for ($i = 0; $i < 2; $i++)
+                                            <div class="form-group">
+                                                <label>@lang('admin.phone')</label>
+                                                <input type="text" id='phone_number' name="phone_number[]" class="form-control" value="{{old("phone_number")}}">
+                                            </div>
+                                       @endfor
                                     <div class="form-group">
                                         <label for="commission">Commission</label>
                                         <input id="commission" name="commission" value="{{old("commission")}}" type="number" class="form-control">
