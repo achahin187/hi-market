@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AddressResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
@@ -248,7 +249,7 @@ class ClientController extends Controller
 
             return $this->returnError('', 'there is no addresses for this client registered');
         }
-        return $this->returnData(['client_addresses'], [$client->addresses]);
+        return $this->returnData(['client_addresses'], [AddressResource::collection($client->addresses)]);
 
     }
 
@@ -267,7 +268,7 @@ class ClientController extends Controller
 
                 $address->delete();
 
-                return $this->returnSuccessMessage('delted successfully');
+                return $this->returnSuccessMessage('deleted successfully');
             } else {
 
                 return $this->returnError(404, 'id not found');
@@ -306,7 +307,7 @@ class ClientController extends Controller
 
         if ($validator->fails()) {
 
-           return $this->returnError(300, 'These data is not valid');
+           return $this->returnError(422, 'These data is not valid');
 
         }
 
