@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -56,8 +57,8 @@ class FavouritesController extends Controller
 
                     $client = Client::find($client_device->client_id);
 
-                    $client->products()->attach($product_id, ['udid' => $udid]);
-//return $client->products;
+                    $client->products()->attach($product_id, ['udid' => $udid, "category_id" => request("category_id")]);
+
                     return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات', '');
 
                 } else {
@@ -81,26 +82,29 @@ class FavouritesController extends Controller
 
     public function getfavourites(Request $request)
     {
-
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+            "category_id" => "required"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $client = getUser();
 
 
-        if ($client) {
-
-            $favproducts = $client->products()->where(function ($query) {
-                if ($udid = \request()->header("udid")) {
-                    $query->where("udid", $udid);
-                };
-            })->select()->get();
-
-            return $this->returnData(['favourite products'], [$favproducts]);
-
-        } else {
-
-            return $this->returnError(404, 'no client exists');
+        if (!$client) {
+            return $this->returnError(422, "Client Not Found");
         }
+        $favproducts = $client->products()->where(function ($query) {
+            if ($udid = \request()->header("udid")) {
+                $query->where("udid", $udid)->where("category_id",\request("category_id"));
+            };
+        })->get();
+
+        return $this->returnData(['favourite products'], [ProductResource::collection($favproducts)]);
 
     }
 
-
 }
+
+
