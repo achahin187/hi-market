@@ -135,23 +135,14 @@ class OrderController extends Controller
             return $this->returnError(422, "user not exists");
         }
 
-        foreach (explode(",", request("products")) as $product) {
 
-            Cart::create(
-                [
-                    "user_id" => $user->id,
-                    "product_id" => explode(":", $product)[0],
-                    "qty" => explode(":", $product)[1]
-                ]
-            );
-        }
         $category_ids = $request->category_ids;
 
         $categories = $category_ids;
 
         $supermarket_id = $request->supermarket_id;
 
-        $client = getUser();
+
 
 
         $imagepaths = [];
@@ -161,7 +152,7 @@ class OrderController extends Controller
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
 
-        $similar_products = Product::whereIn('category_id', $categories)->where('supermarket_id', $supermarket_id)->select('id', 'images')->get();
+        $similar_products = Product::similar($categories,$supermarket_id)->get();
 
 
         foreach ($similar_products as $product) {
@@ -203,12 +194,12 @@ class OrderController extends Controller
         }
 
 
-        if ($client) {
-            return $this->returnData(['similar products',"cart"], [ProductResource::collection($similar_products),CartResource::collection($user->carts)]);
-        }
 
 
-        return $this->returnData(['similar products', 'wishlist', 'setting'], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery]);
+
+
+
+        return $this->returnData(['similar products', 'wishlist', 'setting'], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist),CartResource::collection($user->carts), $setting->delivery]);
 
     }
 
