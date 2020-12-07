@@ -365,9 +365,9 @@ class ProductController extends Controller
 
     public function clone($id,$flag,$supermarket_id = null,$branch_id = null)
     {
-        //
-        $product = Product::find($id);
-         $superMarkets = Supermarket::all();
+        
+        $product      = Product::find($id);
+        $superMarkets = Supermarket::all();
 
         if($product)
         {
