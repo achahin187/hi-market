@@ -180,7 +180,7 @@
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
                                           
                                             @foreach($superMarkets  as $supermarket)
-                                                <option value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
+                                                <option  <?php if($product->supermarket_id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
                                             @endforeach    
                                                 
                                         </select>
@@ -195,6 +195,7 @@
 
                                <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
+
                                 <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
 
                                     @if(isset($product))
@@ -677,8 +678,8 @@
                 success: function(data) {
                     
                     data.forEach(function(x){
-
-                    $('#branches').append(new Option(x.name_ar,x.id,true,true));
+                        console.log(x.id);
+                    $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
                     })
                 }
             });
