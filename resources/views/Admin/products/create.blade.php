@@ -195,7 +195,7 @@
 
                                <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
-                                <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]" data-placeholder="Select a State" style="width: 100%;" @if(isset($branch_id)) disabled @endif required multiple>
+                                <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
 
                                     @if(isset($product))
 
@@ -214,11 +214,11 @@
 
                                     @else
                                     
-                                    @foreach(\App\Models\Branch::all() as $branch)
+                                   {{--  @foreach(\App\Models\Branch::all() as $branch)
 
-                                            <option ></option>
+                                            <option></option>
 
-                                        @endforeach
+                                        @endforeach --}}
 
                                     @endif
 
