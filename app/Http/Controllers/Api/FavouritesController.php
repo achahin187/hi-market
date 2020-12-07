@@ -41,7 +41,7 @@ class FavouritesController extends Controller
                     ->where('client_id', '=', null)
                     ->update(['client_id' => $client->id]);
 
-                $client->products()->attach($product_id, ['udid' => $udid]);
+                $client->products()->attach($product_id, ['udid' => $udid,"category_id"=>$request->category_id,"supermarket_id"=>$request->supermarket_id]);
                 return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات', '');
 
             } else {
@@ -57,13 +57,13 @@ class FavouritesController extends Controller
 
                     $client = Client::find($client_device->client_id);
 
-                    $client->products()->attach($product_id, ['udid' => $udid, "category_id" => request("category_id")]);
+                    $client->products()->attach($product_id, ['udid' => $udid, "category_id" => request("category_id"),"supermarket_id"=>$request->supermarket_id]);
 
                     return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات', '');
 
                 } else {
 
-                    $device = DB::table('client_product')->insert(['udid' => $udid, 'product_id' => $product_id]);
+                    $device = DB::table('client_product')->insert(['udid' => $udid, 'product_id' => $product_id,"category_id"=>$request->category_id,"supermarket_id"=>$request->supermarket_id]);
 
 
                     return $this->returnSuccessMessage('لقد اصبح هذا المنتج في المفضلات', '');
@@ -97,7 +97,7 @@ class FavouritesController extends Controller
         }
         $favproducts = $client->products()->where(function ($query) {
             if ($udid = \request()->header("udid")) {
-                $query->where("udid", $udid)->where("category_id",\request("category_id"));
+                $query->where("udid", $udid)->where("category_id",\request("category_id"))->where("supermarket_id",\request("supermarket_id"));
             };
         })->get();
 
