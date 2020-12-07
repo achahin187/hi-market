@@ -103,12 +103,12 @@ class ClientController extends Controller
                 $address->name = $client->name;
                 $address->name = $client->name;
                 $address->mobile_number = $client->mobile_number;
-                $address->default = $request->default;
-                $address->address_lable = $request->address_lable;
-                $address->lat = $request->lat;
-                $address->lon = $request->lon;
-                $address->govern = $request->govern;
-                $address->additional = $request->additional;
+                $address->default = $address->default;
+                $address->address_lable = $address->address_lable;
+                $address->lat = $address->lat;
+                $address->lon = $address->lon;
+                $address->govern = $address->govern;
+                $address->additional = $address->additional;
 
             }
 
