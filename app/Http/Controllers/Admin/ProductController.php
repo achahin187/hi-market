@@ -690,12 +690,16 @@ class ProductController extends Controller
     public function branchproducts($branch_id,$flag)
     {
         
-        $product = Product::all();
+        // $product = Product::all();
 
-        $products = Product::whereIn('branch_id',$product->branches()->pluck('id'))
-                    ->where('flag',$flag)
-                    ->orderBy('id', 'desc')
-                    ->get();
+        // $products = Product::whereIn('branch_id',$product->branches->pluck('id'))
+        //             ->where('flag',$flag)
+        //             ->orderBy('id', 'desc')
+        //             ->get();
+
+        $products = Product::where('flag',$flag)->WhereHas('branches', function ($q){
+            $q->whereIn('branch_id',$branch_id))->get();
+        });          
 
         return view('Admin.products.index',compact('products','flag','branch_id'));
     }
