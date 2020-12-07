@@ -97,18 +97,18 @@ class ClientController extends Controller
         $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", $udid)->first();
 
         if ($client) {
-            $addresses = $client->addresses()->select('id', 'name', 'phone', 'description', 'default', 'address_lable', 'lat', 'lon', 'govern', 'additional')->get();
+            $addresses = $client->addresses()->get();
 
             foreach ($addresses as $address) {
                 $address->name = $client->name;
                 $address->name = $client->name;
                 $address->mobile_number = $client->mobile_number;
-                $address->default = $address->default;
-                $address->address_lable = $address->address_lable;
-                $address->lat = $address->lat;
-                $address->lon = $address->lon;
-                $address->govern = $address->govern;
-                $address->additional = $address->additional;
+                $address->default = $request->default;
+                $address->address_lable = $request->address_lable;
+                $address->lat = $request->lat;
+                $address->lon = $request->lon;
+                $address->govern = $request->govern;
+                $address->additional = $request->additional;
 
             }
 
@@ -136,9 +136,9 @@ class ClientController extends Controller
 
         }
 
-        $token = auth()->guard('client-api')->login($client);
 
-        $client->update(['remember_token' => $token, 'password' => Hash::make($request->password),]);
+
+        $client->update([ 'password' => Hash::make($request->password),]);
 
         return $this->returnData(['client'], [$client], 'password updated successfully');
 

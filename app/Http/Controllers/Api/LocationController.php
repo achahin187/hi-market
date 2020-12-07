@@ -19,58 +19,31 @@ class LocationController extends Controller
     function index(Request $request)
     {
 
-        $lang = $request->header('lang');
-        $udid = $request->header('udid');
-        $token = $request->header('token');
-
-        if (!$lang || $lang == '') {
-            return $this->returnError(402, 'language is missing');
-        }
-
 
         $long = $request->long;
 
         $lat = $request->lat;
 
-        $data = Coverage_area::where('lat', $lat)->where('long', $long)->where('status','active')->first();
+        $data = Coverage_area::where('lat', $lat)->where('long', $long)->where('status', 'active')->first();
 
 
-        if ($data)
-        {
+        if ($data) {
 
-            if($token) {
 
-                $client = Client::where('remember_token', $token)->first();
+            $client = getUser();
 
-                if ($client) {
-                    if ($lang == 'ar') {
-                        return $this->returnSuccessMessage('العنوان صحيح ', 200);
-                    } else {
-                        return $this->returnSuccessMessage('location is valid', 200);
-                    }
-                } else {
-                    if ($lang == 'ar') {
-                        return $this->returnError(305, 'لم نجد هذا العميل');
-                    }
-                    return $this->returnError(305, 'there is no client found');
-                }
-            }
+            if ($client) {
 
-            if ($lang == 'ar') {
-                return $this->returnSuccessMessage('العنوان صحيح ', 200);
-            } else {
                 return $this->returnSuccessMessage('location is valid', 200);
-            }
-        }
-        else
-        {
-            if ($lang == 'ar') {
-                return $this->returnError(402, 'لا نغطي هذه المساحة');
+
             } else {
-                return $this->returnError(402, 'this area is not included');
+
+                return $this->returnError(404, 'there is no client found');
             }
+        } else {
+            return $this->returnSuccessMessage('location is valid', 200);
         }
-
-
     }
+
+
 }
