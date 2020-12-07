@@ -34,7 +34,8 @@ class ProductResource extends JsonResource
             "favourite"=>$this->favourite ?? 0,
             "percentage"=>$this->percentage ?? 0,
             "imagepath"=>$this->imagepath ?? "default.png",
-            "category"=>$this->category ?? ""
+            "category"=>$this->category ?? "",
+
 
         ];
     }

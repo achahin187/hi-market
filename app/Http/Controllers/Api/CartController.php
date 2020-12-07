@@ -37,11 +37,8 @@ class CartController extends Controller
 
         switch ($getDisount) {
 
-            case $getDisount->value_type === 'discount by value':
-                return $this->returnData(['discount', 'type'], [$getDisount->money, $getDisount->value_type]);
-                break;
-
             case $getDisount->value_type == 'discount by percentage':
+            case $getDisount->value_type === 'discount by value':
                 return $this->returnData(['discount', 'type'], [$getDisount->money, $getDisount->value_type]);
                 break;
 

@@ -187,8 +187,9 @@ class CategoriesController extends Controller
                     ]
                 ]);
 
-
             }
+        }else{
+            return $this->returnError(422,"Pass category id");
         }
     }
 }

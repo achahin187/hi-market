@@ -85,7 +85,7 @@ class ClientController extends Controller
         $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", $udid)->first();
 
 
-        return $this->returnData(['client points'], [$client->total_points]);
+        return $this->returnData(['client points'], [$client->total_points ?? 0]);
 
     }
 
@@ -112,7 +112,7 @@ class ClientController extends Controller
 
             }
 
-            return $this->returnData(['client addresses'], [$addresses]);
+            return $this->returnData(['client addresses'], [AddressResource::collection($addresses)]);
         }
     }
 

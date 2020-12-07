@@ -25,7 +25,7 @@ class Product extends Model
     protected $table = 'products';
 
     // protected static $logAttributes = ['arab_name','eng_name','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','production_date'];
-    
+
     protected static $logAttributes = ['name_ar','name_en','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','production_date'];
 
     protected $fillable = [
@@ -75,7 +75,7 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Branch','product_supermarket');
     }
 
- 
+
 
     protected function getNameAttribute()
     {
@@ -90,6 +90,10 @@ class Product extends Model
     protected function getSpecsAttribute()
     {
         return app()->getLocale() == "en" ? $this->eng_spec : $this->arab_spec;
+    }
+    public function scopeSimilar($query,$categories,$supermarket_id)
+    {
+       $query->whereIn('category_id', $categories)->where('supermarket_id', $supermarket_id)->select('id', 'images');
     }
 
 }
