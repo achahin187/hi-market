@@ -13,7 +13,7 @@ class NotificationController extends Controller
 
     public function __construct()
     {
-        if (\request("Authorization")) {
+        if (\request()->header("Authorization")) {
             $this->middleware("auth:client-api");
         }
     }
