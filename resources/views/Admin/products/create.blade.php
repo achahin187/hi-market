@@ -347,16 +347,6 @@
                                     @enderror
                                 </div>
 
-                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="number" value="@if(isset($product)){{$product->rate }} @endif" name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
-                                    @error('rate')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
                                 @if($flag == 1)
 
                                     <div class="form-group">
@@ -369,6 +359,18 @@
                                         @enderror
                                     </div>
                                 @endif
+
+                                
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
+                                    <input type="number" value="@if(isset($product)){{$product->rate }} @endif" name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
+                                    @error('rate')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.points')}}</label>
@@ -390,7 +392,7 @@
                                     @enderror
                                 </div>
 
-                               
+
 
                                 @if(!isset($client))
 
