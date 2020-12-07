@@ -136,9 +136,9 @@ class ClientController extends Controller
 
         }
 
-        $token = auth()->guard('client-api')->login($client);
 
-        $client->update(['remember_token' => $token, 'password' => Hash::make($request->password),]);
+
+        $client->update([ 'password' => Hash::make($request->password),]);
 
         return $this->returnData(['client'], [$client], 'password updated successfully');
 
