@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function index($flag)
     {
-        dd($flag);
+        dd(request()->flag);
         if($flag == 1)
         {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
