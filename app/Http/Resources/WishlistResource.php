@@ -16,7 +16,7 @@ class WishlistResource extends JsonResource
     {
         return [
             "id"=>$this->id,
-            "product_name"=>$this->name,
+            "name"=>$this->name,
             "price"=>$this->price??0,
             "offer_price"=>$this->price_offer,
             "percentage"=>($this->offer_price / $this->price) * 100,
