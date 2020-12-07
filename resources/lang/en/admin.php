@@ -32,6 +32,7 @@ return [
     'delivery_management' => 'Delivery Management',
     'add_delivery_admin' => 'Add Delivery Admin',
     'delivery_admin' => 'Delivery Admin',
+    'delivery_company' => 'Delivery Company',
 
     'add_admin' => 'Add Admin',
     'rating' => 'Rating',
