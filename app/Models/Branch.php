@@ -14,7 +14,7 @@ class Branch extends Model
     protected static $logName = 'supermarket branches';
 
     protected static $logAttributes = ['name_ar', 'name_en', 'status', 'image', 'supermarket_id'];
-
+    
     protected $guarded = [];
 
     public function products()
