@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function index($flag)
     {
-        //
+        dd(request()->flag);
         if($flag == 1)
         {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
@@ -74,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
-        dd($request->all());
+
 
         $user = auth()->user();
 
@@ -688,9 +688,19 @@ class ProductController extends Controller
     }
 
     public function branchproducts($branch_id,$flag)
-    {
-        //
-        $products = Product::where('branch_id',$branch_id)->where('flag',$flag)->orderBy('id', 'desc')->get();
+    {  // dd($flag , $branch_id);
+        
+        // $product = Product::all();
+
+        // $products = Product::whereIn('branch_id',$product->branches->pluck('id'))
+        //             ->where('flag',$flag)
+        //             ->orderBy('id', 'desc')
+        //             ->get();
+
+        $products = Product::where('flag',$flag)->WhereHas('branches', function ($q) use ($branch_id){
+            $q->where('id',$branch_id)->get();
+        });          
+
         return view('Admin.products.index',compact('products','flag','branch_id'));
     }
 

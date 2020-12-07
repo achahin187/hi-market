@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -102,7 +100,8 @@
                                     'production_date',
                                     'exp_date',
                                     'status',
-                                    'barcode'];?>
+                                    'barcode'
+                                    ];?>
 
                                 <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
 
@@ -152,8 +151,6 @@
                                                 trans('admin.category'),trans('admin.supermarket'),trans('admin.branch')];?>
 
                                                 @foreach($main_cols as $main_col)
-
-
 
                                                         <th>{{__($main_col)}}</th>
 

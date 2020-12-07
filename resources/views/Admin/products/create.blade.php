@@ -193,7 +193,7 @@
 
 
 
-                               <div class="form-group">
+                            <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
 
                                 <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
@@ -208,8 +208,8 @@
 
                                     @elseif(isset($branch_id))
                                         @foreach(\App\Models\Branch::all() as $branch)
-
-                                            <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+{{-- 
+                                            <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option> --}}
 
                                         @endforeach
 
@@ -271,7 +271,6 @@
                                 <div class="form-group">
                                     <label>{{__('admin.description_ar')}}</label>
                                     <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
-
                                         @if(isset($product))
                                             {{$product->arab_description }}
                                         @endif
@@ -286,10 +285,10 @@
                                 <div class="form-group">
                                     <label>{{__('admin.description_en')}}</label>
                                     <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
-
-                                        @if(isset($product))
+                                        {{ isset($product) ? $product->eng_description : '' }}
+                                        {{-- @if(isset($product))
                                             {{$product->eng_description }}
-                                        @endif
+                                        @endif --}}
                                     </textarea>
                                     @error('eng_description')
                                     <span class="invalid-feedback" role="alert">
@@ -497,11 +496,11 @@
  
  
 
-                                @if(isset($branch_id))
+                               {{--  @if(isset($branch_id))
 
                                     <input type="hidden" name="branch_id" value="{{$branch_id}}">
                                 @endif
-
+ --}}
 
                                 <div class="form-group">
                                     <label>{{__('admin.measure')}} </label>
@@ -676,7 +675,7 @@
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    
+                    $('#branches').html('');
                     data.forEach(function(x){
                         console.log(x.id);
                     $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");

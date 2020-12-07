@@ -22,6 +22,7 @@ class Product extends Model
     ];
 
     protected static $logName = 'products';
+    protected $table = 'products';
 
     // protected static $logAttributes = ['arab_name','eng_name','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','production_date'];
     
