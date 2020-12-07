@@ -271,7 +271,6 @@
                                 <div class="form-group">
                                     <label>{{__('admin.description_ar')}}</label>
                                     <textarea class=" @error('arab_description') is-invalid @enderror form-control" name="arab_description" rows="3" placeholder="Enter ...">
-
                                         @if(isset($product))
                                             {{$product->arab_description }}
                                         @endif
@@ -286,10 +285,10 @@
                                 <div class="form-group">
                                     <label>{{__('admin.description_en')}}</label>
                                     <textarea class=" @error('eng_description') is-invalid @enderror form-control" name="eng_description" rows="3" placeholder="Enter ...">
-
-                                        @if(isset($product))
+                                        {{ isset($product) ? $product->eng_description : '' }}
+                                        {{-- @if(isset($product))
                                             {{$product->eng_description }}
-                                        @endif
+                                        @endif --}}
                                     </textarea>
                                     @error('eng_description')
                                     <span class="invalid-feedback" role="alert">

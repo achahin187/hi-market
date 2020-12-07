@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function index($flag)
     {
-        //
+        dd($flag);
         if($flag == 1)
         {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
@@ -74,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
-       
+
 
         $user = auth()->user();
 
