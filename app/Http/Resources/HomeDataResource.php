@@ -32,7 +32,7 @@ class HomeDataResource extends JsonResource
     public function getState()
     {
        
-        if (Carbon::now()->parse(format('g:i A'))->between($this->start_time, $this->end_time) ) {
+        if (Carbon::now()->parse(Carbon::now()->format('g:i A') )->between($this->start_time, $this->end_time) ) {
 
             return 'open';
 
