@@ -40,7 +40,7 @@ class Branch extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Models\Product', 'product_supermarket','branch_id','product_id');
+        return $this->belongsToMany('App\Models\Product', 'product_branch');
     }
 
 
