@@ -193,7 +193,7 @@
 
 
 
-                               <div class="form-group">
+                            <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
 
                                 <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
@@ -208,8 +208,8 @@
 
                                     @elseif(isset($branch_id))
                                         @foreach(\App\Models\Branch::all() as $branch)
-
-                                            <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option>
+{{-- 
+                                            <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option> --}}
 
                                         @endforeach
 
