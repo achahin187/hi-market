@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Client_Devices;
@@ -91,7 +92,7 @@ class AuthController extends Controller
             $client = Auth::guard('client-web')->user();
             $token = $client->createToken("hi-market")->accessToken;
             $msg = "you have been logged in successfully";
-            return $this->returnData(['client', 'token'], [$client, $token], $msg);
+            return $this->returnData(['client', 'token'], [new ClientResource($client), $token], $msg);
         }
 
         return $this->returnError(422, 'These credentials are not in our records');
@@ -150,7 +151,7 @@ class AuthController extends Controller
 
         $msg = "you have been registered sucessfully";
 
-        return $this->returnData(['client',"token"], [$client,$client->createToken("hi-market")->accessToken], $msg);
+        return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], $msg);
 
     }
 
@@ -196,12 +197,12 @@ class AuthController extends Controller
 
         if ($flag == 0) {
 
-            $data = $this->returnData(['client'], [$client], 'you have been logged in successfully');
+            $data = $this->returnData(['client'], [new ClientResource($client)], 'you have been logged in successfully');
 
         } else {
 
 
-            $data = $this->returnData(['client'], [$client], 'you have been registered successfully');
+            $data = $this->returnData(['client'], [new ClientResource($client)], 'you have been registered successfully');
 
         }
 
@@ -233,7 +234,7 @@ class AuthController extends Controller
 
     public function getAuthUser(Request $request)
     {
-        return response()->json(auth()->user());
+        return response()->json(new ClientResource(auth()->user()));
     }
 
     public function logout()

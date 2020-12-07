@@ -26,7 +26,7 @@ class NotificationController extends Controller
         {
         $orders = $user->orders;
         $offers = Offer::all();
-        return $this->returnData(["offers", "orders"], [OfferResource::collection($offers),OrderResource::collection( $orders)]);
+             return $this->returnData(["offers", "orders"], [OfferResource::collection($offers),OrderResource::collection( $orders)]);
 
         }else{
             return $this->returnError(422,"User No Exists");
