@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -11,17 +12,17 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Client extends Authenticatable
 {
 
-    use LogsActivity,HasApiTokens;
+    use LogsActivity, HasApiTokens;
 
 
     protected static $logName = 'client';
 
-    protected static $logAttributes = ['status','password','name','email','mobile_number','address','image'];
+    protected static $logAttributes = ['status', 'password', 'name', 'email', 'mobile_number', 'address', 'image'];
 
-    protected $guarded =[];
+    protected $guarded = [];
 
     protected $hidden = [
-        'password','remember_token'
+        'password', 'remember_token'
     ];
 
     /**
@@ -33,15 +34,18 @@ class Client extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function products() {
+    public function products()
+    {
         return $this->belongsToMany('App\Models\Product')->withPivot('udid');
     }
 
-    public function productsreview() {
-        return $this->belongsToMany('App\Models\Product','client_reviews')->withPivot('review');
+    public function productsreview()
+    {
+        return $this->belongsToMany('App\Models\Product', 'client_reviews')->withPivot('review');
     }
 
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany('App\Models\Order');
     }
 
@@ -51,6 +55,10 @@ class Client extends Authenticatable
         return $this->hasMany('App\Models\Address');
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class,"user_id");
+}
 
     public function getJWTIdentifier()
     {

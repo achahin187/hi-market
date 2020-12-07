@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\WishlistResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Order;
@@ -29,7 +33,7 @@ class OrderController extends Controller
     public function clientorders(Request $request)
     {
 
-        $client =getUser();
+        $client = getUser();
 
         if ($client) {
 
@@ -52,7 +56,7 @@ class OrderController extends Controller
         $order = Order::find($order_id);
 
         if ($order) {
-            return $this->returnData('order', $order->products);
+            return $this->returnData(['products'], [ProductResource::collection($order->products)]);
         } else {
             return $this->returnError('', 'there is no order found');
         }
@@ -116,13 +120,34 @@ class OrderController extends Controller
 
     public function addcart(Request $request)
     {
+        $validation = \Validator::make($request->all(), [
+            "category_ids" => "required|array",
+            "supermarket_id" => "required",
+            "products" => "required"
 
-
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $udid = $request->header('udid');
+        $user = getUser();
+        if (!$user) {
+            return $this->returnError(422, "user not exists");
+        }
 
+        foreach (explode(",", request("products")) as $product) {
+
+            Cart::create(
+                [
+                    "user_id" => $user->id,
+                    "product_id" => explode(":", $product)[0],
+                    "qty" => explode(":", $product)[1]
+                ]
+            );
+        }
         $category_ids = $request->category_ids;
 
-        $categories = explode(',', $category_ids);
+        $categories = $category_ids;
 
         $supermarket_id = $request->supermarket_id;
 
@@ -158,7 +183,7 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
 
-        $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->select('id', 'name_' . app()->getLocale() . ' as name', 'arab_description as description', 'price', 'offer_price', 'images', 'rate', 'flag', 'ratings', 'category_id', 'supermarket_id')->get();
+        $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
 
 
         foreach ($wishlist as $product) {
@@ -179,11 +204,11 @@ class OrderController extends Controller
 
 
         if ($client) {
-            return $this->returnData(['similar products'], [$similar_products]);
+            return $this->returnData(['similar products',"cart"], [ProductResource::collection($similar_products),CartResource::collection($user->carts)]);
         }
 
 
-        return $this->returnData(['similar products', 'wishlist', 'setting'], [$similar_products, $wishlist, $setting->delivery]);
+        return $this->returnData(['similar products', 'wishlist', 'setting'], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery]);
 
     }
 
