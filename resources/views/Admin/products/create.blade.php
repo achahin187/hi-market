@@ -178,7 +178,7 @@
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
-                                            <option> please select supermarket</option>
+                                          
                                             @foreach($superMarkets  as $supermarket)
                                                 <option value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
                                             @endforeach    

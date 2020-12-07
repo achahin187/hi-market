@@ -51,11 +51,13 @@ class ProductController extends Controller
         //
 
         if($supermarket_id != null && $supermarket_id != -1 ) {
-            return view('Admin.products.create', compact('flag','supermarket_id'));
+              $superMarkets = Supermarket::all();
+            return view('Admin.products.create', compact('flag','supermarket_id','superMarkets'));
         }
         elseif ($branch_id != null && $supermarket_id == -1)
-        {
-            return view('Admin.products.create', compact('flag','branch_id'));
+        {   
+             $superMarkets = Supermarket::all();
+            return view('Admin.products.create', compact('flag','branch_id','superMarkets'));
         }
         else
         {
@@ -72,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request,$flag,$supermarket_id = null,$branch_id = null)
     {
-
+        dd($request->all());
 
         $user = auth()->user();
 
