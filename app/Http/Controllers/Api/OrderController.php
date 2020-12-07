@@ -177,28 +177,6 @@ class OrderController extends Controller
         $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
 
 
-        foreach ($wishlist as $product) {
-
-
-            $offer_price = $product->offer_price;
-            $price = $product->price;
-
-            $product->percentage = ($offer_price / $price) * 100;
-
-            $product->imagepath = asset('images/' . $product->images);
-
-
-            $product->categoryname = $product->category->name;
-            $product->supermarketname = $product->supermarket->name;
-
-        }
-
-
-
-
-
-
-
         return $this->returnData(['similar products', 'wishlist', 'setting'], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist),CartResource::collection($user->carts), $setting->delivery]);
 
     }
