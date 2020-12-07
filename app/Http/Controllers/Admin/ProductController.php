@@ -698,7 +698,7 @@ class ProductController extends Controller
         //             ->get();
 
         $products = Product::where('flag',$flag)->WhereHas('branches', function ($q) use ($branch_id){
-            $q->whereIn('branch_id',$branch_id)->get();
+            $q->where('branch_id',$branch_id)->get();
         });          
 
         return view('Admin.products.index',compact('products','flag','branch_id'));
