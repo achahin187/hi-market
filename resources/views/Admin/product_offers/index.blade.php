@@ -21,7 +21,7 @@
                             @elseif(isset($branch))
                                 <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">{{__('admin.add_branch_product')}}</a></li>
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">{{__('admin.add_product')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">{{__('admin.add_product_offer')}}</a></li>
                             @endif
                              @if(auth()->user()->can('product-export')) 
                             <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>

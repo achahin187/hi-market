@@ -201,6 +201,7 @@ return [
     'products'=>'products',
     'product_offers'=>'product offers',
     'add_product'=>'add product',
+    'add_product_offer'=>'add product offer',
     'edit_product'=>'edit product',
     'clone_product' => 'clone product',
     'Add_product_offer' => ' Add product offer',
