@@ -219,9 +219,9 @@
                                       
                         @foreach(\App\Models\Category::all() as $category)
 
-                                <option value="{{ in_array( $category->id, $branch->categories->id) }}">
-                                    {{ $category->name_en }}
-                                </option>
+<option value="{{ in_array( $category->id, $branch->categories->pluck('id')->toArray()) ? 'selected' : '' }}">
+    {{ $category->name_en }}
+</option>
 
                             @endforeach   
                                                 
