@@ -678,7 +678,7 @@
                 success: function(data) {
                     
                     data.forEach(function(x){
-
+                        console.log(x.id);
                     $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
                     })
                 }
