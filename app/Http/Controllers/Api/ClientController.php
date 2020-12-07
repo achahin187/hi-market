@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
@@ -36,7 +37,7 @@ class ClientController extends Controller
         $client = getUser();
 
 
-        return $this->returnData(['client'], [$client]);
+        return $this->returnData(['client'], [new ClientResource($client)]);
 
     }
 
@@ -44,7 +45,7 @@ class ClientController extends Controller
     {
 
 
-        $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", \request()->header("udid"))->first();
+        $client = getUser();
 
 
         $rules = [
@@ -70,7 +71,7 @@ class ClientController extends Controller
         ]);
 
 
-        return $this->returnSuccessMessage('your data has been updated successfully', 422);
+        return $this->returnSuccessMessage('your data has been updated successfully', 200);
 
 
     }
@@ -194,7 +195,7 @@ class ClientController extends Controller
         $validator = \Validator::make($request->all(), [
             'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'label' => ['required', 'string'],
-            'default' => ['boolean'],
+            'default' => ["required",'boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
             'additional' => ['nullable'],
