@@ -29,10 +29,6 @@ class OrderController extends Controller
     public function clientorders(Request $request)
     {
 
-
-
-
-
         $client =getUser();
 
         if ($client) {
@@ -95,7 +91,7 @@ class OrderController extends Controller
             ]);
 
 
-            foreach ($order_details->products as $product) {
+            foreach (Product::find($order_details["products"]) as $product) {
 
                 $order->products()->attach($product->id, ['quantity' => $product->quantity, 'price' => $product->price]);
 
