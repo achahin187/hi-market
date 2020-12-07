@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\OfferResource;
 use App\Http\Resources\ProductResource;
@@ -80,18 +81,24 @@ class CategoriesController extends Controller
     public function supermarketoffers(Request $request)
     {
 
-
+        $validation = \Validator::make($request->all(),[
+            "supermarket_id"=>"required",
+            "category_id"=>"required"
+        ]);
         $udid = $request->header('udid');
 
         $supermarket_id = $request->supermarket_id;
         try {
 
-            $supermarket = supermarket::findOrFail($supermarket_id);
+            $supermarket = Branch::findOrFail($supermarket_id);
         } catch (\Exception $e) {
             return $this->returnError(404, "Super Market Not Found");
         }
 
-        $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
+        $favproducts = DB::table('client_product')
+            ->where('udid', $udid)
+            ->where("supermarket_id",$request->supermarket_id)
+           ->select('product_id')->get();
 
 
         $products = $supermarket->products()->where('status', 'active')->where('flag', 1)->get();
@@ -126,14 +133,20 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products'], [ProductResource::collection($products)]);
+        return $this->returnData(['products'], [CategoryProductResource::collection($products)]);
 
 
     }
 
     public function categoryproducts(Request $request)
     {
-
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+            "category_id" => "required"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $udid = $request->header('udid');
 
 
@@ -166,15 +179,8 @@ class CategoriesController extends Controller
                     }
 
 
-                    $offer_price = $product->offer_price;
-                    $price = $product->price;
-
-                    $product->percentage = ($offer_price / $price) * 100;
-
                     $product->imagepath = asset('images/' . $product->images);
 
-
-                    $product->categoryname = $product->category->{"name_" . app()->getLocale()};
 
                 }
 
@@ -183,13 +189,13 @@ class CategoriesController extends Controller
                     "status" => true,
                     "msg" => "",
                     "data" => [
-                        "products" => ProductResource::collection($products)
+                        "products" => CategoryProductResource::collection($products)
                     ]
                 ]);
 
             }
-        }else{
-            return $this->returnError(422,"Pass category id");
         }
+        return $this->returnError(422, "Pass category id");
+
     }
 }

@@ -12,27 +12,37 @@ class Category extends Model
 
     protected static $logName = 'category';
 
-    protected static $logAttributes = ['image','name_ar','name_en',];
+    protected static $logAttributes = ['image', 'name_ar', 'name_en',];
 
     protected $fillable = [
-        'image','name_ar','name_en','created_by','updated_by'
+        'image', 'name_ar', 'name_en', 'created_by', 'updated_by'
     ];
 
-    public function products() {
+    public function products()
+    {
         return $this->hasMany('App\Models\Product');
     }
 
-    public function vendors() {
+    public function vendors()
+    {
         return $this->hasMany('App\Models\Vendor');
     }
 
-    public function subcategories() {
+    public function subcategories()
+    {
         return $this->hasMany('App\Models\Subcategory');
     }
 
-    public function supermarkets() {
+    public function supermarkets()
+    {
         return $this->belongsToMany('App\Models\Supermarket');
     }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function getNameAttribute()
     {
         return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
