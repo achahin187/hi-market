@@ -26,7 +26,7 @@ class BranchController extends Controller
     public function index()
     {
         //
-        $branches = Branch::orderBy('id', 'desc')->has("area")->has("city")->has("country")->get();
+        $branches = Branch::orderBy('id', 'desc')->has("city")->get();
         return view('Admin.branches.index',compact('branches'));
     }
 
