@@ -691,8 +691,8 @@ class ProductController extends Controller
     {
         
         $product = Product::all();
-        
-        $products = Product::whereIn('branch_id',$product->branches->pluck('id'))
+
+        $products = Product::whereIn('branch_id',$product->branches()->pluck('id'))
                     ->where('flag',$flag)
                     ->orderBy('id', 'desc')
                     ->get();
