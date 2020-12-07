@@ -49,7 +49,7 @@ class AuthController extends Controller
         if ($client->activation_code == $code) {
 
 
-            return $this->returnData(['client',"token"], [$client,$client->createToken("hi-market")->accessToken], 'the code is valid');
+            return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], 'the code is valid');
 
         } else {
 
