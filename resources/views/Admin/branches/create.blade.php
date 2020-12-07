@@ -120,7 +120,7 @@
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Supermarket::all() as $supermarket)
 
-                                                    <option <?php if($branch->supermarket->id == $branch->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
+                                                    <option <?php if($branch->supermarket->id == $supermarket->id) echo 'selected'; ?> value="{{ $supermarket->id }}">{{ $supermarket->eng_name }}</option>
 
                                                 @endforeach
 
