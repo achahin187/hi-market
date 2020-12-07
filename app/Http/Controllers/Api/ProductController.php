@@ -54,9 +54,9 @@ class ProductController extends Controller
             if ($client) {
 
 
-                return ['data'=>[
+                return ['data' => [
                     'supermarkets' => HomeDataResource::collection($supermarkets),
-                    'offers'       => OfferResource::collection($offers),
+                    'offers' => OfferResource::collection($offers),
                 ]];
 
 
@@ -65,15 +65,15 @@ class ProductController extends Controller
                 return $this->returnError(305, 'there is no client found');
             }
         } else {
-            Udid::where("body",$request->header("udid"))->updateOrCreate([
+            Udid::where("body", $request->header("udid"))->updateOrCreate([
                 "body" => $request->header("udid"),
 
             ]);
 
-                return ['data'=>[
-                    'supermarkets' => HomeDataResource::collection($supermarkets),
-                    'offers'       => OfferResource::collection($offers),
-                ]];
+            return ['data' => [
+                'supermarkets' => HomeDataResource::collection($supermarkets),
+                'offers' => OfferResource::collection($offers),
+            ]];
         }
 
 
@@ -105,7 +105,7 @@ class ProductController extends Controller
 
         $names = ['production_date', 'exp_date', 'measure', 'size'];
 
-        $values = [$product->production_date, $product->exp_date, 'kilo', $product->size->value];
+        $values = [$product->production_date, $product->exp_date, 'kilo', !is_null($product->size) ? $product->size->value : 0];
 
         $specifications = [];
 
@@ -141,8 +141,8 @@ class ProductController extends Controller
         $product_details->ratings = $product->ratings;
         $product_details->reviews = $product->clientreviews()->select('client_id', 'name', 'review')->get();
         $product_details->specifications = $specifications;
-        $product_details->category = $product->category->name_en;
-        $product_details->supermarket = $product->supermarket->eng_name;
+        $product_details->category = !is_null($product->category) ? $product->category->name_en : "";
+        $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
         $product_details->deliver_to = 'cairo';
         $product_details->delivery_time = '30 minutes';
 
@@ -161,10 +161,8 @@ class ProductController extends Controller
             $products = Product::where('name_en', 'LIKE', '%' . $value . "%")->orWhere('name_ar', 'LIKE', '%' . $value . "%")->get();
 
             if (count($products) < 1) {
-                if ($this->getCurrentLang() == 'ar') {
-                    return $this->returnError('', 'ليس هناك منتج بهذا الاسم');
-                }
-                return $this->returnError('', 'there is no product found');
+
+                return $this->returnError(404, 'there is no product found');
             } else {
                 foreach ($products as $product) {
 
@@ -172,31 +170,31 @@ class ProductController extends Controller
 
                         $productarray =
                             [
-                                'name' => $product->arab_name,
+                                'name' => $product->name_ar,
                                 'description' => $product->arab_description,
                                 'rate' => $product->rate,
                                 'price' => $product->price,
                                 'images' => $product->images,
-                                'category' => $product->category->arab_name,
-                                'vendor' => $product->vendor->arab_name
+                                'category' => !is_null($product->category) ? $product->category->arab_name : "",
+                                'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
                             ];
                     } else {
 
                         $productarray =
                             [
-                                'name' => $product->eng_name,
+                                'name' => $product->name_en,
                                 'description' => $product->eng_description,
                                 'rate' => $product->rate,
                                 'price' => $product->price,
                                 'images' => $product->images,
-                                'category' => $product->category->eng_name,
-                                'vendor' => $product->vendor->eng_name
+                                'category' => !is_null($product->category) ? $product->category->eng_name : "",
+                                'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
                             ];
                     }
                     $all_products [] = $productarray;
                 }
 
-                return $this->returnData('products', $all_products);
+                return $this->returnData(['products'], [$all_products]);
             }
         } else {
             $product = Product::where('barcode', $value)->first();
@@ -211,8 +209,8 @@ class ProductController extends Controller
                             'rate' => $product->rate,
                             'price' => $product->price,
                             'images' => $product->images,
-                            'category' => $product->category->arab_name,
-                            'vendor' => $product->vendor->arab_name
+                            'category' => !is_null($product->category) ? $product->category->arab_name : "",
+                            'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
                         ];
                 } else {
 
@@ -223,8 +221,8 @@ class ProductController extends Controller
                             'rate' => $product->rate,
                             'price' => $product->price,
                             'images' => $product->images,
-                            'category' => $product->category->eng_name,
-                            'vendor' => $product->vendor->eng_name
+                            'category' => !is_null($product->category) ? $product->category->eng_name : "",
+                            'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
                         ];
                 }
                 return $this->returnData('product', $productarray);
