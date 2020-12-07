@@ -14,7 +14,7 @@ class Branch extends Model
     protected static $logName = 'supermarket branches';
 
     protected static $logAttributes = ['name_ar', 'name_en', 'status', 'image', 'supermarket_id'];
-    
+
     protected $guarded = [];
 
     public function products()
@@ -40,7 +40,7 @@ class Branch extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Models\Product', 'product_supermarket');
+        return $this->belongsToMany('App\Models\Product', 'product_supermarket','branch_id','product_id');
     }
 
 
