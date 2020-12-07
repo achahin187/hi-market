@@ -58,7 +58,7 @@ class BranchController extends Controller
      */
     public function store(Request $request,$supermarket_id = null)
     {   
-        dd($request->all());
+     
       
 
         $request->validate([
@@ -68,7 +68,7 @@ class BranchController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'commission' => ['required','min:0','numeric'],
-            'categories' => ['required'],
+            'categories' => ['required','array'],
             'rating' => ['required','min:1','max:5'],
             'priority' => ['required','min:1','integer'],
             'area_id' => 'integer|min:0',
