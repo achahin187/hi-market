@@ -385,7 +385,7 @@
                                                         @endif
 
                                                        @if(auth()->user()->can('product-clone')) 
-                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>\
+                                                            <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>
                                                         @endif    
 
                                                     </div>
