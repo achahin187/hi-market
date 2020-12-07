@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             "price" => $this->price ?? 0,
             "offer_price" => $this->offer_price ?? 0,
             "rate" => $this->rate ?? 0,
-            "rating" => (string) $this->rating ?? "0",
+            "ratings" => (string) $this->ratings ?? "0",
             "priority" => $this->priority ?? 0,
             "images" => asset("images/" . $this->images),
             "points" => $this->points ?? 0,
