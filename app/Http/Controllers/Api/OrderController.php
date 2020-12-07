@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Order;
@@ -28,7 +29,7 @@ class OrderController extends Controller
     public function clientorders(Request $request)
     {
 
-        $udid = $request->header('udid');
+
 
 
 
@@ -38,7 +39,7 @@ class OrderController extends Controller
 
             if (count($client->orders) > 0) {
 
-                return $this->returnData(['orders'], [$client->orders]);
+                return $this->returnData(['orders'], [OrderResource::collection($client->orders)]);
             } else {
 
 
@@ -69,7 +70,7 @@ class OrderController extends Controller
 //        $device = Client_Device::where('udid', $udid)->first();
 
 
-        $order_details = json_decode($request->getContent());
+        $order_details = $request->all();
 
 
         $client = getUser();
@@ -81,16 +82,16 @@ class OrderController extends Controller
 
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
-                'restId' => $order_details->rest_id,
-                'address' => $order_details->address,
-                'lat' => $order_details->lat,
-                'long' => $order_details->long,
-                'delivery_date' => $order_details->date,
-                'delivery_fees' => $order_details->delivery_fees,
-                'coupon' => $order_details->coupon,
-                'discount' => $order_details->discount,
+                'restId' => $order_details["rest_id"],
+                'address' => $order_details["address"],
+                'lat' => $order_details["lat"],
+                'long' => $order_details["long"],
+                'delivery_date' => $order_details["delivery_date"],
+                'delivery_fees' => $order_details["delivery_fees"],
+                'coupon' => $order_details["coupon"],
+                'discount' => $order_details["discount"],
                 'status' => 0,
-                'final_total' => $order_details->final_total
+                'final_total' => $order_details["final_total"]
             ]);
 
 
