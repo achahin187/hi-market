@@ -21,7 +21,7 @@ class AddressResource extends JsonResource
             "phone"=>$this->phone,
             "govern"=>$this->govern,
             "description"=>$this->description,
-            "default"=>$this->default,
+            "default"=>!! $this->default,
             "address_label"=>$this->address_label,
             "lat"=>$this->lat,
             "lon"=>$this->lon,
