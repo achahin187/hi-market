@@ -55,7 +55,8 @@ class ProductController extends Controller
             return view('Admin.products.create', compact('flag','supermarket_id','superMarkets'));
         }
         elseif ($branch_id != null && $supermarket_id == -1)
-        {
+        {   
+             $superMarkets = Supermarket::all();
             return view('Admin.products.create', compact('flag','branch_id','superMarkets'));
         }
         else
