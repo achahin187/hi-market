@@ -32,7 +32,7 @@ class ProductDetailesResource extends JsonResource
                 "flag" => $this->flag ?? 0,
                 "supermarket_id" =>request("supermarket_id"),
                 "favourite" => $this->favourite ?? 0,
-                "percentage" => $this->percentage ?? 0,
+                "percentage" =>  $this->ofer_price ? (($this->offer_price/$this->price-100)*100) : 0,
                 "imagepaths" => $this->imagepaths ?? "default.png",
                 "category" => $this->category ?? "",
                 
