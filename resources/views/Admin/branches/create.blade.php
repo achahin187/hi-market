@@ -168,10 +168,10 @@
                                         </select>
                                     </div>
 
-
+{{-- 
                                     <div class="form-group">
                                         <label>{{__('admin.category')}}</label>
-                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;"  multiple>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" multiple>
 
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Category::all() as $category)
@@ -182,18 +182,56 @@
                                             @else
                                                 @foreach(\App\Models\Category::all() as $category)
 
-                                                    <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name_en }}
+                                                    </option>
 
                                                 @endforeach
 
                                             @endif
 
                                         </select>
+                                    </div>  --}}
+
+
+                                   {{--  <div class="form-group">
+                                        <label>{{__('admin.category')}}</label>
+                                        <select class=" @error('categories') is-invalid @enderror select2"  name="categories[]" data-placeholder="Select a State" style="width: 100%;" multiple>
+
+                                                @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name_en }}
+                                                    </option>
+
+                                                @endforeach
+
+                                        </select>
                                     </div> 
+ --}}
+                                     <div class="form-group">
+
+                                        <label>{{ __('admin.category') }}</label>
+                                        
+                                        <select 
+                                        class=" @error('categories') is-invalid @enderror select2" name="categories[]"  style="width: 100%;" 
+                                        multiple>
+                                          
+                                            @foreach(\App\Models\Category::all() as $category)
+
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name_en }}
+                                                    </option>
+
+                                                @endforeach   
+                                                
+                                        </select>
+                                    </div>
+
 
                                      <div class="form-group">
                                         <label>{{__('admin.area')}} </label>
-                                        <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" >
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Area::all() as $area)
 

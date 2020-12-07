@@ -17,9 +17,9 @@ class Checklang
     {
 
 
-        if(request("lang"))
+        if(request()->header("lang"))
         {
-            app()->setLocale(request("lang"));
+            app()->setLocale(request()->header("lang"));
         }else{
             app()->setLocale('ar');
         }

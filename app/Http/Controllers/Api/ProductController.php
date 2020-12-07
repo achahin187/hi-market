@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        if (\request("Authorization")) {
+        if (\request()->header("Authorization")) {
             $this->middleware("auth:client-api");
         }
     }
@@ -40,8 +40,8 @@ class ProductController extends Controller
 
         foreach ($supermarkets as $supermarket) {
             $supermarket->imagepath = asset('images/' . $supermarket->image);
-            $supermarket->logopath = asset('images/' . $supermarket->logo_image);
-            $supermarket->town = $supermarket->city->name;
+            $supermarket->logopath = asset('images/' . $supermarket->logo);
+            //$supermarket->town = $supermarket->city->name;
         }
 
         foreach ($offers as $offer) {

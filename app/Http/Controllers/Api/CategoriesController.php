@@ -178,7 +178,7 @@ class CategoriesController extends Controller
 
 
                 return response()->json([
-                    "status"=>true,
+                  "status"=>true,
                    "msg"=>"",
                    "data"=>[
                        "products"=>ProductResource::collection($products)
