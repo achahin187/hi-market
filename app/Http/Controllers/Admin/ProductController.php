@@ -688,7 +688,7 @@ class ProductController extends Controller
     }
 
     public function branchproducts($branch_id,$flag)
-    {
+    {   dd($flag , $branch_id);
         
         // $product = Product::all();
 
