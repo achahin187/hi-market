@@ -47,7 +47,7 @@ class CategoriesController extends Controller
         $categories = $branch->categories()->get();
 
 
-        $branchname = Supermarket::where('id', $branch_id)->select('arab_name as name')->first();
+        $branchname = Branch::where('id', $branch_id)->select('arab_name as name')->first();
 
         $offers = offer::where('status', 'active')->where('branch_id', $branch_id)->limit(4)->get();
 
@@ -81,10 +81,13 @@ class CategoriesController extends Controller
     public function supermarketoffers(Request $request)
     {
 
-        $validation = \Validator::make($request->all(),[
-            "supermarket_id"=>"required",
-            "category_id"=>"required"
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+
         ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $udid = $request->header('udid');
 
         $supermarket_id = $request->supermarket_id;
@@ -97,8 +100,8 @@ class CategoriesController extends Controller
 
         $favproducts = DB::table('client_product')
             ->where('udid', $udid)
-            ->where("supermarket_id",$request->supermarket_id)
-           ->select('product_id')->get();
+            ->where("supermarket_id", $request->supermarket_id)
+            ->select('product_id')->get();
 
 
         $products = $supermarket->products()->where('status', 'active')->where('flag', 1)->get();
