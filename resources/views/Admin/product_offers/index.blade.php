@@ -21,7 +21,7 @@
                             @elseif(isset($branch))
                                 <li class="breadcrumb-item"><a href="{{route('branchproducts.create',['flag' => $flag , 'branch_id' => $branch->id])}}">{{__('admin.add_branch_product')}}</a></li>
                             @else
-                                <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">{{__('admin.add_product')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('products.create',1)}}">{{__('admin.add_product_offer')}}</a></li>
                             @endif
                              @if(auth()->user()->can('product-export')) 
                             <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
@@ -203,7 +203,7 @@
                                            {{--  <th>{{__('admin.category')}}</th> --}}
                                             <th>{{__('admin.vendor')}}</th>
                                             <th>{{__('admin.supermarket')}}</th>
-                                            <th>{{__('admin.branch')}}</th>
+                                            {{-- <th>{{__('admin.branch')}}</th> --}}
                                          {{--    <th>{{__('admin.subcategory')}}</th> --}}
                                              @if(auth()->user()->hasAnyPermission(['product-edit','product-delete','product-clone']))
                                             <th>{{__('admin.controls')}}</th>
@@ -392,11 +392,11 @@
                                                     <td>{{$product->supermarket->eng_name}}</td>
                                                 @endif
 
-                                                @if(App::getLocale() == 'ar')
-                                                    <td>{{$product->branch->name_ar}}</td>
+                                               {{--  @if(App::getLocale() == 'ar')
+                                                    <td>{{$product->branches->name_ar}}</td>
                                                 @else
-                                                    <td>{{$product->branch->name_en}}</td>
-                                                @endif
+                                                    <td>{{$product->branches->name_en}}</td>
+                                                @endif --}}
 
                                                {{--  @if(App::getLocale() == 'ar')
                                                     <td>{{$product->subcategory->arab_name}}</td>

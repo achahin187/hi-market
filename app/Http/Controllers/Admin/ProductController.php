@@ -97,6 +97,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id'     => 'required|array',
+            'rate'     => 'required|numeric',
            // 'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
@@ -114,6 +115,7 @@ class ProductController extends Controller
         $arab_name = $request->input('name_ar');
 
         $eng_name = $request->input('name_en');
+        $rate = $request->input('rate');
 
         $arab_description = $request->input('arab_description');
 
@@ -231,7 +233,8 @@ class ProductController extends Controller
                 'quantity' => $quantity,
                 'measure_id' => $measuring_unit,
                 'size_id' => $size,
-                'created_by' => $user->id
+                'created_by' => $user->id,
+                'rate' => $rate
             ]);
         }
 
@@ -365,9 +368,9 @@ class ProductController extends Controller
 
     public function clone($id,$flag,$supermarket_id = null,$branch_id = null)
     {
-        //
-        $product = Product::find($id);
-         $superMarkets = Supermarket::all();
+        
+        $product      = Product::find($id);
+        $superMarkets = Supermarket::all();
 
         if($product)
         {

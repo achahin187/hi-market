@@ -305,13 +305,15 @@ class BranchController extends Controller
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => $request->input('checkedimage')]);
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id, 'start_time' => $request->start_time,
+                'end_time' => $request->end_time,'image' => $request->input('checkedimage')]);
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->image != null) {
                         unlink('images/' . $branch->image);
                     }
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'image' => null]);
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id, 'start_time' => $request->start_time,
+                'end_time' => $request->end_time,'image' => null]);
                        $branch->categories()->sync($request->categories);
                 }
             }
@@ -330,19 +332,25 @@ class BranchController extends Controller
                     }
                 }
 
-                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => $file_to_store]);
+                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
+                 'start_time' => $request->start_time,
+                'end_time' => $request->end_time,'logo' => $file_to_store]);
                    $branch->categories()->sync($request->categories);
               }else {
 
                 if ($request->has('checkedlogo')) {
 
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => $request->input('checkedlogo')]);
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
+                     'start_time' => $request->start_time,
+                     'end_time' => $request->end_time,'logo' => $request->input('checkedlogo')]);
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->logo != null) {
                         unlink('images/' . $branch->logo);
                     }
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,'logo' => null]);
+                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
+                     'start_time' => $request->start_time,
+                    'end_time' => $request->end_time,'logo' => null]);
                        $branch->categories()->sync($request->categories);
                 }
             }
