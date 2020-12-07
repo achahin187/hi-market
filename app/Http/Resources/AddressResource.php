@@ -22,12 +22,11 @@ class AddressResource extends JsonResource
             "govern"=>$this->govern,
             "description"=>$this->description,
             "default"=>$this->default,
-            "address_label"=>$this->address_lableb,
+            "address_label"=>$this->address_lable,
             "lat"=>$this->lat,
             "lon"=>$this->lon,
             "additional"=>$this->additional ?? "",
             "client_id"=>$this->client_id,
-
 
         ];
     }

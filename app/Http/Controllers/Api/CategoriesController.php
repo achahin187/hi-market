@@ -47,7 +47,7 @@ class CategoriesController extends Controller
         $categories = $branch->categories()->get();
 
 
-        $branchname = Branch::where('id', $branch_id)->select('arab_name as name')->first();
+        $branchname = Branch::where('id', $branch_id)->first();
 
         $offers = offer::where('status', 'active')->where('branch_id', $branch_id)->limit(4)->get();
 

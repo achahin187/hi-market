@@ -75,7 +75,13 @@ class ProductController extends Controller
     public function productdetails(Request $request)
     {
 
-
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+            "id" => "required",
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         $product_id = $request->id;
         try {
 
