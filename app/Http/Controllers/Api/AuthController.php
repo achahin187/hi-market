@@ -51,13 +51,9 @@ class AuthController extends Controller
 
             return $this->returnData(['client',"token"], [$client,$client->createToken("hi-market")->accessToken], 'the code is valid');
 
-
         } else {
 
-
             return $this->returnError(422, 'this code is invalid please check the code sent to your mobile');
-
-
         }
 
 
@@ -66,9 +62,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
-
-
 
 
         $validator = Validator::make($request->all(), [
@@ -81,13 +74,10 @@ class AuthController extends Controller
 
             return $this->returnValidationError(422, $validator);
 
-
         }
 
 
         //login
-
-
         if (auth("client-web")->attempt(["mobile_number" => $request->mobile_number, "password" => $request->password])) {
             $client = Auth::guard('client-web')->user();
             $token = $client->createToken("hi-market")->accessToken;
@@ -102,7 +92,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
 
         $udid = $request->header('udid');
 
