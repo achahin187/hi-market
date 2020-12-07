@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function index($flag)
     {
-        dd(request()->flag);
+     
         if($flag == 1)
         {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
@@ -343,7 +343,7 @@ class ProductController extends Controller
     {
         //
         $product = Product::find($id);
-
+         $superMarkets = Supermarket::all();
 
         if($product)
         {
@@ -351,18 +351,18 @@ class ProductController extends Controller
             {
                 $clone = true;
                 $productimages = explode(',',$product->images);
-                return view('Admin.products.create', compact('product','productimages','flag','clone','supermarket_id'));
+                return view('Admin.products.create', compact('superMarkets','product','productimages','flag','clone','supermarket_id'));
             }
             elseif ($branch_id != null && $supermarket_id == -1)
             {
                 $clone = true;
                 $productimages = explode(',',$product->images);
-                return view('Admin.products.create', compact('product','productimages','flag','clone','branch_id'));
+                return view('Admin.products.create', compact('superMarkets','product','productimages','flag','clone','branch_id'));
             }
             else {
                 $clone = true;
                 $productimages = explode(',', $product->images);
-                return view('Admin.products.create', compact('product', 'productimages', 'flag', 'clone'));
+                return view('Admin.products.create', compact('superMarkets','product', 'productimages', 'flag', 'clone'));
             }
         }
         else
