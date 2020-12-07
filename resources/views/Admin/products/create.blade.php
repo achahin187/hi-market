@@ -195,6 +195,7 @@
 
                                <div class="form-group">
                                 <label>{{__('admin.branch')}} </label>
+
                                 <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
 
                                     @if(isset($product))
@@ -678,7 +679,7 @@
                     
                     data.forEach(function(x){
 
-                    $('#branches').append(new Option(x.name_ar,x.id,true,true));
+                    $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
                     })
                 }
             });
