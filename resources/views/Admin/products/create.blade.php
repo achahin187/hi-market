@@ -676,7 +676,7 @@
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    
+                    $('#branches').html('');
                     data.forEach(function(x){
                         console.log(x.id);
                     $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
