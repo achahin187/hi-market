@@ -29,7 +29,7 @@ class CategoryProductResource extends JsonResource
             "category_name" => $this->category->name ?? "",
             "category_id" => $this->category_id ?? "",
             "flag" => $this->flag ?? 0,
-            "supermarket_id" => req,
+            "supermarket_id" => request("supermarket_id"),
             "favourite" => $this->favourite ?? 0,
             "percentage" => $this->percentage ?? 0,
             "imagepath" => $this->imagepath ?? "default.png",
