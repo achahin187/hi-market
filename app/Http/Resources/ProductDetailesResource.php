@@ -32,7 +32,7 @@ class ProductDetailesResource extends JsonResource
                 "category_name" => $this->category->name ?? "",
                 "category_id" => $this->category_id ?? "",
                 "flag" => $this->flag ?? 0,
-                "supermarket_id" => (int)request("supermarket_id"),
+                "supermarket_id" => (int) request()->get("supermarket_id"),
                 "BranchName" => $this->getBranchName()->name,
                 "favourite" => $this->favourite ?? 0,
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
