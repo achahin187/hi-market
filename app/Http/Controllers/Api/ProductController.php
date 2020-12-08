@@ -93,6 +93,7 @@ class ProductController extends Controller
                 "status" => "Product Not Found"
             ], 404);
         }
+        
         $product->update(["views" => $product->views == null ? 1 : $product->views + 1]);
 
 
