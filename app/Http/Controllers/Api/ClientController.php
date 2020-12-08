@@ -277,7 +277,7 @@ class ClientController extends Controller
     public function delete_address(Request $request)
     {
 
-        $token = $request->header('token');
+
 
         $client = \auth("client-api")->user();
 
