@@ -50,9 +50,9 @@ class ClientController extends Controller
 
 
         $rules = [
-            'name' => 'required|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
-            'email' => ['required', 'email', Rule::unique((new Client)->getTable()),],
-            'mobile_number' => ['required', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
+            'name' => 'nullable|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
+            'email' => ['nullable', 'email', Rule::unique((new Client)->getTable()),],
+            'mobile_number' => ['nullable', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
         ];
 
         $validator = \Validator::make($request->all(), $rules);
@@ -65,11 +65,9 @@ class ClientController extends Controller
 
         }
 
-        $client->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile_number' => $request->mobile_number
-        ]);
+        $client->update(
+            request()->all()
+        );
 
 
         return $this->returnSuccessMessage('your data has been updated successfully', 200);
