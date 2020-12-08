@@ -25,7 +25,7 @@ class AddressResource extends JsonResource
             "address_label"=>$this->address_lable,
             "lat"=>$this->lat,
             "lon"=>$this->lon,
-            "additional"=>$this->additional ?? "",
+            "additional"=>(string)$this->additional ?? "",
             "client_id"=>$this->client_id,
 
 

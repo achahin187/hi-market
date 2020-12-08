@@ -839,8 +839,14 @@
 0a0a 0a0a 0a --}}
 @php
 
-	$branches = \App\Models\Branch::find(10)->WhereHas('locations')->with('locations')->first();
-	dd($branches);
+	$locations = \App\Models\BranchLocation::Where('city','tanta')->get();
+		// foreach ($locations as $key => $location) {
+
+  //  			dd(   $location->lat ,   $location->lat  );
+		// }
+		
+	
+	
 @endphp
 
 @push('scripts')
@@ -886,13 +892,12 @@ L.Circle.include({
 
 //var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
   var circle = L.polygon([
-   			[ 42.34624, -71.06024 ],
-            [ 42.33558, -71.06616 ],
-            [ 42.32632, -71.05835 ],
-            [ 42.32987, -71.05428 ],
-            [ 42.34732, -71.05432 ],
-            [ 42.34618, -71.05973 ],
-            [ 42.34624, -71.06024 ]
+  	@foreach ($locations as  $location) 
+		
+   			 [{{ $location->lat }},  {{ $location->lon }}] ,
+	
+	@endforeach
+          
 ]).addTo(map);
 
 map.fitBounds(circle.getBounds());
