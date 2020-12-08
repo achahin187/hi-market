@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
+use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
@@ -143,8 +144,6 @@ class OrderController extends Controller
         $supermarket_id = $request->supermarket_id;
 
 
-
-
         $imagepaths = [];
 
         $fav_ids = [];
@@ -152,7 +151,7 @@ class OrderController extends Controller
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
 
-        $similar_products = Product::similar($categories,$supermarket_id)->get();
+        $similar_products = Product::similar($categories, $supermarket_id)->get();
 
 
         foreach ($similar_products as $product) {
@@ -176,8 +175,8 @@ class OrderController extends Controller
 
         $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
 
-
-        return $this->returnData(['similar products', 'wishlist', 'setting'], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist),CartResource::collection($user->carts), $setting->delivery]);
+        $products = Product::find($request->products);
+        return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery, CategoryProductResource::collection($products)]);
 
     }
 
