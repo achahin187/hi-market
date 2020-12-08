@@ -15,14 +15,14 @@ class CreateCategorySupermarketTable extends Migration
     {
         Schema::create('category_supermarket', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('branch_id')->unsigned();
-            $table->bigInteger('category_id')->unsigned();
+            $table->unsignedInteger('branch_id');
+            $table->unsignedInteger('category_id');
             $table->unsignedInteger('flag')->nullable();
             $table->timestamps();
 
 
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('branch_id')->references('id')->on('branches')->onDelete('CASCADE')->onUpdate('CASCADE');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

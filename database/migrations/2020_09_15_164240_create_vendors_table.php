@@ -18,16 +18,13 @@ class CreateVendorsTable extends Migration
             $table->string('arab_name');
             $table->string('eng_name');
             $table->string('image')->nullable();
-            // $table->bigInteger('category_id')->unsigned();
-            //$table->bigInteger('subcategory_id')->unsigned();
             $table->unsignedInteger('sponsor');
-            $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+            $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('no action')->onDelete('no action');
-            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onUpdate('no action')->onDelete('no action');
-        });
+            
+                });
     }
 
     /**
