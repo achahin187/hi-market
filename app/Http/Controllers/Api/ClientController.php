@@ -8,6 +8,7 @@ use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
+use App\Models\Point;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,13 +81,16 @@ class ClientController extends Controller
         $udid = $request->header('udid');
 
 
-        $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", $udid)->first();
+        $client = getUser();
 
-
-        return $this->returnData(['client points'], [$client->total_points ?? 0]);
+        $points = Point::simplePaginate();
+        return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
 
     }
-
+public function usePoints()
+{
+    Point::where();
+}
     public function clientaddresses(Request $request)
     {
         $udid = $request->header('udid');
@@ -276,7 +280,6 @@ class ClientController extends Controller
 
     public function delete_address(Request $request)
     {
-
 
 
         $client = \auth("client-api")->user();

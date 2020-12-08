@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('supermarketoffers', 'CategoriesController@supermarketoffers')->name('listcategoryproducts');
 
     Route::post('clientpoints', 'ClientController@clientpoints')->name('listcategoryproducts');
+    Route::get("points/use", "ClientController@usePoints");
     Route::post('clientaddresses', 'ClientController@clientaddresses')->name('listcategoryproducts');
     Route::post("verify/address", "ClientController@validateAddress");
 

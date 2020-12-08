@@ -139,7 +139,7 @@ class OrderController extends Controller
     public function addcart(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            "category_ids" => "required|array",
+            "category_ids" => "required",
             "supermarket_id" => "required",
             "products" => "required"
 
@@ -154,7 +154,7 @@ class OrderController extends Controller
         }
 
 
-        $category_ids = $request->category_ids;
+        $category_ids = explode(",",$request->category_ids);
 
         $categories = $category_ids;
 
@@ -192,7 +192,7 @@ class OrderController extends Controller
 
         $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
 
-        $products = Product::find($request->products);
+        $products = collect([]);
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery, CategoryProductResource::collection($products)]);
 
     }
