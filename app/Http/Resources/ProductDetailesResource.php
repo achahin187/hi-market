@@ -15,7 +15,7 @@ class ProductDetailesResource extends JsonResource
      */
     public function toArray($request)
     {
-        $branch = $this->branches->where("id",$request->supermarket_id)->first()->open_time;
+        $branch = $this->branches->where("id",$request->supermarket_id)->first();
         return
             [
                 "id" => $this->id,
@@ -42,7 +42,8 @@ class ProductDetailesResource extends JsonResource
                 "delivery_time" => $this->delivery_time,
                 "specs"=>$this->specs,
                 "branch_open_time"=>$branch->open_time ?? "",
-                "branch_close_time"=>$branch->close_time ?? ""
+                "branch_close_time"=>$branch->close_time ?? "",
+                "cityname"=>$branch->city->name,
             ];
     }
 
