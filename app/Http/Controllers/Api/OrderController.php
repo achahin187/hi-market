@@ -204,7 +204,7 @@ class OrderController extends Controller
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
             ProductResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
-            , $setting->delivery
+            , $setting->delivery ??""
             , CartResource::collection($cart)]);
 
     }
