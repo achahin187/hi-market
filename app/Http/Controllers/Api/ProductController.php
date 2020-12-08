@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Client;
@@ -236,7 +237,7 @@ class ProductController extends Controller
 
     public function filter()
     {
-        $products = Product::where("branch_id", \request("branch_id"))->filter()->paginate();
-        return ["success" => true, "products" => ProductResource::collection($products), "more" => $products->hasMorePages()];
+        $products = Product::where("branch_id", \request("supermarket_id"))->where("category_id",\request("category_id"))->filter()->paginate();
+        return $this->returnData(["products"],[CategoryProductResource::collection($products)]);
     }
 }

@@ -9,7 +9,7 @@ class MostPopular extends Filter
     protected function canSkipRequest()
     {
 
-        return request($this->filterRequest()) && request("most_popular") == false;
+        return request($this->filterRequest());
     }
 
     protected function query($builder)
