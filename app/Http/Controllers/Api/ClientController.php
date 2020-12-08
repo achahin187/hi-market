@@ -27,7 +27,7 @@ class ClientController extends Controller
     {
 
 
-            $this->middleware("auth:client-api");
+        $this->middleware("auth:client-api");
 
     }
 
@@ -114,6 +114,23 @@ class ClientController extends Controller
         }
     }
 
+    public function validateAddress()
+    {
+        $validation = \Validator::make(\request()->all(), [
+            "address_id" => "required|exists:users,id",
+            "code" => "required"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+        $address = Address::find(\request("address_id"));
+        if ($address->verify == request("code")) {
+            $address->update(["verified" => 1]);
+            $this->returnSuccessMessage("address verified");
+        }
+        return $this->returnError(422, "code is invalid");
+    }
+
     public function resetpassword(Request $request)
     {
 
@@ -135,8 +152,7 @@ class ClientController extends Controller
         }
 
 
-
-        $client->update([ 'password' => Hash::make($request->password),]);
+        $client->update(['password' => Hash::make($request->password),]);
 
         return $this->returnData(['client'], [$client], 'password updated successfully');
 
@@ -194,7 +210,7 @@ class ClientController extends Controller
         $validator = \Validator::make($request->all(), [
             'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'label' => ['required', 'string'],
-            'default' => ["required",'boolean'],
+            'default' => ["required", 'boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
             'additional' => ['nullable'],
@@ -221,7 +237,7 @@ class ClientController extends Controller
         $lon = $request->lon;
         $additional = $request->additional;
         $govern = $request->govern;
-
+        $rand = "1234";
         Address::create([
             'name' => $name,
             'phone' => $phone,
@@ -233,6 +249,8 @@ class ClientController extends Controller
             'lon' => $lon,
             'additional' => $additional,
             'govern' => $govern,
+            "verified" => 0,
+            "verify" => $rand
         ]);
 
 
@@ -309,7 +327,7 @@ class ClientController extends Controller
 
         if ($validator->fails()) {
 
-           return $this->returnError(422, 'These data is not valid');
+            return $this->returnError(422, 'These data is not valid');
 
         }
 
@@ -318,9 +336,9 @@ class ClientController extends Controller
             $address = $client->addresses()->where('id', $request->address_id)->first();
             if ($address) {
 
-                $request_data = $request->except('address_id',"address","label");
-                $request_data["address_lable"]= $request->label;
-                $request_data["name"]= $request->address;
+                $request_data = $request->except('address_id', "address", "label");
+                $request_data["address_lable"] = $request->label;
+                $request_data["name"] = $request->address;
                 $address->update($request_data);
 
             } else {
