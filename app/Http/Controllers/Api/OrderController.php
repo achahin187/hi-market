@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Traits\GeneralTrait;
@@ -57,7 +58,7 @@ class OrderController extends Controller
         $order = Order::find($order_id);
 
         if ($order) {
-            return $this->returnData(['products'], [ProductResource::collection($order->products)]);
+            return $this->returnData(['products'], [ProductDetailesResource::collection($order->products)]);
         } else {
             return $this->returnError('', 'there is no order found');
         }
@@ -224,7 +225,11 @@ class OrderController extends Controller
                 "text" => now()->addHours($i)->format("g A")
             ];
         }
-        return $this->returnData(["days", "time"], [$days, $time]);
+        $state = [
+            1=>"close",
+            2=>"open"
+        ];
+        return $this->returnData(["days", "time","state"], [$days, $time,$state[rand(1,2)]]);
     }
 
 }

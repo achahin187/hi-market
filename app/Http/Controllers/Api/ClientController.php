@@ -237,7 +237,7 @@ class ClientController extends Controller
         $lon = $request->lon;
         $additional = $request->additional;
         $govern = $request->govern;
-        $rand = "1234";
+        $rand = "12345";
         Address::create([
             'name' => $name,
             'phone' => $phone,
