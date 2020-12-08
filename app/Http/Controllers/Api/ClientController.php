@@ -130,7 +130,7 @@ public function usePoints()
         $address = Address::find(\request("address_id"));
         if ($address->verify == request("code")) {
             $address->update(["verified" => 1]);
-            $this->returnSuccessMessage("address verified");
+           return  $this->returnSuccessMessage("address verified");
         }
         return $this->returnError(422, "code is invalid");
     }
