@@ -14,7 +14,7 @@ class Vendor extends Filter
     protected function query($builder)
     {
         return $builder->whereHas("vendor", function ($query) {
-            $query->orderBy(app()->getLocale() == "en" ? "eng_name" : "arab_name");
+            $query->orderBy(app()->getLocale() == "en" ? "eng_name" : "arab_name",request("order","asc"));
         });
     }
 }

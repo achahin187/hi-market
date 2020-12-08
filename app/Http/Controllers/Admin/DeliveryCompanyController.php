@@ -6,14 +6,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\DeliveryCompany;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
 class DeliveryCompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -24,7 +26,7 @@ class DeliveryCompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -43,20 +45,21 @@ class DeliveryCompanyController extends Controller
         $request->validate([
             "name_ar" => "required",
             "name_en" => "required",
-            "email" => ["required","email", 'unique:delivery_companies'],
+            "email" => ["required", "email", 'unique:delivery_companies'],
             "phone_number.0" => "required|digits:11",
             "commission" => "required|integer",
-            "branch_id" => "required|exists:branches,id"
+            "branch_id" => "required"
         ]);
 
         $request_data = $request->all();
         $request_data['phone_number'] = array_filter($request->phone_number);
 
-        DeliveryCompany::create($request_data);
+        $company = DeliveryCompany::create($request_data);
+        $company->branches()->sync($request_data["branch_id"]);
         return redirect()->route("delivery-companies.index");
     }
 
-    /**  
+    /**
      * Display the specified resource.
      *
      * @param int $id
@@ -77,7 +80,7 @@ class DeliveryCompanyController extends Controller
     {
         $branches = Branch::all();
         $delivery = DeliveryCompany::find($id);
-        return view("Admin.delivery_companies.edit", compact("branches","delivery"))->withStatus("success");
+        return view("Admin.delivery_companies.edit", compact("branches", "delivery"))->withStatus("success");
     }
 
     /**
@@ -88,13 +91,13 @@ class DeliveryCompanyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $company = DeliveryCompany::find($id);
 
         $request->validate([
             "name_ar" => "required",
             "name_en" => "required",
-            'email'         => 'required|email|unique:delivery_companies,email,'.$company->id,
+            'email' => 'required|email|unique:delivery_companies,email,' . $company->id,
             "phone_number.0" => "required|digits:11",
             "commission" => "required|integer",
             "branch_id" => "required|exists:branches,id"
@@ -102,8 +105,9 @@ class DeliveryCompanyController extends Controller
 
         $request_data = $request->all();
         $request_data['phone'] = array_filter($request->phone_number);
-        
+
         $company->update($request_data);
+        $company->branches()->sync($request_data["branch_id"]);
         return redirect()->route("delivery-companies.index")->withStatus("updated");
     }
 
@@ -115,12 +119,11 @@ class DeliveryCompanyController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $delivery = DeliveryCompany::find($id);
             $delivery->delete();
             return redirect()->route("delivery-companies.index")->withStatus("deleted");
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->route("delivery-companies.index")->withStatus("Something Went Wrong");
         }
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Traits\GeneralTrait;
@@ -57,7 +58,7 @@ class OrderController extends Controller
         $order = Order::find($order_id);
 
         if ($order) {
-            return $this->returnData(['products'], [ProductResource::collection($order->products)]);
+            return $this->returnData(['products'], [ProductDetailesResource::collection($order->products)]);
         } else {
             return $this->returnError('', 'there is no order found');
         }
@@ -76,8 +77,24 @@ class OrderController extends Controller
 
         $client = getUser();
 
+        $date = now();
+        if ($request->day_index == 2) {
+            $date = $date->addDays(1);
+        } else if ($request->day_index == 3) {
+            $date = $date->addDays(2);
+        } elseif ($request->day_index == 4) {
+            $date = $date->addDays(3);
+        }
+
 
         if ($client) {
+
+            if (request("asap") == 0) {
+                $order_details["delivery_date"] = $date->format("Y-m-d g:i A");
+            } else {
+
+                $order_details["delivery_date"] = $date->addHours(\request("hours_index"))->format("Y-m-d g:i A");
+            }
 
             $order = Order::create([
 
@@ -178,6 +195,41 @@ class OrderController extends Controller
         $products = Product::find($request->products);
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery, CategoryProductResource::collection($products)]);
 
+    }
+
+    public function selectDate()
+    {
+        $days = [
+            [
+                "id" => 1,
+                "text" => "Today",
+            ],
+            [
+                "id" => 2,
+                "text" => "Tomorrow"
+            ],
+            [
+                "id" => 3,
+                "text" => now()->addDays(2)->format("l")
+            ],
+            [
+                "id" => 4,
+                "text" => now()->addDays(3)->format("l")
+            ]
+
+        ];
+        $time = [];
+        for ($i = 0; $i < 10; $i++) {
+            $time[$i] = [
+                "id" => $i,
+                "text" => now()->addHours($i)->format("g A")
+            ];
+        }
+        $state = [
+            1=>"close",
+            2=>"open"
+        ];
+        return $this->returnData(["days", "time","state"], [$days, $time,$state[rand(1,2)]]);
     }
 
 }

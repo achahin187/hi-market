@@ -59,7 +59,7 @@
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.commission') }}</th>
-                                        <th>{{ __('admin.branch_name') }}</th>
+
 
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <th>{{ __('admin.controls') }}</th>
@@ -76,7 +76,7 @@
                                              __("admin.auto_approve") : __("admin.status_approve") }} </td>
 
                                             <td>{{$deliveryCompany->commission}}</td>
-                                            <td>{{$deliveryCompany->branch->name}}</td>
+
 
                                             @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                                 <td>

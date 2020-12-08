@@ -89,26 +89,28 @@
                                             </span>
                                         @enderror
                                     </div>
-                                  
-                                    {{-- 
+
+                                    {{--
                                     <div class="form-group">
                                         <label for="phone_number">Phone Number</label>
                                         <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
                                     </div> --}}
 
-                                      @for ($i = 0; $i < 2; $i++)
-                                            <div class="form-group">
-                                                <label>@lang('admin.phone')</label>
-                                                <input type="text" id='phone_number' name="phone_number[]" class="form-control" value="{{old("phone_number")}}">
-                                            </div>
-                                       @endfor
+                                    @for ($i = 0; $i < 2; $i++)
+                                        <div class="form-group">
+                                            <label>@lang('admin.phone')</label>
+                                            <input type="text" id='phone_number' name="phone_number[]"
+                                                   class="form-control" value="{{old("phone_number")}}">
+                                        </div>
+                                    @endfor
                                     <div class="form-group">
                                         <label for="commission">Commission</label>
-                                        <input id="commission" name="commission" value="{{old("commission")}}" type="number" class="form-control">
+                                        <input id="commission" name="commission" value="{{old("commission")}}"
+                                               type="number" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="branch">Branch</label>
-                                        <select name="branch_id" id="branch" class="form-control">
+                                        <select name="branch_id[]" id="branch" multiple class="form-control select2">
                                             @foreach($branches as $branch)
                                                 <option @if(old("branch_id") == $branch->id) selected
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
@@ -116,10 +118,12 @@
                                         </select>
                                     </div>
 
-                                <div class="form-group">
-                                    <label>{{__('admin.city')}} </label>
-                                    <select id="city" class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                      
+                                    <div class="form-group">
+                                        <label>{{__('admin.city')}} </label>
+                                        <select id="city" class=" @error('city_id') is-invalid @enderror select2"
+                                                name="city_id" data-placeholder="Select a State" style="width: 100%;"
+                                                required>
+
 
                                             @foreach(\App\Models\City::all() as $cities)
 
@@ -127,36 +131,36 @@
 
                                             @endforeach
 
-                                 
-                                    </select>
-                                </div>
+
+                                        </select>
+                                    </div>
 
 
-                              
-
-                                     <div class="form-group">
+                                    <div class="form-group">
                                         <label>{{ __('admin.status') }}</label>
-                                        
-                                        <select class=" @error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
-                                         @php   
-                                          $statuses = [
-                                           '0'=>trans('active'),
-                                            '1'=>trans('inactive')
-                                        ];
-                                          @endphp
+
+                                        <select class=" @error('status') is-invalid @enderror select2" name="status"
+                                                data-placeholder="Select a State" style="width: 100%;" required>
+                                            @php
+                                                $statuses = [
+                                                 '0'=>trans('active'),
+                                                  '1'=>trans('inactive')
+                                              ];
+                                            @endphp
                                             @foreach($statuses  as $index=>$status)
-                                                <option  value={{ $index }}>
-                                               {{ $status }}</option>
-                                            @endforeach    
-                                                
+                                                <option value={{ $index }}>
+                                                    {{ $status }}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                    
+
                                         <label for="status">Auto Approve</label>
 
-                                        <input style="margin-left: 10px " id="status" value="{{old("status") ?? 1}}"  type="checkbox" name="status">
+                                        <input style="margin-left: 10px " id="status" value="{{old("status") ?? 1}}"
+                                               type="checkbox" name="status">
 
                                         @error('status')
                                         <span class="invalid-feedback" role="alert">
@@ -164,7 +168,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
 
 
                                 </div>
@@ -183,6 +186,5 @@
 
 
 @endsection
-
 
 

@@ -90,9 +90,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                                  
 
-                              
+
+
                                     @for ($i = 0; $i < 2; $i++)
                                     <div class="form-group">
                                         <label for="phone_number">{{ __('admin.phone') }}</label>
@@ -106,9 +106,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="branch">{{ __('admin.branch') }}</label>
-                                        <select name="branch_id" id="branch" class="form-control">
+                                        <select name="branch_id[]" multiple id="branch" class="form-control select2">
                                             @foreach($branches as $branch)
-                                                <option @if($delivery->branch->id == $branch->id) selected
+                                                <option @if($delivery->branches->where("id",$branch->id)->count() != 0) selected
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
                                             @endforeach
                                         </select>
@@ -118,7 +118,7 @@
                                         <div class="form-group">
                                             <label>{{__('admin.city')}} </label>
                                             <select id="city" class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                              
+
 
                                                     @foreach(\App\Models\City::all() as $cities)
 
@@ -127,7 +127,7 @@
 
                                                     @endforeach
 
-                                         
+
                                             </select>
                                         </div>
 
@@ -136,9 +136,9 @@
 
                                      <div class="form-group">
                                         <label>{{ __('admin.status') }}</label>
-                                        
+
                                         <select class=" @error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
-                                         @php   
+                                         @php
                                           $statuses = [
                                            '0'=>trans('active'),
                                             '1'=>trans('inactive')
@@ -147,12 +147,12 @@
                                             @foreach($statuses  as $index=>$status)
                                                 <option  value={{ $index }}>
                                                {{ $status }}</option>
-                                            @endforeach    
-                                                
+                                            @endforeach
+
                                         </select>
                                     </div>
 
-                                   
+
                                       <div class="form-group">
                                         <label for="status">Auto Approve</label>
                                         <input id="status"  style="margin-left: 10px "value="{{old("status") ?? 1}}" @if($delivery->status) checked @endif type="checkbox" name="status">
