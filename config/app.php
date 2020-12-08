@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        \App\Providers\PassportServiceProvider::class,
+    
 
         /*
          * Package Service Providers...
