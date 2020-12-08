@@ -121,7 +121,7 @@ public function usePoints()
     public function validateAddress()
     {
         $validation = \Validator::make(\request()->all(), [
-            "address_id" => "required|exists:users,id",
+            "address_id" => "required|exists:addresses,id",
             "code" => "required"
         ]);
         if ($validation->fails()) {
