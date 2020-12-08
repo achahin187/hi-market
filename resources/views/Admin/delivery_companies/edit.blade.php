@@ -108,7 +108,7 @@
                                         <label for="branch">{{ __('admin.branch') }}</label>
                                         <select name="branch_id[]" multiple id="branch" class="form-control select2">
                                             @foreach($branches as $branch)
-                                                <option @if($delivery->branch->id == $branch->id) selected
+                                                <option @if($delivery->branches->where("id",$branch->id)->count() != 0) selected
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
                                             @endforeach
                                         </select>
@@ -182,10 +182,5 @@
 
 
 @endsection
-@push("scripts")
-    <script>
-        $("#branch").select2();
-    </script>
- @endpush
 
 

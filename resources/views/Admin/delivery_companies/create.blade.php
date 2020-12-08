@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="branch">Branch</label>
-                                        <select name="branch_id[]" id="branch" multiple class="form-control">
+                                        <select name="branch_id[]" id="branch" multiple class="form-control select2">
                                             @foreach($branches as $branch)
                                                 <option @if(old("branch_id") == $branch->id) selected
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
