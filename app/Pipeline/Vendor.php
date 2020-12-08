@@ -8,7 +8,7 @@ class Vendor extends Filter
 {
     protected function canSkipRequest()
     {
-        return request($this->filterRequest()) && request($this->filterRequest()) == false;
+        return !request($this->filterRequest()) ;
     }
 
     protected function query($builder)

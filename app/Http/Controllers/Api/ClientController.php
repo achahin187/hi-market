@@ -78,19 +78,31 @@ class ClientController extends Controller
 
     public function clientpoints(Request $request)
     {
-        $udid = $request->header('udid');
 
 
         $client = getUser();
 
-        $points = Point::simplePaginate();
+        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->orderBy("points", "asc")->simplePaginate();
         return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
 
     }
-public function usePoints()
-{
-    Point::where();
-}
+
+    public function usePoints()
+    {
+
+        $validation = \Validator::make(\request()->all(), [
+            "point_id" => "required|exists:points,id"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+        $point = Point::find(\request("point_id"));
+        $user = \auth()->user();
+        $user->points = $point->points - $user->points;
+        $user->save();
+        return $this->returnData(["user_points"], [$user->points]);
+    }
+
     public function clientaddresses(Request $request)
     {
         $udid = $request->header('udid');
@@ -130,7 +142,7 @@ public function usePoints()
         $address = Address::find(\request("address_id"));
         if ($address->verify == request("code")) {
             $address->update(["verified" => 1]);
-           return  $this->returnSuccessMessage("address verified");
+            return $this->returnSuccessMessage("address verified");
         }
         return $this->returnError(422, "code is invalid");
     }
