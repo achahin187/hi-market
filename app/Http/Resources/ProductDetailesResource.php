@@ -51,6 +51,15 @@ class ProductDetailesResource extends JsonResource
     {
         return Branch::Where('id', request("supermarket_id"))->first();
     }
+    private function getBranchCity($branch)
+    {
+        if($branch && $branch->city)
+        {
+            return $branch->city->name;
+        }else{
+            return "";
+        }
+    }
 
 
 }
