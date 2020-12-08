@@ -35,7 +35,7 @@ class ProductDetailesResource extends JsonResource
                 "percentage" => $this->percentage ?? 0,
                 "imagepaths" => $this->imagepaths ?? "default.png",
                 "category" => $this->category ?? "",
-                
+
             ];
     }
 }
