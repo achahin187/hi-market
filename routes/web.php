@@ -189,8 +189,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
+        //Map 
+        Route::post('store-polygon','Admin\LocationController@addLocation')->name('add-polygon');
+        //locations
+        Route::get('locations', 'Admin\LocationController@index')->name('locations.index');
 
-
+        //areas
+        Route::get('locations/{location_id}/area/{area_id}', 'Admin\LocationController@index')->name('locations.area.index');
 
             //supermarket-admins
             Route::resource('supermarket-admins','Admin\SuperMarketAdminController');

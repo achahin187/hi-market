@@ -17,6 +17,8 @@ class CreateCitiesTable extends Migration
             $table->id();
             $table->string('name_ar');
             $table->string('name_en');
+            $table->string('area_en');
+            $table->string('area_en');
             $table->string('status');
             $table->unsignedBigInteger('country');
             $table->timestamps();
