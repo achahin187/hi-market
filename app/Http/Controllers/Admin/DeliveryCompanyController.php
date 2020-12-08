@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\DeliveryCompany;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rule;
 class DeliveryCompanyController extends Controller
 {
     /**
@@ -43,6 +43,7 @@ class DeliveryCompanyController extends Controller
         $request->validate([
             "name_ar" => "required",
             "name_en" => "required",
+            "email" => ["required","email", 'unique:delivery_companies'],
             "phone_number.0" => "required|digits:11",
             "commission" => "required|integer",
             "branch_id" => "required|exists:branches,id"
@@ -87,8 +88,17 @@ class DeliveryCompanyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
         $company = DeliveryCompany::find($id);
+
+        $request->validate([
+            "name_ar" => "required",
+            "name_en" => "required",
+            'email'         => 'required|email|unique:delivery_companies,email,'.$company->id,
+            "phone_number.0" => "required|digits:11",
+            "commission" => "required|integer",
+            "branch_id" => "required|exists:branches,id"
+        ]);
 
         $request_data = $request->all();
         $request_data['phone'] = array_filter($request->phone_number);

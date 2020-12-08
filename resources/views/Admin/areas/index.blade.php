@@ -837,7 +837,11 @@
 7465 6e74 202d 2d3e 0a20 2020 203c 2f64
 6976 3e0a 0a40 656e 6473 6563 7469 6f6e
 0a0a 0a0a 0a --}}
+@php
 
+	$branches = \App\Models\Branch::find(10)->WhereHas('locations')->with('locations')->first();
+	dd($branches);
+@endphp
 
 @push('scripts')
   {{-- maps --}}

@@ -72,7 +72,8 @@
                                         <tr>
                                             <td>{{$deliveryCompany->name}}</td>
                                             <td>{{$deliveryCompany->email}}</td>
-                                            <td>{{$deliveryCompany->status ? __("delivery_company.status.auto_approve") : __("delivery_company.status.approve") }} </td>
+                                            <td>{{$deliveryCompany->status ?
+                                             __("admin.auto_approve") : __("admin.status_approve") }} </td>
 
                                             <td>{{$deliveryCompany->commission}}</td>
                                             <td>{{$deliveryCompany->branch->name}}</td>
