@@ -93,7 +93,7 @@ class ProductController extends Controller
                 "status" => "Product Not Found"
             ], 404);
         }
-        
+
         $product->update(["views" => $product->views == null ? 1 : $product->views + 1]);
 
 
@@ -146,6 +146,7 @@ class ProductController extends Controller
         $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
         $product_details->deliver_to = 'cairo';
         $product_details->delivery_time = '30 minutes';
+
 
 
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);

@@ -48,7 +48,7 @@ class DeliveryCompanyController extends Controller
             "email" => ["required", "email", 'unique:delivery_companies'],
             "phone_number.0" => "required|digits:11",
             "commission" => "required|integer",
-            "branch_id" => "required|exists:branches,id"
+            "branch_id" => "required"
         ]);
 
         $request_data = $request->all();

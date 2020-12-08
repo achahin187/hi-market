@@ -10,10 +10,7 @@ class DeliveryCompany extends Model
     protected $casts = [
         'phone_number' => 'array'
     ];
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
+
 
     protected function getNameAttribute()
     {
