@@ -14,8 +14,8 @@ class DropBranchIdColumnFromDeliveryCompaniesTable extends Migration
     public function up()
     {
         Schema::table('delivery_companies', function (Blueprint $table) {
-           
-            $table->dropColumn("branch_id");
+
+//            $table->dropColumn("branch_id");
         });
     }
 
