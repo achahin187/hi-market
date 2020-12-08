@@ -154,7 +154,7 @@ class OrderController extends Controller
         }
 
 
-        $category_ids = explode(",",$request->category_ids);
+        $category_ids = explode(",", $request->category_ids);
 
         $categories = $category_ids;
 
@@ -191,9 +191,21 @@ class OrderController extends Controller
 
 
         $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
+        $cart = [];
+        foreach (explode(",", request("products")) as $product) {
+            $cart[] = Cart::create([
+                "user_id" => getUser()->id,
+                "product_id" => explode(":", $product)[0],
+                "qty" => explode(":", $product)[1],
 
-        $products = collect([]);
-        return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery, CategoryProductResource::collection($products)]);
+            ]);
+        }
+
+        return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
+            ProductResource::collection($similar_products)
+            , WishlistResource::collection($wishlist)
+            , $setting->delivery
+            , CartResource::collection($cart)]);
 
     }
 
@@ -226,10 +238,10 @@ class OrderController extends Controller
             ];
         }
         $state = [
-            1=>"close",
-            2=>"open"
+            1 => "close",
+            2 => "open"
         ];
-        return $this->returnData(["days", "time","state"], [$days, $time,$state[rand(1,2)]]);
+        return $this->returnData(["days", "time", "state"], [$days, $time, $state[rand(1, 2)]]);
     }
 
 }
