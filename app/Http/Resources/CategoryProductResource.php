@@ -29,7 +29,7 @@ class CategoryProductResource extends JsonResource
             "category_name" => $this->category->name ?? "",
             "category_id" => $this->category_id ?? "",
             "flag" => $this->flag ?? 0,
-            "supermarket_id" => request("supermarket_id"),
+            "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch()->name,
             "favourite" => $this->favourite ?? 0,
             "percentage" =>  $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
