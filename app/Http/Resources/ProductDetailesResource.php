@@ -43,7 +43,7 @@ class ProductDetailesResource extends JsonResource
                 "specs"=>$this->specs,
                 "branch_open_time"=>$branch->open_time ?? "",
                 "branch_close_time"=>$branch->close_time ?? "",
-                "cityname"=>$branch->city->name,
+                "cityname"=>$branch->city ? $branch->city->name: "",
             ];
     }
 
