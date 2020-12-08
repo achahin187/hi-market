@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\Branch;
 class ProductDetailesResource extends JsonResource
 {
     /**
@@ -31,11 +31,17 @@ class ProductDetailesResource extends JsonResource
                 "category_id" => $this->category_id ?? "",
                 "flag" => $this->flag ?? 0,
                 "supermarket_id" =>request("supermarket_id"),
+                "BranchName" =>$this->getBranchName()->name,
                 "favourite" => $this->favourite ?? 0,
-                "percentage" => $this->percentage ?? 0,
+                "percentage" =>  $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
                 "imagepaths" => $this->imagepaths ?? "default.png",
                 "category" => $this->category ?? "",
 
             ];
+    }
+
+    private function getBranchName()
+    {
+       return Branch::Where('id',request("supermarket_id"))->first();
     }
 }

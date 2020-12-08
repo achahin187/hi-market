@@ -476,6 +476,8 @@ class ProductController extends Controller
 
             $price = $request->input('price');
 
+            $offer_price = $request->input('offer_price');
+
             $points = $request->input('points');
 
             $category = $request->input('category_id');
@@ -572,6 +574,7 @@ class ProductController extends Controller
                     'name_ar' => $arab_name,
                     'name_en' => $eng_name,
                     'price' => $price,
+                    'offer_price' => $offer_price,
                     'points' => $points,
                     'category_id' => $category,
                     'vendor_id' => $vendor,
@@ -593,6 +596,7 @@ class ProductController extends Controller
                     'measuring_unit' => $measuring_unit,
                     'size' => $size,
                     'updated_by' => $user->id
+           
                 ]);
 
 
@@ -626,6 +630,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
+                         'offer_price' => $offer_price,
                         
                         //'subcategory_id' => $subcategory,
                         'images' => $images,
