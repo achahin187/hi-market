@@ -44,4 +44,6 @@ class ProductDetailesResource extends JsonResource
     {
        return Branch::Where('id',request("supermarket_id"))->first();
     }
+
+    
 }

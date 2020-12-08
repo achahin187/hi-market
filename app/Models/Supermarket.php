@@ -24,7 +24,7 @@ class Supermarket extends Model
         return $this->hasMany('App\Models\Product');
     }
 
-    public function barcode()
+    public function Barcode()
     {
        return $this->hasOne('App\Models\Barcode'); 
     }
