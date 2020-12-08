@@ -104,21 +104,6 @@
 
 
 
-                                <div class="form-group">
-                                    <label>{{__('admin.city')}} </label>
-                                    <select id="supermarket" class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                      
-
-                                            @foreach(\App\Models\City::all() as $cities)
-
-                                                <option value="{{ $cities->id }}">{{ $cities->name_ar }}</option>
-
-                                            @endforeach
-
-                                 
-                                    </select>
-                                </div>
-
                               
 
 

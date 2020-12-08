@@ -46,6 +46,7 @@ return [
     'controls' => 'ادوات التجكم',
     'address' => 'العنوان',
     'add_client'=>'اضافة عميل جديد',
+    'Unauthenticated' => 'مستخدم غير معروف',
 
     'admin_managment'=>'الادارة',
     'location_managment' => 'ادارة الامكان',
@@ -57,7 +58,8 @@ return [
     'delivery_company'=> 'شركات الشحن',
     'rating' => 'التقسم',
     
-
+    'auto_approve' => 'الموافقة الاتوماتيكية',
+    'approve' => 'الموافقة اليديوية',
 
     'order_setting' => 'اعدادات الاوردر',
     'tax' => 'الضرائب',

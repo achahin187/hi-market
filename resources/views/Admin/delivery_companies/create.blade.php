@@ -89,16 +89,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="status">Auto Approve</label>
-                                        <input id="status" value="{{old("status") ?? 1}}"  type="checkbox" name="status">
-                                        @error('status')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-{{-- 
+                                  
+                                    {{-- 
                                     <div class="form-group">
                                         <label for="phone_number">Phone Number</label>
                                         <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
@@ -122,6 +114,55 @@
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label>{{__('admin.city')}} </label>
+                                    <select id="city" class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                      
+
+                                            @foreach(\App\Models\City::all() as $cities)
+
+                                                <option value="{{ $cities->id }}">{{ $cities->name_ar }}</option>
+
+                                            @endforeach
+
+                                 
+                                    </select>
+                                </div>
+
+
+                              
+
+                                     <div class="form-group">
+                                        <label>{{ __('admin.status') }}</label>
+                                        
+                                        <select class=" @error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
+                                         @php   
+                                          $statuses = [
+                                           '0'=>trans('active'),
+                                            '1'=>trans('inactive')
+                                        ];
+                                          @endphp
+                                            @foreach($statuses  as $index=>$status)
+                                                <option  value={{ $index }}>
+                                               {{ $status }}</option>
+                                            @endforeach    
+                                                
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                    
+                                        <label for="status">Auto Approve</label>
+
+                                        <input style="margin-left: 10px " id="status" value="{{old("status") ?? 1}}"  type="checkbox" name="status">
+
+                                        @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
 

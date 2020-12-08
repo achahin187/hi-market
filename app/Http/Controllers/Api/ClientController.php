@@ -213,7 +213,6 @@ class ClientController extends Controller
 
         }
 
-
         $name = $request->name;
         $phone = $request->phone;
         $address = $request->address;
@@ -226,10 +225,16 @@ class ClientController extends Controller
         $govern = $request->govern;
 
         Address::create([
-            'name' => $name, 'phone' => $phone, 'description' => $address,
-            'address_lable' => $label, 'client_id' => $client_id,
-            'default' => $default, 'lat' => $lat, 'lon' => $lon,
-            'additional' => $additional, 'govern' => $govern,
+            'name' => $name,
+            'phone' => $phone,
+            'description' => $address,
+            'address_lable' => $label,
+            'client_id' => $client_id,
+            'default' => $default,
+            'lat' => $lat,
+            'lon' => $lon,
+            'additional' => $additional,
+            'govern' => $govern,
         ]);
 
 

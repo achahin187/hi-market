@@ -33,10 +33,14 @@ return [
     'add_delivery_admin' => 'Add Delivery Admin',
     'delivery_admin' => 'Delivery Admin',
     'delivery_company' => 'Delivery Company',
+    'Unauthenticated'=>'Unauthenticated',
 
     'add_admin' => 'Add Admin',
     'rating' => 'Rating',
     'dashboard' => 'dashboard',
+
+    'auto_approve' => 'Auto Approve',
+    'approve' => 'Manual Approve',
     //name 
 
     'name_ar' => 'Arabic Name',
