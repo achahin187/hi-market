@@ -237,7 +237,9 @@ class ProductController extends Controller
 
     public function filter()
     {
-        $products = Product::where("branch_id", \request("supermarket_id"))->where("category_id",\request("category_id"))->filter()->paginate();
+        $products = Product::whereHas("branches",function($query){
+          $query->where("branches.id",\request("supermarket_id"));
+        } )->where("category_id",\request("category_id"))->filter()->paginate();
         return $this->returnData(["products"],[CategoryProductResource::collection($products)]);
     }
 }
