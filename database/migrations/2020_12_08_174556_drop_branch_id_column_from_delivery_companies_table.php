@@ -14,7 +14,7 @@ class DropBranchIdColumnFromDeliveryCompaniesTable extends Migration
     public function up()
     {
         Schema::table('delivery_companies', function (Blueprint $table) {
-            $table->dropForeign("delivery_companies_branch_id_foreign");
+           
             $table->dropColumn("branch_id");
         });
     }
