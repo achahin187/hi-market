@@ -4,7 +4,7 @@
 
 <div id="mapid" style="height: 500px;"></div>
 
-{{-- 0000 0000 0000 0000 0000 0000 0000 0000
+{{-- 0000 0000 0000 0000 0000 0000 0000 0000 
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0000 0000 0000 0000
@@ -839,7 +839,8 @@
 0a0a 0a0a 0a --}}
 @php
 
-	$locations = \App\Models\BranchLocation::Where('city','tanta')->get();
+	$locations = \App\Models\Branch::Where('id',3)->first();
+
 		// foreach ($locations as $key => $location) {
 
   //  			dd(   $location->lat ,   $location->lat  );
@@ -892,7 +893,7 @@ L.Circle.include({
 
 //var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
   var circle = L.polygon([
-  	@foreach ($locations as  $location) 
+  	@foreach ($locations->city->locations as  $location) 
 		
    			 [{{ $location->lat }},  {{ $location->lon }}] ,
 	
@@ -904,6 +905,7 @@ map.fitBounds(circle.getBounds());
 
 map.on('click', function (e) {
   var marker = L.marker(e.latlng).addTo(map);
+
   //console.log(marker.getLatLng(), circle.getBounds().contains(marker.getLatLng()));
   var result = (circle.getBounds().contains(marker.getLatLng())) ? 'inside': 'outside';
   marker.bindPopup('Marker ' + result + ' of the circle');
