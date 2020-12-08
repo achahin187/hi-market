@@ -60,13 +60,13 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::post('clientpoints', 'ClientController@clientpoints')->name('listcategoryproducts');
     Route::post('clientaddresses', 'ClientController@clientaddresses')->name('listcategoryproducts');
-
+    Route::post("verify/address", "ClientController@validateAddress");
 
     //sendPromoCode
     Route::post('sendPromoCode', 'CartController@sendPromoCode');
 
     Route::post('updateaddress', 'ClientController@update_address');
-    Route::get("notification","NotificationController@index");
+    Route::get("notification", "NotificationController@index");
 
 });
 
