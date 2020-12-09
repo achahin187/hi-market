@@ -148,35 +148,7 @@ class ClientController extends Controller
         return $this->returnError(422, "code is invalid");
     }
 
-    public function resetpassword(Request $request)
-    {
-
-
-        $client = \auth("client-api")->user();
-
-
-        $validator = Validator::make($request->all(), [
-            'password' => ['required'],
-        ]);
-
-        if ($validator->fails()) {
-
-
-            return $this->returnError(422, 'These data is not valid');
-
-        }
-
-        if (Hash::check(\request("password"), $client->password)) {
-            $client->update(['password' => Hash::make($request->password),]);
-            return $this->returnData(['client'], [$client], 'password updated successfully');
-
-        } else {
-            return $this->returnError(422, "wrong password");
-        }
-
-
-    }
-
+  
     public function uploadImage(Request $request)
     {
         if ($request->image) {

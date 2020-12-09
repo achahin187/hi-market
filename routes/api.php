@@ -21,7 +21,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('login', 'AuthController@login')->name('client.login');
     Route::post('forgetpassword', 'AuthController@forgetpassword')->name('forgetpassword');
     Route::post('verifycode', 'AuthController@verifycode')->name('profile_update');
-    Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
+    Route::post('resetpassword', 'AuthController@resetpassword')->name('reset_password');
     Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
     Route::get('products/search/{name}', 'ProductController@getproductsearch')->name('search');
     Route::post("products/filter", "ProductController@filter");
