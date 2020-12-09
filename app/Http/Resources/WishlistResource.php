@@ -24,11 +24,11 @@ class WishlistResource extends JsonResource
             "imagepath" => asset($this->image),
             "category_id" => $this->category->id,
 
-            "category_name" => $this->category->name,
+            "categoryname" => $this->category->name,
 
             "supermarket_id" => Branch::find(request("supermarket_id"))->id,
 
-            "supermarket_name" => Branch::find(request("supermarket_id"))->name,
+            "supermarketname" => Branch::find(request("supermarket_id"))->name,
 
 
             "description" => $this->description ?? ""
