@@ -589,4 +589,20 @@ class OrderController extends Controller
 
         return back();
     }
+
+    public function changeStatusOrder(Request $request)
+    {
+        //dd($request->all());
+        $order = Order::find($request->order_id);
+        
+        if($request->type == 'next')
+        {
+            $order->update(['status'=>$request->order_status + 1]);
+        }else
+        {
+            $order->update(['status'=>$request->order_status - 1]);
+
+        }
+        return back();
+    }
 }

@@ -227,7 +227,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
        //get_brannch_product
 
         Route::get('get-branch-product', 'Admin\ProductController@getBranchProduct')->name('get_branch_product');
- 
+        //Client Orders
+        Route::get('client/{client_id}/order','Admin\ClientOrdersController@create')->name('client.order.create');
+        Route::post('client/{client_id}/order','Admin\ClientOrdersController@store')->name('client.order.store');
+
+
+
+        //ge branch category
+        Route::get('get-branch-category','Admin\ClientOrdersController@getBranchCategory')->name('get_branch_category');
+
+        // get Category Products
+        Route::get('get-category-products','Admin\ClientOrdersController@getCategoryProducts')->name('get_category_products');
+         // getProduct
+        Route::get('getProduct','Admin\ClientOrdersController@getProduct')->name('get_product');
+            //Change Order Status
+        Route::get('change-order-status','Admin\OrderController@changeStatusOrder')->name('order.change.status');
     });
 
 });

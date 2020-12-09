@@ -72,6 +72,11 @@ class Category extends Model
         return $this->hasMany('App\Models\Subcategory');
     }
 
+    public function branches()
+    {
+        return $this->belongsToMany('App\Models\Branch', 'category_supermarket', "category_id");
+    }
+
     public function supermarkets()
     {
         return $this->belongsToMany('App\Models\Supermarket');

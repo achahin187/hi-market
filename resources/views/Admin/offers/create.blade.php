@@ -145,10 +145,10 @@
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    $('#branche_4').html('');
+                    $('#branche_5').html('');
                     data.forEach(function(x){
                         
-                    $('#branche_4').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
+                    $('#branche_5').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
                     })
                 }
             });
