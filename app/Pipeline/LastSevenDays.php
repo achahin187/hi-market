@@ -8,7 +8,7 @@ class LastSevenDays extends Filter
 {
     protected function canRunRequest()
     {
-        return request(  "new_arrival") && request("new_arrival") == 4;
+        return request(  "new_arrival") && request("new_arrival") == 1;
     }
 
     protected function query($builder)
