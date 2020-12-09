@@ -65,7 +65,7 @@ class Vendor extends Model
     // }
     protected function getNameAttribute()
     {
-        return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
+        return app()->getLocale() == "en" ? $this->eng_name : $this->arab_name;
     }
 
 }

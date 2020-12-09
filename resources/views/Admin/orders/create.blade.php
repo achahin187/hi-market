@@ -468,7 +468,7 @@
 
                                         </div>
 
-                                        <form role="form" action="{{route('orderproduct.update',['order_id' => $order->id,'product_id' => $productorder->id]) }} @else {{route('products.store',$order->id)}}" method="POST" enctype="multipart/form-data">
+                                        <form role="form" action="{{route('orderproduct.update',['order_id' => $order->id,'product_id' => $productorder->id]) }}" method="POST" enctype="multipart/form-data">
 
                                             <div class="card-body">
 
