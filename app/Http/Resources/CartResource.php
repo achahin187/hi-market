@@ -39,7 +39,7 @@ class CartResource extends JsonResource
             "percentage" =>  $product->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
             "imagepath" => $product->imagepath ?? "default.png",
             "category" => $product->category ?? "",
-            "quantity"=>$this->qty,
+            "quantity"=>(int)$this->qty,
 
 
         ];
