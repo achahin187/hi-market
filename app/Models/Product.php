@@ -42,8 +42,8 @@ class Product extends Model
     public function category() {
         return $this->belongsTo('App\Models\Category');
     }
-    public function vendors() {
-        return $this->belongsToMany('App\Models\Vendor');
+    public function vendor() {
+        return $this->belongsTo('App\Models\Vendor');
     }
 
     public function supermarket() {
