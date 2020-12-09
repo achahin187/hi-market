@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('supermarket-admins.index')}}">{{ __('admin.delivery_management') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('locations.index')}}">{{ __('admin.city') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
                     </div>
@@ -43,7 +43,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
 
-                                        {{ __('admin.add_delivery_admin') }}
+                                        {{ __('admin.add_new_area') }}
 
                                     
                                 </h3>
@@ -51,7 +51,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div id="mapid" style="height: 500px;"></div>
-                            <button class="add-polygon btn btn-primary" >Add Location</button>
+                          
                             <form role="form" action=" {{route('supermarket-admins.store') }} " method="POST" enctype="multipart/form-data">
                                 @csrf
 
@@ -97,10 +97,10 @@
 
                                 </div>
                                 <!-- /.card-body -->
-
-                                <div class="card-footer">
+                                  <button class="add-polygon btn btn-primary" >Add Location</button>
+                              {{--   <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                         <!-- /.card -->

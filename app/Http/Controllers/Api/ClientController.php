@@ -131,6 +131,22 @@ class ClientController extends Controller
         }
     }
 
+    public function setDefault(Request $request)
+    {
+       
+       $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
+    
+       $address->update(['default'=>0]);
+
+       $newDefault = Address::where('id',$request->address_id)->first();
+
+       $newDefault->update(['default'=>1]);
+
+        return $this->returnSuccessMessage("updated successfully");
+
+
+    }
+
     public function validateAddress()
     {
         $validation = \Validator::make(\request()->all(), [
@@ -228,7 +244,7 @@ class ClientController extends Controller
         $validator = \Validator::make($request->all(), [
             'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'label' => ['required', 'string'],
-            'default' => ["required", 'boolean'],
+            'default' => [ 'boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
             'additional' => ['nullable'],
@@ -250,7 +266,7 @@ class ClientController extends Controller
         $address = $request->address;
         $label = $request->label;
         $client_id = $client->id;
-        $default = $request->default;
+        $default = Auth('client-api')->user()->addresses->count() >= 1 ? 0 : 1;
         $lat = $request->lat;
         $lon = $request->lon;
         $additional = $request->additional;

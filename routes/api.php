@@ -72,6 +72,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     //client
     Route::post('update/avatar', 'ClientController@uploadImage');
 
+    //default
+    Route::post('set/default', 'ClientController@setDefault');
+
+
 
 });
 

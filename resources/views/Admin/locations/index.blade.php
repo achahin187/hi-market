@@ -11,14 +11,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.delivery_admin') }}</h1>
+                        <h1>{{ __('admin.city') }}</h1>
                     </div>
 
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @if(auth()->user()->can('location-create'))
-                                <li class="breadcrumb-item"><a href="{{route('locations.create')}}">{{ __('admin.add_delivery_admin') }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('locations.create')}}">{{ __('admin.add_new_area') }}</a></li>
                                 @endif
                             </ol>
                         </div>
@@ -46,7 +46,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.delivery_admin') }}</h3>
+                                <h3 class="card-title">{{ __('admin.city') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -55,7 +55,7 @@
                                     <tr>
                                         <th>{{ __('admin.city_ar') }}</th>
                                         <th>{{ __('admin.city_en') }}</th>
-                                        <th>{{ __('admin.area_ar') }}</th>
+                                       
                                       
                                     @if(auth()->user()->hasAnyPermission(['location-delete','location-edit']))
                                         <th>{{ __('admin.controls') }}</th>
