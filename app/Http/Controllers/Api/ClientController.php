@@ -151,9 +151,7 @@ class ClientController extends Controller
     {
 
 
-        $mobile = $request->mobile;
-
-        $client = Client::where('mobile_number', $mobile)->first();
+        $client = \auth("client-api")->user();
 
 
         $validator = Validator::make($request->all(), [
@@ -163,14 +161,17 @@ class ClientController extends Controller
         if ($validator->fails()) {
 
 
-            return $this->returnError(300, 'These data is not valid');
+            return $this->returnError(422, 'These data is not valid');
 
         }
 
-
-        $client->update(['password' => Hash::make($request->password),]);
-
-        return $this->returnData(['client'], [$client], 'password updated successfully');
+        if (Hash::check(\request("password"), $client->password)) {
+            $client->update(['password' => Hash::make($request->password),]);
+            return $this->returnData(['client'], [$client], 'password updated successfully');
+         
+        } else {
+            return $this->returnError(422, "wrong password");
+        }
 
 
     }
