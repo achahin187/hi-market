@@ -15,7 +15,7 @@ class Vendor extends Filter
     {
         return $builder->whereHas("vendors", function ($query)
         {
-            $query->where("vendors.id",explode(",",request("vendor")));
+            $query->whereIn("vendors.id",explode(",",request("vendor")));
         });
     }
 }
