@@ -153,7 +153,7 @@ $settings = App\Models\Setting::all()->first();
                          with font-awesome or any other icon font library -->
 
                     
-            @if(auth()->user()->hasAnyPermission(['admin-list','supermarketAdmin-list','client-list','point-list','branches-list', 'reason-list', 'logs-list']))
+            @if(auth()->user()->hasAnyPermission(['admin-list','supermarketAdmin-list','client-list','point-list','branches-list', 'role-list','reason-list', 'logs-list']))
 
                       <li class="nav-item has-treeview">     
                       
