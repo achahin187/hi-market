@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Pipeline\CreatedAt;
+use App\Pipeline\LastSevenDays;
 use App\Pipeline\LowPrice;
 use App\Pipeline\MostPopular;
 use App\Pipeline\HighPrice;
@@ -16,7 +16,7 @@ class Product extends Model
     //
     use LogsActivity,HasFilter;
     protected $queryFilters= [
-        CreatedAt::class,
+        LastSevenDays::class,
         Vendor::class,
         MostPopular::class,
         HighPrice::class,
