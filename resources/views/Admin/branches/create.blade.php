@@ -448,6 +448,8 @@
                                                     <input name="image" type="file">
 
                                                 </div>
+                                                <p style="color: red">Width: 400 px</p>
+                                          <p style="color: red"> length: 130 px </p>
                                                
                                             </div>
                                         </div>
@@ -476,6 +478,8 @@
                                               </div>
 
                                             </div>
+                                            <p style="color: red">Width: 400 px</p>
+                                          <p style="color: red"> length: 130 px </p>
                                         </div>
 
 
@@ -496,6 +500,10 @@
                                                     <input name="logo_image" type="file">
 
                                                 </div>
+
+                                             <p style="color: red">Width: 80 px</p>
+                                            <p style="color: red"> length: 80 px </p>
+
                                               
                                             </div>
                                         </div>
@@ -510,7 +518,10 @@
                                                 <input type="file"  name="logo_image" class="form-control-file" id="exampleFormControlFile1">
                                               </div>
 
+
                                             </div>
+                                            <p style="color: red">Width: 80 px</p>
+                                          <p style="color: red"> length: 80 px </p>
                                         </div>
 
 

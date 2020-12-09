@@ -258,7 +258,8 @@
 
                                                 </div>
                                             </div>
-                                                <p style="color: red">W-400 px X L-130 px</p>
+                                                <p style="color: red">Width: 400 px</p>
+                                          <p style="color: red"> length: 130 px </p>
                                         </div>
                                     @else
 
@@ -269,7 +270,8 @@
                                              
                                                 <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
                                               </div>
-                                              <p style="color: red">W-400 px X L-130 px</p>
+                                               <p style="color: red">Width: 400 px</p>
+                                          <p style="color: red"> length: 130 px </p>
                                         </div>
 
 
@@ -292,7 +294,8 @@
                                                 </div>
                                                 
                                             </div>
-                                                <p style="color: red">W-80 px X L-80 px</p>
+                                                <p style="color: red">Width: 80 px</p>
+                                          <p style="color: red"> length: 80 px </p>
                                         </div>
                                     @else
 
@@ -306,7 +309,8 @@
                                               </div>
 
                                             </div>
-                                              <p style="color: red">W-80 px X L-80 px</p>
+                                       <p style="color: red">Width: 80 px</p>
+                                          <p style="color: red"> length: 80 px </p>
                                         </div>
 
 
