@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Pipeline\LastSevenDays;
+use App\Pipeline\LastSixtyDays;
 use App\Pipeline\LastThirtyDays;
 use App\Pipeline\LowPrice;
 use App\Pipeline\MostPopular;
@@ -24,6 +25,7 @@ class Product extends Model
         LowPrice::class,
         LastSevenDays::class,
         LastThirtyDays::class,
+        LastSixtyDays::class
     ];
 
     protected static $logName = 'products';
