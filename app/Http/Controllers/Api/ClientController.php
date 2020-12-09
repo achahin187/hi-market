@@ -168,7 +168,7 @@ class ClientController extends Controller
         if (Hash::check(\request("password"), $client->password)) {
             $client->update(['password' => Hash::make($request->password),]);
             return $this->returnData(['client'], [$client], 'password updated successfully');
-         
+
         } else {
             return $this->returnError(422, "wrong password");
         }

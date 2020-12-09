@@ -190,7 +190,9 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
 
-        $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
+        $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches",function($query){
+            $query->where("branches.id",\request("supermarket_id"));
+        })->get();
         $cart = [];
         foreach (explode(",", request("products")) as $product) {
             $cart[] = Cart::create([
