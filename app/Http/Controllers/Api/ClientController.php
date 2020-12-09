@@ -82,7 +82,7 @@ class ClientController extends Controller
 
         $client = getUser();
 
-        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->orderBy("points", "asc")->simplePaginate();
+        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")->simplePaginate();
         return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
 
     }
@@ -100,7 +100,7 @@ class ClientController extends Controller
         $user = \auth()->user();
         $user->points = $point->points - $user->points;
         $user->save();
-        return $this->returnData(["user_points"], [$user->points]);
+        return $this->returnData(["user_points","discount",    ], [$user->points,$point->value]);
     }
 
     public function clientaddresses(Request $request)
