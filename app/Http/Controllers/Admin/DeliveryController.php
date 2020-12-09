@@ -135,7 +135,7 @@ class DeliveryController extends Controller
                  $request_data = $request->except('password');
              }
             
-            $delivery->update($request_data);
+            $driver->update($request_data);
 
             return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
         }else{
