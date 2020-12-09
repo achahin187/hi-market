@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SimilarProductsResource;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
@@ -194,7 +195,7 @@ class OrderController extends Controller
         }
 
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
-            CategoryProductResource::collection($similar_products)
+            SimilarProductsResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
             , $setting->delivery ?? ""
             , CartResource::collection($cart)]);

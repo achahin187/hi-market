@@ -96,7 +96,7 @@ class Product extends Model
     {
        $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id){
            $query->where("branches.id",$supermarket_id);
-       })->select('id', 'images');
+       });
     }
 
 }
