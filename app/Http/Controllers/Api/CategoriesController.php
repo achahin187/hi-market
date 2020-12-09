@@ -165,7 +165,7 @@ class CategoriesController extends Controller
             if ($category) {
 
 
-                $products = $category->products()->where('status', 'active')->get();
+                $products = $category->products()->filter()->where('status', 'active')->get();
 
 
                 foreach ($products as $product) {
