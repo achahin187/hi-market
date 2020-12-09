@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Vendor;
 use App\Models\Supermarket;
 
@@ -52,13 +51,14 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
   
         $request->validate([
         'arab_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
         'eng_name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
         'sponsor' => 'required|integer|min:0',
-        'image' => 'image|mimes:jpeg,png,jpg|max:2048'
+        'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        'category_id' => 'required|array',
         ]);
 
 
@@ -70,23 +70,26 @@ class VendorController extends Controller
 
             $image->move('vendor_images', $file_to_store);
 
-            Vendor::create([
+            $vendor = Vendor::create([
 
                 'arab_name' => $request->input('arab_name'),
                 'eng_name' => $request->input('eng_name'),
                 'sponsor' => $request->input('sponsor'),
                 'image' => $file_to_store
             ]);
+
+            $vendor->categories()->sync($request->category_id);
         }
         else
         {
-            Vendor::create([
+            $vendor=Vendor::create([
 
                 'arab_name' => $request->input('arab_name'),
                 'eng_name' => $request->input('eng_name'),
                 'sponsor' => $request->input('sponsor'),
               
             ]);
+             $vendor->categories()->sync($request->category_id);
         }
 
 
@@ -181,6 +184,7 @@ class VendorController extends Controller
                      'sponsor' => $request->sponsor ,
                      'image' => $file_to_store
                  ]);
+                $vendor->categories()->sync($request->category_id);
             } else {
 
                 if ($request->has('checkedimage')) {
@@ -201,6 +205,7 @@ class VendorController extends Controller
                        'sponsor' => $request->sponsor , 
                        'image' => null
                    ]);
+                    $vendor->categories()->sync($request->category_id);
                 }
             }
             return redirect('/admin/vendors')->withStatus('vendor successfully updated.');

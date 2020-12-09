@@ -23,9 +23,12 @@ class Category extends Model
         return $this->hasMany('App\Models\Product');
     }
 
-    public function vendors()
-    {
-        return $this->hasMany('App\Models\Vendor');
+    // public function vendors()
+    // {
+    //     return $this->hasMany('App\Models\Vendor');
+    // }
+    public function vendors() {
+        return $this->belongsToMany('App\Models\Vendor','category_vendor');
     }
 
     public function subcategories()

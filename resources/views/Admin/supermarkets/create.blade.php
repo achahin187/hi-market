@@ -257,8 +257,8 @@
                                                     <input name="image" type="file">
 
                                                 </div>
-                                                <p style="color: red">W-400 px X L-130 px</p>
                                             </div>
+                                                <p style="color: red">W-400 px X L-130 px</p>
                                         </div>
                                     @else
 
@@ -290,9 +290,9 @@
                                                     <input name="logo_image" type="file">
 
                                                 </div>
-                                                <p style="color: red">W-400 px X L-130 px</p>
                                                 
                                             </div>
+                                                <p style="color: red">W-80 px X L-80 px</p>
                                         </div>
                                     @else
 
@@ -306,7 +306,7 @@
                                               </div>
 
                                             </div>
-                                              <p style="color: red">W-400 px X L-130 px</p>
+                                              <p style="color: red">W-80 px X L-80 px</p>
                                         </div>
 
 
