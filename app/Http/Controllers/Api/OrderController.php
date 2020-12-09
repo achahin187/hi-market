@@ -162,7 +162,7 @@ class OrderController extends Controller
         $supermarket_id = $request->supermarket_id;
 
 
-        $imagepaths = [];
+
 
         $fav_ids = [];
 
