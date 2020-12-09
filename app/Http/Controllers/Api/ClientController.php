@@ -151,9 +151,15 @@ class ClientController extends Controller
   
     public function uploadImage(Request $request)
     {
-        $request->validate([
-            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
+       
+        $validator = \Validator::make($request->all(), [
+             'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
         ]);
+         if ($validator->fails()) {
+
+
+            return $this->returnValidationError(422, $validator);
+        }
         if ($request->image) {
 
             $image = $request->image;
@@ -167,7 +173,7 @@ class ClientController extends Controller
                 'image' => $file_to_store,
             ]);
             
-             return $this->returnSuccessMessage("photo updated successfully");
+             return $this->returnData(['image'],[asset('client/'.$file_to_store)],'image updated successfully');
         }
     }
 
