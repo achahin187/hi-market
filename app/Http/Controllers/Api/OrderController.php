@@ -79,13 +79,13 @@ class OrderController extends Controller
         $client = getUser();
 
         $date = now();
-        if ($request->day_index == 2) {
-            $date = $date->addDays(1);
-        } else if ($request->day_index == 3) {
-            $date = $date->addDays(2);
-        } elseif ($request->day_index == 4) {
-            $date = $date->addDays(3);
-        }
+//        if ($request->day_index == 2) {
+//            $date = $date->addDays(1);
+//        } else if ($request->day_index == 3) {
+//            $date = $date->addDays(2);
+//        } elseif ($request->day_index == 4) {
+//            $date = $date->addDays(3);
+//        }
 
 
         if ($client) {
