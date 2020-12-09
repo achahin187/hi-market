@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\Team;
+use App\Models\DeliveryCompany;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
@@ -44,7 +45,8 @@ class DeliveryController extends Controller
     public function create()
     {
         $roles = Role::whereIn('eng_name',['driver'])->get();
-        return view('Admin.delivery.create',compact('roles'));
+        $companies = DeliveryCompany::all();
+        return view('Admin.delivery.create',compact('roles','companies'));
     }
 
     /**
@@ -55,41 +57,30 @@ class DeliveryController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
+      
 
-        $rules = [
-            'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-            'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'max:50'],
+//dd($request->all());
+       $request->validate([
 
-        ];
+        'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
+        'email' => ['required', 'email', Rule::unique((new User)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+        'password' => ['required', 'min:8', 'max:50'],
+        'company_id' => ['required'],
 
-        $this->validate($request,$rules);
+       ]);
 
 
-        $team = Team::find($request->team_id);
+        $driver = User::create(request()->all());
+    
+        $role = Role::where('name','driver' )->first();
+        
+        $assignRole = $driver->assignRole($role);
 
-        $teamrole = $team->role()->pluck('id')->all();
-
-        $admin = User::create([
-
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'team_id' => $request->team_id,
-            'created_by' => $user->id
-        ]);
-
-        $admin->assignRole([$request->input('roles'),$teamrole[0]]);
-
-        if($admin)
-        {
-            return redirect('admin/delivery')->withStatus(trans('admin.successfully_created'));
-        }
-        else
-        {
-            return redirect('admin/delivery')->withStatus(trans('admin.something went wrong, try again'));
-        }
+        $Permissions = $role->permissions;
+            
+       
+        return redirect('admin/delivery')->withStatus(trans('admin.successfully_created'));
+        
 
     }
 
@@ -103,14 +94,12 @@ class DeliveryController extends Controller
     public function edit($id)
     {
         $driver = User::find($id);
-        $roles = Role::Wherein('name', ['delivery', 'driver'])->get();
-
-        $userRole = $driver->roles->pluck('name','name')->all();
-
+        
+        $companies = DeliveryCompany::all();
 
         if($driver)
         {
-            return view('Admin.delivery.create', compact('driver','roles','userRole'));
+            return view('Admin.delivery.create', compact('driver','companies'));
         }
         else
         {
@@ -127,84 +116,27 @@ class DeliveryController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $user = auth()->user();
+       dd($request->all());
+        $driver = User::find($id);
 
-        $admin = User::find($id);
-
-        if($request->input('password') == null )
-        {
-            $rules = [
+        if ($driver) {
+            
+            $request->validate([
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+                'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($driver->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+                'password' => ['sometimes','min:8', 'max:50'],
+                'company_id' => ['required'],
 
-            ];
+            ]); 
 
-            $this->validate($request,$rules);
+            $delivery->update($request()->all());
 
+            return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
+        }else{
 
-
-            if($admin)
-            {
-
-                $admin->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'team_id' => $request->team_id,
-                    'updated_by' => $user->id
-                ]);
-
-                DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-                $team = Team::find($request->team_id);
-
-                $teamrole = $team->role()->pluck('id')->all();
-
-                $admin->assignRole($request->input('roles'),$teamrole[0]);
-                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
-            }
-            else
-            {
-                return redirect('admin/delivery')->withStatus(trans('admin.not_id'));
-            }
+            return redirect('/admin/delivery')->withStatus(trans('admin.not_id'));
         }
-        else {
-            $rules = [
-                'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
-                'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($admin->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'password' => ['required', 'min:8', 'max:50'],
-                
 
-            ];
-
-            $this->validate($request,$rules);
-
-
-            $password = password_hash($request->password,PASSWORD_DEFAULT);
-
-
-            if($admin)
-            {
-
-                $admin->update([
-
-                    'name' => $request->name ,
-                    'email' => $request->email ,
-                    'password' => $password,
-                    'team_id' => $request->team_id,
-                    'updated_by' => $user->id
-
-                ]);
-
-                DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-                $admin->assignRole($request->input('roles'));
-                return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
-            }
-            else
-            {
-                return redirect('admin/delivery')->withStatus(trans('admin.no_id'));
-            }
-        }
     }
 
     /**

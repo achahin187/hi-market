@@ -50,6 +50,7 @@ class DeliveryCompany extends Model
     {
         return app()->getLocale() == "en" ? $this->name_en : $this->name_ar;
     }
+    
     public function branches()
     {
         return $this->belongsToMany(Branch::class,"delivery_companies_branches");

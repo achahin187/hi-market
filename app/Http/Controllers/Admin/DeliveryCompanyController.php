@@ -30,7 +30,8 @@ class DeliveryCompanyController extends Controller
      */
     public function create()
     {
-        $branches = Branch::all();
+        $branches = Branch::WhereDoesntHave('companies')->get();
+      
         return view("Admin.delivery_companies.create", compact("branches"));
     }
 

@@ -91,6 +91,10 @@ class Branch extends Model
         return $this->hasMany('App\Models\BranchLocation');
     }
     
+    public function companies()
+    {
+        return $this->belongsToMany(DeliveryCompany::class,"delivery_companies_branches");
+    }
 
     public function supermarket()
     {
@@ -112,6 +116,8 @@ class Branch extends Model
     {
         return $this->belongsToMany('App\Models\Product', 'product_supermarket');
     }
+
+
 
 
     public function area()

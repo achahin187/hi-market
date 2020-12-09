@@ -29,7 +29,7 @@ return [
     'location_managment' => 'Location Managment',
     'category_managment' => 'Category Managment',
     'supermarket_management' => 'Markets Management',
-    'delivery_management' => 'Delivery Management',
+    'delivery_management' => 'Delivery Admin',
     'add_delivery_admin' => 'Add Delivery Admin',
     'delivery_admin' => 'Delivery Admin',
     'delivery_company' => 'Delivery Company',
@@ -48,6 +48,9 @@ return [
      //Admin
     'admin' => 'Admin',
     'export' => 'Export',
+
+
+     'add_delivery_company'=>'Add delivery company',
 
     //supermarket_admin
     'supermarket_admin'=>'supermarket Admin',

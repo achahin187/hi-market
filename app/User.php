@@ -68,7 +68,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'password','name','email','flag','team_id','created_by','updated_by','password'
+        'password','name','email','flag','created_by','updated_by','password','company_id'
     ];
 
     /**
@@ -89,8 +89,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function team() {
-        return $this->belongsTo('App\Models\Team','team_id');
+  
+    public function company() {
+        return $this->belongsTo('App\Models\DeliveryCompany');
     }
 
     public function orders()
