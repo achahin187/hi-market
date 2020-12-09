@@ -32,7 +32,7 @@ class CategoryProductResource extends JsonResource
             "flag" => $this->flag ?? 0,
             "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch(),
-            "favourite" =>\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0,
+            "favourite" =>(int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
             "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
             "imagepath" => $this->image ?? "default.png",
             "category" => $this->category ?? "",
