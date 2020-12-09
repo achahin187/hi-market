@@ -184,16 +184,18 @@ class OrderController extends Controller
         $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches",function($query){
             $query->where("branches.id",\request("supermarket_id"));
         })->get();
-        $cart = [];
+        $cart = collect([]);
         foreach (explode(",", request("products")) as $product) {
-            $cart[] = Cart::create([
+            $cart->add(Cart::create([
                 "user_id" => getUser()->id,
                 "product_id" => explode(":", $product)[0],
                 "qty" => explode(":", $product)[1],
 
-            ]);
+            ]));
         }
-
+$cart = $cart->filter(function($cart){
+    return $cart->has("product");
+});
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
             SimilarProductsResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
