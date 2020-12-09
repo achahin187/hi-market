@@ -69,6 +69,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('updateaddress', 'ClientController@update_address');
     Route::get("notification", "NotificationController@index");
 
+    //client 
+    Route::post('update/avatar', 'ClientController@uploadImage');
+
+
 });
 
 

@@ -8,12 +8,12 @@ class CreatedAt extends Filter
 {
     protected function canSkipRequest()
     {
-        return request($this->filterRequest()) && request($this->filterRequest()) == false;
+        return request(  "sortBy") && request("sortBy") == 4;
     }
 
     protected function query($builder)
     {
 
-        return $builder->orderBy("created_at",request("order","asc"));
+        return $builder->orderBy("created_at", "desc");
     }
 }

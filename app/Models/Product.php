@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Pipeline\CreatedAt;
+use App\Pipeline\LowPrice;
 use App\Pipeline\MostPopular;
-use App\Pipeline\Price;
+use App\Pipeline\HighPrice;
 use App\Pipeline\Vendor;
 use App\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,8 @@ class Product extends Model
         CreatedAt::class,
         Vendor::class,
         MostPopular::class,
-        Price::class
+        HighPrice::class,
+        LowPrice::class
     ];
 
     protected static $logName = 'products';

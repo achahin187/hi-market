@@ -17,15 +17,11 @@ class CreateCitiesTable extends Migration
             $table->id();
             $table->string('name_ar');
             $table->string('name_en');
-            $table->string('area_en');
-            $table->string('area_en');
             $table->string('status');
-            $table->unsignedBigInteger('country');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('country')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

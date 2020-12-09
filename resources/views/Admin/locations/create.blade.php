@@ -51,7 +51,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div id="mapid" style="height: 500px;"></div>
-                            <button class="add-polygon">add</button>
+                            <button class="add-polygon btn btn-primary" >Add Location</button>
                             <form role="form" action=" {{route('supermarket-admins.store') }} " method="POST" enctype="multipart/form-data">
                                 @csrf
 
@@ -61,7 +61,7 @@
                                      <div class="form-group">
                                         <label>{{ __('admin.city') }}</label>
                                         
-                                        <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('city_id') is-invalid @enderror select2" id="city_id" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
                                           
                                             @foreach($cities  as $city)
                                                 <option value={{ $city->id }}>
@@ -72,9 +72,20 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.area') }}</label>
-                                        <input type="email" value="" name="area" class="@error('area') is-invalid @enderror form-control"  placeholder="Enter area" required>
-                                        @error('area')
+                                        <label for="exampleInputEmail1">{{ __('admin.area_ar') }}</label>
+                                        <input type="text" value="" name="area_ar" id='area_ar' class="@error('area_ar') is-invalid @enderror form-control"  placeholder="Enter area" required>
+                                        @error('area_ar')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{ __('admin.area_en') }}</label>
+                                        <input type="text" value="" name="area_en" id='area_en' class="@error('area_en') is-invalid @enderror form-control"  placeholder="Enter area_en" required>
+                                        @error('area_en')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -159,14 +170,22 @@ map.on('click', function (e) {
         e.preventDefault();
 
         var requestData =JSON.stringify(locationPoint)
-       
-       
+        var city_id =  $('#city_id').children("option:selected").val();
+        var area_ar = $('#area_ar').val() ;      
+        var area_en = $('#area_en').val() ;      
         var url = '{{ route('add-polygon') }}';
         var method ='post';
+
         $.ajax({
             url: url,
             method: method,
-            data:{_token: '{{ csrf_token() }}', 'data':requestData, 'count':locationPoint.length },
+            data:{
+                _token: '{{ csrf_token() }}',
+                 'data':requestData,
+                  'count':locationPoint.length,
+                   'city_id':city_id,
+                    'area_ar':area_ar ,
+                    'area_en':area_en },
 
             success: function(data) {
 

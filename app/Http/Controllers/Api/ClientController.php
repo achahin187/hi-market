@@ -151,20 +151,23 @@ class ClientController extends Controller
   
     public function uploadImage(Request $request)
     {
+        $request->validate([
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
+        ]);
         if ($request->image) {
 
-
+            $image = $request->image;
             $filename = $image->getClientOriginalName();
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
             $image->move('client', $file_to_store);
 
-            Client::create([
+            Auth('client-api')->user()->update([
                 'image' => $file_to_store,
             ]);
             
-             $this->returnSuccessMessage("photo updated successfully");
+             return $this->returnSuccessMessage("photo updated successfully");
         }
     }
 

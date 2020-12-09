@@ -18,7 +18,7 @@ trait HasFilter
 
         return app(Pipeline::class)
             ->send($query)
-            ->through(array_merge($this->queryFilters,[SortBy::class]))
+            ->through($this->queryFilters)
             ->thenReturn();
 
     }

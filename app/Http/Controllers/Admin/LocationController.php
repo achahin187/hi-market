@@ -45,21 +45,26 @@ class LocationController extends Controller
     public function addLocation(request $request)
     {
     	 $locations =  collect (json_decode($request->data, true)) ;
-
-    	 $count 	= 	$request->count;
-
     	 	
-    	 if ($count < 5) {
+    	 if ($request->count < 5) {
     	 	return response()->json(['msg'=>'sorry you must add at least 5 polygons']);
     	 }else{
 
+
+            $area = Area::create([
+                'name_ar'     => $request->area_ar,
+                'name_en'     => $request->area_en,
+                'city'        => $request->city_id,
+            ]);
+
     	 foreach ($locations as $key => $location) {
     	 	
-    	 	$store = Polygon::create([
+    	 	$Polygon = Polygon::create([
     	 		'lat'     => $location['lat'],
     	 		'lon' 	  => $location['lng'],
-    	 		'area_id' => 4,
+    	 		'area_id' => $area->id,
     	 	]);
+                
     	 }
     	 	return response()->json(['msg'=>'done']);
 
