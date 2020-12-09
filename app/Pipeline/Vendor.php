@@ -13,6 +13,6 @@ class Vendor extends Filter
 
     protected function query($builder)
     {
-        return $builder->whereIn("vendor_id",request("vendor"));
+        return $builder->whereIn("vendor_id",explode( ",",request("vendor")));
     }
 }
