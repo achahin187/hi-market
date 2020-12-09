@@ -178,7 +178,7 @@ class OrderController extends Controller
 
 
         $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches", function ($query) {
-            $query->where("branches.id", \request("supermarket_id"));
+            $query->where("branches.id", request("supermarket_id"));
         })->get();
         $cart = collect([]);
         foreach (explode(",", request("products")) as $product) {
@@ -193,10 +193,11 @@ class OrderController extends Controller
             return $cart->product != null;
         });
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
-            SimilarProductsResource::collection($similar_products)
+             SimilarProductsResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
             , $setting->delivery ?? 0
-            , CartResource::collection($cart)]);
+            , CartResource::collection($cart)
+        ]);
 
     }
 
