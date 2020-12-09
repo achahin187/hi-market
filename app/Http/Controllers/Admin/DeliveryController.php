@@ -116,7 +116,7 @@ class DeliveryController extends Controller
      */
     public function update(Request $request,$id)
     {
-       dd($request->all());
+       
         $driver = User::find($id);
 
         if ($driver) {
@@ -129,7 +129,10 @@ class DeliveryController extends Controller
 
             ]); 
 
-            $delivery->update($request()->all());
+            if ($request->password == null) {
+                 $request_data = $request->except('password');
+             }
+            $delivery->update($request_data);
 
             return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
         }else{

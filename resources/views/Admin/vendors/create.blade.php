@@ -128,8 +128,8 @@
 
                                             @if(isset($vendor))
 
-                                                <option <?php if($vendor->sponsor == 1) echo 'selected'; ?> value="0">{{ __('admin.vendor') }}</option>
-                                                <option  <?php if($vendor->sponsor == 0) echo 'selected'; ?> value="1">{{ __('admin.sponser') }}</option>
+                                                <option <?php if($vendor->sponsor == 0) echo 'selected'; ?> value="0">{{ __('admin.vendor') }}</option>
+                                                <option  <?php if($vendor->sponsor == 1) echo 'selected'; ?> value="1">{{ __('admin.sponser') }}</option>
 
                                             @else
 
