@@ -211,13 +211,13 @@ $settings = App\Models\Setting::all()->first();
 
                         <li class="nav-item has-treeview">
 
-                            <a href="" class="nav-link">
+                           
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     {{ __('admin.admin_managment') }}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
-                            </a>
+                            
 
 
                             <ul class="nav nav-treeview">
