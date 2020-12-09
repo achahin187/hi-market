@@ -10,7 +10,7 @@ class Filter
 {
     public function handle($request, \Closure $next)
     {
-        if ($this->canSkipRequest()) {
+        if (!$this->canSkipRequest()) {
             return $next($request);
         }
         return $this->query($next($request));
