@@ -18,7 +18,7 @@ class CategoryProductResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "description" => $this->description,
+            "description" => $this->description ?? "",
             "overview" => $this->specs ?? "",
             "price" => $this->price ?? 0,
             "offer_price" => $this->offer_price ?? 0,
