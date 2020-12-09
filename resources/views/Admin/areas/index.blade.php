@@ -7,7 +7,8 @@
 
 @php
 
-	$locations = \App\Models\Branch::Where('id',3)->first();
+	$locations = \App\Models\polygon::Where('area_id',4)->get();
+	
 
 		// foreach ($locations as $key => $location) {
 
@@ -61,11 +62,11 @@
 
 // var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
 //   var circle = L.polygon([
-//   	@foreach ($locations->city->locations as  $location) 
+//   	oreach ($locations->city->locations as  $location) 
 		
-//    			 [{{ $location->lat }},  {{ $location->lon }}] ,
+//    			 [{ $location->lat }},  { $location->lon }}] ,
 	
-// 	@endforeach
+// 	endforeach
           
 // ]).addTo(map);
 
@@ -82,7 +83,7 @@
 
   
   // var result = (circle.getBounds().contains(marker.getLatLng())) ? 'inside': 'outside';
-  // marker.bindPopup('Marker ' + result + ' {{ $locations->city->name_en  }}' );
+  // marker.bindPopup('Marker ' + result + ' ' );
   // marker.openPopup();
 //});
 
@@ -125,12 +126,12 @@
 	
 
 	L.polygon([
-			@foreach ($locations->city->locations as  $location) 
-		
+			@foreach ($locations as  $location) 
+			
     			 [{{ $location->lat }},  {{ $location->lon }}] ,
 	
  			@endforeach
-	]).addTo(mymap).bindPopup("inside {{ $locations->city->name_en  }}");
+	]).addTo(mymap).bindPopup("inside ");
 
 
 	var popup = L.popup();
@@ -138,7 +139,7 @@
 	function onMapClick(e) {
 		popup
 			.setLatLng(e.latlng)
-			.setContent("outside"+ "{{ $locations->city->name_en  }}" )
+			.setContent("outside"+ "" )
 			.openOn(mymap);
 	}
 

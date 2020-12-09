@@ -78,11 +78,23 @@ class AuthController extends Controller
 
 
         //login
-        if (auth("client-web")->attempt(["mobile_number" => $request->mobile_number, "password" => $request->password])) {
+        if (auth("client-web")->attempt([
+
+            "mobile_number" => $request->mobile_number,
+
+             "password" => $request->password
+         ])) 
+        {
+
             $client = Auth::guard('client-web')->user();
+
             $token = $client->createToken("hi-market")->accessToken;
+
             $msg = "you have been logged in successfully";
-            return $this->returnData(['client', 'token'], [new ClientResource($client), $token], $msg);
+
+
+            return $this->returnData(
+                ['client', 'token'], [new ClientResource($client), $token], $msg);
         }
 
         return $this->returnError(422, 'These credentials are not in our records');
@@ -111,7 +123,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'mobile_number' => $request->mobile_number,
-                'password' => Hash::make($request->password),
+                'password' => $request->password,
                 "unique_id" => Udid::where("body", $udid)->firstOrCreate([
                     "body"=>request()->header("udid")
                 ])->body
@@ -149,7 +161,9 @@ class AuthController extends Controller
 
 
         $mobile = $request->mobile_number;
+
         try {
+
             $client = Client::where('mobile_number', $mobile)->firstOrFail();
 
         } catch (\Exception $e) {

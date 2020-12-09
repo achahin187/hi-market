@@ -193,16 +193,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('store-polygon','Admin\LocationController@addLocation')->name('add-polygon');
         //locations
         Route::get('locations', 'Admin\LocationController@index')->name('locations.index');
+        Route::get('locations/create', 'Admin\LocationController@create')->name('locations.create');
 
         //areas
-        Route::get('locations/{location_id}/area/{area_id}', 'Admin\LocationController@index')->name('locations.area.index');
+        Route::get('locations/{location_id}/area', 'Admin\LocationController@getArea')->name('locations.area.index');
+        Route::post('area/status', 'Admin\LocationController@status')->name('areaList.status');
 
             //supermarket-admins
             Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
             //delivery-admins
             Route::resource('delivery-admins','Admin\DeliveryManagerController');
             Route::resource("delivery-companies","Admin\DeliveryCompanyController");
-
+ 
     });
 
 });
