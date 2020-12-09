@@ -18,7 +18,9 @@ class FavouritesController extends Controller
     public function addfavourite(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            "product_id" => "required"
+            "product_id" => "required",
+   
+            "supermarket_id"=>"required"
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
@@ -26,6 +28,7 @@ class FavouritesController extends Controller
         $udid = $request->header('udid');
         $product_id = $request->product_id;
         $flag = $request->flag;
+
         $client = getUser();
 
 

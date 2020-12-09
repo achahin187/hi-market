@@ -19,8 +19,11 @@ class SimilarProductsResource extends JsonResource
             "name" => $this->name,
             "imagepaths" => $this->imagepaths ? explode(",", $this->images) : [],
 
+
+
             "images"=>$this->images != ""  ?$this->images:  "default.png",
             "supermarket_id" => (int)request("supermarket_id")
+
 
         ];
     }
