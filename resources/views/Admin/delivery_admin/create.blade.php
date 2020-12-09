@@ -50,6 +50,10 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
+
+                            <div id="mapid" style="height: 500px;"></div>
+
+                            
                             <form role="form" action=" {{route('delivery-admins.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 

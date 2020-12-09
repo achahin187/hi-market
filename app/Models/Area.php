@@ -16,9 +16,7 @@ class Area extends Model
 
     protected static $logAttributes = ['name_ar','name_en','city','country','status'];
 
-    protected $fillable = [
-        'name_ar','name_en','city','country','status','created_by','updated_by'
-    ];
+    protected $guarded=[];
 
 
     public function areacountry() {

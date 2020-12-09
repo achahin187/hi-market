@@ -24,7 +24,11 @@ class City extends Model
     }
 
     public function locations() {
-        return $this->hasMany('App\Models\Location');
+        return $this->hasMany('App\Models\Location','city_id');
+    }
+
+    public function areaList() {
+        return $this->hasMany('App\Models\Area');
     }
 
     public function supermarkets() {

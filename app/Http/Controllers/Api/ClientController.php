@@ -52,8 +52,8 @@ class ClientController extends Controller
 
         $rules = [
             'name' => 'nullable|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
-            'email' => ['nullable', 'email', Rule::unique((new Client)->getTable()),],
-            'mobile_number' => ['nullable', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
+            // 'email' => ['nullable', 'email', Rule::unique((new Client)->getTable()),],
+            // 'mobile_number' => ['nullable', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
         ];
 
         $validator = \Validator::make($request->all(), $rules);
@@ -75,6 +75,7 @@ class ClientController extends Controller
 
 
     }
+
 
     public function clientpoints(Request $request)
     {
@@ -174,6 +175,25 @@ class ClientController extends Controller
         }
 
 
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->image) {
+
+
+            $filename = $image->getClientOriginalName();
+            $fileextension = $image->getClientOriginalExtension();
+            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $image->move('client', $file_to_store);
+
+            Client::create([
+                'image' => $file_to_store,
+            ]);
+            
+             $this->returnSuccessMessage("photo updated successfully");
+        }
     }
 
     public function changepassword(Request $request)

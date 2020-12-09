@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Location;
 use App\Models\City;
+use App\Models\Area;
+use App\Models\Polygon;
 class LocationController extends Controller
 {	
 	public $blade;
@@ -25,9 +27,18 @@ class LocationController extends Controller
 	}
 
 
-	public function create()
+	public function getArea($id)
 	{
-		return view($this->blade.__FUNCTION__);
+		$areaLists = City::find($id)->areaList()->get();
+		
+		return view($this->blade.'area')->with('areaLists',$areaLists);
+	}
+
+
+	public function create()
+	{	
+		$cities = City::all();
+		return view($this->blade.__FUNCTION__)->with('cities',$cities);
 	}
 
 
@@ -44,10 +55,10 @@ class LocationController extends Controller
 
     	 foreach ($locations as $key => $location) {
     	 	
-    	 	$store = Location::create([
-    	 		'lat' => $location['lat'],
-    	 		'lon' => $location['lng'],
-    	 		'city_id' => 3,
+    	 	$store = Polygon::create([
+    	 		'lat'     => $location['lat'],
+    	 		'lon' 	  => $location['lng'],
+    	 		'area_id' => 4,
     	 	]);
     	 }
     	 	return response()->json(['msg'=>'done']);
@@ -57,4 +68,23 @@ class LocationController extends Controller
 
 
     }
+
+    public function status()
+    {
+
+        $area = Area::find(request()->id);
+
+        if ($area) {
+        	
+        	$area->status === 'active' ?  $area->update(['status'=>'deactive']) :  $area->update(['status'=>'active']);
+
+          return redirect()->back()->withStatus(__('status changed successfully'));
+
+        }else{
+
+          return redirect()->back()->withStatus(__('this id not found'));
+        }
+
+    }
+
 }
