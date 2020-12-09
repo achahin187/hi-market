@@ -58,16 +58,21 @@ class Client extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class,"user_id");
-}
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
-    {
-        return [];
+    public function setPasswordAttribute($value){
+
+        $this->attributes['password'] = Hash::make($value);
     }
+
+    // public function getJWTIdentifier()
+    // {
+    //     return $this->getKey();
+    // }
+
+    // public function getJWTCustomClaims()
+    // {
+    //     return [];
+    // }
 
 }
