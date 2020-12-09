@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VendorResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Vendor;
-use Illuminate\Http\Request;
+
 
 class VendorController extends Controller
 {

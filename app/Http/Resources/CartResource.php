@@ -10,16 +10,16 @@ class CartResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
-        $product= $this->product;
+        $product = $this->product;
 
         return [
-            "id"=>$product->id,
-            "name"=>$product->name,
+            "id" => $product->id,
+            "name" => $product->name,
 
             "description" => $product->description,
             "overview" => $product->specs ?? "",
@@ -36,16 +36,17 @@ class CartResource extends JsonResource
             "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch()->name,
             "favourite" => $product->favourite ?? 0,
-            "percentage" =>  $product->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
+            "percentage" => $product->price && $this->offer_price ? (100 - (($this->offer_price / $this->price) * 100)) : 0,
             "imagepath" => $product->imagepath ?? "default.png",
             "category" => $product->category ?? "",
-            "quantity"=>(int)$this->qty,
+            "quantity" => (int)$this->qty,
 
 
         ];
     }
+
     private function getBranch()
     {
-        return Branch::Where('id',request("supermarket_id"))->first();
+        return Branch::Where('id', request("supermarket_id"))->first();
     }
 }
