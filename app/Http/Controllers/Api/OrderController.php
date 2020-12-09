@@ -162,16 +162,12 @@ class OrderController extends Controller
         $supermarket_id = $request->supermarket_id;
 
 
-
-
         $fav_ids = [];
 
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
 
         $similar_products = Product::similar($categories, $supermarket_id)->get();
-
-
 
 
         foreach ($favproducts as $product) {
@@ -181,8 +177,8 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
 
-        $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches",function($query){
-            $query->where("branches.id",\request("supermarket_id"));
+        $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches", function ($query) {
+            $query->where("branches.id", \request("supermarket_id"));
         })->get();
         $cart = collect([]);
         foreach (explode(",", request("products")) as $product) {
@@ -193,9 +189,9 @@ class OrderController extends Controller
 
             ]));
         }
-$cart = $cart->filter(function($cart){
-    return $cart->has("product");
-});
+        $cart = $cart->filter(function ($cart) {
+            return $cart->product != null;
+        });
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
             SimilarProductsResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
