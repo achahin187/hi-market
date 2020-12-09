@@ -13,6 +13,96 @@ use App\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * App\Models\Product
+ *
+ * @property int $id
+ * @property string $name_ar
+ * @property string $name_en
+ * @property string|null $eng_description
+ * @property string|null $arab_description
+ * @property string|null $eng_spec
+ * @property string|null $arab_spec
+ * @property float|null $price
+ * @property float|null $offer_price
+ * @property float|null $rate
+ * @property int|null $ratings
+ * @property int|null $priority
+ * @property string|null $images
+ * @property int|null $points
+ * @property int|null $category_id
+ * @property int|null $vendor_id
+ * @property int|null $supermarket_id
+ * @property int|null $branch_id
+ * @property int|null $measure_id
+ * @property int|null $size_id
+ * @property int $flag
+ * @property string $status
+ * @property string|null $start_date
+ * @property string|null $end_date
+ * @property string $exp_date
+ * @property string $production_date
+ * @property string $barcode
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $views
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Systemlog[] $activities
+ * @property-read int|null $activities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Branch[] $branches
+ * @property-read int|null $branches_count
+ * @property-read \App\Models\Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Client[] $clientreviews
+ * @property-read int|null $clientreviews_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Client[] $clients
+ * @property-read int|null $clients_count
+ * @property-read \App\Models\Measures|null $measure
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property-read \App\Models\Size|null $size
+ * @property-read \App\Models\SubCategory $subcategory
+ * @property-read \App\Models\Supermarket|null $supermarket
+ * @property-read \App\Models\Vendor|null $vendor
+ * @method static \Illuminate\Database\Eloquent\Builder|Product filter()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product similar($categories, $supermarket_id)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereArabDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereArabSpec($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereBarcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereEngDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereEngSpec($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereExpDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereFlag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereMeasureId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereNameAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereNameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereOfferPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePoints($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePriority($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereProductionDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereRatings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSizeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSupermarketId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereVendorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereViews($value)
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
     //
