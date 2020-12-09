@@ -7,7 +7,7 @@
 
 @php
 
-	$locations = \App\Models\polygon::Where('area_id',4)->get();
+	$locations = \App\Models\polygon::Where('area_id',2)->get();
 	
 
 		// foreach ($locations as $key => $location) {
@@ -60,90 +60,69 @@
 //   }
 // });
 
-// var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
-//   var circle = L.polygon([
-//   	oreach ($locations->city->locations as  $location) 
+var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
+  var circle = L.polygon([
+  	@foreach ($locations->city->locations as  $location) 
 		
-//    			 [{ $location->lat }},  { $location->lon }}] ,
+   			 [{ $location->lat }},  { $location->lon }}] ,
 	
-// 	endforeach
+	@endforeach
           
-// ]).addTo(map);
+]).addTo(map);
 
-// map.fitBounds(circle.getBounds());
+map.fitBounds(circle.getBounds());
 
-// var locationPoint = [];
+var locationPoint = [];
 
-// map.on('click', function (e) {
+map.on('click', function (e) {
 
-//   var marker = L.marker(e.latlng).addTo(map);
+  var marker = L.marker(e.latlng).addTo(map);
 
-//   locationPoint.push(e.latlng)
+  locationPoint.push(e.latlng)
  
 
   
-  // var result = (circle.getBounds().contains(marker.getLatLng())) ? 'inside': 'outside';
-  // marker.bindPopup('Marker ' + result + ' ' );
-  // marker.openPopup();
-//});
-
- // $('.add-polygon').on('click', function(e) {
-
- //        e.preventDefault();
-
- //        var requestData =JSON.stringify(locationPoint)
-       
-       
- //        var url = '{{ route('add-polygon') }}';
- //        var method ='post';
- //        $.ajax({
- //            url: url,
- //            method: method,
- //            data:{_token: '{{ csrf_token() }}', 'data':requestData, 'count':locationPoint.length },
-
- //            success: function(data) {
-
- //            	console.log(data);
- //            }
- //        })
-
- //    });//end of order products click
+  var result = (circle.getBounds().contains(marker.getLatLng())) ? 'inside': 'outside';
+  marker.bindPopup('Marker ' + result + ' ' );
+  marker.openPopup();
+});
 
 
 
 
-	var mymap = L.map('mapid').setView([26.863281, 29.539216], 13);
 
-	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox/streets-v11',
-		tileSize: 512,
-		zoomOffset: -1
-	}).addTo(mymap);
+	// var mymap = L.map('mapid').setView([26.863281, 29.539216], 6);
+
+	// L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+	// 	maxZoom: 18,
+	// 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+	// 		'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	// 	id: 'mapbox/streets-v11',
+	// 	tileSize: 512,
+	// 	zoomOffset: -1
+	// }).addTo(mymap);
 
 	
 
-	L.polygon([
-			@foreach ($locations as  $location) 
+	// L.polygon([
+	// 		@foreach ($locations as  $location) 
 			
-    			 [{{ $location->lat }},  {{ $location->lon }}] ,
+ //    			 [{{ $location->lat }},  {{ $location->lon }}] ,
 	
- 			@endforeach
-	]).addTo(mymap).bindPopup("inside ");
+ // 			@endforeach
+	// ]).addTo(mymap).bindPopup("inside ");
 
 
-	var popup = L.popup();
+	// var popup = L.popup();
 
-	function onMapClick(e) {
-		popup
-			.setLatLng(e.latlng)
-			.setContent("outside"+ "" )
-			.openOn(mymap);
-	}
+	// function onMapClick(e) {
+	// 	popup
+	// 		.setLatLng(e.latlng)
+	// 		.setContent("outside"+ "" )
+	// 		.openOn(mymap);
+	// }
 
-	mymap.on('click', onMapClick);
+	// mymap.on('click', onMapClick);
 
 
 </script>

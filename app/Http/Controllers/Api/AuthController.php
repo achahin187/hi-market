@@ -153,7 +153,44 @@ class AuthController extends Controller
         $msg = "you have been registered sucessfully";
 
         return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], $msg);
+    }
 
+    public function resetpassword(Request $request)
+    {
+
+       
+        $validator = \Validator::make($request->all(), [
+            'mobile_number' => ['required','numeric','digits:11'],
+            'old_password'  => ['required'],
+            'new_password'  => ['required', 'confirmed', 'different:old_password'],
+        ]);
+
+
+        if ($validator->fails()) {
+
+
+            return $this->returnError(300, 'These data is not valid');
+        }
+
+        $client= Client::where('mobile_number',$request->mobile_number)->get();
+
+        if ($client) {
+
+            if (Hash::check($request->old_password, $client->password)) {
+
+                $client->update(['password' => $request->new_password,]);
+
+
+                return $this->returnData(['client'], [$client], 'password updated successfully');
+
+            } else {
+
+                return $this->returnError(422, 'the old password is not in our records');
+            }
+        }else{
+
+                return $this->returnError(422, 'the phone number is no correct');
+        }
     }
 
     public function forgetpassword(Request $request)
@@ -183,9 +220,8 @@ class AuthController extends Controller
 
 
         return $this->returnData(['code'], [$code], $msg);
-
-
     }
+
 
     public function social(Request $request, $flag)
     {

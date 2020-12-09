@@ -90,9 +90,8 @@
                                     'points',
                                     'category_id',
                                     'vendor_id',
-                                    'subcategory_id',
                                     'supermarket_id',
-                                    'branch_id',
+                               
                                     'measure_id',
                                     'size_id',
                                     'start_date',
@@ -227,24 +226,8 @@
                                                     @endif
 
                                                 @endif
-                                                @if(in_array('branch_id',$columns))
-
-                                                    @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->branch->name_ar}}</td>
-                                                    @else
-                                                        <td>{{$product->branch->name_en}}</td>
-                                                    @endif
-
-                                                @endif
-                                                @if(in_array('subcategory_id',$columns))
-
-                                                    @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->subcategory->arab_name}}</td>
-                                                    @else
-                                                        <td>{{$product->subcategory->eng_name}}</td>
-                                                    @endif
-
-                                                @endif
+                                              
+                                               
                                                 @if(in_array('measure_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')

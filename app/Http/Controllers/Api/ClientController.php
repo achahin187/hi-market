@@ -148,51 +148,26 @@ class ClientController extends Controller
         return $this->returnError(422, "code is invalid");
     }
 
-    public function resetpassword(Request $request)
-    {
-
-
-        $client = \auth("client-api")->user();
-
-
-        $validator = Validator::make($request->all(), [
-            'password' => ['required'],
-        ]);
-
-        if ($validator->fails()) {
-
-
-            return $this->returnError(422, 'These data is not valid');
-
-        }
-
-        if (Hash::check(\request("password"), $client->password)) {
-            $client->update(['password' => Hash::make($request->password),]);
-            return $this->returnData(['client'], [$client], 'password updated successfully');
-
-        } else {
-            return $this->returnError(422, "wrong password");
-        }
-
-
-    }
-
+  
     public function uploadImage(Request $request)
     {
+        $request->validate([
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
+        ]);
         if ($request->image) {
 
-
+            $image = $request->image;
             $filename = $image->getClientOriginalName();
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
             $image->move('client', $file_to_store);
 
-            Client::create([
+            Auth('client-api')->user()->update([
                 'image' => $file_to_store,
             ]);
             
-             $this->returnSuccessMessage("photo updated successfully");
+             return $this->returnSuccessMessage("photo updated successfully");
         }
     }
 
