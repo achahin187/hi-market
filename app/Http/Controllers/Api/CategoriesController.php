@@ -104,7 +104,7 @@ class CategoriesController extends Controller
             ->select('product_id')->get();
 
 
-        $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
+        $products = $supermarket->products()->has("category")->whereNotNull("created_at")->filter()->where('status', 'active')->where('flag', 1)->get();
 
         foreach ($products as $product) {
 
@@ -165,7 +165,7 @@ class CategoriesController extends Controller
             if ($category) {
 
 
-                $products = $category->products()->has("category")->filter()->where('status', 'active')->get();
+                $products = $category->products()->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->get();
 
 
                 foreach ($products as $product) {
