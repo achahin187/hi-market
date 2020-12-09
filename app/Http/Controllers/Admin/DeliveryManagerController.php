@@ -104,10 +104,14 @@ class DeliveryManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
+
          $request->validate([
             'name' =>'required|string',
             'email' =>'required|email',
         ]);
+         if ($request->password == null) {
+             # code...
+         }
         $delivery = $this->model::find($id);
         $delivery->update(request()->all());
 
