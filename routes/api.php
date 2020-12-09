@@ -33,7 +33,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::get('products', 'ProductController@index')->name('listproducts');
     Route::post('product', 'ProductController@productdetails')->name('productdetails');
-
+    Route::post("product/count", "ProductController@productCount");
     Route::get('categories', 'CategoriesController@index');
     Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
     Route::get('social/{flag}', 'AuthController@social')->name('social.auth');
