@@ -31,13 +31,28 @@ class ProductController extends Controller
         }
     }
 
+    public function productCount()
+    {
+        $validation = \Validator::make(request()->all(), [
+            "supermarket_id" => "required|exists:branches,id",
+            "category_id" => "required|exists:categories,id"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+        $product_count = Product::whereHas("branches", function ($query) {
+            $query->where("branches.id", request("supermarket_id"));
+        })->where("category_id", request("category_id"))->filter()->count();
+        return $this->returnData(["product_count"], [$product_count]);
+    }
+
     public function homedata(Request $request)
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(10)->get();
 
-        $offers = Product::where('status', 'active')->where("flag",1)->limit(4)->get();
+        $offers = Product::where('status', 'active')->where("flag", 1)->limit(4)->get();
 
 
         foreach ($supermarkets as $supermarket) {
@@ -149,7 +164,6 @@ class ProductController extends Controller
         $product_details->delivery_time = '30 minutes';
 
 
-
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
@@ -237,13 +251,13 @@ class ProductController extends Controller
 
     public function filter()
     {
-        
-        $products = Product::whereHas("branches",function($query){
 
-          $query->where("branches.id",request()->get("supermarket_id"));
+        $products = Product::whereHas("branches", function ($query) {
 
-        })->where("category_id",request()->get("category_id"))->filter()->paginate();
+            $query->where("branches.id", request()->get("supermarket_id"));
 
-        return $this->returnData(["products"],[CategoryProductResource::collection($products)]);
+        })->where("category_id", request()->get("category_id"))->filter()->paginate();
+
+        return $this->returnData(["products"], [CategoryProductResource::collection($products)]);
     }
 }

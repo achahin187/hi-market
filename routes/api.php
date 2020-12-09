@@ -33,7 +33,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::get('products', 'ProductController@index')->name('listproducts');
     Route::post('product', 'ProductController@productdetails')->name('productdetails');
-
+    Route::post("product/count", "ProductController@productCount");
     Route::get('categories', 'CategoriesController@index');
     Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
     Route::get('social/{flag}', 'AuthController@social')->name('social.auth');
@@ -57,7 +57,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('getsupermarketcats', 'CategoriesController@supermarketcategories')->name('listsupermarketcats');
     Route::post('getcategoryproducts', 'CategoriesController@categoryproducts')->name('listcategoryproducts');
     Route::post('supermarketoffers', 'CategoriesController@supermarketoffers')->name('listcategoryproducts');
-    Route::get("vendors/{category_id}", "VendorController@show");
+    Route::post("vendors/{category_id}", "VendorController@show");
     Route::post('clientpoints', 'ClientController@clientpoints')->name('listcategoryproducts');
     Route::get("points/use", "ClientController@usePoints");
     Route::post('clientaddresses', 'ClientController@clientaddresses')->name('listcategoryproducts');

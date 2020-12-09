@@ -79,13 +79,8 @@ class OrderController extends Controller
         $client = getUser();
 
         $date = now();
-//        if ($request->day_index == 2) {
-//            $date = $date->addDays(1);
-//        } else if ($request->day_index == 3) {
-//            $date = $date->addDays(2);
-//        } elseif ($request->day_index == 4) {
-//            $date = $date->addDays(3);
-//        }
+
+        $date = $date->addDays($request->day_index - 1);
 
 
         if ($client) {
@@ -192,7 +187,7 @@ class OrderController extends Controller
             return $cart->product != null;
         });
         return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
-             SimilarProductsResource::collection($similar_products)
+            SimilarProductsResource::collection($similar_products)
             , WishlistResource::collection($wishlist)
             , $setting->delivery ?? 0
             , CartResource::collection($cart)

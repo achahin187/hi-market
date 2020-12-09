@@ -34,7 +34,7 @@ class ProductDetailesResource extends JsonResource
                 "flag" => $this->flag ?? 0,
                 "supermarket_id" => (int) request()->get("supermarket_id"),
                 "BranchName" => $this->getBranchName()->name,
-                "favourite" => \DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0,
+                "favourite" => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
                 "imagepaths" => $this->imagepaths ?? "default.png",
                 "category" => $this->category ?? "",
