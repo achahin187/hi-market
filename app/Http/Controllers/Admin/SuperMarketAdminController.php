@@ -112,7 +112,11 @@ class SuperMarketAdminController extends Controller
        $request->validate([
             'name' =>'required|string',
             'email' =>'required|email',
-        ]);;
+        ]);
+
+        if ($request->password == null) {
+             $request->except('password');
+         }
         $supermarket = $this->model::find($id);
         $supermarket->update(request()->all());
 

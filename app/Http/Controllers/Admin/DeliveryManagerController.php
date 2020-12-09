@@ -109,9 +109,11 @@ class DeliveryManagerController extends Controller
             'name' =>'required|string',
             'email' =>'required|email',
         ]);
-         if ($request->password == null) {
-             # code...
+
+        if ($request->password == null) {
+             $request->except('password');
          }
+         
         $delivery = $this->model::find($id);
         $delivery->update(request()->all());
 
