@@ -116,7 +116,7 @@ class OrderController extends Controller
 
             foreach (Product::find($order_details["products"]) as $product) {
 
-                $order->products()->attach($product->id, ['quantity' => $product->quantity, 'price' => $product->price]);
+                $order->products()->attach($product->id, ['quantity' => (int)$product->quantity, 'price' => $product->price]);
 
                 if ($order_details->flag == 1) {
 

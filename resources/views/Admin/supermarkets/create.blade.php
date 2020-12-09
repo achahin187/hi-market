@@ -257,7 +257,7 @@
                                                     <input name="image" type="file">
 
                                                 </div>
-                                               
+                                                <p style="color: red">W-400 px X L-130 px</p>
                                             </div>
                                         </div>
                                     @else
@@ -269,6 +269,7 @@
                                              
                                                 <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
                                               </div>
+                                              <p style="color: red">W-400 px X L-130 px</p>
                                         </div>
 
 
@@ -289,6 +290,7 @@
                                                     <input name="logo_image" type="file">
 
                                                 </div>
+                                                <p style="color: red">W-400 px X L-130 px</p>
                                                 
                                             </div>
                                         </div>
@@ -304,6 +306,7 @@
                                               </div>
 
                                             </div>
+                                              <p style="color: red">W-400 px X L-130 px</p>
                                         </div>
 
 

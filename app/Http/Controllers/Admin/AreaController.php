@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\Polygon;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -25,7 +26,8 @@ class AreaController extends Controller
      */
     public function index()
     {
-        //
+          $All_lat = Polygon::all();
+        dd(); 
         $areas = Area::orderBy('id', 'desc')->get();
 
         return view('Admin.areas.index',compact('areas'));
