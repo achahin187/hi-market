@@ -22,6 +22,44 @@ class AuthController extends Controller
     //
     use GeneralTrait;
 
+    public function checklat(Request $request)
+    {   
+        $All_lats = Polygon::all();
+        $c = false; 
+        $vertices_x = array();  //latitude points of polygon
+        $vertices_y = array();   //longitude points of polygon
+
+        foreach ($All_lats as  $lat) {
+            
+           $vertices_x[] =   $lat->lat; 
+           $vertices_y[] =   $lat->lon; 
+        }
+        
+        $points_polygon = count($vertices_x); 
+        $longitude =  23.345; //latitude of point to be checked
+        $latitude =  75.123; //longitude of point to be checked
+
+        if (is_in_polygon($points_polygon, $vertices_x, $vertices_y, $longitude, $latitude)){
+            echo "Is in polygon!"."<br>";
+        }
+        else { 
+            echo "Is not in polygon"; 
+        }
+
+    }
+
+        public function is_in_polygon($points_polygon, $vertices_x, $vertices_y, $longitude_x, $latitude_y) {
+            $i = $j = $c = 0;
+
+            for ($i = 0, $j = $points_polygon-1; $i < $points_polygon; $j = $i++) {
+                if (($vertices_y[$i] >  $latitude_y != ($vertices_y[$j] > $latitude_y)) && ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) * ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i])) {
+                    $c = !$c;
+                }
+            }
+
+            return $c;
+        }
+
     public function send_sms($name, $mobile, $msg, $lang)
     {
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=NVV2TzQxTHl5cThvcVFzWmozMEkwWWxxczRKT0k1VTRrUHNkaDJ0ZDhZcUtoMlN5WXBIcUVpekl2SlpZ5f4a28289ba33&name=' . $name . '&message=' . $msg . '&numbers=' . $mobile . '&sender=' . $name . '&language=' . $lang;

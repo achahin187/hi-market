@@ -91,7 +91,6 @@
                                     'category_id',
                                     'vendor_id',
                                     'supermarket_id',
-                               
                                     'measure_id',
                                     'size_id',
                                     'start_date',
