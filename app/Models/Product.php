@@ -20,7 +20,8 @@ class Product extends Model
         Vendor::class,
         MostPopular::class,
         HighPrice::class,
-        LowPrice::class
+        LowPrice::class,
+        LastSevenDays::class
     ];
 
     protected static $logName = 'products';
