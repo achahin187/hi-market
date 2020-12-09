@@ -60,6 +60,7 @@ return [
     
     'auto_approve' => 'الموافقة الاتوماتيكية',
     'approve' => 'الموافقة اليديوية',
+    'add_delivery_company'=>'اضافة شركة شحن',
 
     'order_setting' => 'اعدادات الاوردر',
     'tax' => 'الضرائب',

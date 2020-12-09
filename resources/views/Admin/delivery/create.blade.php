@@ -98,74 +98,25 @@
                                     </div>
  --}}
 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{__('admin.roles')}}</label>
-
-                                        @if(isset($driver))
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox"  name="roles[]" <?php if(in_array($role->name, $userRole)) echo 'checked' ?>>
-
-                                                        @if(App::getLocale() == 'ar')
-                                                            {{$role->arab_name}}
-                                                        @else
-                                                            {{$role->eng_name}}
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @else
-
-                                            @foreach($roles as $role)
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="form-check-input" value="{{$role->name}}" type="checkbox" name="roles[]">
-                                                        @if(App::getLocale() == 'ar')
-                                                            {{$role->arab_name}}
-                                                        @else
-                                                            {{$role->eng_name}}
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        @endif
-
-                                    </div>
 
                                     <div class="form-group">
-                                        <label>{{ __('admin.team') }} </label>
-                                        <select class=" @error('team_id') is-invalid @enderror select2" name="team_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <label>{{ __('admin.delivery_company') }} </label>
+                                        <select class=" @error('company_id') is-invalid @enderror select2" name="company_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($driver))
-                                                @foreach(\App\Models\Team::where('eng_name','delivery')->get() as $team)
+                                                @foreach($companies as $company)
 
-                                                    @if(App::getLocale() == 'ar')
+                                                    
 
-                                                        <option <?php if($driver->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->arab_name }}</option>
+                                                        <option <?php if($company->id == $driver->company->id) echo 'selected'; ?> value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
 
-                                                    @else
-
-                                                        <option <?php if($driver->team->id == $team->id) echo 'selected'; ?> value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
 
                                                 @endforeach
                                             @else
-                                                @foreach(\App\Models\Team::where('eng_name','delivery')->get() as $team)
+                                                @foreach($companies as $company)
 
 
-                                                    @if(App::getLocale() == 'ar')
+                                                        <option value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
 
-                                                        <option value="{{ $team->id }}">{{ $team->arab_name }}</option>
-
-                                                    @else
-
-                                                        <option value="{{ $team->id }}">{{ $team->eng_name }}</option>
-
-                                                    @endif
 
                                                 @endforeach
 

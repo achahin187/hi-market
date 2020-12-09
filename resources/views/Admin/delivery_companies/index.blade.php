@@ -19,7 +19,7 @@
                         <ol class="breadcrumb float-sm-right">
                             @if(auth()->user()->can('delivery-list'))
                                 <li class="breadcrumb-item"><a
-                                        href="{{route('delivery-companies.create')}}">{{ __('admin.create_delivery_admin') }}</a>
+                                        href="{{route('delivery-companies.create')}}">{{ __('admin.add_delivery_company') }}</a>
                                 </li>
                             @endif
                         </ol>
@@ -73,7 +73,7 @@
                                             <td>{{$deliveryCompany->name}}</td>
                                             <td>{{$deliveryCompany->email}}</td>
                                             <td>{{$deliveryCompany->status ?
-                                             __("admin.auto_approve") : __("admin.status_approve") }} </td>
+                                             __("admin.auto_approve") : __("admin.approve") }} </td>
 
                                             <td>{{$deliveryCompany->commission}}</td>
 
