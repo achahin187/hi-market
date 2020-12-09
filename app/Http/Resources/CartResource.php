@@ -36,7 +36,7 @@ class CartResource extends JsonResource
             "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch()->name,
             "favourite" => $product->favourite ?? 0,
-            "percentage" => $product->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
+            "percentage" => $product->price && $this->offer_price ? (100 - (($this->offer_price / $this->price) * 100)) : 0,
             "imagepath" => $product->imagepath ?? "default.png",
             "category" => $product->category ?? "",
             "quantity" => (int)$this->qty,
