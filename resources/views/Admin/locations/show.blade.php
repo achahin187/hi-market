@@ -1,7 +1,9 @@
 @extends('layouts.admin_layout')
 
 @section('content')
+ <div class="content-wrapper">
   <div id="mapid" style="height: 500px;"></div>
+</div>
 @endsection
 
 @push('scripts')
@@ -56,13 +58,11 @@
 //   marker.openPopup();
 // });
 
-@php
-	print_r($polygons) ;
-@endphp
 
 
 
-	var mymap = L.map('mapid').setView([{{ $polygons[0][0] }}, {{   $polygons[0][0] }}], 7);
+
+	var mymap = L.map('mapid').setView([{{ $polygons->first()->lat }}, {{   $polygons->first()->lon }}], 14);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,

@@ -55,6 +55,7 @@
                                     <tr>
                                         <th>{{ __('admin.area_ar') }}</th>
                                         <th>{{ __('admin.area_en') }}</th>
+                                        <th>{{ __('admin.map') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                   
                                       
@@ -69,6 +70,8 @@
                                         <tr>
                                             <td>{{$areaList->name_ar}}</td>
                                             <td>{{$areaList->name_en}}</td>
+                                            <td>
+                                            <a href='{{ route('locations.area.show',$areaList->id) }}' class="btn btn-primary">Zone</a></td>
                                             <td>
                                                     <form action="{{ route('areaList.status', ['id'=>$areaList->id]) }}" method="POST">
 
