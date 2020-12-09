@@ -34,7 +34,7 @@ class CategoryProductResource extends JsonResource
             "supermarketName" => $this->getBranch()->name,
             "favourite" => $this->favourite ?? 0,
             "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
-            "imagepath" => explode(",", $this->image) ?? "default.png",
+            "imagepath" => $this->image ?? "default.png",
             "category" => $this->category ?? "",
         ];
     }

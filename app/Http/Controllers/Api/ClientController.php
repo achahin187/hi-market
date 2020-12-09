@@ -100,7 +100,7 @@ class ClientController extends Controller
         $user = \auth()->user();
         $user->points = $point->points - $user->points;
         $user->save();
-        return $this->returnData(["user_points","discount",    ], [$user->points,$point->value]);
+        return $this->returnData(["user_points","point"], [$user->points,$point]);
     }
 
     public function clientaddresses(Request $request)
