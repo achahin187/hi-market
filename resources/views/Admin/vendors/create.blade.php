@@ -76,16 +76,17 @@
                                         @enderror
                                     </div>
 
-{{-- 
+
                                     <div class="form-group">
                                         <label> {{ __('admin.category') }}</label>
-                                        <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id[]" data-placeholder="Select a State" style="width: 100%;" required multiple>
 
                                             @if(isset($vendor))
 
                                                 @foreach(\App\Models\Category::all() as $category)
 
-                                                    <option <?php if($vendor->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                                    <option 
+                                                      {{ $vendor->categories->where('id', $category->id)->count() != 0 ?  'selected' : ""  }}  value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                                 @endforeach
                                             @else
@@ -97,7 +98,7 @@
                                             @endif
 
                                         </select>
-                                    </div> --}}
+                                    </div>
 {{-- 
                                     <div class="form-group">
                                         <label> {{ __('admin.subcategory') }}</label>

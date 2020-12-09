@@ -638,6 +638,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                         <p style="color: red">W-400 px X L-130 px</p>
 
 
                                 @elseif(isset($product) && isset($clone))
@@ -652,6 +653,7 @@
                                            
                                         </div>
                                     </div>
+                                         <p style="color: red">W-400 px X L-130 px</p>
                                 @else
 
                                     <div class="form-group">
@@ -664,6 +666,7 @@
                                           
                                         </div>
                                     </div>
+                                             <p style="color: red">W-400 px X L-130 px</p>
                                 @endif
                             </div>
                             <!-- /.card-body -->

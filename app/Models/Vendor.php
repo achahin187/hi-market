@@ -22,11 +22,13 @@ class Vendor extends Model
         return $this->hasMany('App\Models\Product');
     }
 
-    public function category() {
-        return $this->belongsTo('App\Models\Category');
+    public function categories() {
+        return $this->belongsToMany('App\Models\Category','category_vendor');
     }
 
-    public function subcategory() {
-        return $this->belongsTo('App\Models\SubCategory');
-    }
+    // public function subcategory() {
+    //     return $this->belongsTo('App\Models\SubCategory');
+    // }
+
+
 }

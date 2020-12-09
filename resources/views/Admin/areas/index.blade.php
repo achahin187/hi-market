@@ -64,7 +64,7 @@ var circle = L.circle([30.777718, 30.999327], 1000).addTo(map);
   var circle = L.polygon([
   	@foreach ($locations->city->locations as  $location) 
 		
-   			 [{ $location->lat }},  { $location->lon }}] ,
+   			 [{{ $location->lat }},  {{ $location->lon }}] ,
 	
 	@endforeach
           

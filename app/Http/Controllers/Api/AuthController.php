@@ -242,7 +242,7 @@ class AuthController extends Controller
             $client = Client::where('mobile_number', $mobile)->firstOrFail();
 
         } catch (\Exception $e) {
-            return $this->returnError(404, "Client Not Found");
+            return $this->returnError(404, "mobile number Not Found");
         }
 
 
