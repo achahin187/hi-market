@@ -165,7 +165,9 @@ class CategoriesController extends Controller
             if ($category) {
 
 
-                $products = $category->products()->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->get();
+                $products = $category->products()->whereHas("branches",function($query){
+                    $query->where("branches.id",request("supermarket_id"));
+                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->get();
 
 
                 foreach ($products as $product) {
