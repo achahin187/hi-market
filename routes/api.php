@@ -24,7 +24,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('resetpassword', 'ClientController@resetpassword')->name('reset_password');
     Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
     Route::get('products/search/{name}', 'ProductController@getproductsearch')->name('search');
-    Route::get("products/filter", "ProductController@filter");
+    Route::post("products/filter", "ProductController@filter");
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('supermarketoffers', 'CategoriesController@supermarketoffers')->name('listcategoryproducts');
 
     Route::post('clientpoints', 'ClientController@clientpoints')->name('listcategoryproducts');
+    Route::get("points/use", "ClientController@usePoints");
     Route::post('clientaddresses', 'ClientController@clientaddresses')->name('listcategoryproducts');
     Route::post("verify/address", "ClientController@validateAddress");
 

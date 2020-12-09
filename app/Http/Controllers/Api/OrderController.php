@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SimilarProductsResource;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
@@ -139,7 +140,7 @@ class OrderController extends Controller
     public function addcart(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            "category_ids" => "required|array",
+            "category_ids" => "required",
             "supermarket_id" => "required",
             "products" => "required"
 
@@ -154,14 +155,14 @@ class OrderController extends Controller
         }
 
 
-        $category_ids = $request->category_ids;
+        $category_ids = explode(",", $request->category_ids);
 
         $categories = $category_ids;
 
         $supermarket_id = $request->supermarket_id;
 
 
-        $imagepaths = [];
+
 
         $fav_ids = [];
 
@@ -171,17 +172,7 @@ class OrderController extends Controller
         $similar_products = Product::similar($categories, $supermarket_id)->get();
 
 
-        foreach ($similar_products as $product) {
 
-            $product_images = explode(',', $product->images);
-
-            foreach ($product_images as $image) {
-                array_push($imagepaths, asset('images/' . $image));
-            }
-
-            $product->imagepaths = $imagepaths;
-
-        }
 
         foreach ($favproducts as $product) {
             array_push($fav_ids, $product->product_id);
@@ -190,10 +181,24 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
 
-        $wishlist = Product::whereIn('id', $fav_ids)->where('supermarket_id', $supermarket_id)->get();
+        $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches",function($query){
+            $query->where("branches.id",\request("supermarket_id"));
+        })->get();
+        $cart = [];
+        foreach (explode(",", request("products")) as $product) {
+            $cart[] = Cart::create([
+                "user_id" => getUser()->id,
+                "product_id" => explode(":", $product)[0],
+                "qty" => explode(":", $product)[1],
 
-        $products = Product::find($request->products);
-        return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [ProductResource::collection($similar_products), WishlistResource::collection($wishlist), $setting->delivery, CategoryProductResource::collection($products)]);
+            ]);
+        }
+
+        return $this->returnData(['similar products', 'wishlist', 'setting', "cart"], [
+            SimilarProductsResource::collection($similar_products)
+            , WishlistResource::collection($wishlist)
+            , $setting->delivery ?? ""
+            , CartResource::collection($cart)]);
 
     }
 
@@ -226,10 +231,10 @@ class OrderController extends Controller
             ];
         }
         $state = [
-            1=>"close",
-            2=>"open"
+            1 => "close",
+            2 => "open"
         ];
-        return $this->returnData(["days", "time","state"], [$days, $time,$state[rand(1,2)]]);
+        return $this->returnData(["days", "time", "state"], [$days, $time, $state[rand(1, 2)]]);
     }
 
 }

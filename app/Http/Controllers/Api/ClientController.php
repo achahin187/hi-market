@@ -8,6 +8,7 @@ use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
+use App\Models\Point;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,14 +79,29 @@ class ClientController extends Controller
 
     public function clientpoints(Request $request)
     {
-        $udid = $request->header('udid');
 
 
-        $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", $udid)->first();
+        $client = getUser();
 
+        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")->simplePaginate();
+        return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
 
-        return $this->returnData(['client points'], [$client->total_points ?? 0]);
+    }
 
+    public function usePoints()
+    {
+
+        $validation = \Validator::make(\request()->all(), [
+            "point_id" => "required|exists:points,id"
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+        $point = Point::find(\request("point_id"));
+        $user = \auth()->user();
+        $user->points = $point->points - $user->points;
+        $user->save();
+        return $this->returnData(["user_points","point"], [$user->points,$point]);
     }
 
     public function clientaddresses(Request $request)
@@ -118,7 +134,7 @@ class ClientController extends Controller
     public function validateAddress()
     {
         $validation = \Validator::make(\request()->all(), [
-            "address_id" => "required|exists:users,id",
+            "address_id" => "required|exists:addresses,id",
             "code" => "required"
         ]);
         if ($validation->fails()) {
@@ -127,7 +143,7 @@ class ClientController extends Controller
         $address = Address::find(\request("address_id"));
         if ($address->verify == request("code")) {
             $address->update(["verified" => 1]);
-            $this->returnSuccessMessage("address verified");
+            return $this->returnSuccessMessage("address verified");
         }
         return $this->returnError(422, "code is invalid");
     }
@@ -136,9 +152,7 @@ class ClientController extends Controller
     {
 
 
-        $mobile = $request->mobile;
-
-        $client = Client::where('mobile_number', $mobile)->first();
+        $client = \auth("client-api")->user();
 
 
         $validator = Validator::make($request->all(), [
@@ -148,14 +162,17 @@ class ClientController extends Controller
         if ($validator->fails()) {
 
 
-            return $this->returnError(300, 'These data is not valid');
+            return $this->returnError(422, 'These data is not valid');
 
         }
 
+        if (Hash::check(\request("password"), $client->password)) {
+            $client->update(['password' => Hash::make($request->password),]);
+            return $this->returnData(['client'], [$client], 'password updated successfully');
 
-        $client->update(['password' => Hash::make($request->password),]);
-
-        return $this->returnData(['client'], [$client], 'password updated successfully');
+        } else {
+            return $this->returnError(422, "wrong password");
+        }
 
 
     }
@@ -296,7 +313,6 @@ class ClientController extends Controller
 
     public function delete_address(Request $request)
     {
-
 
 
         $client = \auth("client-api")->user();
