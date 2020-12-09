@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Hash;
 
 class Client extends Authenticatable
 {
@@ -58,16 +59,21 @@ class Client extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class,"user_id");
-}
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
-    {
-        return [];
+    public function setPasswordAttribute($value){
+
+        $this->attributes['password'] = Hash::make($value);
     }
+
+    // public function getJWTIdentifier()
+    // {
+    //     return $this->getKey();
+    // }
+
+    // public function getJWTCustomClaims()
+    // {
+    //     return [];
+    // }
 
 }

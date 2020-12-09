@@ -18,6 +18,7 @@ class ClientResource extends JsonResource
             "id"=>$this->id,
             "name"=>$this->name,
             "email"=>$this->email,
+            "phone"=>$this->mobile_number,
             "total_points"=>!is_null($this->total_points) ? $this->total_points : 0,
             "image"=>!is_null($this->image) ? $this->image : "default.png",
 
