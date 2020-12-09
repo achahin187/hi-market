@@ -177,7 +177,7 @@ class OrderController extends Controller
         $setting = Setting::select('delivery')->first();
 
 
-        $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches", function ($query) {
+        $wishlist = Product::whereIn('id', $fav_ids->pluck("product_id"))->whereHas("branches", function ($query) {
             $query->where("branches.id", \request("supermarket_id"));
         })->get();
         $cart = collect([]);

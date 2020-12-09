@@ -6,7 +6,7 @@ namespace App\Pipeline;
 
 class MostPopular extends Filter
 {
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
 
         return request("sortBy") && request("sortBy") == 1;

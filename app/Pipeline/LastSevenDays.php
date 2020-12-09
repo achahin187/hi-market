@@ -6,7 +6,7 @@ namespace App\Pipeline;
 
 class LastSevenDays extends Filter
 {
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
         return request(  "new_arrival") && request("new_arrival") == 4;
     }
