@@ -128,11 +128,11 @@ class DeliveryController extends Controller
                 'company_id' => ['required'],
 
             ]); 
-            
+
             if ($request->password == null) {
-                 $request->except('password');
+                 $request_data = $request->except('password');
              }
-            $delivery->update($request()->all());
+            $delivery->update($request_data);
 
             return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
         }else{

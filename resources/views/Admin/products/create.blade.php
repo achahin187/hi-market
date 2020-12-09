@@ -397,7 +397,8 @@
                                 @if(!isset($client))
 
                                     <div class="form-group">
-                                        <label>Status</label>
+                                        <label>
+                                        </label>
                                         <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
 

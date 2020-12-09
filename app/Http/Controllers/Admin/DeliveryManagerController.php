@@ -111,11 +111,11 @@ class DeliveryManagerController extends Controller
         ]);
 
         if ($request->password == null) {
-             $request->except('password');
+             $request_data = $request->except('password');
          }
-         
+
         $delivery = $this->model::find($id);
-        $delivery->update(request()->all());
+        $delivery->update($request_data);
 
         return redirect()->route($this->route.'index');
     }
