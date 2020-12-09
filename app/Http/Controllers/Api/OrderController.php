@@ -179,7 +179,7 @@ class OrderController extends Controller
 
         $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches", function ($query) {
             $query->where("branches.id", \request("supermarket_id"));
-        })->dd();
+        })->get();
         $cart = collect([]);
         foreach (explode(",", request("products")) as $product) {
             $cart->add(Cart::create([
