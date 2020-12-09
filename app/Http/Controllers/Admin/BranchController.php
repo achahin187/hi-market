@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Supermarket;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -436,8 +437,19 @@ class BranchController extends Controller
 
     public function supermarketbranches($supermarket_id)
     {
-        //
+        
         $branches = Branch::where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
         return view('Admin.branches.index',compact('branches','supermarket_id'));
+    }
+
+    public function getVendorCategories(Request $request)
+    {
+        $categories = Vendor::WhereHas('categories', function ($q) use($request){
+
+            $q->Where('vendor_id',$request->vendor_id);
+
+        })->get();
+      
+        return response()->json($categories);
     }
 }

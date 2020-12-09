@@ -159,7 +159,7 @@
                                             </div>
                                         </div>
                                     @else
-{{-- 
+                                    {{-- 
                                         <div class="form-group">
                                             <label for="exampleInputFile">{{ __('admin.logo') }}</label>
                                             <div class="input-group">

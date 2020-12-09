@@ -21,8 +21,6 @@ class CreateDeliveryCompaniesTable extends Migration
             $table->float("commission");
             $table->string("phone_number");
             $table->string("email");
-            $table->bigInteger("branch_id")->unsigned();
-            $table->foreign("branch_id")->references("id")->on("branches")->onDelete("cascade");
             $table->bigInteger("city_id")->unsigned();
             $table->foreign("city_id")->references("id")->on("cities")->onDelete("cascade");
             $table->timestamps();

@@ -199,11 +199,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('locations/{location_id}/area', 'Admin\LocationController@getArea')->name('locations.area.index');
         Route::post('area/status', 'Admin\LocationController@status')->name('areaList.status');
 
-            //supermarket-admins
-            Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
-            //delivery-admins
-            Route::resource('delivery-admins','Admin\DeliveryManagerController');
-            Route::resource("delivery-companies","Admin\DeliveryCompanyController");
+        //supermarket-admins
+        Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
+        //delivery-admins
+        Route::resource('delivery-admins','Admin\DeliveryManagerController');
+        Route::resource("delivery-companies","Admin\DeliveryCompanyController");
+
+        //VendorCategories
+        Route::get('getVendorCategories', 'Admin\BranchController@getVendorCategories')->name('vendor.categories');
+            
  
     });
 

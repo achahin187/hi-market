@@ -230,7 +230,7 @@
 
                                 <div class="form-group">
                                     <label>{{__('admin.vendor')}} </label>
-                                    <select class=" @error('vendor_id') is-invalid @enderror select2" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select class=" @error('vendor_id') is-invalid @enderror select2" id="vendor_1" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
                                             @foreach(\App\Models\Vendor::all() as $vendor)
 
@@ -393,7 +393,7 @@
                                 </div>
 
 
-
+{{-- 
                                 @if(!isset($client))
 
                                     <div class="form-group">
@@ -414,10 +414,10 @@
                                     </div>
 
                                 @endif
-
+ --}}
                                 <div class="form-group">
                                     <label>{{__('admin.category')}}</label>
-                                    <select class=" @error('category_id') is-invalid @enderror select2"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                    <select class=" @error('category_id') is-invalid @enderror select2" id='categories'  name="category_id" data-placeholder="Select a State" style="width: 100%;" required >
 
                                         @if(isset($product))
                                             @foreach(\App\Models\Category::all() as $category)
@@ -428,7 +428,7 @@
                                         @else
                                             @foreach(\App\Models\Category::all() as $category)
 
-                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                                <option></option>
 
                                             @endforeach
 
@@ -614,7 +614,7 @@
                                 @if(isset($product) && !isset($clone))
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">{{__('admin.image_upload')}}</label>
+                                        <label for="exampleInputFile">{{__('admin.image')}}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
 
@@ -638,7 +638,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                         <p style="color: red">W-400 px X L-130 px</p>
+                                         <p style="color: red">Width: 80 px</p>
+                                          <p style="color: red"> length: 80 px </p>
 
 
                                 @elseif(isset($product) && isset($clone))
@@ -653,7 +654,8 @@
                                            
                                         </div>
                                     </div>
-                                         <p style="color: red">W-400 px X L-130 px</p>
+                                            <p style="color: red">Width: 80 px</p>
+                                             <p style="color: red"> length: 80 px </p>
                                 @else
 
                                     <div class="form-group">
@@ -666,7 +668,8 @@
                                           
                                         </div>
                                     </div>
-                                             <p style="color: red">W-400 px X L-130 px</p>
+                                                <p style="color: red">Width: 80 px</p>
+                                                <p style="color: red"> length: 80 px </p>
                                 @endif
                             </div>
                             <!-- /.card-body -->
@@ -694,8 +697,24 @@
                 success: function(data) {
                     $('#branches').html('');
                     data.forEach(function(x){
-                        console.log(x.id);
+                        
                     $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
+                    })
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#vendor_1").change(function(){
+            $.ajax({
+                url: "{{ route('vendor.categories') }}?vendor_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#categories').html('');
+                    data.forEach(function(x){
+                       
+                    $('#categories').append(new Option(x.arab_name,x.id,false,false)).trigger("change");
                     })
                 }
             });
