@@ -75,7 +75,7 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Branch','product_supermarket');
     }
 
-    
+
 
 
     protected function getNameAttribute()
@@ -94,7 +94,9 @@ class Product extends Model
     }
     public function scopeSimilar($query,$categories,$supermarket_id)
     {
-       $query->whereIn('category_id', $categories)->where('supermarket_id', $supermarket_id)->select('id', 'images');
+       $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id){
+           $query->where("branches.id",$supermarket_id);
+       })->select('id', 'images');
     }
 
 }
