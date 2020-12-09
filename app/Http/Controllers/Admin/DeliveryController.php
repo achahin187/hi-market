@@ -124,15 +124,18 @@ class DeliveryController extends Controller
             $request->validate([
                 'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
                 'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore($driver->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                'password' => ['sometimes','min:8', 'max:50'],
+              
                 'company_id' => ['required'],
 
             ]); 
 
+            $request_data = $request->all();
+            
             if ($request->password == null) {
                  $request_data = $request->except('password');
              }
-            $delivery->update($request_data);
+            
+            $driver->update($request_data);
 
             return redirect('/admin/delivery')->withStatus(trans('admin.update_successfully'));
         }else{

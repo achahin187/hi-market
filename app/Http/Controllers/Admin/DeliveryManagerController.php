@@ -110,6 +110,8 @@ class DeliveryManagerController extends Controller
             'email' =>'required|email',
         ]);
 
+        $request_data = $request->all();
+        
         if ($request->password == null) {
              $request_data = $request->except('password');
          }
