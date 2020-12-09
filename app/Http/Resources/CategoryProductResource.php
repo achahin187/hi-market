@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Branch;
+
 class CategoryProductResource extends JsonResource
 {
     /**
@@ -32,8 +33,8 @@ class CategoryProductResource extends JsonResource
             "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch()->name,
             "favourite" => $this->favourite ?? 0,
-            "percentage" =>  $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
-            "imagepath" => $this->imagepath ?? "default.png",
+            "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
+            "imagepath" => explode(",", $this->image) ?? "default.png",
             "category" => $this->category ?? "",
         ];
     }
@@ -41,6 +42,6 @@ class CategoryProductResource extends JsonResource
 
     private function getBranch()
     {
-        return Branch::Where('id',request("supermarket_id"))->first();
+        return Branch::Where('id', request("supermarket_id"))->first();
     }
 }

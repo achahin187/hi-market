@@ -171,17 +171,7 @@ class OrderController extends Controller
         $similar_products = Product::similar($categories, $supermarket_id)->get();
 
 
-        foreach ($similar_products as $product) {
 
-            $product_images = explode(',', $product->images);
-
-            foreach ($product_images as $image) {
-                array_push($imagepaths, asset('images/' . $image));
-            }
-
-            $product->imagepaths = $imagepaths;
-
-        }
 
         foreach ($favproducts as $product) {
             array_push($fav_ids, $product->product_id);
