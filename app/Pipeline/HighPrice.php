@@ -6,7 +6,7 @@ namespace App\Pipeline;
 
 class HighPrice extends Filter
 {
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
 
         return request("sortBy") && request("sortBy") == 2;

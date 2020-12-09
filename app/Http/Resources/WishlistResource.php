@@ -18,20 +18,20 @@ class WishlistResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "category_id" => $this->category->id,
+            "categoryname" => $this->category->name,
             "price" => $this->price ?? 0,
             "offer_price" => $this->offer_price ?? 0,
             "percentage" => ($this->offer_price / $this->price) * 100,
             "imagepath" => asset($this->image),
-            "category_id" => $this->category->id,
-
-            "category_name" => $this->category->name,
-
+            "flag"=>$this->flag,
+            "images" => $this->images,
             "supermarket_id" => Branch::find(request("supermarket_id"))->id,
-
-            "supermarket_name" => Branch::find(request("supermarket_id"))->name,
-
-
-            "description" => $this->description ?? ""
+            "supermarketname" => Branch::find(request("supermarket_id"))->name,
+            "ratings" => $this->ratings ?? 0,
+            "rate" => $this->rate,
+            "description" => $this->description ?? "",
+            "category"=>$this->category
 
         ];
     }

@@ -6,14 +6,14 @@ namespace App\Pipeline;
 
 class LastSevenDays extends Filter
 {
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
-        return request(  "new_arrival") && request("") == 4;
+        return request(  "new_arrival") && request("new_arrival") == 4;
     }
 
     protected function query($builder)
     {
 
-        return $builder->orderBy("created_at", "desc");
+        return $builder->whereDate("created_at",">",date("Y-m-d H:i:s",now()->subDays(7)->timestamp));
     }
 }

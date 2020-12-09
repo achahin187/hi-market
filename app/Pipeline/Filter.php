@@ -10,7 +10,7 @@ class Filter
 {
     public function handle($request, \Closure $next)
     {
-        if (!$this->canSkipRequest()) {
+        if (!$this->canRunRequest()) {
             return $next($request);
         }
         return $this->query($next($request));
@@ -27,7 +27,7 @@ class Filter
 
         return $builder->where($this->filterRequest(),"LIKE", "%" . request($this->filterRequest()) . "%");
     }
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
         return !request()->has($this->filterRequest()) || request($this->filterRequest()) == null;
     }

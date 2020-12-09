@@ -6,7 +6,7 @@ namespace App\Pipeline;
 
 class Vendor extends Filter
 {
-    protected function canSkipRequest()
+    protected function canRunRequest()
     {
         return !request($this->filterRequest()) ;
     }

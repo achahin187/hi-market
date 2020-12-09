@@ -18,7 +18,7 @@ class CategoryProductResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "description" => $this->description,
+            "description" => $this->description ?? "",
             "overview" => $this->specs ?? "",
             "price" => $this->price ?? 0,
             "offer_price" => $this->offer_price ?? 0,
@@ -31,7 +31,7 @@ class CategoryProductResource extends JsonResource
             "category_id" => $this->category_id ?? "",
             "flag" => $this->flag ?? 0,
             "supermarket_id" => (int)request("supermarket_id"),
-            "supermarketName" => $this->getBranch()->name,
+            "supermarketName" => $this->getBranch(),
             "favourite" => $this->favourite ?? 0,
             "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
             "imagepath" => $this->image ?? "default.png",
@@ -42,6 +42,6 @@ class CategoryProductResource extends JsonResource
 
     private function getBranch()
     {
-        return Branch::Where('id', request("supermarket_id"))->first();
+        return Branch::Where('id', request("supermarket_id"))->first()->name ?? "";
     }
 }
