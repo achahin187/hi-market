@@ -19,7 +19,8 @@ class FavouritesController extends Controller
     {
         $validation = \Validator::make($request->all(), [
             "product_id" => "required",
-             "category_id"=>"required"
+             "category_id"=>"required",
+            "supermarket_id"=>"required"
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
