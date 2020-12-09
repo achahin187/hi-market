@@ -8,13 +8,11 @@ class Vendor extends Filter
 {
     protected function canRunRequest()
     {
-        return !request($this->filterRequest()) ;
+        return request( "vendor") ;
     }
 
     protected function query($builder)
     {
-        return $builder->whereHas("vendor", function ($query) {
-            $query->orderBy(app()->getLocale() == "en" ? "eng_name" : "arab_name",request("order","asc"));
-        });
+        return $builder->whereIn("vendor_id",request("vendor"));
     }
 }
