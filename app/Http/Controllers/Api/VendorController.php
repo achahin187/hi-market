@@ -17,7 +17,7 @@ class VendorController extends Controller
     {
 
         $vendors = Vendor::whereHas("categories", function ($query) use ($id) {
-            $query->where("categories.id", $id);
+            $query->where("categories.id", request("category_id"));
         })->get();
 
         return $this->returnData(["vendors"], [VendorResource::collection($vendors)]);
