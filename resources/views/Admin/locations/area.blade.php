@@ -18,7 +18,7 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @if(auth()->user()->can('location-create'))
-                                <li class="breadcrumb-item"><a href="{{route('delivery-admins.create')}}">{{ __('admin.add_delivery_admin') }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('delivery-admins.create')}}">{{ __('admin.add_area') }}</a></li>
                                 @endif
                             </ol>
                         </div>
@@ -46,7 +46,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.delivery_admin') }}</h3>
+                                <h3 class="card-title">{{ __('admin.area') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
