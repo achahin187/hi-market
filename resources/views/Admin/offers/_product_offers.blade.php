@@ -1,4 +1,4 @@
-<form action="{{ route('offer.store') }}" method="POST">
+<form action="{{ route('offer.store') }}" method="POST"  enctype="multipart/form-data">
     
 @csrf  
                  <input type="hidden" value="product Offer" name="type">
