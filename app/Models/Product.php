@@ -108,7 +108,7 @@ class Product extends Model
     //
     use LogsActivity,HasFilter;
     protected $queryFilters= [
-        LastSevenDays::class,
+   
         Vendor::class,
         MostPopular::class,
         HighPrice::class,
