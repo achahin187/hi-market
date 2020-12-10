@@ -144,13 +144,21 @@
 
                                             @else
                                                 {{-- trans('admin.status') --}}
-
-                                                <?php $main_cols = [trans('admin.name_ar'),trans('admin.name_en'),trans('admin.priority'),
-                                                trans('admin.category'),trans('admin.supermarket'),trans('admin.branch')];?>
+                                                {{-- <td>--}}
+                                                <?php $main_cols =[ 
+                                                'name_ar',
+                                                'name_en',
+                                                'priority',
+                                                'status',
+                                                'category',
+                                                'supermarket',
+                                                
+                                                ];
+                                                ?>
 
                                                 @foreach($main_cols as $main_col)
 
-                                                        <th>{{__($main_col)}}</th>
+                                                        <th>{{__('admin.'.$main_col)}}</th>
 
 
                                                 @endforeach
@@ -225,6 +233,8 @@
                                                     @endif
 
                                                 @endif
+
+
                                               
                                                
                                                 @if(in_array('measure_id',$columns))
@@ -335,12 +345,7 @@
                                                     <td>{{$product->supermarket->eng_name}}</td>
                                                 @endif
 
-                                               {{--  @if(App::getLocale() == 'ar')
-                                                    <td>{{$product->branch->name_ar}}</td>
-                                                @else
-                                                    <td>{{$product->branch->name_en}}</td>
-                                                @endif
- --}}
+
 
                                             @endif
 

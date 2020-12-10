@@ -812,7 +812,7 @@ class ProductController extends Controller
      */
     public function export()
     {
-        return Excel::download(new ProductsExport , 'admins.csv');
+        return Excel::download(new ProductsExport , 'products.xlsx');
     }
 
     /**
@@ -823,9 +823,11 @@ class ProductController extends Controller
         $rules = [
             'file' => 'file|mimes:csv|max:277'
         ];
+
+       
         Excel::import(new ProductImport ,request()->file('file'));
 
-        return back();
+         return redirect()->back()->withStatus(__('this not'));
     }
 
     public function download()

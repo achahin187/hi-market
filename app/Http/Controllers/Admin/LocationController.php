@@ -98,7 +98,7 @@ class LocationController extends Controller
     public function showPolygon($id)
     {
         $polygons = Polygon::Where('area_id',$id)->get();
-       
+    
         return view($this->blade.'show')->with('polygons', $polygons);
     }
 

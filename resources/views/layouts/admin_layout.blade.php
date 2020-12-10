@@ -292,24 +292,13 @@ $settings = App\Models\Setting::all()->first();
                                 </a>
                                 <ul class="nav nav-treeview">
 
-                                    <li class="nav-item">
-                                        <a href="{{route('countries.index')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>{{ __('admin.country') }}</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('cities.index')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>{{ __('admin.city') }}</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('areas.index')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>{{ __('admin.area') }}</p>
-                                        </a>
-                                    </li>
+                                   <li class="nav-item">
+                                    <a href="{{route('locations.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('admin.locations') }}</p>
+                                    </a>
+                                   </li>
+                                   
                                 </ul>
                             </li>
                           @endif   

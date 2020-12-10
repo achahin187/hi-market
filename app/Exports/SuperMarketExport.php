@@ -20,7 +20,7 @@ class SuperMarketExport implements FromCollection, WithMapping, WithHeadings
      public function map($registration) : array {
         return [
             $registration->id,
-     		$registration->user->name,
+     	    	$registration->user->name,
             $registration->area->name_ar,
             $registration->city->name_ar,
            // Carbon::parse($registration->event_date)->toFormattedDateString(),

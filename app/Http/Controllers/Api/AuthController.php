@@ -56,8 +56,6 @@ class AuthController extends Controller
 
             return $this->returnError(422, 'this code is invalid please check the code sent to your mobile');
         }
-
-
     }
 
 
@@ -99,8 +97,6 @@ class AuthController extends Controller
         }
 
         return $this->returnError(422, 'These credentials are not in our records');
-
-
     }
 
     public function register(Request $request)
