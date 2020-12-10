@@ -66,7 +66,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('notifications', 'Admin\NotificationController');
         Route::resource('measures', 'Admin\UnitController');
         Route::resource('sizes', 'Admin\SizeController');
-        Route::resource('cities', 'Admin\CityController');
+        //Route::resource('cities', 'Admin\CityController');
         Route::resource('areas', 'Admin\AreaController');
         Route::resource('countries', 'Admin\CountryController');
         Route::resource('delivery', 'Admin\DeliveryController');
@@ -88,7 +88,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('clients/status/{client_id}', 'Admin\ClientController@status')->name('clients.status');
         Route::put('areas/status/{area_id}', 'Admin\AreaController@status')->name('areas.status');
         Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
-        Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
+        //Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
 
 
 
@@ -198,8 +198,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //areas
         Route::get('locations/{location_id}/area', 'Admin\LocationController@getArea')->name('locations.area.index');
         Route::post('area/status', 'Admin\LocationController@status')->name('areaList.status');
+        
+        Route::get('area/{id}', 'Admin\LocationController@deleteArea')->name('locations.area.delete');
+        // Route::get('city/{$id}/edit', 'Admin\LocationController@editCity')->name('city.edit');
+
+        // Route::post('city/{$id}/update', 'Admin\LocationController@updateCity')->name('city.update');
+
+        //  Route::post('city/{$id}/delete', 'Admin\LocationController@destroyCity')->name('city.destroy');
 
          Route::get('area/{id}/show', 'Admin\LocationController@showPolygon')->name('locations.area.show');
+
+
         //supermarket-admins
         Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
         //delivery-admins

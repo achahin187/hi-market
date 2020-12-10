@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Barcode;
 use App\Models\Supermarket;
-use App\Imports\ProductImport;
+use App\Imports\Productimport;
 use App\Exports\ProductExport;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
@@ -820,12 +820,8 @@ class ProductController extends Controller
      */
     public function import(Request $request)
     {
-        $rules = [
-            'file' => 'file|mimes:csv|max:277'
-        ];
-
-       
-        Excel::import(new ProductImport ,request()->file('file'));
+    
+        Excel::import(new Productimport , $request->file);
 
          return redirect()->back()->withStatus(__('this not'));
     }

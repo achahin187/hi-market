@@ -57,9 +57,9 @@
                                         <th>{{ __('admin.city_en') }}</th>
                                        
                                       
-                                    @if(auth()->user()->hasAnyPermission(['location-delete','location-edit']))
-                                        <th>{{ __('admin.controls') }}</th>
-                                    @endif    
+                                 
+                                        <th>{{ __('admin.area') }}</th>
+                                      
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -68,32 +68,9 @@
                                         <tr>
                                             <td>{{$location->name_ar}}</td>
                                             <td>{{$location->name_en}}</td>
-                                            <td><a href="{{ route('locations.area.index',$location->id) }}" class="btn btn-primary">areas</a></td>
+                                            <td><a href="{{ route('locations.area.index',$location->id) }}" class="btn btn-primary">Areas</a></td>
                                            
-                                        @if(auth()->user()->hasAnyPermission(['location-delete','location-edit']))
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if(auth()->user()->can('location-delete'))
-                                                        <form action="{{ route('delivery-admins.destroy', $location->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-
-
-
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                        </form>
-                                                    @endif
-                                                    @if(auth()->user()->can('location-edit'))
-                                                                <a class="dropdown-item" href="{{ route('delivery-admins.edit', $location->id) }}">{{ __('edit') }}</a>
-                                                    @endif            
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        @endif    
+                                       
                                         </tr>
                                     @endforeach
                                 @endif

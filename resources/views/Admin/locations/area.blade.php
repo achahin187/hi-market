@@ -11,14 +11,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.delivery_admin') }}</h1>
+                        <h1>{{ __('admin.area') }}</h1>
                     </div>
 
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @if(auth()->user()->can('location-create'))
-                                <li class="breadcrumb-item"><a href="{{route('delivery-admins.create')}}">{{ __('admin.add_area') }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('locations.create')}}">{{ __('admin.add_area') }}</a></li>
                                 @endif
                             </ol>
                         </div>
@@ -79,32 +79,11 @@
                                                       
                                                         <button type="button" onclick="confirm('{{ __("Are you sure you want to change status of this supermarket?") }}') ? this.parentElement.submit() : ''" href="{{ route('areaList.status', ['id'=>$areaList->id]) }}" class="{{ $areaList->status == 'active' ?'btn btn-block btn-outline-success' :'btn btn-block btn-outline-danger '}}">{{ $areaList->status }}</button>
                                                     </form>
+                                                <td>
+                                                <a href="{{ route('locations.area.delete',$areaList->id) }}" class="btn btn-block btn-outline-danger" >{{ __('admin.delete') }}</a>
+                                                  
                                                 </td>
-                                           
-                                        @if(auth()->user()->hasAnyPermission(['location-delete','location-edit']))
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if(auth()->user()->can('location-delete'))
-                                                        <form action="{{ route('delivery-admins.destroy', $areaList->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-
-
-
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                        </form>
-                                                    @endif
-                                                    @if(auth()->user()->can('location-edit'))
-                                                                <a class="dropdown-item" href="{{ route('delivery-admins.edit', $areaList->id) }}">{{ __('edit') }}</a>
-                                                    @endif            
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        @endif    
+                                      
                                         </tr>
                                     @endforeach
                                 @endif

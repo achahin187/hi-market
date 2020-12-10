@@ -752,8 +752,8 @@ $settings = App\Models\Setting::all()->first();
             $("#filteruser").submit();
         });
 
-        $("#link").on('click',function(){
-
+        $("#link").on('click',function(e){
+            e.preventDefault()
             $("#import").trigger('click');
         });
 

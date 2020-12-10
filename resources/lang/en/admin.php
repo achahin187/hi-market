@@ -35,7 +35,7 @@ return [
     'delivery_company' => 'Delivery Company',
     'Unauthenticated'=>'Unauthenticated',
     'add_new_area'=>'Add New Area',
-
+    'map'=>'Zone',
     'city_ar' =>'City Arabic',
     'city_en' =>'City English',
 

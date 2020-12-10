@@ -71,9 +71,6 @@ class LocationController extends Controller
     	 	return response()->json(['msg'=>'done']);
 
     	 }
-
-
-
     }
 
     public function status()
@@ -91,7 +88,6 @@ class LocationController extends Controller
 
           return redirect()->back()->withStatus(__('this id not found'));
         }
-
     }
 
 
@@ -101,5 +97,21 @@ class LocationController extends Controller
     
         return view($this->blade.'show')->with('polygons', $polygons);
     }
+
+
+    public function deleteArea($id)
+    {
+        $area = Area::find($id);
+        if ($area) {
+
+            $area->delete();
+            
+        }else{
+           return redirect()->back()->withStatus(__('this Area not found')); 
+        }
+    }
+
+
+   
 
 }
