@@ -53,7 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Address extends Model
 {
     //
-    use LogsActivity;
+  
 
     protected $table = 'addresses';
 
@@ -61,10 +61,10 @@ class Address extends Model
 
     protected static $logAttributes = ['description','client_id'];
 
-    protected $guarded = []; 
+    protected $guarded = [];
 
 
-    
+
     public function client()
     {
         return $this->belongsTo('App\Models\Client');
