@@ -116,12 +116,6 @@ class ClientController extends Controller
                 $address->name = $client->name;
                 $address->name = $client->name;
                 $address->mobile_number = $client->mobile_number;
-                $address->default = $address->default;
-                $address->address_lable = $address->address_lable;
-                $address->lat = $address->lat;
-                $address->lon = $address->lon;
-                $address->govern = $address->govern;
-                $address->additional = $address->additional;
 
             }
 
@@ -131,9 +125,9 @@ class ClientController extends Controller
 
     public function setDefault(Request $request)
     {
-       
+
        $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
-    
+
        $address->update(['default'=>0]);
 
        $newDefault = Address::where('id',$request->address_id)->first();
@@ -160,10 +154,10 @@ class ClientController extends Controller
         return $this->returnError(422, "code is invalid");
     }
 
-  
+
     public function uploadImage(Request $request)
     {
-       
+
         $validator = \Validator::make($request->all(), [
              'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
         ]);
@@ -174,7 +168,7 @@ class ClientController extends Controller
         }
         $userImage = Auth('client-api')->user()->image;
         if ($request->image) {
-            
+
             if ($userImage != $request->image) {
 
                  $image_path = app_path("images/".$userImage);
@@ -194,7 +188,7 @@ class ClientController extends Controller
             Auth('client-api')->user()->update([
                 'image' => $file_to_store,
             ]);
-            
+
              return $this->returnData(['image'],[asset('client/'.$file_to_store)],'image updated successfully');
         }
     }
