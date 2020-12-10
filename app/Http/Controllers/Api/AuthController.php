@@ -193,7 +193,7 @@ class AuthController extends Controller
                 return $this->returnError(422, 'the phone number is no correct');
         }
     }
-
+    #ssend sms 
     public function forgetpassword(Request $request)
     {
 

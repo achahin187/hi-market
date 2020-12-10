@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use File;
 
 class ClientController extends Controller
 {
@@ -72,8 +72,6 @@ class ClientController extends Controller
 
 
         return $this->returnSuccessMessage('your data has been updated successfully', 200);
-
-
     }
 
 
@@ -85,7 +83,6 @@ class ClientController extends Controller
 
         $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")->simplePaginate();
         return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
-
     }
 
     public function usePoints()
@@ -101,6 +98,7 @@ class ClientController extends Controller
         $user = \auth()->user();
         $user->points = $point->points - $user->points;
         $user->save();
+
         return $this->returnData(["user_points","point"], [$user->points,$point]);
     }
 
@@ -143,8 +141,6 @@ class ClientController extends Controller
        $newDefault->update(['default'=>1]);
 
         return $this->returnSuccessMessage("updated successfully");
-
-
     }
 
     public function validateAddress()
@@ -176,12 +172,22 @@ class ClientController extends Controller
 
             return $this->returnValidationError(422, $validator);
         }
+        $userImage = Auth('client-api')->user()->image;
         if ($request->image) {
+            
+            if ($userImage != $request->image) {
+
+                 $image_path = app_path("images/".$userImage);
+
+                    if (File::exists($image_path)) {
+                        unlink($image_path);
+                    }
+            }//end of if
 
             $image = $request->image;
             $filename = $image->getClientOriginalName();
             $fileextension = $image->getClientOriginalExtension();
-            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+            $file_to_store = $filename;
 
             $image->move('client', $file_to_store);
 

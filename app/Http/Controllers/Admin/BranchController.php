@@ -7,7 +7,7 @@ use App\Models\Branch;
 use App\Models\Supermarket;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-
+use App\Models\Category;
 class BranchController extends Controller
 {
 
@@ -202,7 +202,7 @@ class BranchController extends Controller
      */
     public function edit($id,$supermarket_id = null)
     {
-        //
+       
         $branch = Branch::find($id);
 
         if($branch)
@@ -444,12 +444,12 @@ class BranchController extends Controller
 
     public function getVendorCategories(Request $request)
     {
-        $categories = Vendor::WhereHas('categories', function ($q) use($request){
+        $categories = Category::WhereHas('vendors', function ($q) use($request){
 
             $q->Where('vendor_id',$request->vendor_id);
 
         })->get();
-      
+        
         return response()->json($categories);
     }
 }
