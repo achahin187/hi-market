@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 
-class OfferController extends Controller
+class OffersssController extends Controller
 {
     function __construct()
     {

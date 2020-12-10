@@ -84,7 +84,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('branches/status/{branch_id}', 'Admin\BranchController@status')->name('branch.status');
         Route::put('points/status/{point_id}', 'Admin\PointController@status')->name('points.status');
         Route::put('reasons/status/{reason_id}', 'Admin\ReasonController@status')->name('reason.status');
-        Route::put('offers/status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
+        Route::put('offers/status/{offer_id}', 'Admin\OffersssController@status')->name('offers.status');
         Route::put('clients/status/{client_id}', 'Admin\ClientController@status')->name('clients.status');
         Route::put('areas/status/{area_id}', 'Admin\AreaController@status')->name('areas.status');
         Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
@@ -122,13 +122,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::group(['prefix' => 'offers'],function() {
 
-            Route::get('offers', 'Admin\OfferController@index')->name('offers.index');
-            Route::get('create/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@create')->name('offers.create');
-            Route::post('{supermarket_id?}/{branch_id?}', 'Admin\OfferController@store')->name('offers.store');
-            Route::get('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@edit')->name('offers.edit');
-            Route::put('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@update')->name('offers.update');
-            Route::put('status/{offer_id}', 'Admin\OfferController@status')->name('offers.status');
-            Route::delete('{id}/{supermarket_id?}/{branch_id?}', 'Admin\OfferController@destroy')->name('offers.destroy');
+            Route::get('offers', 'Admin\OffersssController@index')->name('offers.index');
+            Route::get('create/{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@create')->name('offers.create');
+            Route::post('{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@store')->name('offers.store');
+            Route::get('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@edit')->name('offers.edit');
+            Route::put('{id}/edit/{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@update')->name('offers.update');
+            Route::put('status/{offer_id}', 'Admin\OffersssController@status')->name('offers.status');
+            Route::delete('{id}/{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@destroy')->name('offers.destroy');
 
         });
 
@@ -168,11 +168,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         });
 
 
-        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OfferController@supermarketoffers')->name('supermarket.offers');
+        Route::get('supermarkets/offers/{supermarket_id}', 'Admin\OffersssController@supermarketoffers')->name('supermarket.offers');
         Route::get('supermarkets/products/{supermarket_id}/{flag}', 'Admin\ProductController@supermarketproducts')->name('supermarket.products');
         Route::get('supermarkets/branches/{supermarket_id}', 'Admin\BranchController@supermarketbranches')->name('supermarket.branches');
         Route::get('branches/products/{branch_id}/{flag}', 'Admin\ProductController@branchproducts')->name('branch.products');
-        Route::get('branches/offers/{branch_id}', 'Admin\OfferController@branchoffers')->name('branch.offers');
+        Route::get('branches/offers/{branch_id}', 'Admin\OffersssController@branchoffers')->name('branch.offers');
 /*        Route::get('supermarkets/branches/create/{supermarket_id}', 'Admin\SupermarketController@addbranch')->name('supermarketbranches.create');
         Route::post('supermarkets/branches/store/{supermarket_id}', 'Admin\SupermarketController@storebranch')->name('supermarketbranches.store');
         Route::get('supermarkets/offers/create/{supermarket_id}', 'Admin\SupermarketController@addoffer')->name('supermarketoffers.create');
@@ -220,7 +220,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
          
         //poit image
         Route::post('point-photo', 'Admin\PointController@pointImage')->name('point.photo');
-            
+       
+       //offers
+       Route::resource('offer','Admin\OffersController');     
+
+       //get_brannch_product
+
+        Route::get('get-branch-product', 'Admin\ProductController@getBranchProduct')->name('get_branch_product');
  
     });
 

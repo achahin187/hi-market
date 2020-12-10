@@ -128,14 +128,18 @@ class ClientController extends Controller
     {
 
        $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
+       if ($address) {
+           
+           $address->update(['default'=>0]);
 
-       $address->update(['default'=>0]);
+           $newDefault = Address::where('id',$request->address_id)->first();
 
-       $newDefault = Address::where('id',$request->address_id)->first();
+           $newDefault->update(['default'=>1]);
 
-       $newDefault->update(['default'=>1]);
-
-        return $this->returnSuccessMessage("updated successfully");
+            return $this->returnSuccessMessage("updated successfully");
+       }else{
+             return $this->returnError(404, "This Address Not Found");
+       }
     }
 
     public function validateAddress()

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -17,6 +16,7 @@
                             @if(isset($supermarket_id))
 
                                 <li class="breadcrumb-item"><a href="{{route('supermarket.offers',$supermarket_id)}}">{{__('admin.supermarket_offers')}}</a></li>
+
 
 
                             @elseif(isset($branch_id))

@@ -4,19 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
-use App\Models\Role;
-class DeliveryManagerController extends Controller
+use App\Models\Offer;
+use App\Models\Branch;
+use App\Models\Product;
+use App\Models\Supermarket;
+class OffersController extends Controller
 {
+
+
     public $model;
     public $blade;
     public $route;
 
     public function __construct()
     {
-        $this->model = 'App\User' ;
-        $this->blade = 'Admin.delivery_admin.' ;
-        $this->route = 'delivery-admins.' ;
+        $this->model = 'App\Models\Offer' ;
+        $this->blade = 'Admin.offers.' ;
+        $this->route = 'offers.' ;
 
         $this->middleware('permission:delivery-list', ['only' => ['index']]);
         $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
@@ -24,15 +28,15 @@ class DeliveryManagerController extends Controller
         $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
     }
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
-         $delivery_admins = $this->model::Role('delivery_admin')->get();
+         $offers = $this->model::orderBy('id', 'desc')->get();
         
-        return view($this->blade.'.index')->with('delivery_admins',$delivery_admins);
+        return view($this->blade.'.index')->with('offers',$offers);
     }
 
     /**
@@ -42,7 +46,10 @@ class DeliveryManagerController extends Controller
      */
     public function create()
     {
-         return view($this->blade.__FUNCTION__);
+        $supermarkets = Supermarket::Where('status', 'active')->get();
+        $products_offer = Product::Where('flag', 1)->Where('status','active')->get();
+        $branches  = Branch::Where('status','active')->get();
+        return view($this->blade.__FUNCTION__,compact('supermarkets', 'products_offer', 'branches'));
     }
 
     /**

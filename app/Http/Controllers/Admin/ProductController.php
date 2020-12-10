@@ -839,4 +839,15 @@ class ProductController extends Controller
 
         return response()->json($branches);
     }
+
+    public function getBranchProduct(Request $request)
+    {
+         $products = Product::WhereHas('branches', function ($q) use($request){
+
+            $q->Where('branch_id',$request->product_id);
+
+        })->get();
+        
+        return response()->json($products);
+    }
 }

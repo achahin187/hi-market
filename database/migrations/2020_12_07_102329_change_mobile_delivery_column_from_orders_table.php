@@ -14,7 +14,7 @@ class ChangeMobileDeliveryColumnFromOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->date("mobile_delivery")->nullable()->change();
+            //$table->date("mobile_delivery")->nullable()->change();
         });
     }
 

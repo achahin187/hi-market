@@ -105,7 +105,7 @@ class LocationController extends Controller
         if ($area) {
 
             $area->delete();
-            
+             return redirect()->back()->withStatus(__('delete_successfuly')); 
         }else{
            return redirect()->back()->withStatus(__('this Area not found')); 
         }
