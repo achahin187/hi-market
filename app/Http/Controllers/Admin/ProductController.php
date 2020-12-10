@@ -791,7 +791,7 @@ class ProductController extends Controller
     {
 
         $product = Product::Where('id', $id )->where('flag', $flag)->first();
-        dd($product, $product->status);
+       
         if($product)
         {
             if($product->status == 'active') {
