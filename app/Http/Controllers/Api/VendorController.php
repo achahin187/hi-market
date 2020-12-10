@@ -13,7 +13,7 @@ class VendorController extends Controller
 {
     use GeneralTrait;
 
-    public function show($id)
+    public function show()
     {
 
         $vendors = Vendor::whereHas("categories", function ($query) use ($id) {
