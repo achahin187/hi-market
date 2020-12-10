@@ -62,9 +62,9 @@ class OffersController extends Controller
     {   
         $request->validate([
             'type' =>'required',
-            'start_date' =>'required|min:8',
-            'end_date' =>'required|min:8',
-            'banner' =>'required|min:8',
+            'start_date' =>'required',
+            'end_date' =>'required',
+            'banner' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $request_data = $request->all();
@@ -228,10 +228,13 @@ class OffersController extends Controller
     {
           $offer = $this->model::find($id);
         if ($offer) {
+
             $offer->delete();
-            return redirect()->route($this->route.'index')->withStatus(__('Deleted Successfully'));;
+            return redirect()->route($this->route.'index')->withStatus(__('Deleted Successfully'));
+
         }else{
-            return redirect()->route($this->route.'index')->withStatus(__(' This Id Not Found '));;
+            
+            return redirect()->route($this->route.'index')->withStatus(__(' This Id Not Found '));
         }
     }
 
