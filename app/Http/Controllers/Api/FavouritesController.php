@@ -122,8 +122,9 @@ class FavouritesController extends Controller
             if ($udid = \request()->header("udid")) {
                 $query->where("udid", $udid);
             };
-        })->get();
-
+        })->first();
+        #get -> first() ->id
+        //dd($favproducts->branches);
         return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproducts)]);
     }
 

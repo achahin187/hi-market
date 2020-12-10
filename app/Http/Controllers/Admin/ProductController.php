@@ -790,8 +790,8 @@ class ProductController extends Controller
     public function status(Request $request,$id,$flag)
     {
 
-        $product = Product::find($id);
-
+        $product = Product::Where('id', $id )->where('flag', $flag)->first();
+     
         if($product)
         {
             if($product->status == 'active') {
