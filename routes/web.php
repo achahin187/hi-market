@@ -217,6 +217,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         //VendorCategories
         Route::get('getVendorCategories', 'Admin\BranchController@getVendorCategories')->name('vendor.categories');
+         
+        //poit image
+        Route::post('point-photo', 'Admin\PointController@pointImage')->name('point.photo');
             
  
     });

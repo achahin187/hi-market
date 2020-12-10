@@ -46,8 +46,23 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">points</h3>
+                                <form action="{{ route('point.photo') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group" style="margin-bottom: 10px">
+                                            <label for="exampleInputFile">{{__('admin.image')}}</label>
+                                       
+                                             <div class="form-group">
+                                             
+                                                <input type="file"   name="image" class="form-control-file" id="exampleFormControlFile1">
+                                              </div>
+                                                 <button class="btn btn-primary">Upload </button>
+                                               <p style="color: red">Width: 400 px -- length: 800 px </p>
+                                          
+                                        </div>
+                                </form>
                             </div>
+                              
+                            
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-hover">

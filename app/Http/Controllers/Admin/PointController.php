@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Point;
+use App\Models\PointPhoto;
 use Illuminate\Http\Request;
 
 class PointController extends Controller
@@ -254,5 +255,41 @@ class PointController extends Controller
         Excel::import(new AdminImport ,request()->file('file'));
 
         return back();
+    }
+
+
+    public function pointImage(Request $request)
+    {
+        
+        $image = PointPhoto::first();       
+        
+        if ($image) {
+
+            $image->delete();
+
+            $this->uploadImage($request->image);
+            
+        }else{
+          $this->uploadImage($request->image);
+
+        }
+     
+
+
+        return redirect('/admin/points')->withStatus(__('upload_successfuly'));
+    }
+
+
+    private function uploadImage($image)
+    {
+            $filename = $image->getClientOriginalName();
+
+            $fileextension = $image->getClientOriginalExtension();
+
+            $fileNameToStore = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $image->move('images', $fileNameToStore);
+
+            PointPhoto::create(['image'=>$fileNameToStore]);
     }
 }

@@ -757,6 +757,11 @@ $settings = App\Models\Setting::all()->first();
             $("#import").trigger('click');
         });
 
+         $("#image_point").on('click',function(e){
+            e.preventDefault()
+            $("#upload").trigger('click');
+        });
+
         $("#import").on('change',function(){
 
             $("#import-form").submit();
