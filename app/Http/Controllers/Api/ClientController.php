@@ -9,6 +9,7 @@ use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
 use App\Models\Point;
+use App\Models\Udid;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,7 +108,7 @@ class ClientController extends Controller
         $udid = $request->header('udid');
 
 
-        $client = \auth("client-api")->check() ? \auth("client-api")->user() : Client::where("unique_id", $udid)->first();
+        $client = \auth("client-api")->check() ? \auth("client-api")->user() : Udid::where("body", $udid)->first();
 
         if ($client) {
             $addresses = $client->addresses()->get();
