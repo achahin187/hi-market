@@ -64,10 +64,21 @@ class OffersController extends Controller
             'type' =>'required',
             'start_date' =>'required',
             'end_date' =>'required',
-            'banner' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'banner' =>'required',
         ]);
 
+        
         $request_data = $request->all();
+      
+        #Store Banner to DataBase...
+        $filename = $request->banner->getClientOriginalName();
+        $fileextension = $request->banner->getClientOriginalExtension();
+        $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+        $request->banner->move('offer_images', $file_to_store);
+
+           
+    
 
         switch ($request->type) {
             case 'promocode':
