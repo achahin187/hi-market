@@ -2,23 +2,23 @@
 
 namespace App\Exports;
 
-use App\User;
+use App\Models\Size;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class AdminExport implements FromCollection
+class SizeExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return User::all();
+        return Size::all();
     }
 
      public function map($registration) : array {
         return [
            	$registration->id,
-            $registration->name_ar,
+            $registration->value,
             $registration->name_en,            
         ] ;
  
@@ -28,8 +28,8 @@ class AdminExport implements FromCollection
     public function headings() : array {
         return [
             'id',
-            'Arabic Name',
-			'English Name',
+            'size',
+			
 			
         ] ;
     }

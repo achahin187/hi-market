@@ -80,8 +80,8 @@ class AuthController extends Controller
         if (auth("client-web")->attempt([
 
             "mobile_number" => $request->mobile_number,
-
-             "password" => $request->password
+             "password" => $request->password,
+             'verify'=>1,
          ])) 
         {
 
@@ -137,7 +137,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = '123456';
+        $code = '12345';
 
         $client->update(['activation_code' => $code]);
 

@@ -2,17 +2,17 @@
 
 namespace App\Exports;
 
-use App\User;
+use App\Models\Category;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class AdminExport implements FromCollection
+class CategoryExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return User::all();
+        return Category::all();
     }
 
      public function map($registration) : array {

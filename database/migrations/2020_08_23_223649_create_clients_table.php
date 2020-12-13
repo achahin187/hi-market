@@ -25,6 +25,7 @@ class CreateClientsTable extends Migration
             $table->string('unique_id')->nullable();
             $table->string('activation_code')->nullable();
             $table->string('image')->nullable();
+            $table->boolean('verify')->default(1);
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

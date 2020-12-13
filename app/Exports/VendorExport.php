@@ -2,24 +2,24 @@
 
 namespace App\Exports;
 
-use App\User;
+use App\Models\Vendor;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class AdminExport implements FromCollection
+class VendorExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return User::all();
+        return Vendor::all();
     }
 
      public function map($registration) : array {
         return [
            	$registration->id,
-            $registration->name_ar,
-            $registration->name_en,            
+            $registration->arab_nme,
+            $registration->eng_name,            
         ] ;
  
  

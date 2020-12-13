@@ -2,24 +2,25 @@
 
 namespace App\Exports;
 
-use App\User;
+use App\Models\Measures;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class AdminExport implements FromCollection
+class MeasuresExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return User::all();
+        return Measures::all();
     }
+
 
      public function map($registration) : array {
         return [
            	$registration->id,
-            $registration->name_ar,
-            $registration->name_en,            
+            $registration->arab_name,
+            $registration->eng_name,            
         ] ;
  
  
