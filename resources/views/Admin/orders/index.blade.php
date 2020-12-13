@@ -165,10 +165,6 @@
                                                     'shipped' => 4,
                                                     'deliverd' => 5,
                                                     'received' => 6,
-                                                    'approved-rollback' => 7,
-                                                    'prepared-rollback' => 8 ,
-                                                    'shipping-rollback' => 9 ,
-                                                    'shipped-rollback' => 10
                                                      ];?>
 
                                                     @foreach ($status as $index => $state)
