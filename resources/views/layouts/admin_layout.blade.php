@@ -465,7 +465,7 @@ $settings = App\Models\Setting::all()->first();
                                     </li>
                                 @elseif(auth()->user()->hasRole('driver'))
                                   <li class="nav-item">
-                                        <a href="{{route('orders.index',['driver_id'=>'auth()->user()->id'])}}" class="nav-link">
+                                        <a href="{{route('orders.index',['driver_id'=>auth()->user()->id])}}" class="nav-link">
                                             <i class="nav-icon fas fa-tachometer-alt"></i>
                                             <p>
                                                 {{ __('admin.orders') }}

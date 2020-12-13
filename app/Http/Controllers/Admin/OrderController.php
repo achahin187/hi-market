@@ -46,7 +46,7 @@ class OrderController extends Controller
 
             $driver = User::find(request()->driver_id);
 
-            $orders = $driver->orders()->whereNotIn('status',array(0,1,5))->get();
+            $orders = $driver->orders()->whereNotIn('status',array(0,1))->get();
 
             return view('Admin.orders.index',compact('orders','setting','driver'));
         }
