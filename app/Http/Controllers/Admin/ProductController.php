@@ -812,8 +812,11 @@ class ProductController extends Controller
      */
     public function export()
     {
-        return Excel::download(new ProductsExport , 'products.xlsx');
+
+         return  Excel::download(new ProductsExport , 'products.xlsx');
     }
+
+    
 
     /**
      * @return \Illuminate\Support\Collection

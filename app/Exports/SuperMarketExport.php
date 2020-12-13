@@ -20,11 +20,11 @@ class SuperMarketExport implements FromCollection, WithMapping, WithHeadings
      public function map($registration) : array {
         return [
             $registration->id,
-     	    	$registration->user->name,
-            $registration->area->name_ar,
-            $registration->city->name_ar,
-           // Carbon::parse($registration->event_date)->toFormattedDateString(),
-            Carbon::parse($registration->created_at)->toFormattedDateString()
+            $registration->arab_name,
+            $registration->eng_name,
+            
+            // Carbon::parse($registration->event_date)->toFormattedDateString(),
+           // Carbon::parse($registration->created_at)->toFormattedDateString()
         ] ;
  
  
@@ -32,11 +32,9 @@ class SuperMarketExport implements FromCollection, WithMapping, WithHeadings
  
     public function headings() : array {
         return [
-           '#',
-           'created_by',
-           'erea',
-           'city',
-           'Created At'
+           'id',
+           'Arabic Name',
+           'English Name',
         ] ;
     }
 }

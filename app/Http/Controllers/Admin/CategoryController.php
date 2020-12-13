@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Photo;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\Facades\Excel;
 class CategoryController extends Controller
 {
 

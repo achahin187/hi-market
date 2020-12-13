@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Supermarket;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\VendorExport;
 class VendorController extends Controller
 {
 
@@ -243,7 +244,7 @@ class VendorController extends Controller
      */
     public function export()
     {
-        return Excel::download(new VendorExport , 'vendors.csv');
+        return Excel::download(new VendorExport , 'vendors.xlsx');
     }
 
     /**

@@ -137,12 +137,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('admins', 'Admin\AdminController@export')->name('admins.export');
             Route::get('products', 'Admin\ProductController@export')->name('products.export');
             Route::get('products/download', 'Admin\ProductController@download')->name('products.downloadsample');
+            Route::get('category', 'Admin\CategoryController@export')->name('category.export');
+            Route::get('size', 'Admin\SizeController@export')->name('size.export');
+            Route::get('measure', 'Admin\MeasuresController@export')->name('measure.export');
+            Route::get('vendor', 'Admin\VendorController@export')->name('vendor.export');
         });
 
         Route::group(['prefix' => 'import'],function() {
 
             Route::post('admins', 'Admin\AdminController@import')->name('admins.import');
-            Route::post('products', 'Admin\ProductController@import')->name('products.import');
+            Route::post('products', 'Admin\ProductController@export')->name('products.export');
         });
 
 

@@ -80,8 +80,8 @@ class AuthController extends Controller
         if (auth("client-web")->attempt([
 
             "mobile_number" => $request->mobile_number,
-
-             "password" => $request->password
+             "password" => $request->password,
+             'verify'=>1,
          ])) 
         {
 
@@ -107,7 +107,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'mobile_number')],
-            'email' => ['email', Rule::unique('clients', 'email'), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
+            'email' => [ Rule::unique('clients', 'email')],
             'password' => ['required'],
         ]);
 
@@ -137,7 +137,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = '123456';
+        $code = '12345';
 
         $client->update(['activation_code' => $code]);
 

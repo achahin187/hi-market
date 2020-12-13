@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Size;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\Facades\Excel;
 class SizeController extends Controller
 {
 
@@ -169,5 +169,11 @@ class SizeController extends Controller
             return redirect('/admin/sizes')->withStatus(__('size successfully deleted.'));
         }
         return redirect('/admin/sizes')->withStatus(__('this id is not in our database'));
+    }
+
+    public function export()
+    {
+
+         return  Excel::download(new SizeExport , 'products.xlsx');
     }
 }

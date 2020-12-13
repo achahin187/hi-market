@@ -34,7 +34,6 @@ class Productimport implements ToModel, WithHeadingRow
             'flag'     				=> $row['flag'],
             'status'     			=> $row['status'],
             'start_date'    	 	=> $this->ParseDate($row['start_date']),
-            
             'end_date'     			=> $this->ParseDate($row['end_date']),
             'exp_date'    			=> $this->ParseDate($row['exp_date']),
             'production_date'     	=> $this->ParseDate($row['production_date']),

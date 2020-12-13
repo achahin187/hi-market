@@ -30,7 +30,6 @@ class ClientController extends Controller
 
 
         $this->middleware("auth:client-api");
-
     }
 
     public function client_profile(Request $request)
@@ -41,7 +40,6 @@ class ClientController extends Controller
 
 
         return $this->returnData(['client'], [new ClientResource($client)]);
-
     }
 
     public function updateprofile(Request $request)
@@ -75,9 +73,9 @@ class ClientController extends Controller
         return $this->returnSuccessMessage('your data has been updated successfully', 200);
     }
 
-
     public function clientpoints(Request $request)
     {
+
         $client = getUser();
 
         $points = Point::whereDate("end_date", ">", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
@@ -166,7 +164,6 @@ class ClientController extends Controller
         return $this->returnError(422, "code is invalid");
     }
 
-
     public function uploadImage(Request $request)
     {
 
@@ -242,9 +239,7 @@ class ClientController extends Controller
 
             return $this->returnError(422, 'the old password is not in our records');
         }
-
     }
-
 
     public function add_address(Request $request)
     {
@@ -301,8 +296,6 @@ class ClientController extends Controller
 
 
         return $this->returnSuccessMessage("address created successfully", 200);
-
-
     }
 
     public function get_address(Request $request)
@@ -317,7 +310,6 @@ class ClientController extends Controller
             return $this->returnError('', 'there is no addresses for this client registered');
         }
         return $this->returnData(['client_addresses'], [AddressResource::collection($client->addresses)]);
-
     }
 
     public function delete_address(Request $request)
@@ -347,7 +339,6 @@ class ClientController extends Controller
             return $this->returnError(401, 'Unauthorized');
 
         }
-
     }
 
     public function update_address(Request $request)
