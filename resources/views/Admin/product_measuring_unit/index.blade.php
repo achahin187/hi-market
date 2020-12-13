@@ -20,7 +20,7 @@
                                 @endif
                                     <li class="breadcrumb-item">
 
-                                        <a  href="{{ route('measure.export') }}">{{__('admin.import')}}</a>
+                                        <a  href="{{ route('measure.export') }}">{{__('admin.export')}}</a>
 
                                        
                                     </li>

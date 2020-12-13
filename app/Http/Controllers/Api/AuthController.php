@@ -104,10 +104,11 @@ class AuthController extends Controller
 
         $udid = $request->header('udid');
 
+    
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'mobile_number')],
-            'email' => [ Rule::unique('clients', 'email')],
             'password' => ['required'],
         ]);
 
@@ -150,6 +151,7 @@ class AuthController extends Controller
         $msg = "you have been registered sucessfully";
 
         return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], $msg);
+
     }
 
     public function resetpassword(Request $request)
