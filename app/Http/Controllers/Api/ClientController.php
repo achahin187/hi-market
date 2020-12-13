@@ -113,12 +113,12 @@ class ClientController extends Controller
         if ($client) {
             $addresses = $client->addresses()->get();
 
-            foreach ($addresses as $address) {
-                $address->name = $client->name;
-                $address->name = $client->name;
-                $address->mobile_number = $client->mobile_number;
+            // foreach ($addresses as $address) {
+            //     $address->name = $client->name;
+            //     $address->name = $client->name;
+            //     $address->mobile_number = $client->mobile_number;
 
-            }
+            // }
 
             return $this->returnData(['client addresses'], [AddressResource::collection($addresses)]);
         }
