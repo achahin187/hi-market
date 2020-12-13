@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function index($cancel = false)
     {
         $setting = Setting::all()->first();
-        dd($setting);
+        
 
         if($cancel) {
    

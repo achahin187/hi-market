@@ -158,7 +158,7 @@ class AuthController extends Controller
        
         $validator = \Validator::make($request->all(), [
             'mobile_number' => ['required','numeric','digits:11'],
-            'new_password'  => ['required', 'confirmed', 'different:old_password'],
+            'new_password'  => ['required', 'confirmed'],
         ]);
 
 
@@ -168,12 +168,11 @@ class AuthController extends Controller
             return $this->returnError(300, 'These data is not valid');
         }
 
-        $client= Client::where('mobile_number',$request->mobile_number)->get();
+        $client= Client::where('mobile_number',$request->mobile_number)->first();
 
-        if ($client) {
-
-           
-            $client->update(['password' => $request->new_password,]);
+        if (isset($client)) {
+          
+            $client->update(['password' => $request->new_password]);
 
 
             return $this->returnData(['client'], [$client], 'password updated successfully');
