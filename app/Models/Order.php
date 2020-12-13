@@ -98,8 +98,8 @@ class Order extends Model
         return $this->belongsToMany('App\Models\Product')->withPivot('quantity','price');
     }
 
-    public function companies()
-    {
-        return $this->belongsToMany(DeliveryCompany::class,"company_order");
-    }
+    // public function companies()
+    // {
+    //     return $this->belongsToMany(DeliveryCompany::class,"company_order");
+    // }
 }
