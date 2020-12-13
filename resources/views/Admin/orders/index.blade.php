@@ -207,7 +207,7 @@
                                              @endif   
                                                 <td>
 
-                                                    @if(in_array($order->status,[1,2,3,4,6]) )
+                                                    @if(in_array($order->status,[1,2,3,4,5,6]) )
 
                                                         <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" value="{{$order->id}}" class="btn btn-info">{{ __('admin.rollback') }}</button>
 
