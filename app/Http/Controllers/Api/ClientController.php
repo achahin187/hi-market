@@ -82,7 +82,7 @@ class ClientController extends Controller
 
         $client = getUser();
 
-        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
+        $points = Point::whereDate("end_date", ">", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
             ->get()->map(function ($point) use($client){
                 return [
                     "id"=>$point->id,
