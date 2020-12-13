@@ -86,7 +86,7 @@ class ClientController extends Controller
             ->get()->map(function ($point) use($client){
                 return [
                     "id"=>$point->id,
-                    "point"=>(int) $point->point,
+                    "point"=>(int) $point->points,
                     "purchase" => (int) $point->value ,
                     "is_percentage"=>$point->type == 0 ? false : true,
                     "checked"=> $point->point < $client->total_points
