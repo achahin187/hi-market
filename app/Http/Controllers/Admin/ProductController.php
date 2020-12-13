@@ -823,7 +823,7 @@ class ProductController extends Controller
     
         Excel::import(new Productimport , $request->file);
 
-         return redirect()->back()->withStatus(__('this not'));
+         return redirect()->back()->withStatus(__('Added successfully'));
     }
 
     public function download()
