@@ -508,16 +508,29 @@ $settings = App\Models\Setting::all()->first();
                     @endif
 
                     {{-- Orders --}}
-                    @if(auth()->user()->can('order-list'))
-                        <li class="nav-item">
-                            <a href="{{route('orders.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    {{ __('admin.orders') }}
-                                </p>
-                            </a>
-                        </li>
-                    @endif
+                  {{-- Orders --}}
+                           @if(auth()->user()->can('order-list'))
+                            @if(auth()->user()->hasRole('delivery_admin'))
+                                <li class="nav-item">
+                                    <a href="{{route('orders.index',['company_id'=> auth()->user()->company_id])}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            {{ __('admin.orders') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @else
+                              <li class="nav-item">
+                                    <a href="{{route('orders.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            {{ __('admin.orders') }}
+                                        </p>
+                                    </a>
+                                </li>
+
+                            @endif    
+                           @endif
 
                     {{-- setting --}}
                     @if(auth()->user()->can('setting-list'))

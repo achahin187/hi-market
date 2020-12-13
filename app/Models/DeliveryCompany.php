@@ -58,6 +58,6 @@ class DeliveryCompany extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class,"company_order",'company_id');
+        return $this->hasMany(Order::class,'company_id');
     }
 }

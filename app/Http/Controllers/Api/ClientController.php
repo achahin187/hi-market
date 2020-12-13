@@ -113,12 +113,12 @@ class ClientController extends Controller
         if ($client) {
             $addresses = $client->addresses()->get();
 
-            foreach ($addresses as $address) {
-                $address->name = $client->name;
-                $address->name = $client->name;
-                $address->mobile_number = $client->mobile_number;
+            // foreach ($addresses as $address) {
+            //     $address->name = $client->name;
+            //     $address->name = $client->name;
+            //     $address->mobile_number = $client->mobile_number;
 
-            }
+            // }
 
             return $this->returnData(['client addresses'], [AddressResource::collection($addresses)]);
         }
@@ -252,7 +252,7 @@ class ClientController extends Controller
             'default' => [ 'boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
-            'additional' => ['nullable'],
+            'notes' => ['nullable'],
             'govern' => 'required|string',
             'name' => 'required|string',
             'phone' => 'required|string',
@@ -274,7 +274,7 @@ class ClientController extends Controller
         $default = Auth('client-api')->user()->addresses->count() >= 1 ? 0 : 1;
         $lat = $request->lat;
         $lon = $request->lon;
-        $additional = $request->additional;
+        $notes = $request->notes;
         $govern = $request->govern;
         $rand = "12345";
         Address::create([
@@ -286,7 +286,7 @@ class ClientController extends Controller
             'default' => $default,
             'lat' => $lat,
             'lon' => $lon,
-            'additional' => $additional,
+            'notes' => $notes,
             'govern' => $govern,
             "verified" => 0,
             "verify" => $rand
@@ -357,7 +357,7 @@ class ClientController extends Controller
             'lat' => ['string'],
             'lon' => ['string'],
             'govern' => ['string'],
-            'additional' => ['nullable'],
+            'notes' => ['nullable'],
             'name' => ['string'],
             'phone' => ['string'],
         ]);
