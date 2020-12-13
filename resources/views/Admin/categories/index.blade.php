@@ -19,7 +19,7 @@
                             <li class="breadcrumb-item"><a href="{{route('categories.create')}}">{{__('admin.add_category')}}</a></li>
                          @endif  
 
-                           <li class="breadcrumb-item"><a href="{{route('category.export')}}">{{__('admin.import')}}</a></li>
+                           <li class="breadcrumb-item"><a href="{{route('category.export')}}">{{__('admin.export')}}</a></li>
 
                         </ol>
 

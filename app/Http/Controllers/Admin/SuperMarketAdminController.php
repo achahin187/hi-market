@@ -8,6 +8,8 @@ use App\User;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Team;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SuperMarketExport;
 class SuperMarketAdminController extends Controller
 {
 
@@ -141,5 +143,14 @@ class SuperMarketAdminController extends Controller
         }else{
             return redirect()->route($this->route.'index');
         }
+    }
+
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new SuperMarketExport , 'SuperMarket.xlsx');
     }
 }
