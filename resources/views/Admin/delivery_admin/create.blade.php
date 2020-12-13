@@ -100,7 +100,7 @@
 
                                             @foreach(\App\Models\DeliveryCompany::all() as $companies)
 
-                                                <option value="{{ $companies->id }}">{{ $companies->name_ar }}</option>
+                                                <option value="{{ $companies->id }}">{{ $companies->name }}</option>
 
                                             @endforeach
 
