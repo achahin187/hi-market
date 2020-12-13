@@ -56,6 +56,10 @@ class PermissionTableSeeder extends Seeder
             'order-cancel',
             'order-rollback',
             'order-assign',
+            'order-previous',
+            'order-next',
+            'order-assign',
+            
 
             'order-show-canceled-orders ',
             'order-edit-client-orderStatus',
