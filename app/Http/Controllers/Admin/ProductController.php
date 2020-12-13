@@ -813,21 +813,18 @@ class ProductController extends Controller
     public function export()
     {
         $excels = [
-             'ProductsExport'     =>'products.xlsx',
+             
              'CategoryExport'    =>'categories.xlsx',
              'SuperMarketExport' =>'supermarket.xlsx',
              'SizeExport'        =>'size.xlsx',
              
          ];
-       foreach ($excels as $excel_class => $excel_name) {
-            $class = 'App\Exports\\'.$excel_class;
-            
-            $this->callmulti($class, $excel_name);
-        } 
-           
-       return 'done';
+  
         
+         return  Excel::download(new ProductsExport , 'products.xlsx');
     }
+
+    
 
     /**
      * @return \Illuminate\Support\Collection
