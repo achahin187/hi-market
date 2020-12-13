@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Client;
 use App\Models\Udid;
 
 if (!function_exists("getUser")) {
