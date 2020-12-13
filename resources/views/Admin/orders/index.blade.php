@@ -163,6 +163,7 @@
                                                     'prepared' => 2,
                                                     'shipping' => 3,
                                                     'shipped' => 4,
+                                                    'deliverd' => 5,
                                                     'received' => 6,
                                                     'approved-rollback' => 7,
                                                     'prepared-rollback' => 8 ,
