@@ -30,7 +30,7 @@ class FinancialController extends AppBaseController
      *
      * @param Request $request
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -38,7 +38,7 @@ class FinancialController extends AppBaseController
         $orders = Order::filter()->paginate();
 
         $receivables = Receivable::whereIn("order_id",$orders->pluck("id"))->paginate(15);
-        return view('financials.index')
+        return view('Admin.financials.index')
             ->with('financials', $orders)->with("receivables", $receivables)->with("payables", Payable::paginate());
     }
 
@@ -49,7 +49,7 @@ class FinancialController extends AppBaseController
      */
     public function create()
     {
-        return view('financials.create');
+        return view('Admin.financials.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class FinancialController extends AppBaseController
 
         Flash::success(__('messages.saved', ['model' => __('models/financials.singular')]));
 
-        return redirect(route('financials.index'));
+        return redirect(route('Admin.financials.index'));
     }
 
     /**
@@ -87,7 +87,7 @@ class FinancialController extends AppBaseController
             return redirect(route('financials.index'));
         }
 
-        return view('financials.show')->with('financial', $financial);
+        return view('Admin.financials.show')->with('financial', $financial);
     }
 
     /**
@@ -107,7 +107,7 @@ class FinancialController extends AppBaseController
             return redirect(route('financials.index'));
         }
 
-        return view('financials.edit')->with('financial', $financial);
+        return view('Admin.financials.edit')->with('financial', $financial);
     }
 
     /**

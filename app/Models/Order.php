@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Pipeline\CreatedAt;
+use App\Pipeline\Name;
+use App\Pipeline\Status;
+use App\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -76,26 +80,34 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Order extends Model
 {
 
-    use LogsActivity;
+    use LogsActivity, HasFilter;
 
+    public $queryFilters = [
+
+        Status::class,
+        CreatedAt::class
+    ];
     protected static $logName = 'order';
 
-    protected static $logAttributes = ['review_status','client_review','mobile_delivery','address','client_id','status','order_date','delivery_date','delivery_rate','order_price','request','approved_at','prepared_at','shipping_at','shipped_at','rejected_at','received_at','cancelled_at','user_id','admin_cancellation','reason_id','notes',];
+    protected static $logAttributes = ['review_status', 'client_review', 'mobile_delivery', 'address', 'client_id', 'status', 'order_date', 'delivery_date', 'delivery_rate', 'order_price', 'request', 'approved_at', 'prepared_at', 'shipping_at', 'shipped_at', 'rejected_at', 'received_at', 'cancelled_at', 'user_id', 'admin_cancellation', 'reason_id', 'notes',];
 
     protected $fillable = [
-            'review_status','client_review','mobile_delivery','address','client_id','status','order_date','delivery_date','delivery_rate','order_price','request','approved_at','prepared_at','shipping_at','shipped_at','rejected_at','received_at','cancelled_at','user_id','admin_cancellation','reason_id','notes','created_by','updated_by'
+        'review_status', 'client_review', 'mobile_delivery', 'address', 'client_id', 'status', 'order_date', 'delivery_date', 'delivery_rate', 'order_price', 'request', 'approved_at', 'prepared_at', 'shipping_at', 'shipped_at', 'rejected_at', 'received_at', 'cancelled_at', 'user_id', 'admin_cancellation', 'reason_id', 'notes', 'created_by', 'updated_by'
     ];
 
-    public function client() {
+    public function client()
+    {
         return $this->belongsTo('App\Models\Client');
     }
 
-    public function user() {
-        return $this->belongsTo('App\User', 'user_id','id');
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function products() {
-        return $this->belongsToMany('App\Models\Product')->withPivot('quantity','price');
+    public function products()
+    {
+        return $this->belongsToMany('App\Models\Product')->withPivot('quantity', 'price');
     }
 
     // public function companies()

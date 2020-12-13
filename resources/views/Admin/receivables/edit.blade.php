@@ -1,15 +1,17 @@
-@extends('layouts.admin_layout')
-
+@extends('layouts.app')
+@section('heading')
+ @lang('models/receivables.singular')
+@endsection
 @section('content')
-    @lang('models/financials.singular')
+
    <div class="content">
        @include('adminlte-templates::common.errors')
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($financial, ['route' => ['financials.update', $financial->id], 'method' => 'patch']) !!}
+                   {!! Form::model($receivable, ['route' => ['receivables.update', $receivable->id], 'method' => 'patch']) !!}
 
-                        @include('Admin.financials.fields')
+                        @include('receivables.fields')
 
                    {!! Form::close() !!}
                </div>

@@ -1,15 +1,17 @@
-@extends('layouts.admin_layout')
-
+@extends('layouts.app')
+@section('heading')
+ @lang('models/payables.singular')
+@endsection
 @section('content')
-    @lang('models/financials.singular')
+
    <div class="content">
        @include('adminlte-templates::common.errors')
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($financial, ['route' => ['financials.update', $financial->id], 'method' => 'patch']) !!}
+                   {!! Form::model($payable, ['route' => ['payables.update', $payable->id], 'method' => 'patch']) !!}
 
-                        @include('Admin.financials.fields')
+                        @include('Admin.payables.fields')
 
                    {!! Form::close() !!}
                </div>

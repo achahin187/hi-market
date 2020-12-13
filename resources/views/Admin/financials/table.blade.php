@@ -17,6 +17,7 @@
 
         </thead>
         <tbody>
+
         @foreach($financials as $financial)
             <tr>
                 <td>{{ $financial->id }}</td>
