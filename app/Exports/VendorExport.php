@@ -4,8 +4,11 @@ namespace App\Exports;
 
 use App\Models\Vendor;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class VendorExport implements FromCollection
+
+class VendorExport implements FromCollection, WithMapping, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -18,9 +21,9 @@ class VendorExport implements FromCollection
      public function map($registration) : array {
         return [
            	$registration->id,
-            $registration->arab_nme,
+            $registration->arab_name,
             $registration->eng_name,            
-        ] ;
+        ];
  
  
     }

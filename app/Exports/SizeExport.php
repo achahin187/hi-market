@@ -4,8 +4,10 @@ namespace App\Exports;
 
 use App\Models\Size;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class SizeExport implements FromCollection
+class SizeExport implements FromCollection, WithMapping, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -18,8 +20,7 @@ class SizeExport implements FromCollection
      public function map($registration) : array {
         return [
            	$registration->id,
-            $registration->value,
-            $registration->name_en,            
+            $registration->value,           
         ] ;
  
  

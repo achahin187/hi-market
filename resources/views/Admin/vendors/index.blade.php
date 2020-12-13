@@ -18,6 +18,8 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="{{route('vendors.create')}}">{{ __('admin.vendor_create') }}</a></li>
+
+                                <li class="breadcrumb-item"><a href="{{route('vendor.export')}}">{{__('admin.export')}}</a></li>
                             </ol>
                         </div>
                     @endif

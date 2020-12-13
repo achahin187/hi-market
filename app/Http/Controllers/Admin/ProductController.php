@@ -812,15 +812,7 @@ class ProductController extends Controller
      */
     public function export()
     {
-        $excels = [
-             
-             'CategoryExport'    =>'categories.xlsx',
-             'SuperMarketExport' =>'supermarket.xlsx',
-             'SizeExport'        =>'size.xlsx',
-             
-         ];
-  
-        
+
          return  Excel::download(new ProductsExport , 'products.xlsx');
     }
 

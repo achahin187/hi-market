@@ -5,7 +5,7 @@ namespace App\Exports;
 use App\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class ProductSampleExport implements FromCollection
+class ProductSampleExport implements FromCollection ,WithMapping, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection

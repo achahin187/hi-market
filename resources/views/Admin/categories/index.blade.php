@@ -17,8 +17,19 @@
                         <ol class="breadcrumb float-sm-right">
                          @if(auth()->user()->can('category-list'))    
                             <li class="breadcrumb-item"><a href="{{route('categories.create')}}">{{__('admin.add_category')}}</a></li>
-                         @endif    
+                         @endif  
+
+                          <li class="breadcrumb-item">
+                                <a id="link" href="">{{__('admin.import')}}</a>
+
+                                <form role="form" action="{{route('category.export')}}" method="POST" id="import-form" enctype="multipart/form-data">
+                                    @csrf
+                                    <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
+                                </form>
+                            </li>  
                         </ol>
+
+
                     </div>
 
                     <div class="col-12">

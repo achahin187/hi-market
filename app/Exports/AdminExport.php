@@ -15,22 +15,5 @@ class AdminExport implements FromCollection
         return User::all();
     }
 
-     public function map($registration) : array {
-        return [
-           	$registration->id,
-            $registration->name_ar,
-            $registration->name_en,            
-        ] ;
- 
- 
-    }
- 
-    public function headings() : array {
-        return [
-            'id',
-            'Arabic Name',
-			'English Name',
-			
-        ] ;
-    }
+    
 }

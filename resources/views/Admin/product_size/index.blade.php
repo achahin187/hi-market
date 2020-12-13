@@ -12,6 +12,22 @@
                 <div class="row mb-2">
                     <div style="margin-bottom: 5px" class="col-sm-6">
                     </div>
+                      <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                               
+                                @if(auth()->user()->can('product-import')) 
+                                @endif
+                                    <li class="breadcrumb-item">
+
+                                        <a id="link" href="">{{__('admin.import')}}</a>
+
+                                        <form role="form" action="{{route('size.export')}}" method="POST" id="import-form" enctype="multipart/form-data">
+                                            @csrf
+                                            <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
+                                        </form>
+                                    </li>
+                            </ol>
+                        </div>
 
 
                     <div class="col-12">
