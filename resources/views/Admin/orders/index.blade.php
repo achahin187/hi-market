@@ -230,9 +230,9 @@
                                                                         <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                                                                     {{-- @endif --}}
                                                             </form>
-                                                              @if(auth()->user()->can('orders-assign'))
                                                                 
                                                                     <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
+                                                              @if(auth()->user()->can('orders-assign'))
                                                               @endif      
                                                           @if(auth()->user()->can('order-edit'))
                                                                         <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('admin.edit') }}</a>

@@ -159,7 +159,7 @@ class OrderController extends Controller
 
     public function editorder($order_id)
     {
-        //
+        dd($order_id);
         $order = Order::find($order_id);
 
         $total_product_offers_price = 0;
@@ -210,56 +210,18 @@ class OrderController extends Controller
 
     public function updateorder(Request $request,$order_id)
     {
-        //
-
+        
         $order = Order::find($order_id);
-
-        $rules = [
-            'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'status' => ['required','min:0','integer'],
+        
+        $request->validate([
             'driver' => ['sometimes','required','min:0','integer'],
-            'delivery_date' => 'required|after:today',
-        ];
 
-        $this->validate($request,$rules);
+        ]);
 
-
-
-        if($order)
-        {
-
-            if($request->status == 0) {
-                $order->update(['status' => $request->status]);
-            }
-            elseif ($request->status == 1)
-            {
-                $order->update(['status' => $request->status,'approved_at' => now()]);
-            }
-            elseif ($request->status == 2)
-            {
-                $order->update(['status' => $request->status,'prepared_at' => now()]);
-            }
-            elseif($request->status == 3)
-            {
-                $order->update(['status' => $request->status,'shipping_at' => now()]);
-            }
-            elseif($request->status == 4)
-            {
-                $order->update(['status' => $request->status,'shipped_at' => now()]);
-            }
-            else
-            {
-                $order->update(['status' => $request->status,'received_at' => now()]);
-            }
-
-
-            $order->update(['address' => $request->input('address') , 'status' => $request->status , 'delivery_date' => $request->delivery_date , 'user_id' =>  in_array($request->status,[0,1]) ? null : $request->driver]);
-            return redirect()->route('orders.edit',$order_id)->withStatus('Order information successfully updated.');
-        }
-        else
-        {
-            return redirect()->route('orders.edit',$order_id)->withStatus('no id found');
-        }
+        $order->update(['user_id' => $request->driver ]);
+   
+        return redirect()->route('orders.index')->withStatus('assign successfully');
+        
 
     }
 
