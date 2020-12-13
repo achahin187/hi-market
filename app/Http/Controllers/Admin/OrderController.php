@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function index($cancel = false)
     {
         $setting = Setting::all()->first();
-        
+       
 
         if($cancel) {
    
@@ -61,7 +61,7 @@ class OrderController extends Controller
             }
             else
             {
-                $orders = Order::where('status','!=',5)->get();
+                $orders = Order::all();
             }
 
             return view('Admin.orders.index', compact('orders', 'setting'));
