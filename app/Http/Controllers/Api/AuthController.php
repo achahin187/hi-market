@@ -158,7 +158,6 @@ class AuthController extends Controller
        
         $validator = \Validator::make($request->all(), [
             'mobile_number' => ['required','numeric','digits:11'],
-            'old_password'  => ['required'],
             'new_password'  => ['required', 'confirmed', 'different:old_password'],
         ]);
 
@@ -173,17 +172,13 @@ class AuthController extends Controller
 
         if ($client) {
 
-            if (Hash::check($request->old_password, $client->password)) {
+           
+            $client->update(['password' => $request->new_password,]);
 
-                $client->update(['password' => $request->new_password,]);
 
+            return $this->returnData(['client'], [$client], 'password updated successfully');
 
-                return $this->returnData(['client'], [$client], 'password updated successfully');
-
-            } else {
-
-                return $this->returnError(422, 'the old password is not in our records');
-            }
+          
         }else{
 
                 return $this->returnError(422, 'the phone number is no correct');

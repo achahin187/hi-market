@@ -25,11 +25,11 @@ class OrderController extends Controller
     }
     public function index($cancel = false)
     {
-        //
         $setting = Setting::all()->first();
+        dd($setting);
 
         if($cancel) {
-
+   
             if(auth()->user()->hasRole('delivery'))
             {
                 $cancelledorders = auth()->user()->orders()->where('status',5)->orderBy('id', 'desc')->paginate(10);
@@ -587,6 +587,22 @@ class OrderController extends Controller
         ];
         Excel::import(new AdminImport ,request()->file('file'));
 
+        return back();
+    }
+
+    public function changeStatusOrder(Request $request)
+    {
+        //dd($request->all());
+        $order = Order::find($request->order_id);
+        
+        if($request->type == 'next')
+        {
+            $order->update(['status'=>$request->order_status + 1]);
+        }else
+        {
+            $order->update(['status'=>$request->order_status - 1]);
+
+        }
         return back();
     }
 }

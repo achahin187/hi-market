@@ -28,7 +28,7 @@
 
                      <div class="form-group" id="branch_promo" hidden="true">
                         <label for="branch">Branch</label>
-                        <select name="branch_id" id="branche_4"  class="form-control select2">
+                        <select name="branch_id" id="branche_5" multiple class="form-control select2">
                         
                             <option  selected  disabled>Please Select branch</option>
                                

@@ -3,7 +3,6 @@
 @section('content')
 
 
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -129,13 +128,15 @@
                                             <th>{{ __('admin.order_id') }}</th>
                                             <th>{{ __('admin.assign_to') }}</th>
                                             <th>{{ __('admin.status') }}</th>
+                                            <th>{{ __('admin.Previous') }}</th>
+                                            <th>{{ __('admin.Next') }}</th>
 
-                                            @if(auth()->user()->can('orders-cancel'))
                                             <th>{{ __('admin.cancel') }}</th>
+                                            @if(auth()->user()->can('orders-cancel'))
                                             @endif
 
-                                            @if(auth()->user()->can('orders-rollback'))
                                             <th>{{ __('admin.rollback') }}</th>
+                                            @if(auth()->user()->can('orders-rollback'))
                                             @endif
 
                                         @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))   
@@ -155,7 +156,19 @@
 
                                                 <td>
 
-                                                    <?php $status = ['new' => 0,'approved' => 1,'prepared' => 2,'shipping' => 3,'shipped' => 4,'received' => 6,'approved-rollback' => 7,'prepared-rollback' => 8 , 'shipping-rollback' => 9 , 'shipped-rollback' => 10];?>
+                                                    <?php $status = 
+                                                    [
+                                                    'new' => 0,
+                                                    'approved' => 1,
+                                                    'prepared' => 2,
+                                                    'shipping' => 3,
+                                                    'shipped' => 4,
+                                                    'received' => 6,
+                                                    'approved-rollback' => 7,
+                                                    'prepared-rollback' => 8 ,
+                                                    'shipping-rollback' => 9 ,
+                                                    'shipped-rollback' => 10
+                                                     ];?>
 
                                                     @foreach ($status as $index => $state)
 
@@ -172,6 +185,11 @@
                                                 </td>
 
                                                   @if(auth()->user()->can('orders-cancel'))
+                                                @endif
+
+                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
+                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == count($status) ? 'disabled' : '' }}" >Next</a></td>
+                                                <td></td>
                                                 <td>
 
                                                     @if($order->status >= $setting->cancellation || auth()->user()->hasRole('driver'))
@@ -184,8 +202,8 @@
 
                                                 </td>
 
-                                                @endif
                                              @if(auth()->user()->can('orders-rollback'))
+                                             @endif   
                                                 <td>
 
                                                     @if(in_array($order->status,[1,2,3,4,6]) )
@@ -197,7 +215,6 @@
                                                     @endif
 
                                                 </td>
-                                             @endif   
                                                {{--  @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager'])) --}}
                                                     <td>
                                                         <div class="dropdown">
@@ -253,9 +270,9 @@
                                                                         <label>Cancellation Reason</label>
                                                                         <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                                            @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
+                                                                            @foreach(\App\Models\DeliveryCompany::where('status','active')->get() as $reason)
 
-                                                                                <option value="{{ $reason->id }}">{{ $reason->arab_reason }}</option>
+                                                                                <option value="{{ $reason->id }}">{{ $reason->name_ar }}</option>
 
                                                                             @endforeach
 
@@ -294,7 +311,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{ route('orders.cancel','rollback') }}" method="POST">
+                                                            <form action="#" method="POST">
 
                                                                 @csrf
 
@@ -303,12 +320,12 @@
                                                                     <input type="hidden" value="{{$order->id}}" name="order_id">
 
                                                                     <div class="form-group">
-                                                                        <label>{{ __('admin.Rollback_Reason') }}</label>
-                                                                        <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                                                        <label>{{ __('admin.delivery_company') }}</label>
+                                                                        <select class=" @error('company_id') is-invalid @enderror select2"  name="company_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                                            @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
+                                                                            @foreach(\App\Models\DeliveryCompany::where('status',1)->get() as $company)
 
-                                                                                <option value="{{ $reason->id }}">{{ $reason->arab_reason }}</option>
+                                                                                <option value="{{ $company->id }}">{{ $company->name_ar }}</option>
 
                                                                             @endforeach
 
@@ -316,14 +333,16 @@
                                                                     </div>
 
                                                                     <div class="form-group">
-                                                                        <label>{{ __('admin.Notes') }}</label>
-                                                                        <textarea class=" @error('notes') is-invalid @enderror form-control" name="notes" rows="3" placeholder="Enter ..."></textarea>
+                                                                        <label>{{ __('admin.status') }}</label>
+                                                                        <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                                                        @error('notes')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
+                                                                        @foreach($status as $index=>$stat)
+
+                                                                        <option value="{{ $stat }}"{{ $order->status == $stat ?'selected' : '' }}>{{ $index }}</option>
+
+                                                                        @endforeach
+
+                                                                        </select>
                                                                     </div>
                                                                 </div>
 
