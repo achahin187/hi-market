@@ -40,6 +40,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Branch[] $branches
+ * @property-read int|null $branches_count
  */
 class Category extends Model
 {

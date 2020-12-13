@@ -53,6 +53,7 @@ use Hash;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\DeliveryCompany $company
  */
 class User extends Authenticatable
 {
