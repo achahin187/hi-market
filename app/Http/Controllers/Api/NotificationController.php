@@ -24,7 +24,7 @@ class NotificationController extends Controller
     {
         if($user = getUser())
         {
-        $orders = $user->orders;
+            $orders = $user->orders;
 
              return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
 
