@@ -7,6 +7,7 @@ use App\Models\CartRequest;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\DeliveryCompany;
 use App\Models\Setting;
 use App\Models\Team;
 use App\User;
@@ -23,11 +24,11 @@ class OrderController extends Controller
         $this->middleware('permission:order-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:order-delete', ['only' => ['destroy']]);
     }
-    public function index($cancel = false)
+    public function index(Request $request, $cancel = false)
     {
         $setting = Setting::all()->first();
        
-
+      
         if($cancel) {
    
             if(auth()->user()->hasRole('delivery'))
@@ -41,6 +42,25 @@ class OrderController extends Controller
             return view('Admin.orders.index', compact('cancelledorders'));
         }
         elseif(request()->driver_id)
+        {
+
+            $driver = User::find(request()->driver_id);
+
+            $orders = $driver->orders()->whereNotIn('status',array(0,1,5))->get();
+
+            return view('Admin.orders.index',compact('orders','setting','driver'));
+        }
+        elseif(request()->company_id)
+        {
+
+            $company = DeliveryCompany::find(request()->company_id);
+
+            $orders = $company->orders()->get();
+       
+
+            return view('Admin.orders.index',compact('orders','setting'));
+        }
+        elseif(request()->delivery_id)
         {
 
             $driver = User::find(request()->driver_id);

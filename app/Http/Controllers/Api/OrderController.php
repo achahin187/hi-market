@@ -15,6 +15,7 @@ use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\DeliveryCompany;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +76,10 @@ class OrderController extends Controller
 
         $order_details = $request->all();
 
-
+        $comapny = DeliveryCompany::WhereHas('branches', function($q) use ($request){
+                    $q->Where('branch_id', $request->branch_id);
+        })->first();
+        
         $client = getUser();
 
         $date = now();
@@ -105,22 +109,15 @@ class OrderController extends Controller
                 'coupon' => $order_details["coupon"],
                 'discount' => $order_details["discount"],
                 'status' => 0,
-                'final_total' => $order_details["final_total"]
+                'final_total' => $order_details["final_total"],
+                'company_id' => $comapny->id
             ]);
 
 
-            foreach (Product::find($order_details["products"]) as $product) {
-
-                $order->products()->attach($product->id, ['quantity' => $product->quantity, 'price' => $product->price]);
-
-                if ($order_details->flag == 1) {
-
-                    foreach ($product->addons as $addon) {
-                        $order->productaddons()->attach($addon->id, ['quantity' => $addon->quantity, 'price' => $addon->price]);
-                    }
-                }
-
-            }
+        $company->orders()->attach([
+            'order_id'   => $order->id,
+            'company_id' => $comapny->id,
+        ]);
 
 
             return $this->returnSuccessMessage('The order has been completed successfully', 200);

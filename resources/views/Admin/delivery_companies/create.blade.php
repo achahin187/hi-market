@@ -127,7 +127,7 @@
 
                                             @foreach(\App\Models\City::all() as $cities)
 
-                                                <option value="{{ $cities->id }}">{{ $cities->name_ar }}</option>
+                                                <option value="{{ $cities->id }}">{{ $cities->name }}</option>
 
                                             @endforeach
 

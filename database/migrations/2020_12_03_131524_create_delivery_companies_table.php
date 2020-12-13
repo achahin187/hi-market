@@ -23,6 +23,9 @@ class CreateDeliveryCompaniesTable extends Migration
             $table->string("email");
             $table->bigInteger("city_id")->unsigned();
             $table->foreign("city_id")->references("id")->on("cities")->onDelete("cascade");
+
+            $table->bigInteger("manager_id")->unsigned();
+            $table->foreign("manager_id")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

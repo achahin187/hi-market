@@ -55,4 +55,9 @@ class DeliveryCompany extends Model
     {
         return $this->belongsToMany(Branch::class,"delivery_companies_branches");
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class,"company_order",'company_id');
+    }
 }
