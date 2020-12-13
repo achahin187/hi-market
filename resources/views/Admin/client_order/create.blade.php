@@ -196,7 +196,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                                <input type="number" name="quantity" min="1" value="" class="@error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                                <input type="number" name="quantity" min="1" value="" class="@error('quantity') is-invalid @enderror form-control quantity" required>
 
                                                                 @error('quantity')
                                                                     <span class="invalid-feedback" role="alert">
@@ -324,20 +324,26 @@
                 url: "{{ route('get_category_products') }}?category_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
+                    0
                     $('#product_9').html('');
 
                     data.forEach(function(x,i){
 
                     if (i === 0) {
 
-                    $('#price').val(x.price);
-                    $('#price').attr("data-price", x.price)
+                        $('#price').val(x.price);
+
+                        $('#price').attr("data-price", x.price)
+
                     }else{
-                    $('#price').val();
-                    $('#price').attr("data-price", x.price)
+
+                        $('#price').val();
+
+                        $('#price').attr("data-price", x.price)
 
                     }
-                    $('#product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+
+                     $('#product_9').attr("data-price", x.price).append(new Option(x.name_ar,x.id,false,false)).trigger("change");
                     })
                 }
             });
@@ -346,60 +352,38 @@
 </script>
 
 <script>
-    $(document).ready(function () {
 
-        
-
-    
-    //add product btn
-    $('#add-product-btn').on('click', function (e) {
-        e.preventDefault();
-        
-
-         $.ajax({
-                url: "{{ route('get_product') }}?product_id=" +$('#product_9').val(),
+        $("#product_9").change(function(){
+            $.ajax({
+                url: "{{ route('get_product') }} ?product_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                console.log(data);
-                    var name = data.name_ar;
-                    var id = data.id;
-                    var price = data.price;
 
-                    $(this).removeClass('btn-success').addClass('btn-default disabled');
+                    $('#price').val(data.price);
+                    $('#price').attr("data-price", x.price);
 
-                    var html =
-                        `<tr>
-                            <td>${name}</td>
-                            <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
-                            <td class="product-price">${price}</td>               
-                            <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
-                        </tr>`;
-
-                    $('.order-list').append(html);
-
-                    //to calculate total price
-                    //calculateTotal();
-                  
-                   
                 }
             });
-    });
+        });
+    
+</script>
+
+
+<script>
+   
 
     
     //change product quantity
-    $('body').on('keyup change', '.product-quantity', function() {
+    $('body').on('keyup change', '.quantity', function() {
 
-        var quantity = Number($(this).val()); //2
-        var unitPrice = parseFloat($('#price').val() ); //150
+        var quantity = $(this).val(); //2
+        var unitPrice = $('#product_9').data('price'); //150
+
         console.log(unitPrice,quantity);
         $('#price').val(quantity * unitPrice);
         //calculateTotal();
 
     });//end of product quantity change
-  
-
-    
-});//end of document ready
 
 
 

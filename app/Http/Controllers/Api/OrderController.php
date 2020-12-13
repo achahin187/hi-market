@@ -11,6 +11,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
+use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Order;
@@ -227,4 +228,19 @@ class OrderController extends Controller
         return $this->returnData(["days", "time", "state"], [$days, $time, $state[rand(1, 2)]]);
     }
 
+    public function getClientOrder(Request $request)
+    {
+          $udid = $request->header('udid');
+
+          $client = getUser();
+
+          if($client){
+            $clientOrders = $client->orders;
+        
+         
+            return MyOrdersResource::collection($clientOrders);
+          }else{
+             return $this->returnError(422, "user not exists");
+          }
+    }
 }

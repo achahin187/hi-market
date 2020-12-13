@@ -43,22 +43,36 @@ class OrderController extends Controller
         }
         elseif(request()->driver_id)
         {
+            if (auth()->user()->id == request()->driver_id) {
+                
+                $driver = User::find(request()->driver_id);
 
-            $driver = User::find(request()->driver_id);
+                $orders = $driver->orders()->whereNotIn('status',array(0))->get();
 
-            $orders = $driver->orders()->whereNotIn('status',array(0))->get();
+                return view('Admin.orders.index',compact('orders','setting','driver'));
 
-            return view('Admin.orders.index',compact('orders','setting','driver'));
+            }else{
+
+             return redirect()->back()->withStatus('no request have this id');
+
+            }
         }
         elseif(request()->company_id)
         {
+            if(auth()->user()->company_id == request()->company_id ){
 
-            $company = DeliveryCompany::find(request()->company_id);
+                $company = DeliveryCompany::find(request()->company_id);
 
-            $orders = $company->orders()->whereNotIn('status',array(0))->get();
+                $orders = $company->orders()->whereNotIn('status',array(0))->get();
        
 
-            return view('Admin.orders.index',compact('orders','setting'));
+             return view('Admin.orders.index',compact('orders','setting'));
+
+            }else{
+
+             return redirect()->back()->withStatus('no request have this id');
+
+            }
         }
         elseif(request()->delivery_id)
         {
@@ -81,7 +95,13 @@ class OrderController extends Controller
             }
             else
             {
-                $orders = Order::all();
+                if (auth()->user()->hasAnyRole(['super_admin'])) {
+                    # code...
+                    $orders = Order::all();
+                }else{
+
+                return redirect()->back()->withStatus('You  dont  have permission ');
+                }
             }
 
             return view('Admin.orders.index', compact('orders', 'setting'));
@@ -159,7 +179,7 @@ class OrderController extends Controller
 
     public function editorder($order_id)
     {
-        dd($order_id);
+       
         $order = Order::find($order_id);
 
         $total_product_offers_price = 0;
@@ -375,7 +395,7 @@ class OrderController extends Controller
 
     public function addproduct(Request $request,$order_id)
     {
-        //
+        //dd($request->all());
         $order = Order::find($order_id);
 
         $rules = [
@@ -383,7 +403,7 @@ class OrderController extends Controller
             'quantity' => 'required|integer|min:1'
         ];
 
-        $this->validate($request,$rules);
+        $request->validate($rules);
 
         $quantity = $request->input('quantity');
 
@@ -395,18 +415,19 @@ class OrderController extends Controller
             $product_id = $request->input('product_id');
 
             $product = Product::find($product_id);
-
+            $status = [];
             foreach ($order->products as $orderproduct)
             {
                 if($orderproduct->id == $product->id)
                 {
-                    $status = true;
+                    $status[] .= true;
                 }
                 else
                 {
-                    $status = false;
+                    $status[] .= false;
                 }
             }
+         
 
             if($status)
             {
