@@ -53,7 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Address extends Model
 {
     //
-  
+    use LogsActivity;
 
     protected $table = 'addresses';
 

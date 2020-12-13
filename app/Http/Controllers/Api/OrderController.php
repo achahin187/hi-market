@@ -79,7 +79,7 @@ class OrderController extends Controller
         $comapny = DeliveryCompany::WhereHas('branches', function($q) use ($request){
                     $q->Where('branch_id', $request->branch_id);
         })->first();
-        
+
         $client = getUser();
 
         $date = now();
@@ -216,7 +216,7 @@ class OrderController extends Controller
         $time = [];
         for ($i = 0; $i < 10; $i++) {
             $time[$i] = [
-                "id" => $i,
+                "id" => $i +1,
                 "text" => now()->addHours($i)->format("g A")
             ];
         }

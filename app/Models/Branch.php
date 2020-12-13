@@ -67,6 +67,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DeliveryCompany[] $companies
+ * @property-read int|null $companies_count
  */
 class Branch extends Model
 {
