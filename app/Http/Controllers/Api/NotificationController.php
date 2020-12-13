@@ -15,14 +15,14 @@ class NotificationController extends Controller
 
     public function __construct()
     {
-        if (\request()->header("Authorization")) {
+//        if (\request()->header("Authorization")) {
             $this->middleware("auth:client-api");
-        }
+//        }
     }
 
     public function index()
     {
-        if($user = getUser())
+        if($user = auth("client-api")->user())
         {
             $orders = $user->orders;
 
