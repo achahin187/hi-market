@@ -162,9 +162,8 @@
                                                     'approved' => 1,
                                                     'prepared' => 2,
                                                     'shipping' => 3,
-                                                    'shipped' => 4,
-                                                    'deliverd' => 5,
-                                                    'received' => 6,
+                                                    'deliverd' => 4,
+                                                    'received' => 5,
                                                      ];?>
 
                                                     @foreach ($status as $index => $state)
@@ -185,7 +184,7 @@
                                                 @endif
 
                                                 <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
-                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 5 ? 'disabled' : '' }}" >Next</a></td>
+                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 4 ? 'disabled' : '' }}" >Next</a></td>
                                                 <td></td>
                                                 <td>
 
