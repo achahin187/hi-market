@@ -25,11 +25,11 @@ class OrderController extends Controller
     }
     public function index($cancel = false)
     {
-        //
         $setting = Setting::all()->first();
+        dd($setting);
 
         if($cancel) {
-
+   
             if(auth()->user()->hasRole('delivery'))
             {
                 $cancelledorders = auth()->user()->orders()->where('status',5)->orderBy('id', 'desc')->paginate(10);

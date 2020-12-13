@@ -41,7 +41,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('profile', 'ClientController@client_profile')->name('client_profile');
     Route::post('profile/update', 'ClientController@updateprofile')->name('profile_update');
     //address
-    Route::post('ress', 'ClientController@add_address')->name('address.store');
+    Route::post('add_address', 'ClientController@add_address')->name('address.store');
     Route::get('get_address/{flag}', 'ClientController@get_address')->name('address.show');
     Route::post("addorder", "OrderController@addorder");
     Route::get("select/date", "OrderController@selectDate");
