@@ -185,7 +185,7 @@
                                                 @endif
 
                                                 <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
-                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == count($status) ? 'disabled' : '' }}" >Next</a></td>
+                                                <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 5 ? 'disabled' : '' }}" >Next</a></td>
                                                 <td></td>
                                                 <td>
 
