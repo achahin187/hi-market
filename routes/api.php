@@ -85,6 +85,17 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('deleteAddress', 'ClientController@delete_address');
 
 });
+/**
+ * Select 2 API
+ */
+Route::get("select2/categories", "Select2Controller@categories")->name("api.select2.categories");
+Route::get("select2/subcategories", "Select2Controller@subcategories")->name("api.select2.subcategories");
+Route::get("select2/regions", "Select2Controller@regions")->name("api.select2.regions");
+Route::get("select2/restaurants", "Select2Controller@restaurants")->name("api.select2.restaurants");
+Route::get("select2/country", "Select2Controller@country")->name("api.select2.country");
+Route::get("select2/govern", "Select2Controller@govern")->name("api.select2.govern");
+Route::get("select2/products", "Select2Controller@products")->name("api.select2.products");
+Route::get("select2/users", "Select2Controller@users")->name("api.select2.users");
 
 
 

@@ -89,7 +89,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('areas/status/{area_id}', 'Admin\AreaController@status')->name('areas.status');
         Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
         //Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
-
+        Route::resource('financials', 'FinancialController')->except("update", "destroy");
 
 
             Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');
@@ -193,7 +193,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
-        //Map 
+        //Map
         Route::post('store-polygon','Admin\LocationController@addLocation')->name('add-polygon');
         //locations
         Route::get('locations', 'Admin\LocationController@index')->name('locations.index');
@@ -202,7 +202,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //areas
         Route::get('locations/{location_id}/area', 'Admin\LocationController@getArea')->name('locations.area.index');
         Route::post('area/status', 'Admin\LocationController@status')->name('areaList.status');
-        
+
         Route::get('area/{id}', 'Admin\LocationController@deleteArea')->name('locations.area.delete');
         // Route::get('city/{$id}/edit', 'Admin\LocationController@editCity')->name('city.edit');
 
@@ -221,12 +221,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         //VendorCategories
         Route::get('getVendorCategories', 'Admin\BranchController@getVendorCategories')->name('vendor.categories');
-         
+
         //poit image
         Route::post('point-photo', 'Admin\PointController@pointImage')->name('point.photo');
-       
+
        //offers
-       Route::resource('offer','Admin\OffersController');     
+       Route::resource('offer','Admin\OffersController');
 
        //get_brannch_product
 
