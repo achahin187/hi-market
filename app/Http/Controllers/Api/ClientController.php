@@ -78,8 +78,17 @@ class ClientController extends Controller
 
         $client = getUser();
 
-        $points = Point::whereDate("end_date", "<", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")->simplePaginate();
-        return $this->returnData(['client points', "points", "more_points"], [$client->total_points ?? 0, $points->getCollection(), $points->hasMorePages()]);
+        $points = Point::whereDate("end_date", ">", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
+            ->get()->map(function ($point) use($client){
+                return [
+                    "id"=>$point->id,
+                    "point"=>(int) $point->points,
+                    "purchase" => $point->value . " EGP" ,
+                    "is_percentage"=>$point->type == 0 ? false : true,
+                    "checked"=> $point->point < $client->total_points
+                ];
+            });
+        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points,""]);
     }
 
     public function usePoints()
@@ -125,7 +134,7 @@ class ClientController extends Controller
 
        $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
        if ($address) {
-           
+
            $address->update(['default'=>0]);
 
            $newDefault = Address::where('id',$request->address_id)->first();
