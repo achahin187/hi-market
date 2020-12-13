@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Photo;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CategoryExport;
 class CategoryController extends Controller
 {
 
@@ -226,7 +227,7 @@ class CategoryController extends Controller
      */
     public function export()
     {
-        return Excel::download(new CategoryExport , 'categories.csv');
+        return Excel::download(new CategoryExport , 'categories.xlsx');
     }
 
     /**

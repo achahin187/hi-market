@@ -20,12 +20,9 @@
                                 @endif
                                     <li class="breadcrumb-item">
 
-                                        <a id="link" href="">{{__('admin.import')}}</a>
+                                        <a  href="{{ route('measure.export') }}">{{__('admin.import')}}</a>
 
-                                        <form role="form" action="{{route('measure.export')}}" method="POST" id="import-form" enctype="multipart/form-data">
-                                            @csrf
-                                            <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
-                                        </form>
+                                       
                                     </li>
                             </ol>
                         </div>

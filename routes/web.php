@@ -139,7 +139,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('products/download', 'Admin\ProductController@download')->name('products.downloadsample');
             Route::get('category', 'Admin\CategoryController@export')->name('category.export');
             Route::get('size', 'Admin\SizeController@export')->name('size.export');
-            Route::get('measure', 'Admin\MeasuresController@export')->name('measure.export');
+            Route::get('measure', 'Admin\UnitController@export')->name('measure.export');
             Route::get('vendor', 'Admin\VendorController@export')->name('vendor.export');
         });
 

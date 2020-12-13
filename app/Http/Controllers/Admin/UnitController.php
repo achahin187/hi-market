@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Measures;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MeasuresExport;
 class UnitController extends Controller
 {
 
@@ -172,5 +173,11 @@ class UnitController extends Controller
             return redirect('/admin/measures')->withStatus(__('measuring unit successfully deleted.'));
         }
         return redirect('/admin/measures')->withStatus(__('this id is not in our database'));
+    }
+
+     public function export()
+    {
+
+         return  Excel::download(new MeasuresExport , 'measure.xlsx');
     }
 }
