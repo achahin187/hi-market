@@ -149,7 +149,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::group(['prefix' => 'orders'],function() {
 
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
-            
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
             Route::get('{order_id}/edit', 'Admin\OrderController@editorder')->name('orders.edit');

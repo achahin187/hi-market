@@ -482,7 +482,7 @@ $settings = App\Models\Setting::all()->first();
                                 @if(auth()->user()->can('offer-list'))
                                     {{-- offer --}}
                                     <li class="nav-item">
-                                        <a href="{{route('offers.index')}}" class="nav-link">
+                                        <a href="{{route('offer.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>
                                                 {{ __('admin.offers') }}
