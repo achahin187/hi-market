@@ -135,8 +135,8 @@
     <th>{{ __('admin.Next') }}</th>
     @endif
 
+    @if(auth()->user()->can('order-cancel'))
     <th>{{ __('admin.cancel') }}</th>
-    @if(auth()->user()->can('orders-cancel'))
     @endif
 
     <th>{{ __('admin.rollback') }}</th>
@@ -188,22 +188,23 @@
 
         <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
         @endif
+
         @if(auth()->user()->can('order-next'))
         <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 5 ? 'disabled' : '' }}" >Next</a></td>
         @endif
 
      
+        @if($order->status >= $setting->cancellation || auth()->user()->can('order-cancel'))
         <td>
 
-            @if($order->status >= $setting->cancellation || auth()->user()->can('order-cancel'))
 
                 <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
 
             @else
                 <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
-            @endif
 
         </td>
+        @endif
 
      @if(auth()->user()->can('order-rollback'))
         <td>
@@ -237,9 +238,9 @@
                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this order?") }}') ? this.parentElement.submit() : ''">{{ __('admin.delete') }}</button>
                             {{-- @endif --}}
                     </form>
+                      @if(auth()->user()->can('order-assign'))
                         
                             <a class="dropdown-item" href="{{ route('orders.assign', $order->id) }}">assign to</a>
-                      @if(auth()->user()->can('orders-assign'))
                       @endif      
                   @if(auth()->user()->can('order-edit'))
                                 <a class="dropdown-item" href="{{ route('orders.edit', $order->id) }}">{{ __('admin.edit') }}</a>
