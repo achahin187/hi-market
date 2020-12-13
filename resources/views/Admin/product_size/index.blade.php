@@ -19,7 +19,7 @@
                                 @endif
                                     <li class="breadcrumb-item">
 
-                                        <a  href="{{route('size.export')}}">{{__('admin.import')}}</a>
+                                        <a  href="{{route('size.export')}}">{{__('admin.export')}}</a>
 
                                     </li>
                             </ol>

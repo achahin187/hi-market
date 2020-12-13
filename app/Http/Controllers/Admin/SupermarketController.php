@@ -8,7 +8,7 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Http\Request;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SuperMarketExport;
 class SupermarketController extends Controller
 {

@@ -46,7 +46,7 @@ class OrderController extends Controller
 
             $driver = User::find(request()->driver_id);
 
-            $orders = $driver->orders()->whereNotIn('status',array(0,1))->get();
+            $orders = $driver->orders()->whereNotIn('status',array(0))->get();
 
             return view('Admin.orders.index',compact('orders','setting','driver'));
         }
@@ -55,7 +55,7 @@ class OrderController extends Controller
 
             $company = DeliveryCompany::find(request()->company_id);
 
-            $orders = $company->orders()->get();
+            $orders = $company->orders()->whereNotIn('status',array(0))->get();
        
 
             return view('Admin.orders.index',compact('orders','setting'));

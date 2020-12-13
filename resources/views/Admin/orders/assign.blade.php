@@ -83,7 +83,7 @@
                                                     @enderror
                                                 </div>
 
-                                                @if(Auth()->user()->hasRole(['super_admin', 'delivery-manager']))
+                                                @if(Auth()->user()->hasRole(['super_admin', 'delivery_admin']))
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
