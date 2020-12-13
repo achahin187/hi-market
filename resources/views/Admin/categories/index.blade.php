@@ -19,14 +19,8 @@
                             <li class="breadcrumb-item"><a href="{{route('categories.create')}}">{{__('admin.add_category')}}</a></li>
                          @endif  
 
-                          <li class="breadcrumb-item">
-                                <a id="link" href="">{{__('admin.import')}}</a>
+                           <li class="breadcrumb-item"><a href="{{route('category.export')}}">{{__('admin.import')}}</a></li>
 
-                                <form role="form" action="{{route('category.export')}}" method="POST" id="import-form" enctype="multipart/form-data">
-                                    @csrf
-                                    <input name="file" hidden type="file" class="@error('file') is-invalid @enderror" id="import">
-                                </form>
-                            </li>  
                         </ol>
 
 

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SizeExport;
+
 class SizeController extends Controller
 {
 
@@ -174,6 +176,6 @@ class SizeController extends Controller
     public function export()
     {
 
-         return  Excel::download(new SizeExport , 'products.xlsx');
+         return  Excel::download(new SizeExport , 'size.xlsx');
     }
 }
