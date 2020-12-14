@@ -113,56 +113,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">{{__('admin.age')}}</label>
-                                        <input type="number" name="age" min="1" @if(isset($client)) value="{{$client->age}}" @else value="1" @endif class=" @error('age') is-invalid @enderror form-control">
-                                        @error('age')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                   
 
-
-                                    @if(isset($client))
-
-
-                                        <div class="form-group">
-                                            <label>{{ __('admin.gender') }}</label>
-                                            <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                <option value="male" <?php if($client->status == 'male') echo 'selected'; ?>>male</option>
-                                                <option value="female" <?php if($client->status == 'female') echo 'selected'; ?>>female</option>
-
-                                            </select>
-
-                                            @error('gender')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                    @else
-
-
-                                        <div class="form-group">
-                                            <label>{{ __('admin.gender') }}</label>
-                                            <select class="@error('gender') is-invalid @enderror select2" name="gender" data-placeholder="Select a State" style="width: 100%;" required>
-
-                                                <option value="male">male</option>
-                                                <option value="female">female</option>
-
-                                            </select>
-
-                                            @error('gender')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-
-                                    @endif
 
 
 

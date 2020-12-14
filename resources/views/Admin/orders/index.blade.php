@@ -315,7 +315,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="POST">
+                    <form action="" method="POST">
 
                         @csrf
 
@@ -341,8 +341,9 @@
                                 <select class=" @error('status') is-invalid @enderror select2"  name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
                                 @foreach($status as $index=>$stat)
-
+                                @if(in_array($stat,[1,2,3,4,5,6]) )
                                 <option value="{{ $stat }}"{{ $order->status == $stat ?'selected' : '' }}>{{ $index }}</option>
+                                @endif
 
                                 @endforeach
 
