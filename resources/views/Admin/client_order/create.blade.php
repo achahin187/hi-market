@@ -140,7 +140,7 @@
                                                            
                                                     </select>
                                                 </div>
-
+{{-- 
                                                 <div class="form-group"  >
                                                     <label for="branch">category</label>
                                                     <select name="branch_id" id="category_9"  class="form-control select2">
@@ -148,7 +148,7 @@
                                                         <option  selected  disabled>Please Select category</option>
                                                            
                                                     </select>
-                                                </div>
+                                                </div> --}}
 
                                                 {{-- product --}}
                                                     <!--third card-->
