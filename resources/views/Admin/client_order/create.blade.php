@@ -55,6 +55,8 @@
                                          {{ __('admin.clients') }}
                                     </div>
 
+                            @csrf
+                       
                                   
 
                                             <div class="card-body">
@@ -97,11 +99,8 @@
                                                         </span>
                                                     @enderror
                                                 </div>
-
-
-
-                                              
                                             </div>
+
                                         
                                     </div>
 
@@ -240,7 +239,7 @@
                                             </form>
 
                                             <div class="card-body">
-                                                <h5 class="total-price">{{ __('admin.total') }} :Totall</h5>
+                                                
                                                 <table  class="table table-bordered table-hover">
                                                     <thead>
                                                     <tr>
@@ -273,9 +272,27 @@
                                     </div>
 
                             @endif
+
+
                                       
                                     </div>
+                                    
+                    <form action="{{ route('store.order') }}" method="POST">
+                        @csrf
+                               <div class="col-md-3">
 
+                                @foreach( $orders  as $index=>$order)
+                                <input type="hidden" name="order[]" value="{{ $order }}">
+                                @endforeach
+                                        <div class="form-group">
+                                            <button style="margin-top: 30px;" class=" btn btn-primary">
+                                                    Add Order
+
+
+                                            </button>
+                                        </div>
+                                    </div>               
+                         </form>   
 
                          {{--    @endif --}}
 

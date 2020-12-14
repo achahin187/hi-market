@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\DeliveryCompany;
+use App\Models\ManualOrder;
 use App\Models\Category;
 use App\Models\Supermarket;
 class ClientOrdersController extends Controller
@@ -39,5 +41,29 @@ class ClientOrdersController extends Controller
     	$product  = Product::Where('id',$request->product_id)->first();
 
     	return response()->json($product);
+    }
+
+    public function storeOrder(Request $request)
+    {
+        $request_data = $request->all();
+        $orders = collect($request_data["order"]) ;
+        $manual_ordes = ManualOrder::Where('id', $request->order_id)->get();
+        
+        foreach ($orders as $order) {
+            dd(json_decode($order));
+        $product = Product::find($order->product_id)->branches->pluck('id');
+         $store_order = Order::create([
+            'num' => 'jbfe651',
+            
+            'address'=>  Client::find($order->client_id)->address,
+            'client_id' => $order->client_id,
+            'company_id' => DeliveryCompany::WhereHas('branches', function ($q) use ($product){
+                $q->WhereIn('branches.id', $product);
+            })->first()->id,
+
+         ]);
+        }
+
+        dd('done');
     }
 }
