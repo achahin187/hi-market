@@ -329,7 +329,7 @@
 
                                     @foreach(\App\Models\DeliveryCompany::where('status',1)->get() as $company)
 
-                                        <option value="{{ $company->id }}">{{ $company->name_ar }}</option>
+                                        <option value="{{ $company->id }}" {{ $order->company_id == $company->id ? 'selected' : '' }}>{{ $company->name_ar }}</option>
 
                                     @endforeach
 

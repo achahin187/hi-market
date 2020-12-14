@@ -642,10 +642,14 @@ class OrderController extends Controller
 
     public function rollbackChangeCompany(Request $request)
     {
-        dd($request->all());
+        
 
-        $order = Order::Where('id', $request->order_id)->get();
+        $order = Order::Where('id', $request->order_id)->first();
 
-        $order->update(['company_id' => $request->company_id, 'status' => $request->status]);
+        $order->update([
+             'company_id' => $request->company_id,
+             'status' => $request->status
+         ]);
+        return redirect()->back()->withStatus(__('RollBack successfully'));
     }
 }
