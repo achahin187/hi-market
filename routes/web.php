@@ -148,7 +148,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::group(['prefix' => 'import'],function() {
 
             Route::post('admins', 'Admin\AdminController@import')->name('admins.import');
-            Route::get('products/import', 'Admin\ProductController@import')->name('products.import');
+            Route::post('products/import', 'Admin\ProductController@import')->name('products.import');
           
         });
 
