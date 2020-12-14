@@ -113,7 +113,7 @@
                                 <div class="card card-primary">
 
                                     <div class="card-header">
-                                         {{ __('admin.clients') }}
+                                         Choose SuperMaket 
                                     </div>
 
                                   
@@ -162,7 +162,7 @@
 
                                                 @else
 
-                                                    {{ __('admin.edit_product') }}
+                                                    Products
 
                                                 @endif
 
