@@ -252,8 +252,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         //client order manual
         Route::post('client/order/store','Admin\OrderController@addProductOrder')->name('store.product.client');
-        //
+        //rollback.change.company
         Route::get('manual-order-delete/{id}','Admin\OrderController@manualOrderDelete')->name('manual.order.delete');
+        //rollback.change.company
+        Route::post('rollback_change_company','Admin\OrderController@rollbackChangeCompany')->name('rollback.change.company');
     });
 
 });

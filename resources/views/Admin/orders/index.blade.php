@@ -274,7 +274,7 @@
                                 <label>Cancellation Reason</label>
                                 <select class=" @error('reason_id') is-invalid @enderror select2"  name="reason_id" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                    @foreach(\App\Models\DeliveryCompany::where('status','active')->get() as $reason)
+                                    @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
 
                                         <option value="{{ $reason->id }}">{{ $reason->name_ar }}</option>
 
@@ -315,7 +315,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('rollback.change.company') }}" method="POST">
 
                         @csrf
 

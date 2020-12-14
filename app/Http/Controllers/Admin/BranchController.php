@@ -273,7 +273,7 @@ class BranchController extends Controller
 
             if ($file = $request->file('image')) {
 
-                $this->validate($request, $rules);
+               
 
                 $filename = $file->getClientOriginalName();
                 $fileextension = $file->getClientOriginalExtension();

@@ -625,7 +625,7 @@ class OrderController extends Controller
         ]);
 
         $client = Client::where('id', $orders->client_id)->first();
-        
+
         $orders = ManualOrder::Where('client_id',$client->id)->get();
         
         return redirect()->route('client.order.create',
@@ -638,5 +638,14 @@ class OrderController extends Controller
         $order->delete();
 
         return redirect()->route('client.order.create',['client_id'=> $order->client_id])->withStatus(__('deleted successfully'));
+    }
+
+    public function rollbackChangeCompany(Request $request)
+    {
+        dd($request->all());
+
+        $order = Order::Where('id', $request->order_id)->get();
+
+        $order->update(['company_id' => $request->company_id, 'status' => $request->status]);
     }
 }
