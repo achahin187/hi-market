@@ -55,6 +55,7 @@
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.address') }}</th>
                                         <th>{{ __('admin.phone') }}</th>
+                                        <th>Add Order</th>
                                         <th>{{ __('admin.orders') }}</th>
                                 @if(auth()->user()->can('client-active'))         
                                         <th>{{ __('admin.status') }}</th>
