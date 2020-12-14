@@ -627,7 +627,7 @@ class OrderController extends Controller
         $client = Client::where('id', $orders->client_id)->first();
 
         $orders = ManualOrder::Where('client_id',$client->id)->get();
-        
+        session()->put("branch_id",$request->branch_id);
         return redirect()->route('client.order.create',
             ['client_id'=> $request->client_id])->with(['orders'=>$orders, 'supermarkets'=>$supermarkets]);
     }
@@ -651,5 +651,12 @@ class OrderController extends Controller
              'status' => $request->status
          ]);
         return redirect()->back()->withStatus(__('RollBack successfully'));
+    }
+
+    public function showDetails($id)
+    {
+            
+        $order = Order::find($id);
+        return view('Admin.orders.show_order')->with('order', $order);
     }
 }

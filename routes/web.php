@@ -258,6 +258,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('rollback_change_company','Admin\OrderController@rollbackChangeCompany')->name('rollback.change.company');
         //storeOrder
         Route::post('store_orders','Admin\ClientOrdersController@storeOrder')->name('store.order');
+
+        //OrderShow 
+        Route::get('order/show/details/{id}','Admin\OrderController@showDetails')->name('orders.show.details');
+
     });
 
 });

@@ -25,9 +25,7 @@
 <li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">{{ __('admin.CancelledOrders') }}</a></li>
 @endif    
 
-@if(auth()->user()->can('order-create'))
-<li class="breadcrumb-item"><a href="{{route('orders.index',true)}}">{{ __('admin.add_order') }}</a></li>
-@endif
+
 </ol>
 </div>
 

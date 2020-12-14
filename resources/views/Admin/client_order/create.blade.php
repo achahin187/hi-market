@@ -196,7 +196,7 @@
 
                                                             </div>
                                                         </div>
-
+ <input type="hidden" class="branch_product_id" name="branch_id" value="">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
@@ -283,6 +283,8 @@
 
                                 @foreach( $orders  as $index=>$order)
                                 <input type="hidden" name="order[]" value="{{ $order }}">
+                                <input type="hidden" class="branch_id" name="branch_id" value="{{ session()->get('branch_id') }}">
+                               
                                 @endforeach
                                         <div class="form-group">
                                             <button style="margin-top: 30px;" class=" btn btn-primary">
@@ -348,9 +350,17 @@
                 
                     })
 
+                       
 
+                   
                 }
             });
+                  
+                    var selectedStatus = $(this).find('option:selected').val();
+                    $('.branch_id').val(selectedStatus);
+
+                     $('.branch_product_id').val(selectedStatus);
+                    
         });
 
         $('.product_9').change(function(){
