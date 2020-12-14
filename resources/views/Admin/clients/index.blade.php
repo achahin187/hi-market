@@ -54,8 +54,6 @@
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.address') }}</th>
-                                        <th>{{ __('admin.gender') }}</th>
-                                        <th>{{ __('admin.city') }}</th>
                                         <th>{{ __('admin.phone') }}</th>
                                         <th>{{ __('admin.orders') }}</th>
                                 @if(auth()->user()->can('client-active'))         
@@ -72,9 +70,12 @@
                                             <td>{{$client->name}}</td>
                                             <td>{{$client->email}}</td>
                                             <td>{{$client->address}}</td>
-                                            <td>{{$client->gender}}</td>
-                                            <td>{{$client->city}}</td>
                                             <td>{{$client->mobile_number}}</td>
+
+                                            <td>
+                                                <a href="{{route('client.order.create',['client_id'=>$client->id])}}" class="btn btn-info">{{ __('admin.add_order') }}</a>
+                                            </td>
+
                                             <td><a href="{{route('client.orders',['client_id'=>$client->id])}}" class="btn btn-info">{{ __('admin.orders') }}</a></td>
 
                                          @if(auth()->user()->can('client-active'))    
