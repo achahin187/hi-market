@@ -252,13 +252,13 @@ class ClientController extends Controller
 
         if($client)
         {
-            if($client->status == 'active') {
+            if($client->status == 1) {
 
-                $client->update(['status' => 'inactive']);
+                $client->update(['status' => 0]);
             }
             else
             {
-                $client->update(['status' => 'active']);
+                $client->update(['status' => 1]);
             }
             return redirect()->back()->withStatus(__('clients status successfully updated.'));
         }

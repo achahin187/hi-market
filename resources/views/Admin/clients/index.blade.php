@@ -81,7 +81,7 @@
                                          @if(auth()->user()->can('client-active'))    
                                             <td>
 
-                                                @if($client->status == 'active' )
+                                                @if($client->status == 1 )
 
                                                     <form id="active" onsubmit="return confirm('Do you really want to change status of client?');" action="{{ route('clients.status',$client->id) }}"  method="POST">
 
