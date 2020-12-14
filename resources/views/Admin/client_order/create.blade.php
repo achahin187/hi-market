@@ -310,9 +310,10 @@
                 success: function(data) {
                     $('.product_9').html('');
                     data.forEach(function(x){
-                        
-                    $('.product_9').attr('data-price',data.price).append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    
+                    $('.product_9').append(new Option(x.name_ar,x.id,false,false)).attr('data-price',data.price).trigger("change");
                     })
+
                 }
             });
         });
