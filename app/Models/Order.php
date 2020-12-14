@@ -92,7 +92,7 @@ class Order extends Model
     protected static $logAttributes = ['review_status', 'client_review', 'mobile_delivery', 'address', 'client_id', 'status', 'order_date', 'delivery_date', 'delivery_rate', 'order_price', 'request', 'approved_at', 'prepared_at', 'shipping_at', 'shipped_at', 'rejected_at', 'received_at', 'cancelled_at', 'user_id', 'admin_cancellation', 'reason_id', 'notes',];
 
     protected $fillable = [
-        'review_status', 'client_review', 'mobile_delivery', 'address', 'client_id', 'status', 'order_date', 'delivery_date', 'delivery_rate', 'order_price', 'request', 'approved_at', 'prepared_at', 'shipping_at', 'shipped_at', 'rejected_at', 'received_at', 'cancelled_at', 'user_id', 'admin_cancellation', 'reason_id', 'notes', 'created_by', 'updated_by'
+        'review_status','num', 'client_review', 'mobile_delivery', 'address', 'client_id', 'status', 'order_date', 'delivery_date', 'delivery_rate', 'order_price', 'request', 'approved_at', 'prepared_at', 'shipping_at', 'shipped_at', 'rejected_at', 'received_at', 'cancelled_at', 'user_id', 'admin_cancellation', 'reason_id', 'notes', 'created_by', 'updated_by'
     ];
 
     public function client()

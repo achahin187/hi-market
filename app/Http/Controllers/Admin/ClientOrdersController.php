@@ -48,22 +48,23 @@ class ClientOrdersController extends Controller
         $request_data = $request->all();
         $orders = collect($request_data["order"]) ;
         $manual_ordes = ManualOrder::Where('id', $request->order_id)->get();
-        
         foreach ($orders as $order) {
-            dd(json_decode($order));
+            $order =json_decode($order);
+          //  dd(  Client::find($order->client_id)->addresses->first());
         $product = Product::find($order->product_id)->branches->pluck('id');
          $store_order = Order::create([
             'num' => 'jbfe651',
             
-            'address'=>  Client::find($order->client_id)->address,
+            'address'=>  Client::find($order->client_id)->addresses->first()->name,
             'client_id' => $order->client_id,
+            'status'=> 1,
             'company_id' => DeliveryCompany::WhereHas('branches', function ($q) use ($product){
                 $q->WhereIn('branches.id', $product);
             })->first()->id,
 
          ]);
         }
-
-        dd('done');
+        
+        return redirect()->route('clients.index')->withStatus('Order Added Successfully');
     }
 }
