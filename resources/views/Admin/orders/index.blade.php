@@ -128,7 +128,7 @@
     <th>{{ __('admin.order_id') }}</th>
     <th>{{ __('admin.assign_to') }}</th>
     <th>{{ __('admin.status') }}</th>
-    @if(auth()->user()->can('order-Previous'))
+    @if(auth()->user()->can('order-previous'))
     <th>{{ __('admin.Previous') }}</th>
     @endif
     @if(auth()->user()->can('order-next'))
@@ -184,7 +184,7 @@
 
         </td>
 
-        @if(auth()->user()->can('order-Previous'))
+        @if(auth()->user()->can('order-previous'))
 
         <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
         @endif

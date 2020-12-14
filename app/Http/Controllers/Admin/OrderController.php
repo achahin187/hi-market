@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\DeliveryCompany;
 use App\Models\Setting;
 use App\Models\Team;
+use App\Models\Supermarket;
+use App\Models\ManualOrder;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -607,5 +609,34 @@ class OrderController extends Controller
 
         }
         return back();
+    }
+
+    public function addProductOrder(Request $request)
+    {
+        $product = Product::Where('id', $request->product_id)->first();
+        $supermarkets =  Supermarket::Where('status', 'active')->get();
+
+        $orders = ManualOrder::create([
+            'client_id' => $request->client_id,
+            'product_id' => $request->product_id,
+            'product_name' => $product->name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+        ]);
+
+        $client = Client::where('id', $orders->client_id)->first();
+        
+        $orders = ManualOrder::Where('client_id',$client->id)->get();
+        
+        return redirect()->route('client.order.create',
+            ['client_id'=> $request->client_id])->with(['orders'=>$orders, 'supermarkets'=>$supermarkets]);
+    }
+
+    public function manualOrderDelete($id)
+    {
+        $order = ManualOrder::find($id);
+        $order->delete();
+
+        return redirect()->route('client.order.create',['client_id'=> $order->client_id])->withStatus(__('deleted successfully'));
     }
 }

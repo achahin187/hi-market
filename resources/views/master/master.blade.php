@@ -508,20 +508,19 @@ $settings = App\Models\Setting::all()->first();
                     @endif
 
                     {{-- Orders --}}
-                {{-- Orders --}}
+              
                            @if(auth()->user()->can('order-list'))
                                 @if(auth()->user()->hasRole('delivery_admin'))
-                                <form action="{{ route('orders.index') }}" method="get" id="form-submit">
-                                    <input type="hidden" name="company_id" value="{{auth()->user()->company_id }}">
+
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link " id="click-form">
+                                        <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}" class="nav-link " id="click-form">
                                             <i class="nav-icon fas fa-tachometer-alt"></i>
                                             <p>
                                                 {{ __('admin.orders') }}
                                             </p>
                                         </a>
                                     </li>
-                                </form>
+
                                 @elseif(auth()->user()->hasRole('driver'))
                                   <li class="nav-item">
                                         <a href="{{route('orders.index',['driver_id'=>auth()->user()->id])}}" class="nav-link">
@@ -542,6 +541,7 @@ $settings = App\Models\Setting::all()->first();
                                     </li>
                                 @endif    
                            @endif
+                        
                         
 
                     {{-- setting --}}

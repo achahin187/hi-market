@@ -240,7 +240,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 
 
-        //ge branch category
+        //get branch category
         Route::get('get-branch-category','Admin\ClientOrdersController@getBranchCategory')->name('get_branch_category');
 
         // get Category Products
@@ -249,6 +249,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('getProduct','Admin\ClientOrdersController@getProduct')->name('get_product');
             //Change Order Status
         Route::get('change-order-status','Admin\OrderController@changeStatusOrder')->name('order.change.status');
+
+        //client order manual
+        Route::post('client/order/store','Admin\OrderController@addProductOrder')->name('store.product.client');
+        //
+        Route::get('manual-order-delete/{id}','Admin\OrderController@manualOrderDelete')->name('manual.order.delete');
     });
 
 });

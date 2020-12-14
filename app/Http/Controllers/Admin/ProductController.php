@@ -853,4 +853,13 @@ class ProductController extends Controller
         
         return response()->json($products);
     }
+
+    public function getProduct(Request $request)
+    {
+         $products = Product::Where('id', $request->product_id)->first();
+        
+        return response()->json($products);
+    }
+
+   
 }

@@ -1,6 +1,10 @@
 @extends('layouts.admin_layout')
 
 @section('content')
+
+@php
+ $orders = App\Models\ManualOrder::Where('client_id',request('client_id'))->get()
+@endphp
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -165,7 +169,7 @@
 
                                             </div>
 
-                                            <form role="form" action="#" method="POST" enctype="multipart/form-data">
+                                            <form role="form" action="{{ route('store.product.client') }}" method="POST" enctype="multipart/form-data">
 
                                                 <div class="card-body">
 
@@ -197,7 +201,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                                <input type="number" name="quantity" min="1" value="" class="@error('quantity') is-invalid @enderror form-control quantity" required>
+                                                                <input type="number" name="quantity" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
 
                                                                 @error('quantity')
                                                                     <span class="invalid-feedback" role="alert">
@@ -206,7 +210,8 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-
+                                                        <input type="hidden" name="client_id" 
+                                                        value="{{ $client->id }}">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.price')}}</label>
@@ -219,14 +224,15 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
+                                                        <div class="div_inputs"></div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <a href="#" id="add-product-btn"style="margin-top: 30px;" class="btn btn-primary">
+                                                                <button style="margin-top: 30px;" class=" btn btn-primary">
                                                                            {{ __('admin.add') }}
 
 
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -241,12 +247,19 @@
                                                         <th>{{ __('admin.name') }}</th>
                                                         <th>{{ __('admin.quantity') }}</th>
                                                         <th>{{ __('admin.price') }}</th>
-                                                        <th>{{ __('admin.controls') }}</th>
+                                                        <th>{{ __('admin.delete') }}</th>
                                                     </tr>
                                                     </thead>
-                                                      <tbody class="order-list">
-
-                                       
+                                                      
+                                                      @foreach($orders as $order)
+                                                        <tr>
+                                                        <td>{{ $order->product_name }}</td>
+                                                        <td>{{ $order->quantity }}</td>
+                                                        <td>{{ $order->price }}</td>
+                                                        <td><a href="{{ route('manual.order.delete',$order->id) }}" class="btn btn-danger">Delete</a></td>
+                                                         </tr>
+                                                        @endforeach
+                                                      
                                                          </tbody>
                                                 </table>
                                             </div>
@@ -264,7 +277,7 @@
                                     </div>
 
 
-                           {{--  @endif --}}
+                         {{--    @endif --}}
 
                                 <!-- /.card -->
                             </div>
@@ -309,10 +322,48 @@
                 method: 'GET',
                 success: function(data) {
                     $('.product_9').html('');
-                    data.forEach(function(x){
-                    
-                    $('.product_9').append(new Option(x.name_ar,x.id,false,false)).attr('data-price',data.price).trigger("change");
+                    data.forEach(function(x,i){
+                
+
+                    $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+
+                     $('.price').val(x.price);
+                
                     })
+
+
+                }
+            });
+        });
+
+        $('.product_9').change(function(){
+
+            $.ajax({
+                url: "{{ route('get_product') }}?product_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                 
+                 //$('.price').val(data.price);
+                   
+
+
+                }
+            });
+        });
+
+
+        $('.product_qty').change(function(){
+
+            $.ajax({
+                url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
+                method: 'GET',
+                success: function(data) {
+                 var price = parseInt(data.price) ;
+                 var qty =  parseInt($('.product_qty').val());
+
+                 $('.price').val( price  * qty ) ;
+                   
+
 
                 }
             });
@@ -320,14 +371,7 @@
     
 </script>
 
-<script>
 
-        $(".product_9").change(function(){
-            
-            console.log($(this).data('price'));
-        });
-    
-</script>
 
 
 @endpush
