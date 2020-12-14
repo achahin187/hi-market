@@ -131,7 +131,7 @@
 
                                                  <div class="form-group"  >
                                                     <label for="branch">Branch</label>
-                                                    <select name="branch_id" id="branch_9"  class="form-control select2">
+                                                    <select name="branch_id"  class="branch_9 form-control select2">
                                                     
                                                         <option  selected  disabled>Please Select Branch</option>
                                                            
@@ -180,7 +180,8 @@
                                                                 <label>{{ __('admin.select_product') }}</label>
 
 
-                                                                        <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" id="product_9" data-placeholder="Select a product" style="width: 100%;" required>
+                                                                        <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id" 
+                                                                         data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                            
 
@@ -209,7 +210,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.price')}}</label>
-                                                                <input type="number" name="price" min="0" max="99999.99" id='price'class=" @error('price') is-invalid @enderror form-control price" required>
+                                                                <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control price" required>
 
                                                                 @error('price')
                                                                 <span class="invalid-feedback" role="alert">
@@ -288,10 +289,10 @@
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    $('#branch_9').html('');
+                    $('.branch_9').html('');
                     data.forEach(function(x){
                         
-                    $('#branch_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('.branch_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
                     })
                 }
             });
@@ -302,48 +303,15 @@
 
 <script>
 
-        $("#branch_9").change(function(){
+        $(".branch_9").change(function(){
             $.ajax({
-                url: "{{ route('get_branch_category') }}?branch_id=" + $(this).val(),
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    $('#category_9').html('');
+                    $('.product_9').html('');
                     data.forEach(function(x){
                         
-                    $('#category_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
-                    })
-                }
-            });
-        });
-    
-</script>
-<script>
-
-        $("#category_9").change(function(){
-            $.ajax({
-                url: "{{ route('get_category_products') }}?category_id=" + $(this).val(),
-                method: 'GET',
-                success: function(data) {
-                    0
-                    $('#product_9').html('');
-
-                    data.forEach(function(x,i){
-
-                    if (i === 0) {
-
-                        $('#price').val(x.price);
-
-                        $('#price').attr("data-price", x.price)
-
-                    }else{
-
-                        $('#price').val();
-
-                        $('#price').attr("data-price", x.price)
-
-                    }
-
-                     $('#product_9').attr("data-price", x.price).append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('.product_9').attr('data-price',data.price).append(new Option(x.name_ar,x.id,false,false)).trigger("change");
                     })
                 }
             });
@@ -353,81 +321,12 @@
 
 <script>
 
-        $("#product_9").change(function(){
-            $.ajax({
-                url: "{{ route('get_product') }} ?product_id=" + $(this).val(),
-                method: 'GET',
-                success: function(data) {
-
-                    $('#price').val(data.price);
-                    $('#price').attr("data-price", x.price);
-
-                }
-            });
+        $(".product_9").change(function(){
+            
+            console.log($(this).data('price'));
         });
     
 </script>
 
-
-<script>
-   
-
-    
-    //change product quantity
-    $('body').on('keyup change', '.quantity', function() {
-
-        var quantity = $(this).val(); //2
-        var unitPrice = $('#product_9').data('price'); //150
-
-        console.log(unitPrice,quantity);
-        $('#price').val(quantity * unitPrice);
-        //calculateTotal();
-
-    });//end of product quantity change
-
-
-
-//remove product btn
-    $('body').on('click', '.remove-product-btn', function(e) {
-
-        e.preventDefault();
-        var id = $(this).data('id');
-
-        $(this).closest('tr').remove();
-        $('#product-' + id).removeClass('btn-default disabled').addClass('btn-success');
-
-        //to calculate total price
-        calculateTotal();
-
-    });//end of remove product btn
-
-
-    //calculate the total
-function calculateTotal() {
-
-    var price = 0;
-
-    $('.order-list .product-price').each(function(index) {
-        
-        price += parseFloat($(this).html());
-
-    });//end of product price
-
-    $('.total-price').html(price);
-
-    //check if price > 0
-    if (price > 0) {
-
-        $('#add-order-form-btn').removeClass('disabled')
-
-    } else {
-
-        $('#add-order-form-btn').addClass('disabled')
-
-    }//end of else
-
-}//end of calculate total
-
-</script>
 
 @endpush

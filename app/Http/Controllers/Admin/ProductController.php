@@ -847,7 +847,7 @@ class ProductController extends Controller
     {
          $products = Product::WhereHas('branches', function ($q) use($request){
 
-            $q->Where('branch_id',$request->product_id);
+            $q->Where('branch_id',$request->branch_id);
 
         })->get();
         
