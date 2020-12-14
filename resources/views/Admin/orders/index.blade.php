@@ -274,7 +274,7 @@
 
                                     @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
 
-                                        <option value="{{ $reason->id }}">{{ $reason->name_ar }}</option>
+                                        <option value="{{ $reason->id }}">{{ $reason->name_en }}</option>
 
                                     @endforeach
 
@@ -327,7 +327,7 @@
 
                                     @foreach(\App\Models\DeliveryCompany::where('status',1)->get() as $company)
 
-                                        <option value="{{ $company->id }}" {{ $order->company_id == $company->id ? 'selected' : '' }}>{{ $company->name_ar }}</option>
+                                        <option value="{{ $company->id }}" {{ $order->company_id == $company->id ? 'selected' : '' }}>{{ $company->name_en }}</option>
 
                                     @endforeach
 

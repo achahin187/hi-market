@@ -69,7 +69,7 @@ class ClientOrdersController extends Controller
        
        
         }
- $product = Product::find($products[0]->product_id)->branches->pluck('id')[0];
+        $product = Product::find($products[0]->product_id)->branches->pluck('id')[0];
 
          $store_order = Order::create([
             'num' => 'jbfe651',
