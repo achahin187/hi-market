@@ -24,7 +24,7 @@ class MyOrdersResource extends JsonResource
                 'id' => $product->id,
                 'name' => $product->name,
                 'image' => asset('images/'.$product->image),
-                'supermaketId' => $product->branches->first(),
+                'supermaketId' => $product->branches->first()->name,
                 ];
             }),
 
@@ -35,12 +35,11 @@ class MyOrdersResource extends JsonResource
     {
         $statuses = 
                 [
-                    'new'      => 0,
-                    'approved' => 1,
-                    'prepared' => 2,
-                    'shipping' => 3,
-                    'deliverd' => 4,
-                    'received' => 5,
+                    'Pending'      => 0,
+                    'Accepted'     => 1,
+                    'Process'      => 2,
+                    'Pickup'       => 3,
+                    'Deliverd'     => 4,
                 ];
 
         foreach ($statuses as $index => $status) {
