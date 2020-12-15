@@ -25,23 +25,28 @@ class HomeDataResource extends JsonResource
                 "city"=> $this->city->name,
                 "imagepath"=>asset($this->imagepath),
                 "logopath"=>asset($this->logopath),
-             
+
             ];
     }
 
     public function getState()
     {
-       
-        if (Carbon::now()->parse(Carbon::now()->format('g:i A') )->between($this->start_time, $this->end_time) ) {
+
+        $now = now();
+        $start_time = Carbon::parse($this->start_time)->format("H:i:s");
+        $end_time = Carbon::parse($this->end_time)->format("H:i:s");
+        if ($now >= $start_time && $now <= $end_time) {
 
             return 'open';
 
-        }else{
+        } else {
             return 'closed';
 
         }
 
-         
+      
+
+
     }
-  
+
 }
