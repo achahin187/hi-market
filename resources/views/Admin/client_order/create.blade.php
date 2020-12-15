@@ -170,16 +170,7 @@
                                             </a >
                                             <br>  
                                             <br>  
-                                             
-{{-- 
-                                                <div class="form-group"  >
-                                                    <label for="branch">category</label>
-                                                    <select name="branch_id" id="category_9"  class="form-control select2">
-                                                    
-                                                        <option  selected  disabled>Please Select category</option>
-                                                           
-                                                    </select>
-                                                </div> --}}
+                                            
 
                                                 {{-- product --}}
                                                     <!--third card-->
@@ -260,16 +251,14 @@
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <button style="margin-top: 30px;" class=" btn btn-primary">
-                                                                           {{ __('admin.add') }}
-
-
-                                                                </button>
+                                                                 <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
+                                           
+           
 
                                             <div class="card-body">
                                                 
@@ -309,6 +298,7 @@
 
                                       
                                     </div>
+
                                     
                     <form action="{{ route('store.order') }}" method="POST">
                         @csrf
@@ -433,7 +423,40 @@
     
 </script>
 
+<script type="text/javascript">
+    var x = 1;
+    $(document).on('click', '.add_input', function () {
+        var max_input = 9;
+        if (x < max_input) {
 
+
+            $('.div_inputs').append('<div>' +
+                '<div class="col-md-12">' +
+                '<div class="form-group">' +
+                '<label> عنوان الحقل</label>' +
+                '<input type="text" class="form-control" name="input_key[]" >' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-12">' +
+                '<div class="form-group">' +
+                '<label> محتوى الحقل</label>' +
+                '<input type="text" class="form-control" name="input_value[]" >' +
+                '</div>' +
+                '</div>' +
+                '<div class="clearfix"></div>' +
+                '<br>' +
+                '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
+                '</div>');
+            x++;
+        }
+        return false;
+    });
+    $(document).on('click', '.remove_input', function () {
+        $(this).parent('div').remove();
+        x--;
+        return false;
+    });
+</script>
 
 
 @endpush
