@@ -439,10 +439,10 @@ class ProductController extends Controller
             'supermarket_id' => 'required|integer|min:0',
             'branch_id' => 'required|array',
             //'subcategory_id' => 'required|integer|min:0',
-            'start_date' => 'sometimes|required|after:today|date',
-            'end_date' => 'sometimes|required|after:start_date|date',
+            'start_date' => 'sometimes|required',
+            'end_date' => 'sometimes|required',
             'exp_date' => 'required|after:today|date',
-            'production_date' => 'required|after:today|date',
+            'production_date' => 'required',
             'measure_id' => 'required|integer|min:0',
             'size_id' => 'required|integer|min:0',
             'priority' => 'required|integer|min:0',
@@ -847,10 +847,19 @@ class ProductController extends Controller
     {
          $products = Product::WhereHas('branches', function ($q) use($request){
 
-            $q->Where('branch_id',$request->product_id);
+            $q->Where('branches.id',$request->branch_id);
 
         })->get();
         
         return response()->json($products);
     }
+
+    public function getProduct(Request $request)
+    {
+         $products = Product::Where('id', $request->product_id)->first();
+        
+        return response()->json($products);
+    }
+
+   
 }

@@ -49,6 +49,7 @@ class AuthController extends Controller
 
         if ($client->activation_code == $code) {
 
+            $client->update(['verify'=>1]);
 
             return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], 'the code is valid');
 
@@ -78,10 +79,9 @@ class AuthController extends Controller
 
         //login
         if (auth("client-web")->attempt([
-
             "mobile_number" => $request->mobile_number,
              "password" => $request->password,
-             'verify'=>1,
+             
          ])) 
         {
 

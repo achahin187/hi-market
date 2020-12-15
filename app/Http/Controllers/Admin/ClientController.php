@@ -61,13 +61,11 @@ class ClientController extends Controller
         $rules = [
             'name' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'email' => ['required', 'email', Rule::unique((new Client)->getTable()), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-            'password' => ['required', 'min:8', 'confirmed','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
+            'password' => ['required', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'min:8'],
-            'address' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'address' => ['required'],
             'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
-            'city' => ['required','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'gender' => 'required|string',
-            'age' => 'required|min:1|integer',
+            'area_id' => ['required'],
             'status' => ['required','string'],
         ];
 
@@ -90,9 +88,7 @@ class ClientController extends Controller
             'password' => $password,
             'address' => $address,
             'mobile_number' => $mobile_number,
-            'city' => $request->city,
-            'gender' => $request->gender,
-            'age' => $request->age,
+            'area' => $request->area_id,
             'status' => $request->status,
             'created_by' => $user->id
         ]);
@@ -252,13 +248,13 @@ class ClientController extends Controller
 
         if($client)
         {
-            if($client->status == 'active') {
+            if($client->status == 1) {
 
-                $client->update(['status' => 'inactive']);
+                $client->update(['status' => 0]);
             }
             else
             {
-                $client->update(['status' => 'active']);
+                $client->update(['status' => 1]);
             }
             return redirect()->back()->withStatus(__('clients status successfully updated.'));
         }

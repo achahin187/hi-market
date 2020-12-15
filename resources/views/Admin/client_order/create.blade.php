@@ -1,6 +1,10 @@
 @extends('layouts.admin_layout')
 
 @section('content')
+
+@php
+ $orders = App\Models\ManualOrder::Where('client_id',request('client_id'))->get()
+@endphp
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -51,6 +55,8 @@
                                          {{ __('admin.clients') }}
                                     </div>
 
+                            @csrf
+                       
                                   
 
                                             <div class="card-body">
@@ -86,18 +92,15 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{ __('admin.location') }}</label>
-                                                    <input type="text" value="{{$client->address }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="{{$client->addresses->first()->name }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('address')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
-
-
-
-                                              
                                             </div>
+
                                         
                                     </div>
 
@@ -110,7 +113,7 @@
                                 <div class="card card-primary">
 
                                     <div class="card-header">
-                                         {{ __('admin.clients') }}
+                                         Choose SuperMaket 
                                     </div>
 
                                   
@@ -131,13 +134,13 @@
 
                                                  <div class="form-group"  >
                                                     <label for="branch">Branch</label>
-                                                    <select name="branch_id" id="branch_9"  class="form-control select2">
+                                                    <select name="branch_id"  class="branch_9 form-control select2">
                                                     
                                                         <option  selected  disabled>Please Select Branch</option>
                                                            
                                                     </select>
                                                 </div>
-
+{{-- 
                                                 <div class="form-group"  >
                                                     <label for="branch">category</label>
                                                     <select name="branch_id" id="category_9"  class="form-control select2">
@@ -145,7 +148,7 @@
                                                         <option  selected  disabled>Please Select category</option>
                                                            
                                                     </select>
-                                                </div>
+                                                </div> --}}
 
                                                 {{-- product --}}
                                                     <!--third card-->
@@ -159,13 +162,13 @@
 
                                                 @else
 
-                                                    {{ __('admin.edit_product') }}
+                                                    Products
 
                                                 @endif
 
                                             </div>
 
-                                            <form role="form" action="#" method="POST" enctype="multipart/form-data">
+                                            <form role="form" action="{{ route('store.product.client') }}" method="POST" enctype="multipart/form-data">
 
                                                 <div class="card-body">
 
@@ -180,7 +183,8 @@
                                                                 <label>{{ __('admin.select_product') }}</label>
 
 
-                                                                        <select class=" @error('product_id') is-invalid @enderror select2 product" name="product_id" id="product_9" data-placeholder="Select a product" style="width: 100%;" required>
+                                                                        <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id" 
+                                                                         data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                            
 
@@ -192,11 +196,11 @@
 
                                                             </div>
                                                         </div>
-
+ <input type="hidden" class="branch_product_id" name="branch_id" value="">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                                <input type="number" name="quantity" min="1" value="" class="@error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                                <input type="number" name="quantity" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
 
                                                                 @error('quantity')
                                                                     <span class="invalid-feedback" role="alert">
@@ -205,11 +209,12 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-
+                                                        <input type="hidden" name="client_id" 
+                                                        value="{{ $client->id }}">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.price')}}</label>
-                                                                <input type="number" name="price" min="0" max="99999.99" id='price'class=" @error('price') is-invalid @enderror form-control price" required>
+                                                                <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control price" required>
 
                                                                 @error('price')
                                                                 <span class="invalid-feedback" role="alert">
@@ -218,14 +223,15 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
+                                                        <div class="div_inputs"></div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <a href="#" id="add-product-btn"style="margin-top: 30px;" class="btn btn-primary">
+                                                                <button style="margin-top: 30px;" class=" btn btn-primary">
                                                                            {{ __('admin.add') }}
 
 
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -233,19 +239,26 @@
                                             </form>
 
                                             <div class="card-body">
-                                                <h5 class="total-price">{{ __('admin.total') }} :Totall</h5>
+                                                
                                                 <table  class="table table-bordered table-hover">
                                                     <thead>
                                                     <tr>
                                                         <th>{{ __('admin.name') }}</th>
                                                         <th>{{ __('admin.quantity') }}</th>
                                                         <th>{{ __('admin.price') }}</th>
-                                                        <th>{{ __('admin.controls') }}</th>
+                                                        <th>{{ __('admin.delete') }}</th>
                                                     </tr>
                                                     </thead>
-                                                      <tbody class="order-list">
-
-                                       
+                                                      
+                                                      @foreach($orders as $order)
+                                                        <tr>
+                                                        <td>{{ $order->product_name }}</td>
+                                                        <td>{{ $order->quantity }}</td>
+                                                        <td>{{ $order->price }}</td>
+                                                        <td><a href="{{ route('manual.order.delete',$order->id) }}" class="btn btn-danger">Delete</a></td>
+                                                         </tr>
+                                                        @endforeach
+                                                      
                                                          </tbody>
                                                 </table>
                                             </div>
@@ -259,11 +272,31 @@
                                     </div>
 
                             @endif
+
+
                                       
                                     </div>
+                                    
+                    <form action="{{ route('store.order') }}" method="POST">
+                        @csrf
+                               <div class="col-md-3">
+
+                                @foreach( $orders  as $index=>$order)
+                                <input type="hidden" name="order[]" value="{{ $order }}">
+                                <input type="hidden" class="branch_id" name="branch_id" value="{{ session()->get('branch_id') }}">
+                               
+                                @endforeach
+                                        <div class="form-group">
+                                            <button style="margin-top: 30px;" class=" btn btn-primary">
+                                                    Add Order
 
 
-                           {{--  @endif --}}
+                                            </button>
+                                        </div>
+                                    </div>               
+                         </form>   
+
+                         {{--    @endif --}}
 
                                 <!-- /.card -->
                             </div>
@@ -288,10 +321,10 @@
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    $('#branch_9').html('');
+                    $('.branch_9').html('');
                     data.forEach(function(x){
                         
-                    $('#branch_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('.branch_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
                     })
                 }
             });
@@ -302,148 +335,70 @@
 
 <script>
 
-        $("#branch_9").change(function(){
+        $(".branch_9").change(function(){
             $.ajax({
-                url: "{{ route('get_branch_category') }}?branch_id=" + $(this).val(),
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
-                    $('#category_9').html('');
-                    data.forEach(function(x){
-                        
-                    $('#category_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
-                    })
-                }
-            });
-        });
-    
-</script>
-<script>
-
-        $("#category_9").change(function(){
-            $.ajax({
-                url: "{{ route('get_category_products') }}?category_id=" + $(this).val(),
-                method: 'GET',
-                success: function(data) {
-                    $('#product_9').html('');
-
+                    $('.product_9').html('');
                     data.forEach(function(x,i){
+                
 
-                    if (i === 0) {
+                    $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-                    $('#price').val(x.price);
-                    $('#price').attr("data-price", x.price)
-                    }else{
-                    $('#price').val();
-                    $('#price').attr("data-price", x.price)
-
-                    }
-                    $('#product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                     $('.price').val(x.price);
+                
                     })
-                }
-            });
-        });
-    
-</script>
 
-<script>
-    $(document).ready(function () {
+                       
 
-        
-
-    
-    //add product btn
-    $('#add-product-btn').on('click', function (e) {
-        e.preventDefault();
-        
-
-         $.ajax({
-                url: "{{ route('get_product') }}?product_id=" +$('#product_9').val(),
-                method: 'GET',
-                success: function(data) {
-                console.log(data);
-                    var name = data.name_ar;
-                    var id = data.id;
-                    var price = data.price;
-
-                    $(this).removeClass('btn-success').addClass('btn-default disabled');
-
-                    var html =
-                        `<tr>
-                            <td>${name}</td>
-                            <td><input type="number" name="products[${id}][quantity]" data-price="${price}" class="form-control input-sm product-quantity" min="1" value="1"></td>
-                            <td class="product-price">${price}</td>               
-                            <td><button class="btn btn-danger btn-sm remove-product-btn" data-id="${id}"><span class="fa fa-trash"></span></button></td>
-                        </tr>`;
-
-                    $('.order-list').append(html);
-
-                    //to calculate total price
-                    //calculateTotal();
-                  
                    
                 }
             });
-    });
+                  
+                    var selectedStatus = $(this).find('option:selected').val();
+                    $('.branch_id').val(selectedStatus);
 
+                     $('.branch_product_id').val(selectedStatus);
+                    
+        });
+
+        $('.product_9').change(function(){
+
+            $.ajax({
+                url: "{{ route('get_product') }}?product_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                 
+                 //$('.price').val(data.price);
+                   
+
+
+                }
+            });
+        });
+
+
+        $('.product_qty').change(function(){
+
+            $.ajax({
+                url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
+                method: 'GET',
+                success: function(data) {
+                 var price = parseInt(data.price) ;
+                 var qty =  parseInt($('.product_qty').val());
+
+                 $('.price').val( price  * qty ) ;
+                   
+
+
+                }
+            });
+        });
     
-    //change product quantity
-    $('body').on('keyup change', '.product-quantity', function() {
-
-        var quantity = Number($(this).val()); //2
-        var unitPrice = parseFloat($('#price').val() ); //150
-        console.log(unitPrice,quantity);
-        $('#price').val(quantity * unitPrice);
-        //calculateTotal();
-
-    });//end of product quantity change
-  
-
-    
-});//end of document ready
-
-
-
-//remove product btn
-    $('body').on('click', '.remove-product-btn', function(e) {
-
-        e.preventDefault();
-        var id = $(this).data('id');
-
-        $(this).closest('tr').remove();
-        $('#product-' + id).removeClass('btn-default disabled').addClass('btn-success');
-
-        //to calculate total price
-        calculateTotal();
-
-    });//end of remove product btn
-
-
-    //calculate the total
-function calculateTotal() {
-
-    var price = 0;
-
-    $('.order-list .product-price').each(function(index) {
-        
-        price += parseFloat($(this).html());
-
-    });//end of product price
-
-    $('.total-price').html(price);
-
-    //check if price > 0
-    if (price > 0) {
-
-        $('#add-order-form-btn').removeClass('disabled')
-
-    } else {
-
-        $('#add-order-form-btn').addClass('disabled')
-
-    }//end of else
-
-}//end of calculate total
-
 </script>
+
+
+
 
 @endpush

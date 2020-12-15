@@ -75,7 +75,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     //default
     Route::post('set/default', 'ClientController@setDefault');
 
+    //getClientOrder
 
+    Route::get('getClientOrder', 'OrderController@getClientOrder');
 
 });
 

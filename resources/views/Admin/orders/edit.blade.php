@@ -78,7 +78,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{__('admin.phone')  }}</label>
-                                                    <input type="text" value="{{$order->mobile_delivery }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="{{$order->client->mobile_number }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('mobile_number')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>

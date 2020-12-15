@@ -14,12 +14,12 @@ class CreateCompanyOrderTable extends Migration
     public function up()
     {
         Schema::create('company_order', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('order_id')->unsigned();
-            $table->bigInteger('company_id')->unsigned();
+            // $table->id();
+            // $table->bigInteger('order_id')->unsigned();
+            // $table->bigInteger('company_id')->unsigned();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('CASCADE');
-            $table->foreign('company_id')->references('id')->on('delivery_companies')->onDelete('CASCADE');
+            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('CASCADE');
+            // $table->foreign('company_id')->references('id')->on('delivery_companies')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

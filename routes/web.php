@@ -136,6 +136,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::get('admins', 'Admin\AdminController@export')->name('admins.export');
             Route::get('products', 'Admin\ProductController@export')->name('products.export');
+       
             Route::get('supermarket/export', 'Admin\SuperMarketAdminController@export')->name('supermarket.export');
             Route::get('products/download', 'Admin\ProductController@download')->name('products.downloadsample');
             Route::get('category', 'Admin\CategoryController@export')->name('category.export');
@@ -147,6 +148,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::group(['prefix' => 'import'],function() {
 
             Route::post('admins', 'Admin\AdminController@import')->name('admins.import');
+            Route::post('products/import', 'Admin\ProductController@import')->name('products.import');
           
         });
 
@@ -238,7 +240,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 
 
-        //ge branch category
+        //get branch category
         Route::get('get-branch-category','Admin\ClientOrdersController@getBranchCategory')->name('get_branch_category');
 
         // get Category Products
@@ -247,6 +249,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('getProduct','Admin\ClientOrdersController@getProduct')->name('get_product');
             //Change Order Status
         Route::get('change-order-status','Admin\OrderController@changeStatusOrder')->name('order.change.status');
+
+        //client order manual
+        Route::post('client/order/store','Admin\OrderController@addProductOrder')->name('store.product.client');
+        //rollback.change.company
+        Route::get('manual-order-delete/{id}','Admin\OrderController@manualOrderDelete')->name('manual.order.delete');
+        //rollback.change.company
+        Route::post('rollback_change_company','Admin\OrderController@rollbackChangeCompany')->name('rollback.change.company');
+        //storeOrder
+        Route::post('store_orders','Admin\ClientOrdersController@storeOrder')->name('store.order');
+
+        //OrderShow 
+        Route::get('order/show/details/{id}','Admin\OrderController@showDetails')->name('orders.show.details');
+
     });
 
 });

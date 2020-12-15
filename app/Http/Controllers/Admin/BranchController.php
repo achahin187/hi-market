@@ -273,7 +273,7 @@ class BranchController extends Controller
 
             if ($file = $request->file('image')) {
 
-                $this->validate($request, $rules);
+               
 
                 $filename = $file->getClientOriginalName();
                 $fileextension = $file->getClientOriginalExtension();
@@ -290,7 +290,7 @@ class BranchController extends Controller
                 'name_en' => $request->name_en,
                 'supermarket_id' => $request->supermarket_id,
                 'image' => $file_to_store,
-                'priority' => $priority,
+                'priority' => $request->priority,
                 'status' => $status,
                 'commission' => $commission,
                 'start_time' => $request->start_time,
