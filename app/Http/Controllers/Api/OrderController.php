@@ -35,26 +35,26 @@ class OrderController extends Controller
         }
     }
 
-    public function clientorders(Request $request)
-    {
+    // public function clientorders(Request $request)
+    // {
 
-        $client = getUser();
+                
+    //     $client = getUser();
 
-        if ($client) {
+    //     if ($client) {
 
-            if (count($client->orders) > 0) {
+    //         if (count($client->orders) > 0) {
+    //             return $this->returnData(['orders'], [OrderResource::collection($client->orders)]);
+    //         } else {
 
-                return $this->returnData(['orders'], [OrderResource::collection($client->orders)]);
-            } else {
 
+    //             return $this->returnError(404, 'there is no orders for this client');
+    //         }
+    //     } else {
 
-                return $this->returnError(404, 'there is no orders for this client');
-            }
-        } else {
-
-            return $this->returnError(404, 'there is no client found');
-        }
-    }
+    //         return $this->returnError(404, 'there is no client found');
+    //     }
+    // }
 
     public function getorder($order_id)
     {
@@ -235,12 +235,23 @@ class OrderController extends Controller
           $client = getUser();
 
           if($client){
+
             $clientOrders = $client->orders;
+
+            if (count($client->orders) > 0) {
         
          
-            return MyOrdersResource::collection($clientOrders);
+              return MyOrdersResource::collection($clientOrders);
+
+            }else{
+                
+               return $this->returnError(404, 'there is no orders for this client');
+            }
+
           }else{
+
              return $this->returnError(422, "user not exists");
+
           }
     }
 }

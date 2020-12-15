@@ -273,7 +273,7 @@ class ClientController extends Controller
         $address = $request->address;
         $label = $request->label;
         $client_id = $client->id;
-        $default = Auth('client-api')->user()->addresses->count() >= 1 ? 0 : 1;
+        $default = Auth('client-api')->user()->addresses->count() > 1 ? 0 : 1;
         $lat = $request->lat;
         $lon = $request->lon;
         $notes = $request->notes;
