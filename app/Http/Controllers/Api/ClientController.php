@@ -267,13 +267,13 @@ class ClientController extends Controller
             return $this->returnError(300, $validator->errors()->first());
 
         }
-
+       
         $name = $request->name;
         $phone = $request->phone;
         $address = $request->address;
         $label = $request->label;
         $client_id = $client->id;
-        $default = Auth('client-api')->user()->addresses->count() > 1 ? 0 : 1;
+        $default = Auth('client-api')->user()->addresses->count() == 0 ? 1 : 0;
         $lat = $request->lat;
         $lon = $request->lon;
         $notes = $request->notes;
