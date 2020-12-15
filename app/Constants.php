@@ -12,5 +12,7 @@ class Constants
        const  ORDER_SHIPPING = 2;
        const  ORDER_DELIVERED = 3;
        const  ORDER_RECEIVED = 4;
+       const ORDER_PREPARED = 5;
+
 
 }

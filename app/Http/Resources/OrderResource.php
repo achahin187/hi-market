@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
             Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
             Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
             Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
+             Constants::ORDER_PREPARED => "Your Order $order->num is Prepared",
             null => ""
         ];
          return $messages[$order->status];
@@ -30,7 +31,6 @@ class OrderResource extends JsonResource
     {
         return [
             "id" => $this->id,
-
             "message" => $this->getMessage($this),
             "status" => $this->status,
         ];
