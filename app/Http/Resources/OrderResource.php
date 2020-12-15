@@ -3,22 +3,27 @@
 namespace App\Http\Resources;
 
 use App\Constants;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
 {
-    private $messages = [
-        Constants::ORDER_NEW => "New Order Created",
-        Constants::ORDER_APPROVED => "You Approved New Order",
-        Constants::ORDER_DELIVERED => "Your Order Was Delivered Rate Your Order",
-        Constants::ORDER_RECEIVED => "You Received New Order",
-        null => ""
-    ];
+    public function getMessage($order)
+    {
+         $messages = [
+            Constants::ORDER_NEW => "New Order Created",
+            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
+            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
+            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
+            null => ""
+        ];
+         return $messages[$order->status];
+    }
 
     /**
      * Transform the resource into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
@@ -26,7 +31,7 @@ class OrderResource extends JsonResource
         return [
             "id" => $this->id,
 
-            "message" => $this->messages[$this->status],
+            "message" => $this->getMessage($this),
             "status" => $this->status,
         ];
     }
