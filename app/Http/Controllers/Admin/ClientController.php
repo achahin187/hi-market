@@ -158,7 +158,7 @@ class ClientController extends Controller
                     'email' => ['required', 'email', Rule::unique((new Client)->getTable())->ignore($client->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
-                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                   
                   
                 ];
 
@@ -170,8 +170,7 @@ class ClientController extends Controller
                     'email' => $request->email,
                     'address' => $request->address,
                     'mobile_number' => $request->mobile_number,
-                    'city' => $request->city,
-                                       'updated_by' => $user->id
+                    'updated_by' => $user->id
                 ]);
 
                 return redirect('/admin/clients')->withStatus('client information successfully updated.');
@@ -184,7 +183,7 @@ class ClientController extends Controller
                     'password_confirmation' => ['required', 'min:8'],
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
-                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
+                   
                    
                 ];
 
@@ -199,9 +198,7 @@ class ClientController extends Controller
                     'email' => $request->email,
                     'address' => $request->address,
                     'mobile_number' => $request->mobile_number,
-                    'password' => $password,
-                    'city' => $request->city,
-                   
+                    'password' => $password, 
                     'updated_by' => $user->id
 
                 ]);
