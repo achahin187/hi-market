@@ -129,23 +129,7 @@ class ClientController extends Controller
         }
     }
 
-    public function setDefault(Request $request)
-    {
-
-       $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
-       if ($address) {
-
-           $address->update(['default'=>0]);
-
-           $newDefault = Address::where('id',$request->address_id)->first();
-
-           $newDefault->update(['default'=>1]);
-
-            return $this->returnSuccessMessage("updated successfully");
-       }else{
-             return $this->returnError(404, "This Address Not Found");
-       }
-    }
+   
 
     public function validateAddress()
     {
@@ -241,6 +225,24 @@ class ClientController extends Controller
         }
     }
 
+    public function setDefault(Request $request)
+    {
+
+       $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
+       if ($address) {
+
+           $address->update(['default'=>0]);
+
+           $newDefault = Address::where('id',$request->address_id)->first();
+
+           $newDefault->update(['default'=>1]);
+
+            return $this->returnSuccessMessage("updated successfully");
+       }else{
+             return $this->returnError(404, "This Address Not Found");
+       }
+    }
+
     public function add_address(Request $request)
     {
 
@@ -267,13 +269,30 @@ class ClientController extends Controller
             return $this->returnError(300, $validator->errors()->first());
 
         }
+
+        if($request->default == 1){
+
+            $address = Auth('client-api')->user()->addresses->where('default',1)->first();
+
+            if ($address) {
+             
+              $address->update(['default'=>0]);
+
+              $default = 1;
+
+            }else{
+
+              $default = $request->default;
+            }
+
+        }
        
         $name = $request->name;
         $phone = $request->phone;
         $address = $request->address;
         $label = $request->label;
         $client_id = $client->id;
-        $default = Auth('client-api')->user()->addresses->count() == 0 ? 1 : 0;
+       // $default = Auth('client-api')->user()->addresses->count() == 0 ? 1 : 0;
         $lat = $request->lat;
         $lon = $request->lon;
         $notes = $request->notes;
