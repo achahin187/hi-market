@@ -44,7 +44,7 @@ class HomeDataResource extends JsonResource
 
         }
 
-      
+
 
 
     }

@@ -7,13 +7,17 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
 {
-    private $messages = [
-        Constants::ORDER_NEW => "New Order Created",
-        Constants::ORDER_APPROVED => "You Approved New Order",
-        Constants::ORDER_DELIVERED => "Your Order Was Delivered Rate Your Order",
-        Constants::ORDER_RECEIVED => "You Received New Order",
-        null => ""
-    ];
+    public function getMessage($order)
+    {
+         $messages = [
+            Constants::ORDER_NEW => "New Order Created",
+            Constants::ORDER_APPROVED => "You Approved New Order",
+            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
+            Constants::ORDER_RECEIVED => "You Received New Order",
+            null => ""
+        ];
+         return $messages[$order->status];
+    }
 
     /**
      * Transform the resource into an array.
@@ -26,7 +30,7 @@ class OrderResource extends JsonResource
         return [
             "id" => $this->id,
 
-            "message" => $this->messages[$this->status],
+            "message" => $this->getMessage($this),
             "status" => $this->status,
         ];
     }
