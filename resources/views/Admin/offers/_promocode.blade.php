@@ -134,5 +134,5 @@
                         @enderror
 
                         <p style="color: red">Width: 400 px</p>
-                       <p style="color: red"> length: 130 px </p>
+                        <p style="color: red"> length: 130 px </p>
                     </div>

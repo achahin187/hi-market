@@ -159,8 +159,7 @@ class ClientController extends Controller
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
                     'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-                    'gender' => 'required|string',
-                    'age' => 'required|min:0|integer'
+                  
                 ];
 
                 $this->validate($request, $rules);
@@ -172,9 +171,7 @@ class ClientController extends Controller
                     'address' => $request->address,
                     'mobile_number' => $request->mobile_number,
                     'city' => $request->city,
-                    'gender' => $request->gender,
-                    'age' => $request->age,
-                    'updated_by' => $user->id
+                                       'updated_by' => $user->id
                 ]);
 
                 return redirect('/admin/clients')->withStatus('client information successfully updated.');
@@ -188,8 +185,7 @@ class ClientController extends Controller
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
                     'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-                    'gender' => 'required|string',
-                    'age' => 'required|min:0|integer'
+                   
                 ];
 
                 $this->validate($request, $rules);
@@ -205,8 +201,7 @@ class ClientController extends Controller
                     'mobile_number' => $request->mobile_number,
                     'password' => $password,
                     'city' => $request->city,
-                    'gender' => $request->gender,
-                    'age' => $request->age,
+                   
                     'updated_by' => $user->id
 
                 ]);
