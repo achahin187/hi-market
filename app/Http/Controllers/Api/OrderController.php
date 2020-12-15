@@ -79,7 +79,7 @@ class OrderController extends Controller
 
         $order_details = $request->all();
 
-        $comapny = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
+        $comapany = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
             $q->Where('branch_id', $request->branch_id);
         })->first();
 
@@ -113,13 +113,13 @@ class OrderController extends Controller
                 'discount' => $order_details["discount"],
                 'status' => 0,
                 'final_total' => $order_details["final_total"],
-                'company_id' => $comapny->id
+                'company_id' => $comapany->id
             ]);
 
 
-            $company->orders()->attach([
+            $comapany->orders()->attach([
                 'order_id' => $order->id,
-                'company_id' => $comapny->id,
+                'company_id' => $comapany->id,
             ]);
 
 
