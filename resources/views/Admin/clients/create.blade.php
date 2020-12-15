@@ -92,17 +92,7 @@
                                                 </span>
                                         @enderror
                                     </div>
-{{-- 
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1"> {{ __('admin.city') }}</label>
-                                        <input type="text" value="@if(isset($client)){{$client->city }}@endif " name="city" class="@error('city') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter city" required>
-                                        @error('city')
-                                        <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                        @enderror
-                                    </div>
- --}}
+{{-- --}}
                                     <div class="form-group">
                                         <label for="exampleInputEmail1"> {{ __('admin.phone') }}</label>
                                         <input type="text" value="@if(isset($client)){{$client->mobile_number }} @endif" name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>

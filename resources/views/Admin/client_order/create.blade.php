@@ -116,23 +116,43 @@
                                          Choose SuperMaket 
                                     </div>
 
-                                  
+                                 
 
                                             <div class="card-body">
-                                                                          
+                                      
+                                                                    
                                                 <div class="form-group ">
                                                     <label for="branch">SuperMarket</label>
                                                     <select name="supermarket_id" id='supermarket_6'  class="form-control select2">
                                                     
-                                                        <option  selected  disabled>Please Select Source</option>
+                                                <option  selected  disabled>Please Select Source</option>
+
                                                     @foreach( $supermarkets as  $supermarket) 
-                                                        <option  @if(old("supermarket_id") == $supermarket->id) selected
-                                                                    @endif value="{{$supermarket->id}}">{{$supermarket->name}}</option>
-                                                    @endforeach             
+                                            <option  
+                                            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null)            selected disabled
+                                            @endif 
+                                                        value="{{ $supermarket->id }}">{{$supermarket->name}}
+                                                    </option>
+                                                    @endforeach
+
                                                     </select>
                                                 </div>
 
+                                            @if(session()->get('branch_id'))
+
                                                  <div class="form-group"  >
+                                                    <label for="branch">Branch</label>
+                                                    <select name="branch_id"  class="form-control select2">
+                                                    @php
+                                                    $branch = \App\Models\Branch::find(session()->get('branch_id'))
+                                                    @endphp
+                                                        <option value="{{ $branch->id }}" selected > {{ $branch->name  }}</option>
+                                                           
+                                                    </select>
+                                                </div>
+
+                                            @else
+                                                <div class="form-group"  >
                                                     <label for="branch">Branch</label>
                                                     <select name="branch_id"  class="branch_9 form-control select2">
                                                     
@@ -140,6 +160,17 @@
                                                            
                                                     </select>
                                                 </div>
+
+                                            @endif  
+
+                                            <a href="{{ route('change.order') }}" style="margin-top: 30px;" class=" btn btn-primary">
+                                                    Cahnge Order
+
+
+                                            </a >
+                                            <br>  
+                                            <br>  
+                                             
 {{-- 
                                                 <div class="form-group"  >
                                                     <label for="branch">category</label>
@@ -197,6 +228,8 @@
                                                             </div>
                                                         </div>
  <input type="hidden" class="branch_product_id" name="branch_id" value="">
+ <input type="hidden" class="supermarket_data_id" name="supermarket_id" value="">
+
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
@@ -356,10 +389,12 @@
                 }
             });
                   
-                    var selectedStatus = $(this).find('option:selected').val();
+                    var selectedStatus      = $(this).find('option:selected').val();
+                    var selectedsuperMarket = $('#supermarket_6').find('option:selected').val();
                     $('.branch_id').val(selectedStatus);
-
                      $('.branch_product_id').val(selectedStatus);
+                     $('.supermarket_data_id').val(selectedsuperMarket);
+                     
                     
         });
 

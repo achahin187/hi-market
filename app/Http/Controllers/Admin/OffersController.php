@@ -59,11 +59,18 @@ class OffersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   dd($request->all());
+    {   dd(collect($request->all())->keys());
         $request->validate([
-            'name' =>'required|string',
-            'email' =>'required|email|unique:users',
-            'password' =>'required|min:8',
+            'source' =>'required|string',
+            'supermarket_id' =>'required|email|unique:users',
+            'branch_id' =>'required|min:8',
+            'promocode_name' =>'required|min:8',
+            'promocode_type' =>'required|min:8',
+            'discount_on' =>'required|min:8',
+            'value' =>'required|min:8',
+            'start_offer_date' =>'required|min:8',
+            'end_offer_date' =>'required|min:8',
+            'banner' =>'required|min:8',
             
         ]);
         

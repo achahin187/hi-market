@@ -89,4 +89,15 @@ class ClientOrdersController extends Controller
 
         return redirect()->route('clients.index')->withStatus('Order Added Successfully');
     }
+
+
+    public function changeManualOrder(Request $request)
+    {
+        $deleteOrder     = ManualOrder::Where('client_id', $request->client_id)->delete();
+        
+         session()->forget('supermarket_id');
+         session()->forget('branch_id');
+
+        return redirect()->back();
+    }
 }

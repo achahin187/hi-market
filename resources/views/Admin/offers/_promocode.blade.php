@@ -1,7 +1,7 @@
 
                     <div class="form-group">
                         <label for="branch">Source</label>
-                        <select name="source" id="type"  class="form-control select2">
+                        <select name="source_promo" id="type"  class="form-control select2">
                             @php
                             $sources = ['Delivertto','Branch'];
                             @endphp
@@ -100,9 +100,9 @@
 
                     <div class="form-group">
                         <label>{{__('admin.start_date')}}</label>
-                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control"   name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" >
+                        <input type="datetime-local" class=" @error('start_date_promo') is-invalid @enderror form-control"   name="start_date_promo" data-placeholder="Select a offer start_date" style="width: 100%;" >
 
-                        @error('start_date')
+                        @error('start_date_promo')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -112,9 +112,9 @@
 
                     <div class="form-group">
                         <label>{{__('admin.end_date')}}</label>
-                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" >
+                        <input type="datetime-local" class=" @error('end_date_promo') is-invalid @enderror form-control"  name="end_date_promo" data-placeholder="Select a offer end_date" style="width: 100%;" >
 
-                        @error('end_date')
+                        @error('end_date_promo')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -125,7 +125,7 @@
                     <div class="form-group">
                         <label>{{__('admin.banner')}}</label>
                         <br>
-                        <input type="file" name="banner">
+                        <input type="file" name="banner_promo">
 
                         @error('banner')
                         <span class="invalid-feedback" role="alert">

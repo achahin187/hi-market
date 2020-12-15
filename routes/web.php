@@ -262,6 +262,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //OrderShow 
         Route::get('order/show/details/{id}','Admin\OrderController@showDetails')->name('orders.show.details');
 
+        //Delete manular order 
+        Route::get('delete_orders','Admin\ClientOrdersController@changeManualOrder')->name('change.order');
+
+
     });
 
 });

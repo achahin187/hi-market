@@ -627,7 +627,10 @@ class OrderController extends Controller
         $client = Client::where('id', $orders->client_id)->first();
 
         $orders = ManualOrder::Where('client_id',$client->id)->get();
+
         session()->put("branch_id",$request->branch_id);
+        session()->put("supermarket_id",$request->supermarket_id);
+
         return redirect()->route('client.order.create',
             ['client_id'=> $request->client_id])->with(['orders'=>$orders, 'supermarkets'=>$supermarkets]);
     }
