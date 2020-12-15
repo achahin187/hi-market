@@ -59,7 +59,7 @@ class OffersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   dd($request->all());
         $request->validate([
             'name' =>'required|string',
             'email' =>'required|email|unique:users',

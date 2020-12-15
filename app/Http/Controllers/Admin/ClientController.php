@@ -158,9 +158,8 @@ class ClientController extends Controller
                     'email' => ['required', 'email', Rule::unique((new Client)->getTable())->ignore($client->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
-                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-                    'gender' => 'required|string',
-                    'age' => 'required|min:0|integer'
+                   
+                  
                 ];
 
                 $this->validate($request, $rules);
@@ -171,9 +170,6 @@ class ClientController extends Controller
                     'email' => $request->email,
                     'address' => $request->address,
                     'mobile_number' => $request->mobile_number,
-                    'city' => $request->city,
-                    'gender' => $request->gender,
-                    'age' => $request->age,
                     'updated_by' => $user->id
                 ]);
 
@@ -187,9 +183,8 @@ class ClientController extends Controller
                     'password_confirmation' => ['required', 'min:8'],
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
-                    'city' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-                    'gender' => 'required|string',
-                    'age' => 'required|min:0|integer'
+                   
+                   
                 ];
 
                 $this->validate($request, $rules);
@@ -203,10 +198,7 @@ class ClientController extends Controller
                     'email' => $request->email,
                     'address' => $request->address,
                     'mobile_number' => $request->mobile_number,
-                    'password' => $password,
-                    'city' => $request->city,
-                    'gender' => $request->gender,
-                    'age' => $request->age,
+                    'password' => $password, 
                     'updated_by' => $user->id
 
                 ]);

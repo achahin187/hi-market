@@ -37,7 +37,8 @@
 
         <section class="content">
            
-       <form>
+       <form action="{{ route('offer.store') }}" method="POST">
+        @csrf
     <div class="col-12 col-sm-6 col-lg-12">
                 <div class="card card-primary card-outline card-outline-tabs">
                   <div class="card-header p-0 border-bottom-0">
@@ -72,9 +73,13 @@
                       </div>
                     </div>
                   </div>
+                  <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
+                  </div>
                   <!-- /.card -->
                 </div>
     </div>
+
 
     </form>
                       

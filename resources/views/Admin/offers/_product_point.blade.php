@@ -30,7 +30,7 @@
                      <div class="form-group">
                         <label for="exampleInputEmail1">Points</label>
                         <input type="number" placeholder="please write Point" value="{{old("point")}}" name="point"
-                               class=" @error('point') is-invalid @enderror form-control" required>
+                               class=" @error('point') is-invalid @enderror form-control" >
                         @error('point')
                         <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -43,7 +43,7 @@
                      <div class="form-group">
                         <label for="exampleInputEmail1">Total Order Money</label>
                         <input type="number" placeholder="please write Total Order Money" value="{{old("total_order_money")}}" name="total_order_money"
-                               class=" @error('total_order_money') is-invalid @enderror form-control" required>
+                               class=" @error('total_order_money') is-invalid @enderror form-control" >
                         @error('total_order_money')
                         <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                     
                     <div class="form-group">
                         <label>{{__('admin.start_date')}}</label>
-                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control"  id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" required>
+                        <input type="datetime-local" class=" @error('start_date') is-invalid @enderror form-control"  id="start" name="start_date" data-placeholder="Select a offer start_date" style="width: 100%;" >
 
                         @error('start_date')
                         <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
 
                     <div class="form-group">
                         <label>{{__('admin.end_date')}}</label>
-                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" required>
+                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" data-placeholder="Select a offer end_date" style="width: 100%;" >
 
                         @error('end_date')
                         <span class="invalid-feedback" role="alert">
