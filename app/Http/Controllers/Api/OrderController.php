@@ -13,11 +13,13 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
+use App\Models\Branch;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\DeliveryCompany;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
@@ -38,7 +40,7 @@ class OrderController extends Controller
     // public function clientorders(Request $request)
     // {
 
-                
+
     //     $client = getUser();
 
     //     if ($client) {
@@ -77,8 +79,8 @@ class OrderController extends Controller
 
         $order_details = $request->all();
 
-        $comapny = DeliveryCompany::WhereHas('branches', function($q) use ($request){
-                    $q->Where('branch_id', $request->branch_id);
+        $comapany = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
+            $q->Where('branch_id', $request->branch_id);
         })->first();
 
         $client = getUser();
@@ -111,14 +113,14 @@ class OrderController extends Controller
                 'discount' => $order_details["discount"],
                 'status' => 0,
                 'final_total' => $order_details["final_total"],
-                'company_id' => $comapny->id
+                'company_id' => $comapany->id
             ]);
 
 
-        $company->orders()->attach([
-            'order_id'   => $order->id,
-            'company_id' => $comapny->id,
-        ]);
+            $comapany->orders()->attach([
+                'order_id' => $order->id,
+                'company_id' => $comapany->id,
+            ]);
 
 
             return $this->returnSuccessMessage('The order has been completed successfully', 200);
@@ -195,6 +197,7 @@ class OrderController extends Controller
 
     public function selectDate()
     {
+        $branch = Branch::find(request("supermarket_id"));
         $days = [
             [
                 "id" => 1,
@@ -217,41 +220,57 @@ class OrderController extends Controller
         $time = [];
         for ($i = 0; $i < 10; $i++) {
             $time[$i] = [
-                "id" => $i +1,
+                "id" => $i + 1,
                 "text" => now()->addHours($i)->format("g A")
             ];
         }
-        $state = [
-            1 => "close",
-            2 => "open"
-        ];
-        return $this->returnData(["days", "time", "state"], [$days, $time, $state[rand(1, 2)]]);
+
+
+        return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
+    }
+
+    public function getState($branch)
+    {
+
+$now = now();
+$start_time = Carbon::parse($branch->start_time)->format("H:i:s");
+$end_time = Carbon::parse($branch->end_time)->format("H:i:s");
+        if ($now >= $start_time && $now <= $end_time) {
+
+            return 'open';
+
+        } else {
+            return 'closed';
+
+        }
+
+
     }
 
     public function getClientOrder(Request $request)
     {
-          $udid = $request->header('udid');
+        $udid = $request->header('udid');
 
-          $client = getUser();
+        $client = getUser();
 
-          if($client){
+        if ($client) {
 
             $clientOrders = $client->orders;
 
             if (count($client->orders) > 0) {
-        
-         
-              return MyOrdersResource::collection($clientOrders);
 
-            }else{
-                
-               return $this->returnError(404, 'there is no orders for this client');
+
+                return MyOrdersResource::collection($clientOrders);
+
+            } else {
+
+                return $this->returnError(404, 'there is no orders for this client');
             }
 
-          }else{
+        } else {
 
-             return $this->returnError(422, "user not exists");
+            return $this->returnError(422, "user not exists");
 
-          }
+        }
     }
 }
