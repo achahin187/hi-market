@@ -257,15 +257,12 @@ $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
 
             $clientOrders = $client->orders;
 
-            if (count($client->orders) > 0) {
+           
 
 
                 return MyOrdersResource::collection($clientOrders);
 
-            } else {
-
-                return $this->returnError(404, 'there is no orders for this client');
-            }
+           
 
         } else {
 

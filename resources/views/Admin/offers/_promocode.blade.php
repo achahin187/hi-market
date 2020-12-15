@@ -50,7 +50,7 @@
                         <label for="branch">Promo Code Type</label>
                         <select name="promocode_type"  class="form-control select2">
 
-                                @php $promocode_types = ['Dicount','Value'];@endphp
+                                @php $promocode_types = ['Percentage','Value'];@endphp
 
                             <option  selected  disabled>Please Select Source</option>
 

@@ -201,7 +201,7 @@ class AuthController extends Controller
         }
 
 
-        $code = '123456';
+        $code = '12345';
 
         $client->update(['activation_code' => $code]);
 

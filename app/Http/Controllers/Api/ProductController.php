@@ -93,8 +93,8 @@ class ProductController extends Controller
     {
 
         $validation = \Validator::make($request->all(), [
+            "id"             => "required",
             "supermarket_id" => "required",
-            "id" => "required",
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
