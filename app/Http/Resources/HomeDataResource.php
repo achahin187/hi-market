@@ -23,7 +23,7 @@ class HomeDataResource extends JsonResource
                 "rating"=>$this->rating,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name,
-                "imagepath"=>asset($this->imagepath),
+                "imagepath"=>$this->imagepath,
                 "logopath"=>asset($this->logopath),
 
             ];

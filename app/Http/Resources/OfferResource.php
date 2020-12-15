@@ -23,7 +23,7 @@ class OfferResource extends JsonResource
             'offer_type' => $this->offer_type,
             'value_type' => $this->value_type,
             'image' => $this->image,
-            "imagepath" => asset("images/" . $this->image),
+            "imagepath" => asset("images/" . $this->images),
         ];
     }
 }
