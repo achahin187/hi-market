@@ -92,8 +92,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{ __('admin.location') }}</label>
-                                                    <input type="text" 
-                                                    value="{{$client->addresses->where('default',1)->first()->name  }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="{{$client->addresses->where('default',1)->first()->name ?? ""  }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('address')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
