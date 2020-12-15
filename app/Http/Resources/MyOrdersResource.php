@@ -24,7 +24,7 @@ class MyOrdersResource extends JsonResource
                 'id' => $product->id,
                 'name' => $product->name,
                 'image' => asset('images/'.$product->image),
-                'supermaketId' => $product->branches->first()->name,
+                'supermaketId' => $product->branches->first()->id,
                 ];
             }),
 
