@@ -18,6 +18,7 @@ class HomeDataResource extends JsonResource
                 "id"=>$this->id,
                 "name"=>$this->name,
                 "state"=>$this->getState(),
+                "flag" =>$this->getState() == 'open' ? 1 : 0,
                 "start_time"=>$this->start_time,
                 "end_time"=>$this->end_time,
                 "rating"=>$this->rating,
@@ -37,10 +38,10 @@ class HomeDataResource extends JsonResource
         $end_time = Carbon::parse($this->end_time)->format("H:i:s");
         if ($now >= $start_time && $now <= $end_time) {
 
-            return 1;
+            return 'open';
 
         } else {
-            return 0;
+            return 'closed';
 
         }
 
