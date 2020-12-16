@@ -38,7 +38,9 @@ class CreateBranchesTable extends Migration
 
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('country_id');
+            
+
+            $table->unsignedBigInteger('offer_id')->nullable();
 
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');

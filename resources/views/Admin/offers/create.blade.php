@@ -37,8 +37,7 @@
 
         <section class="content">
            
-       <form action="{{ route('offer.store') }}" method="POST">
-        @csrf
+      
     <div class="col-12 col-sm-6 col-lg-12">
                 <div class="card card-primary card-outline card-outline-tabs">
                   <div class="card-header p-0 border-bottom-0">
@@ -73,15 +72,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
-                  </div>
+                
                   <!-- /.card -->
                 </div>
     </div>
 
 
-    </form>
+
                       
         </section>
     </div>
@@ -163,7 +160,7 @@
     <script type="text/javascript">
         $("#branche_2").change(function(){
             $.ajax({
-                url: "{{ route('get_branch_product') }}?product_id=" + $(this).val(),
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
                     $('#product_2').html('');
@@ -179,7 +176,7 @@
       <script type="text/javascript">
         $("#branche_3").change(function(){
             $.ajax({
-                url: "{{ route('get_branch_product') }}?product_id=" + $(this).val(),
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
                     $('#product_3').html('');
@@ -212,10 +209,10 @@
        
 
                  $('.supermarket_4').removeAttr('hidden');
-                 $('#branch_promo').removeAttr('hidden');
+                 $('#branch').removeAttr('hidden');
             }else{
                  $('.supermarket_4').attr("hidden",true);
-                 $('#branch_promo').attr("hidden",true);
+                 $('#branch').attr("hidden",true);
             }
     });
 </script>

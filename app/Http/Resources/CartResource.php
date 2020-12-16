@@ -46,7 +46,7 @@ class CartResource extends JsonResource
     }
 
     private function getBranch()
-    {
-        return Branch::Where('id', request("supermarket_id"))->first();
+    {      
+        return Branch::Where('id', request("supermarket_id") )->first();
     }
 }

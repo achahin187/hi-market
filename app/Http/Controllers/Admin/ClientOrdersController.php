@@ -85,6 +85,7 @@ class ClientOrdersController extends Controller
          $store_order->products()->attach($products->pluck('product_id'));
 
          $delete = ManualOrder::Where('id', $request->order_id)->delete();
+
          $destroy_session = session()->forget('branch_id');
 
         return redirect()->route('clients.index')->withStatus('Order Added Successfully');
@@ -93,8 +94,8 @@ class ClientOrdersController extends Controller
 
     public function changeManualOrder(Request $request)
     {
+        //dd($request->all());
         $deleteOrder     = ManualOrder::Where('client_id', $request->client_id)->delete();
-        
          session()->forget('supermarket_id');
          session()->forget('branch_id');
 

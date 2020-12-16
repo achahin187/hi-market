@@ -234,7 +234,7 @@
                                         @if(isset($product))
                                             @foreach(\App\Models\Vendor::all() as $vendor)
 
-                                                <option <?php if($product->vendor->id == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+                                                <option <?php if($product->vendor->id ?? "" == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
 
                                             @endforeach
                                         @else

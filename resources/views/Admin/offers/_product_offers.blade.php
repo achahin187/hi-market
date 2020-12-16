@@ -1,4 +1,7 @@
-
+<form action="{{ route('offer.store') }}" method="POST">
+    
+@csrf  
+                 <input type="hidden" value="product Offer" name="type">
                     <div class="form-group">
                         <label for="branch">SuperMarket</label>
                         <select name="supermarket_id" id='supermarket_2'  class="form-control select2">
@@ -31,6 +34,17 @@
                         </select>
                         @error('product_id')
                          <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                     <div class="form-group">
+                        <label for="exampleInputEmail1">Priority</label>
+                        <input type="text" placeholder="please Choose Priority" value="{{old("priority")}}" name="priority"
+                               class=" @error('priority') is-invalid @enderror form-control" >
+                        @error('priority')
+                        <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -77,3 +91,9 @@
                         <p style="color: red">Width: 400 px</p>
                        <p style="color: red"> length: 130 px </p>
                     </div>
+
+                     <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
+                  </div>
+</form>
+

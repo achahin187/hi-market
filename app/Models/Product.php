@@ -190,9 +190,11 @@ class Product extends Model
         return app()->getLocale() == "en" ? $this->eng_spec : $this->arab_spec;
     }
     public function scopeSimilar($query,$categories,$supermarket_id)
-    {
+    {   
+        // dd(explode(":", request("products") ) );
        $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id){
-           $query->where("branches.id",$supermarket_id);
+
+           $query->where("branches.id",$supermarket_id)->whereNotIn('product_id',explode(":", request("products")) );
        });
     }
 

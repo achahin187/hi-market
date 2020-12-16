@@ -55,10 +55,17 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>{{ __('admin.name') }}</th>
-                                        <th>{{ __('admin.email') }}</th>
+                                        <th>{{ __('admin.type') }}</th>
+                                        <th>{{ __('admin.source') }}</th>
+                                        <th>{{ __('admin.promocode_name') }}</th>
+                                        <th>{{ __('admin.promocode_type') }}</th>
+                                        <th>{{ __('admin.discount_on') }}</th>
+                                        <th>{{ __('admin.value') }}</th>
+                                        <th>{{ __('admin.total_order_money') }}</th>
+                                        <th>{{ __('admin.product') }}</th>
+                                        <th>{{ __('admin.supermarket') }}</th>
+                                        <th>{{ __('admin.branches') }}</th>
                                         <th>{{ __('admin.status') }}</th>
-                                        <th>{{ __('admin.commission') }}</th>
 
 
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
@@ -70,11 +77,23 @@
 
                                     @foreach($offers as $offer)
                                         <tr>
-                                            <td>{{$offer->name}}</td>
-                                            <td>{{$offer->email}}</td>
-                                            <td>{{$offer->status  }} </td>
+                                            
+                                        <td>{{$offer->type}}</td>
+                                        <td>{{$offer->source}}</td>
+                                        <td>{{$offer->promocode_name}}</td>
+                                        <td>{{$offer->promocode_type}}</td>
+                                        <td>{{$offer->discount_on}}</td>
+                                        <td>{{$offer->value}}</td>
+                                        <td>{{$offer->total_order_money}}</td>
+                                        <td>{{$offer->product->name ?? ''  }}</td>
+                                        <td>{{$offer->supermarket->name ?? ''  }} </td>
+                                        <td>{{$offer->branches->pluck('name') ?? ''  }}</td>
+                                        <td> 
+                                            <a href="{{ route('offer.status', ['status'=>$offer->status,'id'=>$offer->id]) }}" class="btn btn-block btn-outline-{{ $offer->status ==1 ? 'success': 'danger'}}">{{__($offer->status ==1 ? 'active': 'inactive')}}</a>
+                                        </td>
+                                        
 
-                                            <td>{{$offer->commission}}</td>
+                                          
 
 
                                             @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
@@ -103,6 +122,8 @@
                                                                    href="{{ route('offer.edit', $offer->id) }}">{{ __('edit') }}</a>
                                                             @endif
 
+                                                         
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -129,4 +150,4 @@
 @endsection
 
 
-
+                                            

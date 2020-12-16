@@ -381,9 +381,9 @@
                                                 @endif --}}
 
                                                 @if(App::getLocale() == 'ar')
-                                                    <td>{{$product->vendor->arab_name}}</td>
+                                                    <td>{{$product->vendor->arab_name ?? ''}}</td>
                                                 @else
-                                                    <td>{{$product->vendor->eng_name}}</td>
+                                                    <td>{{$product->vendor->eng_name ?? ''}}</td>
                                                 @endif
 
                                                 @if(App::getLocale() == 'ar')

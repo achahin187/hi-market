@@ -713,7 +713,7 @@ $settings = App\Models\Setting::all()->first();
 
             let type = $(this).val();
 
-
+            console.log(type);
             if(type == 2)
             {
                 $('.offer_type').css('display','block');

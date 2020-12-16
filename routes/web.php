@@ -231,6 +231,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
        //offers
        Route::resource('offer','Admin\OffersController');
 
+        //offer.status
+        Route::get('offer_status','Admin\OffersController@changeStatus')->name('offer.status');
+
        //get_brannch_product
 
         Route::get('get-branch-product', 'Admin\ProductController@getBranchProduct')->name('get_branch_product');
@@ -264,6 +267,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         //Delete manular order 
         Route::get('delete_orders','Admin\ClientOrdersController@changeManualOrder')->name('change.order');
+
 
 
     });

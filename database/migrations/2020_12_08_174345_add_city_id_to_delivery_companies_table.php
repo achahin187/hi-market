@@ -14,8 +14,8 @@ class AddCityIdToDeliveryCompaniesTable extends Migration
     public function up()
     {
         Schema::table('delivery_companies', function (Blueprint $table) {
-            $table->bigInteger("city_id")->unsigned();
-            $table->foreign("city_id")->references("id")->on("cities")->onDelete("cascade");
+            // $table->bigInteger("city_id")->unsigned();
+            // $table->foreign("city_id")->references("id")->on("cities")->onDelete("cascade");
         });
     }
 

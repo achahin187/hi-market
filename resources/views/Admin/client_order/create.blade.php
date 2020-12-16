@@ -116,37 +116,43 @@
                                          Choose SuperMaket 
                                     </div>
 
-                                 
+                                
 
                                             <div class="card-body">
                                       
-                                                                    
-                                                <div class="form-group ">
-                                                    <label for="branch">SuperMarket</label>
-                                                    <select name="supermarket_id" id='supermarket_6'  class="form-control select2">
-                                                    
-                                                <option  selected  disabled>Please Select Source</option>
+                                    
+                <div class="form-group ">
+                    <label for="branch">SuperMarket</label>
+                    <select name="supermarket_id" 
+                    @if(session()->get('supermarket_id') != $supermarket->id) class="  
+                     form-control select2 click_here" @else class="  
+                     form-control select2"@endif  >
+                 
+                <option  selected  disabled>Please Select Source</option>
 
-                                                    @foreach( $supermarkets as  $supermarket) 
-                                            <option  
-                                            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null)            selected disabled
-                                            @endif 
-                                                        value="{{ $supermarket->id }}">{{$supermarket->name}}
-                                                    </option>
-                                                    @endforeach
+                    @foreach( $supermarkets as  $supermarket) 
+            <option  
+            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null)            selected disabled
+            @endif 
+                        value="{{ $supermarket->id }}">{{$supermarket->name}}
+                    </option>
+                    @endforeach
 
-                                                    </select>
-                                                </div>
+                    </select>
+                </div>
+                 
 
                                             @if(session()->get('branch_id'))
 
                                                  <div class="form-group"  >
                                                     <label for="branch">Branch</label>
-                                                    <select name="branch_id"  class="form-control select2">
+                                                    <select name="branch_id"  class=" branch_9 form-control select2">
+
                                                     @php
-                                                    $branch = \App\Models\Branch::find(session()->get('branch_id'))
+                                                    $branch = \App\Models\Branch::find(session()->get('branch_id'));
                                                     @endphp
-                                                        <option value="{{ $branch->id }}" selected > {{ $branch->name  }}</option>
+
+                                                        <option value="{{ $branch->id }}" selected > {{ $branch->name_en  }}</option>
                                                            
                                                     </select>
                                                 </div>
@@ -163,14 +169,23 @@
 
                                             @endif  
 
-                                            <a href="{{ route('change.order') }}" style="margin-top: 30px;" class=" btn btn-primary">
+                                            <a href="{{ route('change.order',['client_id'=>request()->client_id]) }}" style="margin-top: 30px;" class=" btn btn-primary">
                                                     Cahnge Order
 
 
                                             </a >
                                             <br>  
                                             <br>  
-                                            
+                                            <br>  
+{{-- 
+                                                <div class="form-group"  >
+                                                    <label for="branch">category</label>
+                                                    <select name="branch_id" id="category_9"  class="form-control select2">
+                                                    
+                                                        <option  selected  disabled>Please Select category</option>
+                                                           
+                                                    </select>
+                                                </div> --}}
 
                                                 {{-- product --}}
                                                     <!--third card-->
@@ -219,7 +234,8 @@
                                                             </div>
                                                         </div>
  <input type="hidden" class="branch_product_id" name="branch_id" value="">
- <input type="hidden" class="supermarket_data_id" name="supermarket_id" value="">
+  <input type="hidden" class="supermarket_id" name="supermarket_id" value="">
+ 
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
@@ -251,14 +267,16 @@
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                 <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
+                                                                <button style="margin-top: 30px;" class=" btn btn-primary">
+                                                                           {{ __('admin.add') }}
+
+
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
-                                           
-           
 
                                             <div class="card-body">
                                                 
@@ -298,7 +316,6 @@
 
                                       
                                     </div>
-
                                     
                     <form action="{{ route('store.order') }}" method="POST">
                         @csrf
@@ -338,7 +355,7 @@
 @push('scripts')
 <script>
 
-        $("#supermarket_6").change(function(){
+        $(".supermarket_6").change(function(){
             $.ajax({
                
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
@@ -380,10 +397,11 @@
             });
                   
                     var selectedStatus      = $(this).find('option:selected').val();
-                    var selectedsuperMarket = $('#supermarket_6').find('option:selected').val();
-                    $('.branch_id').val(selectedStatus);
+                    var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
+
+                     $('.branch_id').val(selectedStatus);
                      $('.branch_product_id').val(selectedStatus);
-                     $('.supermarket_data_id').val(selectedsuperMarket);
+                     $('.supermarket_id').val(selectedsuperMarket);
                      
                     
         });
@@ -423,40 +441,7 @@
     
 </script>
 
-<script type="text/javascript">
-    var x = 1;
-    $(document).on('click', '.add_input', function () {
-        var max_input = 9;
-        if (x < max_input) {
 
-
-            $('.div_inputs').append('<div>' +
-                '<div class="col-md-12">' +
-                '<div class="form-group">' +
-                '<label> عنوان الحقل</label>' +
-                '<input type="text" class="form-control" name="input_key[]" >' +
-                '</div>' +
-                '</div>' +
-                '<div class="col-md-12">' +
-                '<div class="form-group">' +
-                '<label> محتوى الحقل</label>' +
-                '<input type="text" class="form-control" name="input_value[]" >' +
-                '</div>' +
-                '</div>' +
-                '<div class="clearfix"></div>' +
-                '<br>' +
-                '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
-                '</div>');
-            x++;
-        }
-        return false;
-    });
-    $(document).on('click', '.remove_input', function () {
-        $(this).parent('div').remove();
-        x--;
-        return false;
-    });
-</script>
 
 
 @endpush

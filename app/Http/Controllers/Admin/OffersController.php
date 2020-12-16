@@ -20,7 +20,7 @@ class OffersController extends Controller
     {
         $this->model = 'App\Models\Offer' ;
         $this->blade = 'Admin.offers.' ;
-        $this->route = 'offers.' ;
+        $this->route = 'offer.' ;
 
         $this->middleware('permission:delivery-list', ['only' => ['index']]);
         $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
@@ -59,35 +59,105 @@ class OffersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   dd(collect($request->all())->keys());
+    {   
         $request->validate([
-            'source' =>'required|string',
-            'supermarket_id' =>'required|email|unique:users',
-            'branch_id' =>'required|min:8',
-            'promocode_name' =>'required|min:8',
-            'promocode_type' =>'required|min:8',
-            'discount_on' =>'required|min:8',
-            'value' =>'required|min:8',
-            'start_offer_date' =>'required|min:8',
-            'end_offer_date' =>'required|min:8',
+            'type' =>'required',
+            'start_date' =>'required|min:8',
+            'end_date' =>'required|min:8',
             'banner' =>'required|min:8',
-            
         ]);
-        
-        $user = $this->model::create(request()->all());
-    
-        $role = Role::where('name','delivery_admin' )->first();
-        
-        $assignRole = $user->assignRole($role);
 
-        $Permissions = $role->permissions;
+        $request_data = $request->all();
+
+        switch ($request->type) {
+            case 'promocode':
+               $this->createPromocode($request_data);
+                break;
+
+            case 'product Offer':
+               $this->createProductOffer($request_data);
+                break;
+
+            case 'free product':
+               $this->createFreeProduct($request_data);
+                break;
+
+            case 'point':
+               $this->createPoint($request_data);
+                break;    
             
-        //$user->givePermissionTo($Permissions);
-        
+            default:
+                # code...
+                break;
+        }
+       
+            
         return redirect()->route($this->route.'index');
     }
 
+   
     /**
+     * Display the specified resource.
+     *
+     * @param  array  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function createPromocode($request)
+    {  
+        $request_data = collect($request)->except('branch_id');
+
+        $create_promocode =   $this->model::create($request_data->toArray());
+
+        $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
+
+        foreach ($get_branches as  $branch) {
+
+         $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
+        }
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function createProductOffer($request)
+    {
+        $create_promocode = $this->model::create($request);
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function createFreeProduct($request)
+    {
+        $create_promocode = $this->model::create($request);
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function createPoint($request)
+    {
+        $request_data     = collect($request)->except('branch_id');
+
+        $create_promocode =   $this->model::create($request_data->toArray());
+
+        $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
+
+        foreach ($get_branches as  $branch) {
+
+         $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
+         
+        }
+
+
+    }
+     /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -153,5 +223,14 @@ class OffersController extends Controller
         }else{
             return redirect()->route($this->route.'index');
         }
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $request_data = $request->status;
+        $offer  = $this->model::find($request->id);
+        $offer->update(['status' => $request_data == 0 ? 1 :0 ]);
+
+        return redirect()->route($this->route.'index')->withStatus(__('status Changed Successfully'));; 
     }
 }

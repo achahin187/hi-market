@@ -41,10 +41,10 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients')->onUpdate('set null')->onDelete('set null');
-            $table->foreign('reason_id')->references('id')->on('reasons')->onUpdate('set null')->onDelete('set null');
+            // $table->foreign('client_id')->references('id')->on('clients')->onUpdate('set null')->onDelete('set null');
+            // $table->foreign('reason_id')->references('id')->on('reasons')->onUpdate('set null')->onDelete('set null');
 
-            $table->foreign('company_id')->references('id')->on('reasons')->onUpdate('set null')->onDelete('set null');
+            // $table->foreign('company_id')->references('id')->on('reasons')->onUpdate('set null')->onDelete('set null');
         });
     }
 

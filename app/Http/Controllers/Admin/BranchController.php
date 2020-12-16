@@ -116,7 +116,7 @@ class BranchController extends Controller
                 'area_id' => $request->area_id,
                 'city_id' => $request->city_id,
                 'rating' => $request->rating,
-                'country_id' => $request->country_id,
+               
             ]);
 
             $branch->categories()->sync($request->categories);
@@ -151,7 +151,7 @@ class BranchController extends Controller
                 'area_id' => $request->area_id,
                  'rating' => $request->rating,
                 'city_id' => $request->city_id,
-                'country_id' => $request->country_id,
+             
             ]);
 
             $branch->categories()->sync($request->categories);
@@ -298,7 +298,7 @@ class BranchController extends Controller
                 'area_id' => $request->area_id,
                  'rating' => $request->rating,
                 'city_id' => $request->city_id,
-                'country_id' => $request->country_id,
+              
             ]);
 
                    $branch->categories()->sync($request->categories);

@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }

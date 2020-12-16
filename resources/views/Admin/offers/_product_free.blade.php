@@ -1,12 +1,16 @@
-                    
+<form action="{{ route('offer.store') }}" method="POST">
+    
+@csrf                  
+                <input type="hidden" value="free product" name="type">    
                     <div class="form-group">
                         <label for="branch">Branch</label>
                         <select name="branch_id" id="branche_3"  class="form-control select2">
                         
                             <option  selected  disabled>Please Select branch</option>
                               @foreach( $branches as  $branch) 
-                            <option  @if(old("branch_id") == $branch->id) selected
-                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
+                                <option  @if(old("branch_id") == $branch->id) selected
+                                        @endif value="{{$branch->id}}">{{$branch->name}}
+                                </option>
                               @endforeach     
                         </select>
                     </div>
@@ -31,6 +35,17 @@
                         <input type="number" placeholder="please write Total Order Money" value="{{old("total_order_money")}}" name="total_order_money"
                                class=" @error('total_order_money') is-invalid @enderror form-control" >
                         @error('total_order_money')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                     <div class="form-group">
+                        <label for="exampleInputEmail1">Priority</label>
+                        <input type="text" placeholder="please Choose Priority" value="{{old("priority")}}" name="priority"
+                               class=" @error('priority') is-invalid @enderror form-control" >
+                        @error('priority')
                         <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -76,3 +91,8 @@
                         <p style="color: red">Width: 400 px</p>
                        <p style="color: red"> length: 130 px </p>
                     </div>
+
+                     <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
+                  </div>
+</form>                    

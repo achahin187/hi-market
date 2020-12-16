@@ -161,9 +161,10 @@ class OrderController extends Controller
 
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
-
         $similar_products = Product::similar($categories, $supermarket_id)->get();
 
+    
+       
 
         foreach ($favproducts as $product) {
             array_push($fav_ids, $product->product_id);
@@ -175,14 +176,19 @@ class OrderController extends Controller
         $wishlist = Product::whereIn('id', $fav_ids)->whereHas("branches", function ($query) {
             $query->where("branches.id", request("supermarket_id"));
         })->get();
+
         $cart = collect([]);
+
         foreach (explode(",", request("products")) as $product) {
+
             $cart->add(Cart::create([
                 "user_id" => getUser()->id,
                 "product_id" => explode(":", $product)[0],
                 "qty" => explode(":", $product)[1],
             ]));
         }
+        
+
         $cart = $cart->filter(function ($cart) {
             return $cart->product != null;
         });
@@ -232,19 +238,17 @@ class OrderController extends Controller
     public function getState($branch)
     {
 
-$now = now();
-$start_time = Carbon::parse($branch->start_time)->format("H:i:s");
-$end_time = Carbon::parse($branch->end_time)->format("H:i:s");
-        if ($now >= $start_time && $now <= $end_time) {
+        $now = now();
+        $start_time = Carbon::parse($branch->start_time)->format("H:i:s");
+        $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
+                if ($now >= $start_time && $now <= $end_time) {
 
-            return 'open';
+                    return 'open';
 
-        } else {
-            return 'closed';
+                } else {
+                    return 'closed';
 
-        }
-
-
+                }
     }
 
     public function getClientOrder(Request $request)

@@ -58,7 +58,7 @@ class PermissionTableSeeder extends Seeder
             'order-assign',
             'order-previous',
             'order-next',
-            'order-assign',
+          
             
 
             'order-show-canceled-orders ',
@@ -187,7 +187,7 @@ class PermissionTableSeeder extends Seeder
 
             'name' => 'super',
             'email' => 'super_admin@delivertto.com',
-            'team_id' => 1,
+           
             'password' => '123456789',
         ]);
 

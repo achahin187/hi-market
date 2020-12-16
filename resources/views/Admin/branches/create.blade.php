@@ -252,6 +252,26 @@
                                     @endif
 
 
+                                    <div class="form-group">
+                                        <label>{{__('admin.city')}} </label>
+                                        <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                            @if(isset($branch))
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option <?php if($branch->city->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+                                            @else
+                                                @foreach(\App\Models\City::all() as $city)
+
+                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                                                @endforeach
+
+                                            @endif
+                                        </select>
+                                    </div>  
+
                                      <div class="form-group">
                                         <label>{{__('admin.area')}} </label>
                                         <select class=" @error('area_id') is-invalid @enderror select2" name="area_id" data-placeholder="Select a State" style="width: 100%;" >
@@ -272,45 +292,8 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>{{__('admin.city')}} </label>
-                                        <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($branch))
-                                                @foreach(\App\Models\City::all() as $city)
 
-                                                    <option <?php if($branch->city->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\City::all() as $city)
-
-                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{__('admin.country')}} </label>
-                                        <select class=" @error('country_id') is-invalid @enderror select2" name="country_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($branch))
-                                                @foreach(\App\Models\Country::all() as $country)
-
-                                                    <option <?php if($branch->country->id == $country->id) echo 'selected'; ?> value="{{ $country->id }}">{{ $country->name_en }}</option>
-
-                                                @endforeach
-                                            @else
-                                                @foreach(\App\Models\Country::all() as $country)
-
-                                                    <option value="{{ $country->id }}">{{ $country->name_en }}</option>
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                    </div> 
+                                   
 
 
                                     <div class="form-group">
