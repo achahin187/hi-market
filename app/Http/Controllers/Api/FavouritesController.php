@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\AllFavoriteResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -84,7 +85,7 @@ class FavouritesController extends Controller
 
     public function getfavourites(Request $request)
     {
-
+       
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
             "category_id" => "required"
@@ -116,14 +117,14 @@ class FavouritesController extends Controller
         if (!$client) {
             return $this->returnError(422, "Client Not Found");
         }
-
+        
         $favproducts = $client->products()->where(function ($query) {
             if ($udid = \request()->header("udid")) {
                 $query->where("udid", $udid);
             };
         })->get();
 
-        return $this->returnData(['favourite products'], [ProductResource::collection($favproducts)]);
+        return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproducts)]);
     }
 
 }

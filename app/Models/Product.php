@@ -172,6 +172,11 @@ class Product extends Model
         return $this->belongsToMany('App\Models\Branch','product_supermarket');
     }
 
+    // public function getBranch()
+    // {
+    //     return $this->branches()->get();
+    // }
+
 
 
 
