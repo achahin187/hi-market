@@ -11,9 +11,11 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
+use App\Http\Resources\GetReasonsResource;
 use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
+use App\Models\Reason;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
@@ -273,5 +275,36 @@ class OrderController extends Controller
             return $this->returnError(422, "user not exists");
 
         }
+    }
+
+    public function getReasons()
+    {
+        $reasons = Reason::Where('status','active')->get();
+
+        return $this->returnData(['reasons'], [GetReasonsResource::collection($reasons)]);
+        
+    }
+
+    public function CancelOrder(Request $request)
+    {
+        $validation = \Validator::make($request->all(), [
+            "order_id" => "required",
+            "reason_id" => "required",
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+
+        $getOrder = Order::find($request->id);
+
+        if ($getOrder) {
+            $getOrder->update(['status'=>5, 'resone_id'=>$reqeust->reason_id]);
+
+            return $this->returnSuccessMessage('order Canceled successfully', 200);
+        }else{
+            return $this->returnError(404, "This order id not found");
+        }
+
+
     }
 }

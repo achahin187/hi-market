@@ -81,6 +81,12 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::get('getClientOrder', 'OrderController@getClientOrder');
 
+     //Get reasons 
+    Route::get('getReasons','OrderController@getReasons');  
+
+    //Cancel Order 
+    Route::post('cancelOrder','OrderController@CancelOrder');
+
 });
 
 

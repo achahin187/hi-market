@@ -43,4 +43,9 @@ class Reason extends Model
     protected $fillable = [
         'arab_reason','eng_reason','status','created_by','updated_by'
     ];
+
+       protected function getNameAttribute()
+    {
+        return app()->getLocale() == "en" ? $this->eng_reason : $this->arab_reason;
+    }
 }
