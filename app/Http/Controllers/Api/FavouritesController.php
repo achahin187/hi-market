@@ -84,6 +84,7 @@ class FavouritesController extends Controller
 
     public function getfavourites(Request $request)
     {
+       
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
             "category_id" => "required"

@@ -183,8 +183,8 @@ class OrderController extends Controller
 
             $cart->add(Cart::create([
                 "user_id" => getUser()->id,
-                "product_id" => explode(":", $product)[$index],
-                "qty" => explode(":", $product)[$index],
+                "product_id" => explode(":", $product)[0],
+                "qty" => explode(":", $product)[1],
             ]));
         }
         

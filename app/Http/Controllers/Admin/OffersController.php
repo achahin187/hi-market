@@ -216,12 +216,12 @@ class OffersController extends Controller
      */
     public function destroy($id)
     {
-          $delivery_admin = User::find($id);
-        if ($delivery_admin) {
-            $delivery_admin->delete();
-            return redirect()->route($this->route.'index');
+          $offer = $this->model::find($id);
+        if ($offer) {
+            $offer->delete();
+            return redirect()->route($this->route.'index')->withStatus(__('Deleted Successfully'));;
         }else{
-            return redirect()->route($this->route.'index');
+            return redirect()->route($this->route.'index')->withStatus(__(' This Id Not Found '));;
         }
     }
 
@@ -231,6 +231,6 @@ class OffersController extends Controller
         $offer  = $this->model::find($request->id);
         $offer->update(['status' => $request_data == 0 ? 1 :0 ]);
 
-        return redirect()->route($this->route.'index')->withStatus(__('status Changed Successfully'));; 
+        return redirect()->route($this->route.'index')->withStatus(__('status Changed Successfully')); 
     }
 }

@@ -307,7 +307,7 @@ class ClientController extends Controller
             'default' => $default,
             'lat' => $lat,
             'lon' => $lon,
-            'notes' => $notes,
+            'additional' => $notes,
             'govern' => $govern,
             "verified" => 0,
             "verify" => $rand

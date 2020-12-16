@@ -268,7 +268,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //Delete manular order 
         Route::get('delete_orders','Admin\ClientOrdersController@changeManualOrder')->name('change.order');
 
+        Route::get('rate',function(){
+            $rate = 
+            [5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
+            $count = collect($rate)->avg();
+            dd( $count );
+        });
 
     });
 
