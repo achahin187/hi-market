@@ -51,6 +51,8 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::get('order/{order_id}', 'OrderController@getorder')->name('order_details');
     Route::post('cart', 'OrderController@addcart')->name('order_details');
     Route::get("fav/get", "FavouritesController@getfavourites");
+    //get all fav
+    Route::get("fav/get/all", "FavouritesController@getAllFavourites");
 
     Route::post('getarea', 'LocationController@index')->name('listArea');
     Route::get('gethomedata', 'ProductController@homeData')->name('listHome');

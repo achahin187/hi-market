@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 namespace App\Http\Resources;
 
@@ -20,7 +20,6 @@ class CartResource extends JsonResource
         return [
             "id" => $product->id,
             "name" => $product->name,
-
             "description" => $product->description,
             "overview" => $product->specs ?? "",
             "price" => $product->price ?? 0,

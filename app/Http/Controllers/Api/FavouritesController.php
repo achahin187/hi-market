@@ -84,7 +84,7 @@ class FavouritesController extends Controller
 
     public function getfavourites(Request $request)
     {
-       
+
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
             "category_id" => "required"
@@ -106,6 +106,24 @@ class FavouritesController extends Controller
 
         return $this->returnData(['favourite products'], [ProductResource::collection($favproducts)]);
 
+    }
+
+    public function getAllFavourites(Request $request)
+    {
+        $client = getUser();
+
+
+        if (!$client) {
+            return $this->returnError(422, "Client Not Found");
+        }
+        
+        $favproducts = $client->products()->where(function ($query) {
+            if ($udid = \request()->header("udid")) {
+                $query->where("udid", $udid)->where("category_id",\request("category_id"))->where("supermarket_id",\request("supermarket_id"));
+            };
+        })->get();
+
+        return $this->returnData(['favourite products'], [ProductResource::collection($favproducts)]);
     }
 
 }
