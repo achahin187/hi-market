@@ -191,10 +191,21 @@ class Product extends Model
     }
     public function scopeSimilar($query,$categories,$supermarket_id)
     {   
-        // dd(explode(":", request("products") ) );
-       $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id){
+       $product =  explode(":", request("products") );
 
-           $query->where("branches.id",$supermarket_id)->whereNotIn('product_id',explode(":", request("products")) );
+        $cart = [];
+
+        foreach (explode(",", request("products")) as $index => $product) {
+
+            $cart[]=  explode(":", $product)[0];
+               
+
+        }
+        
+         
+       $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id, $cart){
+
+           $query->where("branches.id",$supermarket_id)->whereNotIn('product_id', $cart );
        });
     }
 
