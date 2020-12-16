@@ -116,10 +116,10 @@ class FavouritesController extends Controller
         if (!$client) {
             return $this->returnError(422, "Client Not Found");
         }
-        
+
         $favproducts = $client->products()->where(function ($query) {
             if ($udid = \request()->header("udid")) {
-                $query->where("udid", $udid)->where("category_id",\request("category_id"))->where("supermarket_id",\request("supermarket_id"));
+                $query->where("udid", $udid);
             };
         })->get();
 
