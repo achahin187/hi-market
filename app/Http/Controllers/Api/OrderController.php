@@ -164,7 +164,7 @@ class OrderController extends Controller
         $similar_products = Product::similar($categories, $supermarket_id)->get();
 
     
-       
+
 
         foreach ($favproducts as $product) {
             array_push($fav_ids, $product->product_id);
@@ -179,12 +179,12 @@ class OrderController extends Controller
 
         $cart = collect([]);
 
-        foreach (explode(",", request("products")) as $product) {
+        foreach (explode(",", request("products")) as $index => $product) {
 
             $cart->add(Cart::create([
                 "user_id" => getUser()->id,
-                "product_id" => explode(":", $product)[0],
-                "qty" => explode(":", $product)[1],
+                "product_id" => explode(":", $product)[$index],
+                "qty" => explode(":", $product)[$index],
             ]));
         }
         
