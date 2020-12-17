@@ -49,14 +49,16 @@ class CartController extends Controller
     #return dicount value
     public function sendPromoCode(Request $request)
     {
-        $request->validate([
+        
+        $validation = \Validator::make(\request()->all(), [
             'promoCode' => 'required',
             'supermarket_id' => 'required',
             'total_money' => 'required',
             'deliver_money' => 'required'
-       
         ]);
-
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
 
         try {
 
@@ -124,10 +126,14 @@ class CartController extends Controller
                 $total =  $total_money - $value ; 
 
                 return [
-                    'discount_on' => $dicount_on,
-                    'OrderMoney_AfterDiscount'=>$total,
-                    'DeliveryMoney'=>$deliver_money, 
-                    'Total'=>$total + $deliver_money,
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'discount_on' => $dicount_on,
+                        'OrderMoney'=>$total,
+                        'DeliveryMoney'=>$deliver_money, 
+                        'Total'=>$total + $deliver_money,
+                     ],
 
                 ];
             #Delivery
@@ -136,10 +142,14 @@ class CartController extends Controller
                 $total =  $deliver_money - $value  ; 
 
                 return [
-                    'discount_on' => $dicount_on,
-                    'OrderMoney'=>$total_money,
-                    'DeliveryMoney_AfterDiscount'=>$total, 
-                    'Total'=>$total + $total_money,
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'discount_on' => $dicount_on,
+                        'OrderMoney'=>$total_money,
+                        'DeliveryMoney'=>$total, 
+                        'Total'=>$total + $total_money,
+                    ],
 
                 ];
 
@@ -154,10 +164,14 @@ class CartController extends Controller
                $total = $total_money - ( $total_money * $value)/100; 
 
                 return [
-                    'discount_on' => $dicount_on,
-                    'OrderMoney_AfterDiscount'=>$total,
-                    'DeliveryMoney'=>$deliver_money, 
-                    'Total'=>$total + $deliver_money,
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'discount_on' => $dicount_on,
+                        'OrderMoney'=>$total,
+                        'DeliveryMoney'=>$deliver_money, 
+                        'Total'=>$total + $deliver_money,
+                    ],
 
                 ];
 
@@ -167,10 +181,14 @@ class CartController extends Controller
                $total = $deliver_money - ( $deliver_money * $value)/100; 
 
                 return [
-                    'discount_on' => $dicount_on,
-                    'OrderMoney'=>$total_money,
-                    'DeliveryMoney_AfterDiscount'=>$total, 
-                    'Total'=>$total_money + $total,
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'discount_on' => $dicount_on,
+                        'OrderMoney'=>$total_money,
+                        'DeliveryMoney'=>$total, 
+                        'Total'=>$total_money + $total,
+                    ],
                 ];
             }
     }
