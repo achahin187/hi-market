@@ -298,10 +298,13 @@ class OrderController extends Controller
         $getOrder = Order::find($request->id);
 
         if ($getOrder) {
+
             $getOrder->update(['status'=>5, 'resone_id'=>$reqeust->reason_id]);
 
             return $this->returnSuccessMessage('order Canceled successfully', 200);
+
         }else{
+            
             return $this->returnError(404, "This order id not found");
         }
 

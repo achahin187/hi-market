@@ -50,7 +50,7 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(10)->get();
+        $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
         $offers = Product::where('status', 'active')->where("flag", 1)->limit(4)->get();
 
