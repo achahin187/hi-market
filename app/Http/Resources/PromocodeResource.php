@@ -14,8 +14,7 @@ class PromocodeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-
-        ];
+        dd($this);
+        
     }
 }

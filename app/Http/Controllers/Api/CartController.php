@@ -71,14 +71,16 @@ class CartController extends Controller
              if ($offer->source == 'Branch') {
 
                  $promo_result =  $this->branchType($request->supermarket_id, $offer->branch_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
-
+                 dd($promo_result);
 
              }else{
 
                  $promo_result =  $this->checkType($offer->promocode_type, $offer->discount_on, $offer->value,  $request->total_money, $request->deliver_money);
              }
             
-            return $promo_result;
+          return response()->json($promo_result);
+           
+           
         }
 
 
@@ -118,12 +120,28 @@ class CartController extends Controller
     private function promocodeTypeValue($dicount_on, $total_money, $value, $deliver_money)
     {
           if ($dicount_on == 'Order') {
-                
-                return $total_money - $value;
 
+                $total =  $total_money - $value ; 
+
+                return [
+                    'discount_on' => $dicount_on,
+                    'OrderMoney_AfterDiscount'=>$total,
+                    'DeliveryMoney'=>$deliver_money, 
+                    'Total'=>$total + $deliver_money,
+
+                ];
+            #Delivery
             }else{
 
-                return   $deliver_money - $value;
+                $total =  $deliver_money - $value  ; 
+
+                return [
+                    'discount_on' => $dicount_on,
+                    'OrderMoney'=>$total_money,
+                    'DeliveryMoney_AfterDiscount'=>$total, 
+                    'Total'=>$total + $total_money,
+
+                ];
 
             }
     }
@@ -133,12 +151,27 @@ class CartController extends Controller
 
              if ($dicount_on == 'Order') {
                
-                return $total_money - ( $total_money * $value)/100 ;
-                
-            }else{
-             
-                return $deliver_money - ( $deliver_money * $value)/100 ;
+               $total = $total_money - ( $total_money * $value)/100; 
 
+                return [
+                    'discount_on' => $dicount_on,
+                    'OrderMoney_AfterDiscount'=>$total,
+                    'DeliveryMoney'=>$deliver_money, 
+                    'Total'=>$total + $deliver_money,
+
+                ];
+
+            #Delivery  
+            }else{
+
+               $total = $deliver_money - ( $deliver_money * $value)/100; 
+
+                return [
+                    'discount_on' => $dicount_on,
+                    'OrderMoney'=>$total_money,
+                    'DeliveryMoney_AfterDiscount'=>$total, 
+                    'Total'=>$total_money + $total,
+                ];
             }
     }
 }//end class
