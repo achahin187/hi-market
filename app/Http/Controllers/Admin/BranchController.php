@@ -444,9 +444,9 @@ class BranchController extends Controller
 
     public function getVendorCategories(Request $request)
     {
-        $categories = Category::WhereHas('vendors', function ($q) use($request){
+        $categories = Vendor::WhereHas('categories', function ($q) use($request){
 
-            $q->Where('vendor_id',$request->vendor_id);
+            $q->Where('category_id',$request->vendor_id);
 
         })->get();
         

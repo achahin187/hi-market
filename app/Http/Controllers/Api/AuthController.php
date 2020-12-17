@@ -222,44 +222,31 @@ class AuthController extends Controller
 
         $udid = $request->header('udid');
 
+    
 
-        $email = $request->email;
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+            'email'=> ['required','email'],
+        ]);
 
-        $client = Client::where('email', $email)->first();
-
-        if ($flag == 0) {
-
-            $data = $this->returnData(['client'], [new ClientResource($client)], 'you have been logged in successfully');
-
-        } else {
-
-
-            $data = $this->returnData(['client'], [new ClientResource($client)], 'you have been registered successfully');
-
+        if ($validator->fails()) {
+            return $this->returnValidationError(422, $validator);
         }
 
-        if ($client) {
-
-            return $data;
-        } else {
+        try {
             $client = Client::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'mobile_number' => $request->mobile_number,
+                "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                    "body"=>request()->header("udid")
+                ])->body
             ]);
+        } catch (\Exception $exception) {
 
-
-            $client_device = Client_Devices::create([
-
-                'client_id' => $client->id,
-                'udid' => $udid
-
+            return response()->json([
+                "success" => false,
+                "status" => "Client Not Exists With this Udid"
             ]);
-
-
-            $client->update(['status' => 0]);
-
-            return $data;
         }
     }
 

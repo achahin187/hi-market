@@ -29,9 +29,9 @@ class SimilarProductsResource extends JsonResource
             "category_name" => $this->category->name ?? "",
             "category_id" => $this->category_id ?? "",
             "flag" => $this->flag ?? 0,
-            "supermarket_id" =>  (int) request("supermarket_id"),
             "imagepaths" => $this->imagepaths ? explode(",", $this->images) : [],
             "images"=>$this->images != ""  ?$this->images:  "default.png",
+            "supermarket_id" =>  (int) request("supermarket_id"),
             "supermarketName" => $this->getBranch()->name,
             "percentage" => $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
 

@@ -295,8 +295,8 @@ class OrderController extends Controller
             return $this->returnValidationError(422, $validation);
         }
 
-        $getOrder = Order::find($request->id);
-
+        $getOrder = Order::find($request->order_id);
+      
         if ($getOrder) {
 
             $getOrder->update(['status'=>5, 'resone_id'=>$reqeust->reason_id]);

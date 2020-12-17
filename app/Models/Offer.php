@@ -8,6 +8,19 @@ class Offer extends Model
 {
     protected $guarded = [];
 
+
+    public function scopeCheckPromoCode($q, $promoCode)
+    {
+        
+        return $q->Where('promocode_name', $promoCode);
+    }
+
+    public function scopeCheckSuperMarket($q, $supermarket_id)
+    {
+
+        return $q->Where('branch_id', $supermarket_id);
+    }
+
     public function supermarket()
     {
     	return $this->belongsTo('App\Models\Supermarket') ;

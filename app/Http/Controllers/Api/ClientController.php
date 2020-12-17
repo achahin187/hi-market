@@ -83,7 +83,7 @@ class ClientController extends Controller
                 return [
                     "id"=>$point->id,
                     "point"=>(int) $point->points,
-                    "purchase" => $point->value ,
+                    "purchase" => $point->value,
                     "is_percentage"=>$point->type == 0 ? false : true,
                     "checked"=> $point->point < $client->total_points
                 ];

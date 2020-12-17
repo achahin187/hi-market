@@ -226,31 +226,9 @@
                                 </select>
                             </div>
 
-
-
                                 <div class="form-group">
-                                    <label>{{__('admin.vendor')}} </label>
-                                    <select class=" @error('vendor_id') is-invalid @enderror select2" id="vendor_1" name="vendor_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                        @if(isset($product))
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                <option <?php if($product->vendor->id ?? "" == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                            @endforeach
-                                        @else
-                                            @foreach(\App\Models\Vendor::all() as $vendor)
-
-                                                <option value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
-
-                                            @endforeach
-
-                                        @endif
-                                    </select>
-                                </div>
-
-                                 <div class="form-group">
                                     <label>{{__('admin.category')}}</label>
-                                    <select class=" @error('category_id') is-invalid @enderror select2" id='categories'  name="category_id" data-placeholder="Select a State" style="width: 100%;" required >
+                                    <select class=" @error('category_id') is-invalid @enderror select2"  id="vendor_1"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required >
 
                                         @if(isset($product))
                                             @foreach(\App\Models\Category::all() as $category)
@@ -261,13 +239,30 @@
                                         @else
                                             @foreach(\App\Models\Category::all() as $category)
 
-                                                <option></option>
+                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                             @endforeach
 
                                         @endif
 
                                     </select>
+                                </div>    
+
+                                <div class="form-group">
+                                    <label>{{__('admin.vendor')}} </label>
+                                    <select class=" @error('vendor_id') is-invalid @enderror select2"  name="vendor_id" id='categories' data-placeholder="Select a State" style="width: 100%;" required>
+                                        @if(isset($product))
+                                            @foreach(\App\Models\Vendor::all() as $vendor)
+
+                                                <option <?php if($product->vendor->id ?? "" == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
+
+                                            @endforeach
+                                        @else
+                                           
+                                        @endif
+                                    </select>
+                                </div>
+
 
 
 
@@ -716,10 +711,10 @@
                     $('#categories').html('');
                     data.forEach(function(x){
                     @if (app()->getLocale() == 'ar') 
-                    $('#categories').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('#categories').append(new Option(x.eng_name,x.id,false,false)).trigger("change");
                     
                     @else
-                     $('#categories').append(new Option(x.name_en,x.id,false,false)).trigger("change");
+                     $('#categories').append(new Option(x.eng_name,x.id,false,false)).trigger("change");
                     @endif
 
                     })

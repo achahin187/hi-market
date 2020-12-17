@@ -50,34 +50,85 @@ class CartController extends Controller
     {
         $request->validate([
             'promoCode' => 'required',
-            'supermarket_id' => 'required'
+            'supermarket_id' => 'required',
+            'total_money' => 'required',
+            'deliver_money' => 'required'
+       
         ]);
 
 
         try {
 
-            $getDisount = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->firstOrFail();
+            $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->firstOrFail();
 
         } catch (\Exception $e) {
             return $this->returnError(404, "Offer Not Found");
         }
 
-        switch ($getDisount) {
-
-            case $getDisount->value_type == 'discount by percentage':
-            case $getDisount->value_type === 'discount by value':
-                return $this->returnData(['discount', 'type'], [$getDisount->money, $getDisount->value_type]);
-                break;
-
-            case $getDisount->value_type == 'free delivery':
-                return $this->returnData(['discount', 'type'], [0, $getDisount->value_type]);
-                break;
-
-            default:
-                return response()->json(['msg' => 'this type not avilable']);
-                break;
-        }//end case
+        if ( $offer->promocode_name == $request->promoCode ) {
+            
+             if ($offer->source == 'Branch') {
+                 return $this->branchType($request->supermarket_id, $offer->branch_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+             }
+        }
 
 
     }//end function
+
+    private function branchType($branch, $offer_branch, $value, $dicount_on, $promocode_type, $total_money, $deliver_money)
+    {
+        #check branch
+        if ($branch == $offer_branch) {
+                
+            return $this->checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money);
+          
+        }
+        #promocode type value of percantage
+
+        #dicount on
+    }
+
+    private function checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money)
+    {
+
+        if ($promocode_type == 'Value') {
+
+            return $this->promocodeTypeValue($dicount_on, $total_money , $value, $deliver_money);
+
+          
+
+        }elseif($promocode_type == 'Percentage')
+        {
+            return $this->promocodeTypePercentage($dicount_on, $total_money , $value, $deliver_money);
+
+
+        }
+    }
+
+    private function promocodeTypeValue($dicount_on, $total_money, $value, $deliver_money)
+    {
+          if ($dicount_on == 'Order') {
+                
+                return $total_money - $value;
+
+            }else{
+
+                return $value - $deliver_money;
+
+            }
+    }
+
+    private function promocodeTypePercentage($dicount_on, $total_money, $value, $deliver_money)
+    {
+
+             if ($dicount_on == 'Order') {
+               
+                return $total_money - ( $total_money * $value)/100 ;
+                
+            }else{
+             
+                return $deliver_money - ( $deliver_money * $value)/100 ;
+
+            }
+    }
 }//end class
