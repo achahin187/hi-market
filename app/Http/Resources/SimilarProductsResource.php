@@ -17,9 +17,23 @@ class SimilarProductsResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "price" => $this->price,
+            "offer_price" => $this->offer_price ?? 0,
+            "description" => $this->description,
+            "favourite" => $this->favourite ?? 0,
+            "rate" => $this->rate ?? 0,
+            "ratings" => $this->ratings ?? 0,    
+            "overview" => $this->specs ?? "",
+            "points" => $this->points ?? 0,
+            "priority" => $this->priority ?? 0,
+            "category_name" => $this->category->name ?? "",
+            "category_id" => $this->category_id ?? "",
+            "flag" => $this->flag ?? 0,
+            "supermarket_id" =>  $this->branches->pluck("id"),
             "imagepaths" => $this->imagepaths ? explode(",", $this->images) : [],
             "images"=>$this->images != ""  ?$this->images:  "default.png",
-            "supermarket_id" => (int)request("supermarket_id")
+            "supermarket_id" => (int)request("supermarket_id"),
+              "percentage" => $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
 
 
         ];
