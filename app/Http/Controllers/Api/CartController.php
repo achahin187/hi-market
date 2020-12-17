@@ -49,7 +49,7 @@ class CartController extends Controller
     #return dicount value
     public function sendPromoCode(Request $request)
     {
-        
+
         $validation = \Validator::make(\request()->all(), [
             'promoCode' => 'required',
             'supermarket_id' => 'required',
@@ -62,7 +62,12 @@ class CartController extends Controller
 
         try {
 
-            $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->firstOrFail();
+            if ($offer->source == 'Branch') {
+                $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)
+            }else{
+                
+             $offer = Offer::CheckPromoCode($request->promoCode)->firstOrFail();
+            }
 
         } catch (\Exception $e) {
             return $this->returnError(404, "Offer Not Found");
