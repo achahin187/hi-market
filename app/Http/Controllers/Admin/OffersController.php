@@ -105,7 +105,7 @@ class OffersController extends Controller
     private function createPromocode($request)
     {  
         $request_data = collect($request)->except('branch_id');
-
+        dd($request_data);
         $create_promocode =   $this->model::create($request_data->toArray());
 
         if ($request['source'] == 'Branch') {
