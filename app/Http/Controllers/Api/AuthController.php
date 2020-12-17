@@ -233,19 +233,22 @@ class AuthController extends Controller
         }
 
         try {
-            $client = Client::create([
-                'name'  => $request->name,
-                'email' => $request->email,
-                'type'  => $request->type,
-                "unique_id" => Udid::where("body", $udid)->firstOrCreate([
-                    "body"=>request()->header("udid")
-                ])->body
-            ]);
+            $client = Client::Where('email', $request->email)->first();
+            if (!$client) {
+                $client = Client::create([
+                    'name'  => $request->name,
+                    'email' => $request->email,
+                    'type'  => $request->type,
+                    "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                        "body"=>request()->header("udid")
+                    ])->body
+                ]);
+            }
         } catch (\Exception $exception) {
 
             return response()->json([
                 "success" => false,
-                "status" => "Client Not Exists With this Udid"
+                "msg" => "Client Not Exists With this Udid"
             ]);
         }
         
