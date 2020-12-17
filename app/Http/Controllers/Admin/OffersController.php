@@ -68,7 +68,7 @@ class OffersController extends Controller
         ]);
 
         $request_data = $request->all();
-
+dd($request->all());
         switch ($request->type) {
             case 'promocode':
                $this->createPromocode($request_data);
