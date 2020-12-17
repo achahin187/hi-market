@@ -8,6 +8,7 @@ use App\Http\Resources\CartResource;
 use App\Http\Resources\PromocodeResource;
 use Illuminate\Http\Request;
 use App\Models\Offer;
+use App\Models\Point;
 use App\Http\Traits\GeneralTrait;
 
 class CartController extends Controller
@@ -194,5 +195,26 @@ class CartController extends Controller
                     ],
                 ];
             }
+    }
+
+    public function cartpoint()
+    {
+        $client = Auth('client-api')->user();
+
+        $points = Point::orderBy('points', 'desc')->Where('points',$client->total_points)->orWhere('points','<=',$client->total_points)->first();
+
+        return [
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'clinetPoints'=>$client->total_points,
+                        'points' => $points->points ??0,
+                        'Value'=>$points->value??0, 
+                        'type'=>$points->type??0, 
+                        
+                    ],
+                ];
+=
+
     }
 }//end class
