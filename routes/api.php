@@ -88,7 +88,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('cancelOrder','OrderController@CancelOrder');
 
      //cart point  
-    Route::get('cartPoint','cartController@cartpoint');
+    Route::get('cartPoint','CartController@cartpoint');
 
 });
 
