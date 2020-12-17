@@ -299,7 +299,7 @@ class OrderController extends Controller
       
         if ($getOrder) {
 
-            $getOrder->update(['status'=>5, 'resone_id'=>$reqeust->reason_id]);
+            $getOrder->update(['status'=>5, 'resone_id'=>$request->reason_id]);
 
             return $this->returnSuccessMessage('order Canceled successfully', 200);
 
