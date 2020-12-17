@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('changepassword', 'ClientController@changepassword')->name('change_password');
     Route::get('products/search/{name}', 'ProductController@getproductsearch')->name('search');
     Route::post("products/filter", "ProductController@filter");
+    Route::post('social/login', 'AuthController@social');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
@@ -36,7 +37,6 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post("product/count", "ProductController@productCount");
     Route::get('categories', 'CategoriesController@index');
     Route::get('user', 'AuthController@getAuthUser')->name('client.auth');
-    Route::get('social/{flag}', 'AuthController@social')->name('social.auth');
 
     Route::post('profile', 'ClientController@client_profile')->name('client_profile');
     Route::post('profile/update', 'ClientController@updateprofile')->name('profile_update');

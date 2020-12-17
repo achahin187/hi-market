@@ -18,13 +18,14 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->unsignedInteger('total_points')->nullable();
             $table->string('address')->nullable();
             $table->string('mobile_number')->nullable();
             $table->string('unique_id')->nullable();
             $table->string('activation_code')->nullable();
             $table->string('image')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('verify')->default(1);
             $table->rememberToken();
             $table->timestamps();

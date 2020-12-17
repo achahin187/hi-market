@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\SocialLoginResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Client_Devices;
-use App\Models\Clientdevice;
 use App\Models\Udid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -116,6 +116,8 @@ class AuthController extends Controller
             return $this->returnValidationError(422, $validator);
         }
 
+        
+
         try {
             $client = Client::create([
                 'name' => $request->name,
@@ -216,13 +218,10 @@ class AuthController extends Controller
     }
 
 
-    public function social(Request $request, $flag)
+    public function social(Request $request)
     {
 
-
         $udid = $request->header('udid');
-
-    
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
@@ -235,8 +234,9 @@ class AuthController extends Controller
 
         try {
             $client = Client::create([
-                'name' => $request->name,
+                'name'  => $request->name,
                 'email' => $request->email,
+                'type'  => $request->type,
                 "unique_id" => Udid::where("body", $udid)->firstOrCreate([
                     "body"=>request()->header("udid")
                 ])->body
@@ -248,6 +248,11 @@ class AuthController extends Controller
                 "status" => "Client Not Exists With this Udid"
             ]);
         }
+        
+      
+       $msg = 'login Successfully';
+
+        return $this->returnData(['client',"token"], [new SocialLoginResource($client),$client->createToken("hi-market")->accessToken], $msg);
     }
 
 

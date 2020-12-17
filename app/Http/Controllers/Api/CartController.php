@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
+use App\Http\Resources\PromocodeResource;
 use Illuminate\Http\Request;
 use App\Models\Offer;
 use App\Http\Traits\GeneralTrait;
@@ -68,26 +69,34 @@ class CartController extends Controller
         if ( $offer->promocode_name == $request->promoCode ) {
             
              if ($offer->source == 'Branch') {
-                 return $this->branchType($request->supermarket_id, $offer->branch_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+
+                 $promo_result =  $this->branchType($request->supermarket_id, $offer->branch_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+
+
+             }else{
+
+                 $promo_result =  $this->checkType($offer->promocode_type, $offer->discount_on, $offer->value,  $request->total_money, $request->deliver_money);
              }
+            
+            return $promo_result;
         }
 
 
     }//end function
 
+    #check branch
     private function branchType($branch, $offer_branch, $value, $dicount_on, $promocode_type, $total_money, $deliver_money)
     {
-        #check branch
         if ($branch == $offer_branch) {
                 
             return $this->checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money);
           
         }
-        #promocode type value of percantage
 
-        #dicount on
+        
     }
 
+    #promocode type value of percantage
     private function checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money)
     {
 
@@ -104,7 +113,8 @@ class CartController extends Controller
 
         }
     }
-
+    
+    #dicount on
     private function promocodeTypeValue($dicount_on, $total_money, $value, $deliver_money)
     {
           if ($dicount_on == 'Order') {
@@ -113,11 +123,11 @@ class CartController extends Controller
 
             }else{
 
-                return $value - $deliver_money;
+                return   $deliver_money - $value;
 
             }
     }
-
+    #dicount on
     private function promocodeTypePercentage($dicount_on, $total_money, $value, $deliver_money)
     {
 
