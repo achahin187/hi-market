@@ -71,7 +71,7 @@ class CartController extends Controller
              if ($offer->source == 'Branch') {
 
                  $promo_result =  $this->branchType($request->supermarket_id, $offer->branch_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
-                 dd($promo_result);
+                
 
              }else{
 

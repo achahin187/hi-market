@@ -64,7 +64,7 @@
                                         <th>{{ __('admin.total_order_money') }}</th>
                                         <th>{{ __('admin.product') }}</th>
                                         <th>{{ __('admin.supermarket') }}</th>
-                                        <th>{{ __('admin.branches') }}</th>
+                                     
                                         <th>{{ __('admin.status') }}</th>
 
 
@@ -87,7 +87,7 @@
                                         <td>{{$offer->total_order_money}}</td>
                                         <td>{{$offer->product->name ?? ''  }}</td>
                                         <td>{{$offer->supermarket->name ?? ''  }} </td>
-                                        <td>{{$offer->branches->pluck('name') ?? ''  }}</td>
+                                       
                                         <td> 
                                             <a href="{{ route('offer.status', ['status'=>$offer->status,'id'=>$offer->id]) }}" class="btn btn-block btn-outline-{{ $offer->status ==1 ? 'success': 'danger'}}">{{__($offer->status ==1 ? 'active': 'inactive')}}</a>
                                         </td>
