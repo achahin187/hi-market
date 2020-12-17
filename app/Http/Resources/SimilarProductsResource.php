@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\Branch;
 class SimilarProductsResource extends JsonResource
 {
     /**
@@ -32,10 +32,15 @@ class SimilarProductsResource extends JsonResource
             "supermarket_id" =>  $this->branches->pluck("id"),
             "imagepaths" => $this->imagepaths ? explode(",", $this->images) : [],
             "images"=>$this->images != ""  ?$this->images:  "default.png",
-            "supermarket_id" => (int)request("supermarket_id"),
-              "percentage" => $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
+            "supermarket_id" => getBranch()->name,
+            "percentage" => $this->offer_price ? (int)(100-(($this->offer_price/$this->price)*100)) : 0,
 
 
         ];
+    }
+
+    private function getBranch()
+    {
+        return Branch::Where('id', request("supermarket_id"))->first();
     }
 }

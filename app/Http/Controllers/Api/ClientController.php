@@ -74,7 +74,7 @@ class ClientController extends Controller
     }
 
     public function clientpoints(Request $request)
-    {
+    { 
 
         $client = getUser();
 
@@ -83,7 +83,7 @@ class ClientController extends Controller
                 return [
                     "id"=>$point->id,
                     "point"=>(int) $point->points,
-                    "purchase" => $point->value . " EGP" ,
+                    "purchase" => $point->value ,
                     "is_percentage"=>$point->type == 0 ? false : true,
                     "checked"=> $point->point < $client->total_points
                 ];
