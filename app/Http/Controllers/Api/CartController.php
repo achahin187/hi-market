@@ -214,7 +214,7 @@ class CartController extends Controller
                         
                     ],
                 ];
-=
+
 
     }
 }//end class
