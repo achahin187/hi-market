@@ -118,11 +118,12 @@ class FavouritesController extends Controller
             return $this->returnError(422, "Client Not Found");
         }
         
-        $favproducts = $client->products()->where(function ($query) {
-            if ($udid = \request()->header("udid")) {
-                $query->where("udid", $udid);
-            };
-        })->first();
+        // $favproducts = $client->products()->where(function ($query) {
+        //     if ($udid = \request()->header("udid")) {
+        //         $query->where("udid", $udid);
+        //     };
+        // })->first();
+        $favproducts = $client->products;
         #get -> first() ->id
         //dd($favproducts->branches);
         return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproducts)]);
