@@ -88,7 +88,7 @@ class ClientController extends Controller
             'password' => $password,
             'address' => $address,
             'mobile_number' => $mobile_number,
-            'area' => $request->area_id,
+            //'area' => $request->area_id,
             'status' => $request->status,
             'created_by' => $user->id
         ]);
