@@ -45,7 +45,7 @@ class AllFavoriteResource extends JsonResource
 
     private function getBranch()
     {
-        $this->branches
+        $this->branches;
     }
 
     
