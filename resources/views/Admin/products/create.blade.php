@@ -164,7 +164,7 @@
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         
-                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" data-placeholder="Select a State" style="width: 100%;" required>
+                                        <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" id="supermarket_1" data-placeholder="Select a State" style="width: 100%;" required>
                                           
                                             @foreach($superMarkets  as $supermarket)
                                                 <option <?php if($product->supermarket_id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>
@@ -380,7 +380,7 @@
                                 
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="number" value="@if(isset($product)){{$product->rate }} @endif" name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
+                                    <input type="number" @if(isset($product))value="{{$product->rate }} "@endif name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
                                     @error('rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
