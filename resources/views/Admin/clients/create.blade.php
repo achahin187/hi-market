@@ -115,8 +115,8 @@
                                             <select class="@error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
 
 
-                                                <option value="active">{{ __('admin.active') }}</option>
-                                                <option value="inactive">{{ __('admin.inactive') }}</option>
+                                                <option value="1">{{ __('admin.active') }}</option>
+                                                <option value="0">{{ __('admin.inactive') }}</option>
 
                                             </select>
 

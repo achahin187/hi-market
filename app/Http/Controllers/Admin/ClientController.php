@@ -66,7 +66,7 @@ class ClientController extends Controller
             'address' => ['required'],
             'mobile_number' => 'required|unique:clients|numeric|digits:11|regex:/(01)[0-9]{9}/',
             //'area_id' => ['required'],
-            'status' => ['required','string'],
+            'status' => ['required','boolean'],
         ];
 
         $this->validate($request,$rules);
