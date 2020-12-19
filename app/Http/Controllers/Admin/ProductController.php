@@ -97,7 +97,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
             'branch_id'     => 'required|array',
-            'rate'     => 'required|numeric',
+            'rate'     => 'required|numeric|max:5|min:1',
            // 'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|required|after:today|date',
             'end_date' => 'sometimes|required|after:start_date|date',
