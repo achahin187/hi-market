@@ -123,7 +123,8 @@ class FavouritesController extends Controller
         //         $query->where("udid", $udid);
         //     };
         // })->first();
-        $favproducts = $client->products;
+        $favproducts = $client->products; 
+        return $favproducts;
         #get -> first() ->id
         //dd($favproducts->branches);
         return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproducts)]);
