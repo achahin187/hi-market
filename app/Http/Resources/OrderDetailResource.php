@@ -19,6 +19,13 @@ class OrderDetailResource extends JsonResource
             'id' => $this->id,
             'status' => $this->getStatus(),
             'date' => Carbon::parse($this->delvery_date)->format('M d Y'),
+            'address'=>$this->client->map(function($client){
+                return[
+                'name' => $client->name,
+                'desc' => $client->addresses->first()->name,
+                'phone' => $client->addresses->first()->phone,
+                ];
+            }),
             'products'=>$this->products->map(function($product){
                 return[
                 'id' => $product->id,
