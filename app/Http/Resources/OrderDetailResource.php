@@ -19,7 +19,7 @@ class OrderDetailResource extends JsonResource
             'id' => $this->id,
             'status' => $this->getStatus(),
             'date' => Carbon::parse($this->delvery_date)->format('M d Y'),
-            
+
             'address'=>[
                 'name' => $this->client->name,
                 'desc' => $this->client->addresses->first()->description,
@@ -33,8 +33,13 @@ class OrderDetailResource extends JsonResource
                 return[
                 'id' => $product->id,
                 'name' => $product->name,
-                'image' => asset('images/'.$product->image),
+                'productImage' => asset('images/'.$product->image),
                 'supermaketId' => $product->branches->first()->id,
+                'categoryName' => $product->category->name,
+                'productDesc' => $product->description,
+                'price' => $product->price,
+                'quantity' => $product->quantity,
+                'branchName' => $product->branches,
                 ];
             }),
 
