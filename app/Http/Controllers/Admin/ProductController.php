@@ -449,7 +449,7 @@ class ProductController extends Controller
             'images' => 'nullable',
             'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
         ];
-        dd($request->all(););
+        
         $this->validate($request, $rules);
 
         if($product) {
