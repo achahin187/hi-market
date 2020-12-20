@@ -38,7 +38,10 @@ class ClientController extends Controller
 
 
         $client = getUser();
-
+        
+        $date = new DateTime();
+        $date->modify('+1 day');
+        return  $date->format('Y-m-d');
 
         return $this->returnData(['client'], [new ClientResource($client)]);
     }
