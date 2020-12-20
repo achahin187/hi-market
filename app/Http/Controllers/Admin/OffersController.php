@@ -67,7 +67,6 @@ class OffersController extends Controller
             'banner' =>'required',
         ]);
 
-        
         $request_data = $request->all();
         
           if ($request->banner) {
@@ -77,11 +76,11 @@ class OffersController extends Controller
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
                 $request->banner->move('offer_images', $file_to_store);
-                $request['banner'] = $file_to_store;
+
+                $request_data['banner'] = $file_to_store;
           }
 
            
-    
 
         switch ($request->type) {
             case 'promocode':
