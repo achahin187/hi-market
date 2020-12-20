@@ -310,7 +310,7 @@ class BranchController extends Controller
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->image != null) {
-                        unlink('images/' . $branch->image);
+                        unlink('branche_image/' . $branch->image);
                     }
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id, 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,'image' => null]);
