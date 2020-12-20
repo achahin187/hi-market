@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             "id"=>$this->id,
             "name"=>$this->name,
             "image"=>$this->image,
-            "imagepath"=>$this->imagepath,
+            "imagepath"=>asset('category_images/'.$this->image),
 
         ];
     }
