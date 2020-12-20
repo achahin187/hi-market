@@ -75,7 +75,7 @@ class CategoryController extends Controller
                 $fileextension = $image->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                $image->move('categories_image', $file_to_store);
+                $image->move('categories_images', $file_to_store);
 
             Category::create([
 
@@ -175,10 +175,10 @@ class CategoryController extends Controller
                 $fileextension = $file->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                if ($file->move('categories_image', $file_to_store)) {
+                if ($file->move('categories_images', $file_to_store)) {
                     if ($category->image != null) {
 
-                        unlink('categories_image/' . $category->image);
+                        unlink('categories_images/' . $category->image);
                     }
                 }
                 $category->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en, 'image' => $file_to_store , 'updated_by' => $user->id]);
@@ -188,7 +188,7 @@ class CategoryController extends Controller
                 } else {
 
                     if($category->image) {
-                        unlink('categories_image/' . $category->image);
+                        unlink('categories_images/' . $category->image);
                     }
                     $category->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en, 'image' => null , 'updated_by' => $user->id]);
                 }
@@ -215,7 +215,7 @@ class CategoryController extends Controller
         if($category)
         {
             if($category->image != null) {
-                unlink('categories_image/' . $category->image);
+                unlink('categories_images/' . $category->image);
             }
             $category->delete();
             return redirect('/admin/categories')->withStatus(__('category successfully deleted.'));
