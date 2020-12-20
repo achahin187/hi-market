@@ -102,6 +102,10 @@ class ClientController extends Controller
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
+        
+        $setting = Setting::first();
+
+
 
         $client = Auth('client-api')->user();
 
@@ -119,7 +123,7 @@ class ClientController extends Controller
             $total = $request->total_order_money - $points->value ;
         }
 
-        if ($total <  (( $request->total_order_money * 70)/100)) {
+        if ($total <  (( $request->total_order_money * $setting->reedem_point)/100)) {
             $total = (( $request->total_order_money * 30)/100)  ;
         }
           return [

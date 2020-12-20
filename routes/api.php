@@ -94,6 +94,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
      //help  
     Route::get('getHelp','AuthController@getHelp');
 
+    //place order
+    Route::post('placeOrder','OrderController@sendOrder');
+
 
 });
 

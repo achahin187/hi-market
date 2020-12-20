@@ -76,7 +76,7 @@ class OrderController extends Controller
     {
 
 
-//        $device = Client_Device::where('udid', $udid)->first();
+        // $device = Client_Device::where('udid', $udid)->first();
 
 
         $order_details = $request->all();
