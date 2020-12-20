@@ -309,8 +309,6 @@ class ClientController extends Controller
              
               $address->update(['default'=>0]);
 
-           
-
             }else{
 
               $default = 1;
