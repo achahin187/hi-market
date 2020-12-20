@@ -343,15 +343,10 @@ class OrderController extends Controller
         $order = Order::Where('id',$request->order_id)->Where('client_id',$client->id)->get();
         if($order){
 
-                return response()->json([
-                    "status" => true,
-                    "msg" => "",
-                    "data" => [
-                        OrderDetailResource::collection($order),
-                    ];
-                ]);
+        return OrderDetailResource::collection($order);
+                
 
-            }
+        
         }else{
              return $this->returnError(404, "This Order ID Not Found");
         }
