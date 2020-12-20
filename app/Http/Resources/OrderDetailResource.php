@@ -38,7 +38,7 @@ class OrderDetailResource extends JsonResource
                 'productDesc' => $product->description,
                 'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
                 'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
-                'branchName' => $product->branches->first()->name,
+                'branchName' => $product->branches->first()->name??"",
                 ];
             }),
 
