@@ -76,6 +76,7 @@ class OffersController extends Controller
         $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
         $request->banner->move('offer_images', $file_to_store);
+        $request['banner'] = $file_to_store;
 
            
     

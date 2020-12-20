@@ -83,6 +83,7 @@ class CategoryController extends Controller
                 'name_en' => $eng_name,
                 'image' => $file_to_store,
                 'created_by' => $user->id
+                
             ]);
         }
         else
