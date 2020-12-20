@@ -291,7 +291,7 @@ class BranchController extends Controller
                 'image' => $file_to_store,
                 'priority' => $request->priority,
                 'status' => $request->status,
-                'commission' => $commission,
+                'commission' => $request->commission,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'area_id' => $request->area_id,
