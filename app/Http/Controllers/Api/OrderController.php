@@ -132,6 +132,7 @@ class OrderController extends Controller
                     "price"      => Product::Where('id', explode(":", $product)[0])->first()->price,
                 ]);
 
+             }   
             $comapany->orders()->attach([
                 'order_id' => $order->id,
                 'company_id' => $comapany->id,
