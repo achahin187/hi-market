@@ -334,7 +334,7 @@ class OrderController extends Controller
         }
 
         $orders = $client->order;
-
+        return $orders;
         return  OrderDetailResource::collection($orders);
 
     }
