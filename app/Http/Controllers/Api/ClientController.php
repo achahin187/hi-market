@@ -111,7 +111,7 @@ class ClientController extends Controller
         ->first();
 
         if ($points->type == 0) {
-            $total = $request->total_order_money - (( $total_order_money * $points->value)/100) ;
+            $total = $request->total_order_money - (( $request->total_order_money * $points->value)/100) ;
         }
         else{
 
