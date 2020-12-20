@@ -76,8 +76,6 @@ class BranchController extends Controller
             'country_id' => 'integer|min:0',
             'start_time' => ['required','string'],
             'end_time' => ['required','string'],        
-
-
         ]);
 
         $arab_name = $request->input('name_ar');
@@ -292,7 +290,7 @@ class BranchController extends Controller
                 'supermarket_id' => $request->supermarket_id,
                 'image' => $file_to_store,
                 'priority' => $request->priority,
-                'status' => $status,
+                'status' => $request->status,
                 'commission' => $commission,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
