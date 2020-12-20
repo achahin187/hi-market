@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use File;
-
+use Illuminate\Support\Facades\DB;
 class ClientController extends Controller
 {
     //
@@ -88,7 +88,8 @@ class ClientController extends Controller
                     "checked"=> $point->point < $client->total_points
                 ];
             });
-        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points,""]);
+        $image = DB::table('point_photos')->first();
+        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, $image->image]);
     }
 
     public function usePoints()
