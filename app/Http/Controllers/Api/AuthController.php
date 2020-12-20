@@ -129,8 +129,9 @@ class AuthController extends Controller
                     "body"=>request()->header("udid")
                 ])->body
             ]);
-        } catch (\Exception $exception) {
 
+        } catch (\Exception $exception) {
+           
             return response()->json([
                 "success" => false,
                 "status" => "Client Not Exists With this Udid"

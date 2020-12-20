@@ -127,6 +127,7 @@ class FavouritesController extends Controller
         $favproducts = $client->products; 
        
          $get_data = $favproducts->pluck('pivot')->pluck('product_id');
+         return $get_data;
          $favproductss = DB::table('client_product')->whereIn('product_id',$get_data)->get();
 
         #get -> first() ->id
