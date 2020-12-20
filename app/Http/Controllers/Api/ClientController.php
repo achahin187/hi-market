@@ -108,6 +108,7 @@ class ClientController extends Controller
         $points = Point::orderBy('points', 'desc')
         ->Where('points',$client->total_points)
         ->orWhere('points','<=',$client->total_points)
+        ->where('status','active')
         ->first();
 
         if ($points->type == 0) {
