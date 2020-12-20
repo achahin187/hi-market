@@ -96,17 +96,38 @@ class ClientController extends Controller
     {
 
         $validation = \Validator::make(\request()->all(), [
-            "point_id" => "required|exists:points,id"
+            "total_redeem_point" => "required"
+            "total_order_money" => "required"
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
-        $point = Point::find(\request("point_id"));
-        $user = \auth()->user();
-        $user->points = $point->points - $user->points;
-        $user->save();
 
-        return $this->returnData(["user_points","point"], [$user->points,$point]);
+        $client = Auth('client-api')->user();
+
+        $points = Point::orderBy('points', 'desc')
+        ->Where('points',$client->total_points)
+        ->orWhere('points','<=',$client->total_points)
+        ->first();
+
+        if ($points->type == 0) {
+            $total = $request->total_order_money - (( $total_order_money * $points->value)/100) ;
+        }
+          return [
+                    'status' => true,
+                    'msg'=>'',
+                    'data'=>[
+                        'totalOrderMoney' => $total,                        
+                    ],
+                ];
+
+         // return $this->returnData(["user_points","point"], [$user->points,$point]);
+
+        // $point = Point::find(\request("point_id"));
+        // $user = \auth()->user();
+        // $user->points = $point->points - $user->points;
+        // $user->save();
+
     }
 
     public function clientaddresses(Request $request)
