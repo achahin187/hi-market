@@ -449,7 +449,7 @@ class ProductController extends Controller
             'images' => 'nullable',
             'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
         ];
-
+        dd($request->all(););
         $this->validate($request, $rules);
 
         if($product) {
@@ -579,7 +579,7 @@ class ProductController extends Controller
                     'category_id' => $category,
                     'vendor_id' => $vendor,
                     'supermarket_id' => $supermarket,
-                    'branch_id' => $branch,
+                    //'branch_id' => $branch,
                     //'subcategory_id' => $subcategory,
                     'images' => $images,
                     'barcode' => $barcode,
@@ -598,6 +598,7 @@ class ProductController extends Controller
                     'updated_by' => $user->id
            
                 ]);
+                 $product->branches()->sync($request->branch_id);
 
 
             } else {
