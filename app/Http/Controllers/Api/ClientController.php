@@ -301,7 +301,7 @@ class ClientController extends Controller
 
         }
 
-        if($request->default == 1){
+       
 
             $address = Auth('client-api')->user()->addresses->where('default',1)->first();
 
@@ -309,14 +309,14 @@ class ClientController extends Controller
              
               $address->update(['default'=>0]);
 
-              $default = 1;
+           
 
             }else{
 
-              $default = $request->default;
+              $default = 1;
             }
 
-        }
+       
        
         $name = $request->name;
         $phone = $request->phone;
