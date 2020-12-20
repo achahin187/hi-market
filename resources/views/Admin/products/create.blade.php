@@ -619,7 +619,7 @@
 
                                                     @foreach($productimages as $image)
 
-                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
+                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('products_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
 
                                                         <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
 

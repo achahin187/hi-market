@@ -424,7 +424,7 @@
                                             <div class="input-group">
                                                 <div class="custom-file">
 
-                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$branch->image}}" class="card-img-top" alt="Course Photo">
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('branche_image') }}/{{$branch->image}}" class="card-img-top" alt="Course Photo">
 
                                                     <input type="checkbox" checked style="margin-right:10px;" name="checkedimage" value="{{$branch->image}}">
 
@@ -476,7 +476,7 @@
                                             <div class="input-group">
                                                 <div class="custom-file">
 
-                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('images') }}/{{$branch->logo}}" class="card-img-top" alt="Course Photo">
+                                                    <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('branche_image') }}/{{$branch->logo}}" class="card-img-top" alt="Course Photo">
 
                                                     <input type="checkbox" checked style="margin-right:10px;" name="checkedlogo" value="{{$branch->logo}}">
 
