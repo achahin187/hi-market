@@ -325,17 +325,24 @@ class OrderController extends Controller
 
     }
 
-    public function orderDetails()
+    public function orderDetails(Request $request)
     {
+
+        $validation = \Validator::make($request->all(), [
+            "order_id" => "required",
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
         
         $client = getUser();
         if (!$client) {
             return $this->returnError(422, "user not exists");
         }
 
-        $orders = $client->order;
-        return $orders;
-        return  OrderDetailResource::collection($orders);
+        $order = Order::Where('id',$request->order_id)->where('client_id',$client_id)->first();
+
+        return  OrderDetailResource::collection($order);
 
     }
 }
