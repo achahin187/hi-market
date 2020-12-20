@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Carbon\Carbon;
 class OrderDetailResource extends JsonResource
 {
     /**
@@ -19,14 +19,14 @@ class OrderDetailResource extends JsonResource
             'id' => $this->id,
             'status' => $this->getStatus(),
             'date' => Carbon::parse($this->delvery_date)->format('M d Y'),
-            // 'products'=>$this->products->map(function($product){
-            //     return[
-            //     'id' => $product->id,
-            //     'name' => $product->name,
-            //     'image' => asset('images/'.$product->image),
-            //     'supermaketId' => $product->branches->first()->id,
-            //     ];
-            // }),
+            'products'=>$this->products->map(function($product){
+                return[
+                'id' => $product->id,
+                'name' => $product->name,
+                'image' => asset('images/'.$product->image),
+                'supermaketId' => $product->branches->first()->id,
+                ];
+            }),
 
         
         ];
