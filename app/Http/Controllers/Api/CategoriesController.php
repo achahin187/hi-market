@@ -53,11 +53,11 @@ class CategoriesController extends Controller
 
 
         foreach ($categories as $category) {
-            $category->imagepath = asset('images/' . $category->image);
+            $category->imagepath = asset('categories_image/' . $category->image);
         }
 
         foreach ($offers as $offer) {
-            $offer->imagepath = asset('images/' . $offer->image);
+            $offer->imagepath = asset('categories_image/' . $offer->image);
         }
 
 
@@ -127,7 +127,7 @@ class CategoriesController extends Controller
 
             $product->percentage = ($offer_price / $price) * 100;
 
-            $product->imagepath = asset('images/' . $product->images);
+            $product->imagepath = asset('categories_image/' . $product->images);
 
 
             $product->categoryname = $product->category->{"name_" . app()->getLocale()};
@@ -184,7 +184,7 @@ class CategoriesController extends Controller
                     }
 
 
-                    $product->imagepath = asset('images/' . $product->images);
+                    $product->imagepath = asset('categories_image/' . $product->images);
 
 
                 }
