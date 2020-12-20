@@ -26,8 +26,6 @@ class OrderDetailResource extends JsonResource
                 'phone' => $this->client->addresses->first()->phone,
             ],
 
-           
-            
 
             'products'=>$this->products->map(function($product){
                 return[
@@ -38,7 +36,7 @@ class OrderDetailResource extends JsonResource
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
                 'price' => $product->price,
-                'quantity' => $product->quantity,
+                'quantity' => $this->products->quantity,
                 'branchName' => $product->branches->first()->name,
                 ];
             }),
