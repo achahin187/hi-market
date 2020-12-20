@@ -106,8 +106,8 @@ class ClientController extends Controller
         $client = Auth('client-api')->user();
 
         $points = Point::orderBy('points', 'desc')
-        ->Where('points',$client->total_points)
-        ->orWhere('points','<=',$client->total_points)
+        ->Where('points',$request->total_redeem_point)
+        ->orWhere('points','<=',$request->total_redeem_point)
         ->where('status','active')
         ->first();
 
