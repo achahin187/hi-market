@@ -36,7 +36,7 @@ class OrderDetailResource extends JsonResource
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
                 'price' => $product->price,
-                'quantity' => $this->products->quantity,
+                'quantity' => $this->getQty()->quantity,
                 'branchName' => $product->branches->first()->name,
                 ];
             }),
@@ -65,4 +65,9 @@ class OrderDetailResource extends JsonResource
         } 
 
     } //end function 
+
+    private function getQty()
+    {
+       return  DB::table('order_client')->where('order',$this->id)->where('product_id', $product->id)->first();
+    }
 }
