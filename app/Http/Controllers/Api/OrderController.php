@@ -68,7 +68,7 @@ class OrderController extends Controller
         if ($order) {
             return $this->returnData(['products'], [ProductDetailesResource::collection($order->products)]);
         } else {
-            return $this->returnError('', 'there is no order found');
+            return $this->returnError(404, 'there is no order found');
         }
     }
 
