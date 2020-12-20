@@ -75,7 +75,7 @@ class ClientController extends Controller
 
     public function clientpoints(Request $request)
     { 
-
+  
         $client = getUser();
 
         $points = Point::whereDate("end_date", ">", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
@@ -89,7 +89,7 @@ class ClientController extends Controller
                 ];
             });
         $image = DB::table('point_photos')->first();
-        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, $image->image]);
+        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, asset('points/'.$image->image)]);
     }
 
     public function usePoints()
