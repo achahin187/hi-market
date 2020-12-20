@@ -33,7 +33,7 @@ class OrderDetailResource extends JsonResource
                 'id' => $product->id,
                 'name' => $product->name,
                 'productImage' => asset('images/'.$product->image),
-                'supermaketId' => $product->branches->first()->id,
+                'supermaketId' => $product->branches->first()->id??"",
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
                 'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
