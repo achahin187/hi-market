@@ -340,7 +340,7 @@ class OrderController extends Controller
             return $this->returnError(422, "user not exists");
         }
 
-        $order = Order::Where('id',$request->order_id)->where('client_id',$client->id)->first();
+        $order = Order::Where('id',$request->order_id)->Where('client_id',$client->id)->get();
         if($order){
          return  OrderDetailResource::collection($order);
         }else{
