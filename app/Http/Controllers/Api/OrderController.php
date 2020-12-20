@@ -347,8 +347,8 @@ class OrderController extends Controller
                     "status" => true,
                     "msg" => "",
                     "data" => [
-                        OrderDetailResource::collection($order)
-                    ]
+                        OrderDetailResource::collection($order),
+                    ];
                 ]);
 
             }

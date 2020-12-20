@@ -26,6 +26,7 @@ class OrderDetailResource extends JsonResource
                 'phone' => $client->addresses->first()->phone,
                 ];
             }),
+            
             'products'=>$this->products->map(function($product){
                 return[
                 'id' => $product->id,
