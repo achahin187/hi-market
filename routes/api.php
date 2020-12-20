@@ -92,7 +92,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::get('cartPoint','CartController@cartpoint');
 
      //help  
-    Route::get('getHelp','AuthController@cartpoint');
+    Route::get('getHelp','AuthController@helps');
 
 
 });

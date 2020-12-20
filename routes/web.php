@@ -269,7 +269,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('delete_orders','Admin\ClientOrdersController@changeManualOrder')->name('change.order');
 
        
-        Route::resource('helps','Admin\HelpController@getHelp');
+        Route::resource('helps','Admin\HelpController');
 
         // Route::get('rate',function(){
         //     $rate = 
