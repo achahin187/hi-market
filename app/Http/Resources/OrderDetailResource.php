@@ -39,7 +39,7 @@ class OrderDetailResource extends JsonResource
                 'productDesc' => $product->description,
                 'price' => $product->price,
                 'quantity' => $product->quantity,
-                'branchName' => $product->branches,
+                'branchName' => $product->branches->first()->name,
                 ];
             }),
 
