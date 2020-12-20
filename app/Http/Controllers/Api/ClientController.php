@@ -96,7 +96,7 @@ class ClientController extends Controller
     {
 
         $validation = \Validator::make(\request()->all(), [
-            "total_redeem_point" => "required"
+            "total_redeem_point" => "required",
             "total_order_money" => "required"
         ]);
         if ($validation->fails()) {
