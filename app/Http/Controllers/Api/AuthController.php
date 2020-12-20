@@ -7,6 +7,7 @@ use App\Http\Resources\ClientResource;
 use App\Http\Resources\SocialLoginResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
+use App\Models\Help;
 use App\Models\Client_Devices;
 use App\Models\Udid;
 use Illuminate\Http\Request;
@@ -275,6 +276,18 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
+        ]);
+    }
+
+    public function getHelp()
+    {
+        $help = Help::all();
+         return response()->json([
+            "status" => true,
+            "data" => [
+                "helps" => $help,  
+            ]
+
         ]);
     }
 }

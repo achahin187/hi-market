@@ -32,6 +32,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 
+
     Route::get('products', 'ProductController@index')->name('listproducts');
     Route::post('product', 'ProductController@productdetails')->name('productdetails');
     Route::post("product/count", "ProductController@productCount");
@@ -89,6 +90,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
      //cart point  
     Route::get('cartPoint','CartController@cartpoint');
+
+     //help  
+    Route::get('getHelp','AuthController@cartpoint');
+
 
 });
 
