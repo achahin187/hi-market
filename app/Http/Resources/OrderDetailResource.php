@@ -23,7 +23,7 @@ class OrderDetailResource extends JsonResource
 
                 return [
                     'id'=>$product->id,
-                    'supermaketId' => $product->branches->first()->id,
+                    // 'supermaketId' => $product->branches->first()->id,
                     'productImage' => asset('product_images/'.$product->image),
                     'productDesc' => $product->description,
                 ];
