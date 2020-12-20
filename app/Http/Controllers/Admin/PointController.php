@@ -288,7 +288,7 @@ class PointController extends Controller
 
             $fileNameToStore = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $image->move('images', $fileNameToStore);
+            $image->move('points', $fileNameToStore);
 
             PointPhoto::create(['image'=>$fileNameToStore]);
     }

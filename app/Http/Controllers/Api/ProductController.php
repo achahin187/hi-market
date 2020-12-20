@@ -30,7 +30,8 @@ class ProductController extends Controller
             $this->middleware("auth:client-api");
         }
     }
-
+    #vendor
+    #new arrival 
     public function productCount()
     {
         $validation = \Validator::make(request()->all(), [
