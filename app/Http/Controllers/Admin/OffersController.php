@@ -69,14 +69,16 @@ class OffersController extends Controller
 
         
         $request_data = $request->all();
-      
-        #Store Banner to DataBase...
-        $filename = $request->banner->getClientOriginalName();
-        $fileextension = $request->banner->getClientOriginalExtension();
-        $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+        
+          if ($request->banner) {
+                #Store Banner to DataBase...
+                $filename = $request->banner->getClientOriginalName();
+                $fileextension = $request->banner->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-        $request->banner->move('offer_images', $file_to_store);
-        $request['banner'] = $file_to_store;
+                $request->banner->move('offer_images', $file_to_store);
+                $request['banner'] = $file_to_store;
+          }
 
            
     

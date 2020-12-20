@@ -53,7 +53,7 @@ class ProductController extends Controller
         // Change to Branch
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
-        $offers = Offer::orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->orderBy('priority', 'asc')->get();
 
 
         foreach ($supermarkets as $supermarket) {
