@@ -113,6 +113,10 @@ class ClientController extends Controller
         if ($points->type == 0) {
             $total = $request->total_order_money - (( $total_order_money * $points->value)/100) ;
         }
+        else{
+            
+            $total = $request->total_order_money - $points->value ;
+        }
           return [
                     'status' => true,
                     'msg'=>'',
