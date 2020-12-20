@@ -92,7 +92,7 @@ class ClientController extends Controller
         return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, asset('points/'.$image->image)]);
     }
 
-    public function usePoints()
+    public function usePoints(Request $request)
     {
 
         $validation = \Validator::make(\request()->all(), [
@@ -114,7 +114,7 @@ class ClientController extends Controller
             $total = $request->total_order_money - (( $total_order_money * $points->value)/100) ;
         }
         else{
-            
+
             $total = $request->total_order_money - $points->value ;
         }
           return [
