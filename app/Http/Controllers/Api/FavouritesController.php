@@ -123,11 +123,15 @@ class FavouritesController extends Controller
         //         $query->where("udid", $udid);
         //     };
         // })->first();
-        $favproducts = $client->products()->with('branches'); 
-        return $favproducts;
+
+        $favproducts = $client->products; 
+       
+         $get_data = $favproducts->pluck('pivot')->pluck('product_id');
+         $favproductss = DB::table('client_product')->whereIn('product_id',$get_data)->get();
+
         #get -> first() ->id
         //dd($favproducts->branches);
-        return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproducts)]);
+        return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
     }
 
 }
