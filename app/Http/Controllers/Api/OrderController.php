@@ -12,6 +12,7 @@ use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Resources\GetReasonsResource;
+use App\Http\Resources\OrderDetailResource;
 use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
@@ -101,6 +102,9 @@ class OrderController extends Controller
                 $order_details["delivery_date"] = $date->addHours(\request("hours_index"))->format("Y-m-d g:i A");
             }
 
+             $cart = [];
+
+
             $order = Order::create([
 
                 'num' => "sdsadf3244",
@@ -108,7 +112,7 @@ class OrderController extends Controller
                 'address' => $order_details["address_id"],
                 // 'lat' => $order_details["lat"],
                 // 'long' => $order_details["long"],
-                'delivery_date' => $order_details["delivery_date"],
+                'delivery_date' => '08/04/2010 22:15:00',
                 'delivery_fees' => $order_details["delivery_fees"],
                 // 'coupon' => $order_details["coupon"],
                 // 'discount' => $order_details["discount"],
@@ -121,6 +125,12 @@ class OrderController extends Controller
                 'company_id' => $comapany->id
             ]);
 
+            foreach (explode(",", request("cart")) as $product) {
+                $cart[] = $order->products->attach([
+                    "product_id" => explode(":", $product)[0],
+                    "quantity"   => explode(":", $product)[1]
+                    "price"      => Product::Where('id', explode(":", $product)[0])->first()->price
+                ]);
 
             $comapany->orders()->attach([
                 'order_id' => $order->id,
@@ -311,6 +321,20 @@ class OrderController extends Controller
             return $this->returnError(404, "This order id not found");
         }
 
+
+    }
+
+    public function orderDetails()
+    {
+        
+        $client = getUser();
+        if (!$user) {
+            return $this->returnError(422, "user not exists");
+        }
+
+        $orders = $client->order;
+
+        return  OrderDetailResource::collection($orders);
 
     }
 }

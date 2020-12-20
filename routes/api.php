@@ -97,6 +97,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     //place order
     Route::post('placeOrder','OrderController@sendOrder');
 
+    //place order
+    Route::get('order/details','OrderController@orderDetails');
+
 
 });
 

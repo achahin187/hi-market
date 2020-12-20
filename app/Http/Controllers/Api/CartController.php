@@ -53,9 +53,10 @@ class CartController extends Controller
 
         $validation = \Validator::make(\request()->all(), [
             'promoCode' => 'required',
-            'supermarket_id' => 'required',
+            //'supermarket_id' => 'required',
             'total_money' => 'required',
             'deliver_money' => 'required'
+            
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
