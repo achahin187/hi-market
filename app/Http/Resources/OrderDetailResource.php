@@ -36,7 +36,7 @@ class OrderDetailResource extends JsonResource
                 'supermaketId' => $product->branches->first()->id,
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
-                'price' => $product->price,
+                'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
                 'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
                 'branchName' => $product->branches->first()->name,
                 ];
