@@ -8,6 +8,7 @@ use App\Http\Resources\ClientResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
 use App\Models\Address;
+use App\Models\Setting;
 use App\Models\Point;
 use App\Models\Udid;
 use App\Rules\CurrentPasswordCheckRule;

@@ -82,7 +82,7 @@ class OrderController extends Controller
         $order_details = $request->all();
 
         $comapany = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
-            $q->Where('branch_id', $request->branch_id);
+            $q->Where('supermarket_id', $request->branch_id);
         })->first();
 
         $client = getUser();
@@ -105,16 +105,19 @@ class OrderController extends Controller
 
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
-                'restId' => $order_details["rest_id"],
-                'address' => $order_details["address"],
-                'lat' => $order_details["lat"],
-                'long' => $order_details["long"],
+                'address' => $order_details["address_id"],
+                // 'lat' => $order_details["lat"],
+                // 'long' => $order_details["long"],
                 'delivery_date' => $order_details["delivery_date"],
                 'delivery_fees' => $order_details["delivery_fees"],
-                'coupon' => $order_details["coupon"],
-                'discount' => $order_details["discount"],
+                // 'coupon' => $order_details["coupon"],
+                // 'discount' => $order_details["discount"],
                 'status' => 0,
-                'final_total' => $order_details["final_total"],
+                'total_money' => $order_details["total_money"],
+                'promocode' => $order_details["promocode"],
+                'redeem' => $order_details["redeem"],
+                'total_before' => $order_details["total_before"],
+                'shipping_before' => $order_details["shipping_before"],
                 'company_id' => $comapany->id
             ]);
 
