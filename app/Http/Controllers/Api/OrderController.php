@@ -345,9 +345,8 @@ class OrderController extends Controller
 
         return response()->json([
             "status" => true,
-            "data" => [
-                 OrderDetailResource::collection($order),
-            ]
+            OrderDetailResource::collection($order),
+            
 
         ]);
 
