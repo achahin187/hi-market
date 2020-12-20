@@ -187,7 +187,7 @@ class ProductController extends Controller
                 $fileextension = $image->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                $image->move('product_images', $file_to_store);
+                $image->move('products_images', $file_to_store);
 
                 $image_names[] = $file_to_store;
             }
@@ -538,7 +538,7 @@ class ProductController extends Controller
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                    $image->move('product_images', $file_to_store);
+                    $image->move('products_images', $file_to_store);
 
                     $file_names[] = $file_to_store;
                 }
@@ -556,7 +556,7 @@ class ProductController extends Controller
                         foreach ($deletedimages as $deletedimage) {
                             if (($key = array_search($deletedimage, $productimages)) !== false) {
                                 unset($productimages[$key]);
-                                unlink('product_images/' . $deletedimage);
+                                unlink('products_images/' . $deletedimage);
                             }
                         }
                     }
@@ -615,7 +615,7 @@ class ProductController extends Controller
                         foreach ($deletedimages as $deletedimage) {
                             if (($key = array_search($deletedimage, $productimages)) !== false) {
                                 unset($productimages[$key]);
-                                unlink('product_images/' . $deletedimage);
+                                unlink('products_images/' . $deletedimage);
                             }
                         }
                     }
@@ -752,7 +752,7 @@ class ProductController extends Controller
                 $productimages = explode(',', $images);
 
                 foreach ($productimages as $image) {
-                    unlink('product_images/' . $image);
+                    unlink('products_images/' . $image);
                 }
             }
 
