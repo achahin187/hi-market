@@ -60,7 +60,6 @@ class BranchController extends Controller
     public function store(Request $request,$supermarket_id = null)
     {   
      
-      
 
         $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -94,13 +93,15 @@ class BranchController extends Controller
 
         $priority = $request->input('priority');
 
+
         if($image = $request->file('image'))
         {
             $filename = $image->getClientOriginalName();
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-            $image->move('images', $file_to_store);
+        //dd($file_to_store);
+            $image->move('branche_image', $file_to_store);
 
             $branch = Branch::create([
 
@@ -130,7 +131,7 @@ class BranchController extends Controller
                 $fileextension = $logoimage->getClientOriginalExtension();
                 $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                $logoimage->move('images', $logo);
+                $logoimage->move('branche_image', $logo);
 
             }
             else
@@ -144,8 +145,8 @@ class BranchController extends Controller
                 'status' => $status,
                 'supermarket_id' => $supermarket,
                 'logo' => $logo,
-                 'priority' => $priority,
-                 'commission' => $commission,
+                'priority' => $priority,
+                'commission' => $commission,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
                 'area_id' => $request->area_id,
@@ -279,10 +280,10 @@ class BranchController extends Controller
                 $fileextension = $file->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                if ($file->move('images', $file_to_store)) {
+                if ($file->move('branche_image', $file_to_store)) {
                     if ($branch->image != null) {
 
-                        unlink('images/' . $branch->image);
+                        unlink('branche_image/' . $branch->image);
                     }
                 }
                 $branch->update([
@@ -326,10 +327,10 @@ class BranchController extends Controller
                 $fileextension = $logoimage->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-             if ($logoimage->move('images', $file_to_store)) {
+             if ($logoimage->move('branche_image', $file_to_store)) {
                     if ($branch->logo != null) {
 
-                        unlink('images/' . $branch->logo);
+                        unlink('branche_image/' . $branch->logo);
                     }
                 }
 
@@ -347,7 +348,7 @@ class BranchController extends Controller
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->logo != null) {
-                        unlink('images/' . $branch->logo);
+                        unlink('branche_image/' . $branch->logo);
                     }
                     $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
                      'start_time' => $request->start_time,
@@ -393,7 +394,7 @@ class BranchController extends Controller
         {
 
             if($branch->image != null) {
-                unlink('images/' . $branch->image);
+                unlink('branche_image/' . $branch->image);
             }
 
             $branch->delete();

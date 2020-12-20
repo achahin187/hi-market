@@ -201,7 +201,10 @@ class CartController extends Controller
     {
         $client = Auth('client-api')->user();
 
-        $points = Point::orderBy('points', 'desc')->Where('points',$client->total_points)->orWhere('points','<=',$client->total_points)->first();
+        $points = Point::orderBy('points', 'desc')
+        ->Where('points',$client->total_points)
+        ->orWhere('points','<=',$client->total_points)
+        ->first();
 
         return [
                     'status' => true,
