@@ -128,8 +128,8 @@ class OrderController extends Controller
             foreach (explode(",", request("cart")) as $product) {
                 $cart[] = $order->products->attach([
                     "product_id" => explode(":", $product)[0],
-                    "quantity"   => explode(":", $product)[1]
-                    "price"      => Product::Where('id', explode(":", $product)[0])->first()->price
+                    "quantity"   => explode(":", $product)[1],
+                    "price"      => Product::Where('id', explode(":", $product)[0])->first()->price,
                 ]);
 
             $comapany->orders()->attach([
