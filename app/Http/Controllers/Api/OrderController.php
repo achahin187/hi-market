@@ -329,7 +329,7 @@ class OrderController extends Controller
     {
         
         $client = getUser();
-        if (!$user) {
+        if (!$client) {
             return $this->returnError(422, "user not exists");
         }
 
