@@ -119,8 +119,8 @@ class ClientController extends Controller
             $total = $request->total_order_money - $points->value ;
         }
 
-        if ($total <  (( $request->total_order_money * 70)/100) ) {
-            $total = (( $request->total_order_money * 30)/100) ) ;
+        if ($total <  (( $request->total_order_money * 70)/100)) {
+            $total = (( $request->total_order_money * 30)/100)  ;
         }
           return [
                     'status' => true,
