@@ -390,7 +390,9 @@ class OrderController extends Controller
                 'to' => 'c4wEkQfiRw6xpqzeqjSb72:APA91bGn3LQaR8IhIGuGMekyUQjhrMbvC8KX_DLzQljljnvVJZ7r02oolp59-MkE8yLaTRxhSz8QJwxlVL7m0WXIF2wQBcctsZskrzcdz9nsvpkLZhsuJU7LdXxs-KcpdxCuIt2NZqaD',
                 'data' => 'test data',
                 'notification' => array(
-                    'test' => 'test data',
+                    'title' => 'test data',
+                    'text' => 'test data',
+                    'click_action' => 'HomeActivity',
                 ),
                 'android' => array(
                     "priority" => "high"
@@ -417,4 +419,5 @@ class OrderController extends Controller
             curl_close($ch);
             $result = json_decode($result);
         }
+
 }
