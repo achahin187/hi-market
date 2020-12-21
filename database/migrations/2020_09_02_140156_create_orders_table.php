@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->dateTime('delivery_date');
             $table->unsignedFloat('delivery_rate')->nullable();
             $table->text('client_review')->nullable();
+            $table->string('promocode')->nullable();
             $table->string('review_status')->nullable();
             $table->unsignedFloat('order_price')->nullable();
             $table->unsignedInteger('status');

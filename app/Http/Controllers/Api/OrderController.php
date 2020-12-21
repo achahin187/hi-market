@@ -99,7 +99,7 @@ class OrderController extends Controller
                 $order_details["delivery_date"] = $date->format("Y-m-d g:i A");
             } else {
 
-                $order_details["delivery_date"] = $date->addHours(\request("hours_index"))->format("Y-m-d g:i A");
+                $order_details["delivery_date"] = str_replace("/","-",date('Y/m/d', strtotime($request->day)) ).' ' .date('H:i', strtotime($request->time));
             }
 
              $cart = [];
@@ -110,26 +110,23 @@ class OrderController extends Controller
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
                 'address' => $order_details["address_id"],
-                // 'lat' => $order_details["lat"],
-                // 'long' => $order_details["long"],
-                // 'coupon' => $order_details["coupon"],
-                // 'discount' => $order_details["discount"],
-                'delivery_date' => '08/04/2010 22:15:00',
+                'delivery_date' =>  $order_details["delivery_date"] ,
                 'delivery_fees' => $order_details["delivery_fees"],
                 'status' => 0,
                 'total_money' => $order_details["total_money"],
                 'promocode' => $order_details["promocode"],
                 'redeem' => $order_details["redeem"],
                 'total_before' => $order_details["total_before"],
+                'total_after' => $order_details["total_after"],
                 'shipping_before' => $order_details["shipping_before"],
                 'company_id' => $comapany->id
             ]);
 
             foreach (explode(",", request("cart")) as $product) {
-                $cart[] = $order->products->attach([
+                     $order->products->attach([
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
-                    "price"      => Product::Where('id', explode(":", $product)[0])->first()->price,
+                    "price"      => Product::Where('id', explode(":", $product)[0] )->first()->price,
                 ]);
 
              }   
@@ -143,7 +140,7 @@ class OrderController extends Controller
 
         } else {
 
-            return $this->returnError(404, 'something wrong happened');
+            return $this->returnError(404, 'client donst exist');
 
         }
     }

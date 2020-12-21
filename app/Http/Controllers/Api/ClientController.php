@@ -190,11 +190,11 @@ class ClientController extends Controller
              'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
         ]);
          if ($validator->fails()) {
-
-
             return $this->returnValidationError(422, $validator);
         }
+
         $userImage = Auth('client-api')->user()->image;
+        
         if ($request->image) {
 
             if ($userImage != $request->image) {
@@ -244,7 +244,7 @@ class ClientController extends Controller
         if ($validator->fails()) {
 
 
-            return $this->returnError(300, 'These data is not valid');
+              return $this->returnValidationError(422, $validator);
         }
 
 
@@ -309,6 +309,7 @@ class ClientController extends Controller
         {
 
             $address = Auth('client-api')->user()->addresses->where('default',1)->first();
+
             if ($address) {
              
                 $address->update([ 'default' => 0 ]);
