@@ -47,6 +47,7 @@ trait GeneralTrait
             curl_close($ch);
             $result = json_decode($result);
         }
+        
         public function returnError($errNum, $msg)
         {
            /*  return response()->json([
