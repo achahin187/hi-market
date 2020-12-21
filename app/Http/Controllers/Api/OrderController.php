@@ -139,7 +139,7 @@ class OrderController extends Controller
 
              }   
            
-             $this->sendNotification(1,1,1);
+             return $this->sendNotification(1,1,1);
             return $this->returnSuccessMessage('The order has been completed successfully', 200);
 
         } else {
