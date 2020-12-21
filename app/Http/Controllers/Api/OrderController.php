@@ -104,9 +104,9 @@ class OrderController extends Controller
 
              $cart = [];
 
+        //str_replace("/","-",date('Y/m/d', strtotime('Tomorrow')) ).' ' .date('H:i', strtotime('5 PM'))
 
             $order = Order::create([
-
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
                 'address' => $order_details["address_id"],
