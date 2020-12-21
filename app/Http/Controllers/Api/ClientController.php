@@ -420,7 +420,7 @@ class ClientController extends Controller
 
         }
 
-         
+         dd($request->all());
 
         if (count($client->addresses) >= 1) {
 
