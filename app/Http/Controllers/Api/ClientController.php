@@ -325,13 +325,10 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-
-       
-       
-        $name = $request->name;
-        $phone = $request->phone;
-        $address = $request->address;
-        $label = $request->label;
+        $name   =   $request->name;
+        $phone  =  $request->phone;
+        $address= $request->address;
+        $label  =   $request->label;
         $client_id = $client->id;
        // $default = Auth('client-api')->user()->addresses->count() == 0 ? 1 : 0;
         $lat = $request->lat;
@@ -340,16 +337,16 @@ class ClientController extends Controller
         $govern = $request->govern;
         $rand = "12345";
         Address::create([
-            'name' => $name,
-            'phone' => $phone,
-            'description' => $address,
-            'address_lable' => $label,
-            'client_id' => $client_id,
-            'default' => $default,
-            'lat' => $lat,
-            'lon' => $lon,
-            'additional' => $notes,
-            'govern' => $govern,
+            'name' =>  $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'address_lable' => $request->label,
+            'client_id' => $request->client_id,
+            'default' => $request->default,
+            'lat' => $request->lat,
+            'lon' => $request->lon,
+            'additional' => $request->notes,
+            'govern' => $request->govern,
             "verified" => 0,
             "verify" => $rand
         ]);
@@ -432,10 +429,12 @@ class ClientController extends Controller
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
 
+            if ($request->default == 1 && $address->address ) {
+                # code...
+            }
+
             if ($address) {
 
-
-            
                 DB::table('addresses')->update([
 
                     "name"               => $request->name,
@@ -450,10 +449,6 @@ class ClientController extends Controller
                     "client_id"          => $client->id,
                 
                 ]);
-
-
-        
-                 
                 //$address->update($request_data);
 
             } else {
