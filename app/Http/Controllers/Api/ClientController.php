@@ -428,7 +428,7 @@ class ClientController extends Controller
 
             if ($address) {
 
-                $request_data = $request->except('address_id', "address", "label");
+                $request_data = $request->except('address_id');
                 $request_data["address_lable"] = $request->label;
                 $request_data["name"] = $request->name;
                 $request_data["address"] = $request->description;
