@@ -346,7 +346,7 @@ class OrderController extends Controller
 
     public function rateOrder(Request $request)
     {
-        $order = Order::Where('id', $request->order_id)->get();
+        $order = Order::Where('id', $request->order_id)->first();
 
         $order->update([
 
