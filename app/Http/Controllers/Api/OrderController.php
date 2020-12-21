@@ -112,10 +112,10 @@ class OrderController extends Controller
                 'address' => $order_details["address_id"],
                 // 'lat' => $order_details["lat"],
                 // 'long' => $order_details["long"],
-                'delivery_date' => '08/04/2010 22:15:00',
-                'delivery_fees' => $order_details["delivery_fees"],
                 // 'coupon' => $order_details["coupon"],
                 // 'discount' => $order_details["discount"],
+                'delivery_date' => '08/04/2010 22:15:00',
+                'delivery_fees' => $order_details["delivery_fees"],
                 'status' => 0,
                 'total_money' => $order_details["total_money"],
                 'promocode' => $order_details["promocode"],
@@ -214,7 +214,6 @@ class OrderController extends Controller
             , $setting->delivery ?? 0
             , CartResource::collection($cart)
         ]);
-
     }
 
     public function selectDate()
@@ -227,7 +226,7 @@ class OrderController extends Controller
             ],
             [
                 "id" => 2,
-                "text" => "Tomorrow"
+                "text" => strtotime('Tomorrow'),
             ],
             [
                 "id" => 3,
