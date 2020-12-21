@@ -99,9 +99,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //orderDetails
     Route::post('orderDetails','OrderController@orderDetails');
-    
+
     //rateOrder
-    Route::post('rateOrder','OrderController@rateOrder');
+    Route::post('rate/order','OrderController@rateOrder');
 
 
 });
