@@ -117,10 +117,12 @@ class OrderController extends Controller
                 'shipping_fee' => $order_details["shipping_fee"],
                 'shipping_before' => $order_details["shipping_before"],
 
-                'redeem' => $order_details["redeem"],
+
+                'promocode' => $order_details["promocode"], 
+                'point_redeem' => $order_details["redeem"],
 
                 'mobile_delivery' => '01060487345',
-
+ 
                 'status' => 0,
                 'company_id' => 1,
 
