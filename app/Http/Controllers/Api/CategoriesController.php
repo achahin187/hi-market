@@ -49,10 +49,8 @@ class CategoriesController extends Controller
 
         $branchname = Branch::where('id', $branch_id)->first();
 
-        $offers = $branchname->WhereHas('offers', function($q) use ($branch_id){
-            $q->where('id', $branch_id);
-        })->get();
-
+        $offers = $branchname->offers;
+        dd($offers);
         
         foreach ($categories as $category) {
             $category->imagepath = asset('categories_image/' . $category->image);
