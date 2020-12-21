@@ -25,12 +25,16 @@ class NotificationController extends Controller
         if($user = auth("client-api")->user())
         {
             $orders = $user->orders;
-
+            return $orders;
              return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
 
         }else{
+
             return $this->returnError(422,"User No Exists");
+
         }
 
     }
+
+
 }

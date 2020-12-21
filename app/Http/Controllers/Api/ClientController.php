@@ -275,6 +275,7 @@ class ClientController extends Controller
            $newDefault->update(['default'=>1]);
 
             return $this->returnSuccessMessage("updated successfully");
+            
        }else{
 
             $newDefault = Address::where('id',$request->address_id)->first();
@@ -285,10 +286,7 @@ class ClientController extends Controller
 
     public function add_address(Request $request)
     {
-
-
         $client = \auth("client-api")->user();
-
 
         $validator = \Validator::make($request->all(), [
             'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
