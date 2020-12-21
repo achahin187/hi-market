@@ -10,6 +10,7 @@ use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\OrderRateResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Resources\GetReasonsResource;
 use App\Http\Resources\OrderDetailResource;
@@ -76,10 +77,6 @@ class OrderController extends Controller
     public function addorder(Request $request)
     {
 
-
-        // $device = Client_Device::where('udid', $udid)->first();
-
-
         $order_details = $request->all();
 
         $comapany = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
@@ -95,16 +92,14 @@ class OrderController extends Controller
 
         if ($client) {
 
-            if (request("asap") == 0) {
+            if (request("asap") == 1) {
                 $order_details["delivery_date"] = $date->format("Y-m-d g:i A");
             } else {
 
                 $order_details["delivery_date"] = str_replace("/","-",date('Y/m/d', strtotime($request->day)) ).' ' .date('H:i', strtotime($request->time));
             }
 
-             
 
-        //str_replace("/","-",date('Y/m/d', strtotime('Tomorrow')) ).' ' .date('H:i', strtotime('5 PM'))
             $order = Order::create([
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
@@ -116,7 +111,6 @@ class OrderController extends Controller
                 'promocode' => $order_details["promocode"],
                 'redeem' => $order_details["redeem"],
                 'total_before' => $order_details["total_before"],
-                'total_after' => $order_details["total_after"],
                 'shipping_before' => $order_details["shipping_before"],
                 'shipping_after' => $order_details["shipping_after"],
                 'mobile_delivery' => '01060487345',
@@ -349,4 +343,24 @@ class OrderController extends Controller
              return $this->returnError(404, "This Order ID Not Found");
         }
     }
+
+    public function rateOrder(Request $request)
+    {
+        $order = Order::Where('id', $request->order_id)->get();
+
+        $order->update([
+
+            'delivery_rate' => $request->delivery_rate,
+            'seller_rate'   => $request->seller_rate,
+            'pickup_rate'   => $request->pickup_rate,
+            'time_rate'     => $request->time_rate,
+            'comment'       => $request->comment,
+        ]); 
+
+        return response()->json([
+            "status" => true,
+            "msg" => 'rate send successfully',
+            'data'    => OrderRateResource::collection($order),
+        ]);
+    } 
 }
