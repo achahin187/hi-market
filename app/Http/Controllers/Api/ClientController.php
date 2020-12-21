@@ -420,23 +420,12 @@ class ClientController extends Controller
 
         }
 
-        'name' => $name,
-            'phone' => $phone,
-            'description' => $address,
-            'address_lable' => $label,
-            'client_id' => $client_id,
-            'default' => $default,
-            'lat' => $lat,
-            'lon' => $lon,
-            'additional' => $notes,
-            'govern' => $govern,
-            "verified" => 0,
-            "verify" => $rand
+         
 
         if (count($client->addresses) >= 1) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
-            
+
             if ($address) {
 
                 $request_data = $request->except('address_id', "address", "label");
