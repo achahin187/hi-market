@@ -288,7 +288,7 @@ class ClientController extends Controller
         $validator = \Validator::make($request->all(), [
             'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'label' => ['required', 'string'],
-            'default' => [ 'boolean'],
+            'default' => ['boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
             'notes' => ['nullable'],
@@ -312,6 +312,7 @@ class ClientController extends Controller
             if ($address) {
              
               $address->update(['default'=>0]);
+              $default = 0;
 
             }else{
 
