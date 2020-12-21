@@ -338,7 +338,8 @@ class ClientController extends Controller
             'notes' => $request->notes,
             'govern' => $request->govern,
             "verified" => 0,
-            "verify" => $rand
+            "verify" => $rand,
+            "client_id" => $client->id,
         ]);
 
 
