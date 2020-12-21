@@ -420,14 +420,32 @@ class ClientController extends Controller
 
         }
 
-
+        'name' => $name,
+            'phone' => $phone,
+            'description' => $address,
+            'address_lable' => $label,
+            'client_id' => $client_id,
+            'default' => $default,
+            'lat' => $lat,
+            'lon' => $lon,
+            'additional' => $notes,
+            'govern' => $govern,
+            "verified" => 0,
+            "verify" => $rand
         if (count($client->addresses) >= 1) {
             $address = $client->addresses()->where('id', $request->address_id)->first();
             if ($address) {
 
                 $request_data = $request->except('address_id', "address", "label");
                 $request_data["address_lable"] = $request->label;
-                $request_data["name"] = $request->address;
+                $request_data["name"] = $request->name;
+                $request_data["address"] = $request->description;
+                $request_data["phone"] = $request->phone;
+                $request_data["default"] = $request->default;
+                $request_data["lat"] = $request->lat;
+                $request_data["lon"] = $request->lon;
+                $request_data["additional"] = $request->additional;
+                $request_data["govern"] = $request->govern;
                 $address->update($request_data);
 
             } else {

@@ -296,7 +296,6 @@ class OrderController extends Controller
         $reasons = Reason::Where('status','active')->get();
 
         return $this->returnData(['reasons'], [GetReasonsResource::collection($reasons)]);
-        
     }
 
     public function CancelOrder(Request $request)
@@ -321,8 +320,6 @@ class OrderController extends Controller
             
             return $this->returnError(404, "This order id not found");
         }
-
-
     }
 
     public function orderDetails(Request $request)
@@ -346,16 +343,12 @@ class OrderController extends Controller
 
             return response()->json([
                 "status" => true,
-                'data' =>OrderDetailResource::collection($order),
-                
-
+                'data'    => OrderDetailResource::collection($order),
         ]);
         
         }else{
-            
+
              return $this->returnError(404, "This Order ID Not Found");
         }
-
-
     }
 }
