@@ -406,8 +406,7 @@ class ClientController extends Controller
 
 
         $client = \auth()->user();
-        ret
-
+      
         $validator = \Validator::make($request->all(), [
             'address' => ['min:2', 'not_regex:/([%\$#\*<>]+)/'],
             'label' => ['string'],
