@@ -314,7 +314,7 @@ class ClientController extends Controller
                 $address->update([ 'default' => 0 ]);
                 $default = 1;
             }else{
-                $default = 
+                $default = 1;
             }
 
           
