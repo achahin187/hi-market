@@ -346,15 +346,15 @@ class OrderController extends Controller
 
     public function rateOrder(Request $request)
     {
-        $order = Order::Where('id', $request->order_id)->get();
-
+        $order = Order::find($request->order_id);
+        
         $store_rate = $order->update([
-            'delivery_rate' => $request->delivery_rate,
-            'seller_rate'   => $request->seller_rate,
-            'pickup_rate'   => $request->pickup_rate,
-            'time_rate'     => $request->time_rate,
-            'comment'       => $request->comment,
-        ]); 
+                            'delivery_rate' => $request->delivery_rate,
+                            'seller_rate'   => $request->seller_rate,
+                            'pickup_rate'   => $request->pickup_rate,
+                            'time_rate'     => $request->time_rate,
+                            'comment'       => $request->comment,
+                        ]); 
 
         return response()->json([
             "status"  => true,
