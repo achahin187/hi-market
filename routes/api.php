@@ -106,9 +106,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //get user
     Route::get('getUser','NotificationController@getUser');
-    
+
     //category Product Offer
-    Route::get('categoryProductOffer','CategoriesController@categoryProductOffer');
+    Route::get('category/Product/Offer','CategoriesController@categoryProductOffer');
 
 
 });
