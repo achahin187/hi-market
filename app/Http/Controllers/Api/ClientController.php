@@ -406,7 +406,7 @@ class ClientController extends Controller
 
 
         $client = \auth()->user();
-
+        ret
 
         $validator = \Validator::make($request->all(), [
             'address' => ['min:2', 'not_regex:/([%\$#\*<>]+)/'],
@@ -435,7 +435,7 @@ class ClientController extends Controller
 
             if ($address) {
 
-                $request_data = $request->except('address_id', 'label');
+                $request_data = $request->except('address_id', 'label','address');
                 $request_data["address_lable"] = $request->label;
                 $request_data["name"] = $request->name;
                 $request_data["description"] = $request->address;
