@@ -124,11 +124,9 @@ class OrderController extends Controller
             ]);
 
             foreach (explode(",", request("products")) as $product) {
-            //return explode(":", $product)[1];
+          
               
-                    DB::table('order_product')->insert([
-
-                    "order_id"   => $order->id,
+                    $order->products()->attach([
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
                     "price"      => Product::Where('id', explode(":", $product)[0] )->first()->price,

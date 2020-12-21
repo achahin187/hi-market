@@ -434,18 +434,27 @@ class ClientController extends Controller
 
             if ($address) {
 
-                $request_data = $request->except('address_id', 'label','address');
-                $request_data["address_lable"] = $request->label;
-                $request_data["name"] = $request->name;
-                $request_data["description"] = $request->address;
-                $request_data["phone"] = $request->phone;
-                $request_data["default"] = $request->default;
-                $request_data["lat"] = $request->lat;
-                $request_data["lon"] = $request->lon;
-                $request_data["additional"] = $request->notes;
-                $request_data["govern"] = $request->govern;
+
+            
+                DB::table('order_product')->update([
+
+                    "name"   => $request->name,
+                    "phone"  => $request->phone,
+                    "govern"   => $request->govern,
+                    "address"      => $request->address,
+                    "default"      => $request->default,
+                    "address_lable"      => $request->address_lable,
+                    "lat"      => $request->lat,
+                    "lon"      => $request->lon,
+                    "notes"      => $request->notes,
+                    "client_id"      => $client->id,
+                
+                ]);
+
+
+        
                  
-                $address->update($request_data);
+                //$address->update($request_data);
 
             } else {
 
