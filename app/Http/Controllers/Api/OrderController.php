@@ -391,7 +391,7 @@ class OrderController extends Controller
                 'data' => 'test data',
                 'notification' => array(
                     'test' => 'test data',
-                )
+                ),
                 'android' => array(
                     "priority" => "high"
                 ),
