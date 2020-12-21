@@ -291,15 +291,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             }
 
             // Results 
-            /*
-            This will output:
-            point 1 (50 70): vertex
-            point 2 (70 40): inside
-            point 3 (-20 30): inside
-            point 4 (100 10): outside
-            point 5 (-10 -10): outside
-            point 6 (40 -20): inside
-            point 7 (110 -20): boundary
+          
+            // This will output:
+            // point 1 (50 70): vertex
+            // point 2 (70 40): inside
+            // point 3 (-20 30): inside
+            // point 4 (100 10): outside
+            // point 5 (-10 -10): outside
+            // point 6 (40 -20): inside
+            // point 7 (110 -20): boundary
 
         });
 
