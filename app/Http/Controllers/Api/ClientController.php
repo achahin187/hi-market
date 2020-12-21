@@ -325,16 +325,6 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-        $name   =   $request->name;
-        $phone  =  $request->phone;
-        $address= $request->address;
-        $label  =   $request->label;
-        $client_id = $client->id;
-       // $default = Auth('client-api')->user()->addresses->count() == 0 ? 1 : 0;
-        $lat = $request->lat;
-        $lon = $request->lon;
-        $notes = $request->notes;
-        $govern = $request->govern;
         $rand = "12345";
         Address::create([
             'name' =>  $request->name,
@@ -345,7 +335,7 @@ class ClientController extends Controller
             'default' => $request->default,
             'lat' => $request->lat,
             'lon' => $request->lon,
-            'additional' => $request->notes,
+            'notes' => $request->notes,
             'govern' => $request->govern,
             "verified" => 0,
             "verify" => $rand
