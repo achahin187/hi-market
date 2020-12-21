@@ -49,7 +49,7 @@ class CategoriesController extends Controller
 
         $branchname = Branch::where('id', $branch_id)->first();
 
-        $offers = offer::whereHas('branches', function($q){
+        $offers = offer::whereHas('branches', function($q) use($branch_id){
                 $q->Where('id', $branch_id);
         })->where('status', 'active')->where('source', 'Branch')->get();
 
