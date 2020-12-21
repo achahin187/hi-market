@@ -27,6 +27,14 @@ class OrderDetailResource extends JsonResource
                 'phone' => $this->client->addresses->first()->phone,
             ],
 
+            'orderSummary' =>[
+                'totalItems' => DB::table('order_product')->where('order_id',$this->id)->count(),
+                'priceItems' => DB::table('order_product')->where('order_id',$this->id)->sum('price'),
+                'shippingFee'=> 5,
+                'estimatedVat'=> 10,
+                'paymentMethod'=>'Cash',
+            ],
+
 
             'products'=>$this->products->map(function($product){
                 return[
