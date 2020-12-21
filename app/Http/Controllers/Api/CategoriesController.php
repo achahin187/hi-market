@@ -98,6 +98,7 @@ class CategoriesController extends Controller
             return $this->returnError(404, "Super Market Not Found");
         }
 
+
         $favproducts = DB::table('client_product')
             ->where('udid', $udid)
             ->where("supermarket_id", $request->supermarket_id)
@@ -105,6 +106,8 @@ class CategoriesController extends Controller
 
 
         $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
+        $categories = $supermarket->categories;
+
 
         foreach ($products as $product) {
 
@@ -136,7 +139,7 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products'], [CategoryProductResource::collection($products)]);
+        return $this->returnData(['products','categories'], [CategoryProductResource::collection($products),CategoryResource::collection($categories)]);
 
 
     }
