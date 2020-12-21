@@ -219,6 +219,9 @@ class OrderController extends Controller
     public function selectDate()
     {
         $branch = Branch::find(request("supermarket_id"));
+
+       
+
         $days = [
             [
                 "id" => 1,
@@ -226,7 +229,8 @@ class OrderController extends Controller
             ],
             [
                 "id" => 2,
-                "text" => date('m/d/Y', strtotime('Tomorrow')),
+                "text" => "Tomorrow",
+             
             ],
             [
                 "id" => 3,
@@ -238,6 +242,8 @@ class OrderController extends Controller
             ]
 
         ];
+
+
         $time = [];
         for ($i = 0; $i < 10; $i++) {
             $time[$i] = [
