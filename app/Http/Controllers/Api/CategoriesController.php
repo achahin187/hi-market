@@ -232,7 +232,7 @@ class CategoriesController extends Controller
 
                 $products = $category->products()->whereHas("branches",function($query){
                     $query->where("branches.id",request("supermarket_id"));
-                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->where('flag', 1)get();
+                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
 
 
                 foreach ($products as $product) {
