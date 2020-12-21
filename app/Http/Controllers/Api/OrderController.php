@@ -359,7 +359,7 @@ class OrderController extends Controller
         return response()->json([
             "status"  => true,
             "msg"     => 'rate send successfully',
-            'data'    => OrderRateResource::collection($store_rate),
+            'data'    => new OrderRateResource($store_rate),
         ]);
     } 
 }
