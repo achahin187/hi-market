@@ -122,7 +122,7 @@ class FavouritesController extends Controller
         $favproducts = $client->products; 
         if ($favproducts) {
        
-             $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
+             $product_ids = $favproducts->pluck('product_id');
 
              $favproductss = DB::table('client_product')
              ->whereIn('product_id',$product_ids)
