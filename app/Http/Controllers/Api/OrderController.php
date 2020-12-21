@@ -382,7 +382,7 @@ class OrderController extends Controller
     } 
 
 
-    private function sendNotification($device_token, $notification_body, $notification_body){
+    private function sendNotification(){
 
             $url = 'https://fcm.googleapis.com/fcm/send';
             $api_key = 'Key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu';
