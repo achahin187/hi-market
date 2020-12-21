@@ -131,6 +131,8 @@ class OffersController extends Controller
             }
 
         }else{
+
+            //$create_promocode->attach()
             $allBranches =  Branch::all(); 
             foreach ($allBranches as  $allBranche) {
                 

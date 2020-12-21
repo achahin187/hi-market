@@ -51,7 +51,7 @@ class CategoriesController extends Controller
 
         $offers = offer::WhereHas('branches', function($q) use($branch_id){
             $q->where('branch_id', $branch_id);
-        })->get();
+        })->where('status', 'active')->where('source', 'Branch')->get();
 
        
         foreach ($categories as $category) {
