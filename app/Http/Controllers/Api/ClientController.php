@@ -432,8 +432,11 @@ class ClientController extends Controller
             'govern' => $govern,
             "verified" => 0,
             "verify" => $rand
+
         if (count($client->addresses) >= 1) {
+
             $address = $client->addresses()->where('id', $request->address_id)->first();
+            
             if ($address) {
 
                 $request_data = $request->except('address_id', "address", "label");
