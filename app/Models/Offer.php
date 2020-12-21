@@ -28,8 +28,12 @@ class Offer extends Model
 
     public function branches()
     {
-    	return $this->hasMany('App\Models\Branch');
+    	 return $this->belongsToMany('App\Models\Branch','branch_offer');
     }
+    //  public function offers()
+    // {
+    //     return $this->belongsToMany('App\Models\Offer','branch_offer');
+    // }
 
     public function product()
     {

@@ -105,7 +105,7 @@ class Branch extends Model
 
     public function offers()
     {
-        return $this->hasMany('App\Models\Offer');
+        return $this->belongsToMany('App\Models\Offer','branch_offer');
     }
 
 
