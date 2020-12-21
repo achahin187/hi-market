@@ -102,16 +102,15 @@ class OrderController extends Controller
                 $order_details["delivery_date"] = str_replace("/","-",date('Y/m/d', strtotime($request->day)) ).' ' .date('H:i', strtotime($request->time));
             }
 
-             $cart = [];
+             
 
         //str_replace("/","-",date('Y/m/d', strtotime('Tomorrow')) ).' ' .date('H:i', strtotime('5 PM'))
-
             $order = Order::create([
                 'num' => "sdsadf3244",
                 'client_id' => $client->id,
                 'address' => $order_details["address_id"],
-                'delivery_date' =>  $order_details["delivery_date"] ,
-                'delivery_fees' => $order_details["delivery_fees"],
+                'delivery_date' =>  str_replace("PM","",$order_details["delivery_date"]) ,
+                'delivery_fees' =>  $order_details["delivery_fees"],
                 'status' => 0,
                 'total_money' => $order_details["total_money"],
                 'promocode' => $order_details["promocode"],
@@ -119,22 +118,24 @@ class OrderController extends Controller
                 'total_before' => $order_details["total_before"],
                 'total_after' => $order_details["total_after"],
                 'shipping_before' => $order_details["shipping_before"],
-                'company_id' => $comapany->id
+                'shipping_after' => $order_details["shipping_after"],
+                'mobile_delivery' => '01060487345',
+                'company_id' => 1,
             ]);
 
-            foreach (explode(",", request("cart")) as $product) {
-                     $order->products->attach([
+            foreach (explode(",", request("products")) as $product) {
+            //return explode(":", $product)[1];
+              
+                    DB::table('order_product')->insert([
+
+                    "order_id"   => $order->id,
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
                     "price"      => Product::Where('id', explode(":", $product)[0] )->first()->price,
                 ]);
 
              }   
-            $comapany->orders()->attach([
-                'order_id' => $order->id,
-                'company_id' => $comapany->id,
-            ]);
-
+           
 
             return $this->returnSuccessMessage('The order has been completed successfully', 200);
 
@@ -156,12 +157,13 @@ class OrderController extends Controller
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
+
         $udid = $request->header('udid');
         $user = getUser();
+
         if (!$user) {
             return $this->returnError(422, "user not exists");
         }
-
 
         $category_ids = explode(",", $request->category_ids);
 
@@ -169,15 +171,11 @@ class OrderController extends Controller
 
         $supermarket_id = $request->supermarket_id;
 
-
         $fav_ids = [];
 
         $favproducts = DB::table('client_product')->where('udid', $udid)->select('product_id')->get();
 
         $similar_products = Product::similar($categories, $supermarket_id)->get();
-
-    
-
 
         foreach ($favproducts as $product) {
             array_push($fav_ids, $product->product_id);

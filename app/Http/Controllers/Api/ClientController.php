@@ -249,6 +249,7 @@ class ClientController extends Controller
 
 
         if (Hash::check($request->old_password, $client->password)) {
+            
             $client->update(['password' => Hash::make($request->new_password),]);
 
 
@@ -437,12 +438,12 @@ class ClientController extends Controller
                 $request_data = $request->except('address_id', 'label');
                 $request_data["address_lable"] = $request->label;
                 $request_data["name"] = $request->name;
-                $request_data["description"] = $request->description;
+                $request_data["description"] = $request->address;
                 $request_data["phone"] = $request->phone;
                 $request_data["default"] = $request->default;
                 $request_data["lat"] = $request->lat;
                 $request_data["lon"] = $request->lon;
-                $request_data["additional"] = $request->additional;
+                $request_data["additional"] = $request->notes;
                 $request_data["govern"] = $request->govern;
                  
                 $address->update($request_data);
