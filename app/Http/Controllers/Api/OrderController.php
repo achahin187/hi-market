@@ -348,8 +348,7 @@ class OrderController extends Controller
     {
         $order = Order::Where('id', $request->order_id)->get();
 
-        $order->update([
-
+        $store_rate = $order->update([
             'delivery_rate' => $request->delivery_rate,
             'seller_rate'   => $request->seller_rate,
             'pickup_rate'   => $request->pickup_rate,
@@ -358,9 +357,9 @@ class OrderController extends Controller
         ]); 
 
         return response()->json([
-            "status" => true,
-            "msg" => 'rate send successfully',
-            'data'    => OrderRateResource::collection($order),
+            "status"  => true,
+            "msg"     => 'rate send successfully',
+            'data'    => OrderRateResource::collection($store_rate),
         ]);
     } 
 }
