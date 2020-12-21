@@ -101,6 +101,7 @@ class OrderController extends Controller
 
 
             $order = Order::create([
+
                 'num' => "sdsadf3244",
 
                 'client_id' => $client->id,
@@ -112,24 +113,26 @@ class OrderController extends Controller
 
                 'total_money' => $order_details["total_money"],
                 'total_before' => $order_details["total_before"],
-                
+
                 'shipping_fee' => $order_details["shipping_fee"],
                 'shipping_before' => $order_details["shipping_before"],
 
                 'redeem' => $order_details["redeem"],
 
                 'mobile_delivery' => '01060487345',
+
                 'status' => 0,
                 'company_id' => 1,
+
             ]);
 
-            foreach (explode(",", request("cart")) as $product) {
-          
-              
-                    $order->products()->attach([
+            foreach ( explode(",", request("cart")) as $product) {
+                
+                    DB::table('order_product')->insert([
+                    'order_id'=>$order->id,
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
-                    "price"      => Product::Where('id', explode(":", $product)[0] )->first()->price,
+                    "price"      => explode(":", $product)[2],
                 ]);
 
              }   
