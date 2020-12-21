@@ -75,7 +75,10 @@ class FavouritesController extends Controller
 
             }
         } else {
-            DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->where("supermarket_id"=>$request->supermarket_id)->delete();
+            DB::table('client_product')
+            ->where('udid', $udid)->where('product_id', $product_id)
+            ->where("supermarket_id",$request->supermarket_id)
+            ->delete();
 
             return $this->returnSuccessMessage('تم الغاء الاعجاب', '');
 
