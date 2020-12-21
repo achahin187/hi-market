@@ -15,11 +15,11 @@ class OrderRateResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'delivery_rate' => $this->delivery_rate,
-            'seller_rate' => $this->seller_rate,
-            'pickup_rate' => $this->pickup_rate,
-            'time_rate' => $this->time_rate,
-            'comment' => $this->comment,
+            'delivery_rate' => $request->delivery_rate,
+            'seller_rate' => $request->seller_rate,
+            'pickup_rate' => $request->pickup_rate,
+            'time_rate' => $request->time_rate,
+            'comment' => $request->comment,
         ];
     }
 }
