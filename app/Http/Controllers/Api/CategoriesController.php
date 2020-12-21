@@ -49,7 +49,7 @@ class CategoriesController extends Controller
 
         $branchname = Branch::where('id', $branch_id)->first();
 
-        $offers = offer::where('status', 'active')->branches->limit(4)->get();
+        $offers = offer::with('branches')->where('status', 'active')->limit(4)->get();
 
 
         foreach ($categories as $category) {
