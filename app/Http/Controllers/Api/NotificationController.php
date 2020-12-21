@@ -26,7 +26,7 @@ class NotificationController extends Controller
         {
             $orders = $user->orders;
             return $orders;
-             return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
+            return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
 
         }else{
 
@@ -34,6 +34,12 @@ class NotificationController extends Controller
 
         }
 
+    }
+
+
+    public function getUser()
+    {
+        return auth("client-api")->user();
     }
 
 

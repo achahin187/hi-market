@@ -104,6 +104,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('rate/order','OrderController@rateOrder');
 
 
+    //get user
+    Route::get('getUser','NotificationController@getUser')
+
+
 });
 
 
