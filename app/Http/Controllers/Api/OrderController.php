@@ -226,7 +226,7 @@ class OrderController extends Controller
             ],
             [
                 "id" => 2,
-                "text" => strtotime('Tomorrow'),
+                "text" => date('m/d/Y', strtotime('Tomorrow')),
             ],
             [
                 "id" => 3,
