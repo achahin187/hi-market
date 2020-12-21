@@ -12,7 +12,6 @@ use App\Models\Category;
 use App\Models\Client;
 use App\Models\Branch;
 use App\Models\Offer;
-use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -211,12 +210,11 @@ class CategoriesController extends Controller
     {
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
+            "category_id" => "required"
         ]);
-
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
-
         $udid = $request->header('udid');
 
 
@@ -266,43 +264,8 @@ class CategoriesController extends Controller
                 ]);
 
             }
-        }else{
-
-             $products = Product::whereHas("branches",function($query){
-                    $query->where("branches.id",request("supermarket_id"));
-                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
-
-
-                foreach ($products as $product) {
-
-                    $product->favourite = 0;
-
-                    if (count($favproducts) > 0) {
-
-                        foreach ($favproducts as $favproduct) {
-                            if ($product->id == $favproduct->product_id) {
-                                $product->favourite = 1;
-                            }
-                        }
-                    }
-
-
-                    $product->imagepath = asset('categories_image/' . $product->images);
-
-
-                }
-
-
-                return response()->json([
-                    "status" => true,
-                    "msg" => "",
-                    "data" => [
-                        "products" => CategoryProductResource::collection($products)
-                    ]
-                ]);
-
         }
-        
+        return $this->returnError(422, "Pass category id");
 
     }
 }
