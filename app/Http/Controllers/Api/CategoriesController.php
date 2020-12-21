@@ -73,8 +73,6 @@ class CategoriesController extends Controller
             ]
 
         ]);
-
-
     }
 
 
@@ -202,7 +200,6 @@ class CategoriesController extends Controller
             }
         }
         return $this->returnError(422, "Pass category id");
-
     }
 
     public function categoryProductOffer(Request $request)

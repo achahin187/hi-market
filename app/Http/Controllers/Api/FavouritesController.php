@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class FavouritesController extends Controller
 {
-    //
+    
 
     use GeneralTrait;
 
@@ -75,12 +75,11 @@ class FavouritesController extends Controller
 
             }
         } else {
-            DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->delete();
+            DB::table('client_product')->where('udid', $udid)->where('product_id', $product_id)->where("supermarket_id"=>$request->supermarket_id)->delete();
 
             return $this->returnSuccessMessage('تم الغاء الاعجاب', '');
 
         }
-
     }
 
     public function getfavourites(Request $request)
@@ -106,7 +105,6 @@ class FavouritesController extends Controller
         })->get();
 
         return $this->returnData(['favourite products'], [ProductResource::collection($favproducts)]);
-
     }
 
     public function getAllFavourites(Request $request)
@@ -139,7 +137,25 @@ class FavouritesController extends Controller
         }
     }
 
-   
+   // public function removefavourites(Request $request)
+   // {
+   //       $validation = \Validator::make($request->all(), [
+   //          "product_id" => "required",
+   //          "supermarket_id"=>"required"
+   //      ]);
+   //      if ($validation->fails()) {
+   //          return $this->returnValidationError(422, $validation);
+   //      }
+
+   //      $client = auth('client-api')->user();
+
+   //      if ($client) {
+   //          # code...
+   //          $client->products()->where('product_id', $request->product_id)->where('supermarket_id', $supermarket_id)->delete();
+
+   //            return $this->returnSuccessMessage('', '');
+   //      }
+   // }
 
 }
 

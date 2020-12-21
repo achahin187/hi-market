@@ -46,6 +46,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::get('get_address/{flag}', 'ClientController@get_address')->name('address.show');
     Route::post("addorder", "OrderController@addorder");
     Route::post("select/date", "OrderController@selectDate");
+    //fave add and delete using flag
     Route::post('favourites/add', 'FavouritesController@addfavourite');
 
     //Route::post('favourites/remove', 'FavouritesController@removefavourites');
