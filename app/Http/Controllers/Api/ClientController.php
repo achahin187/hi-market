@@ -436,18 +436,18 @@ class ClientController extends Controller
 
 
             
-                DB::table('order_product')->update([
+                DB::table('addresses')->update([
 
-                    "name"   => $request->name,
-                    "phone"  => $request->phone,
-                    "govern"   => $request->govern,
-                    "address"      => $request->address,
-                    "default"      => $request->default,
+                    "name"               => $request->name,
+                    "phone"              => $request->phone,
+                    "govern"             => $request->govern,
+                    "address"            => $request->address,
+                    "default"            => $request->default,
                     "address_lable"      => $request->address_lable,
-                    "lat"      => $request->lat,
-                    "lon"      => $request->lon,
-                    "notes"      => $request->notes,
-                    "client_id"      => $client->id,
+                    "lat"                => $request->lat,
+                    "lon"                => $request->lon,
+                    "notes"              => $request->notes,
+                    "client_id"          => $client->id,
                 
                 ]);
 
