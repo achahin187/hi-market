@@ -105,7 +105,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
 
     //get user
-    Route::get('getUser','NotificationController@getUser')
+    Route::get('getUser','NotificationController@getUser');
 
 
 });
