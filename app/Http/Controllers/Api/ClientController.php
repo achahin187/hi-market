@@ -438,7 +438,7 @@ class ClientController extends Controller
                 $request_data["lon"] = $request->lon;
                 $request_data["additional"] = $request->additional;
                 $request_data["govern"] = $request->govern;
-                 dd($request_data);
+                 
                 $address->update($request_data);
 
             } else {
