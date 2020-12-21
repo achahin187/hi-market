@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Client;
 use App\Models\Branch;
 use App\Models\Offer;
+use App\Models\Product;
 use App\Models\Supermarket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
