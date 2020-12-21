@@ -102,22 +102,28 @@ class OrderController extends Controller
 
             $order = Order::create([
                 'num' => "sdsadf3244",
+
                 'client_id' => $client->id,
                 'address' => $order_details["address_id"],
+
                 'delivery_date' =>  str_replace("PM","",$order_details["delivery_date"]) ,
-                'delivery_fees' =>  $order_details["delivery_fees"],
-                'status' => 0,
-                'total_money' => $order_details["total_money"],
+
                 'promocode' => $order_details["promocode"],
-                'redeem' => $order_details["redeem"],
+
+                'total_money' => $order_details["total_money"],
                 'total_before' => $order_details["total_before"],
+                
+                'shipping_fee' => $order_details["shipping_fee"],
                 'shipping_before' => $order_details["shipping_before"],
-                'shipping_after' => $order_details["shipping_after"],
+
+                'redeem' => $order_details["redeem"],
+
                 'mobile_delivery' => '01060487345',
+                'status' => 0,
                 'company_id' => 1,
             ]);
 
-            foreach (explode(",", request("products")) as $product) {
+            foreach (explode(",", request("cart")) as $product) {
           
               
                     $order->products()->attach([
