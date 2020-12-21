@@ -264,10 +264,10 @@ class CategoriesController extends Controller
                     ]
                 ]);
 
-            }else{
+            }
+        }else{
 
-                
-                 $products = $category->products()->whereHas("branches",function($query){
+             $products = Product::whereHas("branches",function($query){
                     $query->where("branches.id",request("supermarket_id"));
                 })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
 
@@ -300,9 +300,8 @@ class CategoriesController extends Controller
                     ]
                 ]);
 
-            }
         }
-        return $this->returnError(422, "Pass category id");
+        
 
     }
 }
