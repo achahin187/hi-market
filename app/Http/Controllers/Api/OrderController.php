@@ -348,18 +348,24 @@ class OrderController extends Controller
     {
         $order = Order::find($request->order_id);
         
-        $store_rate = $order->update([
-                            'delivery_rate' => $request->delivery_rate,
-                            'seller_rate'   => $request->seller_rate,
-                            'pickup_rate'   => $request->pickup_rate,
-                            'time_rate'     => $request->time_rate,
-                            'comment'       => $request->comment,
-                        ]); 
+        if ($order) {
+                $store_rate = $order->update([
+                                    'delivery_rate' => $request->delivery_rate,
+                                    'seller_rate'   => $request->seller_rate,
+                                    'pickup_rate'   => $request->pickup_rate,
+                                    'time_rate'     => $request->time_rate,
+                                    'comment'       => $request->comment,
+                                ]); 
 
-        return response()->json([
-            "status"  => true,
-            "msg"     => 'rate send successfully',
-            'data'    => new OrderRateResource($store_rate),
-        ]);
+                return response()->json([
+                    "status"  => true,
+                    "msg"     => 'rate send successfully',
+                    'data'    => new OrderRateResource($store_rate),
+                ]);
+        
+        }else{
+
+             return $this->returnError(404, "This Order ID Not Found");
+        }
     } 
 }
