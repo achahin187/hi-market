@@ -16,6 +16,7 @@ use App\Models\Supermarket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CategoriesController extends Controller
 {
