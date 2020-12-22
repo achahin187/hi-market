@@ -279,7 +279,7 @@ class ClientController extends Controller
        }else{
 
             $newDefault = Address::find($request->address_id);
-
+             return $newDefault;
             $newDefault->update(['default'=>0]);
        }
     }
