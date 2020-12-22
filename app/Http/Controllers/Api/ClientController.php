@@ -423,13 +423,14 @@ class ClientController extends Controller
             $address = $client->addresses()->where('id', $request->address_id)->first();
 
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
+            return $addressWhereDefault;
 
             if ($address) {
 
 
-                if ($request->default == 1 && $address->default == 1 && $addressWhereDefault) {
+                if ($request->default == 1 && $address->default == 1 && $addressWhereDefault ) {
 
-                    $addressWhereDefault->update(['default' => 0]);
+                    $addressWhereDefault->update([ 'default' => 0 ]);
                 }
                     //dd($request->label);
                 DB::table('addresses')->Where('id', $request->address_id)->update([
@@ -437,6 +438,7 @@ class ClientController extends Controller
                     "phone"              => $request->phone,
                     "govern"             => $request->govern,
                     "address"            => $request->address,
+
                     "default"            => $request->default,
 
                     "address_lable"      => $request->label,
