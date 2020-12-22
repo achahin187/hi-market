@@ -29,6 +29,20 @@ class ConfirmationOrderResource extends JsonResource
                  'phone'   => $this->addressOrder->phone ??'',
                  'time'    => Carbon::parse($this->delvery_date)->format('M d Y H:i A')  ??'' ,
             ],
+
+            'paymentMethod'=>[
+
+                 'payment'      => 'Cash',
+            ],
+
+            'orderSummary' =>[
+                'totalItems' => $this->getOrder()->count(),
+                'priceItems' =>  $this->getOrder()->sum('price'),
+                'shippingFee'=> 5,
+                'totalPrice' =>  $this->getOrder()->sum('price') + 5 + 10,
+                'estimatedVat'=> 10,
+            ],
+
         ];
     }
 
@@ -37,5 +51,10 @@ class ConfirmationOrderResource extends JsonResource
     {
         
         return DB::table('products')->whereIn('id',$this->products->pluck('id'))->sum('points');
+    }
+
+    private function getOrder()
+    {
+        return DB::table('order_product')->where('order_id',$this->id);
     }
 }
