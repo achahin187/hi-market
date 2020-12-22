@@ -150,7 +150,7 @@ class AuthController extends Controller
         $activation_msg = 'your activation code is' . $code;
 
 
-        $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+        //$this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
