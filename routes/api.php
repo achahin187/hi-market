@@ -108,6 +108,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     //get user
     Route::get('getUser','NotificationController@getUser');
 
+    //get order confirmation
+    Route::get('OrderConfirmation','OrderController@orderConfirmation');
+
     //category Product Offer
     Route::post('category/product/offer','CategoriesController@categoryProductOffer');
 
