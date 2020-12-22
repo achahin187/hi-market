@@ -71,9 +71,9 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalOfferPoints()
     {
-        
-       $offer =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
-       $offerBranches = DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
+        return $this->products->first();
+       $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
+       $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
 
            if ($offer) {
 
