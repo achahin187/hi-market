@@ -183,7 +183,7 @@ class AuthController extends Controller
             $client->update(['password' => $request->new_password]);
 
             $client->update(['device_token'=>$request->device_token]);
-            
+
             return $this->returnData(['client'], [$client], 'password updated successfully');
 
           
@@ -257,7 +257,7 @@ class AuthController extends Controller
             ]);
         }
         
-      
+       $client->update(['device_token'=>$request->device_token]);
        $msg = 'login Successfully';
 
         return $this->returnData(['client',"token"], [new SocialLoginResource($client),$client->createToken("hi-market")->accessToken], $msg);

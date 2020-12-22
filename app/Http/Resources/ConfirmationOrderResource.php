@@ -40,9 +40,11 @@ class ConfirmationOrderResource extends JsonResource
             ],
 
             'orderSummary' =>[
-                'totalItems' => $this->getOrder()->count(),
-                'priceItems' =>  $this->getOrder()->sum('price'),
-                'shippingFee'=> 5,
+                'totalBefore' => $this->total_before,
+                'shippingBefore' => $this->shipping_before,
+                'totalItems' =>  $this->getOrder()->count(),
+                'priceItems' =>  $this->total_money??'',
+                'shippingFee'=> $this->shipping_fee??'',
                 'totalPrice' =>  $this->getOrder()->sum('price') + 5 + 10,
                 'estimatedVat'=> 10,
             ],
