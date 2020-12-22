@@ -113,6 +113,11 @@ class Order extends Model
         return $this->belongsTo('App\Models\DeliveryCompany', 'company_id');
     }
 
+    public function address()
+    {
+        return $this->belongsTo('App\Models\Address','address');
+    }
+
 
 
 

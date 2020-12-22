@@ -19,7 +19,7 @@ class ShippingAddressResource extends JsonResource
             'name' => $this->order->address->name,
             'address' => $this->order->address->address,
             'phone' => $this->order->address->phone,
-            'time' => $this->order->address->phone,
+            'time' => $this->order->delivery_date,
         ];
     }
 }
