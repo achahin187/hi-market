@@ -139,7 +139,7 @@ class OrderController extends Controller
 
              }   
            
-             return $this->sendNotification();
+             //return $this->sendNotification();
 
             return $this->returnSuccessMessage('The order has been completed successfully', 200);
 
