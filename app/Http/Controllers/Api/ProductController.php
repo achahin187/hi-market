@@ -55,7 +55,7 @@ class ProductController extends Controller
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->get();
       
         foreach ($checkSatus as  $status) {
-            $status->update('status', 0);
+            $status->update(['status'=> 0]);
         }
 
         $offers = Offer::Where('source','Delivertto')->where('status', 'active')->orderBy('priority', 'asc')->get();
