@@ -264,14 +264,14 @@ class ClientController extends Controller
     public function setDefault(Request $request)
     {
 
-       $address =  Auth('client-api')->user()->addresses->where('default',1)->first() ;
+       $address =  Auth('client-api')->user()->addresses->where('default',1)->first();
 
        if ($address) {
 
            $address->update(['default'=>0]);
 
            $newDefault = Address::where('id',$request->address_id)->first();
-
+           return $newDefault;
            $newDefault->update(['default'=>1]);
 
             return $this->returnSuccessMessage("updated successfully");
