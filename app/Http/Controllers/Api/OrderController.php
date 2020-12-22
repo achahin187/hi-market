@@ -429,4 +429,9 @@ class OrderController extends Controller
             $result = json_decode($result);
     }
 
+    public function orderConfirmation(Request $request)
+    {
+
+    }
+
 }
