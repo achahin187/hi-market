@@ -265,31 +265,41 @@ class ClientController extends Controller
     {
 
        $client_address =  Auth('client-api')->user()->addresses->where('default',1)->first();
+       if ($client_address) {
+           
 
-        $address = Address::find($request->address_id);
+            $address = Address::find($request->address_id);
        
-        if ($address) {
+            if ($address) {
 
-            if($address->default == 1 || $client_address){
+                if($address->default == 1 || $client_address){
 
-                if ($client_address) {
-                    
-                    $client_address->update(['default'=>0 ]);
+                    if ($client_address) {
+                        
+                        $client_address->update(['default'=>0 ]);
+                    }
+
+                 $address->update(['default'=>1 ]);
+
+                }else{
+
+                $address->update(['default'=>1 ]);
+
                 }
 
-             $address->update(['default'=>1 ]);
+                return $this->returnSuccessMessage("updated successfully");
 
             }else{
 
-            $address->update(['default'=>1 ]);
+                 return $this->returnError(404, 'Address Id Not Found');
 
             }
 
-            return $this->returnSuccessMessage("updated successfully");
-        }else{
+       }else{
+        
              return $this->returnError(404, 'Address Id Not Found');
-        }
 
+       }
        // if ($address) {
 
        //     $address->update(['default'=>0]);
