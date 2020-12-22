@@ -145,7 +145,7 @@ class OrderController extends Controller
             return response()->json([
                 "status" => true,
                 "msg" => 'The order has been completed successfully',
-                'data'    => $order_id,
+                'data'    => ['order_id'=>$order_id],
         ]);
         } else {
 
