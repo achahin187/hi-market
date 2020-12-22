@@ -47,7 +47,8 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post("addorder", "OrderController@addorder");
     Route::post("select/date", "OrderController@selectDate");
     Route::post('favourites/add', 'FavouritesController@addfavourite');
-//    Route::post('favourites/remove', 'FavouritesController@removefavourites');
+
+    //Route::post('favourites/remove', 'FavouritesController@removefavourites');
     Route::get('clientorders', 'OrderController@clientorders')->name('client_orders');//
     Route::get('order/{order_id}', 'OrderController@getorder')->name('order_details');
     Route::post('cart', 'OrderController@addcart')->name('order_details');
