@@ -76,7 +76,7 @@ class ConfirmationOrderResource extends JsonResource
         
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
        $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
-       return $this->branch_id;
+
            if ($offer) {
 
                 return $offer->value;
@@ -86,7 +86,7 @@ class ConfirmationOrderResource extends JsonResource
                  foreach ($offerBranches as $key => $offerBranch) {
 
                         if ($offerBranch->id == $this->branch_id) {
-
+                               dd($offerBranch->value); 
                             return $offerBranch->value;
                         }//end if
                  }//end foreach  
