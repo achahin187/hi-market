@@ -271,14 +271,14 @@ class ClientController extends Controller
 
             if($address->default == 1){
 
-            $address->update(['default',0 ])
+            $address->update(['default',0 ]);
 
             }else{
 
-            $address->update(['default',1 ])
+            $address->update(['default',1 ]);
 
             }
-            
+
             return $this->returnSuccessMessage("updated successfully");
         }else{
              return $this->returnError(404, 'Address Id Not Found');
