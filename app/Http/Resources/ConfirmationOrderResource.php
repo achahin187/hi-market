@@ -84,7 +84,7 @@ class ConfirmationOrderResource extends JsonResource
 
                  foreach ($offerBranches as $key => $offerBranch) {
 
-                        if ($offerBranch == $this->products->first()->branches->first()->id) {
+                        if ($offerBranch == $this->branch_id) {
 
                             return $offerBranch->value;
                         }//end if
