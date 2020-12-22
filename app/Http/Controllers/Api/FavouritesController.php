@@ -123,43 +123,20 @@ class FavouritesController extends Controller
         //         $query->where("udid", $udid);
         //     };
         // })->first();
-         if (!$udid = \request()->header("udid")) {
 
-            $favproducts = $client->products; 
-
-            $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
-
-            $favproductss = DB::table('client_product')
-            ->whereIn('product_id',$product_ids)
-            ->orWhere('client_id', $client->id)
-            ->orWhere('udid', request()->header('udid'))
-            ->get();
-            //dd ($favproductss);
-
-            #get -> first() ->id
-            //dd($favproducts->branches);
-            return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
-
+        $favproducts = $client->products; 
        
+         $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
+         $favproductss = DB::table('client_product')
+         ->whereIn('product_id',$product_ids)
+         ->orWhere('client_id', $client->id)
+         ->orWhere('udid', request()->header('udid'))
+         ->get();
+         //dd ($favproductss);
 
-        }else{
-
-              $favproducts = DB::table('client_product')->where("udid", $udid);
-
-              return $favproducts;
-              $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
-
-              $favproductss = DB::table('client_product')
-                    ->whereIn('product_id',$product_ids)
-                    ->orWhere('udid', request()->header('udid'))
-                    ->get();
-            //dd ($favproductss);
-
-            #get -> first() ->id
-            //dd($favproducts->branches);
-            return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
-
-        }
+        #get -> first() ->id
+        //dd($favproducts->branches);
+        return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
     }
 
 }
