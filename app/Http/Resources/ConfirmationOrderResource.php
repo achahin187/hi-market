@@ -18,12 +18,14 @@ class ConfirmationOrderResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email??"",
-            'point' => $this->totalProductPoints()??"",
+            'productPoint' => $this->totalProductPoints()??"",
+            'orderPoint' => $this->totalProductPoints()??"",
             'orderNum' => $this->num??"",
 
             'ShippingAddress'=>[
 
                  'id'      => $this->addressOrder->id,
+                 'label'      => $this->addressOrder->label,
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
@@ -47,7 +49,7 @@ class ConfirmationOrderResource extends JsonResource
                 return[
                     'id' => $product->id,
                     'name' => $product->name,
-                    'productImage' => asset('images/'.$product->image),
+                    'productImage' => asset('product_images/'.$product->image),
                     'supermaketId' => $product->branches->first()->id??"",
                     'categoryName' => $product->category->name,
                     'productDesc' => $product->description,
@@ -66,6 +68,17 @@ class ConfirmationOrderResource extends JsonResource
         
         return DB::table('products')->whereIn('id',$this->products->pluck('id'))->sum('points');
     }
+
+    private function totalOfferPoints()
+    {
+        
+       $offer =  DB::table('offers')->whereIn('type','point')->get();
+
+       if ($offer->source) {
+           # code...
+       }
+    }
+
 
     private function getOrder()
     {
