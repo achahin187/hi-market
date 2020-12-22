@@ -43,8 +43,8 @@ class ConfirmationOrderResource extends JsonResource
 
                 'totalItems' => $this->getOrder()->count(),
                 'priceItems' =>  $this->getOrder()->sum('price'),
-                'shippingFee'=> $this->shipping_fee,
-                'totalPrice' =>  $this->total_money,
+                'shippingFee'=> intval($this->shipping_fee) ?? "",
+                'totalPrice' =>  $this->total_money??"",
                 'totalorderPrice' =>  $this->total_money + $this->shipping_fee + 10 ,
                 'estimatedVat'=> 10,
                 'paymentMethod'=>'Cash',
@@ -89,7 +89,7 @@ class ConfirmationOrderResource extends JsonResource
                  foreach ($offerBranches as $key => $offerBranch) {
                    
                         if ($offerBranch->branch_id == $this->branch_id) {
-                            
+
                              if ($this->total_before >= $offerBranch->total_order_money) {
                                  
                                 return strval($offerBranch->value);
