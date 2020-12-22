@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Carbon\Carbon;
 class ConfirmationOrderResource extends JsonResource
 {
     /**
@@ -19,6 +19,13 @@ class ConfirmationOrderResource extends JsonResource
             'email' => $this->email??"",
             'point' => $this->totalProductPoints()??"",
             'orderNum' => $this->num??"",
+            'address'=>[
+                 'id'      => $this->addressOrder->id,
+                 'name'    => $this->addressOrder->name ??'',
+                 'address' => $this->addressOrder->address ??'',
+                 'phone'   => $this->addressOrder->phone ??'',
+                 'time'    =>Carbon::parse($this->delvery_date)->format('M d Y H:i:s A')  ??'' ,
+            ] ,
         ];
     }
 

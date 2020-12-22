@@ -445,10 +445,10 @@ class OrderController extends Controller
 
         return response()->json([
             "status" => true,
-            "data" => [
-                "order" => new ConfirmationOrderResource($order),
-                "ShippingAddress" => new ShippingAddressResource($order),
-            ]
+           
+           'data'=> new ConfirmationOrderResource($order),
+                
+         
 
         ]);  
 
