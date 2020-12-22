@@ -119,6 +119,7 @@ class OrderController extends Controller
                 'shipping_fee' => $order_details["shipping_fee"],
                 'shipping_before' => $order_details["shipping_before"],
 
+                'branch_id' =>  $order_details["supermarket_id"],
 
                 //'promocode' => $order_details["promocode"], 
                 'point_redeem' => $order_details["redeem"],

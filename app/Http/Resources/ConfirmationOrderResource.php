@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
+use App\Models\Branch;
 use DB;
 class ConfirmationOrderResource extends JsonResource
 {
@@ -50,12 +51,12 @@ class ConfirmationOrderResource extends JsonResource
                     'id' => $product->id,
                     'name' => $product->name,
                     'productImage' => asset('product_images/'.$product->image),
-                    'supermaketId' => $product->branches->first()->id??"",
+                    //'supermaketId' => $product->branches->first()->id??"",
                     'categoryName' => $product->category->name,
                     'productDesc' => $product->description,
                     'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
                     'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
-                    'branchName' => $product->branches->first()->name??"",
+                    'branchName' => Branch::Where('id',$this->branch_id)->first()->name??"",
                 ];
             }),
 
