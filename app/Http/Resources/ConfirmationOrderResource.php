@@ -40,13 +40,14 @@ class ConfirmationOrderResource extends JsonResource
             ],
 
             'orderSummary' =>[
-                'totalBefore' => $this->total_before,
-                'shippingBefore' => $this->shipping_before,
-                'totalItems' =>  $this->getOrder()->count(),
-                'priceItems' =>  $this->total_money??'',
-                'shippingFee'=> $this->shipping_fee??'',
-                'totalPrice' =>  $this->getOrder()->sum('price') + $this->shipping_fee + 10,
+
+                'totalItems' => $this->getOrder()->count(),
+                'priceItems' =>  $this->getOrder()->sum('price'),
+                'shippingFee'=> $this->shipping_fee,
+                'totalPrice' =>  $this->total_money,
+                'totalorderPrice' =>  $this->total_money + $this->shipping_fee + 10 ,
                 'estimatedVat'=> 10,
+                'paymentMethod'=>'Cash',
             ],
 
             'products'=>$this->products->map(function($product){
@@ -88,8 +89,12 @@ class ConfirmationOrderResource extends JsonResource
                  foreach ($offerBranches as $key => $offerBranch) {
                    
                         if ($offerBranch->branch_id == $this->branch_id) {
-                             
-                            return strval($offerBranch->value);
+                             if ($this->total_before >= $offerBranches->total_order_money) {
+                                 
+                                return strval($offerBranch->value);
+                             }else{
+                                return '';
+                             }
                         }//end if
                  }//end foreach  
 
@@ -108,4 +113,7 @@ class ConfirmationOrderResource extends JsonResource
     {
         return DB::table('order_product')->where('order_id',$this->id);
     }
+
+
+
 }
