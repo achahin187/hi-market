@@ -53,7 +53,9 @@ class ProductController extends Controller
         // Add Rate And Address Branch ++.
         // Change to Branch
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->get();
-        $checkSatus->update('status', 'inactive');
+        foreach ($checkSatus as  $status) {
+            $status->update('status', 'inactive');
+        }
 
         $offers = Offer::Where('source','Delivertto')->where('status', 'active')->orderBy('priority', 'asc')->get();
 
