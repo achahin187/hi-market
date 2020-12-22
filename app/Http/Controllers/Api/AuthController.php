@@ -92,6 +92,7 @@ class AuthController extends Controller
 
             $msg = "you have been logged in successfully";
 
+            $client->update(['device_token'=>$request->device_token]);
 
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
@@ -130,6 +131,7 @@ class AuthController extends Controller
                 ])->body
             ]);
 
+
         } catch (\Exception $exception) {
            
             return response()->json([
@@ -149,7 +151,7 @@ class AuthController extends Controller
 
         $activation_msg = 'your activation code is' . $code;
 
-
+        $client->update(['device_token'=>$request->device_token]);
         //$this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
@@ -180,7 +182,8 @@ class AuthController extends Controller
           
             $client->update(['password' => $request->new_password]);
 
-
+            $client->update(['device_token'=>$request->device_token]);
+            
             return $this->returnData(['client'], [$client], 'password updated successfully');
 
           

@@ -26,6 +26,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedFloat('order_price')->nullable();
             $table->unsignedInteger('status');
             $table->bigInteger('client_id')->unsigned();
+            $table->bigInteger('branch_id')->unsigned();
             $table->unsignedInteger('request');
             $table->dateTime('approved_at')->nullable();
             $table->dateTime('prepared_at')->nullable();
