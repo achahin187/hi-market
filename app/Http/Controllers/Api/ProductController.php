@@ -171,13 +171,13 @@ class ProductController extends Controller
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
-    public function getproductsearch($value)
+    public function getproductsearch(Request $request)
     {
 
-        $type = intval($value);
-        return $value;
+        $type = intval($request->name);
+        return $request->name;
         if (strlen($type) < 10) {
-            $products = Product::where('name_en', 'LIKE', '%' . $value . "%")->orWhere('name_ar', 'LIKE', '%' . $value . "%")->get();
+            $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
 
             if (count($products) < 1) {
 
@@ -216,7 +216,7 @@ class ProductController extends Controller
                 return $this->returnData(['products'], [$all_products]);
             }
         } else {
-            $product = Product::where('barcode', $value)->first();
+            $product = Product::where('barcode', $request->name)->first();
 
             if ($product) {
                 if ($this->getCurrentLang() == 'ar') {
