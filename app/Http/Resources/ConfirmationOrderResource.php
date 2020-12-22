@@ -19,12 +19,13 @@ class ConfirmationOrderResource extends JsonResource
             'email' => $this->email??"",
             'point' => $this->totalProductPoints()??"",
             'orderNum' => $this->num??"",
-            'address'=>[
+
+            'ShippingAddress'=>[
                  'id'      => $this->addressOrder->id,
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
-                 'time'    =>Carbon::parse($this->delvery_date)->format('M d Y H:i:s A')  ??'' ,
+                 'time'    =>Carbon::parse($this->delvery_date)->format('M d Y H:i A')  ??'' ,
             ] ,
         ];
     }
@@ -32,6 +33,6 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalProductPoints()
     {
-        $this->products()->sum('points');
+        $this->products()->sum('points')->get();
     }
 }
