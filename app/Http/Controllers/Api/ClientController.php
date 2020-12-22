@@ -276,7 +276,8 @@ class ClientController extends Controller
                     
                     $client_address->update(['default'=>0 ]);
                 }
-             $address->update(['default'=>0 ]);
+
+             $address->update(['default'=>1 ]);
 
             }else{
 
