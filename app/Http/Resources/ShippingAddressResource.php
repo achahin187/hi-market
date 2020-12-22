@@ -19,7 +19,7 @@ class ShippingAddressResource extends JsonResource
             'name'    => $this->addressOrder->name ??'',
             'address' => $this->addressOrder->address ??'',
             'phone'   => $this->addressOrder->phone ??'',
-            'time'    => $this->delivery_date ??'' ,
+            'time'    =>Carbon::parse($this->delvery_date)->format('M d Y .A')  ??'' ,
         ];
     }
 }
