@@ -197,7 +197,7 @@ class ProductController extends Controller
                                 'rate' => $product->rate,
                                 'price' => $product->price,
                                 'images' => $product->images,
-                                'category' => !is_null($product->category) ? $product->category->arab_name : "",
+                                'category' => !is_null($product->category) ? $product->category->name_ar : "",
                                 'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
                             ];
                     } else {
@@ -209,7 +209,7 @@ class ProductController extends Controller
                                 'rate' => $product->rate,
                                 'price' => $product->price,
                                 'images' => $product->images,
-                                'category' => !is_null($product->category) ? $product->category->eng_name : "",
+                                'category' => !is_null($product->category) ? $product->category->name_en : "",
                                 'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
                             ];
                     }
