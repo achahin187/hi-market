@@ -93,7 +93,7 @@ class OrderController extends Controller
         if ($client) {
 
             if (request("asap") == 1) {
-                $order_details["delivery_date"] = Carbon\Carbon::now();
+                $order_details["delivery_date"] = Carbon::now();
             } else {
 
                 $order_details["delivery_date"] = str_replace("/","-",date('Y/m/d', strtotime($request->day)) ).' ' .date('H:i', strtotime($request->time));
