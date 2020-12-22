@@ -428,7 +428,7 @@ class ClientController extends Controller
 
             if ($address) {
 
-                DB::table('addresses')->Where('id', $request->address_id)update([
+                DB::table('addresses')->Where('id', $request->address_id)->update([
 
                     "name"               => $request->name,
                     "phone"              => $request->phone,
