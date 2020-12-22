@@ -278,7 +278,7 @@ class ClientController extends Controller
             
        }else{
 
-            $newDefault = Address::where('id',$request->address_id)->first();
+            $newDefault = Address::find($request->address_id);
 
             $newDefault->update(['default'=>0]);
        }
