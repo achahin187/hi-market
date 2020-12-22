@@ -196,7 +196,8 @@ class ProductController extends Controller
                                 'description' => $product->arab_description,
                                 'rate' => $product->rate,
                                 'price' => $product->price,
-                                'images' => $product->images,
+                                'offer_price' => $product->offer_price,
+                                'images' => asset('product_images/'.$product->images),
                                 'category' => !is_null($product->category) ? $product->category->name_ar : "",
                                 'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
                             ];
@@ -208,7 +209,9 @@ class ProductController extends Controller
                                 'description' => $product->eng_description,
                                 'rate' => $product->rate,
                                 'price' => $product->price,
-                                'images' => $product->images,
+                                'offer_price' => $product->offer_price,
+                                'images' => asset('product_images/'.$product->images),
+                                
                                 'category' => !is_null($product->category) ? $product->category->name_en : "",
                                 'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
                             ];
