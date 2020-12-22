@@ -268,6 +268,7 @@ class ClientController extends Controller
 
         $address = Address::find($request->address_id);
         if ($address) {
+
             if($address->default == 1){
 
             $address->update(['default',0 ])
@@ -277,7 +278,8 @@ class ClientController extends Controller
             $address->update(['default',1 ])
 
             }
-
+            
+            return $this->returnSuccessMessage("updated successfully");
         }else{
              return $this->returnError(404, 'Address Id Not Found');
         }
