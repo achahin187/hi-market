@@ -84,8 +84,8 @@ class ConfirmationOrderResource extends JsonResource
            }elseif($offerBranches){
 
                  foreach ($offerBranches as $key => $offerBranch) {
-                    dd($offerBranch->id , $this->branch_id);
-                        if ($offerBranch->id == $this->branch_id) {
+                   
+                        if ($offerBranch->branch_id == $this->branch_id) {
                              
                             return $offerBranch->value;
                         }//end if
