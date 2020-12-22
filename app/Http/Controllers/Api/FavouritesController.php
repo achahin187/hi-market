@@ -125,18 +125,23 @@ class FavouritesController extends Controller
         // })->first();
 
         $favproducts = $client->products; 
+        if ($favproducts) {
        
-         $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
-         $favproductss = DB::table('client_product')
-         ->whereIn('product_id',$product_ids)
-         ->orWhere('client_id', $client->id)
-         ->orWhere('udid', request()->header('udid'))
-         ->get();
-         //dd ($favproductss);
+             $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
 
-        #get -> first() ->id
-        //dd($favproducts->branches);
-        return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
+             $favproductss = DB::table('client_product')
+             ->whereIn('product_id',$product_ids)
+             ->orWhere('client_id', $client->id)
+             ->orWhere('udid', request()->header('udid'))
+             ->get();
+             //dd ($favproductss);
+
+            #get -> first() ->id
+            //dd($favproducts->branches);
+            return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
+        }else{
+            return $this->returnError(422, "Client Not Have favourite");
+        }
     }
 
 }
