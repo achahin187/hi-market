@@ -16,10 +16,10 @@ class ShippingAddressResource extends JsonResource
     {
         return [
             'id' => $this->address,
-            'name' => $this->address->name,
-            'address' => $this->address->address,
-            'phone' => $this->address->phone,
-            'time' => $this->delivery_date,
+            'name' => $this->address->name ??'',
+            'address' => $this->address->address ??'',
+            'phone' => $this->address->phone ??'',
+            'time' => $this->delivery_date ??'',
         ];
     }
 }
