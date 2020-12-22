@@ -54,7 +54,7 @@ class ProductController extends Controller
         // Change to Branch
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->update('status', 'inactive');
 
-        $offers = Offer::Where('source','Delivertto')->orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->where('status', 'active')->orderBy('priority', 'asc')->get();
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
