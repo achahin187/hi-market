@@ -444,15 +444,10 @@ class OrderController extends Controller
         $order = Order::find($request->order_id);
 
         return response()->json([
-                "status" => true,
-                'data'    => ConfirmationOrderResource::collection($order),
-             ]);   
-
-        return response()->json([
             "status" => true,
             "data" => [
-                "order" => ConfirmationOrderResource::collection($order),
-                "ShippingAddress" => ShippingAddressResource::collection($order),
+                "order" => new ConfirmationOrderResource($order),
+                "ShippingAddress" => new ShippingAddressResource($order),
             ]
 
         ]);  
