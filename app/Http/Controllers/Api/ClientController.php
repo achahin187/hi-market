@@ -429,13 +429,15 @@ class ClientController extends Controller
             if ($address) {
 
                 DB::table('addresses')->Where('id', $request->address_id)->update([
-
+                    dd($request->lable);
                     "name"               => $request->name,
                     "phone"              => $request->phone,
                     "govern"             => $request->govern,
                     "address"            => $request->address,
                     "default"            => $request->default,
+
                     "address_lable"      => $request->lable,
+
                     "lat"                => $request->lat,
                     "lon"                => $request->lon,
                     "notes"              => $request->additional,
