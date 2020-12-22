@@ -25,6 +25,6 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalProductPoints()
     {
-        $this->products()->sum('point');
+        $this->products()->sum('points');
     }
 }
