@@ -175,7 +175,7 @@ class ProductController extends Controller
     {
 
         $type = intval($request->name);
-        return $request->name;
+        
         if (strlen($type) < 10) {
             $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
 
