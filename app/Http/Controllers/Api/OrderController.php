@@ -120,10 +120,10 @@ class OrderController extends Controller
                 'shipping_before' => $order_details["shipping_before"],
 
 
-                'promocode' => $order_details["promocode"], 
+                //'promocode' => $order_details["promocode"], 
                 'point_redeem' => $order_details["redeem"],
 
-                'mobile_delivery' => '01060487345',
+                //'mobile_delivery' => '01060487345',
  
                 'status' => 0,
                 'company_id' => 1,
