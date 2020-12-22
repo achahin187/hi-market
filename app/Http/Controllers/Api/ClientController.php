@@ -423,12 +423,12 @@ class ClientController extends Controller
             $address = $client->addresses()->where('id', $request->address_id)->first();
 
             if ($request->default == 1 && $address->address ) {
-                # code...
+                
             }
 
             if ($address) {
 
-                DB::table('addresses')->update([
+                DB::table('addresses')->Where('id', $request->address_id)update([
 
                     "name"               => $request->name,
                     "phone"              => $request->phone,
