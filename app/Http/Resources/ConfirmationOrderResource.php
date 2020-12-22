@@ -89,6 +89,7 @@ class ConfirmationOrderResource extends JsonResource
                  foreach ($offerBranches as $key => $offerBranch) {
                    
                         if ($offerBranch->branch_id == $this->branch_id) {
+                            return $offerBranch;
                              if ($this->total_before >= $offerBranches->total_order_money) {
                                  
                                 return strval($offerBranch->value);
