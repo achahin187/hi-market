@@ -451,12 +451,8 @@ class OrderController extends Controller
         return response()->json([
             "status" => true,
             "data" => [
-                "categories" => ConfirmationOrderResource::collection($order),
+                "order" => ConfirmationOrderResource::collection($order),
                 "ShippingAddress" => ShippingAddressResource::collection($order),
-                "supermarket" => [
-                    'id' => $branch->id,
-                    "name" => $branch->name,
-                ]
             ]
 
         ]);  
