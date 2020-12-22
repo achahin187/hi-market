@@ -13,6 +13,8 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\OrderRateResource;
 use App\Http\Resources\WishlistResource;
 use App\Http\Resources\GetReasonsResource;
+use App\Http\Resources\ShippingAddressResource;
+use App\Http\Resources\ConfirmationOrderResource;
 use App\Http\Resources\OrderDetailResource;
 use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
@@ -352,7 +354,7 @@ class OrderController extends Controller
             return response()->json([
                 "status" => true,
                 'data'    => OrderDetailResource::collection($order),
-        ]);
+             ]);
         
         }else{
 
@@ -431,6 +433,34 @@ class OrderController extends Controller
 
     public function orderConfirmation(Request $request)
     {
+        #Validation
+        $validation = \Validator::make($request->all(), [
+            "order_id" => "required",
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+
+        $order = Order::find($request->order_id);
+
+        return response()->json([
+                "status" => true,
+                'data'    => ConfirmationOrderResource::collection($order),
+             ]);   
+
+        return response()->json([
+            "status" => true,
+            "data" => [
+                "categories" => ConfirmationOrderResource::collection($order),
+                "ShippingAddress" => ShippingAddressResource::collection($order),
+                "supermarket" => [
+                    'id' => $branch->id,
+                    "name" => $branch->name,
+                ]
+            ]
+
+        ]);  
+
 
     }
 

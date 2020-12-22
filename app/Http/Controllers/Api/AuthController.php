@@ -211,7 +211,7 @@ class AuthController extends Controller
 
         $activation_msg = 'your activation code is ' . $code;
 
-        $this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
+        //$this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
 
         $msg = "we sent an activation code to verify your mobile number";
 
