@@ -421,13 +421,14 @@ class ClientController extends Controller
         if (count($client->addresses) >= 1) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
+
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
 
             if ($address) {
 
 
-                if ($request->default == 1 && $address->default == 1 ) {
-                    
+                if ($request->default == 1 && $address->default == 1 && $addressWhereDefault) {
+
                     $addressWhereDefault->update(['default' => 0]);
                 }
                     //dd($request->label);
