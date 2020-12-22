@@ -17,6 +17,7 @@ use App\Http\Traits\GeneralTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\HomeDataResource;
 use App\Http\Resources\OfferResource;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -53,7 +54,7 @@ class ProductController extends Controller
         // Change to Branch
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
-        $offers = Offer::Where('source','Delivertto')->orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->where('end_date', '<', Carbon::now()  )->orderBy('priority', 'asc')->get();
 
 
         foreach ($supermarkets as $supermarket) {
