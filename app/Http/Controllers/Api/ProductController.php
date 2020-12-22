@@ -53,7 +53,7 @@ class ProductController extends Controller
         // Add Rate And Address Branch ++.
         // Change to Branch
 
-        $offers = Offer::Where('source','Delivertto')->where('end_date', '<', Carbon\Carbon::now()->format('Y-m-d H:i')  )->orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->where('end_date', '<',Carbon::now()->format('Y-m-d H:i')  )->orderBy('priority', 'asc')->get();
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
