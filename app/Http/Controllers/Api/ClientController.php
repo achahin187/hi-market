@@ -428,7 +428,7 @@ class ClientController extends Controller
             if ($address) {
 
 
-                if ($request->default == 1 && $address->default == 1 && $addressWhereDefault ) {
+                if ($request->default == 1 &&  $addressWhereDefault ) {
 
                     $addressWhereDefault->update([ 'default' => 0 ]);
                 }
