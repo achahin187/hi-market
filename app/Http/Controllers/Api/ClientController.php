@@ -428,7 +428,7 @@ class ClientController extends Controller
 
             if ($address) {
 
-                    dd($request->lable);
+                    //dd($request->label);
                 DB::table('addresses')->Where('id', $request->address_id)->update([
                     "name"               => $request->name,
                     "phone"              => $request->phone,
@@ -436,7 +436,7 @@ class ClientController extends Controller
                     "address"            => $request->address,
                     "default"            => $request->default,
 
-                    "address_lable"      => $request->lable,
+                    "address_lable"      => $request->label,
 
                     "lat"                => $request->lat,
                     "lon"                => $request->lon,
