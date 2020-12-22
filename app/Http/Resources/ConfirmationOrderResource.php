@@ -17,22 +17,24 @@ class ConfirmationOrderResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email??"",
-            'point' => $this->totalProductPoints()??"",
+            'point' => $this->totalProductPoints-()??"",
             'orderNum' => $this->num??"",
 
             'ShippingAddress'=>[
+
                  'id'      => $this->addressOrder->id,
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
-                 'time'    =>Carbon::parse($this->delvery_date)->format('M d Y H:i A')  ??'' ,
-            ] ,
+                 'time'    => Carbon::parse($this->delvery_date)->format('M d Y H:i A')  ??'' ,
+            ],
         ];
     }
 
 
     private function totalProductPoints()
     {
-        $this->products()->sum('points')->get();
+        
+        return DB::table('products')->whereIn('id',$this->products->pluck('id'))->sum('points');
     }
 }
