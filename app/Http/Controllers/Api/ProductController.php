@@ -179,9 +179,7 @@ class ProductController extends Controller
     public function getproductsearch(Request $request)
     {
 
-        $type = intval($request->name);
-        
-        if (strlen($type) < 10) {
+
             $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
 
             if (count($products) < 1) {
@@ -220,42 +218,7 @@ class ProductController extends Controller
 
                 return $this->returnData(['products'], [$all_products]);
             }
-        } else {
-            $product = Product::where('barcode', $request->name)->first();
-
-            if ($product) {
-                if ($this->getCurrentLang() == 'ar') {
-
-                    $productarray =
-                        [
-                            'name' => $product->arab_name,
-                            'description' => $product->arab_description,
-                            'rate' => $product->rate,
-                            'price' => $product->price,
-                            'images' => $product->images,
-                            'category' => !is_null($product->category) ? $product->category->arab_name : "",
-                            'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
-                        ];
-                } else {
-
-                    $productarray =
-                        [
-                            'name' => $product->eng_name,
-                            'description' => $product->eng_description,
-                            'rate' => $product->rate,
-                            'price' => $product->price,
-                            'images' => $product->images,
-                            'category' => !is_null($product->category) ? $product->category->eng_name : "",
-                            'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
-                        ];
-                }
-                return $this->returnData('product', $productarray);
-            } else {
-                return $this->returnError('', 'there is no product found');
-            }
-
-
-        }
+        
     }
 
     public function filter()
