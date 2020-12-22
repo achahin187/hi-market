@@ -15,7 +15,7 @@ class ShippingAddressResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->order,
+            'id' => $this->address,
             'name' => $this->order,
             'address' => $this->order,
             'phone' => $this->order,
