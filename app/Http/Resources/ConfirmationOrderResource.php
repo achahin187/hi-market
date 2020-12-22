@@ -71,7 +71,7 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalOfferPoints()
     {
-        return $this->products->first()->branches->first()->id;
+        
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
        $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
 
@@ -83,7 +83,7 @@ class ConfirmationOrderResource extends JsonResource
 
                  foreach ($offerBranches as $key => $offerBranch) {
 
-                        if ($offerBranch == $this->products->first()->branches->id) {
+                        if ($offerBranch == $this->products->first()->branches->first()->id) {
 
                             return $offerBranch->value;
                         }//end if
