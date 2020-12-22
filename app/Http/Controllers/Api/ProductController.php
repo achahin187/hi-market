@@ -58,7 +58,7 @@ class ProductController extends Controller
             $status->update(['status'=> 0]);
         }
 
-        $offers = Offer::Where('source','Delivertto')->where('status', 'active')->orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
