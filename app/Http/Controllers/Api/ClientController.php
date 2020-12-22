@@ -229,6 +229,7 @@ class ClientController extends Controller
 
         if (auth("client-api")->check()) {
             $client = \auth("client-api")->user();
+            
         } else {
             $client = Client::where('unique_id', $udid)->first();
 
@@ -252,7 +253,7 @@ class ClientController extends Controller
             
             $client->update(['password' => Hash::make($request->new_password),]);
 
-
+             $client->update(['device_token'=>$request->device_token]);
             return $this->returnData(['client'], [$client], 'password updated successfully');
 
         } else {
