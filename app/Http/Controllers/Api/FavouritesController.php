@@ -146,8 +146,8 @@ class FavouritesController extends Controller
 
               $favproducts = $client->products()->where("udid", $udid)
 
+              return $favproducts;
               $product_ids = $favproducts->pluck('pivot')->pluck('product_id');
-              return $product_ids;
 
               $favproductss = DB::table('client_product')
                     ->whereIn('product_id',$product_ids)
