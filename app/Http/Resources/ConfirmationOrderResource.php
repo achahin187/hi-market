@@ -17,8 +17,14 @@ class ConfirmationOrderResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email??"",
-            'point' => $this->email??"",
+            'point' => $this->totalProductPoints()??"",
             'orderNum' => $this->num??"",
         ];
+    }
+
+
+    private function totalProductPoints()
+    {
+        $this->products()->sum('point');
     }
 }
