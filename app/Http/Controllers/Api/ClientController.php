@@ -264,24 +264,40 @@ class ClientController extends Controller
     public function setDefault(Request $request)
     {
 
-       $address =  Auth('client-api')->user()->addresses->where('default',1)->first();
+      // $address =  Auth('client-api')->user()->addresses->where('default',1)->first();
 
-       if ($address) {
+        $address = Address::find($request->address_id);
+        if ($address) {
+            if($address->default == 1){
 
-           $address->update(['default'=>0]);
+            $address->update(['default',0 ])
 
-           $newDefault = Address::where('id',$request->address_id)->first();
-           return $newDefault;
-           $newDefault->update(['default'=>1]);
+            }else{
 
-            return $this->returnSuccessMessage("updated successfully");
+            $address->update(['default',1 ])
+
+            }
+
+        }else{
+             return $this->returnError(404, 'Address Id Not Found');
+        }
+
+       // if ($address) {
+
+       //     $address->update(['default'=>0]);
+
+       //     $newDefault = Address::where('id',$request->address_id)->first();
+       //     return $newDefault;
+       //     $newDefault->update(['default'=>1]);
+
+       //      return $this->returnSuccessMessage("updated successfully");
             
-       }else{
+       // }else{
 
-            $newDefault = Address::find($request->address_id);
-             return $newDefault;
-            $newDefault->update(['default'=>0]);
-       }
+       //      $newDefault = Address::find($request->address_id);
+       //       return $newDefault;
+       //      $newDefault->update(['default'=>0]);
+       // }
     }
 
     public function add_address(Request $request)
