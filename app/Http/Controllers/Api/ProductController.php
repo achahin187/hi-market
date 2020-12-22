@@ -189,12 +189,16 @@ class ProductController extends Controller
                 foreach ($products as $product) {
 
                     if ($this->getCurrentLang() == 'ar') {
-
+                        // $branches_ids = DB::table('product_supermarket')->pluck('pivot')->pluck('branch_id');
+                        // $favproductss = DB::table('product_supermarket')->whereIn('branch_id',$branches_ids)
+                        //  ->first();
                         $productarray =
                             [
+                                'id' => $product->id,
                                 'name' => $product->name_ar,
                                 'description' => $product->arab_description,
                                 'rate' => $product->rate,
+                                'supermarketId'=> $product->branches->first()->id,
                                 'price' => $product->price,
                                 'offer_price' => $product->offer_price,
                                 'images' => asset('product_images/'.$product->images),
@@ -206,9 +210,11 @@ class ProductController extends Controller
 
                         $productarray =
                             [
+                                'id' => $product->id,
                                 'name' => $product->name_en,
                                 'description' => $product->eng_description,
                                 'rate' => $product->rate,
+                                  'supermarketId'=> $product->branches->first()->id,
                                 'price' => $product->price,
                                 'offer_price' => $product->offer_price,
                                 'images' => asset('product_images/'.$product->images),
