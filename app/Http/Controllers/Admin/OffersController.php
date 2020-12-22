@@ -181,7 +181,8 @@ class OffersController extends Controller
             foreach ($allBranches as  $allBranche) {
                 
                 $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
-            }    
+            }  
+        }      
 
 
     }
