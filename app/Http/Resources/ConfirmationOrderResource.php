@@ -19,13 +19,13 @@ class ConfirmationOrderResource extends JsonResource
             'id' => $this->id,
             'email' => $this->email??"",
             'productPoint' => $this->totalProductPoints()??"",
-            'orderPoint' => $this->totalProductPoints()??"",
+            'orderPoint' => $this->totalOfferPoints()??"",
             'orderNum' => $this->num??"",
 
             'ShippingAddress'=>[
 
                  'id'      => $this->addressOrder->id,
-                 'label'      => $this->addressOrder->label,
+                 'label'      => $this->addressOrder->address_lable ??'',
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
@@ -72,11 +72,31 @@ class ConfirmationOrderResource extends JsonResource
     private function totalOfferPoints()
     {
         
-       $offer =  DB::table('offers')->whereIn('type','point')->get();
+       $offer =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
+       $offerBranches = DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
 
-       if ($offer->source) {
-           # code...
-       }
+           if ($offer) {
+
+                return $offer->value;
+               
+           }elseif($offerBranches){
+
+                 foreach ($offerBranches as $key => $offerBranch) {
+
+                        if ($offerBranch == $this->products->first()->branches->id) {
+
+                            return $offerBranch->value;
+                        }//end if
+                 }//end foreach  
+
+
+
+           }else{
+
+             return 0;
+
+           }//end if 
+
     }
 
 
