@@ -266,6 +266,7 @@ class ClientController extends Controller
 
        $client_address =  Auth('client-api')->user()->addresses->where('default',1)->first();
        $check =  Address::Where('id', $request->address_id)->where('client_id', Auth('client-api')->user()->id )->get();
+       return $check;
        if ($check) {
            
 
