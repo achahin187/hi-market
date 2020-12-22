@@ -140,7 +140,7 @@ class FavouritesController extends Controller
             //dd($favproducts->branches);
             return $this->returnData(['favourite products'], [AllFavoriteResource::collection($favproductss)]);
         }else{
-            return $this->returnError(422, "Client Not Have favourite");
+            return $this->returnError(404, "Client Not Have favourite");
         }
     }
 
