@@ -25,7 +25,7 @@ class ConfirmationOrderResource extends JsonResource
             'ShippingAddress'=>[
 
                  'id'      => $this->addressOrder->id,
-                 'label'      => $this->addressOrder->address_lable ??'',
+                 'label'   => $this->addressOrder->address_lable ??'',
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
@@ -71,7 +71,7 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalOfferPoints()
     {
-        return $this->products->first();
+        return $this->products->first()->branches->first()->id;
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
        $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
 
