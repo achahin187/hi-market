@@ -267,15 +267,16 @@ class ClientController extends Controller
       // $address =  Auth('client-api')->user()->addresses->where('default',1)->first();
 
         $address = Address::find($request->address_id);
+       
         if ($address) {
 
             if($address->default == 1){
 
-            $address->update(['default',0 ]);
+            $address->update(['default'=>0 ]);
 
             }else{
 
-            $address->update(['default',1 ]);
+            $address->update(['default'=>1 ]);
 
             }
 
