@@ -265,7 +265,8 @@ class ClientController extends Controller
     {
 
        $client_address =  Auth('client-api')->user()->addresses->where('default',1)->first();
-       if ($client_address) {
+       $check =  Address::Where('id', $request->address_id)->where('client_id', Auth('client-api')->user()->id );
+       if ($check) {
            
 
             $address = Address::find($request->address_id);
@@ -296,7 +297,7 @@ class ClientController extends Controller
             }
 
        }else{
-        
+
              return $this->returnError(404, 'Address Id Not Found');
 
        }
