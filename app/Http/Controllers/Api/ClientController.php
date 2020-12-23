@@ -462,7 +462,7 @@ class ClientController extends Controller
 
         
 
-        if (count($client->addresses) > 1) {
+        if ( $client->addresses ) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
