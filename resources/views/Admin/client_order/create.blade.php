@@ -359,20 +359,26 @@
 
 @push('scripts')
 <script>
-
+    //supermarket ajax
         $(".supermarket_6").change(function(){
+
             $.ajax({
                
                 url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
+
                     $('.branch_9').html('');
+
+                    $('.branch_9').append(new Option('select Branch',0,true,true));
+
                     data.forEach(function(x){
                         
-                    $('.branch_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('.branch_9').append(new Option(x.name_ar,x.id,false,false));
+
                     })
                 }
-            });
+            });//end ajax
 
 
         });
@@ -385,6 +391,7 @@
         $(".branch_9").change(function(){
 
             $.ajax({
+
                 url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
@@ -404,7 +411,7 @@
                 }
             });// end ajax
 
-             $(".branch_9").attr("disabled", "disabled");
+             //$(".branch_9").attr("disabled", "disabled");
              $(".supermarket_6").attr("disabled", "disabled");
                   
                     var selectedStatus      = $(this).find('option:selected').val();
