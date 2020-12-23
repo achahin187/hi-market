@@ -465,7 +465,8 @@
     $(document).on('click', '.add_input', function () {
 
         var max_input = 9;
-        var $options = $("#ahamdyinput > option").clone();
+        var options = $("#ahamdyinput").html();
+        alert(options);
         if (x < max_input) {
 
             $('.div_inputs').append('<div>' +
@@ -474,7 +475,7 @@
                 '<label> عنوان الحقل</label>' +
 
                 '<select class="product_9 select2 product" id="hamdyinput'+x+'" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> '+
-                 
+                 options
                 +'</select>'+
                     
                 '</div>' +
@@ -489,7 +490,7 @@
                 '<br>' +
                 '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
                 '</div>');
-            $('#select2-hamdyinput'+x+'-container').append($options);
+           // $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();
             x++;
         }
