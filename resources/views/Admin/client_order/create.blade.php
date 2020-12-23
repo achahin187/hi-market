@@ -471,11 +471,17 @@
         if (x < max_input) {
 
 
+
+
+       
+
             $('.div_inputs').append('<div>' +
                 '<div class="col-md-6">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
-                '<input type="text" class="form-control" name="input_key[]" >' +
+
+                +'<select class="product_9 select2 product" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required>'+ +'</select>'+
+                    
                 '</div>' +
                 '</div>' +
                 '<div class="col-md-6">' +
