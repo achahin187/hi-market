@@ -285,6 +285,25 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             $pointLocation = new pointLocation();
             $polygon = array("31.399123 30.187870", "31.562183 30.111870", "31.248863 30.012031");
             $points = array("31.320520 31.512996");
+            #a.lat the data base point 
+            #$lat the 
+        //     6371 * acos(
+        //     cos( radians(".$lat.") ) * cos( radians( a.lat ) )
+        //     * cos( radians( a.lon ) - radians(".$lon.") )
+        //     + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
+        //     ) ) AS distance
+
+        //     // end 
+
+        // $placeOffers = $GLOBALS['db']->query("SELECT a.,o., o.img as offer_img,o.`id` as `offer_id`, a.`img` AS `img_h`,a.`img_100` AS `img_s`,c.name as category_name,c.icon as category_icon, (
+        //     6371 * acos(
+        //             cos( radians(".$lat.") ) * cos( radians( a.lat ) )
+        //             * cos( radians( a.lon ) - radians(".$lon.") )
+        //             + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
+        //             )
+        //     ) AS distance FROM `categories` c INNER JOIN `places` a ON (a.`category` = c.`id`) INNER JOIN `offers` o ON (a.`id` = o.`place_id`) HAVING distance < 0.9 ORDER BY distance limit 1 ;
+
+
             // The last point's coordinates must be the same as the first one's, to "close the loop"
             foreach($points as $key => $point) {
                 echo "point ahmed"  . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
