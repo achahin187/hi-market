@@ -152,7 +152,6 @@ class ClientController extends Controller
         // $user = \auth()->user();
         // $user->points = $point->points - $user->points;
         // $user->save();
-
     }
 
     public function clientaddresses(Request $request)
@@ -163,7 +162,7 @@ class ClientController extends Controller
         $client = \auth("client-api")->check() ? \auth("client-api")->user() : Udid::where("body", $udid)->first();
 
         if ($client) {
-            $addresses = $client->addresses()->get();
+            $addresses = $client->addresses()->where('verified',1)->get();
 
             // foreach ($addresses as $address) {
             //     $address->name = $client->name;
@@ -184,14 +183,18 @@ class ClientController extends Controller
             "address_id" => "required|exists:addresses,id",
             "code" => "required"
         ]);
+
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
+
         $address = Address::find(\request("address_id"));
+
         if ($address->verify == request("code")) {
             $address->update(["verified" => 1]);
             return $this->returnSuccessMessage("address verified");
         }
+
         return $this->returnError(422, "code is invalid");
     }
 
