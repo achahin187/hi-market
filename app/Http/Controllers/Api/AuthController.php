@@ -298,7 +298,7 @@ class AuthController extends Controller
     public function testNotification(Request $request)
     {
 
-        $client = Client::find(auth('client-api')->user()->id);
+        //$client = Client::find(auth('client-api')->user()->id);
 
         $data = [
             "to" => $request->device_token,
