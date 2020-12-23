@@ -456,10 +456,8 @@ class ClientController extends Controller
         ]);
 
 
-        if ($validator->fails()) {
-
-            return $this->returnError(422, 'These data is not valid');
-
+       if ($validator->fails()) {
+            return $this->returnError(422, $validator->errors()->first());
         }
 
         
@@ -467,28 +465,21 @@ class ClientController extends Controller
         if (count($client->addresses) >= 1) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
-
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
-            //return $addressWhereDefault;
-
+          
             if ($address) {
 
-
                 if ($request->default == 1 &&  $addressWhereDefault ) {
-
                     $addressWhereDefault->update([ 'default' => 0 ]);
                 }
-                    //dd($request->label);
+                   
                 DB::table('addresses')->Where('id', $request->address_id)->update([
                     "name"               => $request->name,
                     "phone"              => $request->phone,
                     "govern"             => $request->govern,
                     "address"            => $request->address,
-
                     "default"            => $request->default,
-
                     "address_lable"      => $request->label,
-
                     "lat"                => $request->lat,
                     "lon"                => $request->lon,
                     "notes"              => $request->additional,
