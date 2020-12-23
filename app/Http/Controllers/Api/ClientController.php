@@ -462,7 +462,7 @@ class ClientController extends Controller
 
         
 
-        if ( $client->addresses != null ) {
+        // if ( $client->addresses != null ) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
@@ -488,12 +488,12 @@ class ClientController extends Controller
                 ]);
                 //$address->update($request_data);
 
-            } else {
+            // } else {
 
 
-                return $this->returnError(404, 'address not found');
+            //     return $this->returnError(404, 'address not found');
 
-            }
+            // }
 
 
             return $this->returnSuccessMessage('updated successfully', 200);
