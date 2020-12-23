@@ -609,7 +609,7 @@ class OrderController extends Controller
 
                     "type" => "order",
                     "orderId" => $order->id,
-                   ],
+                   ];
 
             $this->testNotification($order->client->device_token, $order->status, $data);
         }else
