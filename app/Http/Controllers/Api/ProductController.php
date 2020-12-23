@@ -187,14 +187,14 @@ class ProductController extends Controller
                 return $this->returnError(404, 'there is no product found');
             } else {
 
-$branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
-$search = Product::WhereHas('branches', function ($q) use ($branches_ids){
-    $q->WhereIn('branches.id',$branches_ids);
-})->get();
+                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
+                $search_result = Product::WhereHas('branches', function ($q) use ($branches_ids){
+                    $q->WhereIn('branches.id',$branches_ids);
+                })->get();
 
-                return $search;
+               
 
-                foreach ($products as $product) {
+                foreach ($search_result as $product) {
 
                     if ($this->getCurrentLang() == 'ar') {
                        
@@ -204,7 +204,7 @@ $search = Product::WhereHas('branches', function ($q) use ($branches_ids){
                                 'name' => $product->name_ar,
                                 'description' => $product->arab_description,
                                 'rate' => $product->rate,
-                                //'supermarketId'=> $product->branches,
+                                'supermarketId'=> $product->branch_id,
                                 'price' => $product->price,
                                 'offer_price' => $product->offer_price,
                                 'images' => asset('product_images/'.$product->images),
@@ -220,7 +220,7 @@ $search = Product::WhereHas('branches', function ($q) use ($branches_ids){
                                 'name' => $product->name_en,
                                 'description' => $product->eng_description,
                                 'rate' => $product->rate,
-                                //'supermarketId'=> $product->branches,
+                                'supermarketId'=> $product->branch_id,
                                 'price' => $product->price,
                                 'offer_price' => $product->offer_price,
                                 'images' => asset('product_images/'.$product->images),
