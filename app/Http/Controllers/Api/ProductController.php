@@ -187,13 +187,13 @@ class ProductController extends Controller
                 return $this->returnError(404, 'there is no product found');
             } else {
 
-                $branches_ids = DB::table('product_supermarket')->pluck('pivot')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
+$branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
                 return $branches_ids;
+
                 foreach ($products as $product) {
 
                     if ($this->getCurrentLang() == 'ar') {
-                        // $favproductss = DB::table('product_supermarket')->whereIn('branch_id',$branches_ids)
-                        //  ->first();
+                       
                         $productarray =
                             [
                                 'id' => $product->id,

@@ -44,15 +44,10 @@ class ClientController extends Controller
 
     public function updateprofile(Request $request)
     {
-
-
         $client = getUser();
-
 
         $rules = [
             'name' => 'nullable|string|min:5|max:30|not_regex:/([%\$#\*<>]+)/',
-            // 'email' => ['nullable', 'email', Rule::unique((new Client)->getTable()),],
-            // 'mobile_number' => ['nullable', 'digits:11', Rule::unique((new Client)->getTable())->ignore($client->id)],
         ];
 
         $validator = \Validator::make($request->all(), $rules);
@@ -168,10 +163,6 @@ class ClientController extends Controller
             return $this->returnData(['client addresses'], [AddressResource::collection($addresses)]);
         }
     }
-
-   
-
-  
 
     public function uploadImage(Request $request)
     {
