@@ -294,4 +294,45 @@ class AuthController extends Controller
 
         ]);
     }
+
+    public function testNotification(Request $request)
+    {
+
+        $client = Client::find(auth('client-api')->user()->id);
+
+        $data = [
+            "to" => $client->device_token,
+            
+            "data"=> 
+                [
+                    "type" : "order",
+                    "orderId" : "13"
+                ],
+
+            "notification" =>
+                [
+                    "title" => 'Web Push',
+                    "body" => "Sample Notification",
+                    "icon" => url('/logo.png')
+                ],
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $this->serverKey,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        curl_exec($ch);
+
+        return redirect('/home')->with('message', 'Notification sent!');
+    }
 }

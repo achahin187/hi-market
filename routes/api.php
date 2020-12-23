@@ -72,7 +72,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //update address
     Route::post('updateaddress', 'ClientController@update_address');
-    
+
     //notifications
     Route::get("notification", "NotificationController@index");
 
@@ -116,6 +116,8 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //category Product Offer
     Route::post('category/product/offer','CategoriesController@categoryProductOffer');
+
+    Route::post('test/notification', 'AuthController@testNotification');
 
 
 });
