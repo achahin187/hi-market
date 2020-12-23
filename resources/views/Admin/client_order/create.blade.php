@@ -489,6 +489,7 @@
                 '<br>' +
                 '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
                 '</div>');
+            $('.product_9').select2();
             x++;
         }
         return false;
