@@ -473,7 +473,7 @@
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
 
-                '<select class="product_9 select2 product" id= "hamdyinput'+x+'" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> '+
+                '<select class="product_9 select2 product" id="hamdyinput'+x+'" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> '+
                  
                 +'</select>'+
                     
@@ -489,6 +489,7 @@
                 '<br>' +
                 '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
                 '</div>');
+            $('#hamdyinput'+x).append($options);
             $('.product_9').select2();
             x++;
         }
