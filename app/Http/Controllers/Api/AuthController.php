@@ -333,6 +333,6 @@ class AuthController extends Controller
 
         curl_exec($ch);
 
-        return redirect('/home')->with('message', 'Notification sent!');
+        return response()->json('send');
     }
 }
