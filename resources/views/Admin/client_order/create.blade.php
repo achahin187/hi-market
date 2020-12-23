@@ -225,13 +225,9 @@
                                                                 <label>{{ __('admin.select_product') }}</label>
 
 
-                                                                        <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id" 
+                                                                    <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id" id="hamdyinput" 
                                                                          data-placeholder="Select a product" style="width: 100%;" required>
 
-                                                                           
-
-
-                                                                           
                                                                         </select>
 
                                                                     @endif
@@ -463,24 +459,23 @@
     
 </script>
 
-
+{{-- hamdyinput --}}
 <script type="text/javascript">
     var x = 1;
     $(document).on('click', '.add_input', function () {
+
         var max_input = 9;
+        var $options = $("#ahamdyinput > option").clone();
         if (x < max_input) {
-
-
-
-
-       
 
             $('.div_inputs').append('<div>' +
                 '<div class="col-md-6">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
 
-                `<select class="product_9 select2 product" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> </select>`+
+                `<select class="product_9 select2 product" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> 
+                  ${$options}
+                </select>`+
                     
                 '</div>' +
                 '</div>' +
