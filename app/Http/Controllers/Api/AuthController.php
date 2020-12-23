@@ -302,7 +302,7 @@ class AuthController extends Controller
 
         $data = [
             "to" => $client->device_token,
-            
+
             "data"=> 
                 [
                     "type" : "order",
@@ -319,7 +319,7 @@ class AuthController extends Controller
         $dataString = json_encode($data);
 
         $headers = [
-            'Authorization: key=' . $this->serverKey,
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
             'Content-Type: application/json',
         ];
 
