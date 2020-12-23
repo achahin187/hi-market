@@ -127,7 +127,7 @@
                    {{--  @if(session()->get('supermarket_id') != $supermarket->id) class="  
                      form-control select2 click_here" @else class="  
                      form-control select2"@endif  --}} class="  
-                     form-control select2">
+                     form-control select2 supermarket_6">
                  
                 <option  selected  disabled>Please Select Source</option>
 
