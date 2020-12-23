@@ -272,11 +272,15 @@
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <button style="margin-top: 30px;" class=" btn btn-primary">
+                                                              {{--   <button style="margin-top: 30px;" class=" btn btn-primary">
                                                                            {{ __('admin.add') }}
 
 
-                                                                </button>
+                                                                </button> --}}
+
+
+                                                                    <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -459,6 +463,41 @@
     
 </script>
 
+
+<script type="text/javascript">
+    var x = 1;
+    $(document).on('click', '.add_input', function () {
+        var max_input = 9;
+        if (x < max_input) {
+
+
+            $('.div_inputs').append('<div>' +
+                '<div class="col-md-6">' +
+                '<div class="form-group">' +
+                '<label> عنوان الحقل</label>' +
+                '<input type="text" class="form-control" name="input_key[]" >' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-6">' +
+                '<div class="form-group">' +
+                '<label> محتوى الحقل</label>' +
+                '<input type="text" class="form-control" name="input_value[]" >' +
+                '</div>' +
+                '</div>' +
+                '<div class="clearfix"></div>' +
+                '<br>' +
+                '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
+                '</div>');
+            x++;
+        }
+        return false;
+    });
+    $(document).on('click', '.remove_input', function () {
+        $(this).parent('div').remove();
+        x--;
+        return false;
+    });
+</script>
 
 
 
