@@ -129,8 +129,7 @@
                      form-control select2"@endif  --}} class="  
                      form-control select2 supermarket_6">
                  
-                <option    selected disabled="" 
-                  >Please Select Source</option>
+                <option    selected disabled="" >Please Select Source</option>
 
                     @foreach( $supermarkets as  $supermarket) 
                      <option
@@ -374,6 +373,8 @@
                     })
                 }
             });
+
+
         });
     
 </script>
@@ -402,7 +403,9 @@
                    
                 }
             });// end ajax
-            alert('ahmed');
+
+             $(".branch_9").attr("disabled", "disabled");
+             $(".supermarket_6").attr("disabled", "disabled");
                   
                     var selectedStatus      = $(this).find('option:selected').val();
                     var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
