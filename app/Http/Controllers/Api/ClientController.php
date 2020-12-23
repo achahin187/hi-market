@@ -399,7 +399,8 @@ class ClientController extends Controller
             
            'data'=> [
 
-            'address_id'=>$address->id
+            'address_id'=>$address->id,
+            'code'=>$rand,
 
             ],
         ]);  
