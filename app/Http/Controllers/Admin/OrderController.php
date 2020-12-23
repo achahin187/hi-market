@@ -689,7 +689,7 @@ class OrderController extends Controller
     {
 
         //$client = Client::find(auth('client-api')->user()->id);
-        dd ($data, $device_token, $stauts);
+       // dd ($data, $device_token, $stauts);
         $data = [
             "to" => $device_token,
 
