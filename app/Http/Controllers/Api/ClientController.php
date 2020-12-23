@@ -396,14 +396,12 @@ class ClientController extends Controller
         return response()->json([
 
             "status" => true,
-            
-           'data'=> [
-
-            'address_id'=>$address->id,
-            'code'=>$rand,
-
+            'msg' =>'',
+            'data'=> [
+                'address_id'=>$address->id,
+                'code'=>$rand,
             ],
-        ]);  
+        ],200);  
         return $this->returnSuccessMessage("address created successfully", 200);
     }
 
