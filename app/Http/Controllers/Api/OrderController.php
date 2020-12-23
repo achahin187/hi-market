@@ -75,7 +75,6 @@ class OrderController extends Controller
         }
     }
 
-
     public function addorder(Request $request)
     {
 

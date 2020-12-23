@@ -94,8 +94,6 @@ class ProductController extends Controller
 
             return $this->returnData(["supermarkets", "offers"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers)]);
         }
-
-
     }
 
     public function productdetails(Request $request)

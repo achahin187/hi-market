@@ -212,14 +212,13 @@ class OrderController extends Controller
         {
             return redirect('admin/orders')->withStatus('no order have this id');
         }
-
     }
 
      public function assignorder($order_id)
     {
          $order = Order::find($order_id);
 
-/*        $driver_team = Team::where('eng_name','drivers')->first();
+          /*        $driver_team = Team::where('eng_name','drivers')->first();
 
         $drivers = $driver_team->users;*/
 
