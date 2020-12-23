@@ -685,7 +685,7 @@ class OrderController extends Controller
          return $messages[$order->status];
     }
 
-    public function testNotification($device_token, $stauts, $data)
+    public function testNotification($device_token, $stauts, $data=[])
     {
 
         //$client = Client::find(auth('client-api')->user()->id);
