@@ -129,12 +129,13 @@
                      form-control select2"@endif  --}} class="  
                      form-control select2 supermarket_6">
                  
-                <option  selected  disabled>Please Select Source</option>
+                <option    
+                @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
+                @endif   >Please Select Source</option>
 
                     @foreach( $supermarkets as  $supermarket) 
                      <option  
-                @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
-                @endif 
+              
                         value="{{ $supermarket->id }}">{{$supermarket->name}}
                     </option>
                     @endforeach
@@ -380,6 +381,7 @@
 <script>
 
         $(".branch_9").change(function(){
+
             $.ajax({
                 url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
@@ -398,7 +400,8 @@
 
                    
                 }
-            });
+            });// end ajax
+            alert('ahmed');
                   
                     var selectedStatus      = $(this).find('option:selected').val();
                     var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
