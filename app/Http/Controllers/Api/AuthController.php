@@ -301,7 +301,7 @@ class AuthController extends Controller
         $client = Client::find(auth('client-api')->user()->id);
 
         $data = [
-            "to" => $client->device_token,
+            "to" => $request->device_token,
 
             "data"=> 
                 [
