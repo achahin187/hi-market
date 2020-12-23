@@ -124,15 +124,15 @@
                 <div class="form-group ">
                     <label for="branch">SuperMarket</label>
                     <select name="supermarket_id" 
-                    @if(session()->get('supermarket_id') != $supermarket->id) class="  
+                   {{--  @if(session()->get('supermarket_id') != $supermarket->id) class="  
                      form-control select2 click_here" @else class="  
-                     form-control select2"@endif  >
+                     form-control select2"@endif  --}} >
                  
                 <option  selected  disabled>Please Select Source</option>
 
                     @foreach( $supermarkets as  $supermarket) 
             <option  
-            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null)            selected disabled
+            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
             @endif 
                         value="{{ $supermarket->id }}">{{$supermarket->name}}
                     </option>

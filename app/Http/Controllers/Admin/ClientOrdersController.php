@@ -18,7 +18,7 @@ class ClientOrdersController extends Controller
     	$client = Client::find($id);
 
       
-
+ 
     	$supermarkets =  Supermarket::Where('status', 'active')->get();
     	return view('Admin.client_order.create',compact('client', 'supermarkets')); 
     } 
@@ -71,7 +71,7 @@ class ClientOrdersController extends Controller
         }
         $product = Product::find($products[0]->product_id)->branches->pluck('id')[0];
 
-         $store_order = Order::create([
+        $store_order = Order::create([
             'num' => 'jbfe651',
             "order_price"=>$total_price,
             'address'=>  Client::find($products[0]->client_id)->addresses->first()->name,
@@ -81,7 +81,8 @@ class ClientOrdersController extends Controller
                 $q->Where('branches.id', $request->branch_id);
             })->first()->id,
 
-         ]);
+        ]);
+
          $store_order->products()->attach($products->pluck('product_id'));
 
          $delete = ManualOrder::Where('id', $request->order_id)->delete();
