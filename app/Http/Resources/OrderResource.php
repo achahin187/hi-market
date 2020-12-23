@@ -46,9 +46,10 @@ class OrderResource extends JsonResource
             "id"    => $this->id,
             "title" => $this->getMessage($this),
             "icon"  => $this->getIcon($this),
-            "type"  => [
-                'order_id' => $this->id, 
-            ],
+            "type"  =>'order',
+            "order_id": $this->id,
+            "product_id": null,
+            "super_market_id": null,
             
         ];
     }
