@@ -137,7 +137,13 @@ class ClientController extends Controller
                     ];
         }else{
 
-             return $this->returnError(404, 'no point found smaller than your points');
+              return [
+                        'status' => true,
+                        'msg'=>'',
+                        'data'=>[
+                            'totalOrderMoney' => 0,                        
+                        ],
+                    ];
         }
 
          // return $this->returnData(["user_points","point"], [$user->points,$point]);
