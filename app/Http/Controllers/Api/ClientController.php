@@ -342,7 +342,7 @@ class ClientController extends Controller
             'default' => ['boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
-            'phone' => ['required', 'unique'],
+            'phone' => ['required', Rule::unique((new Address)->getTable())],
             'notes' => ['nullable'],
             'govern' => 'required|string',
             'name' => 'required|string',
