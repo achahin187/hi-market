@@ -455,14 +455,14 @@ class ClientController extends Controller
             'phone' => 'string',
         ]);
 
-        
+
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }
 
         
 
-        if (count($client->addresses) >= 1) {
+        if (count($client->addresses) > 1) {
 
             $address = $client->addresses()->where('id', $request->address_id)->first();
             $addressWhereDefault  = $client->addresses()->where('default', 1)->first();
