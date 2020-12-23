@@ -465,7 +465,7 @@
     $(document).on('click', '.add_input', function () {
 
         var max_input = 9;
-        var options = $("#ahamdyinput").html();
+        var options = $("#hamdyinput").html();
         alert(options);
         if (x < max_input) {
 
