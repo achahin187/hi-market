@@ -116,7 +116,7 @@ class ClientController extends Controller
         ->first();
 
         if ($points) {
-            # code...
+            
             if ($points->type == 0) {
                 $total = $request->total_order_money - (( $request->total_order_money * $points->value)/100) ;
             }
@@ -141,7 +141,7 @@ class ClientController extends Controller
                         'status' => true,
                         'msg'=>'',
                         'data'=>[
-                            'totalOrderMoney' => 0,                        
+                            'totalOrderMoney' => $request->total_redeem_point,                        
                         ],
                     ];
         }
