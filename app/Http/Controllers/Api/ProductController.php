@@ -188,7 +188,7 @@ class ProductController extends Controller
             } else {
 
 $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
-$search = Product::WhereHas('branches', function ($q){
+$search = Product::WhereHas('branches', function ($q) use ($branches_ids){
     $q->WhereIn('branches.id',$branches_ids);
 })->get();
 
