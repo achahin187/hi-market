@@ -305,8 +305,8 @@ class AuthController extends Controller
 
             "data"=> 
                 [
-                    "type" : "order",
-                    "orderId" : "13"
+                    "type" => "order",
+                    "orderId" => "13",
                 ],
 
             "notification" =>
