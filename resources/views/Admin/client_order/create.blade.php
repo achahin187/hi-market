@@ -473,9 +473,9 @@
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
 
-                `<select class="product_9 select2 product" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> 
-                  ${$options}
-                </select>`+
+                '<select class="product_9 select2 product" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> '+
+                 $options
+                +'</select>'+
                     
                 '</div>' +
                 '</div>' +
