@@ -489,7 +489,7 @@
                 '<br>' +
                 '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
                 '</div>');
-            $('#hamdyinput'+x).append($options);
+            $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();
             x++;
         }
