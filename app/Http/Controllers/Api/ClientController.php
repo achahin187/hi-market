@@ -393,14 +393,14 @@ class ClientController extends Controller
         #send sms to the number in address
 
 
-        return response()->json(200,[
+        return response()->json([
 
             "status" => true,
             
            'data'=> [
 
             'address_id'=>$address->id
-            
+
             ],
         ]);  
         return $this->returnSuccessMessage("address created successfully", 200);
