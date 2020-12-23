@@ -444,18 +444,18 @@ class ClientController extends Controller
         $client = \auth()->user();
       
         $validator = \Validator::make($request->all(), [
-            'address' => ['min:2', 'not_regex:/([%\$#\*<>]+)/'],
-            'label' => ['string'],
-            'default' => ['boolean'],
-            'lat' => ['string'],
-            'lon' => ['string'],
-            'govern' => ['string'],
-            'notes' => ['nullable'],
-            'name' => ['string'],
-            'phone' => ['string'],
+            'address' => 'required',
+            'label' => 'string',
+            'default' => 'boolean',
+            'lat' => 'string',
+            'lon' => 'string',
+            'govern' => 'string',
+            'notes' => 'nullable',
+            'name' => 'string',
+            'phone' => 'string',
         ]);
 
-
+        return $request->all();
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }
