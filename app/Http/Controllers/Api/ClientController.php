@@ -141,7 +141,7 @@ class ClientController extends Controller
                         'status' => true,
                         'msg'=>'',
                         'data'=>[
-                            'totalOrderMoney' => intval($request->total_redeem_point),                        
+                            'totalOrderMoney' => intval($request->total_order_money),                        
                         ],
                     ];
         }
