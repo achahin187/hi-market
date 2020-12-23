@@ -283,8 +283,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('check/location/test',function(){
 
             $pointLocation = new pointLocation();
-            $polygon = array("30.187870 31.399123", "30.111870 31.562183", "30.012031 31.248863");
-            $points = array("30.168876 31.331316");
+            $polygon = array("31.399123 30.187870", "31.562183 30.111870", "31.248863 30.012031");
+            $points = array("31.331316 30.168876");
             // The last point's coordinates must be the same as the first one's, to "close the loop"
             foreach($points as $key => $point) {
                 echo "point ahmed"  . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
