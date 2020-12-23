@@ -342,7 +342,7 @@ class ClientController extends Controller
             'default' => ['boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
-            'phone' => ['required', 'unique:addresses'],
+            'phone' => ['required', 'unique:addresses,phone'],
             'notes' => ['nullable'],
             'govern' => 'required|string',
             'name' => 'required|string',
