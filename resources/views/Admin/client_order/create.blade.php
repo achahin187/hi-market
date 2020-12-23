@@ -129,12 +129,13 @@
                      form-control select2"@endif  --}} class="  
                      form-control select2 supermarket_6">
                  
-                <option    
-                @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
-                @endif   >Please Select Source</option>
+                <option    selected disabled="" 
+                  >Please Select Source</option>
 
                     @foreach( $supermarkets as  $supermarket) 
-                     <option  
+                     <option
+                      @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
+                       @endif  
               
                         value="{{ $supermarket->id }}">{{$supermarket->name}}
                     </option>
