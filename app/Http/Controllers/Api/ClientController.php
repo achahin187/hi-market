@@ -455,7 +455,7 @@ class ClientController extends Controller
             'phone' => 'string',
         ]);
 
-        return $request->all();
+        
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }
