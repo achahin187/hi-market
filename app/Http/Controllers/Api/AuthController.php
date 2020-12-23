@@ -313,8 +313,25 @@ class AuthController extends Controller
                 [
                     "title" => 'Web Push',
                     "body" => "Sample Notification",
-                    "icon" => url('/logo.png')
+                    "icon" => url('/logo.png'),
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
                 ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
         ];
         $dataString = json_encode($data);
 
