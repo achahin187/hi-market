@@ -411,7 +411,7 @@
                 }
             });// end ajax
 
-             //$(".branch_9").attr("disabled", "disabled");
+             $(".branch_9").attr("disabled", "disabled");
              $(".supermarket_6").attr("disabled", "disabled");
                   
                     var selectedStatus      = $(this).find('option:selected').val();
