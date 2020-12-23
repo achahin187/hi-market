@@ -115,24 +115,30 @@ class ClientController extends Controller
         ->where('status','active')
         ->first();
 
-        if ($points->type == 0) {
-            $total = $request->total_order_money - (( $request->total_order_money * $points->value)/100) ;
-        }
-        else{
+        if ($points) {
+            # code...
+            if ($points->type == 0) {
+                $total = $request->total_order_money - (( $request->total_order_money * $points->value)/100) ;
+            }
+            else{
 
-            $total = $request->total_order_money - $points->value ;
-        }
+                $total = $request->total_order_money - $points->value ;
+            }
 
-        if ($total <  (( $request->total_order_money * $setting->reedem_point)/100)) {
-            $total = (( $request->total_order_money * 30)/100)  ;
+            if ($total <  (( $request->total_order_money * $setting->reedem_point)/100)) {
+                $total = (( $request->total_order_money * 30)/100)  ;
+            }
+              return [
+                        'status' => true,
+                        'msg'=>'',
+                        'data'=>[
+                            'totalOrderMoney' => $total,                        
+                        ],
+                    ];
+        }else{
+
+             return $this->returnError(404, 'no point found smaller than your points');
         }
-          return [
-                    'status' => true,
-                    'msg'=>'',
-                    'data'=>[
-                        'totalOrderMoney' => $total,                        
-                    ],
-                ];
 
          // return $this->returnData(["user_points","point"], [$user->points,$point]);
 

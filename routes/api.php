@@ -70,7 +70,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     //sendPromoCode
     Route::post('sendPromoCode', 'CartController@sendPromoCode');
 
+    //update address
     Route::post('updateaddress', 'ClientController@update_address');
+    
+    //notifications
     Route::get("notification", "NotificationController@index");
 
     //client

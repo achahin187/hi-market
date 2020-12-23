@@ -140,7 +140,6 @@ class CategoriesController extends Controller
 
 
         return $this->returnData(['products','categories'], [CategoryProductResource::collection($products),CategoryResource::collection($categories)]);
-
     }
 
     public function categoryproducts(Request $request)
@@ -266,6 +265,5 @@ class CategoriesController extends Controller
             }
         }
         return $this->returnError(422, "Pass category id");
-
     }
 }
