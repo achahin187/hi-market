@@ -15,6 +15,7 @@ use App\Models\ManualOrder;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Constants;
 
 class OrderController extends Controller
 {
@@ -603,6 +604,14 @@ class OrderController extends Controller
         if($request->type == 'next')
         {
             $order->update(['status'=>$request->order_status + 1]);
+
+            $data =  [
+
+                    "type" => "order",
+                    "orderId" => $order->id,
+                   ],
+
+            $this->testNotification($device_token, $order->status, $data);
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
@@ -661,5 +670,73 @@ class OrderController extends Controller
             
         $order = Order::find($id);
         return view('Admin.orders.show_order')->with('order', $order);
+    }
+
+    public function getMessage($order)
+    {
+        $messages = [
+            Constants::ORDER_NEW => "New Order Created",
+            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
+            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
+            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
+             Constants::ORDER_PREPARED => "Your Order $order->num is Prepared",
+            null => ""
+        ];
+         return $messages[$order->status];
+    }
+
+    public function testNotification($device_token, $stauts, $data)
+    {
+
+        //$client = Client::find(auth('client-api')->user()->id);
+
+        $data = [
+            "to" => $device_token,
+
+            "data"=> $data,
+
+
+            "notification" =>
+                [
+                    "title" => $this->getMessage($stauts),
+                    "body" => "Sample Notification",
+                    "icon" => url('/logo.png'),
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        curl_exec($ch);
+
+        return response()->json('send');
     }
 }

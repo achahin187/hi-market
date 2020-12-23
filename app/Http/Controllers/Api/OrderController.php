@@ -288,13 +288,7 @@ class OrderController extends Controller
 
             $clientOrders = $client->orders;
 
-           
-
-
                 return MyOrdersResource::collection($clientOrders);
-
-           
-
         } else {
 
             return $this->returnError(422, "user not exists");
@@ -400,14 +394,14 @@ class OrderController extends Controller
                      "body" => "great match!",
                      "Room" => "PortugalVSDenmark",
                    ],
-                'notification' => array(
+                'notification' => [
                     'title' => 'test data',
                     'text' => 'test data',
                     'click_action' => 'HomeActivity',
-                ),
-                'android' => array(
+                ],
+                'android' => [
                     "priority" => "high"
-                ),
+                ],
                 'priority' => 10
             );
             $headers = array(
@@ -446,14 +440,8 @@ class OrderController extends Controller
 
         return response()->json([
             "status" => true,
-           
            'data'=> new ConfirmationOrderResource($order),
-                
-         
-
         ]);  
-
-
     }
 
 }
