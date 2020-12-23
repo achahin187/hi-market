@@ -162,14 +162,8 @@ class ClientController extends Controller
         $client = \auth("client-api")->check() ? \auth("client-api")->user() : Udid::where("body", $udid)->first();
 
         if ($client) {
+
             $addresses = $client->addresses()->where('verified',1)->get();
-
-            // foreach ($addresses as $address) {
-            //     $address->name = $client->name;
-            //     $address->name = $client->name;
-            //     $address->mobile_number = $client->mobile_number;
-
-            // }
 
             return $this->returnData(['client addresses'], [AddressResource::collection($addresses)]);
         }
@@ -177,26 +171,7 @@ class ClientController extends Controller
 
    
 
-    public function validateAddress()
-    {
-        $validation = \Validator::make(\request()->all(), [
-            "address_id" => "required|exists:addresses,id",
-            "code" => "required"
-        ]);
-
-        if ($validation->fails()) {
-            return $this->returnValidationError(422, $validation);
-        }
-
-        $address = Address::find(\request("address_id"));
-
-        if ($address->verify == request("code")) {
-            $address->update(["verified" => 1]);
-            return $this->returnSuccessMessage("address verified");
-        }
-
-        return $this->returnError(422, "code is invalid");
-    }
+  
 
     public function uploadImage(Request $request)
     {
@@ -336,6 +311,27 @@ class ClientController extends Controller
        // }
     }
 
+    public function validateAddress()
+    {
+        $validation = \Validator::make(\request()->all(), [
+            "address_id" => "required|exists:addresses,id",
+            "code" => "required"
+        ]);
+
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+
+        $address = Address::find(\request("address_id"));
+
+        if ($address->verify == request("code")) {
+            $address->update(["verified" => 1]);
+            return $this->returnSuccessMessage("address verified");
+        }
+
+        return $this->returnError(422, "code is invalid");
+    }
+
     public function add_address(Request $request)
     {
         $client = \auth("client-api")->user();
@@ -354,10 +350,7 @@ class ClientController extends Controller
 
 
         if ($validator->fails()) {
-
-
             return $this->returnError(300, $validator->errors()->first());
-
         }
 
         if($request->default == 1)
@@ -369,17 +362,17 @@ class ClientController extends Controller
              
                 $address->update([ 'default' => 0 ]);
                 $default = 1;
+
             }else{
                 $default = 1;
             }
-
-          
 
         }else{
             $default = 0; 
         }
 
         $rand = "12345";
+
         Address::create([
             'name' =>  $request->name,
             'phone' => $request->phone,
@@ -396,7 +389,15 @@ class ClientController extends Controller
             "client_id" => $client->id,
         ]);
 
+        #send sms to the number in address
 
+
+        return response()->json(200,[
+            
+            "status" => true,
+            
+           'data'=> ['order_id'=>$order->id],
+        ]);  
         return $this->returnSuccessMessage("address created successfully", 200);
     }
 
@@ -445,8 +446,6 @@ class ClientController extends Controller
 
     public function update_address(Request $request)
     {
-
-
         $client = \auth()->user();
       
         $validator = \Validator::make($request->all(), [
