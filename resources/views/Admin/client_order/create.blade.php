@@ -225,7 +225,7 @@
                                                                 <label>{{ __('admin.select_product') }}</label>
 
 
-                                                                    <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id" id="hamdyinput" 
+                                                                    <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id[]" id="hamdyinput" 
                                                                          data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                         </select>
