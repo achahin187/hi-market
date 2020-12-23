@@ -342,6 +342,7 @@ class ClientController extends Controller
             'default' => ['boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
+            'phone' => ['required', 'unique'],
             'notes' => ['nullable'],
             'govern' => 'required|string',
             'name' => 'required|string',
@@ -373,7 +374,7 @@ class ClientController extends Controller
 
         $rand = "12345";
 
-        Address::create([
+        $address=Address::create([
             'name' =>  $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
@@ -393,10 +394,10 @@ class ClientController extends Controller
 
 
         return response()->json(200,[
-            
+
             "status" => true,
             
-           'data'=> ['order_id'=>$order->id],
+           'data'=> ['order_id'=>$address->id],
         ]);  
         return $this->returnSuccessMessage("address created successfully", 200);
     }
