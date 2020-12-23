@@ -21,6 +21,19 @@ class OrderResource extends JsonResource
          return $messages[$order->status];
     }
 
+     public function getIcon($order)
+    {
+         $icon = [
+            Constants::ORDER_NEW => asset('notification_icons/box.svg'),
+            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
+            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
+            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
+             Constants::ORDER_PREPARED => asset('notification_icons/delivery-man.svg'),
+            null => ""
+        ];
+         return $icon[$order->status];
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -30,9 +43,10 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "message" => $this->getMessage($this),
-            "status" => $this->status,
+            "id"    => $this->id,
+            "title" => $this->getMessage($this),
+            "icon"  => $this->getIcon($this),
+            
         ];
     }
 }

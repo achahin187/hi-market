@@ -186,10 +186,12 @@ class ProductController extends Controller
 
                 return $this->returnError(404, 'there is no product found');
             } else {
+
+                $branches_ids = DB::table('product_supermarket')->pluck('pivot')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
+                return $branches_ids;
                 foreach ($products as $product) {
 
                     if ($this->getCurrentLang() == 'ar') {
-                        // $branches_ids = DB::table('product_supermarket')->pluck('pivot')->pluck('branch_id');
                         // $favproductss = DB::table('product_supermarket')->whereIn('branch_id',$branches_ids)
                         //  ->first();
                         $productarray =
@@ -227,8 +229,7 @@ class ProductController extends Controller
                 }
 
                 return $this->returnData(['products'], [$all_products]);
-            }
-        
+            }    
     }
 
     public function filter()

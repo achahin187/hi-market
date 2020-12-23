@@ -71,7 +71,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+    //
         $notifications = Notification::where('flag',0)->orderBy('id', 'desc')->get();
 
         return view('Admin.notifications.index',compact('notifications'));

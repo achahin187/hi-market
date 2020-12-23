@@ -116,7 +116,8 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //category Product Offer
     Route::post('category/product/offer','CategoriesController@categoryProductOffer');
-
+    
+    //test notification
     Route::post('test/notification', 'AuthController@testNotification');
 
 
