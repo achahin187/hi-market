@@ -132,9 +132,9 @@
                 <option  selected  disabled>Please Select Source</option>
 
                     @foreach( $supermarkets as  $supermarket) 
-            <option  
-            @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
-            @endif 
+                     <option  
+                @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
+                @endif 
                         value="{{ $supermarket->id }}">{{$supermarket->name}}
                     </option>
                     @endforeach
@@ -153,7 +153,10 @@
                                                     $branch = \App\Models\Branch::find(session()->get('branch_id'));
                                                     @endphp
 
-                                                        <option value="{{ $branch->id }}" selected > {{ $branch->name_en  }}</option>
+                                                        <option
+                                                         @if(session()->get('branch_id') != $branch->id && session()->get('branch') != null) selected disabled
+                                                          @endif 
+                                                         value="{{ $branch->id }}"  > {{ $branch->name_en  }}</option>
                                                            
                                                     </select>
                                                 </div>
@@ -171,7 +174,7 @@
                                             @endif  
 
                                             <a href="{{ route('change.order',['client_id'=>request()->client_id]) }}" style="margin-top: 30px;" class=" btn btn-primary">
-                                                    Cahnge Order
+                                                    Reset Order
 
 
                                             </a >
@@ -234,8 +237,8 @@
 
                                                             </div>
                                                         </div>
- <input type="hidden" class="branch_product_id" name="branch_id" value="">
-  <input type="hidden" class="supermarket_id" name="supermarket_id" value="">
+                                                         <input type="hidden" class="branch_product_id" name="branch_id" value="">
+                                                          <input type="hidden" class="supermarket_id" name="supermarket_id" value="">
  
 
                                                         <div class="col-md-3">
