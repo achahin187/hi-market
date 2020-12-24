@@ -315,7 +315,7 @@ class OffersController extends Controller
             $allBranches =  Branch::all(); 
             foreach ($allBranches as  $allBranche) {
                 
-                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+                $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
             }
         }
     }
@@ -361,7 +361,7 @@ class OffersController extends Controller
             $allBranches =  Branch::all(); 
             foreach ($allBranches as  $allBranche) {
                 
-                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+                $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
             }  
         }      
 
