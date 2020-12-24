@@ -674,11 +674,11 @@ class OrderController extends Controller
     public function getMessage($order)
     {
         $messages = [
-            Constants::ORDER_NEW => "New Order Created",
-            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
-            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
-            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
-             Constants::ORDER_PREPARED => "Your Order $order->num is Prepared",
+            0 => "New Order Created",
+            1 => "Your Order $order->num was Approved",
+            2 => "Your Order $order->num Was Delivered Rate Your Order",
+            3 => "Your Order $order->num Was Received",
+             4 => "Your Order $order->num is Prepared",
             null => ""
         ];
          return $messages[$order->status];
