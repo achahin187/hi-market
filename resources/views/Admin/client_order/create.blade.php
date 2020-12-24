@@ -473,7 +473,7 @@
             // });
         //});
 
-        $('body').on('keyup change', '.product-quantity .product-price', function() {
+        $('body').on('keyup change', '.product-quantity', function() {
 
       
             var quantity = parseInt($(this).val()); //2
