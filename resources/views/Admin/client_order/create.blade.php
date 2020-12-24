@@ -415,7 +415,8 @@
                 success: function(data) {
                  var price = parseInt(data.price) ;
                  var qty =  parseInt($('.product_qty').val());
-
+                 console.log(price);
+                 console.log(qty);
                  $('.price').val( price  * qty ) ;
                    
 
