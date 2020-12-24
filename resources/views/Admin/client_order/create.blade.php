@@ -225,7 +225,7 @@
                                                                 <label>{{ __('admin.select_product') }}</label>
 
 
-                                                                    <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="product_id[]" id="hamdyinput" 
+                                                                    <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
                                                                          data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                         </select>
@@ -241,7 +241,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="exampleInputPassword1">{{__('admin.quantity')}}</label>
-                                                                <input type="number" name="quantity" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
+                                                                <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
 
                                                                 @error('quantity')
                                                                     <span class="invalid-feedback" role="alert">
@@ -444,15 +444,15 @@
 
         var max_input = 9;
         var options = $("#hamdyinput").html();
-        
+        console.log(options);
         if (x < max_input) {
 
             $('.div_inputs').append('<div class="row" style="align-items: center;">' +
-                '<div class="col-md-3">' +
+                '<div class="col-md-4">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
 
-                '<select class="product_9 select2 product" id="hamdyinput'+x+'" name="input_key[]" data-placeholder="Select a product" style="width: 100%;" required> '+
+                '<select class="product_9 select2 product" id="hamdyinput'+x+'" name="products[]" data-placeholder="Select a product" style="width: 100%;" required> '+
                  options
                 +'</select>'+
                     
@@ -460,13 +460,13 @@
                 '</div>' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
-                '<label> محتوى الحقل</label>' +
-                '<input type="text" class="form-control" name="input_value[]" >' +
+                '<label> الكية </label>' +
+                '<input type="text" class="form-control" name="quantity[]" >' +
                 '</div>' +
                 '</div>' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
-                '<label> محتوى الحقل</label>' +
+                '<label> السهر</label>' +
                 '<input type="text" class="form-control" name="input_value[]" >' +
                 '</div>' +
                 '</div>' +

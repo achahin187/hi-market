@@ -49,7 +49,7 @@ class ClientOrdersController extends Controller
     public function storeOrder(Request $request)
     {       
         $request_data = $request->all();
-
+        dd($request_data);
         $orders = collect($request_data["order"]) ;
         // $total_price = $orders->sum('price');
 
