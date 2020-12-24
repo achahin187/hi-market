@@ -450,13 +450,13 @@
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> الكية </label>' +
-                '<input type="number" class="product_qty form-control" name="quantity[]" >' +
+                '<input type="number"  name="quantity[]" min="1" value="1" class="product_qty form-control >' +
                 '</div>' +
                 '</div>' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> السهر</label>' +
-                '<input type="text" class="price form-control" name="price[]" >' +
+                '<input type="number" name="price[]"  min="0" max="99999.99" class="price form-control" name="price[]" >' +
                 '</div>' +
                 '</div>' +
                 '<div class="clearfix"></div>' +
