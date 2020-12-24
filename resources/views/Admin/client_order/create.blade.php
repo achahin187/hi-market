@@ -549,14 +549,13 @@
         }
         return false;
     });
-    $('body').on('keyup', '.delivery  .discount', function () {
+     $('body').on('keyup', '.delivery  .discount', function () {
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
-
-         console.log(delivery);
          console.log(discount);
-       
+         console.log(delivery);
+      
     });
 
   $(document).on('click', '.remove_input', function () {
@@ -571,7 +570,7 @@ function calculateTotal() {
 
     var price = 0;
 
-    $('.order-list .product-price .delivery .discount ').each(function(index) {
+    $('.order-list .product-price -list').each(function(index) {
         
         price += parseFloat($(this).html());
 
