@@ -286,30 +286,7 @@
                                                 </div>
                                             </form>
 
-                                            <div class="card-body">
-                                                
-                                                <table  class="table table-bordered table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>{{ __('admin.name') }}</th>
-                                                        <th>{{ __('admin.quantity') }}</th>
-                                                        <th>{{ __('admin.price') }}</th>
-                                                        <th>{{ __('admin.delete') }}</th>
-                                                    </tr>
-                                                    </thead>
-                                                      
-                                                      @foreach($orders as $order)
-                                                        <tr>
-                                                        <td>{{ $order->product_name }}</td>
-                                                        <td>{{ $order->quantity }}</td>
-                                                        <td>{{ $order->price }}</td>
-                                                        <td><a href="{{ route('manual.order.delete',$order->id) }}" class="btn btn-danger">Delete</a></td>
-                                                         </tr>
-                                                        @endforeach
-                                                      
-                                                         </tbody>
-                                                </table>
-                                            </div>
+                                            
                                         </div>
                                      
                                                 {{-- Endproduct --}}
@@ -497,7 +474,7 @@
                 
 
                 '<a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a>' +
-                +
+                
                 '</div>');
            // $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();

@@ -108,7 +108,7 @@ class OffersController extends Controller
                 $data =  [
                   "type" => "Deal",
                   "product_id" => $request_data['product_id'] ?? null,
-                  "superMarket_id" => $request_data['branch_id'],
+                  "superMarket_id" => $request_data['branch_id']??null,
                  ];
 
         new SendNotification('topics', '', $data);    
