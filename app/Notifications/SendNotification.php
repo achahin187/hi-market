@@ -147,7 +147,7 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$order];
+         return $messages[$order->status];
     }
 
      public function getIcone($order)
@@ -163,7 +163,7 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$order->status];
+         return $messages[$order];
     }
 
     public function storeNotificationOrder()
