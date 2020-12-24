@@ -187,7 +187,7 @@ class ProductController extends Controller
                 $fileextension = $image->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                $image->move('products_images', $file_to_store);
+                $image->move('product_images', $file_to_store);
 
                 $image_names[] = $file_to_store;
             }
@@ -753,7 +753,7 @@ class ProductController extends Controller
                 $productimages = explode(',', $images);
 
                 foreach ($productimages as $image) {
-                    unlink('products_images/' . $image);
+                    unlink('product_images/' . $image);
                 }
             }
 
