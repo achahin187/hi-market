@@ -180,7 +180,7 @@ class ProductController extends Controller
 
 
             $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
-
+return $products;
             if (count($products) < 1) {
 
                 return $this->returnError(404, 'there is no product found');
