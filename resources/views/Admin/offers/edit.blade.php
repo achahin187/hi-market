@@ -43,31 +43,31 @@
                   <div class="card-header p-0 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">Promo Code</a>
+                        <a class="nav-link {{ $offer->type == 'promocode' ?'active':''}} " id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">Promo Code</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Product Profile</a>
+                        <a class="nav-link {{ $offer->type == 'product Offer' ?'active':''}}" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Product Profile</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Free Product</a>
+                        <a class="nav-link {{ $offer->type == 'free product' ?'active':''}}" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Free Product</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link " id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="true">Points</a>
+                        <a class="nav-link {{ $offer->type == 'point' ?'active':''}}" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="true">Points</a>
                       </li>
                     </ul>
                   </div>
                   <div class="card-body">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
-                      <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                      <div class="tab-pane fade {{ $offer->type == 'promocode' ?'show active':''}}" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                          @include('Admin.offers._promocode_edit') 
                       </div>
-                      <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                      <div class="tab-pane fade {{ $offer->type == 'product Offer' ?'show active':''}}" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                           @include('Admin.offers._product_offers') 
                       </div>
-                      <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                      <div class="tab-pane fade {{ $offer->type == 'free product' ?'show active':''}}" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                            @include('Admin.offers._product_free') 
                       </div>
-                      <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+                      <div class="tab-pane fade {{ $offer->type == 'point' ?'show active':''}}" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
                            @include('Admin.offers._product_point') 
                       </div>
                     </div>

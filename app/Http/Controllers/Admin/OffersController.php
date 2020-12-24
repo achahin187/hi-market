@@ -231,12 +231,12 @@ class OffersController extends Controller
     {
 
          $request->validate([
-            'name' =>'required|string',
-            'email' =>'required|email',
+            // 'name' =>'required|string',
+            // 'email' =>'required|email',
         ]);
 
         $request_data = $request->all();
-        
+        dd($request_data);
         if ($request->password == null) {
              $request_data = $request->except('password');
          }
