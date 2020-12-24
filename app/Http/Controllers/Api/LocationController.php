@@ -27,12 +27,13 @@ class LocationController extends Controller
           $pointLocation = new PointLocation();
 
           $getpolygon = Polygon::all();
-          $polygon=[];
+          $lat=[];
+          $lon=[];
           foreach ($getpolygon as $key => $value) {
              $polygon[]= $value->lat;
-             $polygon[]= $value->lon;
+             $lon[]= $value->lon;
           }
-          return $polygon;
+          return implode(' ', array($lat, $lon));
        
           $point = implode(' ', array($long, $lat));
 
