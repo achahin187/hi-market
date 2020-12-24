@@ -479,7 +479,7 @@
         
         // var unitPrice = $(this).data('price'); //150
       
-            var quantity = $(this).val(); //2
+            var quantity = parseInt($(this).val()); //2
 
             $.ajax({
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
@@ -488,7 +488,7 @@
         
                   
              
-              console.log(quantity);
+              console.log(quantity * data.price);
               console.log(data.price);
          $(this).closest('tr').find('.product-price').html(quantity * data.price);
         
