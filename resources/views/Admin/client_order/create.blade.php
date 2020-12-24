@@ -489,7 +489,7 @@
                 success: function(data) {
                  
                   $('.product-price').html(data.price);
-                   //calculateTotal();
+                   calculateTotal();
                   
 
                 }
@@ -550,7 +550,7 @@
         return false;
     });
 
-     $('.order-list .product-price').keyup( function () {
+     $('.delivery .discount').keyup( function () {
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
