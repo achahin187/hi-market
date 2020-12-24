@@ -195,10 +195,11 @@ class ProductController extends Controller
                 // })->get();
 
             //return $search_result;
-            return [
-                'status' =>true,
-                'products' =>SearchResource::collection($branches_ids),
-            ];
+            // return [
+            //     'status' =>true,
+            //     'msg' =>'',
+            //     'products' =>SearchResource::collection($branches_ids),
+            // ];
 
                 // foreach ($search_result as $product) {
 
@@ -238,7 +239,7 @@ class ProductController extends Controller
                 //     $all_products [] = $productarray;
                 // }
                 
-                //return $this->returnData(['products'], [$all_products]);
+                return $this->returnData(['products'], ['faefa','geagea']);
             }    
     }
 
