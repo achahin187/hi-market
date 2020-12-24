@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 use App\Models\NotificationMobile;
+use App\Models\Branch;
 
 class SendNotification {
 
@@ -14,11 +15,13 @@ class SendNotification {
         $this->device_token = $device_token;
         $this->order = $order;
         $this->data = $data;
-        $this->testNotification();
+        $device_token == 'topics' ? $this->sendNotificationOffer() : $this->sendNotificationOrder();
     }
 
-    public function testNotification()
+    public function sendNotificationOrder()
     {
+
+
        
         $data = [
 
@@ -71,10 +74,65 @@ class SendNotification {
         
         curl_close($ch);
         #store notification To database
-        $this->storeNotification();
-         
+        $this->storeNotificationOrder();   
     }
 
+    public function sendNotificationOffer()
+    {
+
+        $data = [
+
+            "to" => '/topics/Deals',
+            "data"=> $this->data,
+
+            "notification" =>
+                [
+                    "title" => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                    "body" => "Sample Notification",
+                    "icon" => $this->getIcone(1),
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+        if($result == FALSE){
+            die(curl_exec($ch));
+        }
+        
+        curl_close($ch);
+        #store notification Offer To database
+        $this->storeNotificationOffer();   
+    }
 
     public function getMessage($order)
     {
@@ -108,7 +166,7 @@ class SendNotification {
          return $messages[$order->status];
     }
 
-    public function storeNotification()
+    public function storeNotificationOrder()
     {
          NotificationMobile::create([
 
@@ -126,7 +184,28 @@ class SendNotification {
             ]);
     } 
 
-   
+    public function storeNotificationOffer()
+    {
+         NotificationMobile::create([
+
+                'title_ar'    => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                'title_en'    => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                'body_ar'     => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                'body_en'     => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                'type'        => $this->data['type'],
+                'icon'        => $this->getIcone(1),
+                'order_id'    => $this->data['orderId']?? null,
+                'client_id'   => $this->order->client_id?? null,
+                'product_id'  => $this->data['product_id']?? null,
+                'superMarket_id'    => $this->data['superMarket_id']?? null,
+
+            ]);
+    } 
+
+    public function getBranch()
+    {
+        Branch::where('id', $this->data['superMarket_id'])->first();
+    }
  
  
 }

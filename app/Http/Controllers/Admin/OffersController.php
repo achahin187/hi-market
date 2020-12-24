@@ -104,8 +104,14 @@ class OffersController extends Controller
                 # code...
                 break;
         }
-       
-            
+     
+                $data =  [
+                  "type" => "Deal",
+                  "product_id" => $request_data['product_id'] ?? null,
+                  "superMarket_id" => $request_data['branch_id'],
+                 ];
+
+        new SendNotification('topics', '', $data);    
         return redirect()->route($this->route.'index');
     }
 
