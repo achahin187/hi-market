@@ -65,7 +65,7 @@ class SendNotification {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
         $result = curl_exec($ch);
         if($result == FALSE){
-            die(curl_exec($ch))
+            die(curl_exec($ch));
         }
         
         curl_close($ch);
