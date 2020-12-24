@@ -7,7 +7,7 @@ class SendNotification {
 
     public $device_token;
     public $order;
-    public $data=[];
+    public $data;
 
     public function __construct($device_token, $order, $data=[])
     {
@@ -19,7 +19,7 @@ class SendNotification {
 
     public function testNotification()
     {
-        dd($this->device_token, $this->order, $this->data);
+        dd($this->data);
 
         $data = [
 
@@ -50,6 +50,7 @@ class SendNotification {
                           ],
                     ],
         ];
+
         $dataString = json_encode($data);
 
         $headers = [
