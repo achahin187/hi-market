@@ -16,7 +16,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Constants;
-use App\Notification\SendNotification;
+use App\Notifications\SendNotification;
 
 class OrderController extends Controller
 {
