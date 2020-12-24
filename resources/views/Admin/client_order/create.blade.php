@@ -356,10 +356,10 @@
 
 
 
-
+{{-- Js Code  --}}
 @push('scripts')
+    {{-- supermarket ajax --}}
 <script>
-    //supermarket ajax
         $(".supermarket_6").change(function(){
 
             $.ajax({
@@ -382,10 +382,9 @@
 
 
         });
-    
 </script>
 
-
+{{-- branch Ajax --}}
 <script>
 
         $(".branch_9").change(function(){
@@ -456,7 +455,6 @@
                 }
             });
         });
-    
 </script>
 
 {{-- hamdyinput --}}
@@ -502,7 +500,5 @@
         return false;
     });
 </script>
-
-
 
 @endpush

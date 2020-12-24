@@ -223,9 +223,8 @@ class OrderController extends Controller
 
     public function selectDate()
     {
-        $branch = Branch::find(request("supermarket_id"));
 
-       
+        $branch = Branch::find(request("supermarket_id"));
 
         $days = [
             [
