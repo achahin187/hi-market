@@ -438,7 +438,7 @@
         var quantity = Number($(this).val()); //2
        
         var unitPrice = $(this).data('price'); //150
-        $(this).closest('tr').find('.price').html($.number(quantity * unitPrice, 2));
+        $(this).closest('tr').find('.price').html(quantity * unitPrice);
         
 
     });//end of product quantity change
