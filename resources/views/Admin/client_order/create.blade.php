@@ -286,11 +286,11 @@
                                                    
                                                         <tr>
                                                             <td>  
-                                                                <input type="number" name="delivery"  min="1" value="1" class="delivery @error('quantity') is-invalid @enderror form-control" required>
+                                                                <input type="number" name="delivery"  min="1" value="1" class="delivery-money @error('quantity') is-invalid @enderror form-control" required>
                                                             </td>
 
                                                             <td>  
-                                                                <input type="number" name="discount" min="1" value="1" class="discount @error('quantity') is-invalid @enderror form-control" required>
+                                                                <input type="number" name="discount" min="1" value="1" class="discount-money @error('quantity') is-invalid @enderror form-control" required>
                                                             </td>
                                                            
                                                         </tr>
@@ -550,7 +550,7 @@
         return false;
     });
 
-     $('.delivery .discount').keyup( function () {
+     $('.delivery-money').click( function () {
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
