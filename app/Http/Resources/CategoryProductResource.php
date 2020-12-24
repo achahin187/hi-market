@@ -26,6 +26,7 @@ class CategoryProductResource extends JsonResource
             "ratings" => $this->ratings ?? "0",
             "priority" => $this->priority ?? 0,
             "images" => $this->images ? asset("product_images/" . $this->images) : asset("images/default.svg") ,
+            "imagepath" => $this->images ? asset("product_images/" . $this->images) : asset("images/default.svg"),
             "points" => $this->points ?? 0,
             "category_name" => $this->category->name ?? "",
             "category_id" => $this->category_id ?? "",
@@ -34,7 +35,6 @@ class CategoryProductResource extends JsonResource
             "supermarketName" => $this->getBranch(),
             "favourite" =>(int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
             "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
-            "imagepath" => $this->image ?? "default.png",
             "category" => $this->category ?? "",
         ];
     }
