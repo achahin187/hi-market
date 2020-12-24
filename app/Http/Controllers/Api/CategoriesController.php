@@ -254,7 +254,7 @@ class CategoriesController extends Controller
                     }
 
 
-                    $product->imagepath = asset('categories_image/' . $product->images);
+                    $product->imagepath = asset('product_images/' . $product->images);
 
 
                 }

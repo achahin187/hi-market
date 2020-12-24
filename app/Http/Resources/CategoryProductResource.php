@@ -26,7 +26,7 @@ class CategoryProductResource extends JsonResource
             "ratings" => $this->ratings ?? "0",
             "priority" => $this->priority ?? 0,
             "images" => $this->images ? asset("product_images/" . $this->images) : asset("images/default.svg") ,
-            "imagepath" => $this->images ? asset("product_images/" . $this->images) : asset("images/default.svg"),
+            "imagepath" => $this->imagepath ? asset("product_images/" . $this->images) : asset("images/default.svg"),
             "points" => $this->points ?? 0,
             "category_name" => $this->category->name ?? "",
             "category_id" => $this->category_id ?? "",
