@@ -27,7 +27,7 @@ class ProductDetailesResource extends JsonResource
                 "rate" => $this->rate ?? 0,
                 "ratings" => $this->ratings ?? 0,
                 "priority" => $this->priority ?? 0,
-                "images" => asset("images/" . $this->images),
+                "images" => asset("product_images/" . $this->images),
                 "points" => $this->points ?? 0,
                 "category_name" => $this->category->name ?? "",
                 "category_id" => $this->category_id ?? "",
