@@ -492,8 +492,8 @@
         console.log(options);
 
           
-        if (x < max_input) {
-                $('.div_inputs').append(`<div><tr>
+       
+              $('.div_inputs').append(`<div><tr>
                         <td> 
                             <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
                             data-placeholder="Select a product" style="width: 100%;" required>
@@ -512,10 +512,11 @@
                                             </button> 
                         </td>
                     </tr></div>`);
+              
            // $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();
             x++;
-        }
+       
         return false;
     });
     $(document).on('click', '.remove_input', function () {
