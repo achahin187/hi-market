@@ -30,7 +30,7 @@ class LocationController extends Controller
           $polygon=[];
           foreach ($getpolygon as $key => $value) {
              $polygon[]= $value->lat;
-             $polygon[]= $value->long;
+             $polygon[]= $value->lon;
           }
           return $polygon;
        
