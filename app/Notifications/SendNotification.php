@@ -27,9 +27,9 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => $this->getMessage($this->order_stauts),
+                    "title" => $this->getMessage(),
                     "body" => "Sample Notification",
-                    "icon" => url('/logo.png'),
+                    "icon" => $this->getIcone(),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",
@@ -70,7 +70,7 @@ class SendNotification {
     }
 
 
-    public function getMessage($order)
+    public function getMessage()
     {
         $messages = [
             0 => "New Order Created",
@@ -83,10 +83,10 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$order->status];
+         return $messages[$this->order_status];
     }
 
-     public function getIcone($order)
+     public function getIcone()
     {
         $messages = [
             0 => asset('notification_icons/box.png'),
@@ -99,7 +99,7 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$order->status];
+         return $messages[$this->order_status];
     }
 
    
