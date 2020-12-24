@@ -30,7 +30,7 @@
                         @endforeach             
                         </select>
                     </div>
-@dd($offer->branches)
+
                      <div class="form-group" id="branch" hidden="true">
                         <label for="branch">Branch</label>
                         <select name="branch_id[]" id="branche_5" multiple class="form-control select2">
