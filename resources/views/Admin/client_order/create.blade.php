@@ -489,7 +489,7 @@
               
         $(this).closest('tr').find('.price').val(quantity * unitPrice);
         
-
+    }
         });//end of ajax quantity change  
     });//end of product quantity change
 
