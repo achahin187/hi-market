@@ -20,9 +20,9 @@ class OrderDetailResource extends JsonResource
             'id' => $this->id,
             'orderNumber' => $this->num,
             'status' => $this->getStatus(),
-            'time' => Carbon::parse($this->delvery_date)->format('M d Y H:i A'),
-            'placedOn' => Carbon::parse($this->created_at)->format('M d Y'),
-            'deliverdOn' => Carbon::parse($this->received_at)->format('M d Y'),
+            'time' => Carbon::parse($this->delvery_date)->format('M d Y H:i A')?? '',
+            'placedOn' => Carbon::parse($this->created_at)->format('M d Y')?? '',
+            'deliverdOn' => Carbon::parse($this->received_at)->format('M d Y')??'',
 
             'address'=>[
                 'name' => $this->addressOrder->name,
@@ -50,7 +50,7 @@ class OrderDetailResource extends JsonResource
                 'categoryId' => $product->category->id,
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
-                
+
                 'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
 
                 'favourite' => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),

@@ -270,37 +270,29 @@
 
                                            
                                                 <div class="card-body">
-                                                        <h4>@lang('site.total') : <span class="total-price">0</span></h4>
+                                                       
 
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>@lang('site.product')</th>
-                                                        <th>@lang('site.quantity')</th>
-                                                        <th>@lang('site.price')</th>
+                                                       
+                                                        <th>@lang('site.delivery')</th>
+                                                        <th>@lang('site.dicount')</th>
                                                     </tr>
                                                     </thead>
 
-                                                    <tbody class="order-list">
+                                                    <tbody class="offer-list">
 
                                                    
                                                         <tr>
-                                                            <td> 
-                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
-                                                                data-placeholder="Select a product" style="width: 100%;" required>
-
-                                                                </select>
-                                                            </td>
                                                             <td>  
-                                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                                <input type="number" name="delivery"  min="1" value="1" class="delivery @error('quantity') is-invalid @enderror form-control" required>
                                                             </td>
-                                                            <td class="product-price">  
-                                                              
+
+                                                            <td>  
+                                                                <input type="number" name="discount" min="1" value="1" class="discount @error('quantity') is-invalid @enderror form-control" required>
                                                             </td>
-                                                            <td>
-                                                               
-                                                                <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
-                                                            </td>
+                                                           
                                                         </tr>
                                                            
 
@@ -581,7 +573,14 @@
         }
         return false;
     });
-    $(document).on('click', '.remove_input', function () {
+    $(document).on('click', '.delivery  .discount', function () {
+       
+         calculateTotal();
+        x--;
+        return false;
+    });
+
+  $(document).on('change', '.remove_input', function () {
         $(this).closest('tr').remove();
          calculateTotal();
         x--;
@@ -593,7 +592,7 @@ function calculateTotal() {
 
     var price = 0;
 
-    $('.order-list .product-price').each(function(index) {
+    $('.order-list .product-price .offer-list').each(function(index) {
         
         price += parseFloat($(this).html());
 
