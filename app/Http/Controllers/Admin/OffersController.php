@@ -234,7 +234,7 @@ class OffersController extends Controller
             'type' =>'required',
             'start_date' =>'required',
             'end_date' =>'required',
-            'banner' =>'required',
+           
         ]);
 
         $offer = $this->model::find($id);
