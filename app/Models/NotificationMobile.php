@@ -7,7 +7,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class NotificationMobile extends Model
 {
    use LogsActivity;
-    protected $table= 'notifications_mobile';
+    protected $table= 'notification_mobiles';
     protected $fillable = [
         'title_ar','title_en','body_en','body_ar','type','client_id','body_en','order_id','product_id','supermarket_id'
     ];

@@ -70,7 +70,8 @@ class SendNotification {
         }
         
         curl_close($ch);
-
+        #store notification To database
+        $this->storeNotification();
          
     }
 
@@ -106,6 +107,24 @@ class SendNotification {
 
          return $messages[$order->status];
     }
+
+    public function storeNotification()
+    {
+         NotificationMobile::create([
+
+                'title_ar'    => $this->getMessage($this->order),
+                'title_en'    => $this->getMessage($this->order),
+                'body_en'     => $this->getMessage($this->order),
+                'body_en'     => $this->getMessage($this->order),
+                'type'        => $this->data['type'],
+                'icon'        => $this->getIcone($this->order),
+                'order_id'    => $this->data['orderId']?? null,
+                'client_id'   => $this->order->client_id?? null,
+                'product_id'  => $this->data['product_id']?? null,
+                'superMarket_id'    => $this->data['superMarket_id']?? null,
+
+            ]);
+    } 
 
    
  

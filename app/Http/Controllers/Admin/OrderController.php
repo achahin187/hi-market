@@ -7,6 +7,7 @@ use App\Models\CartRequest;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\NotificationMobile;
 use App\Models\DeliveryCompany;
 use App\Models\Setting;
 use App\Models\Team;
@@ -398,7 +399,7 @@ class OrderController extends Controller
 
     public function addproduct(Request $request,$order_id)
     {
-        //dd($request->all());
+        
         $order = Order::find($order_id);
 
         $rules = [
@@ -598,7 +599,7 @@ class OrderController extends Controller
 
     public function changeStatusOrder(Request $request)
     {
-        //dd($request->all());
+        
         $order = Order::find($request->order_id);
         
         $data =  [
@@ -611,12 +612,13 @@ class OrderController extends Controller
             $order->update(['status'=>$request->order_status + 1]);
 
             new SendNotification($order->client->device_token, $order, $data);  
-            
+           
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
-            
-            new SendNotification($order->client->device_token, $order, $data);  
+
+            new SendNotification($order->client->device_token, $order, $data); 
+
 
         }
         return back();
