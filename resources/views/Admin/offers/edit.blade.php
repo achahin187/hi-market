@@ -26,7 +26,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a
-                                    href="{{route('delivery-companies.index')}}">{{ __('admin.delivery_companies') }}</a>
+                                    href="{{route('offer.index')}}">{{ __('admin.delivery_companies') }}</a>
                             </li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
@@ -36,151 +36,184 @@
         </section>
 
         <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- left column -->
-                    <div class="col-md-12">
-                        <!-- general form elements -->
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">
-
-                                    {{ __('admin.add_delivery_company') }}
-
-
-                                </h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form role="form" action=" {{route('delivery-companies.update',$delivery->id) }}" method="POST"
-                                  enctype="multipart/form-data">
-                                @csrf
-                               @method('PUT')
-
-
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.name_ar') }}</label>
-                                        <input type="text" value="{{$delivery->name_ar}}" name="name_ar"
-                                               class=" @error('name_ar') is-invalid @enderror form-control" required>
-                                        @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.name_en') }}</label>
-                                        <input type="text" value="{{$delivery->name_en}}" name="name_en"
-                                               class=" @error('name_en') is-invalid @enderror form-control" required>
-                                        @error('name_en')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
-                                        <input type="email" value="{{$delivery->email}}" name="email"
-                                               class="@error('email') is-invalid @enderror form-control"
-                                               id="exampleInputEmail1" placeholder="Enter email" required>
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-
-
-                                    @for ($i = 0; $i < 2; $i++)
-                                    <div class="form-group">
-                                        <label for="phone_number">{{ __('admin.phone') }}</label>
-                                        <input id="phone_number" name="phone_number[]" value="{{ $delivery->phone_number[$i] ?? '' }}" class="form-control" type="text">
-                                    </div>
-                                    @endfor
-
-                                    <div class="form-group">
-                                        <label for="commission">{{ __('admin.commission') }}</label>
-                                        <input id="commission" name="commission" value="{{$delivery->commission}}" type="number" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="branch">{{ __('admin.branch') }}</label>
-                                        <select name="branch_id[]" multiple id="branch" class="form-control select2">
-                                            @foreach($branches as $branch)
-                                                <option @if($delivery->branches->where("id",$branch->id)->count() != 0) selected
-                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                        <div class="form-group">
-                                            <label>{{__('admin.city')}} </label>
-                                            <select id="city" class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
-
-
-                                                    @foreach(\App\Models\City::all() as $cities)
-
-                                                        <option value="{{ $cities->id }}"
-                                                            {{ $delivery->city_id == $cities->id ? 'selected' : '' }}>{{ $cities->name_ar }}</option>
-
-                                                    @endforeach
-
-
-                                            </select>
-                                        </div>
-
-
-
-
-                                     <div class="form-group">
-                                        <label>{{ __('admin.status') }}</label>
-
-                                        <select class=" @error('status') is-invalid @enderror select2" name="status" data-placeholder="Select a State" style="width: 100%;" required>
-                                         @php
-                                          $statuses = [
-                                           '0'=>trans('active'),
-                                            '1'=>trans('inactive')
-                                        ];
-                                          @endphp
-                                            @foreach($statuses  as $index=>$status)
-                                                <option  value={{ $index }}>
-                                               {{ $status }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-
-                                      <div class="form-group">
-                                        <label for="status">Auto Approve</label>
-                                        <input id="status"  style="margin-left: 10px "value="{{old("status") ?? 1}}" @if($delivery->status) checked @endif type="checkbox" name="status">
-                                        @error('status')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-
-
-
-                                </div>
-                                <!-- /.card-body -->
-
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">{{ __('admin.add') }}</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
+           
+      
+    <div class="col-12 col-sm-6 col-lg-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                  <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">Promo Code</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Product Profile</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Free Product</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="true">Points</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                      <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                         @include('Admin.offers._promocode_edit') 
+                      </div>
+                      <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                          @include('Admin.offers._product_offers') 
+                      </div>
+                      <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                           @include('Admin.offers._product_free') 
+                      </div>
+                      <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+                           @include('Admin.offers._product_point') 
+                      </div>
                     </div>
+                  </div>
+                
+                  <!-- /.card -->
                 </div>
-            </div>
+    </div>
+
+
+
+                      
         </section>
+    </div>
 
 
 @endsection
 
+{{-- 
+@push('scripts')
 
+<script type="text/javascript">
+
+    function setInput(selectedType){
+        selectedType.forEach(function(x){
+        $('#type').append(new Option(x,true,true)).trigger("change");
+        })
+    }
+
+
+        $("#offer_type").change(function(){
+
+            var offer_type      = $('#offer_type').val(); 
+            var promoCodeSource = ['Delivertto','Branches'];
+            var productOffer    = ['Delivertto','Branches'];
+
+               $('#type').html('');
+
+               switch(offer_type) {
+
+                      case "PromoCode":
+                          setInput(promoCodeSource);
+                        break;
+                      case 'Product Offer':
+                          setInput(promoCodeSource);
+                        break;
+                      default:
+                        // code block
+                }
+
+             
+        });
+    </script>
+@endpush --}}
+
+
+@push('scripts')
+<script type="text/javascript">
+        $("#supermarket_2").change(function(){
+            $.ajax({
+                url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#branche_2').html('');
+                    data.forEach(function(x){
+                        
+                    $('#branche_2').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
+                    })
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#supermarket_4").change(function(){
+            $.ajax({
+                url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#branche_5').html('');
+                    data.forEach(function(x){
+                        
+                    $('#branche_5').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    })
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#branche_2").change(function(){
+            $.ajax({
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#product_2').html('');
+                    data.forEach(function(x){
+                        
+                    $('#product_2').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
+                    })
+                }
+            });
+        });
+    </script>
+
+      <script type="text/javascript">
+        $("#branche_3").change(function(){
+            $.ajax({
+                url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+                    $('#product_3').html('');
+                    data.forEach(function(x){
+                        
+                    $('#product_3').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
+                    })
+                }
+            });
+        });
+    </script>
+
+    <script>
+    $("#type_proint").change(function(){
+         var type = $('#type_proint').val();
+         
+            if (type === 'Branch') {
+       
+
+                 $('#branch_point').removeAttr('hidden');
+            }else{
+                 $('#branch_point').attr("hidden",true);
+            }
+    });
+
+     $("#type").change(function(){
+         var type = $('#type').val();
+            console.log(type);
+            if (type === 'Branch') {
+       
+
+                 $('.supermarket_4').removeAttr('hidden');
+                 $('#branch').removeAttr('hidden');
+            }else{
+                 $('.supermarket_4').attr("hidden",true);
+                 $('#branch').attr("hidden",true);
+            }
+    });
+</script>
+@endpush
