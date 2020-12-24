@@ -40,7 +40,7 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <!-- general form elements -->
-                             <form role="form" action="{{ route('store.product.client') }}" method="POST" enctype="multipart/form-data">
+                             <form role="form" action="{{ route('store.order') }}" method="POST" enctype="multipart/form-data">
         
                                      @csrf
                         <div class="card card-primary">
