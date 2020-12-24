@@ -350,7 +350,7 @@ class OrderController extends Controller
             //     "status" => true,
             //     'data'    => OrderDetailResource::collection($order),
             //  ]);
-            return $this->returnData(['status','data'], [true , OrderDetailResource::collection($order)]);
+            return $this->returnData(['data'], [OrderDetailResource::collection($order)]);
         }else{
 
              return $this->returnError(404, "This Order ID Not Found");
