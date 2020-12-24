@@ -185,52 +185,54 @@ class ProductController extends Controller
                 return $this->returnError(404, 'there is no product found');
             } else {
 
-                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->pluck('branch_id');
-                $search_result = Product::WhereHas('branches', function ($q) use ($branches_ids){
-                    $q->WhereIn('branches.id',$branches_ids);
-                })->get();
+                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products)->get();
 
-            return $search_result;
+                // $search_result = Product::WhereHas('branches', function ($q) use ($branches_ids){
+                //     $q->WhereIn('branches.id',$branches_ids);
+                // })->get();
 
-                foreach ($search_result as $product) {
+            //return $search_result;
+            return SearchResource::collection($branches_ids)
 
-                    if ($this->getCurrentLang() == 'ar') {
+                // foreach ($search_result as $product) {
+
+                //     if ($this->getCurrentLang() == 'ar') {
                        
-                        $productarray =
-                            [
-                                'id' => $product->id,
-                                'name' => $product->name_ar,
-                                'description' => $product->arab_description,
-                                'rate' => $product->rate,
-                                'supermarketId'=> $product->branch_id,
-                                'price' => $product->price,
-                                'offer_price' => $product->offer_price,
-                                'images' => asset('product_images/'.$product->images),
-                                'points' => $product->points,
-                                'category' => !is_null($product->category) ? $product->category->name_ar : "",
-                                'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
-                            ];
-                    } else {
+                //         $productarray =
+                //             [
+                //                 'id' => $product->id,
+                //                 'name' => $product->name_ar,
+                //                 'description' => $product->arab_description,
+                //                 'rate' => $product->rate,
+                //                 'supermarketId'=> $product->branch_id,
+                //                 'price' => $product->price,
+                //                 'offer_price' => $product->offer_price,
+                //                 'images' => asset('product_images/'.$product->images),
+                //                 'points' => $product->points,
+                //                 'category' => !is_null($product->category) ? $product->category->name_ar : "",
+                //                 'vendor' => !is_null($product->vendor) ? $product->vendor->arab_name : ""
+                //             ];
+                //     } else {
 
-                        $productarray =
-                            [
-                                'id' => $product->id,
-                                'name' => $product->name_en,
-                                'description' => $product->eng_description,
-                                'rate' => $product->rate,
-                                'supermarketId'=> $product->branch_id,
-                                'price' => $product->price,
-                                'offer_price' => $product->offer_price,
-                                'images' => asset('product_images/'.$product->images),
-                                'points' => $product->points,
-                                'category' => !is_null($product->category) ? $product->category->name_en : "",
-                                'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
-                            ];
-                    }
-                    $all_products [] = $productarray;
-                }
-
-                return $this->returnData(['products'], [$all_products]);
+                //         $productarray =
+                //             [
+                //                 'id' => $product->id,
+                //                 'name' => $product->name_en,
+                //                 'description' => $product->eng_description,
+                //                 'rate' => $product->rate,
+                //                 'supermarketId'=> $product->branch_id,
+                //                 'price' => $product->price,
+                //                 'offer_price' => $product->offer_price,
+                //                 'images' => asset('product_images/'.$product->images),
+                //                 'points' => $product->points,
+                //                 'category' => !is_null($product->category) ? $product->category->name_en : "",
+                //                 'vendor' => !is_null($product->vendor) ? $product->vendor->eng_name : ""
+                //             ];
+                //     }
+                //     $all_products [] = $productarray;
+                // }
+                
+                //return $this->returnData(['products'], [$all_products]);
             }    
     }
 
