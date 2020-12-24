@@ -398,7 +398,7 @@
                 method: 'GET',
                 success: function(data) {
                  
-                 //$('.price').val(data.price);
+                  $('.price').val(parseInt(data.price));
                    
 
 
@@ -407,28 +407,29 @@
         });
 
       
-         document.getElementsByClassName("product_qty").addEventListener("change", function() {
-           console.log("function is run");
-        });
+        //  document.getElementsByClassName("product_qty").addEventListener("change", function() {
+        //    console.log("function is run");
+        // });
 
-        // $('.product_qty').change(function(){
+        $('.product_qty').change(function(){
 
-        //     console.log("function is run");
-            // $.ajax({
-            //     url: "{ route('get_product') }}?product_id=" + $('.product_9').val(),
-            //     method: 'GET',
-            //     success: function(data) {
-            //      var price = parseInt(data.price) ;
-            //      var qty =  parseInt($('.product_qty').val());
-            //      console.log(price);
-            //      console.log(qty);
-            //      $('.price').val( price  * qty ) ;
+              console.log($('.product_qty').val());   
+              console.log($('.price').val());   
+            $.ajax({
+                url: "{ route('get_product') }}?product_id=" + $('.product_9').val(),
+                method: 'GET',
+                success: function(data) {
+                 var price = parseInt(data.price) ;
+                 var qty =  parseInt($('.product_qty').val());
+                 console.log(price);
+                 console.log(qty);
+                 $('.price').val( price  * qty ) ;
                    
 
 
-            //     }
-            // });
-        //});
+                }
+            });
+        });
 
             var x = 1;
     $('.add_input').click( function () {
