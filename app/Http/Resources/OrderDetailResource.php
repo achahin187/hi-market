@@ -23,7 +23,7 @@ class OrderDetailResource extends JsonResource
             'time' => Carbon::parse($this->delvery_date)->format('M d Y H:i A')?? '',
             'placedOn' => Carbon::parse($this->created_at)->format('M d Y')?? '',
             'deliverdOn' => Carbon::parse($this->received_at)->format('M d Y')??'',
-            'rate' => checkRate();
+            'rate' => checkRate(),
 
             'address'=>[
                 'name' => $this->addressOrder->name,
