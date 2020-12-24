@@ -33,7 +33,7 @@ class LocationController extends Controller
              $polygon[]= $value->lat;
              $lon[]= $value->lon;
           }
-          //return collect([$lat,$lon])->implode(' ');
+          return [$lat,$lon]  ;
           return implode(' ', array($lat, $lon));
        
           $point = implode(' ', array($long, $lat));
