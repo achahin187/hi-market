@@ -409,7 +409,7 @@
 
         $('.product_qty').change(function(){
 
-            console.log($(this));
+            console.log(this);
             // $.ajax({
             //     url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
             //     method: 'GET',
