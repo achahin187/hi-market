@@ -489,7 +489,7 @@
                   
              
               console.log(quantity);
-              console.log(unitPrice);
+              console.log(data.price);
          $(this).closest('tr').find('.product-price').html($.number(quantity * data.price, 2));
         
     }
