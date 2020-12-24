@@ -215,42 +215,99 @@
                                                 <div class="card-body">
                                                         <h4>@lang('site.total') : <span class="total-price">0</span></h4>
 
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>@lang('site.product')</th>
-                                        <th>@lang('site.quantity')</th>
-                                        <th>@lang('site.price')</th>
-                                    </tr>
-                                    </thead>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>@lang('site.product')</th>
+                                                        <th>@lang('site.quantity')</th>
+                                                        <th>@lang('site.price')</th>
+                                                    </tr>
+                                                    </thead>
 
-                                    <tbody class="order-list">
+                                                    <tbody class="order-list">
 
-                                   
-                                        <tr>
-                                            <td> 
-                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
-                                                data-placeholder="Select a product" style="width: 100%;" required>
+                                                   
+                                                        <tr>
+                                                            <td> 
+                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
+                                                                data-placeholder="Select a product" style="width: 100%;" required>
 
-                                                </select>
-                                            </td>
-                                            <td>  
-                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
-                                            </td>
-                                            <td class="product-price">  
-                                              
-                                            </td>
-                                            <td>
-                                               
-                                                <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
-                                            </td>
-                                        </tr>
-                                           
+                                                                </select>
+                                                            </td>
+                                                            <td>  
+                                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                            </td>
+                                                            <td class="product-price">  
+                                                              
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
+                                                            </td>
+                                                        </tr>
+                                                           
 
-                                    </tbody>
+                                                    </tbody>
 
-                                </table><!-- end of table -->
+                                                </table><!-- end of table -->
+                                            </div>
                                 @endif
+
+                                <div class="card card-primary">
+
+                                            <div class="card-header">
+                                                @if(isset($productorder) && isset($order) && !isset($offer))
+
+                                                    {{ __('admin.add_offer') }}
+
+                                                @else
+
+                                                    Products
+
+                                                @endif
+
+                                            </div>
+
+                                           
+                                                <div class="card-body">
+                                                        <h4>@lang('site.total') : <span class="total-price">0</span></h4>
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>@lang('site.product')</th>
+                                                        <th>@lang('site.quantity')</th>
+                                                        <th>@lang('site.price')</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody class="order-list">
+
+                                                   
+                                                        <tr>
+                                                            <td> 
+                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
+                                                                data-placeholder="Select a product" style="width: 100%;" required>
+
+                                                                </select>
+                                                            </td>
+                                                            <td>  
+                                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                            </td>
+                                                            <td class="product-price">  
+                                                              
+                                                            </td>
+                                                            <td>
+                                                               
+                                                                <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
+                                                            </td>
+                                                        </tr>
+                                                           
+
+                                                    </tbody>
+
+                                                </table><!-- end of table -->
+                                            </div>
 
 {{-- 
                                                     <div class="row"style="align-items: flex-end; margin-bottom: 0px">

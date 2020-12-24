@@ -46,10 +46,17 @@ class OrderDetailResource extends JsonResource
                 'name' => $product->name,
                 'productImage' => asset('images/'.$product->image),
                 'supermaketId' => $product->branches->first()->id??"",
+                'supermaketName' => $product->branches->first()->name??"",
+                'categoryId' => $product->category->id,
                 'categoryName' => $product->category->name,
                 'productDesc' => $product->description,
+                
                 'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
+
+                'favourite' => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
+
                 'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
+
                 'branchName' => $product->branches->first()->name??"",
                 ];
             }),
