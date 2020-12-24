@@ -137,6 +137,7 @@ class OrderController extends Controller
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
                     "price"      => explode(":", $product)[2],
+                    "point" => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1],
                 ]);
 
              }   
@@ -206,7 +207,7 @@ class OrderController extends Controller
                 "user_id" => getUser()->id,
                 "product_id" => explode(":", $product)[0],
                 "qty" => explode(":", $product)[1],
-                "point" => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1] ,
+              
             ]));
         }
         
