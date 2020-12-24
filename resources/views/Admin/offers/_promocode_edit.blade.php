@@ -30,12 +30,13 @@
                         @endforeach             
                         </select>
                     </div>
-
+@dd($offer->branches)
                      <div class="form-group" id="branch" hidden="true">
                         <label for="branch">Branch</label>
                         <select name="branch_id[]" id="branche_5" multiple class="form-control select2">
                         
                             <option  selected  disabled>Please Select branch</option>
+
                             @foreach($offer->branches  as $branch)
                                  <option value="{{$branch->id}}">{{ $branch->name }}</option>
                               @endforeach  
