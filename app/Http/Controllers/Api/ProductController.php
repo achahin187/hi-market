@@ -180,13 +180,15 @@ class ProductController extends Controller
 
 
             $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
-return $products;
+
+
             if (count($products) < 1) {
 
                 return $this->returnError(404, 'there is no product found');
             } else {
 
-                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products)->get();
+                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
+return $branches_ids;
 
                 // $search_result = Product::WhereHas('branches', function ($q) use ($branches_ids){
                 //     $q->WhereIn('branches.id',$branches_ids);
