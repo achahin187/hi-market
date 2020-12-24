@@ -549,7 +549,7 @@
         }
         return false;
     });
-    $(document).on('keyup', '.delivery  .discount', function () {
+    $('body').on('keyup', '.delivery  .discount', function () {
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
