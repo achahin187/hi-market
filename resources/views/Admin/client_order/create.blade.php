@@ -554,11 +554,10 @@
             
          var delivery = $('.delivery-money').val();
          var discount = $('.discount-money').val();
+         var total = $('.total-price').html();
 
-         console.log($('.total-price').val());
-         console.log($('.total-price').html());
-         console.log(discount);
-         console.log(delivery);
+         
+         $('.total-price').html((delivery + total) - discount);
       
     });
 

@@ -192,7 +192,7 @@ class ProductController extends Controller
                 // })->get();
 
             //return $search_result;
-            return SearchResource::collection($branches_ids)
+            return SearchResource::collection($branches_ids);
 
                 // foreach ($search_result as $product) {
 
