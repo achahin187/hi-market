@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryProductResource;
 use App\Http\Resources\ProductDetailesResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\SearchResource;
 use App\Models\Client;
 use App\Models\Offer;
 use App\Models\Product;

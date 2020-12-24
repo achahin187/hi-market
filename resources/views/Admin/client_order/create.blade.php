@@ -557,7 +557,7 @@
          var total = $('.total-price').html();
 
          
-         $('.total-price').html((delivery + total) - discount);
+         $('.total-price').html( discount-(delivery + total) );
       
     });
 
