@@ -489,7 +489,7 @@
                 success: function(data) {
                  
                   $('.product-price').html(data.price);
-                   calculateTotal();
+                   //calculateTotal();
                   
 
                 }
@@ -549,6 +549,7 @@
         }
         return false;
     });
+
      $('body').on('keyup', '.delivery  .discount', function () {
             
          var delivery = $('.delivery').val();
@@ -570,7 +571,7 @@ function calculateTotal() {
 
     var price = 0;
 
-    $('.order-list .product-price -list').each(function(index) {
+    $('.order-list .product-price').each(function(index) {
         
         price += parseFloat($(this).html());
 
