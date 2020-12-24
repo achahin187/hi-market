@@ -409,20 +409,21 @@
 
         $('.product_qty').change(function(){
 
-            $.ajax({
-                url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
-                method: 'GET',
-                success: function(data) {
-                 var price = parseInt(data.price) ;
-                 var qty =  parseInt($('.product_qty').val());
-                 console.log(price);
-                 console.log(qty);
-                 $('.price').val( price  * qty ) ;
+            console.log($(this));
+            // $.ajax({
+            //     url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
+            //     method: 'GET',
+            //     success: function(data) {
+            //      var price = parseInt(data.price) ;
+            //      var qty =  parseInt($('.product_qty').val());
+            //      console.log(price);
+            //      console.log(qty);
+            //      $('.price').val( price  * qty ) ;
                    
 
 
-                }
-            });
+            //     }
+            // });
         });
 
             var x = 1;
@@ -453,7 +454,7 @@
                 <div class="col-md-3"> 
                 <div class="form-group"> 
                 <label> السهر</label> 
-                <input type="number" name="price[]"  min="0" max="99999.99" class="price form-control" name="price[]" > 
+                <input type="number" name="price[]"  min="0" max="99999.99" class="price form-control" > 
                 </div> 
                 </div> 
                 <div class="clearfix"></div> 
