@@ -368,7 +368,7 @@
 
                     $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-                     $('.price').val(x.price);
+                     $('.price').val(parseInt(x.price));
                 
                     })
 
@@ -450,13 +450,13 @@
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> الكية </label>' +
-                '<input type="text" class="form-control" name="quantity[]" >' +
+                '<input type="text" class="product_qty form-control" name="quantity[]" >' +
                 '</div>' +
                 '</div>' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> السهر</label>' +
-                '<input type="text" class="form-control" name="input_value[]" >' +
+                '<input type="text" class="price form-control" name="price[]" >' +
                 '</div>' +
                 '</div>' +
                 '<div class="clearfix"></div>' +
