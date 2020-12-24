@@ -88,7 +88,7 @@ class SendNotification {
             "notification" =>
                 [
                     "title" => 'New Offers In '.isset($this->getBranch()->name)?'':'Delivertto'. ', Check It Now',
-                    "body" => "Sample Notification",
+                    "body" => 'New Offers In '.isset($this->getBranch()->name)?'':'Delivertto'. ', Check It Now',
                     "icon" => $this->getIcone(1),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
@@ -188,10 +188,10 @@ class SendNotification {
     {
          NotificationMobile::create([
 
-                'title_ar'    => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
-                'title_en'    => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
-                'body_ar'     => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
-                'body_en'     => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                'title_ar'    => 'New Offers In '.'Delivered'. ', Check It Now',
+                'title_en'    => 'New Offers In '.'Delivered'. ', Check It Now',
+                'body_ar'     => 'New Offers In '.'Delivered'. ', Check It Now',
+                'body_en'     => 'New Offers In '.'Delivered'. ', Check It Now',
                 'type'        => $this->data['type'],
                 'icon'        => $this->getIcone(1),
                 'order_id'    => $this->data['orderId']?? null,

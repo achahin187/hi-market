@@ -94,6 +94,8 @@
                         <p style="color: red">Width: 400 px</p>
                        <p style="color: red"> length: 130 px </p>
                     </div>
+                    
+                        <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner) }}">
 
                      <div class="card-footer">
                       <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
