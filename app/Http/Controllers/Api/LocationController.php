@@ -29,7 +29,7 @@ class LocationController extends Controller
           $getpolygon = Polygon::all();
           $polygon=[];
           
-          foreach ($getpolygon as $key => $value) {
+          foreach ($getpolygon as  $value) {
              $polygon[] = $value->lat;
              $polygon[]     = $value->lon;
           }
@@ -38,7 +38,7 @@ class LocationController extends Controller
        
           $point = implode(' ', array($long, $lat));
 
-          $data = $pointLocation->pointInPolygon($point, $polygon) ;
+          $data = $pointLocation->pointInPolygon(array($point), $polygon) ;
             
 
             
