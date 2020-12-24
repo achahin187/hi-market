@@ -541,7 +541,7 @@ function calculateTotal() {
 
     });//end of product price
 
-    $('.total-price').html(price));
+    $('.total-price').html(price);
 
    
 </script>
