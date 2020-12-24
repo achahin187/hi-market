@@ -216,7 +216,7 @@
 
                                                     @csrf
 
-                                                    <div class="row">
+                                                    <div class="row"style="align-items: center;">
 
                                                         <div class="col-md-3">
 
