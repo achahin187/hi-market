@@ -245,7 +245,7 @@
                                                                     <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                             </td>
                                         </tr>
-                   
+                                           <div class="div_inputs"></div>
 
                                     </tbody>
 
@@ -314,8 +314,8 @@
 
                                                                 </div>
                                                             </div>
-                                                               <span>  
-                                                              <div class="div_inputs"></div>
+                                                              
+                                                           
 
                                                         {{-- </div> --}} 
                                                     </div>
@@ -495,7 +495,7 @@
                         <td> 
                             <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinputx" 
                             data-placeholder="Select a product" style="width: 100%;" required>
-
+                                ${options}
                             </select>
                         </td>
                         <td>  
