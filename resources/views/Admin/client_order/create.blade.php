@@ -570,7 +570,8 @@
 
     //calculate the total
 function calculateTotal(delivery, total, discount) {
-console.log(delivery);
+
+
     var price = 0;
 
     $('.order-list .product-price').each(function(index) {
@@ -578,7 +579,10 @@ console.log(delivery);
         price += parseFloat($(this).html());
 
     });//end of product price
-
+   
+    if (delivery) {
+          $('.total-price').html((delivery+total)-discount);
+    }
     $('.total-price').html(price);
  }
    
