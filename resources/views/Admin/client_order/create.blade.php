@@ -552,12 +552,13 @@
 
      $('.delivery-money').click( function () {
             
-         var delivery = $('.delivery').val();
-         var discount = $('.discount').val();
+         var delivery = $('.delivery-money').val();
+         var discount = $('.discount-money').val();
 
+         console.log($('.total-price').val());
+         console.log($('.total-price').html());
          console.log(discount);
          console.log(delivery);
-         console.log($('.total-price').val());
       
     });
 
