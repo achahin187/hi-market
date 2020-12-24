@@ -485,7 +485,8 @@
                  var quantity = parseInt(data.price) ;
                  var unitPrice =  parseInt($('.product_qty').val() );
              
-              
+              console.log(quantity);
+              console.log(unitPrice);
         $(this).closest('tr').find('.price').val(quantity * unitPrice);
         
     }
