@@ -189,6 +189,7 @@ class ProductController extends Controller
 
                 $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
 
+                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
 
                 // $search_result = Product::WhereHas('branches', function ($q) use ($branches_ids){
                 //     $q->WhereIn('branches.id',$branches_ids);
@@ -239,7 +240,6 @@ class ProductController extends Controller
                 //     $all_products [] = $productarray;
                 // }
                 
-                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
             }    
     }
 
