@@ -440,7 +440,7 @@
                 success: function(data) {
                  
                   $('.product-price').html(data.price);
-                   
+                   calculateTotal();
                   
 
                 }
