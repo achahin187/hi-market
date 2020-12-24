@@ -9,7 +9,7 @@ class NotificationMobile extends Model
    use LogsActivity;
     protected $table= 'notification_mobiles';
     protected $fillable = [
-        'title_ar','title_en','body_en','body_ar','type','client_id','body_en','order_id','product_id','supermarket_id'
+        'title_ar','title_en','body_en','body_ar','type','client_id','body_en','order_id','product_id','supermarket_id','icon',
     ];
 
 }

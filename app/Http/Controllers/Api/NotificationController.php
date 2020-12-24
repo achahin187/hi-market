@@ -7,6 +7,7 @@ use App\Http\Resources\OfferResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Offer;
+use App\Models\NotificationMobile;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -22,9 +23,9 @@ class NotificationController extends Controller
 
     public function index()
     {
-        if($user = auth("client-api")->user())
+        if($client = auth("client-api")->user())
         {
-            $orders = $user->orders;
+            $orders = NotificationMobile::Where('client_id', $client->id)->get();
          
             return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
 

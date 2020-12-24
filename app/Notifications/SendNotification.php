@@ -114,7 +114,7 @@ class SendNotification {
 
                 'title_ar'    => $this->getMessage($this->order),
                 'title_en'    => $this->getMessage($this->order),
-                'body_en'     => $this->getMessage($this->order),
+                'body_ar'     => $this->getMessage($this->order),
                 'body_en'     => $this->getMessage($this->order),
                 'type'        => $this->data['type'],
                 'icon'        => $this->getIcone($this->order),
