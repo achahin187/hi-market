@@ -477,7 +477,7 @@
         
         var unitPrice = $(this).data('price'); //150
         console.log(unitPrice);
-        $(this).closest('tr').find('.price').html(quantity * unitPrice);
+        $(this).closest('tr').find('.price').val(quantity * unitPrice);
         
 
     });//end of product quantity change
