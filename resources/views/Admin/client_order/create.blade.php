@@ -40,6 +40,9 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <!-- general form elements -->
+                             <form role="form" action="{{ route('store.product.client') }}" method="POST" enctype="multipart/form-data">
+        
+                                     @csrf
                         <div class="card card-primary">
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -54,8 +57,6 @@
                                     <div class="card-header">
                                          {{ __('admin.clients') }}
                                     </div>
-
-                            @csrf
                        
                                   
 
@@ -119,30 +120,30 @@
                                 
 
                                             <div class="card-body">
-                                      
-                                    
-                <div class="form-group ">
-                    <label for="branch">SuperMarket</label>
-                    <select name="supermarket_id" 
-                   {{--  @if(session()->get('supermarket_id') != $supermarket->id) class="  
-                     form-control select2 click_here" @else class="  
-                     form-control select2"@endif  --}} class="  
-                     form-control select2 supermarket_6">
-                 
-                <option    selected disabled="" >Please Select Source</option>
+                                                                      
+                                                                    
+                                                <div class="form-group ">
+                                                    <label for="branch">SuperMarket</label>
+                                                    <select name="supermarket_id" 
+                                                   {{--  @if(session()->get('supermarket_id') != $supermarket->id) class="  
+                                                     form-control select2 click_here" @else class="  
+                                                     form-control select2"@endif  --}} class="  
+                                                     form-control select2 supermarket_6">
+                                                 
+                                                <option    selected disabled="" >Please Select Source</option>
 
-                    @foreach( $supermarkets as  $supermarket) 
-                     <option
-                      @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
-                       @endif  
-              
-                        value="{{ $supermarket->id }}">{{$supermarket->name}}
-                    </option>
-                    @endforeach
+                                                    @foreach( $supermarkets as  $supermarket) 
+                                                     <option
+                                                      @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
+                                                       @endif  
+                                              
+                                                        value="{{ $supermarket->id }}">{{$supermarket->name}}
+                                                    </option>
+                                                    @endforeach
 
-                    </select>
-                </div>
-                 
+                                                    </select>
+                                                </div>
+                                                 
 
                                             @if(session()->get('branch_id'))
 
@@ -210,11 +211,8 @@
 
                                             </div>
 
-                                            <form role="form" action="{{ route('store.product.client') }}" method="POST" enctype="multipart/form-data">
-
+                                           
                                                 <div class="card-body">
-
-                                                    @csrf
 
                                                     <div class="row"style="align-items: flex-end; margin-bottom: 0px">
 
@@ -284,7 +282,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            
 
                                             
                                         </div>
@@ -302,15 +300,6 @@
                                       
                                     </div>
                                     
-                    <form action="{{ route('store.order') }}" method="POST">
-                        @csrf
-                               <div class="col-md-3">
-
-                                @foreach( $orders  as $index=>$order)
-                                <input type="hidden" name="order[]" value="{{ $order }}">
-                                <input type="hidden" class="branch_id" name="branch_id" value="{{ session()->get('branch_id') }}">
-                               
-                                @endforeach
                                         <div class="form-group">
                                             <button style="margin-top: 30px;" class=" btn btn-primary">
                                                     Add Order
@@ -318,12 +307,11 @@
 
                                             </button>
                                         </div>
-                                    </div>               
-                         </form>   
 
                          {{--    @endif --}}
 
                                 <!-- /.card -->
+                            </form>
                             </div>
                         </div>
                     </div>
