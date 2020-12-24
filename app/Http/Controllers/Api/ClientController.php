@@ -75,12 +75,13 @@ class ClientController extends Controller
 
         $points = Point::whereDate("end_date", ">", date("Y-m-d H:i:s", now()->timestamp))->where("status","active")->orderBy("points", "asc")
             ->get()->map(function ($point) use($client){
+                dd($client->total_points, $point->point);
                 return [
                     "id"=>$point->id,
                     "point"=>(int) $point->points,
                     "purchase" => $point->value,
                     "is_percentage"=>$point->type == 0 ? false : true,
-                    "checked"=> false, 
+                    "checked"=> $client->total_points >= $point->point   ? true : false, 
                 ];
             });
         $image = DB::table('point_photos')->first();
