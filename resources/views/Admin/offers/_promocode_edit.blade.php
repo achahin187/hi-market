@@ -96,7 +96,7 @@
 
                      <div class="form-group">
                         <label for="exampleInputEmail1">Value</label>
-                        <input type="text" placeholder="please Choose Value" value="{{ $offer->Value }}" name="value"
+                        <input type="text" placeholder="please Choose Value" value="{{ $offer->value }}" name="value"
                                class=" @error('Value') is-invalid @enderror form-control" >
                         @error('Value')
                         <span class="invalid-feedback" role="alert">

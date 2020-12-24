@@ -124,7 +124,7 @@ class OffersController extends Controller
      */
     private function createPromocode($request)
     {  
-        //dd($request);
+        
         $request_data = collect($request)->except('branch_id');
         
         $create_promocode =   $this->model::create($request_data->toArray());
@@ -231,20 +231,141 @@ class OffersController extends Controller
     {
 
          $request->validate([
-            // 'name' =>'required|string',
-            // 'email' =>'required|email',
+            'type' =>'required',
+            'start_date' =>'required',
+            'end_date' =>'required',
+            'banner' =>'required',
         ]);
 
+        $offer = $this->model::find($id);
         $request_data = $request->all();
-        dd($request_data);
-        if ($request->password == null) {
-             $request_data = $request->except('password');
-         }
+        
+          if ($request->banner) {
+            if ($offer->banner != $request->banner) {
+                unlink('offer_images/' . $offer->banner );
+            }
 
-        $delivery = $this->model::find($id);
-        $delivery->update($request_data);
+                #Store Banner to DataBase...
+                $filename = $request->banner->getClientOriginalName();
+                $fileextension = $request->banner->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
+                $request->banner->move('offer_images', $file_to_store);
+
+                $request_data['banner'] = $file_to_store;
+          }
+
+           
+
+        switch ($request->type) {
+            case 'promocode':
+               $this->editPromocode($request_data, $offer);
+                break;
+
+            case 'product Offer':
+               $this->editProductOffer($request_data, $offer);
+                break;
+
+            case 'free product':
+               $this->editFreeProduct($request_data, $offer);
+                break;
+
+            case 'point':
+               $this->editPoint($request_data, $offer);
+                break;    
+            
+            default:
+                # code...
+                break;
+        }
+     
+                $data =  [
+                  "type" => "Deal",
+                  "product_id" => $request_data['product_id'] ?? null,
+                  "superMarket_id" => $request_data['branch_id']??null,
+                 ];
+
+         new SendNotification('topics', '', $data);    
         return redirect()->route($this->route.'index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  array  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function editPromocode($request, $offer)
+    {  
+        
+        $request_data = collect($request)->except('branch_id');
+        
+        $create_promocode =   $offer->update($request_data->toArray());
+
+        if ($request['source'] == 'Branch') {
+            $create_promocode->branches()->sync($request['branch_id']);
+            // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
+            // foreach ($get_branches as  $branch) {
+            //  $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
+            // }
+
+        }else{
+
+            //$create_promocode->attach()
+            $allBranches =  Branch::all(); 
+            foreach ($allBranches as  $allBranche) {
+                
+                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+            }
+        }
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function editProductOffer($request, $offer)
+    {
+        $create_promocode = $offer->update($request);
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function editFreeProduct($request, $offer)
+    {
+        $create_promocode = $offer->update($request);
+    }
+    /**
+    * Display the specified resource.
+    *
+    * @param  array  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function editPoint($request, $offer)
+    {
+        $request_data     = collect($request)->except('branch_id');
+
+        $create_promocode =   $offer->update($request_data->toArray());
+        if ($request['source'] == 'Branch') {
+              $create_promocode->branches()->sync($request['branch_id']);
+            // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
+
+            //     foreach ($get_branches as  $branch) {
+            //      $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
+            //     }
+        }else{
+            $allBranches =  Branch::all(); 
+            foreach ($allBranches as  $allBranche) {
+                
+                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+            }  
+        }      
+
+
     }
 
     /**
