@@ -401,6 +401,8 @@
                 method: 'GET',
                 success: function(data) {
                     $('.product_9').html('');
+
+                     $('.product_9').append(new Option('select Product',0,true,true));
                     data.forEach(function(x,i){
                 
 
@@ -473,17 +475,17 @@
 
         $('body').on('keyup change', '.product_qty', function() {
 
-        var quantity = $(this).val(); //2
+        // var quantity = $(this).val(); //2
         
-        var unitPrice = $(this).data('price'); //150
+        // var unitPrice = $(this).data('price'); //150
       
 
             $.ajax({
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
                 method: 'GET',
                 success: function(data) {
-                 var quantity = parseInt(data.price) ;
-                 var unitPrice =  parseInt($('.product_qty').val() );
+                 var quantity = parseInt(this).val() ;
+                 var unitPrice =  parseInt(data.price );
              
               console.log(quantity);
               console.log(unitPrice);
@@ -520,7 +522,8 @@
 
                                             </button> 
                         </td>
-                    </tr>`);
+                    </tr>`
+                    );
               
            // $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();
