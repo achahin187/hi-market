@@ -65,7 +65,7 @@
                           @include('Admin.offers._product_offers') 
                       </div>
                       <div class="tab-pane fade {{ $offer->type == 'free product' ?'show active':'hidden'}}" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
-                           @include('Admin.offers._product_free') 
+                           @include('Admin.offers._product_free_edit') 
                       </div>
                       <div class="tab-pane fade {{ $offer->type == 'point' ?'show active':'hidden'}}" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
                            @include('Admin.offers._product_point') 

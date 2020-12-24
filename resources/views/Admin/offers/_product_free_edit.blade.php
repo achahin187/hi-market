@@ -1,7 +1,7 @@
 <form action="{{ route('offer.update', $offer->id) }}" method="POST"  enctype="multipart/form-data">
     
 @csrf 
- @method('PUT')                    
+ @method('PUT')       faefaefae             
                 <input type="hidden" value="free product" name="type"> 
 
                     <div class="form-group">
