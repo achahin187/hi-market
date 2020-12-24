@@ -611,7 +611,7 @@ class OrderController extends Controller
                     "orderId" => $order->id,
                    ];
 
-            new SendNotification($order->client->device_token, $order->status, $data)    
+            new SendNotification($order->client->device_token, $order->status, $data);  
             //$this->testNotification($order->client->device_token, $order, $data);
         }else
         {
