@@ -485,15 +485,14 @@
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
                 method: 'GET',
                 success: function(data) {
+                 
+                  console.log(quantity * data.price);
+                  console.log(data.price);
+
+                $(this).closest('tr').attr('data-pr',10);
+           
         
-                  
-             
-              console.log(quantity * data.price);
-              console.log(data.price);
-            $(this).closest('tr').find('.product-price').val(quantity * data.price);
-       
-        
-    }
+                }
         });//end of ajax quantity change  
     });//end of product quantity change
 
