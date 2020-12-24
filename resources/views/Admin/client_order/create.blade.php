@@ -253,6 +253,7 @@
                                     </tbody>
 
                                 </table><!-- end of table -->
+                                @endif
 
 {{-- 
                                                     <div class="row"style="align-items: flex-end; margin-bottom: 0px">
@@ -334,7 +335,7 @@
                                             </div>
                                         
                                     </div>
-@if
+
                             @endif
 
 
