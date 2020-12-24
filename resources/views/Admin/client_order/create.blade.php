@@ -484,6 +484,12 @@
                 '<input type="text" class="form-control" name="input_value[]" >' +
                 '</div>' +
                 '</div>' +
+                '<div class="col-md-6">' +
+                '<div class="form-group">' +
+                '<label> محتوى الحقل</label>' +
+                '<input type="text" class="form-control" name="input_value[]" >' +
+                '</div>' +
+                '</div>' +
                 '<div class="clearfix"></div>' +
                 '<div class="col-md-3">'+
 
