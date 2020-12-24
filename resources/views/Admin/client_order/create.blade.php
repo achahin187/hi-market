@@ -405,10 +405,11 @@
                 }
             });
         });
+
         var test = document.getElementsByClassName("product_qty");
-         test.addEventListener("change", function(){
-              console.log("function is run");
-         });
+         test.addEventListener("change", function() {
+            console.log("function is run");
+            });
 
         // $('.product_qty').change(function(){
 
