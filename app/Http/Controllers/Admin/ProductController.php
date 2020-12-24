@@ -538,7 +538,7 @@ class ProductController extends Controller
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                    $image->move('products_images', $file_to_store);
+                    $image->move('product_images', $file_to_store);
 
                     $file_names[] = $file_to_store;
                 }
@@ -556,7 +556,7 @@ class ProductController extends Controller
                         foreach ($deletedimages as $deletedimage) {
                             if (($key = array_search($deletedimage, $productimages)) !== false) {
                                 unset($productimages[$key]);
-                                unlink('products_images/' . $deletedimage);
+                                unlink('product_images/' . $deletedimage);
                             }
                         }
                     }
@@ -616,7 +616,7 @@ class ProductController extends Controller
                         foreach ($deletedimages as $deletedimage) {
                             if (($key = array_search($deletedimage, $productimages)) !== false) {
                                 unset($productimages[$key]);
-                                unlink('products_images/' . $deletedimage);
+                                unlink('product_images/' . $deletedimage);
                             }
                         }
                     }
