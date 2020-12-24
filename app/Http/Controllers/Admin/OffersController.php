@@ -8,6 +8,7 @@ use App\Models\Offer;
 use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Supermarket;
+use App\Notifications\SendNotification;
 class OffersController extends Controller
 {
 
