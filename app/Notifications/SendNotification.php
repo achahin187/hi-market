@@ -64,9 +64,9 @@ class SendNotification {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
-        curl_exec($ch);
+       return curl_exec($ch);
 
-        return response()->json('send');
+         
     }
 
 

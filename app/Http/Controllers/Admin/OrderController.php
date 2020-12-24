@@ -606,7 +606,6 @@ class OrderController extends Controller
             $order->update(['status'=>$request->order_status + 1]);
 
             $data =  [
-
                     "type" => "order",
                     "orderId" => $order->id,
                    ];
