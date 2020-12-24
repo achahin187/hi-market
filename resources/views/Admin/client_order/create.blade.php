@@ -467,7 +467,7 @@
         alert(options);
         if (x < max_input) {
 
-            $('.div_inputs').append('<div>' +
+            $('.div_inputs').append('<div class="row">' +
                 '<div class="col-md-6">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
