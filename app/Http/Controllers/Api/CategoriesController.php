@@ -137,7 +137,7 @@ class CategoriesController extends Controller
 
             $product->percentage = ($offer_price / $price) * 100;
 
-            $product->imagepath = asset('products_images/' . $product->images);
+            $product->imagepath = asset('product_images/' . $product->images);
 
 
             $product->categoryname = $product->category->{"name_" . app()->getLocale()};
@@ -192,7 +192,7 @@ class CategoriesController extends Controller
                     }
 
 
-                    $product->imagepath = asset('products_images/' . $product->images);
+                    $product->imagepath = asset('product_images/' . $product->images);
 
 
                 }
