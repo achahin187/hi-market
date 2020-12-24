@@ -36,7 +36,7 @@
                         <select name="branch_id[]" id="branche_5" multiple class="form-control select2">
                         
                             <option  selected  disabled>Please Select branch</option>
-                            @foreach($branches  as $branch)
+                            @foreach($offer->branches  as $branch)
                             <option value="{{$branch->id}}" {{ $offer->branch_id ==  $branch->id ? 'selected' : ''}}>{{ $branch->name }}</option>
                             @endforeach
                         </select>
