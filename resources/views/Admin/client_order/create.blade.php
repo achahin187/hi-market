@@ -334,7 +334,7 @@
                                             </div>
                                         
                                     </div>
-
+@if
                             @endif
 
 
@@ -490,42 +490,9 @@
         var max_input = 9;
         var options = $("#hamdyinput").html();
         console.log(options);
+
+          
         if (x < max_input) {
-
-            // $('.div_inputs').append(`<span><div class="row" style="align-items: center;"> 
-
-            //     <div class="col-md-4"> 
-            //         <div class="form-group"> 
-            //             <label> عنوان الحقل</label> 
-
-            //             <select class="product_9 select2 product" id="hamdyinputx" name="products[]" data-placeholder="Select a product" style="width: 100%;" required> 
-            //              ${options}
-            //             </select>
-                        
-            //         </div> 
-            //     </div>
-
-            //     <div class="col-md-3"> 
-            //         <div class="form-group"> 
-            //             <label> الكية </label> 
-            //             <input type="number"  name="quantity[]" min="1" value="1" class="product_qty form-control > 
-            //         </div> 
-            //     </div> 
-
-            //     <div class="col-md-3"> 
-            //         <div class="form-group"> 
-            //         <label> السهر</label> 
-            //         <input type="number" name="price[]"  min="0" max="99999.99" class="price form-control" > 
-            //         </div> 
-            //     </div>
-
-            //     <div class="clearfix"></div> 
-                
-
-            //     <a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a> 
-                
-            //     </div> </span>`);
-
                 $('.div_inputs').append(`<div><tr>
                         <td> 
                             <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
@@ -557,6 +524,42 @@
         return false;
     });
 </script>
+
+
+
+ {{--  // $('.div_inputs').append(`<span><div class="row" style="align-items: center;"> 
+
+            //     <div class="col-md-4"> 
+            //         <div class="form-group"> 
+            //             <label> عنوان الحقل</label> 
+
+            //             <select class="product_9 select2 product" id="hamdyinputx" name="products[]" data-placeholder="Select a product" style="width: 100%;" required> 
+            //              ${options}
+            //             </select>
+                        
+            //         </div> 
+            //     </div>
+
+            //     <div class="col-md-3"> 
+            //         <div class="form-group"> 
+            //             <label> الكية </label> 
+            //             <input type="number"  name="quantity[]" min="1" value="1" class="product_qty form-control > 
+            //         </div> 
+            //     </div> 
+
+            //     <div class="col-md-3"> 
+            //         <div class="form-group"> 
+            //         <label> السهر</label> 
+            //         <input type="number" name="price[]"  min="0" max="99999.99" class="price form-control" > 
+            //         </div> 
+            //     </div>
+
+            //     <div class="clearfix"></div> 
+                
+
+            //     <a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a> 
+                
+            //     </div> </span>`); --}}
 
 {{-- hamdyinput --}}
 {{-- <script type="text/javascript">
