@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')}}">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="{{ URL::asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+  <!-- Favicon -->
+    <link rel="shortcut icon" type="{{ asset('logo.jpeg') }}" href="{{ asset('logo.jpeg') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ URL::asset('dist/css/adminlte.min.css')}}">
   <!-- Google Font: Source Sans Pro -->
