@@ -238,7 +238,7 @@
                                                 <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
                                             </td>
                                             <td class="product-price">  
-                                              <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control" required>
+                                              
                                             </td>
                                             <td>
                                                
@@ -439,7 +439,7 @@
                 method: 'GET',
                 success: function(data) {
                  
-                  $('.price').val(parseInt(data.price));
+                  $('.product-price').html($.number(data.price));
                    
                   
 
@@ -489,7 +489,7 @@
              
               console.log(quantity);
               console.log(unitPrice);
-        $(this).closest('tr').find('.price').val(quantity * unitPrice);
+         $(this).closest('tr').find('.product-price').html($.number(quantity * unitPrice, 2));
         
     }
         });//end of ajax quantity change  
