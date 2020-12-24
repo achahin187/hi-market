@@ -213,9 +213,9 @@ class OffersController extends Controller
      */
     public function edit($id)
     {
-         $delivery = $this->model::find($id);
+         $offer = $this->model::find($id);
        
-        return view($this->blade.__FUNCTION__,compact("delivery"));
+        return view($this->blade.__FUNCTION__,compact("offer"));
     }
 
     /**
