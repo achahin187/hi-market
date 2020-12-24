@@ -504,7 +504,7 @@
 
           
         if (x < max_input) {
-              $('.div_inputs').append(`<tr>
+              $('.order-list').append(`<tr>
                         <td> 
                             <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinputx" 
                             data-placeholder="Select a product" style="width: 100%;" required>
