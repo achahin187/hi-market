@@ -264,8 +264,8 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="div_inputs"></div>
 
+                                                      
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                               {{--   <button style="margin-top: 30px;" class=" btn btn-primary">
@@ -278,6 +278,9 @@
                                                                     <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                                                 </div>
                                                             </div>
+
+                                                              <div class="div_inputs"></div>
+
                                                         </div>
                                                     </div>
                                                 </div>
