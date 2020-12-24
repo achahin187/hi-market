@@ -78,7 +78,7 @@ class PointLocation {
     function pointStringToCoordinates($pointString) {
 
         $coordinates = explode(" ", $pointString);
-       
+       dd($coordinates[1],$coordinates[0]);
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  
