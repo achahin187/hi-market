@@ -3,7 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\Product;
+use App\Models\Branch;
 class SearchResource extends JsonResource
 {
     /**
