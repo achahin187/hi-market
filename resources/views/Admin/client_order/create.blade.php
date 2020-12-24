@@ -413,22 +413,23 @@
 
         $('.product_qty').change(function(){
 
-              console.log($('.product_qty').val());   
-              console.log($('.price').val());   
-            $.ajax({
-                url: "{ route('get_product') }}?product_id=" + $('.product_9').val(),
-                method: 'GET',
-                success: function(data) {
-                 var price = parseInt(data.price) ;
-                 var qty =  parseInt($('.product_qty').val());
-                 console.log(price);
-                 console.log(qty);
+              var qty = $('.product_qty').val();   
+              var price = $('.price').val();   
                  $('.price').val( price  * qty ) ;
+            // $.ajax({
+            //     url: "{{   route('get_product') }}?product_id=" + $('.product_9').val(),
+            //     method: 'GET',
+            //     success: function(data) {
+            //      var price = parseInt(data.price) ;
+            //      var qty =  parseInt($('.product_qty').val());
+            //      console.log(price);
+            //      console.log(qty);
+              
                    
 
 
-                }
-            });
+            //     }
+            // });
         });
 
             var x = 1;
