@@ -23,6 +23,7 @@ class OrderDetailResource extends JsonResource
             'time' => Carbon::parse($this->delvery_date)->format('M d Y H:i A')?? '',
             'placedOn' => Carbon::parse($this->created_at)->format('M d Y')?? '',
             'deliverdOn' => Carbon::parse($this->received_at)->format('M d Y')??'',
+            'rate' => checkRate();
 
             'address'=>[
                 'name' => $this->addressOrder->name,
@@ -90,6 +91,22 @@ class OrderDetailResource extends JsonResource
     {
         return DB::table('order_product')->where('order_id',$this->id);
     }
+
+    private function checkRate()
+    {   
+        $rates = [$this->delivery_rate, $this->seller_rate, $this->pickup_rate, $this->time_rate]
+        foreach ($rates as  $rate) {
+        
+            if ($rate != null) {
+               return true;
+            }else{
+
+               return false;
+            }
+        }
+       
+    }
+
 
    
 }
