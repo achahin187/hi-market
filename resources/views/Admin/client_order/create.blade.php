@@ -369,6 +369,7 @@
                     $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
                      $('.price').val(parseInt(x.price));
+                    $(".product_9").attr("data-price", x.price);
                 
                     })
 
@@ -400,7 +401,7 @@
                  
                   $('.price').val(parseInt(data.price));
                    
-
+                  product_9
 
                 }
             });
@@ -414,7 +415,7 @@
         $('.product_qty').change(function(){
 
               var qty = $('.product_qty').val();   
-              var price = $('.price').val();   
+              var price = $(this).data('price');   
                  $('.price').val( price  * qty ) ;
             // $.ajax({
             //     url: "{{   route('get_product') }}?product_id=" + $('.product_9').val(),
