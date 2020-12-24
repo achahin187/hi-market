@@ -601,20 +601,22 @@ class OrderController extends Controller
         //dd($request->all());
         $order = Order::find($request->order_id);
         
+        $data =  [
+                  "type" => "order",
+                  "orderId" => $order->id,
+                 ];
+
         if($request->type == 'next')
         {
             $order->update(['status'=>$request->order_status + 1]);
 
-            $data =  [
-                    "type" => "order",
-                    "orderId" => $order->id,
-                   ];
-
             new SendNotification($order->client->device_token, $order, $data);  
-            //$this->testNotification($order->client->device_token, $order, $data);
+            
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
+            
+            new SendNotification($order->client->device_token, $order, $data);  
 
         }
         return back();
