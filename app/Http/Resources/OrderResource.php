@@ -10,28 +10,34 @@ class OrderResource extends JsonResource
 {
     public function getMessage($order)
     {
-         $messages = [
-            Constants::ORDER_NEW => "New Order Created",
-            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
-            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
-            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
-             Constants::ORDER_PREPARED => "Your Order $order->num is Prepared",
+        $messages = [
+            0 => "New Order Created",
+            1 => "Your Order $order->num was Pending",
+            2 => "Your Order $order->num Was Accepted",
+            3 => "Your Order $order->num Was Process",
+            4 => "Your Order $order->num Was Pickup",
+            5 => "Your Order $order->num Was Delivered Rate Your Order",
+            6 => "Your Order $order->num was Cancelled",
             null => ""
         ];
+
          return $messages[$order->status];
     }
 
      public function getIcon($order)
     {
-         $icon = [
-            Constants::ORDER_NEW => asset('notification_icons/box.svg'),
-            Constants::ORDER_APPROVED => "Your Order $order->num was Approved",
-            Constants::ORDER_DELIVERED => "Your Order $order->num Was Delivered Rate Your Order",
-            Constants::ORDER_RECEIVED => "Your Order $order->num Was Received",
-             Constants::ORDER_PREPARED => asset('notification_icons/delivery-man.svg'),
+         $messages = [
+            0 => asset('notification_icons/box.png'),
+            1 => asset('notification_icons/box.png'),
+            2 => asset('notification_icons/box.png'),
+            3 => asset('notification_icons/box.png'),
+            4 => asset('notification_icons/delivery-bike.png'),
+            5 => asset('notification_icons/delivery-man.png'),
+            6 => asset('notification_icons/box.png'),
             null => ""
         ];
-         return $icon[$order->status];
+
+         return $messages[$order->status];
     }
 
     /**
