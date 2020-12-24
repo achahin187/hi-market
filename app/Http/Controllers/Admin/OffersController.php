@@ -217,6 +217,7 @@ class OffersController extends Controller
          $offer         = $this->model::find($id);
          $supermarkets  = Supermarket::all();
          $branches      = Branch::all();
+         $products      = Product::all();
        
         return view($this->blade.__FUNCTION__,compact("offer", 'supermarkets', 'branches'));
     }
