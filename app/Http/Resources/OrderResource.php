@@ -51,7 +51,7 @@ class OrderResource extends JsonResource
         return [
             "id"    => $this->id,
             "title" => $this->title_ar,
-            "icon"  => asset('notification_icons/'.$this->icon),
+            "icon"  => $this->icon,
             "type"  => $this->type,
             "order_id"=> $this->order_id??null,
             "product_id"=> $this->product_id??null,
