@@ -473,7 +473,7 @@
 
         $('body').on('keyup change', '.product_qty', function() {
 
-        var quantity = (this).val(); //2
+        var quantity = $(this).val(); //2
         
         var unitPrice = $(this).data('price'); //150
         console.log(unitPrice);
