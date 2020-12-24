@@ -20,7 +20,7 @@
 
 
 
-                    <div class="form-group" id="branch_point" hidden="true">
+                    <div class="form-group" id="branch_point" {{$offer->source == 'Branch'?'': 'hidden' }}>
                         <label for="branch">Branch</label>
                         <select name="branch_id[]" multiple  id="branche_4"  class="form-control select2">
                         
