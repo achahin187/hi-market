@@ -479,18 +479,18 @@
         
         // var unitPrice = $(this).data('price'); //150
       
+            var quantity = $(this).val(); //2
 
             $.ajax({
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
                 method: 'GET',
                 success: function(data) {
-                   var quantity = $(this).val(); //2
         
-                  var unitPrice = $(this).data('price'); //150
+                  
              
               console.log(quantity);
               console.log(unitPrice);
-         $(this).closest('tr').find('.product-price').html($.number(quantity * unitPrice, 2));
+         $(this).closest('tr').find('.product-price').html($.number(quantity * data.price, 2));
         
     }
         });//end of ajax quantity change  
