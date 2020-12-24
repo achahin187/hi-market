@@ -24,8 +24,8 @@ class LocationController extends Controller
 	public function index()
 	{
 
-		$locations = City::all();
-
+		$locations = City::withCount('areaList')->orderBy('area_list_count', 'desc')->get(); 
+       
 		return view($this->blade.__FUNCTION__)->with('locations',$locations);
 	}
 
@@ -57,6 +57,7 @@ class LocationController extends Controller
                 'name_ar'     => $request->area_ar,
                 'name_en'     => $request->area_en,
                 'city'        => $request->city_id,
+                'status'        => 'active',
             ]);
 
     	 foreach ($locations as $key => $location) {
@@ -68,7 +69,7 @@ class LocationController extends Controller
     	 	]);
                 
     	 }
-    	 	return response()->json(['msg'=>'done']);
+    	 	 return response()->json('done');
 
     	 }
     }
