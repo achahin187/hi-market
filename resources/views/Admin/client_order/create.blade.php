@@ -550,7 +550,7 @@
         return false;
     });
 
-     $('body').on('keyup', '.delivery  .discount', function () {
+     $('.order-list .product-price').keyup(, function () {
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
