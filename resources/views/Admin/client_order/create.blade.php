@@ -484,8 +484,9 @@
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
                 method: 'GET',
                 success: function(data) {
-                 var quantity = parseInt(this).val() ;
-                 var unitPrice =  parseInt(data.price );
+                   var quantity = $(this).val(); //2
+        
+                  var unitPrice = $(this).data('price'); //150
              
               console.log(quantity);
               console.log(unitPrice);
