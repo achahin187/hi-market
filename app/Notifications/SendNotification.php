@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Notifications;
-
+use App\Models\NotificationMobile;
 
 class SendNotification {
 
