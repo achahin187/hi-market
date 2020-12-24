@@ -216,7 +216,7 @@
 
                                                     @csrf
 
-                                                    <div class="row"style="align-items: flex-start;">
+                                                    <div class="row"style="align-items: flex-end; margin-bottom: 0px">
 
                                                         <div class="col-md-3">
 
