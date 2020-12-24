@@ -16,6 +16,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Constants;
+use App\Notification\SendNotification;
 
 class OrderController extends Controller
 {
@@ -610,7 +611,8 @@ class OrderController extends Controller
                     "orderId" => $order->id,
                    ];
 
-            $this->testNotification($order->client->device_token, $order, $data);
+            new SendNotification($order->client->device_token, $order->status, $data)    
+            //$this->testNotification($order->client->device_token, $order, $data);
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
