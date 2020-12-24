@@ -19,8 +19,7 @@ class SendNotification {
 
     public function testNotification()
     {
-        dd($this->data);
-
+       
         $data = [
 
             "to" => $this->device_token,
