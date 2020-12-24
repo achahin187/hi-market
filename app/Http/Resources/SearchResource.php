@@ -22,7 +22,7 @@ class SearchResource extends JsonResource
             "description" => $this->getProduct()->description,
             //"overview" => $this->getProduct()->specs ?? "",
             "price" => $this->getProduct()->price ?? 0,
-            //"offer_price" => $this->getProduct()->offer_price ?? 0,
+            "offer_price" => $this->getProduct()->offer_price ?? 0,
             "rate" => $this->getProduct()->rate ?? 0,
             //"ratings" => $this->getProduct()->ratings ?? "0",
             //"priority" => $this->getProduct()->priority ?? 0,
