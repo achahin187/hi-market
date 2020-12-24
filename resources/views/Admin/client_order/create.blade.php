@@ -526,6 +526,7 @@
     });
     $(document).on('click', '.remove_input', function () {
         $(this).closest('tr').remove();
+         calculateTotal();
         x--;
         return false;
     });
