@@ -439,7 +439,7 @@
                 method: 'GET',
                 success: function(data) {
                  
-                  $('.product-price').html($.number(data.price));
+                  $('.product-price').html(data.price);
                    
                   
 
