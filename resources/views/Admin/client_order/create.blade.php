@@ -556,7 +556,7 @@
          var discount = $('.discount-money').val();
          var total = $('.total-price').html();
 
-         
+         calculateTotal(parseInt(delivery), parseInt(total),  parseInt(discount));
          $('.total-price').html( (parseInt(delivery) + parseInt(total)) - parseInt(discount) );
       
     });
@@ -569,8 +569,8 @@
     });
 
     //calculate the total
-function calculateTotal() {
-
+function calculateTotal(delivery, total, discount) {
+console.log(delivery);
     var price = 0;
 
     $('.order-list .product-price').each(function(index) {
