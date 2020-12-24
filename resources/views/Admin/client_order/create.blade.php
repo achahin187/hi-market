@@ -369,7 +369,7 @@
                     $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
                      $('.price').val(parseInt(x.price));
-                    $(".product_9").attr("data-price", x.price);
+                    $(".product_qty").attr("data-price", x.price);
                 
                     })
 
@@ -401,7 +401,7 @@
                  
                   $('.price').val(parseInt(data.price));
                    
-                  product_9
+                  
 
                 }
             });
