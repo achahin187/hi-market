@@ -213,7 +213,7 @@
 
                                            
                                                 <div class="card-body">
-
+                                                        <h4>@lang('site.total') : <span class="total-price">0</span></h4>
 
                                 <table class="table table-hover">
                                     <thead>
@@ -483,7 +483,7 @@
                 method: 'GET',
                 success: function(data) {
              $(self).closest('tr').find('.product-price').html(quantity * data.price);
-        
+                calculateTotal(); 
                 }
         });//end of ajax quantity change  
     });//end of product quantity change
@@ -529,6 +529,21 @@
         x--;
         return false;
     });
+
+    //calculate the total
+function calculateTotal() {
+
+    var price = 0;
+
+    $('.order-list .product-price').each(function(index) {
+        
+        price += parseFloat($(this).html());
+
+    });//end of product price
+
+    $('.total-price').html(price));
+
+   
 </script>
 
 
