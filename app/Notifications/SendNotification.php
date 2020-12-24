@@ -14,9 +14,10 @@ class SendNotification {
         $this->device_token = $device_token;
         $this->order_status = $order_status;
         $this->data[] = $data;
+        $this->testNotification();
     }
 
-     public function testNotification()
+    public function testNotification()
     {
 
         $data = [
