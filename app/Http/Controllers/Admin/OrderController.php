@@ -675,12 +675,15 @@ class OrderController extends Controller
     {
         $messages = [
             0 => "New Order Created",
-            1 => "Your Order $order->num was Approved",
-            2 => "Your Order $order->num Was Delivered Rate Your Order",
-            3 => "Your Order $order->num Was Received",
-             4 => "Your Order $order->num is Prepared",
+            1 => "Your Order $order->num was Pending",
+            2 => "Your Order $order->num Was Accepted",
+            3 => "Your Order $order->num Was Process",
+            4 => "Your Order $order->num Was Pickup",
+            5 => "Your Order $order->num Was Delivered Rate Your Order",
+            6 => "Your Order $order->num was Cancelled",
             null => ""
         ];
+
          return $messages[$order->status];
     }
 
