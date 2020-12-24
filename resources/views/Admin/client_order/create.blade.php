@@ -467,7 +467,7 @@
 
         var max_input = 9;
         var options = $("#hamdyinput").html();
-        alert(options);
+        
         if (x < max_input) {
 
             $('.div_inputs').append('<div class="row" style="align-items: center;">' +

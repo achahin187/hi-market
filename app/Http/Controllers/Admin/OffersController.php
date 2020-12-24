@@ -60,6 +60,7 @@ class OffersController extends Controller
      */
     public function store(Request $request)
     {   
+        dd($request->all());
         $request->validate([
             'type' =>'required',
             'start_date' =>'required',
