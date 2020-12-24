@@ -242,7 +242,7 @@
                                             </td>
                                             <td>
                                                
-                                                                    <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
+                                                <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                             </td>
                                         </tr>
                                            <div class="div_inputs"></div>
@@ -408,7 +408,7 @@
 
                     $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-                     $('.price').val(parseInt(x.price));
+                     $('.product-price').val(parseInt(x.price));
                     $(".product_qty").attr("data-price", x.price);
                 
                     })
@@ -516,7 +516,7 @@
                             <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
                         </td>
                         <td class="product-price">  
-                          <input type="number" name="price" min="0" max="99999.99"class="price @error('price') is-invalid @enderror form-control price" required>
+                         
                         </td>
                         <td>
                             <a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a> 
