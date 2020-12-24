@@ -468,7 +468,7 @@
         if (x < max_input) {
 
             $('.div_inputs').append('<div class="row">' +
-                '<div class="col-md-6">' +
+                '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
 
@@ -478,13 +478,13 @@
                     
                 '</div>' +
                 '</div>' +
-                '<div class="col-md-6">' +
+                '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> محتوى الحقل</label>' +
                 '<input type="text" class="form-control" name="input_value[]" >' +
                 '</div>' +
                 '</div>' +
-                '<div class="col-md-6">' +
+                '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> محتوى الحقل</label>' +
                 '<input type="text" class="form-control" name="input_value[]" >' +
