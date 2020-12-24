@@ -37,17 +37,17 @@ class PointController extends Controller
 
         $user = auth()->user();
 
-        $rules = [
-            'points' => ['required', 'min:1', 'integer'],
+        $request->validate([
+            'points' => ['required', 'min:1', 'unique:points,points','integer'],
             'type' => ['required', 'min:0', 'integer'],
             'offer_type' => ['sometimes','string'],
             'value' => ['required', 'min:0', 'numeric'],
             'status' => ['required','string'],
             'start_date' => 'sometimes|after:today',
             'end_date' => 'sometimes|after:start_date|date'
-        ];
 
-        $this->validate($request,$rules);
+        ]);
+        
 
         if($request->type == 2)
         {

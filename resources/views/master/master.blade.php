@@ -18,6 +18,8 @@ $settings = App\Models\Setting::all()->first();
     <link rel="stylesheet" href="{{ URL::asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="{{ asset('logo.jpeg') }}" href="images/favicon.ico">
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet"
           href="{{ URL::asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">

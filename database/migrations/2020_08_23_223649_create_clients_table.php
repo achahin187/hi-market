@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->unsignedInteger('total_points')->nullable();
+            $table->unsignedInteger('total_points')->default(0);
             $table->string('address')->nullable();
             $table->string('mobile_number')->nullable();
             $table->string('unique_id')->nullable();
