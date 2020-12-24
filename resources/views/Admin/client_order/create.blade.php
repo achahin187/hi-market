@@ -436,7 +436,7 @@
         $('body').on('keyup change', '.product_qty', function() {
 
         var quantity = Number($(this).val()); //2
-        console.log($(this).data('price'));
+        console.log(parseFloat($(this).data('price')) );
         var unitPrice = parseFloat($(this).data('price').replace(/,/g, '')); //150
         $(this).closest('tr').find('.price').html($.number(quantity * unitPrice, 2));
         
