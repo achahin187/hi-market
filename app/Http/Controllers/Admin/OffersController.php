@@ -172,12 +172,12 @@ class OffersController extends Controller
 
         $create_promocode =   $this->model::create($request_data->toArray());
         if ($request['source'] == 'Branch') {
+              $create_promocode->branches()->attach($request['branch_id']);
+            // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
 
-            $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
-
-                foreach ($get_branches as  $branch) {
-                 $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
-                }
+            //     foreach ($get_branches as  $branch) {
+            //      $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
+            //     }
         }else{
             $allBranches =  Branch::all(); 
             foreach ($allBranches as  $allBranche) {
