@@ -581,8 +581,10 @@ function calculateTotal(delivery, total, discount) {
     });//end of product price
    
     if (delivery) {
+        console.log('hi');
           $('.total-price').html((delivery+total)-discount);
     }
+    console.log('bye');
     $('.total-price').html(price);
  }
    
