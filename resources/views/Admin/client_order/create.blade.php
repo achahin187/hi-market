@@ -485,8 +485,10 @@
                 '</div>' +
                 '</div>' +
                 '<div class="clearfix"></div>' +
-                 
+                '<div class="col-md-3">'+
+
                 '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
+                '</div>'+
                 '</div>');
            // $('#select2-hamdyinput'+x+'-container').append($options);
             $('.product_9').select2();
