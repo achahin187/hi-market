@@ -80,7 +80,7 @@ class ClientController extends Controller
                     "point"=>(int) $point->points,
                     "purchase" => $point->value,
                     "is_percentage"=>$point->type == 0 ? false : true,
-                    "checked"=> $client->total_points >= $point->point   ? true : false, 
+                    "checked"=> false, 
                 ];
             });
         $image = DB::table('point_photos')->first();
