@@ -489,8 +489,8 @@
                   console.log(quantity * data.price);
                   console.log(data.price);
 
-             $(this).closest('tr').find('.product-price').html('gyiwbhgbkfgidyh');
-             $(this).closest('tr').html('ijfiid');
+             $(this).closest('tr').find('.product-price').html(quantity * data.price);
+            console.log($(this).closest('tr').find('.product-price'));
         
                 }
         });//end of ajax quantity change  
