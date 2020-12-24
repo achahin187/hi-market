@@ -6,13 +6,13 @@ namespace App\Notifications;
 class SendNotification {
 
     public $device_token;
-    public $order_status;
+    public $order;
     public $data=[];
 
-    public function __construct($device_token, $order_status, $data=[])
+    public function __construct($device_token, $order, $data=[])
     {
         $this->device_token = $device_token;
-        $this->order_status = $order_status;
+        $this->order = $order;
         $this->data[] = $data;
         $this->testNotification();
     }
@@ -27,9 +27,9 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => $this->getMessage(),
+                    "title" => $this->getMessage($this->order),
                     "body" => "Sample Notification",
-                    "icon" => $this->getIcone(),
+                    "icon" => $this->getIcone($this->order),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",
@@ -70,7 +70,7 @@ class SendNotification {
     }
 
 
-    public function getMessage()
+    public function getMessage($order)
     {
         $messages = [
             0 => "New Order Created",
@@ -83,10 +83,10 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$this->order_status];
+         return $messages[$order->status];
     }
 
-     public function getIcone()
+     public function getIcone($order)
     {
         $messages = [
             0 => asset('notification_icons/box.png'),
@@ -99,7 +99,7 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$this->order_status];
+         return $messages[$order->status];
     }
 
    
