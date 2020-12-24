@@ -38,7 +38,7 @@ class LocationController extends Controller
        
           $point = implode(' ', array($long, $lat));
 
-          $data = $pointLocation->pointInPolygon($point, $polygon) ;
+          $data = $pointLocation->pointInPolygon(['50 70'], $polygon) ;
             
 
             
