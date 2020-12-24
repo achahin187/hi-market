@@ -179,8 +179,7 @@ class ClientController extends Controller
                 $rules = [
                     'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
                     'email' => ['required', 'email', Rule::unique((new Client)->getTable())->ignore($client->id), 'regex:/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,3}$/'],
-                    'password' => ['required', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$@#%]).*$/'],
-                    'password_confirmation' => ['required', 'min:8'],
+                    'password' => ['required', 'min:8', 'confirmed'],
                     'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
                     'mobile_number' => 'required|regex:/(01)[0-9]{9}/',
                    
