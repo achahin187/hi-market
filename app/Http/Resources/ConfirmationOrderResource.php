@@ -70,12 +70,15 @@ class ConfirmationOrderResource extends JsonResource
 
     private function totalProductPoints()
     {
-              $qty = DB::table('order_product')->where('order_id',$this->id)->whereIn('product_id', $this->products->pluck('id'))->pluck('quantity');
+              return  DB::table('order_product')
+                      ->where('order_id',$this->id)
+                      ->whereIn('product_id', $this->products->pluck('id'))
+                      ->sum('point');
 
               
-              $point = DB::table('products')->whereIn('id',$this->products->pluck('id'))->pluck('points');
+              //$point = DB::table('products')->whereIn('id',$this->products->pluck('id'))->pluck('points');
 
-              return $qty * $point;
+
     }
 
     private function totalOfferPoints()
