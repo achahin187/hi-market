@@ -28,7 +28,7 @@ class LocationController extends Controller
 
           $getpolygon = Polygon::all();
          
-        $polygon =implode(' ', $getpolygon->pluck('lat')->toArray() , $getpolygon->pluck('lon')->toArray());
+        $polygon =implode(' ', [$getpolygon->pluck('lat')->toArray() , $getpolygon->pluck('lon')->toArray()]);
 
           $point = implode(' ', array($long, $lat));
 
