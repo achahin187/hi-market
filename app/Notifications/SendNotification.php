@@ -87,7 +87,7 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => 'New Offers In '.$this->getBranch()->name. ', Check It Now',
+                    "title" => 'New Offers In '.$this->getBranch()->name??'Delivertto'. ', Check It Now',
                     "body" => "Sample Notification",
                     "icon" => $this->getIcone(1),
                     "requireInteraction" => true,
