@@ -157,7 +157,7 @@ class ProductController extends Controller
         $imagepaths = [];
 
         foreach ($product_images as $image) {
-            array_push($imagepaths, asset('images/' . $image));
+            array_push($imagepaths, asset('product_images/' . $image));
         }
 
         $product_details->imagepaths = $imagepaths;
