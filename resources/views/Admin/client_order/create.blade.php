@@ -477,17 +477,12 @@
 
       
             var quantity = parseInt($(this).val()); //2
-
+            var self = this;
             $.ajax({
                 url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
                 method: 'GET',
                 success: function(data) {
-                 
-                  console.log(quantity * data.price);
-                  console.log(data.price);
-
-             console.log($(this));
-             $(this).closest('tr').find('.product-price').html(quantity * data.price);
+             $(self).closest('tr').find('.product-price').html(quantity * data.price);
         
                 }
         });//end of ajax quantity change  

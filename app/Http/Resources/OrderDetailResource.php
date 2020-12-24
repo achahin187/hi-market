@@ -18,6 +18,7 @@ class OrderDetailResource extends JsonResource
         return [
 
             'id' => $this->id,
+            'orderNumber' => $this->num,
             'status' => $this->getStatus(),
             'date' => Carbon::parse($this->delvery_date)->format('M d Y'),
 
