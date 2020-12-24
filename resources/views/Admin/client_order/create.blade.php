@@ -450,7 +450,7 @@
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> الكية </label>' +
-                '<input type="text" class="product_qty form-control" name="quantity[]" >' +
+                '<input type="number" class="product_qty form-control" name="quantity[]" >' +
                 '</div>' +
                 '</div>' +
                 '<div class="col-md-3">' +
