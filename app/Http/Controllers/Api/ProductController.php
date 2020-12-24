@@ -190,7 +190,7 @@ class ProductController extends Controller
                     $q->WhereIn('branches.id',$branches_ids);
                 })->get();
 
-               
+            return $search_result;
 
                 foreach ($search_result as $product) {
 
