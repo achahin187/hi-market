@@ -346,11 +346,11 @@ class OrderController extends Controller
 
         if($order){
 
-            return response()->json([
-                "status" => true,
-                'data'    => OrderDetailResource::collection($order),
-             ]);
-        
+            // return response()->json([
+            //     "status" => true,
+            //     'data'    => OrderDetailResource::collection($order),
+            //  ]);
+            return $this->returnData(['status','data'], [true , OrderDetailResource::collection($order)]);
         }else{
 
              return $this->returnError(404, "This Order ID Not Found");
