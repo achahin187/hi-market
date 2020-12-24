@@ -473,11 +473,8 @@
             // });
         //});
 
-        $('body').on('keyup change', '.product-quantity', function() {
+        $('body').on('keyup change', '.product-quantity .product-price', function() {
 
-        // var quantity = $(this).val(); //2
-        
-        // var unitPrice = $(this).data('price'); //150
       
             var quantity = parseInt($(this).val()); //2
 
@@ -490,7 +487,7 @@
                   console.log(data.price);
 
              $(this).closest('tr').find('.product-price').html(quantity * data.price);
-            console.log($(this).closest('tr').find('.product-price'));
+             console.log($(this).closest('tr'));
         
                 }
         });//end of ajax quantity change  
