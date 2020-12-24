@@ -412,13 +412,13 @@
         //    console.log("function is run");
         // });
 
-        $('.product_qty').change(function(){
+        // $('.product_qty').change(function(){
 
-              var qty = $('.product_qty').val();   
-              var price = $(this).data('price');   
-                 $('.price').val( price  * qty ) ;
+        //       var qty = $('.product_qty').val();   
+        //       var price = $(this).data('price');   
+        //          $('.price').val( price  * qty ) ;
             // $.ajax({
-            //     url: "{{   route('get_product') }}?product_id=" + $('.product_9').val(),
+            //     url: "{   route('get_product') }}?product_id=" + $('.product_9').val(),
             //     method: 'GET',
             //     success: function(data) {
             //      var price = parseInt(data.price) ;
@@ -431,7 +431,17 @@
 
             //     }
             // });
-        });
+        //});
+
+        $('body').on('keyup change', '.product_qty', function() {
+
+        var quantity = Number($(this).val()); //2
+        console.log($(this).data('price'));
+        var unitPrice = parseFloat($(this).data('price').replace(/,/g, '')); //150
+        $(this).closest('tr').find('.price').html($.number(quantity * unitPrice, 2));
+        
+
+    });//end of product quantity change
 
             var x = 1;
     $('.add_input').click( function () {
