@@ -405,13 +405,16 @@
                 }
             });
         });
+        var test = document.getElementsByClassName("product_qty");
+         test.addEventListener("change", function(){
+              console.log("function is run");
+         });
 
+        // $('.product_qty').change(function(){
 
-        $('.product_qty').change(function(){
-
-            console.log("function is run");
+        //     console.log("function is run");
             // $.ajax({
-            //     url: "{{ route('get_product') }}?product_id=" + $('.product_9').val(),
+            //     url: "{ route('get_product') }}?product_id=" + $('.product_9').val(),
             //     method: 'GET',
             //     success: function(data) {
             //      var price = parseInt(data.price) ;
@@ -424,7 +427,7 @@
 
             //     }
             // });
-        });
+        //});
 
             var x = 1;
     $('.add_input').click( function () {
