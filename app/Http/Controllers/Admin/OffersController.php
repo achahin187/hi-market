@@ -60,7 +60,7 @@ class OffersController extends Controller
      */
     public function store(Request $request)
     {   
-        dd($request->all());
+
         $request->validate([
             'type' =>'required',
             'start_date' =>'required',
@@ -118,6 +118,7 @@ class OffersController extends Controller
      */
     private function createPromocode($request)
     {  
+        dd($request);
         $request_data = collect($request)->except('branch_id');
         
         $create_promocode =   $this->model::create($request_data->toArray());
