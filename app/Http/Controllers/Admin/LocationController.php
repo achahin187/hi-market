@@ -25,7 +25,7 @@ class LocationController extends Controller
 	{
 
 		$locations = City::withCount('areaList')->orderBy('area_list_count', 'desc')->get(); 
-       dd($locations);
+      
 		return view($this->blade.__FUNCTION__)->with('locations',$locations);
 	}
 
