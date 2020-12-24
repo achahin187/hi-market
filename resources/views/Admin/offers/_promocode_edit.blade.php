@@ -37,9 +37,10 @@
                         
                             <option  selected  disabled>Please Select branch</option>
 
-                            @foreach($offer->branches  as $branch)
-                                 <option value="{{$branch->id}}">{{ $branch->name }}</option>
-                              @endforeach  
+                            
+                               @foreach($branches  as $branch)
+                                 <option value="{{$branch->id}}" {{ in_array($branch->id, $offer->branches->pluck('id'))?'selected' :'' }}>{{ $branch->name }}</option>
+                              @endforeach    
                         </select>
                     </div>
 
