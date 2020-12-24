@@ -525,7 +525,7 @@
         return false;
     });
     $(document).on('click', '.remove_input', function () {
-        $(this).parent('div').remove();
+        $(this).closest('tr').remove();
         x--;
         return false;
     });
