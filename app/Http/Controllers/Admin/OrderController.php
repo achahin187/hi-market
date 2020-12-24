@@ -610,8 +610,8 @@ class OrderController extends Controller
                     "orderId" => $order->id,
                    ];
 
-            new SendNotification($order->client->device_token, $order, $data);  
-            //$this->testNotification($order->client->device_token, $order, $data);
+            //new SendNotification($order->client->device_token, $order, $data);  
+            $this->testNotification($order->client->device_token, $order, $data);
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
@@ -693,6 +693,7 @@ class OrderController extends Controller
 
         //$client = Client::find(auth('client-api')->user()->id);
        // dd ($data, $device_token, $stauts);
+        dd($data);
         $data = [
             "to" => $device_token,
 
