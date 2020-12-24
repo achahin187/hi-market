@@ -73,7 +73,7 @@ class ConfirmationOrderResource extends JsonResource
               return  DB::table('order_product')
                       ->where('order_id',$this->id)
                       ->whereIn('product_id', $this->products->pluck('id'))
-                      ->sum('point');
+                      ->sum('points');
 
               
               //$point = DB::table('products')->whereIn('id',$this->products->pluck('id'))->pluck('points');
