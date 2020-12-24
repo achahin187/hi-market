@@ -554,8 +554,10 @@
             
          var delivery = $('.delivery').val();
          var discount = $('.discount').val();
+
          console.log(discount);
          console.log(delivery);
+         console.log($('.total-price').val());
       
     });
 
