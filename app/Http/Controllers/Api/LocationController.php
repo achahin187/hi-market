@@ -34,11 +34,11 @@ class LocationController extends Controller
              $polygon[]     = $value->lon;
           }
           //return str_replace(',', ' ', $polygon)  ;
-          $polygons =  implode(' ', $polygon);
+          //$polygons =  implode(' ', $polygon);
        
           $point = implode(' ', array($long, $lat));
 
-          $data = $pointLocation->pointInPolygon($point, $polygons) ;
+          $data = $pointLocation->pointInPolygon($point, $polygon) ;
             
 
             
