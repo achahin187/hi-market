@@ -342,15 +342,15 @@ class OrderController extends Controller
             return $this->returnError(422, "user not exists");
         }
 
-        $order = Order::Where('id',$request->order_id)->Where('client_id',$client->id)->get();
+        $order = Order::Where('id',$request->order_id)->Where('client_id',$client->id)->first();
 
         if($order){
 
-            // return response()->json([
-            //     "status" => true,
-            //     'data'    => OrderDetailResource::collection($order),
-            //  ]);
-            return $this->returnData(['data'], [OrderDetailResource::collection($order)]);
+            return response()->json([
+                "status" => true,
+                'data'    => new OrderDetailResource($order),
+             ]);
+            //return $this->returnData(['data'], [OrderDetailResource::collection($order)]);
         }else{
 
              return $this->returnError(404, "This Order ID Not Found");
