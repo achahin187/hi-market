@@ -94,7 +94,7 @@ class OrderDetailResource extends JsonResource
 
     private function checkRate()
     {   
-        $rates = [$this->delivery_rate, $this->seller_rate, $this->pickup_rate, $this->time_rate]
+        $rates = [$this->delivery_rate, $this->seller_rate, $this->pickup_rate, $this->time_rate];
         foreach ($rates as  $rate) {
         
             if ($rate != null) {
