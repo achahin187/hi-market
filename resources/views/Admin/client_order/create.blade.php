@@ -238,14 +238,11 @@
                                                 <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
                                             </td>
                                             <td class="product-price">  
-                                              <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control price" required>
+                                              <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control" required>
                                             </td>
                                             <td>
-                                                <button style="margin-top: 30px;" class=" btn btn-primary">
-                                                                           {{ __('admin.add') }}
-
-
-                                                                </button> 
+                                               
+                                                                    <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                             </td>
                                         </tr>
                    
@@ -315,7 +312,6 @@
                                                                 </button> --}}
 
 
-                                                                    <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                                                 </div>
                                                             </div>
                                                                <span>  
