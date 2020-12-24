@@ -239,7 +239,7 @@ class ProductController extends Controller
                 //     $all_products [] = $productarray;
                 // }
                 
-                return $this->returnData(['products'], ['faefa','geagea']);
+                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
             }    
     }
 

@@ -583,9 +583,11 @@ function calculateTotal(delivery, total, discount) {
     if (delivery) {
         console.log('hi');
           $('.total-price').html((delivery+total)-discount);
-    }
-    console.log('bye');
+    }else{
     $('.total-price').html(price);
+
+    }
+
  }
    
 </script>
