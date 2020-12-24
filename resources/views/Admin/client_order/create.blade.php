@@ -489,7 +489,7 @@
                   console.log(quantity * data.price);
                   console.log(data.price);
 
-                $(this).closest('tr').attr('data-pr',10);
+                $(this).parent('tr').attr('data-pr',10);
            
         
                 }
