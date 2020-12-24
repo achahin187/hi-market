@@ -235,7 +235,7 @@
                                                 </select>
                                             </td>
                                             <td>  
-                                                <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
+                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
                                             </td>
                                             <td class="product-price">  
                                               
@@ -245,7 +245,7 @@
                                                 <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                             </td>
                                         </tr>
-                                           <div class="div_inputs"></div>
+                                           
 
                                     </tbody>
 
@@ -473,7 +473,7 @@
             // });
         //});
 
-        $('body').on('keyup change', '.product_qty', function() {
+        $('body').on('keyup change', '.product-quantity', function() {
 
         // var quantity = $(this).val(); //2
         
@@ -513,7 +513,7 @@
                             </select>
                         </td>
                         <td>  
-                            <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
+                            <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
                         </td>
                         <td class="product-price">  
                          
