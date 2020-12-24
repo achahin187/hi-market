@@ -470,7 +470,7 @@
         alert(options);
         if (x < max_input) {
 
-            $('.div_inputs').append('<div class="row">' +
+            $('.div_inputs').append('<div class="row" style="align-items: center;">' +
                 '<div class="col-md-3">' +
                 '<div class="form-group">' +
                 '<label> عنوان الحقل</label>' +
@@ -496,7 +496,7 @@
                 '<div class="clearfix"></div>' +
                 
 
-                '<a href="#" class="remove_input btn btn-danger"><i class="fa fa-trash">حذف</i></a>' +
+                '<a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a>' +
                 +
                 '</div>');
            // $('#select2-hamdyinput'+x+'-container').append($options);
