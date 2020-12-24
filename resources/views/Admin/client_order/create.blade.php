@@ -473,7 +473,7 @@
 
         $('body').on('keyup change', '.product_qty', function() {
 
-        var quantity = Number($(this).val()); //2
+        var quantity = (this).val(); //2
         
         var unitPrice = $(this).data('price'); //150
         console.log(unitPrice);
@@ -502,7 +502,7 @@
                             <input type="number" name="quantity[]" min="1" value="1" class="product_qty @error('quantity') is-invalid @enderror form-control " required>
                         </td>
                         <td class="product-price">  
-                          <input type="number" name="price" min="0" max="99999.99" class="price @error('price') is-invalid @enderror form-control price" required>
+                          <input type="number" name="price" min="0" max="99999.99"class="price @error('price') is-invalid @enderror form-control price" required>
                         </td>
                         <td>
                             <a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a> 
