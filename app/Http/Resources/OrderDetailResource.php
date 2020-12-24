@@ -22,9 +22,9 @@ class OrderDetailResource extends JsonResource
             'date' => Carbon::parse($this->delvery_date)->format('M d Y'),
 
             'address'=>[
-                'name' => $this->client->name,
-                'desc' => $this->client->addresses->first()->description,
-                'phone' => $this->client->addresses->first()->phone,
+                'name' => $this->addressOrder->name,
+                'desc' => $this->addressOrder->address,
+                'phone' => $this->addressOrder->phone,
             ],
 
             'orderSummary' =>[
