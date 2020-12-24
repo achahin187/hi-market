@@ -29,7 +29,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
-
+use App\Notifications\SendNotification;
 class OrderController extends Controller
 {
     //
@@ -141,9 +141,13 @@ class OrderController extends Controller
                 ]);
 
              }   
-           
+            
+             $data =  [
+                  "type" => "order",
+                  "orderId" => $order->id,
+                 ];
              //return $this->sendNotification();
-
+             new SendNotification($order->client->device_token, $order, $data);  
             //return $this->returnSuccessMessage('The order has been completed successfully', 200);
             return response()->json([
                 "status" => true,

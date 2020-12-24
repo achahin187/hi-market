@@ -610,7 +610,7 @@ class OrderController extends Controller
         if($request->type == 'next')
         {
             $order->update(['status'=>$request->order_status + 1]);
-
+ 
             new SendNotification($order->client->device_token, $order, $data);  
            
         }else
