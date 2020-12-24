@@ -87,8 +87,8 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => 'New Offers In '.isset($this->getBranch()->name)?'':'Delivertto'. ', Check It Now',
-                    "body" => 'New Offers In '.isset($this->getBranch()->name)?'':'Delivertto'. ', Check It Now',
+                    "title" => 'New Offers In Delivertto, Check It Now',
+                    "body" => 'New Offers In Delivertto, Check It Now',
                     "icon" => $this->getIcone(1),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
