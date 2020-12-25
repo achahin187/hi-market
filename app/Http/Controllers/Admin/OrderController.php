@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Constants;
 use App\Notifications\SendNotification;
-
+use DB;
 class OrderController extends Controller
 {
     //
@@ -611,12 +611,30 @@ class OrderController extends Controller
         if($request->type == 'next')
         {
             $order->update(['status'=>$request->order_status + 1]);
+            if ($order->status == 4) {
+                $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
+
+                $total_points = $order->client->total_points + $getClientPoints;
+              
+                $order->client->update(['total_points'=>$total_points]);
+            }
  
             new SendNotification($order->client->device_token, $order, $data);  
            
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
+
+              if ($request->order_status == 4) {
+
+              
+                $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
+
+                $total_points = $order->client->total_points - $getClientPoints;
+                $order->client->update(['total_points'=>$total_points]);
+            }
+ 
+
 
             new SendNotification($order->client->device_token, $order, $data); 
 
