@@ -1,34 +1,23 @@
 <form action="{{ route('offer.store') }}" method="POST"  enctype="multipart/form-data">
     
-@csrf                  
-                <input type="hidden" value="free product" name="type">    
+@csrf 
+
                     <div class="form-group">
-                        <label for="branch">Branch</label>
-                        <select name="branch_id" id="branche_3"  class="form-control select2">
-                        
-                            <option  selected  disabled>Please Select branch</option>
-                              @foreach( $branches as  $branch) 
-                                <option  @if(old("branch_id") == $branch->id) selected
-                                        @endif value="{{$branch->id}}">{{$branch->name}}
-                                </option>
-                              @endforeach     
+                        <label for="branch">Source</label>
+                        <select name="source" id="delivery-free"  class="form-control select2">
+                            @php
+                            $source = 'Delivertto';
+                            @endphp
+                           
+                             
+                               <option value="{{$source}}"  selected="" disabled="">{{$source}}</option>
+                                 
                         </select>
                     </div>
 
+                    <input type="hidden" value="free product" name="type">  
 
-                     <div class="form-group">
-                        <label for="branch">Product </label>
-                        <select name="product_id" id="product_3"   class="@error('product_id') is-invalid @enderror form-control select2">
-                        
-                            <option  selected  disabled>Please Select product</option>
-                       
-                        </select>
-                        @error('product_id')
-                         <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+              
 
                      <div class="form-group">
                         <label for="exampleInputEmail1">Total Order Money</label>

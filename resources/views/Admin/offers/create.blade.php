@@ -215,5 +215,19 @@
                  $('#branch').attr("hidden",true);
             }
     });
+
+     $("#type").change(function(){
+         var type = $('#type').val();
+            console.log(type);
+            if (type === 'Branch') {
+       
+
+                 $('.supermarket_4').removeAttr('hidden');
+                 $('#branch').removeAttr('hidden');
+            }else{
+                 $('.supermarket_4').attr("hidden",true);
+                 $('#branch').attr("hidden",true);
+            }
+    });
 </script>
 @endpush

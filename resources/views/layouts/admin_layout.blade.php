@@ -828,6 +828,24 @@ $settings = App\Models\Setting::all()->first();
             "autoWidth": false,
             "responsive": true,
         });
+         $('#example3').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+          $('#example4').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
 
     $(document).ready(function () {
