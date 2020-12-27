@@ -93,7 +93,7 @@ class OffersController extends Controller
                $this->createProductOffer($request_data);
                 break;
 
-            case 'free product':
+            case 'free delivery':
                $this->createFreeProduct($request_data);
                 break;
 
@@ -164,7 +164,8 @@ class OffersController extends Controller
     * @return \Illuminate\Http\Response
     */
     private function createFreeProduct($request)
-    {dd($request);
+    {   
+      dd($request);
         $create_promocode = $this->model::create($request);
     }
     /**

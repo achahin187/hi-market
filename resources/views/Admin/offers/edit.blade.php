@@ -46,7 +46,7 @@
                         <a class="nav-link {{ $offer->type == 'promocode' ?'active':''}} " id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">Promo Code</a>
                       </li>
                       <li class="nav-item" {{ $offer->type == 'product Offer' ?'':'hidden'}}>
-                        <a class="nav-link {{ $offer->type == 'product Offer' ?'active':''}}" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Product Profile</a>
+                        <a class="nav-link {{ $offer->type == 'product Offer' ?'active':''}}" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Product offer</a>
                       </li>
                       <li class="nav-item" {{ $offer->type == 'free product' ?'':'hidden'}}>
                         <a class="nav-link {{ $offer->type == 'free product' ?'active':''}}" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Free Product</a>

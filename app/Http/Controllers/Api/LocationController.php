@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Clientdevice;
-use App\Models\Coverage_area;
+use App\Models\Polygon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Polygons\PointLocation;
 use App\Http\Traits\GeneralTrait;
 
 class LocationController extends Controller
@@ -24,22 +24,18 @@ class LocationController extends Controller
 
         $lat = $request->lat;
 
-        $data = Coverage_area::where('lat', $lat)->where('long', $long)->where('status', 'active')->first();
+          new PointLocation();
 
+          $polygon = Polygon::all()->toArray();
+          $points = array("$request->long $request->lat");
+
+          $data = $pointLocation->pointInPolygon($point, $polygon) ;
+            
 
         if ($data) {
 
-
-            $client = getUser();
-
-            if ($client) {
-
                 return $this->returnSuccessMessage('location is valid', 200);
 
-            } else {
-
-                return $this->returnError(404, 'there is no client found');
-            }
         } else {
             return $this->returnSuccessMessage('location is valid', 200);
         }

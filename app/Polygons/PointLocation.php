@@ -33,7 +33,7 @@ class PointLocation {
  
         // Check if the point sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
-            return "vertex";
+            return true;
         }
  
         // Check if the point is inside the polygon or on the boundary
@@ -45,7 +45,7 @@ class PointLocation {
             $vertex2 = $vertices[$i];
             if ($vertex1['y'] == $vertex2['y'] and $vertex1['y'] == $point['y'] and $point['x'] > min($vertex1['x'], $vertex2['x']) and $point['x'] < max($vertex1['x'], $vertex2['x'])) { 
             // Check if point is on an horizontal polygon boundary
-                return "boundary";
+                return true;
             }
             if ($point['y'] > min($vertex1['y'], $vertex2['y']) and $point['y'] <= max($vertex1['y'], $vertex2['y']) and $point['x'] <= max($vertex1['x'], $vertex2['x']) and $vertex1['y'] != $vertex2['y']) { 
                 $xinters = ($point['y'] - $vertex1['y']) * ($vertex2['x'] - $vertex1['x']) / ($vertex2['y'] - $vertex1['y']) + $vertex1['x']; 
@@ -60,9 +60,9 @@ class PointLocation {
         } 
         // If the number of edges we passed through is odd, then it's in the polygon. 
         if ($intersections % 2 != 0) {
-            return "inside";
+            return true;
         } else {
-            return "outside";
+            return false;
         }
     }
  
