@@ -12,7 +12,7 @@
                               <option  selected  disabled>Please Select Source</option>
                             @foreach($sources as  $source) 
                                <option  @if(old("source") == $source) selected
-                                        @endif value="{{$source}}"{{ $offer->source == $source ?'selected':'' }}>{{$source}}</option>
+                                        @endif value="{{$source}}">{{$source}}</option>
                              @endforeach           
                         </select>
                     </div>

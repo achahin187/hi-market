@@ -50,9 +50,10 @@ class ClientOrdersController extends Controller
     {          
         $request_data = $request->all();
       
-        $company = BD::table('delivery_companies_branches')
-                    ->where('banch_id',$request_data['branch_id'])
+        $company = DB::table('delivery_companies_branches')
+                    ->where('branch_id',$request_data['branch_id'])
                     ->first();
+                   
          $order = Order::create([
                 'num' => rand(0,9),
                 'order_price'=> $request_data['order_price'],
@@ -61,7 +62,7 @@ class ClientOrdersController extends Controller
                 'shipping_fee'=> $request_data['delivery'],
                 'address'=> 1,//static
                 'branch_id'=> $request_data['branch_id'],
-                'company_id' => $request_data[$company->company_id], 
+                'company_id' => $company->delivery_company_id, 
                
             ]);
 

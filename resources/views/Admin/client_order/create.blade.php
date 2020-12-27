@@ -470,7 +470,7 @@
                      $('.branch_product_id').val(selectedStatus);
                      $('.supermarket_id').val(selectedsuperMarket);
 
-                     
+                    
                     
         });
 
