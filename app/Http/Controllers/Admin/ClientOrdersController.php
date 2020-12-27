@@ -12,6 +12,7 @@ use App\Models\ManualOrder;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Supermarket;
+use DB;
 class ClientOrdersController extends Controller
 {
     public function create($id)
@@ -46,70 +47,39 @@ class ClientOrdersController extends Controller
     }
 
     public function storeOrder(Request $request)
-    {           //products[${id}][quantity]
+    {          
         $request_data = $request->all();
-        $products = [];
-        foreach ($request->products as $product) {
-
-                $products[] = $product;
-        }
-
-        $data=[];
-        foreach ($request->quantity as  $q) {
-            $data[] = $product;
-        }
-       dd($products, $data);
-       foreach ($data as $index => $quantity) {
-
-          dd($data[$index][$product]);
-
-            $product = Product::FindOrFail($id);
-            $total_price += $product->sale_price * $quantity['quantity'];
-
-            $product->update([
-                'stock' => $product->stock - $quantity['quantity']
+      
+        $company = BD::table('delivery_companies_branches')
+                    ->where('banch_id',$request_data['branch_id'])
+                    ->first();
+         $order = Order::create([
+                'num' => rand(0,9),
+                'order_price'=> $request_data['order_price'],
+                'client_id'  => $request_data['client_id'],
+                'status'     => 0,
+                'shipping_fee'=> $request_data['delivery'],
+                'address'=> 1,//static
+                'branch_id'=> $request_data['branch_id'],
+                'company_id' => $request_data[$company->company_id], 
+               
             ]);
 
-        }//end of foreach
+        foreach ($request->products as $index => $product) {
 
-        $orders = collect($request_data["order"]) ;
-        // $total_price = $orders->sum('price');
+            $getProduct = $product;
 
-        $manual_orders = ManualOrder::Where('id', $request->order_id)->get();
+            $quantity = $request->quantity[$index];
 
-        $prices = collect([]);
-        foreach ($orders as $order) {
-            $order = json_decode($order);
+            $data = Product::find($getProduct);
 
-            $prices->add($order->price* $order->quantity);
+            DB::table('order_product')->insert([
+                 'order_id' => $order->id,
+                 'quantity' => $quantity,
+                 'price' => $data->price * $quantity,
+                 'product_id' => $getProduct,
+            ]);   
         }
-
-         $total_price = $prices->sum();
-      $products = collect([]);
-        foreach ($orders as $order) {
-            $products->add(json_decode($order));
-       
-       
-        }
-        $product = Product::find($products[0]->product_id)->branches->pluck('id')[0];
-
-        $store_order = Order::create([
-            'num' => 'jbfe651',
-            "order_price"=>$total_price,
-            'address'=>  Client::find($products[0]->client_id)->addresses->first()->name,
-            'client_id' => $products[0]->client_id,
-            'status'=> 1,
-            'company_id' => DeliveryCompany::WhereHas('branches', function ($q) use ($request){
-                $q->Where('branches.id', $request->branch_id);
-            })->first()->id,
-
-        ]);
-
-         $store_order->products()->attach($products->pluck('product_id'));
-
-         $delete = ManualOrder::Where('id', $request->order_id)->delete();
-
-         $destroy_session = session()->forget('branch_id');
 
         return redirect()->route('clients.index')->withStatus('Order Added Successfully');
     }

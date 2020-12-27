@@ -134,6 +134,7 @@
 
                                                     @foreach( $supermarkets as  $supermarket) 
                                                      <option
+                                                     
                                                       @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
                                                        @endif  
                                               
@@ -143,27 +144,10 @@
 
                                                     </select>
                                                 </div>
-                                                 
 
-                                            @if(session()->get('branch_id'))
+                                                 <input type="hidden" name="client_id" value="{{ request()->client_id }}">
 
-                                                 <div class="form-group"  >
-                                                    <label for="branch">Branch</label>
-                                                    <select name="branch_id"  class=" branch_9 form-control select2">
-
-                                                    @php
-                                                    $branch = \App\Models\Branch::find(session()->get('branch_id'));
-                                                    @endphp
-
-                                                        <option
-                                                         @if(session()->get('branch_id') != $branch->id && session()->get('branch') != null) selected disabled
-                                                          @endif 
-                                                         value="{{ $branch->id }}"  > {{ $branch->name_en  }}</option>
-                                                           
-                                                    </select>
-                                                </div>
-
-                                            @else
+                                           
                                                 <div class="form-group"  >
                                                     <label for="branch">Branch</label>
                                                     <select name="branch_id"  class="branch_9 form-control select2">
@@ -173,7 +157,7 @@
                                                     </select>
                                                 </div>
 
-                                            @endif  
+                                       
 
                                             <a href="{{ route('change.order',['client_id'=>request()->client_id]) }}" style="margin-top: 30px;" class=" btn btn-primary">
                                                     Reset Order
@@ -183,17 +167,8 @@
                                             <br>  
                                             <br>  
                                             <br>  
-{{-- 
-                                                <div class="form-group"  >
-                                                    <label for="branch">category</label>
-                                                    <select name="branch_id" id="category_9"  class="form-control select2">
-                                                    
-                                                        <option  selected  disabled>Please Select category</option>
-                                                           
-                                                    </select>
-                                                </div> --}}
 
-                                                {{-- product --}}
+                                        {{-- product --}}
                                                     <!--third card-->
                                     @if(Auth()->user()->can('order-edit-client-product'))
                                         <div class="card card-primary">
@@ -229,13 +204,13 @@
                                                    
                                                         <tr>
                                                             <td> 
-                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="" id="hamdyinput" 
+                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
                                                                 data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                 </select>
                                                             </td>
                                                             <td>  
-                                                                <input type="number" name="" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
                                                             </td>
                                                             <td class="product-price">  
                                                               
@@ -306,7 +281,7 @@
                                                 {{-- product total --}}
                                                  <h4>@lang('site.total_product') : <span class="total-price-product">0</span></h4>
 
-
+                                                 <input type="hidden" name="order_price" class="order_price" value="">
                                                   {{-- delivery --}}
                                                   <h4>@lang('site.total_delivery') : <span class="total-price-delivery">0</span></h4>
 
@@ -317,12 +292,12 @@
                                                   <h4>@lang('site.total') : <span class="total-price-result">0</span></h4>
                                             </div>
 
+                                                         <input type="hidden" class="branch_product_id" name="branch_id" value="">
 {{-- 
                                                     <div class="row"style="align-items: flex-end; margin-bottom: 0px">
-                                                         {{-- <input type="hidden" class="branch_product_id" name="branch_id" value="">
-                                                          <input type="hidden" class="supermarket_id" name="supermarket_id" value=""> --}}
+                                                          <input type="hidden" class="supermarket_id" name="supermarket_id" value="">
 
-                                                      {{--   <div class="col-md-3">
+                                                        <div class="col-md-3">
 
                                                             <div class="form-group">
 
@@ -475,6 +450,7 @@
 
                      $('.product-price').val(parseInt(x.price));
                     $(".product_qty").attr("data-price", x.price);
+                     //$('.product_9').attr('name', 'product['+x.id+'][quantity]');
                 
                     })
 
@@ -493,6 +469,7 @@
                      $('.branch_id').val(selectedStatus);
                      $('.branch_product_id').val(selectedStatus);
                      $('.supermarket_id').val(selectedsuperMarket);
+
                      
                     
         });
@@ -506,8 +483,7 @@
                  
                   $('.product-price').html(data.price);
                    calculateTotal();
-                   $('.product_9').attr('name', 'product['+data.id+']');
-
+                   //$('.product_9').attr('name', 'product['+data.id+'][quantity]');
                 }
             });
         });
@@ -524,6 +500,8 @@
                 method: 'GET',
                 success: function(data) {
              $(self).closest('tr').find('.product-price').html(quantity * data.price);
+           
+              //$('.product_9').attr('name', 'product['+data.id+'][quantity]');
                 calculateTotal(); 
                 }
         });//end of ajax quantity change  
@@ -596,6 +574,7 @@ function calculateTotal() {
     });//end of product price
    
     $('.total-price').html(price);
+
    
 
  }
@@ -619,12 +598,14 @@ function calculateTotal() {
         $('.total-price-delivery').html(delivery);
         $('.total-price-discount').html(total * {{ (100 - $setting->reedem_point) /100 }});
         $('.total-price-product').html(productTotal);
+        $('.order_price').val(productTotal);
   
     }else{
          $('.total-price-result').html(result+delivery);
          $('.total-price-delivery').html(delivery);
          $('.total-price-discount').html(discount);
-         $('.total-price-product').html(productTotal);
+         $('.total-price-product').html((total * {{ $setting->reedem_point /100 }})+delivery);
+         $('.order_price').val(productTotal);
         }
     
    

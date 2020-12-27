@@ -184,7 +184,11 @@ class ProductController extends Controller
 
             if (count($products) < 1) {
 
-                 return $this->returnData(['products'], []);
+                 return response()->json([
+                        'status' => true,
+                        'msg' => '',
+                        'data' => '',
+                        ]);
             } else {
 
                 $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
