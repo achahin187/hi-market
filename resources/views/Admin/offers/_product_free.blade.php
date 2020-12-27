@@ -2,7 +2,7 @@
     
 @csrf 
 
-                    <div class="form-group">
+                  {{--   <div class="form-group">
                         <label for="branch">Source</label>
                         <select name="source" id="delivery-free"  class="form-control select2">
                             @php
@@ -13,9 +13,10 @@
                                <option value="{{$source}}"  selected="" disabled="">{{$source}}</option>
                                  
                         </select>
-                    </div>
+                    </div> --}}
 
-                    <input type="hidden" value="free product" name="type">  
+                    <input type="hidden" value="free delivery" name="type">  
+                    <input type="hidden" value="Delivertto" name="source">  
 
               
 

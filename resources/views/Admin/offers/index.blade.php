@@ -154,12 +154,9 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.type') }}</th>
-                                        <th>{{ __('admin.source') }}</th>
-                                       
+                                        <th>{{ __('admin.source') }}</th>                                     
                                         <th>{{ __('admin.value') }}</th>
-                                        <th>{{ __('admin.total_order_money') }}</th>
-                                      
-                                     
+                                        <th>{{ __('admin.total_order_money') }}</th>       
                                         <th>{{ __('admin.status') }}</th>
 
 
@@ -249,14 +246,8 @@
                                     <tr>
                                         <th>{{ __('admin.type') }}</th>
                                         <th>{{ __('admin.source') }}</th>
-                                        <th>{{ __('admin.promocode_name') }}</th>
-                                        <th>{{ __('admin.promocode_type') }}</th>
-                                        <th>{{ __('admin.discount_on') }}</th>
-                                        <th>{{ __('admin.value') }}</th>
                                         <th>{{ __('admin.total_order_money') }}</th>
-                                        <th>{{ __('admin.product') }}</th>
-                                        <th>{{ __('admin.supermarket') }}</th>
-                                     
+                                       
                                         <th>{{ __('admin.status') }}</th>
 
 
@@ -267,19 +258,12 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach($offers->where('type','free product' ) as $offer)
+                                    @foreach($offers->where('type','free delivery' ) as $offer)
                                         <tr>
                                             
                                         <td>{{$offer->type}}</td>
                                         <td>{{$offer->source}}</td>
-                                        <td>{{$offer->promocode_name}}</td>
-                                        <td>{{$offer->promocode_type}}</td>
-                                        <td>{{$offer->discount_on}}</td>
-                                        <td>{{$offer->value}}</td>
                                         <td>{{$offer->total_order_money}}</td>
-                                        <td>{{$offer->product->name ?? ''  }}</td>
-                                        <td>{{$offer->supermarket->name ?? ''  }} </td>
-                                       
                                         <td> 
                                             <a href="{{ route('offer.status', ['status'=>$offer->status,'id'=>$offer->id]) }}" class="btn btn-block btn-outline-{{ $offer->status ==1 ? 'success': 'danger'}}">{{__($offer->status ==1 ? 'active': 'inactive')}}</a>
                                         </td>
@@ -349,11 +333,8 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.type') }}</th>
-                                       
-                                      
                                         <th>{{ __('admin.product') }}</th>
                                         <th>{{ __('admin.supermarket') }}</th>
-                                     
                                         <th>{{ __('admin.status') }}</th>
 
 

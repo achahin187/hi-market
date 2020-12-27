@@ -154,7 +154,7 @@ class OffersController extends Controller
     * @return \Illuminate\Http\Response
     */
     private function createProductOffer($request)
-    {
+    { 
         $create_promocode = $this->model::create($request);
     }
     /**
@@ -164,7 +164,7 @@ class OffersController extends Controller
     * @return \Illuminate\Http\Response
     */
     private function createFreeProduct($request)
-    {
+    {dd($request);
         $create_promocode = $this->model::create($request);
     }
     /**
