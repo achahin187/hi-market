@@ -32,7 +32,7 @@ class LocationController extends Controller
           $data = $pointLocation->pointInPolygon($point, $polygon) ;
             
 
-        if ($data) {
+        if ($data = true) {
 
                 return $this->returnSuccessMessage('location is valid', 200);
 
