@@ -32,7 +32,7 @@ class SendNotification {
                 [
                     "title" => $this->getMessage($this->order),
                     "body" => "Sample Notification",
-                    "icon" => $this->getIcone($this->order),
+                    "icon" => $this->getIconeOrder($this->order),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",
@@ -89,7 +89,7 @@ class SendNotification {
                 [
                     "title" => 'New Offers In Delivertto, Check It Now',
                     "body" => 'New Offers In Delivertto, Check It Now',
-                    "icon" => $this->getIcone(1),
+                    "icon" => $this->getIconeOffer(1),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",
@@ -150,7 +150,7 @@ class SendNotification {
          return $messages[$order->status];
     }
 
-     public function getIcone($order)
+    public function getIconeOrder($order)
     {
         $messages = [
             0 => asset('notification_icons/box.png'),
@@ -160,6 +160,17 @@ class SendNotification {
             4 => asset('notification_icons/delivery-bike.png'),
             5 => asset('notification_icons/delivery-man.png'),
             6 => asset('notification_icons/box.png'),
+            null => ""
+        ];
+
+         return $messages[$order->status];
+    }
+
+    public function getIconeOffer($order)
+    {
+        $messages = [
+           
+            1 => asset('notification_icons/box.png'),
             null => ""
         ];
 
@@ -175,7 +186,7 @@ class SendNotification {
                 'body_ar'     => $this->getMessage($this->order),
                 'body_en'     => $this->getMessage($this->order),
                 'type'        => $this->data['type'],
-                'icon'        => $this->getIcone($this->order),
+                'icon'        => $this->getIconeOrder($this->order),
                 'order_id'    => $this->data['orderId']?? null,
                 'client_id'   => $this->order->client_id?? null,
                 'product_id'  => $this->data['product_id']?? null,
@@ -193,7 +204,7 @@ class SendNotification {
                 'body_ar'     => 'New Offers In '.'Delivered'. ', Check It Now',
                 'body_en'     => 'New Offers In '.'Delivered'. ', Check It Now',
                 'type'        => $this->data['type'],
-                'icon'        => $this->getIcone(1),
+                'icon'        => $this->getIconeOffer(1),
                 'order_id'    => $this->data['orderId']?? null,
                 'client_id'   => $this->order->client_id?? null,
                 'product_id'  => $this->data['product_id']?? null,
