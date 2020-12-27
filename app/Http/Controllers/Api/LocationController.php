@@ -24,7 +24,7 @@ class LocationController extends Controller
 
         $lat = $request->lat;
 
-          new PointLocation();
+          $pointLocation = new PointLocation();
 
           $polygon = Polygon::all()->toArray();
           $points = array("$request->long $request->lat");
@@ -32,8 +32,8 @@ class LocationController extends Controller
           $data = $pointLocation->pointInPolygon($point, $polygon) ;
             
 
-        if ($data = true) {
-
+            dd($data);
+        if ($data == true) {
                 return $this->returnSuccessMessage('location is valid', 200);
 
         } else {
