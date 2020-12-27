@@ -244,7 +244,7 @@ class OffersController extends Controller
         
           if ($request->banner) {
             if ($offer->banner != $request->banner) {
-                unlink('offer_images/' . $offer->banner );
+                unlink(asset('offer_images/' . $offer->banner) );
             }
 
                 #Store Banner to DataBase...
