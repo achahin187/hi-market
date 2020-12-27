@@ -83,7 +83,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{__('admin.phone')  }}</label>
-                                                    <input type="text" value="{{$client->mobile_number }} " name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="" name="mobile_number" class="@error('mobile_number') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('mobile_number')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{ __('admin.location') }}</label>
-                                                    <input type="text" value="{{$client->addresses->where('default',1)->first()->name ?? ""  }} " name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="" name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('address')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -213,7 +213,7 @@
 
                                            
                                                 <div class="card-body">
-                                                        <h4>@lang('site.total') : <span class="total-price">0</span></h4>
+                                                        <h4>@lang('site.total_product') : <span class="total-price">0</span></h4>
 
                                                 <table class="table table-hover">
                                                     <thead>
@@ -229,13 +229,13 @@
                                                    
                                                         <tr>
                                                             <td> 
-                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
+                                                                <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="" id="hamdyinput" 
                                                                 data-placeholder="Select a product" style="width: 100%;" required>
 
                                                                 </select>
                                                             </td>
                                                             <td>  
-                                                                <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                                                                <input type="number" name="" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
                                                             </td>
                                                             <td class="product-price">  
                                                               
@@ -293,12 +293,28 @@
                                                                 <input type="number" name="discount" min="1" value="1" class="discount-money @error('quantity') is-invalid @enderror form-control" required>
                                                             </td>
                                                            
+                                                           <td>  
+                                                                <a href="#" class="btn btn-primary  total-price-offer" >Add total</a>
+                                                            </td>
                                                         </tr>
                                                            
 
                                                     </tbody>
 
                                                 </table><!-- end of table -->
+
+                                                {{-- product total --}}
+                                                 <h4>@lang('site.total_product') : <span class="total-price-product">0</span></h4>
+
+
+                                                  {{-- delivery --}}
+                                                  <h4>@lang('site.total_delivery') : <span class="total-price-delivery">0</span></h4>
+
+                                                  {{-- dicount --}}
+                                                  <h4>@lang('site.total_discount') : <span class="total-price-discount">0</span></h4>
+
+                                                  {{--  final total --}}
+                                                  <h4>@lang('site.total') : <span class="total-price-result">0</span></h4>
                                             </div>
 
 {{-- 
@@ -490,7 +506,7 @@
                  
                   $('.product-price').html(data.price);
                    calculateTotal();
-                  
+                   $('.product_9').attr('name', 'product['+data.id+']');
 
                 }
             });
@@ -550,13 +566,13 @@
         return false;
     });
 
-     $('.delivery-money').click( function () {
-            
+     $('.total-price-offer').click( function (e) {
+        e.preventDefault();
          var delivery = $('.delivery-money').val();
          var discount = $('.discount-money').val();
-         var total = $('.total-price').html();
+         var total    = $('.total-price').html();
 
-         calculateTotal(parseInt(delivery), parseInt(total),  parseInt(discount));
+         calculateTotalOffer(parseInt(delivery), parseInt(total),  parseInt(discount));
       
     });
 
@@ -568,7 +584,7 @@
     });
 
     //calculate the total
-function calculateTotal(delivery, total, discount) {
+function calculateTotal() {
 
 
     var price = 0;
@@ -579,17 +595,46 @@ function calculateTotal(delivery, total, discount) {
 
     });//end of product price
    
-    if (delivery) {
-        console.log('hi');
-          $('.total-price').html((delivery+total)-discount);
-    }else{
     $('.total-price').html(price);
+   
 
-    }
+ }
+   function calculateTotalOffer(delivery, total, discount) {
+
+
+    var price = 0;
+    var productTotal = $('.total-price').html();
+    $('.order-list .product-price').each(function(index) {
+        
+        price += parseFloat($(this).html());
+
+    });//end of product price
+    
+    var result = total-discount;
+
+    if (result <= 0) {
+                
+        $('.total-price-result').html((total * {{ $setting->reedem_point /100 }})+delivery);
+
+        $('.total-price-delivery').html(delivery);
+        $('.total-price-discount').html(total * {{ (100 - $setting->reedem_point) /100 }});
+        $('.total-price-product').html(productTotal);
+  
+    }else{
+         $('.total-price-result').html(result+delivery);
+         $('.total-price-delivery').html(delivery);
+         $('.total-price-discount').html(discount);
+         $('.total-price-product').html(productTotal);
+        }
+    
+   
 
  }
    
+
 </script>
+
+
 
 
 

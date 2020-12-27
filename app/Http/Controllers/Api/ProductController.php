@@ -184,7 +184,7 @@ class ProductController extends Controller
 
             if (count($products) < 1) {
 
-                return $this->returnError(404, 'there is no product found');
+                 return $this->returnData(['products'], []);
             } else {
 
                 $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();

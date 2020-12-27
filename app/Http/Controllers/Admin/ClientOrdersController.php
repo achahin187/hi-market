@@ -10,17 +10,16 @@ use App\Models\Order;
 use App\Models\DeliveryCompany;
 use App\Models\ManualOrder;
 use App\Models\Category;
+use App\Models\Setting;
 use App\Models\Supermarket;
 class ClientOrdersController extends Controller
 {
     public function create($id)
     {
     	$client = Client::find($id);
-
-      
- 
+        $setting = Setting::first();
     	$supermarkets =  Supermarket::Where('status', 'active')->get();
-    	return view('Admin.client_order.create',compact('client', 'supermarkets')); 
+    	return view('Admin.client_order.create',compact('client', 'supermarkets', 'setting')); 
     } 
 
     public function getBranchCategory(Request $request)
@@ -47,9 +46,32 @@ class ClientOrdersController extends Controller
     }
 
     public function storeOrder(Request $request)
-    {       
+    {           //products[${id}][quantity]
         $request_data = $request->all();
-        dd($request_data);
+        $products = [];
+        foreach ($request->products as $product) {
+
+                $products[] = $product;
+        }
+
+        $data=[];
+        foreach ($request->quantity as  $q) {
+            $data[] = $product;
+        }
+       dd($products, $data);
+       foreach ($data as $index => $quantity) {
+
+          dd($data[$index][$product]);
+
+            $product = Product::FindOrFail($id);
+            $total_price += $product->sale_price * $quantity['quantity'];
+
+            $product->update([
+                'stock' => $product->stock - $quantity['quantity']
+            ]);
+
+        }//end of foreach
+
         $orders = collect($request_data["order"]) ;
         // $total_price = $orders->sum('price');
 
