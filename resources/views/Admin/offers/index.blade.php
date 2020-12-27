@@ -134,12 +134,12 @@
 
                                     </tbody>
                                 </table>
-                            </div>
-                            </div>
+                           </div>
                         </div>
-                      </div>
                     </div>
-                   </section>
+                </div>
+             </div>                                
+        </section>
        {{-- end table 2 --}} 
 
         {{-- table 3 --}} 
