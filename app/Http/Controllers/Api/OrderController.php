@@ -80,7 +80,7 @@ class OrderController extends Controller
 
         $order_details = $request->all();
 
-        $comapany = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
+        $company = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
             $q->Where('supermarket_id', $request->branch_id);
         })->first();
 
@@ -89,7 +89,8 @@ class OrderController extends Controller
         $date = now();
 
         $date = $date->addDays($request->day_index - 1);
-
+      
+       
 
         if ($client) {
 
@@ -120,13 +121,13 @@ class OrderController extends Controller
 
                 'branch_id' =>  $order_details["supermarket_id"],
 
-                //'promocode' => $order_details["promocode"], 
                 'point_redeem' => $order_details["redeem"],
 
+                //'promocode' => $order_details["promocode"], 
                 //'mobile_delivery' => '01060487345',
  
                 'status' => 0,
-                'company_id' => 1,
+                'company_id' => $company->id,
 
             ]);
 
@@ -142,6 +143,14 @@ class OrderController extends Controller
 
              }   
             
+            #get comapnt and auto approve the order to it 
+            if ($company) { 
+            #change to the stauts to status 1             
+                if ($company->status = 1) {
+                    $order->update(['status'=> 1]);
+                }
+            }
+
              $data =  [
                   "type" => "order",
                   "orderId" => $order->id,

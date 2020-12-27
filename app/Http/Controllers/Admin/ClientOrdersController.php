@@ -45,15 +45,15 @@ class ClientOrdersController extends Controller
 
     	return response()->json($product);
     }
-
+    #function to store manual order
     public function storeOrder(Request $request)
     {          
         $request_data = $request->all();
-      
+        #get company
         $company = DB::table('delivery_companies_branches')
                     ->where('branch_id',$request_data['branch_id'])
                     ->first();
-                   
+         #store order           
          $order = Order::create([
                 'num' => rand(0,9),
                 'order_price'=> $request_data['order_price'],
@@ -66,6 +66,15 @@ class ClientOrdersController extends Controller
                
             ]);
 
+         #get comapnt and auto approve the order to it 
+         $getCompany = DeliveryCompany::Where('id', $company->delivery_company_id)->first();
+         if ($getCompany) { 
+         #change to the stauts to status 1             
+            if ($getCompany->status = 1) {
+                $order->update(['status'=> 1]);
+            }
+         }
+         # store order realation   
         foreach ($request->products as $index => $product) {
 
             $getProduct = $product;

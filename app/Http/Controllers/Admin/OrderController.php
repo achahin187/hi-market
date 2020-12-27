@@ -67,8 +67,8 @@ class OrderController extends Controller
             if(auth()->user()->company_id == request()->company_id ){
 
                 $company = DeliveryCompany::find(request()->company_id);
-
-                $orders = $company->orders()->whereNotIn('status',array(0))->get();
+               
+                $orders = $company->orders()->get();
        
 
              return view('Admin.orders.index',compact('orders','setting'));

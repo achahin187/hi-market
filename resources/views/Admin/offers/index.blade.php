@@ -134,6 +134,122 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            {{-- table 2 --}}
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <div class="card-body">
+
+
+                                <!--first card-->
+                         
+                                <div class="card card-primary">
+
+                                    <div class="card-header">
+                                         {{ __('admin.clients') }}
+                                    </div>
+                       
+                                  
+
+                                            <div class="card-body">
+                                              <table id="example1" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ __('admin.type') }}</th>
+                                        <th>{{ __('admin.source') }}</th>
+                                        <th>{{ __('admin.promocode_name') }}</th>
+                                        <th>{{ __('admin.promocode_type') }}</th>
+                                        <th>{{ __('admin.discount_on') }}</th>
+                                        <th>{{ __('admin.value') }}</th>
+                                        <th>{{ __('admin.total_order_money') }}</th>
+                                        <th>{{ __('admin.product') }}</th>
+                                        <th>{{ __('admin.supermarket') }}</th>
+                                     
+                                        <th>{{ __('admin.status') }}</th>
+
+
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            <th>{{ __('admin.controls') }}</th>
+                                        @endif
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    @foreach($offers as $offer)
+                                        <tr>
+                                            
+                                        <td>{{$offer->type}}</td>
+                                        <td>{{$offer->source}}</td>
+                                        <td>{{$offer->promocode_name}}</td>
+                                        <td>{{$offer->promocode_type}}</td>
+                                        <td>{{$offer->discount_on}}</td>
+                                        <td>{{$offer->value}}</td>
+                                        <td>{{$offer->total_order_money}}</td>
+                                        <td>{{$offer->product->name ?? ''  }}</td>
+                                        <td>{{$offer->supermarket->name ?? ''  }} </td>
+                                       
+                                        <td> 
+                                            <a href="{{ route('offer.status', ['status'=>$offer->status,'id'=>$offer->id]) }}" class="btn btn-block btn-outline-{{ $offer->status ==1 ? 'success': 'danger'}}">{{__($offer->status ==1 ? 'active': 'inactive')}}</a>
+                                        </td>
+                                        
+
+                                          
+
+
+                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"
+                                                                class="drop-down-button">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            @if(auth()->user()->can('delivery-delete'))
+                                                                <form
+                                                                    action="{{ route('offer.destroy', $offer->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('delete')
+
+
+                                                                    <button type="button" class="dropdown-item"
+                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                </form>
+                                                            @endif
+                                                            @if(auth()->user()->can('delivery-edit'))
+                                                                <a class="dropdown-item"
+                                                                   href="{{ route('offer.edit', $offer->id) }}">{{ __('edit') }}</a>
+                                                            @endif
+
+                                                         
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </select>
+
+                            {{-- end table 2 --}}
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
