@@ -43,22 +43,24 @@ class OrderDetailResource extends JsonResource
 
             'products'=>$this->products->map(function($product){
                 return[
-                'id' => $product->id,
-                'name' => $product->name,
-                'productImage' => asset('images/'.$product->image),
-                'supermaketId' => $product->branches->first()->id??"",
-                'supermaketName' => $product->branches->first()->name??"",
-                'categoryId' => $product->category->id,
-                'categoryName' => $product->category->name,
-                'productDesc' => $product->description,
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'productImage' => asset('images/'.$product->image),
 
-                'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
+                    'supermaketId' => $this->branch_id??"",
+                    'supermaketName' => $product->branches->where('id',$this->branch_id)->first->name??"",
 
-                'favourite' => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
+                    'categoryId' => $product->category->id,
+                    'categoryName' => $product->category->name,
+                    'productDesc' => $product->description,
 
-                'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
+                    'price' =>  DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->price,
 
-                'branchName' => $product->branches->first()->name??"",
+                    'favourite' => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
+
+                    'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
+
+                    'branchName' => $product->branches->where('id',$this->branch_id)->first->name??"",
                 ];
             }),
 

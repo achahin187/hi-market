@@ -48,13 +48,14 @@ class LocationController extends Controller
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
            } 
-          
-          $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+       
          
-          dd($testPolygon );
-          $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
         #if data == true
-        if ($data != false) {             
+        if ($data == true) {        
+
+          $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+          $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
+
                   return response()->json([
                     "status" => true,
                     'msg' =>'location is valid',
