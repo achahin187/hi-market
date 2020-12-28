@@ -27,7 +27,9 @@ class PointLocation {
         // Transform string coordinates into arrays with x and y values
         $point = $this->pointStringToCoordinates($point);
         $vertices = array(); 
+       
         foreach ($polygon as $vertex) {
+            
             $vertices[] = $this->pointStringToCoordinates($vertex); 
         }
  
@@ -76,6 +78,8 @@ class PointLocation {
     }
  
     function pointStringToCoordinates($pointString) {
+       
+        
         $coordinates = explode(" ", $pointString);
         
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
@@ -87,7 +91,7 @@ class PointLocation {
 
 
 // $pointLocation = new pointLocation();
-// $points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
+// $points = array("50 70");
 // $polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
 // // The last point's coordinates must be the same as the first one's, to "close the loop"
 // foreach($points as $key => $point) {

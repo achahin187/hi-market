@@ -285,6 +285,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             $pointLocation = new pointLocation();
             $polygon = array("31.399123 30.187870", "31.562183 30.111870", "31.248863 30.012031");
             $points = array("31.320520 31.512996");
+            foreach($points as $key => $point) {
+                echo "point ahmed"  . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
+            }
             #a.lat the data base point 
             #$lat the 
         //     6371 * acos(
@@ -305,9 +308,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 
             // The last point's coordinates must be the same as the first one's, to "close the loop"
-            foreach($points as $key => $point) {
-                echo "point ahmed"  . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-            }
+            
 
             // Results 
           

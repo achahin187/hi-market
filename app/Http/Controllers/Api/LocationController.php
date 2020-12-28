@@ -18,35 +18,50 @@ class LocationController extends Controller
 
     function index(Request $request)
     {
-
-
-        $long = $request->long;
-
-        $lat = $request->lat;
-
-          $pointLocation = new PointLocation();
-
+      
+          $getPlygons = Polygon::all();
+          #polygon array
           $polygon=[]; 
-          $data = Polygon::all();
-          foreach ($data as $d)
+          foreach ($getPlygons as $getPlygons)
           {
-            $polygon[]= $d->lat;
-            $polygon[]= $d->lon;
+              $polygon[]= $getPlygons->lon;
+              $polygon[]= $getPlygons->lat;
           }
           
-          $point = [$request->long $request->lat];
+          #impload polygon
+          $implodePolygon = implode(" ", (array)$polygon);
+         
+          #new instance 
+          $pointLocation = new PointLocation();
 
-          $data = $pointLocation->pointInPolygon($point, $polygon) ;
+          #impload implode Points
+          $implodePoints = implode( " ", [$request->long,$request->lat]);
+
+
+          #points
+          $points = array($implodePoints);
+          #polygon
+          $polygon = array($implodePolygon);
+
+          #loop and send to check if point in polygon retuen boolean
+          foreach($points as $key => $point) {
+
+            $data = $pointLocation->pointInPolygon($point, $polygon);
+
+           } 
+          
             
-
-            dd($data);
+        #if data == true
         if ($data == true) {
+
                 return $this->returnSuccessMessage('location is valid', 200);
 
         } else {
-            return $this->returnSuccessMessage('location is valid', 200);
-        }
-    }
+
+            return $this->returnSuccessMessage('location is not valid', 200);
+
+        }//end if 
+    }//end function 
 
 
-}
+}//end class
