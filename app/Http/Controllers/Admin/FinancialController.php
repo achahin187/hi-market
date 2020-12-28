@@ -16,13 +16,20 @@ use Response;
 
 class FinancialController extends AppBaseController
 {
-    /** @var  FinancialRepository */
-    private $financialRepository;
+    public $model;
+    public $blade;
+    public $route;
 
-    public function __construct(FinancialRepository $financialRepo)
+    public function __construct()
     {
-        $this->financialRepository = $financialRepo;
-        $this->middleware("auth");
+        $this->model = 'App\Models\Financial' ;
+        $this->blade = 'Admin.financials.' ;
+        $this->route = 'financials.' ;
+
+        $this->middleware('permission:delivery-list', ['only' => ['index']]);
+        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
+        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
     }
 
     /**
