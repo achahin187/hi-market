@@ -33,7 +33,8 @@ class HomeDataResource extends JsonResource
     public function getState()
     {
 
-        $now = now();
+        $now = Carbon::parse(now())->format("H:i:s");
+
         $start_time = Carbon::parse($this->start_time)->format("H:i:s");
         $end_time = Carbon::parse($this->end_time)->format("H:i:s");
         if ($now >= $start_time && $now <= $end_time) {

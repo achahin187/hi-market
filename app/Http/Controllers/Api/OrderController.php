@@ -278,7 +278,7 @@ class OrderController extends Controller
     public function getState($branch)
     {
 
-        $now = now();
+        $now = Carbon::parse(now())->format("H:i:s");
         $start_time = Carbon::parse($branch->start_time)->format("H:i:s");
         $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
                 if ($now >= $start_time && $now <= $end_time) {
