@@ -237,7 +237,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.offers') }}</h3>
+                                <h3 class="card-title">{{ __('admin.free_delivery') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -258,7 +258,7 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach($offers->where('type','free delivery' ) as $offer)
+                                    @foreach($offers->where('type','free delivery') as $offer)
                                         <tr>
                                             
                                         <td>{{$offer->type}}</td>
@@ -325,7 +325,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.offers') }}</h3>
+                                <h3 class="card-title">{{ __('admin.product_offer') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

@@ -196,10 +196,10 @@
         <td>
 
 
-                <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"  disabled value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
+                <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"   value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
 
             @else
-                <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
+                <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" disabled value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
 
         </td>
         @endif

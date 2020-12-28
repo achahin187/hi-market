@@ -53,7 +53,7 @@ class PointLocation {
                 $xinters = ($point['y'] - $vertex1['y']) * ($vertex2['x'] - $vertex1['x']) / ($vertex2['y'] - $vertex1['y']) + $vertex1['x']; 
                 if ($xinters == $point['x']) { 
                 // Check if point is on the polygon boundary (other than horizontal)
-                    return "boundary";
+                    return true;
                 }
                 if ($vertex1['x'] == $vertex2['x'] || $point['x'] <= $xinters) {
                     $intersections++; 
