@@ -18,7 +18,7 @@ class LocationController extends Controller
 
     function index(Request $request)
     {
-      
+
           $getPlygons = Polygon::all();
           #polygon array
           $polygon=[]; 
@@ -48,7 +48,7 @@ class LocationController extends Controller
 
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
-           } 
+          } 
           
             
         #if data == true
