@@ -11,6 +11,7 @@ use App\Models\Client;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Branch;
+use App\Models\Polygon;
 use App\Models\Supermarket;
 use App\Models\Udid;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\HomeDataResource;
 use App\Http\Resources\OfferResource;
 use Carbon\Carbon;
-
+use App\Polygons\PointLocation;
 class ProductController extends Controller
 {
     //
@@ -178,22 +179,38 @@ class ProductController extends Controller
     public function getproductsearch(Request $request)
     {
 
+       
+         $client = getUser();
 
-            $products = Product::where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
+        if ($client) {
+        #new instance 
+        $pointLocation = new PointLocation();
+        $data = $this->checkPolygon($client->lat, $client->lon);
+        
+        $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+        
+        $name = $request->name;
+         // $products = Branch::WhereIn('id',$testPolygon->area->supermarkets->pluck('id'))->where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
+        //return $testPolygon->area->supermarkets->pluck('id');
+         $products = Branch::WhereIn('id',$testPolygon->area->supermarkets->pluck('id'))->get();
+        
+         return $products->where('name_en', 'LIKE', '%' . 'فتح الله سعيد' . "%")->toArray();
+                         
+                            
+               
+        // }
+        //     if (count($products) < 1) {
 
+        //          return response()->json([
+        //                 'status' => true,
+        //                 'msg' => '',
+        //                 'data' => [],
+        //                 ]);
+        //     } else {
 
-            if (count($products) < 1) {
+        //         $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
 
-                 return response()->json([
-                        'status' => true,
-                        'msg' => '',
-                        'data' => [],
-                        ]);
-            } else {
-
-                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
-
-                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
+        //         return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
                 
             }    
     }
@@ -210,7 +227,7 @@ class ProductController extends Controller
         return $this->returnData(["products"], [CategoryProductResource::collection($products)]);
     }
 
-    private function checkPolygon()
+    private function checkPolygon($lat, $lon)
     {
          $getPlygons = Polygon::all();
           #polygon array
@@ -228,7 +245,7 @@ class ProductController extends Controller
           $pointLocation = new PointLocation();
 
           #impload implode Points
-          $implodePoints = implode( " ", [$request->long,$request->lat]);
+          $implodePoints = implode( " ", [$lon,$lat]);
 
 
           #points
@@ -242,6 +259,8 @@ class ProductController extends Controller
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
            } 
+
+
            return $data;
          
        

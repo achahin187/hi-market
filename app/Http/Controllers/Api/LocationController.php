@@ -18,7 +18,7 @@ class LocationController extends Controller
 
     function index(Request $request)
     {
-  $getPlygons = Polygon::all();
+          $getPlygons = Polygon::all();
           #polygon array
           $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
@@ -35,8 +35,7 @@ class LocationController extends Controller
 
           #impload implode Points
           $implodePoints = implode( " ", [$request->long,$request->lat]);
-
-
+          
           #points
           $points = array($implodePoints);
           #polygon
