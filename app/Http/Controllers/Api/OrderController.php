@@ -30,6 +30,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use App\Notifications\SendNotification;
+use DateTime;
 class OrderController extends Controller
 {
     //
@@ -262,13 +263,28 @@ class OrderController extends Controller
 
         ];
 
+      
+        $carbon_date = Carbon::parse($branch->start_time);
+      
 
+
+        $carbon_date_end = Carbon::parse($branch->end_time);
+      
+        
+       
         $time = [];
-        for ($i = 0; $i < 10; $i++) {
-            $time[$i] = [
+        $end_time = $carbon_date_end;
+
+        for ($i = 0; $i < 24; $i++) {
+            $time[] = [
                 "id" => $i + 1,
-                "text" => now()->addHours($i)->format("g A")
+                "text" =>  $carbon_date->addHours(1)->format("g A"),
             ];
+
+            if ($carbon_date->addHours($i)->format("g A") == $carbon_date_end->addHours($i)->format("g A")) {
+                break;
+            }
+            
         }
 
 
