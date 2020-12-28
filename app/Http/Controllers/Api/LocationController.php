@@ -49,11 +49,21 @@ class LocationController extends Controller
 
            } 
           
-            
-        #if data == true
-        if ($data == true) {
+          $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+         
+          $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
 
-                return $this->returnSuccessMessage('location is valid', 200);
+        #if data == true
+        if ($data != false) {             
+                  return response()->json([
+                    "status" => true,
+                    'msg' =>'location is valid',
+                    "data" => [
+                        "topics" => $testPolygon->topic,
+                        "nonTopic" => $notTopic->pluck('topic')->unique('topic'),
+                     ]
+
+        ]);
 
         } else {
 

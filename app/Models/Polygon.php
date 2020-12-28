@@ -27,4 +27,9 @@ use Illuminate\Database\Eloquent\Model;
 class Polygon extends Model
 {
     protected $guarded =[];
+
+    public function area()
+    {
+    	return $this->belongsTo('App\Models\Area');
+    }
 }

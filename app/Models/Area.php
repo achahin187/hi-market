@@ -63,6 +63,6 @@ class Area extends Model
     }
 
     public function supermarkets() {
-        return $this->hasMany('App\Models\Supermarket');
+        return $this->hasMany('App\Models\Branch');
     }
 }

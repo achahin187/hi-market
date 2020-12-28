@@ -17,6 +17,7 @@ class CreatePolygonsTable extends Migration
             $table->id();
             $table->string('lat');
             $table->string('lon');
+            $table->string('topic');
             $table->bigInteger('area_id')->unsigned();
             
             $table->timestamps();
