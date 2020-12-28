@@ -48,7 +48,7 @@ class OrderDetailResource extends JsonResource
                     'productImage' => asset('images/'.$product->image),
 
                     'supermaketId' => $this->branch_id??"",
-                    'supermaketName' => $product->branches->where('id',$this->branch_id)->first->name??"",
+                    'supermaketName' => $product->branches->where('id',$this->branch_id)->first()->name??"",
 
                     'categoryId' => $product->category->id,
                     'categoryName' => $product->category->name,
@@ -60,7 +60,7 @@ class OrderDetailResource extends JsonResource
 
                     'quantity' => DB::table('order_product')->where('order_id',$this->id)->where('product_id', $product->id)->first()->quantity,
 
-                    'branchName' => $product->branches->where('id',$this->branch_id)->first->name??"",
+                    'branchName' => $product->branches->where('id',$this->branch_id)->first()->name??"",
                 ];
             }),
 

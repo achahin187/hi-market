@@ -42,11 +42,9 @@ class FinancialController extends AppBaseController
     public function index(Request $request)
     {
 
-        $orders = Order::filter()->paginate();
+        $orders = Order::paginate();
 
-        $receivables = Receivable::whereIn("order_id",$orders->pluck("id"))->paginate(15);
-        return view('Admin.financials.index')
-            ->with('financials', $orders)->with("receivables", $receivables)->with("payables", Payable::paginate());
+      
     }
 
     /**
