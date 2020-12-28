@@ -26,10 +26,17 @@ class HomeDataResource extends JsonResource
                 "city"=> $this->city->name?? '',
                 "imagepath"=> asset('branche_image/'.$this->image),
                 "logopath"=>asset('branche_image/'.$this->logo),
+                'isOffer'=> !!$this->getOffer(),
+                'totalMoney'=> $this->getOffer()->total_order_money,
+                
 
             ];
     }
 
+    public function getOffer()
+    {
+        $offer = Offer::where('type','free delivery')->first()
+    }
     public function getState()
     {
 
