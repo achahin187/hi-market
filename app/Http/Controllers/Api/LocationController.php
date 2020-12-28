@@ -18,8 +18,7 @@ class LocationController extends Controller
 
     function index(Request $request)
     {
-
-          $getPlygons = Polygon::all();
+  $getPlygons = Polygon::all();
           #polygon array
           $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
@@ -48,7 +47,7 @@ class LocationController extends Controller
 
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
-          } 
+           } 
           
             
         #if data == true
@@ -61,7 +60,5 @@ class LocationController extends Controller
             return $this->returnSuccessMessage('location is not valid', 200);
 
         }//end if 
-    }//end function 
-
-
-}//end class
+    }
+}
