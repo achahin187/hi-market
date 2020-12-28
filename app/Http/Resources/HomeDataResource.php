@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
+use App\Models\Offer;
 class HomeDataResource extends JsonResource
 {
     /**
@@ -35,7 +36,8 @@ class HomeDataResource extends JsonResource
 
     public function getOffer()
     {
-        $offer = Offer::where('type','free delivery')->first()
+        $offer = Offer::where('type','free delivery')->first();
+        return $offer;
     }
     public function getState()
     {
