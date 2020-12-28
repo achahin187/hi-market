@@ -533,7 +533,7 @@ class OrderController extends Controller
         {
 
             if($flag == 'cancel') {
-                $order->update(['status' => 5, 'cancelled_at' => now(), 'admin_cancellation' => 1, 'notes' => $request->notes , 'user_id' => null]);
+                $order->update(['status' => 6, 'cancelled_at' => now(), 'admin_cancellation' => 1, 'notes' => $request->notes , 'user_id' => null]);
                 return redirect('/admin/orders')->withStatus(__('order status successfully cancelled.'));
             }
             else

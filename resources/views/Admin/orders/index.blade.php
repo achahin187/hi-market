@@ -166,6 +166,7 @@
             'shipping' => 3,
             'deliverd' => 4,
             'received' => 5,
+            'canceled' => 6,
              ];?>
 
             @foreach ($status as $index => $state)
@@ -207,7 +208,7 @@
      @if(auth()->user()->can('order-rollback'))
         <td>
 
-            @if(in_array($order->status,[1,2,3,4,5,6]) )
+            @if(in_array($order->status,[1,2,3]) )
 
                 <button type="button" data-toggle="modal" data-target="#my-rollback-{{ $order->id }}" value="{{$order->id}}" class="btn btn-info">{{ __('admin.rollback') }}</button>
 
@@ -274,7 +275,7 @@
 
                                     @foreach(\App\Models\Reason::where('status','active')->get() as $reason)
 
-                                        <option value="{{ $reason->id }}">{{ $reason->name_en }}</option>
+                                        <option value="{{ $reason->id }}">{{ $reason->name }}</option>
 
                                     @endforeach
 
