@@ -26,7 +26,7 @@ class NotificationController extends Controller
         if($client = auth("client-api")->user())
         {
             $orders = NotificationMobile::Where('client_id', $client->id)
-                        ->orderBy('created_at', 'desc');
+                        ->orderBy('created_at', 'desc')->get();
                       
          
             return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
