@@ -190,27 +190,20 @@ class ProductController extends Controller
         $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
         
         $name = $request->name;
-         // $products = Branch::WhereIn('id',$testPolygon->area->supermarkets->pluck('id'))->where('name_en', 'LIKE', '%' . $request->name . "%")->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")->get();
-        //return $testPolygon->area->supermarkets->pluck('id');
+       
          $products = Branch::WhereIn('id',$testPolygon->area->supermarkets->pluck('id'))->get();
         
-         return $products->where('name_en', 'LIKE', '%' . 'فتح الله سعيد' . "%")->toArray();
+          foreach ($products as   $product) {
+              $data = $product->where('name_en', 'LIKE', '%' . $name . "%")
+                              ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
+                              ->get();
+          }
                          
-                            
-               
-        // }
-        //     if (count($products) < 1) {
+       
 
-        //          return response()->json([
-        //                 'status' => true,
-        //                 'msg' => '',
-        //                 'data' => [],
-        //                 ]);
-        //     } else {
+                // $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
 
-        //         $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
-
-        //         return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
+                return $this->returnData(['supermarkets'], [HomeDataResource::collection($data)]);
                 
             }    
     }
