@@ -172,7 +172,7 @@
                                             
                                         <td>{{$offer->type}}</td>
                                         <td>{{$offer->source}}</td>
-                                        <
+                                      
                                         <td>{{$offer->value}}</td>
                                         <td>{{$offer->total_order_money}}</td>
                                        
