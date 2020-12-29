@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 use App\Models\Offer;
+use DateTime;
 class HomeDataResource extends JsonResource
 {
     /**
@@ -20,8 +21,8 @@ class HomeDataResource extends JsonResource
                 "name"=>$this->name,
                 "state"=>$this->getState(),
                 "flag" =>$this->getState() == 'open' ? 1 : 0,
-                "start_time"=>$this->start_time,
-                "end_time"=>$this->end_time,
+                "start_time"=>Carbon::parse($this->start_time)->format("g:i a"),
+                "end_time"=>Carbon::parse($this->end_time)->format("g:i a"),
                 "rating"=>$this->rating,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name?? '',
@@ -39,31 +40,27 @@ class HomeDataResource extends JsonResource
         $offer = Offer::where('type','free delivery')->first();
         return $offer;
     }
+
     public function getState()
     {
 
+       $time = $this->isBetween($this->start_time, $this->end_time, now());
 
-         // $start_times = Carbon::parse($this->start_time)->format("H:i A");
-         // $end_times = Carbon::parse($this->end_time)->format("H:i A");
+       if($time == true){
+        return 'open';
+       }else{
 
+        return 'closed';
+       }
 
-        $now = Carbon::now();
-        $start_time = Carbon::createFromTimeString($this->start_time);
-        $end_time = Carbon::createFromTimeString($this->end_time)->addDay();
+    }
+         
+    public function isBetween($from, $till, $input) {
+        $fromTime = strtotime($from);
+        $toTime = strtotime($till);
+        $inputTime = strtotime($input);
 
-       
-
-    
-        if ($now->between($start_time, $end_time, true) ) {
-
-            return 'open';
-
-        } else {
-            return 'closed';
-
-        }
-
-
+        return $inputTime >= $fromTime and $inputTime <= $toTime;
     }
 
 }
