@@ -92,7 +92,7 @@ class OrderController extends Controller
            $order_details["promocode"] = $promocodeId;
         }
 
-        $promocodeId = Offer::Where('') 
+        
 
         $client = getUser();
 
