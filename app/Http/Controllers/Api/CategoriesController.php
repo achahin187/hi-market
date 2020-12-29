@@ -38,9 +38,12 @@ class CategoriesController extends Controller
         $branch_id = $request->id;
 
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i:s')  )->get();
-      
-        foreach ($checkSatus as  $status) {
-            $status->update(['status'=> 0]);
+        
+        if ($checkSatus) {
+            
+            foreach ($checkSatus as  $status) {
+                $status->update(['status'=> 0]);
+            }
         }
 
         try {
