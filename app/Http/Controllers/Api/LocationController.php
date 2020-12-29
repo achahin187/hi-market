@@ -67,7 +67,10 @@ class LocationController extends Controller
 
         } else {
 
-            return response()->json('location is not valid', 404);
+            return response()->json([
+             "status" => true,  
+             'msg' =>'location is not valid',
+           ], 404);
 
         }//end if 
     }
