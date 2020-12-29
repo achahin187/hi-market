@@ -133,16 +133,16 @@
     <th>{{ __('admin.Next') }}</th>
     @endif
 
-    @if(auth()->user()->can('order-cancel'))
     <th>{{ __('admin.cancel') }}</th>
+    @if(auth()->user()->can('order-cancel'))
     @endif
 
-    <th>{{ __('admin.rollback') }}</th>
     @if(auth()->user()->can('orders-rollback'))
+    <th>{{ __('admin.rollback') }}</th>
     @endif
 
-@if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))   
- <th>{{ __('admin.controls') }}</th>
+  <th>{{ __('admin.controls') }}</th>
+  @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))   
   @endif   
 
   {{--   @if(Auth()->user()->hasAnyPermission(['order-date', 'order-status', 'order-address','order-driver']) || auth()->user()->hasRole(['admin','delivery-manager']))

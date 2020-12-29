@@ -512,6 +512,7 @@ class OrderController extends Controller
                 $order->update(['status' => 4,'shipped_at' => now()]);
             }
 
+            
             return redirect('/admin/orders')->withStatus(__('order status successfully updated.'));
         }
         return redirect('/admin/admins')->withStatus(__('this id is not in our database'));

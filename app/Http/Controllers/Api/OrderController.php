@@ -272,30 +272,24 @@ class OrderController extends Controller
 
         ];
 
+        $branch_start_time = Carbon::parse($branch->start_time);
+        $branch_end_time = Carbon::parse($branch->end_time);
       
-        $carbon_date = Carbon::parse($branch->start_time);
-      
-
-
-        $carbon_date_end = Carbon::parse($branch->end_time);
-      
-        
-       
         $time = [];
-        $end_time = $carbon_date_end;
+      
 
-        for ($i = 0; $i < 24; $i++) {
+        for ($i = 1; $i < 24; $i++) {
             $time[] = [
-                "id" => $i + 1,
-                "text" =>  $carbon_date->addHours(1)->format("g A"),
+                "id" => $i,
+                "text" =>  $branch_start_time->addHours(1)->format("g A"),
             ];
 
-            if ($carbon_date->addHours($i)->format("g A") == $carbon_date_end->addHours($i)->format("g A")) {
+            if ($time[$i-1]['text'] == $branch_end_time->format("g A")) {
                 break;
             }
             
         }
-
+        
 
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }

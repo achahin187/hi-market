@@ -447,7 +447,7 @@ $settings = App\Models\Setting::all()->first();
                            @if(auth()->user()->can('delivery-list'))
                           {{-- delivery --}} 
                              <li class="nav-item">
-                                <a href="{{route('delivery.index')}}" class="nav-link">
+                                <a href="{{route('delivery.index',['company_id'=>auth()->user()->company_id ])}}" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>{{ __('admin.delivery') }}</p>
                                 </a>

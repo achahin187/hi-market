@@ -175,7 +175,7 @@ map.on('click', function (e) {
         var area_en = $('#area_en').val() ;      
         var url = '{{ route('add-polygon') }}';
         var method ='post';
-
+        console.log(city_id);
         $.ajax({
             url: url,
             method: method,

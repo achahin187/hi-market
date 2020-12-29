@@ -30,9 +30,21 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $delivery = User::role(['driver'])->orderBy('id', 'desc')->get();
+        if(Auth('web')->user()->hasRole('super_admin')){
+
+            $delivery = User::role(['driver'])
+                        ->where('company_id', $request->company_id)
+                        ->orderBy('id', 'desc')
+                        ->get();
+            }else{
+
+            $delivery = User::role(['driver'])
+                        ->where('company_id', $request->company_id)
+                        ->orderBy('id', 'desc')
+                        ->get();    
+            }
 
         return view('Admin.delivery.index',compact('delivery'));
     }
