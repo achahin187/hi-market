@@ -42,11 +42,19 @@ class HomeDataResource extends JsonResource
     public function getState()
     {
 
-        $now = Carbon::parse(now())->format("H:i:s A");
 
-        $start_time = Carbon::parse($this->start_time)->format("H:i:s A");
-        $end_time = Carbon::parse($this->end_time)->format("H:i:s A");
-        if ($now >= $start_time && $now <= $end_time) {
+         // $start_times = Carbon::parse($this->start_time)->format("H:i A");
+         // $end_times = Carbon::parse($this->end_time)->format("H:i A");
+
+
+        $now = Carbon::now();
+        $start_time = Carbon::createFromTimeString($this->start_time);
+        $end_time = Carbon::createFromTimeString($this->end_time)->addDay();
+
+       
+
+    
+        if ($now->between($start_time, $end_time, true) ) {
 
             return 'open';
 
@@ -54,8 +62,6 @@ class HomeDataResource extends JsonResource
             return 'closed';
 
         }
-
-
 
 
     }
