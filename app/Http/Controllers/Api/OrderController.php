@@ -85,6 +85,15 @@ class OrderController extends Controller
             $q->Where('supermarket_id', $request->branch_id);
         })->first();
 
+        if ($order_details["promocode"]) {
+
+           $promocodeId = Offer::where('type', 'promocode')->where('promocode',$order_details["promocode"] )->first()->id;
+
+           $order_details["promocode"] = $promocodeId;
+        }
+
+        $promocodeId = Offer::Where('') 
+
         $client = getUser();
 
         $date = now();
@@ -112,7 +121,7 @@ class OrderController extends Controller
 
                 'delivery_date' =>  str_replace("PM","",$order_details["delivery_date"]) ,
 
-                'promocode' => $order_details["promocode"],
+                'promocode' => $promocodeId??null,
 
                 'total_money' => $order_details["total_money"],
                 'total_before' => $order_details["total_before"],

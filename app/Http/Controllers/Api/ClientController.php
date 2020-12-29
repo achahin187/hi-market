@@ -230,7 +230,7 @@ class ClientController extends Controller
 
               return $this->returnValidationError(422, $validator);
         }
-
+ 
 
         if (Hash::check($request->old_password, $client->password)) {
             

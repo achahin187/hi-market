@@ -123,7 +123,7 @@ class OrderController extends Controller
 
     public function store(Request $request,$request_id)
     {
-        //
+       
 
         $rules = [
             'product_id' => 'required|integer|min:0',
