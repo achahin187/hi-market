@@ -53,7 +53,6 @@ class CartController extends Controller
 
         $validation = \Validator::make(\request()->all(), [
             'promoCode' => 'required',
-            //'supermarket_id' => 'required',
             'total_money' => 'required',
             'deliver_money' => 'required'
             
@@ -66,13 +65,14 @@ class CartController extends Controller
 
              $offer = Offer::CheckPromoCode($request->promoCode)->firstOrFail();
             if ($offer->source == 'Branch') {
-                $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id);
+
+                $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->first();
             }
 
         } catch (\Exception $e) {
             return $this->returnError(404, "Offer Not Found");
         }
-
+        
         if ( $offer->promocode_name == $request->promoCode ) {
             
              if ($offer->source == 'Branch') {
