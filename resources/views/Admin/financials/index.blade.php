@@ -1,8 +1,9 @@
 @extends('layouts.admin_layout')
-@section("heading")
-    @lang('models/financials.plural')
-@endsection
+
 @section('content')
+
+
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -10,29 +11,25 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-
+                        <h1>{{ __('admin.financials') }}</h1>
                     </div>
+
+
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-
-                            @if(isset($supermarket_id))
+                            @if(auth()->user()->can('delivery-list'))
                                 <li class="breadcrumb-item"><a
-                                        href="{{route('offers.create',$supermarket_id)}}">{{__('admin.add_supermarket_offer')}}</a>
+                                        href="{{route('financials.create')}}">{{ __('admin.add_financials') }}</a>
                                 </li>
-                            @elseif(isset($branch_id))
-                                <li class="breadcrumb-item"><a
-                                        href="{{route('offers.create',['supermarket_id' => -1 , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_offer')}}</a>
-                                </li>
-                            @else
-                                <li class="breadcrumb-item"><a
-                                        href="{{route('offers.create')}}">{{__('admin.add_offer')}}</a></li>
                             @endif
                         </ol>
                     </div>
+
+
                     <div class="col-12">
 
                         @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <div class="alert alert-success alert-dismissible fade show" admin="alert">
                                 {{ session('status') }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -43,105 +40,213 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
+
         <!-- Main content -->
+        {{-- table 2 --}} 
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{__('admin.financials')}}</h3>
+                                <h3 class="card-title">{{ __('admin.promocode') }}</h3>
                             </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ __('admin.branch_name') }}</th>
+                                        <th>{{ __('admin.company_name') }}</th>
+                                        <th>{{ __('admin.total_order') }}</th>
+                                        <th>{{ __('admin.delivertto_money') }}</th>
+                                        <th>{{ __('admin.branch_money') }}</th>
+                                        <th>{{ __('admin.branch_recieved') }}</th>
+                                        <th>{{ __('admin.branch_remain') }}</th>
+                                        <th>{{ __('admin.company_remain') }}</th>
+                                        
+                                     
+                                        <th>{{ __('admin.status') }}</th>
 
-                            {!! Form::open(["route"=>"financials.index","method"=>"get"]) !!}
 
-                            <div class="form-group col-md-3">
-                                {!! Form::label("name",__("models/resturants.fields.name")) !!}
-                                {!! Form::text("name",request("name")) !!}
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            <th>{{ __('admin.controls') }}</th>
+                                        @endif
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    @foreach($financials as $financial)
+                                        <tr>
+                                            
+                                        
+                                        <td>{{$financial->branch->name}}</td>
+                                        <td>{{$financial->company->name}}</td>
+                                        <td>{{$financial->total_order}}</td>
+                                        <td>{{$financial->delivertto_money}}</td>
+                                        <td>{{$financial->branch_money}}</td>
+                                        <td>{{$financial->branch_recieved}}</td>
+                                        <td>{{$financial->branch_remain}}</td>
+                                        <td>{{$financial->company_remain}}</td>
+                                       
+                                       
+                                        <td> 
+                                            <a href="{{ route('financials.status', ['status'=>$financial->status,'id'=>$financial->id]) }}" class="btn btn-block btn-outline-{{ $financial->status ==1 ? 'success': 'danger'}}">{{__($financial->status ==1 ? 'active': 'inactive')}}</a>
+                                        </td>
+                                        
+
+                                          
+
+
+                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"
+                                                                class="drop-down-button">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            @if(auth()->user()->can('delivery-delete'))
+                                                                <form
+                                                                    action="{{ route('financials.destroy', $financial->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('delete')
+
+
+                                                                    <button type="button" class="dropdown-item"
+                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                </form>
+                                                            @endif
+                                                            @if(auth()->user()->can('delivery-edit'))
+                                                                <a class="dropdown-item"
+                                                                   href="{{ route('financials.edit', $financial->id) }}">{{ __('edit') }}</a>
+                                                            @endif
+
+                                                         
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+             </div>                                
+        </section>
+       {{-- end table 2 --}} 
+
+        {{-- table 3 --}} 
+          <!-- Main content -->
+   {{--      <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ __('admin.points') }}</h3>
                             </div>
-                            <div class="form-group col-md-3">
-                                {!! Form::label("status",__("models/resturants.fields.status")) !!}
-                                {!! Form::select("status",[],request("status")) !!}
-                            </div>
-                            <div class="form-group col-md-3">
-                                {!! Form::label("created_at",__("models/resturants.fields.created_at")) !!}
-                                {!! Form::date("created_at",request("created_at")) !!}
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                {!! Form::submit("Search") !!}
-                            </div>
-                            {!! Form::close() !!}
-                            <section class="content-header">
-
-                                <h1 class="pull-right">
-                                    <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px"
-                                       href="{{ route('financials.create') }}">@lang('crud.add_new')</a>
-                                </h1>
-                            </section>
-                            <div class="content">
-                                <div class="clearfix"></div>
-
-                                @include('flash::message')
-
-                                <div class="clearfix"></div>
-                                <div class="box box-primary">
-                                    <div class="box-header"><h3>Financial</h3></div>
-                                    <div class="box-body">
-                                        @include('Admin.financials.table')
-                                    </div>
-                                </div>
-                                <div class="text-center">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ __('admin.type') }}</th>
+                                        <th>{{ __('admin.source') }}</th>                                     
+                                        <th>{{ __('admin.value') }}</th>
+                                        <th>{{ __('admin.total_order_money') }}</th>       
+                                        <th>{{ __('admin.status') }}</th>
 
 
-                                </div>
-                            </div>
-                            <div class="content">
-                                <div class="clearfix"></div>
+                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            <th>{{ __('admin.controls') }}</th>
+                                        @endif
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                                @include('flash::message')
+                                    @foreach($financials as $financials)
+                                        <tr>
+                                            
+                                        <td>{{$financials->type}}</td>
+                                        <td>{{$financials->source}}</td>
+                                        <
+                                        <td>{{$financials->value}}</td>
+                                        <td>{{$financials->total_order_money}}</td>
+                                       
+                                        <td> 
+                                            <a href="{{ route('financials.status', ['status'=>$financials->status,'id'=>$financials->id]) }}" class="btn btn-block btn-outline-{{ $financials->status ==1 ? 'success': 'danger'}}">{{__($financials->status ==1 ? 'active': 'inactive')}}</a>
+                                        </td>
+                                        
 
-                                <div class="clearfix"></div>
-                                <div class="box box-primary">
-                                    <div class="box-header"><h3>Receivable</h3></div>
-                                    <div class="box-body">
-                                        @include('Admin.receivables.table')
-                                    </div>
-                                </div>
-                                <div class="text-center">
+                                          
 
 
-                                </div>
-                            </div>
-                            <div class="content">
-                                <div class="clearfix"></div>
+                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false"
+                                                                class="drop-down-button">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            @if(auth()->user()->can('delivery-delete'))
+                                                                <form
+                                                                    action="{{ route('financials.destroy', $financials->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('delete')
 
-                                @include('flash::message')
 
-                                <div class="clearfix"></div>
-                                <div class="box box-primary">
-                                    <div class="box-header"><h3>Payable</h3></div>
-                                    <div class="box-body">
-                                        @include('Admin.payables.table')
-                                    </div>
-                                </div>
-                                <div class="text-center">
+                                                                    <button type="button" class="dropdown-item"
+                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
+                                                                </form>
+                                                            @endif
+                                                            @if(auth()->user()->can('delivery-edit'))
+                                                                <a class="dropdown-item"
+                                                                   href="{{ route('financials.edit', $financials->id) }}">{{ __('edit') }}</a>
+                                                            @endif
 
-                                    @include('adminlte-templates::common.paginate', ['records' => $payables])
+                                                         
 
-                                </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+             </div>                                
         </section>
-    </div>
+ --}}
+        {{-- table 2 --}} 
 
+  
+      
+
+        {{-- table 2 --}} 
+
+    
+
+
+
+ 
 
 @endsection
 
+
+                                            

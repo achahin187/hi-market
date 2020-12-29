@@ -27,13 +27,12 @@ class CreateFinancialsTable extends Migration
             $table->string('branch_remain')->nullable();
 
             $table->string('company_remain')->nullable();
-            $table->string('company_remain')->nullable();
-            $table->string('company_remain')->nullable();
+        
             $table->timestamps();
 
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('CASCADE')->onUpdate('CASCADE');
             
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('company_id')->references('id')->on('branches')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

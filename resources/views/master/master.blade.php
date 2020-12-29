@@ -559,16 +559,27 @@ $settings = App\Models\Setting::all()->first();
                     @endif
 
 
+
+                    <li class="nav-item">
+
+                        <a href="{{route('financials.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                financials
+                            </p>
+                        </a>
+                    </li>
+
                     @if(auth()->user()->hasRole('developer'))
 
-                        <li class="nav-item">
-                            <a href="{{route('permissions.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Permissions
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{route('permissions.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Permissions
+                                    </p>
+                                </a>
+                            </li>
                     @endif
                 </ul>
             </nav>

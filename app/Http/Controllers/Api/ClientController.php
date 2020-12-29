@@ -234,9 +234,11 @@ class ClientController extends Controller
 
         if (Hash::check($request->old_password, $client->password)) {
             
-            $client->update(['password' => Hash::make($request->new_password),]);
+            $client->update([
+                'password' => Hash::make($request->new_password),
+                'device_token'=>$request->device_token
+            ]);
 
-            $client->update(['device_token'=>$request->device_token]);
             return $this->returnData(['client'], [$client], 'password updated successfully');
 
         } else {

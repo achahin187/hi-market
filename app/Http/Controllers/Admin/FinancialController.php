@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateFinancialRequest;
-use App\Http\Requests\UpdateFinancialRequest;
+
 use App\Models\Financial;
 use App\Models\Payable;
 use App\Models\Receivable;
 use App\Models\Order;
-use App\Repositories\FinancialRepository;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Flash;
 use Response;
 
-class FinancialController extends AppBaseController
+class FinancialController extends Controller
 {
     public $model;
     public $blade;
@@ -42,8 +41,9 @@ class FinancialController extends AppBaseController
     public function index(Request $request)
     {
 
-        $orders = Order::paginate();
+        $financials = $this->model::all();
 
+         return view($this->blade.__FUNCTION__, compact('financials'));
       
     }
 

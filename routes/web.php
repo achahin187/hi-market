@@ -89,7 +89,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::put('areas/status/{area_id}', 'Admin\AreaController@status')->name('areas.status');
         Route::put('countries/status/{country_id}', 'Admin\CountryController@status')->name('countries.status');
         //Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
-        Route::resource('financials', 'FinancialController')->except("update", "destroy");
+
+        Route::resource('financials', 'Admin\FinancialController');
 
 
             Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');
