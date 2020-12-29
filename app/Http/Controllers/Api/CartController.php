@@ -198,10 +198,20 @@ class CartController extends Controller
             }
     } 
 
-    public function cartpoint()
+    public function cartpoint(Request $request)
     {
-        $client = Auth('client-api')->user();
+        #supermarket_id 
+        #address_id
+        $validation = \Validator::make(\request()->all(), [
+            'supermarket_id' => 'required',
+            'address_id'     => 'required',
+        ]);
 
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+
+        $client = Auth('client-api')->user();
         $points = Point::orderBy('points', 'desc')
         ->Where('points',$client->total_points)
         ->orWhere('points','<=',$client->total_points)
@@ -214,11 +224,12 @@ class CartController extends Controller
                         'clinetPoints'=>$client->total_points,
                         'points' => $points->points ??0,
                         'Value'=>$points->value??0, 
-                        'type'=>$points->type??0, 
-                        
+                        'type'=>$points->type??0,
+                        'vat' => 5,
+                        'shippingFee'=>10, 
+
                     ],
                 ];
-
-
     }
+
 }//end class
