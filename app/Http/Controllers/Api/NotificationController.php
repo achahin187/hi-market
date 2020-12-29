@@ -29,7 +29,7 @@ class NotificationController extends Controller
                             ->orWhere('type', 'Deal')
                             ->orderBy('created_at', 'desc');
          
-            return $this->returnData(["orders"], [new OrderResource( $orders)]);
+            return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
 
         }else{
 
