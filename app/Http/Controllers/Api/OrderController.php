@@ -254,7 +254,7 @@ class OrderController extends Controller
         $days = [
             [
                 "id" => 1,
-                "text" => trans("Today"),
+                "text" => trans("admin.Today"),
             ],
             [
                 "id" => 2,
