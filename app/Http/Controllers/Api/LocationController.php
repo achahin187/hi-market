@@ -46,9 +46,9 @@ class LocationController extends Controller
 
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
-           } 
+          } 
        
-         
+        dd($data);
         #if data == true
         if ($data == true) {        
 

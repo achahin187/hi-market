@@ -97,7 +97,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.name_ar')}}</label>
-                                        <input type="text" value="@if(isset($branch)){{$branch->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
+                                        <input type="text" value="{{ old('name_ar') }} @if(isset($branch)){{$branch->name_ar }} @endif" name="name_ar" class=" @error('name_ar') is-invalid @enderror form-control" required>
                                         @error('name_ar')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{__('admin.name_en')}}</label>
-                                        <input type="text" name="name_en" value="@if(isset($branch)){{$branch->name_en }} @endif" class=" @error('name_en') is-invalid @enderror form-control" required>
+                                        <input type="text" name="name_en" value="@if(isset($branch)){{$branch->name_en }} @endif {{ old('name_en') }}" class=" @error('name_en') is-invalid @enderror form-control" required>
                                         @error('name_en')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -498,7 +498,7 @@
                                                
                                                   <div class="form-group">
                                                 <label for="exampleFormControlFile1">{{ __('admin.logo') }}</label>
-                                                <input type="file"  name="logo_image" class="form-control-file" id="exampleFormControlFile1">
+                                                <input name="logo_image" type="file">
                                               </div>
 
 
