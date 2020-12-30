@@ -180,24 +180,24 @@ class CategoriesController extends Controller
                 })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->get();
 
 
-                foreach ($products as $product) {
+                // foreach ($products as $product) {
 
-                    $product->favourite = 0;
+                //     $product->favourite = 0;
 
-                    if (count($favproducts) > 0) {
+                //     if (count($favproducts) > 0) {
 
-                        foreach ($favproducts as $favproduct) {
-                            if ($product->id == $favproduct->product_id) {
-                                $product->favourite = 1;
-                            }
-                        }
-                    }
-
-
-                    $product->imagepath = asset('product_images/' . $product->images);
+                //         foreach ($favproducts as $favproduct) {
+                //             if ($product->id == $favproduct->product_id) {
+                //                 $product->favourite = 1;
+                //             }
+                //         }
+                //     }
 
 
-                }
+                //     $product->imagepath = asset('product_images/' . $product->images);
+
+
+                // }
 
 
                 return response()->json([
