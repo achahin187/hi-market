@@ -144,11 +144,11 @@ class OrderController extends Controller
             foreach ( explode(",", request("cart")) as $product) {
                 
                     DB::table('order_product')->insert([
-                    'order_id'=>$order->id,
+                    'order_id'   => $order->id,
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
                     "price"      => explode(":", $product)[2],
-                    "points" => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1],
+                    "points"     => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1],
                 ]);
 
              }   
@@ -304,21 +304,62 @@ class OrderController extends Controller
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }
 
+    // public function getState($branch)
+    // {
+
+    //     // $now = Carbon::parse(now())->format("H:i:s");
+    //     // $start_time = Carbon::parse($branch->start_time)->format("H:i:s");
+    //     // $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
+    //     //         if ($now >= $start_time && $now <= $end_time) {
+
+    //     //             return 'open';
+
+    //     //         } else {
+    //     //             return 'closed';
+
+    //     //         }
+
+
+    // }
     public function getState($branch)
     {
+       $now = now();
+       
+       $start_time =  Carbon::parse($branch->start_time)->format('H:i');
+       $end_time   =  Carbon::parse($branch->end_time)->format('H:i');
+      
 
-        $now = Carbon::parse(now())->format("H:i:s");
-        $start_time = Carbon::parse($branch->start_time)->format("H:i:s");
-        $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
-                if ($now >= $start_time && $now <= $end_time) {
+      if ($start_time == $end_time) {
+       
+          return 'open';
+      }
 
-                    return 'open';
+      elseif($start_time < $end_time)
+      {
+              
+        $between = $now->between($start_time, $end_time);
 
-                } else {
-                    return 'closed';
+            if ($between) {
+               
+                return 'open';
+            }else{
+               
+                return 'closed';
+            }//end if
+      }else{
+            if (Carbon::now()->toTimeString() > $start_time) {
+               
+                return 'open';
+            }
+            elseif(Carbon::now()->toTimeString() < $end_time){
+               
+                return 'open';
+            }else{
+                
+                return 'closed';
 
-                }
-    }
+            }//end if
+      }//end if
 
     public function getClientOrder(Request $request)
     {
