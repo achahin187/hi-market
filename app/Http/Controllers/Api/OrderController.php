@@ -157,7 +157,7 @@ class OrderController extends Controller
 
             if ($client->points > 0 || $client->points!= null) {
 
-               $finalClientPoint = $client->points -  $order_details["redeem"];
+               $finalClientPoint = $client->points -  100;//$order_details["redeem"];
                
                $client->update(['points'=> $finalClientPoint]);
 
