@@ -361,6 +361,15 @@ class OrderController extends Controller
 
             $getOrder->update(['status'=>5, 'resone_id'=>$request->reason_id]);
 
+
+            if ($order_details["redeem"]!= 0) {
+
+               $finalClientPoint = $client->total_points + $order_details["redeem"];
+               
+               $client->update(['total_points'=> $finalClientPoint]);
+
+            }
+
             return $this->returnSuccessMessage('order Canceled successfully', 200);
 
         }else{
