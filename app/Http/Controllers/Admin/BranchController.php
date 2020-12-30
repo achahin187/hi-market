@@ -65,17 +65,18 @@ class BranchController extends Controller
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
-            'supermarket_id' => 'required|integer|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'supermarket_id' => ['required ',' integer','min:0'],
+            'image' => ['required','image ',' mimes:jpeg,png,jpg','max:2048'],
+            'logo'  => ['required','image ',' mimes:jpeg,png,jpg','max:2048'],
             'commission' => ['required','min:0','numeric'],
             'categories' => ['required','array'],
             'rating' => ['required','min:1','max:5'],
             'priority' => ['required','min:1','integer'],
-            'area_id' => 'integer|min:0',
-            'city_id' => 'integer|min:0',
-            'country_id' => 'integer|min:0',
-            'start_time' => ['required','string'],
-            'end_time' => ['required','string'],        
+            'area_id' => ['integer','min:0'],
+            'city_id' => ['integer','min:0'],
+            'country_id' => ['integer','min:0'],
+            'start_time' => ['required','string','different:end_time'],
+            'end_time' => ['required','string','different:start_time'],        
         ]);
 
         $arab_name = $request->input('name_ar');
@@ -244,13 +245,14 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id,$supermarket_id = null)
     {
-
+        dd($request->all());
            $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'status' => ['required','string'],
             'supermarket_id' => 'required|integer|min:0',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'image|mimes:jpeg,png,jpg|max:2048',
             'commission' => ['required','min:1','numeric'],
             'categories' => ['required'],
             'rating' => ['required','min:1','max:5'],
@@ -258,9 +260,8 @@ class BranchController extends Controller
             'area_id' => 'integer|min:0',
             'city_id' => 'integer|min:0',
             'country_id' => 'integer|min:0',
-            'start_time' => ['required','string'],
-            'end_time' => ['required','string'],        
-
+             'start_time' => ['required','string','different:end_time'],
+            'end_time' => ['required','string','different:start_time'], 
 
         ]);
 

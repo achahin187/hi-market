@@ -335,8 +335,8 @@
                                                 <div class="form-group">
                                                     <label>{{__('admin.start_time')}}</label>
 
-                                                    <div class="input-group date" id="startpicker" data-target-input="nearest">
-                                                        <input type="text" name="start_time" @if(isset($branch)) value="{{$branch->start_time}}" @endif class="@error('start_time') is-invalid @enderror form-control datetimepicker-input" data-target="#startpicker"/>
+                                                    <div class="input-group date"  data-target-input="nearest">
+                                                        <input type="time" name="start_time" @if(isset($branch)) value="{{$branch->start_time}}" @endif class="@error('start_time') is-invalid @enderror form-control " data-target="#startpicker"/>
                                                         <div class="input-group-append" data-target="#startpicker" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                         </div>
@@ -353,8 +353,8 @@
                                                 <div class="form-group">
                                                     <label>{{__('admin.end_time')}}</label>
 
-                                                    <div class="input-group date" id="endpicker" data-target-input="nearest">
-                                                        <input type="text" name="end_time" class="@error('end_time') is-invalid @enderror form-control datetimepicker-input" @if(isset($branch)) value="{{$branch->end_time}}" @endif data-target="#endpicker"/>
+                                                    <div class="input-group date"  data-target-input="nearest">
+                                                        <input type="time" name="end_time" class="@error('end_time') is-invalid @enderror form-control " @if(isset($branch)) value="{{$branch->end_time}}" @endif data-target="#endpicker"/>
                                                         <div class="input-group-append" data-target="#endpicker" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                         </div>
