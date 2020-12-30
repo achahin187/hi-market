@@ -359,7 +359,7 @@ class OrderController extends Controller
       
         if ($getOrder) {
 
-            $getOrder->update(['status'=>5, 'resone_id'=>$request->reason_id]);
+            $getOrder->update(['status'=>6, 'resone_id'=>$request->reason_id]);
 
 
             if ($getOrder->point_redeem != 0) {
