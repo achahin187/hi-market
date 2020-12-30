@@ -8,13 +8,13 @@ class CategoryId extends Filter
 {
 	protected function canRunRequest()
 	{
-		return request($this->filterRequest());
+		return request("category_id");
 	}
 
     protected function query($builder)
     {
         return $builder->whereHas("category", function ($query) {
-            $query->where("id",request($this-filterRequest()));
+            $query->where("id",request("category_id"));
         });
     }
 }
