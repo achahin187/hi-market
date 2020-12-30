@@ -34,7 +34,7 @@ class ProductController extends Controller
         }
     }
     #vendor
-    #new arrival 
+    #new arrival
     public function productCount()
     {
         $validation = \Validator::make(request()->all(), [
@@ -55,7 +55,7 @@ class ProductController extends Controller
         // Add Rate And Address Branch ++.
         // Change to Branch
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->get();
-      
+
         foreach ($checkSatus as  $status) {
             $status->update(['status'=> 0]);
         }
@@ -190,25 +190,25 @@ class ProductController extends Controller
 
 
         if ($client) {
-        #new instance 
-       
+        #new instance
 
 
 
-        
+
+
         foreach ($products as   $product) {
               $data = $product->where('name_en', 'LIKE', '%' . $name . "%")
                               ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
                               ->get();
           }
-                         
-       
+
+
 
                 // $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
 
                 return $this->returnData(['supermarkets'], [HomeDataResource::collection($data)]);
-                
-            }    
+
+            }
     }*/
 
    public function getproductsearch(Request $request)
@@ -232,8 +232,8 @@ class ProductController extends Controller
                 $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->where('branch_id', $supermarket_id)->get();
 
                 return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
-                
-            }    
+
+            }
     }
 
 
@@ -241,6 +241,7 @@ class ProductController extends Controller
     public function filter()
     {
 
+        return request()->all();
         $products = Product::whereHas("branches", function ($query) {
 
             $query->where("branches.id", request()->get("supermarket_id"));
@@ -254,17 +255,17 @@ class ProductController extends Controller
     {
          $getPlygons = Polygon::all();
           #polygon array
-          $polygon=[]; 
+          $polygon=[];
           foreach ($getPlygons as $getPlygons)
           {
               $polygon[]= $getPlygons->lon;
               $polygon[]= $getPlygons->lat;
           }
-          
+
           #impload polygon
           $implodePolygon = implode(" ", (array)$polygon);
-         
-          #new instance 
+
+          #new instance
           $pointLocation = new PointLocation();
 
           #impload implode Points
@@ -281,9 +282,9 @@ class ProductController extends Controller
 
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
-           } 
+           }
 
 
-           return $data; 
+           return $data;
     }//end function
 }
