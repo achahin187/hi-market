@@ -530,7 +530,7 @@ class ProductController extends Controller
 
             if ($request->hasFile('images')) {
 
-                $image_names = $request->file('images');
+                $image = $request->file('images');
 
                 //foreach ($image_names as $image) {
 
