@@ -548,7 +548,7 @@ class ProductController extends Controller
                     // $productimages = explode(',', $product->images);
 
                     $image = $request->input('image');
-
+                    dd($request->all());
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
@@ -610,14 +610,14 @@ class ProductController extends Controller
 
 
             } else {
+                if ($request->file('image') ) {
 
-                if ($request->has('image')) {
-
+                
                     //$productimages = explode(',', $product->images);
 
                     
-                    $image = $request->input('image');
-
+                    $image = $request->image;
+                   // dd($image);
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
@@ -695,7 +695,7 @@ class ProductController extends Controller
                         'measuring_unit' => $measuring_unit,
                         'size' => $size,
                         'updated_by' => $user->id,
-                        'images' => null
+                        'images' => $product->iamges,
                     ]);
                          $product->branches()->sync($request->branch_id);
                 }

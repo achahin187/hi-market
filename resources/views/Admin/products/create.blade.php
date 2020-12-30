@@ -377,10 +377,10 @@
                                     </div>
                                 @endif
 
-                                
+                               
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="number" @if(isset($product))value="{{$product->rate }} "@endif name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
+                                    <input type="text" value="{{$product->rate}} " name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
                                     @error('rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -619,7 +619,7 @@
 
                                                     @foreach($productimages as $image)
 
-                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('products_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
+                                                        <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('product_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
 
                                                         <input type="checkbox" checked style="margin-right:10px;" name="image" value="{{$image}}">
 
@@ -627,7 +627,7 @@
 
                                                 @endif
 
-                                                <input name="images"  type="file">
+                                                <input name="image"  type="file">
 
                                             </div>
                                             <div class="input-group-append">
@@ -645,7 +645,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images"  type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="image"  type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
                                                
                                             </div>
                                            
@@ -659,7 +659,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images"  type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="image"  type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
                                               
                                             </div>
                                           

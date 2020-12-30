@@ -100,8 +100,14 @@ class ProductController extends Controller
 
             ]);
 
-            return $this->returnData(["supermarkets", "offers"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers)]);
+            return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
         }
+    }
+
+    private function getOffer()
+    {
+        $offer = Offer::where('type','free delivery')->first();
+        return $offer;
     }
 
     public function productdetails(Request $request)
