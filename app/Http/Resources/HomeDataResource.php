@@ -47,7 +47,7 @@ class HomeDataResource extends JsonResource
    
        $start_time =  Carbon::parse($this->start_time)->format('H:i');
        $end_time   =  Carbon::parse($this->end_time)->format('H:i');
-
+       dd($start_time, $end_time, $now);
       if ($start_time == $end_time) {
           return 'open';
       }
