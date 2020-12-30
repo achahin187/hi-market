@@ -35,7 +35,7 @@ class OffersController extends Controller
     */
     public function index()
     {
-         $offers = $this->model::orderBy('id', 'desc')->get();
+        $offers = $this->model::orderBy('id', 'desc')->get();
         
         return view($this->blade.'.index')->with('offers',$offers);
     }
@@ -50,6 +50,7 @@ class OffersController extends Controller
         $supermarkets = Supermarket::Where('status', 'active')->get();
         $products_offer = Product::Where('flag', 1)->Where('status','active')->get();
         $branches  = Branch::Where('status','active')->get();
+
         return view($this->blade.__FUNCTION__,compact('supermarkets', 'products_offer', 'branches'));
     }
 
@@ -67,12 +68,14 @@ class OffersController extends Controller
             'start_date' =>'required',
             'end_date' =>'required',
             'banner' =>'required',
+            'banner2' =>'required',
+            
         ]);
 
         $request_data = $request->all();
-        
-          if ($request->banner) {
-                #Store Banner to DataBase...
+
+          if ($request->banner && $request->banner2) {
+                #Store Banner to DataBase banner...
                 $filename = $request->banner->getClientOriginalName();
                 $fileextension = $request->banner->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
@@ -80,7 +83,16 @@ class OffersController extends Controller
                 $request->banner->move('offer_images', $file_to_store);
 
                 $request_data['banner'] = $file_to_store;
-          }
+
+                #Store Banner to DataBase banner2...
+                $filename = $request->banner2->getClientOriginalName();
+                $fileextension = $request->banner2->getClientOriginalExtension();
+                $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+                $request->banner2->move('offer_images', $file_to_store);
+
+                $request_data['banner2'] = $file_to_store;
+          }//end if
 
            
 
@@ -241,6 +253,7 @@ class OffersController extends Controller
         ]);
 
         $offer = $this->model::find($id);
+
         $request_data = $request->all();
         
           if ($request->banner) {
@@ -258,6 +271,23 @@ class OffersController extends Controller
 
                 $request_data['banner'] = $file_to_store;
           }
+
+          if ($request->banner2) {
+            if ($offer->banner2 != $request->banner2) {
+                unlink( base_path('public/offer_images/'.$offer->banner2) );
+               
+            }
+
+                #Store Banner to DataBase...
+                $filename2 = $request->banner2->getClientOriginalName();
+                $fileextension2 = $request->banner2->getClientOriginalExtension();
+                $file_to_store2 = time() . '_' . explode('.', $filename2)[0] . '_.' . $fileextension2;
+
+                $request->banner2->move('offer_images', $file_to_store2);
+
+                $request_data['banner2'] = $file_to_store2;
+          }
+
 
            
 

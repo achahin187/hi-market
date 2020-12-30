@@ -82,6 +82,21 @@
                        <p style="color: red"> length: 130 px </p>
                     </div>
 
+                     <div class="form-group">
+                        <label>{{__('admin.banner')}}</label>
+                        <br>
+                        <input type="file" name="banner2">
+
+                        @error('banner')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+
+                        <p style="color: red">Width: 400 px</p>
+                       <p style="color: red"> length: 130 px </p>
+                    </div>
+
                      <div class="card-footer">
                       <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
                   </div>

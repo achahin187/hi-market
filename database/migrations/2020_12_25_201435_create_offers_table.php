@@ -30,6 +30,7 @@ class CreateOffersTable extends Migration
             $table->string('end_date');
             $table->boolean('status')->default(1);
             $table->string('banner');
+          
             $table->timestamps();
         });
     }

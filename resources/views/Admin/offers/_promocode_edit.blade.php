@@ -19,7 +19,7 @@
                     </div>
 
 
-                    <div class="form-group supermarket_4"  {{ $offer->source == 'Branch'?'hidden':"" }}>
+                    <div class="form-group supermarket_4"  {{ $offer->source == 'Delivertto'?'hidden':"" }}>
                         <label for="branch">SuperMarket</label>
                         <select name="supermarket_id" id='supermarket_4'  class="form-control select2">
                         
@@ -141,7 +141,7 @@
                         @enderror
                     </div>
 
-
+                    {{-- banner 1 --}}
                     <div class="form-group">
                         <label>{{__('admin.banner')}}</label>
                         <br>
@@ -157,6 +157,30 @@
                     </div>
 
                         <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner) }}">
+                        <br>
+                        <br>
+                        <br>
+                             {{-- banner 1 --}}
+                    <div class="form-group">
+                        <label>{{__('admin.banner')}}</label>
+                        <br>
+                        <input type="file" name="banner2">
+                        @error('banner')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+
+                        <p style="color: red">Width: 400 px</p>
+                        <p style="color: red"> length: 130 px </p>
+                    </div>
+
+                        <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner2) }}">
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                       <div class="card-footer">
                       <button type="submit" class="btn btn-primary">{{ __('admin.edit_offer') }}</button>
                   </div>
