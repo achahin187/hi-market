@@ -50,32 +50,32 @@ class HomeDataResource extends JsonResource
       
 
       if ($start_time == $end_time) {
-        //dd('first');
+       
           return 'open';
       }
 
       elseif($start_time < $end_time)
       {
-               // dd('start_time < end_time');
+              
         $between = $now->between($start_time, $end_time);
 
             if ($between) {
-                //dd('between open');
+               
                 return 'open';
             }else{
-                //dd('between cloes');
+               
                 return 'closed';
             }//end if
       }else{
             if (Carbon::now()->toTimeString() > $start_time) {
-                //dd($now , $start_time);
+               
                 return 'open';
             }
             elseif(Carbon::now()->toTimeString() < $end_time){
-                //dd('end_time now');
+               
                 return 'open';
             }else{
-                //dd('end_time else now');
+                
                 return 'closed';
 
             }//end if

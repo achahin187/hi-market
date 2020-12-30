@@ -272,7 +272,7 @@ class OrderController extends Controller
 
         ];
 
-        $branch_start_time = Carbon::parse($branch->start_time)->subHour();
+        $branch_start_time = Carbon::parse($branch->start_time);
         $branch_end_time = Carbon::parse($branch->end_time);
       
         $time = [];
