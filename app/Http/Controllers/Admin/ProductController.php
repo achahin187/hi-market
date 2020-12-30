@@ -418,7 +418,7 @@ class ProductController extends Controller
     public function update(Request $request,$id,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
-        dd($request->all());
+        //dd($request->all());
         $product = Product::find($id);
 
         $user = auth()->user();
@@ -548,7 +548,7 @@ class ProductController extends Controller
                     // $productimages = explode(',', $product->images);
 
                     $image = $request->input('image');
-                    
+
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;

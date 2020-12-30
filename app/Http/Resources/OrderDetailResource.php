@@ -45,7 +45,7 @@ class OrderDetailResource extends JsonResource
                 return[
                     'id' => $product->id,
                     'name' => $product->name,
-                    'productImage' => asset('images/'.$product->image),
+                    'productImage' =>  asset("product_images/" . $this->images),
 
                     'supermaketId' => $this->branch_id??"",
                     'supermaketName' => $product->branches->where('id',$this->branch_id)->first()->name??"",

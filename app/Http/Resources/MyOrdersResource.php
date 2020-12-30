@@ -23,7 +23,7 @@ class MyOrdersResource extends JsonResource
                 return[
                 'id' => $product->id,
                 'name' => $product->name,
-                'image' => asset('images/'.$product->image),
+                'image' =>  asset("product_images/" . $product->images),
                 'supermaketId' => $product->branches->first()->id,
                 ];
             }),
