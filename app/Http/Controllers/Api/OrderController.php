@@ -370,7 +370,7 @@ class OrderController extends Controller
 
         if ($client) {
 
-            $clientOrders = collect($client->orders)->orderBy('created_at', 'desc')->get();
+            $clientOrders = Order::Where('client_id', $client->id)->orderBy('created_at', 'desc')->get();
 
                 return MyOrdersResource::collection($clientOrders);
         } else {
