@@ -7,6 +7,7 @@ use App\Pipeline\LastSixtyDays;
 use App\Pipeline\LastThirtyDays;
 use App\Pipeline\LowPrice;
 use App\Pipeline\MostPopular;
+use App\Pipeline\CategoryId;
 use App\Pipeline\HighPrice;
 use App\Pipeline\Vendor;
 use App\Traits\HasFilter;
@@ -115,7 +116,8 @@ class Product extends Model
         LowPrice::class,
         LastSevenDays::class,
         LastThirtyDays::class,
-        LastSixtyDays::class
+        LastSixtyDays::class,
+        CategoryId::class
     ];
 
     protected static $logName = 'products';
