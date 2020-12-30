@@ -180,12 +180,14 @@ class AuthController extends Controller
 
         if (isset($client)) {
           
-            $client->update(['password' => $request->new_password]);
+            $client->update(['password' => $request->new_password, 'device_token'=>$request->device_token]);
 
-            $client->update(['device_token'=>$request->device_token]);
+            $token = $client->createToken("hi-market")->accessToken;
 
-            return $this->returnData(['client'], [$client], 'password updated successfully');
+            return $this->returnData(
+                ['client', 'token'], [new ClientResource($client), $token], 'password updated successfully');
 
+           
           
         }else{
 
