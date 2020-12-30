@@ -53,7 +53,7 @@ class LocationController extends Controller
 
           } 
        
-        dd($data);
+        //dd($data);
         #if data == true
         if ($data == true) {        
 
