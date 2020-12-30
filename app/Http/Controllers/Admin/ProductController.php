@@ -179,25 +179,25 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
 
-            $image_names = [];
+            // $image_names = [];
             $files = $request->file('images');
 
-            foreach ($files as $image) {
+            // foreach ($files as $image) {
                 $filename = $image->getClientOriginalName();
                 $fileextension = $image->getClientOriginalExtension();
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
                 $image->move('product_images', $file_to_store);
 
-                $image_names[] = $file_to_store;
+                $image_names = $file_to_store;
             }
 
-            $images = implode(',', $image_names);
+            //$images = implode(',', $image_names);
         }
-        else
-        {
-            $images = '';
-        }
+        // else
+        // {
+        //     $images = '';
+        // }
 
 
         $barcodes = Product::Where('supermarket_id',$supermarket)->get()->toArray();
@@ -377,18 +377,18 @@ class ProductController extends Controller
             if($supermarket_id != null && $supermarket_id != -1)
             {
                 $clone = true;
-                $productimages = explode(',',$product->images);
+                $productimages = $product->images ;//explode(',',$product->images);
                 return view('Admin.products.create', compact('superMarkets','product','productimages','flag','clone','supermarket_id'));
             }
             elseif ($branch_id != null && $supermarket_id == -1)
             {
                 $clone = true;
-                $productimages = explode(',',$product->images);
+                $productimages = $product->images;//explode(',',$product->images);
                 return view('Admin.products.create', compact('superMarkets','product','productimages','flag','clone','branch_id'));
             }
             else {
                 $clone = true;
-                $productimages = explode(',', $product->images);
+                $productimages = $product->images; //explode(',', $product->images);
                 return view('Admin.products.create', compact('superMarkets','product', 'productimages', 'flag', 'clone'));
             }
         }
@@ -532,7 +532,7 @@ class ProductController extends Controller
 
                 $image_names = $request->file('images');
 
-                foreach ($image_names as $image) {
+                //foreach ($image_names as $image) {
 
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
@@ -540,8 +540,8 @@ class ProductController extends Controller
 
                     $image->move('product_images', $file_to_store);
 
-                    $file_names[] = $file_to_store;
-                }
+                    $file_names = $file_to_store;
+                //}
 
                 if ($request->has('image')) {
 
@@ -549,26 +549,26 @@ class ProductController extends Controller
 
                     $checkedimages = $request->input('image');
 
-                    $deletedimages = array_diff($productimages, $checkedimages);
+                    //$deletedimages = array_diff($productimages, $checkedimages);
 
 
                     if (!empty($deletedimages)) {
-                        foreach ($deletedimages as $deletedimage) {
-                            if (($key = array_search($deletedimage, $productimages)) !== false) {
-                                unset($productimages[$key]);
-                                unlink('product_images/' . $deletedimage);
-                            }
-                        }
+                        //foreach ($deletedimages as $deletedimage) {
+                        //    if (($key = array_search($deletedimage, $productimages)) !== false) {
+                          //      unset($productimages[$key]);
+                                unlink('product_images/' . $checkedimages);
+                            //}
+                        //}
                     }
 
-                    $productimages = array_merge($productimages, $file_names);
+                   // $productimages = array_merge($productimages, $file_names);
                 }
                 else
                 {
                     $productimages = $file_names;
                 }
 
-                $images = implode(',', $productimages);
+                //$images = implode(',', $productimages);
 
                 $product->update([
                     'name_ar' => $arab_name,
@@ -605,23 +605,23 @@ class ProductController extends Controller
 
                 if ($request->has('image')) {
 
-                    $productimages = explode(',', $product->images);
+                    //$productimages = explode(',', $product->images);
 
                     $checkedimages = $request->input('image');
 
-                    $deletedimages = array_diff($productimages, $checkedimages);
+                    //$deletedimages = array_diff($productimages, $checkedimages);
 
 
                     if (!empty($deletedimages)) {
-                        foreach ($deletedimages as $deletedimage) {
-                            if (($key = array_search($deletedimage, $productimages)) !== false) {
-                                unset($productimages[$key]);
-                                unlink('product_images/' . $deletedimage);
-                            }
-                        }
+                        //foreach ($deletedimages as $deletedimage) {
+                           // if (($key = array_search($deletedimage, $productimages)) !== false) {
+                               // unset($productimages);
+                                unlink('product_images/' . $checkedimages);
+                            //}
+                        //}
                     }
 
-                    $images = implode(',', $productimages);
+                   // $images = implode(',', $productimages);
 
                     $product->update([
                         'name_ar' => $arab_name,
