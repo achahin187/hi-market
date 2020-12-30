@@ -31,7 +31,7 @@ class SendNotification {
             "notification" =>
                 [
                     "title" => $this->getMessage($this->order),
-                    "body" => "Sample Notification",
+                    "body" => "Order Updates",
                     "icon" => $this->getIconeOrder($this->order),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
