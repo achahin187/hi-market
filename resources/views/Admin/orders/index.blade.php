@@ -160,12 +160,12 @@
 
             <?php $status = 
             [
-            'new' => 0,
-            'approved' => 1,
-            'prepared' => 2,
-            'shipping' => 3,
+            'pending' => 0,
+            'accepted' => 1,
+            'process' => 2,
+            'pickup' => 3,
             'deliverd' => 4,
-            'received' => 5,
+            'received' => 7,
             'canceled' => 6,
              ];?>
 

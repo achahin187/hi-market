@@ -77,6 +77,7 @@ class OrderDetailResource extends JsonResource
                     'Process'      => 2,
                     'Pickup'       => 3,
                     'Deliverd'     => 4,
+                    'Received'     => 4,
                     'Canceled'     => 5,
                 ];
 
