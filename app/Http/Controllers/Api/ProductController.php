@@ -52,7 +52,7 @@ class ProductController extends Controller
             {
                 $q->where("category_id",\request("category_id"));
             }
-        })->where("status","active")->where("flag",\request("flag",0))->filter()->count();
+        })->where("status","active")->where("flag",\request("is_offer",0))->filter()->count();
         return $this->returnData(["product_count"], [$product_count]);
     }
 

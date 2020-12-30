@@ -60,7 +60,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('getarea', 'LocationController@index')->name('listArea');
     Route::get('gethomedata', 'ProductController@homeData')->name('listHome');
     Route::post('getsupermarketcats', 'CategoriesController@supermarketcategories')->name('listsupermarketcats');
-    Route::post('getcategoryproducts', 'CategoriesControllerCategoriesController@categoryproducts')->name('listcategoryproducts');
+    Route::post('getcategoryproducts', 'CategoriesController@categoryproducts')->name('listcategoryproducts');
     Route::post('supermarketoffers', 'CategoriesController@supermarketoffers')->name('listcategoryproducts');
     Route::post("vendors", "VendorController@show");
     Route::get('clientpoints', 'ClientController@clientpoints')->name('listcategoryproducts');
