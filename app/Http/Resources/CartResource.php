@@ -27,7 +27,7 @@ class CartResource extends JsonResource
             "rate" => $product->rate ?? 0,
             "ratings" => $product->ratings ?? "0",
             "priority" => $product->priority ?? 0,
-            "images" => asset("product_images/" . $this->images),
+            "images" => asset("product_images/" . $product->images)??"",
             "points" => $product->points ?? 0,
             "category_name" => $product->category->name ?? "",
             "category_id" => $product->category_id ?? "",
@@ -36,7 +36,7 @@ class CartResource extends JsonResource
             "supermarketName" => $this->getBranch()->name,
             "favourite" => (int)(\DB::table("client_product")->where("product_id",$product->id)->where("udid",request()->header("udid"))->count() != 0),
             "percentage" => $product->price && $this->offer_price ? (100 - (($this->offer_price / $this->price) * 100)) : 0,
-            "imagepath" => $product->imagepath ?? "default.png",
+            "imagepath" => asset("product_images/" . $product->images)??"",
             "category" => $product->category ?? "",
             "quantity" => (int)$this->qty,
 
