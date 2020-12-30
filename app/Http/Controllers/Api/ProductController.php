@@ -46,7 +46,7 @@ class ProductController extends Controller
         }
         $product_count = Product::whereHas("branches", function ($query) {
             $query->where("branches.id", request("supermarket_id"));
-        })->where("category_id", request("category_id"))->filter()->count();
+        })->where("category_id", request("category_id"))->where("status","active")->filter()->count();
         return $this->returnData(["product_count"], [$product_count]);
     }
 
