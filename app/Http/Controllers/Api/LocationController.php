@@ -19,42 +19,48 @@ class LocationController extends Controller
     function index(Request $request)
     {
           $getPlygons = Polygon::all();
-          #polygon array
+
+          #polygon array        
           $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
           {
-              $polygon[]= $getPlygons->lon;
-              $polygon[]= $getPlygons->lat;
+              $polygon[]= $getPlygons->lon .' '.$getPlygons->lat;
+               
           }
+         
            //$implodePolygon=[]; 
           #impload polygon
          
-          $implodePolygon = array_chunk($polygon,2);
+         // $implodePolygon = array_chunk($polygon,2);
 
-            
-          
-         
+       
           #new instance 
           $pointLocation = new PointLocation();
 
           #impload implode Points
           $implodePoints = implode( " ", [$request->long,$request->lat]);
-          
-          #points
-         // $points = array($implodePoints);
 
+          $implodePolygon = implode( " ", $polygon);
+       
+          #points
+          $points = array($implodePoints);
+
+          
           #polygon
           //$polygon = $implodePolygon;
-          $points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
-          $polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
-          dd($points ,$polygon );
+         // $points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
+          //dd($points , $pointss);
+          //$polygons = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
+          //dd($polygon ,$polygons);
+
           #loop and send to check if point in polygon retuen boolean
-          foreach($points as $key => $point) {
+          foreach($points as  $point) {
       
 
-            $data = $pointLocation->pointInPolygon($point, $polygon);
+            $data = $pointLocation->pointInPolygon($points, $polygon);
 
           } 
+          dd($data);
        
         #if data == true
         if ($data == true) {        

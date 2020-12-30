@@ -23,7 +23,7 @@ class PointLocation {
  
     function pointInPolygon($point, $polygon, $pointOnVertex = true) {
         $this->pointOnVertex = $pointOnVertex;
- 
+   
         // Transform string coordinates into arrays with x and y values
         $point = $this->pointStringToCoordinates($point);
         $vertices = array(); 
@@ -79,8 +79,9 @@ class PointLocation {
     }
  
     function pointStringToCoordinates($pointString) {
-
-        $coordinates = explode(" ", $pointString);
+        $implode= implode(" ", $pointString);
+       // dd(explode(" ", $implode));
+        $coordinates = explode(" ", $implode);
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  

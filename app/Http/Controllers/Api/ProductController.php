@@ -176,22 +176,27 @@ class ProductController extends Controller
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
-    public function getproductsearch(Request $request)
+   /* public function getproductsearch(Request $request)
     {
+
+          $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+        ]);
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
+        }
+
         $client = getUser();
+
 
         if ($client) {
         #new instance 
-        $pointLocation = new PointLocation();
-        $data = $this->checkPolygon($client->lat, $client->lon);
-        
-        $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
-        
-        $name = $request->name;
        
-         $products = Branch::WhereIn('id',$testPolygon->area->supermarkets->pluck('id'))->get();
+
+
+
         
-          foreach ($products as   $product) {
+        foreach ($products as   $product) {
               $data = $product->where('name_en', 'LIKE', '%' . $name . "%")
                               ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
                               ->get();
@@ -204,7 +209,34 @@ class ProductController extends Controller
                 return $this->returnData(['supermarkets'], [HomeDataResource::collection($data)]);
                 
             }    
+    }*/
+
+   public function getproductsearch(Request $request)
+    {
+
+            $supermarket_id = $request->supermarket_id;
+            $name = $request->name;
+            $products = Product::orWhere('name_en', 'LIKE', '%' . $name . "%")
+                               ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
+                                ->get();
+
+            if (count($products) < 1) {
+
+                 return response()->json([
+                        'status' => true,
+                        'msg' => '',
+                        'data' => [],
+                        ]);
+            } else {
+
+                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->where('branch_id', $supermarket_id)->get();
+
+                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
+                
+            }    
     }
+
+
 
     public function filter()
     {
