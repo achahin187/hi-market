@@ -418,7 +418,7 @@ class ProductController extends Controller
     public function update(Request $request,$id,$flag,$supermarket_id = null,$branch_id = null)
     {
         //
-
+        dd($request->all());
         $product = Product::find($id);
 
         $user = auth()->user();
@@ -545,7 +545,7 @@ class ProductController extends Controller
 
                 if ($request->has('image')) {
 
-                    $productimages = explode(',', $product->images);
+                    // $productimages = explode(',', $product->images);
 
                     $checkedimages = $request->input('image');
 
