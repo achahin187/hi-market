@@ -245,7 +245,7 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id,$supermarket_id = null)
     {
-       
+        
            $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],

@@ -101,7 +101,7 @@
                         <br>
                         <br>
                         <br>
-                             {{-- banner 1 --}}
+                             {{-- banner 2 --}}
                     <div class="form-group">
                         <label>{{__('admin.banner')}}</label>
                         <br>

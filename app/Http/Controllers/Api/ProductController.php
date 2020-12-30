@@ -178,9 +178,7 @@ class ProductController extends Controller
 
     public function getproductsearch(Request $request)
     {
-
-       
-         $client = getUser();
+        $client = getUser();
 
         if ($client) {
         #new instance 
@@ -254,8 +252,6 @@ class ProductController extends Controller
            } 
 
 
-           return $data;
-         
-       
+           return $data; 
     }//end function
 }
