@@ -323,43 +323,44 @@ class OrderController extends Controller
     // }
     public function getState($branch)
     {
-       $now = now();
-       
-       $start_time =  Carbon::parse($branch->start_time)->format('H:i');
-       $end_time   =  Carbon::parse($branch->end_time)->format('H:i');
-      
+           $now = now();
+           
+           $start_time =  Carbon::parse($branch->start_time)->format('H:i');
+           $end_time   =  Carbon::parse($branch->end_time)->format('H:i');
+          
 
-      if ($start_time == $end_time) {
-       
-          return 'open';
-      }
+          if ($start_time == $end_time) {
+           
+              return 'open';
+          }
 
-      elseif($start_time < $end_time)
-      {
-              
-        $between = $now->between($start_time, $end_time);
+          elseif($start_time < $end_time)
+          {
+                  
+            $between = $now->between($start_time, $end_time);
 
-            if ($between) {
-               
-                return 'open';
-            }else{
-               
-                return 'closed';
-            }//end if
-      }else{
-            if (Carbon::now()->toTimeString() > $start_time) {
-               
-                return 'open';
-            }
-            elseif(Carbon::now()->toTimeString() < $end_time){
-               
-                return 'open';
-            }else{
-                
-                return 'closed';
+                if ($between) {
+                   
+                    return 'open';
+                }else{
+                   
+                    return 'closed';
+                }//end if
+          }else{
+                if (Carbon::now()->toTimeString() > $start_time) {
+                   
+                    return 'open';
+                }
+                elseif(Carbon::now()->toTimeString() < $end_time){
+                   
+                    return 'open';
+                }else{
+                    
+                    return 'closed';
 
-            }//end if
-      }//end if
+                }//end if
+          }//end if
+    }
 
     public function getClientOrder(Request $request)
     {
