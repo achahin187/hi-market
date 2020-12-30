@@ -618,8 +618,10 @@ class OrderController extends Controller
               
                 $order->client->update(['total_points'=>$total_points]);
             }
- 
-            new SendNotification($order->client->device_token, $order, $data);  
+            if(in_array($order->status, [1,3,4]))
+            {
+                new SendNotification($order->client->device_token, $order, $data);
+            }  
            
         }else
         {
@@ -698,13 +700,12 @@ class OrderController extends Controller
     public function getMessage($order)
     {
         $messages = [
-            0 => "New Order Created",
-            1 => "Your Order $order->num was Pending",
-            2 => "Your Order $order->num Was Accepted",
-            3 => "Your Order $order->num Was Process",
-            4 => "Your Order $order->num Was Pickup",
-            5 => "Your Order $order->num Was Delivered Rate Your Order",
-            6 => "Your Order $order->num was Cancelled",
+            0 => "New Order Created, waiting for Acceptance",
+            1 => "Your Order $order->num Was Accepted",
+            2 => "Your Order $order->num Was Process",
+            3 => "Your Order $order->num Was Pickup",
+            4 => "Your Order $order->num Was Delivered Rate Your Order",
+            5 => "Your Order $order->num was Cancelled",
             null => ""
         ];
 

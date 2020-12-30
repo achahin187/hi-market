@@ -31,7 +31,7 @@ class SendNotification {
             "notification" =>
                 [
                     "title" => $this->getMessage($this->order),
-                    "body" => "Sample Notification",
+                    "body" => "Order Updates",
                     "icon" => $this->getIconeOrder($this->order),
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
@@ -137,13 +137,12 @@ class SendNotification {
     public function getMessage($order)
     {
         $messages = [
-            0 => "New Order Created",
-            1 => "Your Order $order->num was Pending",
-            2 => "Your Order $order->num Was Accepted",
-            3 => "Your Order $order->num Was Process",
-            4 => "Your Order $order->num Was Pickup",
-            5 => "Your Order $order->num Was Delivered Rate Your Order",
-            6 => "Your Order $order->num was Cancelled",
+            0 => "New Order Created, waiting for Acceptance",
+            1 => "Your Order $order->num Was Accepted",
+            2 => "Your Order $order->num Was Process",
+            3 => "Your Order $order->num Was Pickup",
+            4 => "Your Order $order->num Was Delivered Rate Your Order",
+            5 => "Your Order $order->num was Cancelled",
             null => ""
         ];
 
