@@ -241,7 +241,7 @@ class ProductController extends Controller
     public function filter()
     {
 
-        return request()->all();
+        return request()->get("supermarket_id");
         $products = Product::whereHas("branches", function ($query) {
 
             $query->where("branches.id", request()->get("supermarket_id"));
