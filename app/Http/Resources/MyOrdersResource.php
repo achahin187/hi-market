@@ -40,7 +40,7 @@ class MyOrdersResource extends JsonResource
                     'Process'      => 2,
                     'Pickup'       => 3,
                     'Deliverd'     => 4,
-                    'Deliverd and Rated'     => 5,
+                    'Deliverd'     => 5,
                     'Canceled'     => 6,
                 ];
 
