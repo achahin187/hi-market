@@ -87,16 +87,16 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::get('getClientOrder', 'OrderController@getClientOrder');
 
-     //Get reasons 
-    Route::get('getReasons','OrderController@getReasons');  
+     //Get reasons
+    Route::get('getReasons','OrderController@getReasons');
 
-    //Cancel Order 
+    //Cancel Order
     Route::post('cancelOrder','OrderController@CancelOrder');
 
-     //cart point  
+     //cart point
     Route::post('cartPoint','CartController@cartpoint');
 
-     //help  
+     //help
     Route::get('getHelp','AuthController@getHelp');
 
     //place order
@@ -117,7 +117,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //category Product Offer
     Route::post('category/product/offer','CategoriesController@categoryProductOffer');
-    
+
     //test notification
     Route::post('test/notification', 'AuthController@testNotification');
 
