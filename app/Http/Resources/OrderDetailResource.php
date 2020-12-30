@@ -77,8 +77,8 @@ class OrderDetailResource extends JsonResource
                     'Process'      => 2,
                     'Pickup'       => 3,
                     'Deliverd'     => 4,
-                    'Received'     => 4,
-                    'Canceled'     => 5,
+                    'Received'     => 5,
+                    'Canceled'     => 6,
                 ];
 
         foreach ($statuses as $index => $status) {
