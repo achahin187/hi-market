@@ -267,7 +267,7 @@ class OrderController extends Controller
             ],
             [
                 "id" => 4,
-                "text" => trans('admin.'.now()->addDays(3)->format("l"))
+                "text" => trans('admin. '.now()->addDays(3)->format("l"))
             ]
 
         ];
@@ -276,7 +276,10 @@ class OrderController extends Controller
         $branch_end_time = Carbon::parse($branch->end_time);
       
         $time = [];
-      
+        
+        if (request()->header('lang') == 'ar') {
+            Carbon::setLocale('ar');
+        }
 
         for ($i = 1; $i <= 24; $i++) {
             $time[] = [
