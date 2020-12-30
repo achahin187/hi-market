@@ -480,7 +480,7 @@
 
                                                     <input type="checkbox" checked style="margin-right:10px;" name="checkedlogo" value="{{$branch->logo}}">
 
-                                                    <input name="logo_image" type="file">
+                                                    <input name="logo" type="file">
 
                                                 </div>
 
@@ -498,7 +498,7 @@
                                                
                                                   <div class="form-group">
                                                 <label for="exampleFormControlFile1">{{ __('admin.logo') }}</label>
-                                                <input name="logo_image" type="file">
+                                                <input name="logo" type="file">
                                               </div>
 
 
