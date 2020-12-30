@@ -621,7 +621,7 @@
 
                                                         <img style="width:80px;height:80px;margin-right:10px;margin-top: 30px;" src="{{ asset('products_images') }}/{{$image}}" class="card-img-top" alt="Course Photo">
 
-                                                        <input type="checkbox" checked style="margin-right:10px;" name="image[]" value="{{$image}}">
+                                                        <input type="checkbox" checked style="margin-right:10px;" name="image" value="{{$image}}">
 
                                                     @endforeach
 
@@ -645,7 +645,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images[]" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="images" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
                                                
                                             </div>
                                            
@@ -659,7 +659,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images[]" multiple type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="images" multiple type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
                                               
                                             </div>
                                           
