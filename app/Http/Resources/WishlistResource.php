@@ -25,7 +25,7 @@ class WishlistResource extends JsonResource
             "percentage" => ($this->offer_price / $this->price) * 100,
             "imagepath" => asset($this->image),
             "flag"=>$this->flag,
-            "images" => $this->images,
+            "images" => asset("product_images/" . $this->images),
             "supermarket_id" => Branch::find(request("supermarket_id"))->id,
             "supermarketname" => Branch::find(request("supermarket_id"))->name,
             "ratings" => $this->ratings ?? 0,
