@@ -55,7 +55,7 @@ class ClientOrdersController extends Controller
                     ->first();
          #store order           
          $order = Order::create([
-                'num' => rand(0,9),
+                'num' => '#'.str_pad(rand() + 1, 8, "0", STR_PAD_LEFT),
                 'order_price'=> $request_data['order_price'],
                 'client_id'  => $request_data['client_id'],
                 'status'     => 0,

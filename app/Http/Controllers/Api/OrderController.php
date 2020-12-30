@@ -114,7 +114,7 @@ class OrderController extends Controller
 
             $order = Order::create([
 
-                'num' => "sdsadf3244",
+                'num' => '#'.str_pad(rand() + 1, 8, "0", STR_PAD_LEFT),
 
                 'client_id' => $client->id,
                 'address' => $order_details["address_id"],
