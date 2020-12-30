@@ -165,7 +165,7 @@
             'process' => 2,
             'pickup' => 3,
             'deliverd' => 4,
-            'received' => 7,
+            'received' => 5,
             'canceled' => 6,
              ];?>
 
@@ -189,7 +189,7 @@
         @endif
 
         @if(auth()->user()->can('order-next'))
-        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 5 ? 'disabled' : '' }}" >Next</a></td>
+        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status == 4 ? 'disabled' : '' }}" >Next</a></td>
         @endif
 
      
