@@ -31,7 +31,7 @@ class ConfirmationOrderResource extends JsonResource
                  'name'    => $this->addressOrder->name ??'',
                  'address' => $this->addressOrder->address ??'',
                  'phone'   => $this->addressOrder->phone ??'',
-                 'time'    => Carbon::parse($this->delvery_date)->format('M d Y H:i A')  ??'' ,
+                 'time'    => Carbon::parse($this->delivery_date)->format('M d Y H:i A')  ??'' ,
             ],
 
             'paymentMethod'=>[
