@@ -627,7 +627,7 @@
 
                                                 @endif
 
-                                                <input name="images[]" multiple type="file">
+                                                <input name="images"  type="file">
 
                                             </div>
                                             <div class="input-group-append">
@@ -645,7 +645,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images" multiple type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="images"  type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
                                                
                                             </div>
                                            
@@ -659,7 +659,7 @@
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="images" multiple type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
+                                                <input name="images"  type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
                                               
                                             </div>
                                           
