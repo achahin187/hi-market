@@ -338,7 +338,7 @@ class ClientController extends Controller
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
             'phone' => 'required|unique:addresses,phone|digits:11',
-            'notes' => ['nullable'],
+            'additional' => ['nullable'],
             'govern' => 'required|string',
             'name' => 'required|string',
             'phone' => 'required|string',
@@ -454,7 +454,7 @@ class ClientController extends Controller
             'lat' => 'string',
             'lon' => 'string',
             'govern' => 'string',
-            'notes' => 'nullable',
+            'additional' => 'nullable',
             'name' => 'string',
             'phone' => 'string',
         ]);

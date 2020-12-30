@@ -29,10 +29,10 @@ class PointLocation {
         $vertices = array(); 
        
         foreach ($polygon as $vertex) {
+       
             
-            $vertices[] = $this->pointStringToCoordinates($vertex); 
+            $vertices[] = $this->pointStringToCoordinates(implode(" ", $vertex)); 
         }
-        dd($polygon);
         // Check if the point sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
             return $vertices;
@@ -45,6 +45,7 @@ class PointLocation {
         for ($i=1; $i < $vertices_count; $i++) {
             $vertex1 = $vertices[$i-1]; 
             $vertex2 = $vertices[$i];
+
             if ($vertex1['y'] == $vertex2['y'] and $vertex1['y'] == $point['y'] and $point['x'] > min($vertex1['x'], $vertex2['x']) and $point['x'] < max($vertex1['x'], $vertex2['x'])) { 
             // Check if point is on an horizontal polygon boundary
                 return $vertex1['x'] and $vertex1['y'];
@@ -78,9 +79,8 @@ class PointLocation {
     }
  
     function pointStringToCoordinates($pointString) {
-        
         $coordinates = explode(" ", $pointString);
-        //dd($coordinates);
+        var_dump( $coordinates[1]);
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  

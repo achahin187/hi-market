@@ -26,13 +26,13 @@ class LocationController extends Controller
               $polygon[]= $getPlygons->lon;
               $polygon[]= $getPlygons->lat;
           }
-           $implodePolygon=[]; 
+           //$implodePolygon=[]; 
           #impload polygon
-          foreach($polygon as $pol ){
-          $implodePolygon[] = chunck($pol);
+         
+          $implodePolygon = array_chunk($polygon,2);
 
-          }
-          dd($implodePolygon);
+            
+          
          
           #new instance 
           $pointLocation = new PointLocation();
@@ -44,8 +44,8 @@ class LocationController extends Controller
           $points = array($implodePoints);
 
           #polygon
-          $polygon = array($implodePolygon);
-
+          $polygon = $implodePolygon;
+          
           #loop and send to check if point in polygon retuen boolean
           foreach($points as $key => $point) {
 
