@@ -618,8 +618,10 @@ class OrderController extends Controller
               
                 $order->client->update(['total_points'=>$total_points]);
             }
- 
-            new SendNotification($order->client->device_token, $order, $data);  
+            if(in_array($order->status, [1,3,4]))
+            {
+                new SendNotification($order->client->device_token, $order, $data);
+            }  
            
         }else
         {
