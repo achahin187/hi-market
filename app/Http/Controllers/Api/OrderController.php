@@ -370,7 +370,7 @@ class OrderController extends Controller
 
         if ($client) {
 
-            $clientOrders = $client->orders;
+            $clientOrders = $client->orders->orderBy('created_at', 'desc');
 
                 return MyOrdersResource::collection($clientOrders);
         } else {
