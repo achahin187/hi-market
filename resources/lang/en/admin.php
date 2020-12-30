@@ -39,6 +39,16 @@ return [
     'city_ar' =>'City Arabic',
     'city_en' =>'City English',
 
+    'Today'=>'Today',
+    'Tomorrow'=>'Tomorrow',
+    'Saturday'=>'Saturday',
+    'Sunday'=>'Sunday',
+    'Monday'=>'Monday',
+    'Tuesday'=>'Tuesday',
+    'Wednesday'=>'Wednesday',
+    'Thursday'=>'Thursday',
+    'Friday'=>'Friday',
+
 
     'area_ar' =>'Area Arabic',
     'area_en' =>'Area English',
