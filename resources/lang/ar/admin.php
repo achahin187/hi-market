@@ -50,7 +50,7 @@ return [
     'Unauthenticated' => 'مستخدم غير معروف',
     'Today'=>'اليوم',
     'Tomorrow'=>'الغد',
-    'Satarday'=>'السبت',
+    'Saturday'=>'السبت',
     'Sunday'=>'الاحد',
     'Monday'=>'الاثنين',
     'Tuesday'=>'الثلاثاء',
