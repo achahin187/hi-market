@@ -547,7 +547,15 @@ class ProductController extends Controller
 
                     // $productimages = explode(',', $product->images);
 
-                    $checkedimages = $request->input('image');
+                    $image = $request->input('image');
+                    
+                    $filename = $image->getClientOriginalName();
+                    $fileextension = $image->getClientOriginalExtension();
+                    $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+                    $image->move('product_images', $file_to_store);
+
+                    $file_names = $file_to_store;
 
                     //$deletedimages = array_diff($productimages, $checkedimages);
 
@@ -581,7 +589,7 @@ class ProductController extends Controller
                     'supermarket_id' => $supermarket,
                     //'branch_id' => $branch,
                     //'subcategory_id' => $subcategory,
-                    'images' => $images,
+                    'images' => $file_names,
                     'barcode' => $barcode,
                     'arab_description' => $arab_description,
                     'eng_description' => $eng_description,
