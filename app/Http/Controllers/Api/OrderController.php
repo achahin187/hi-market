@@ -276,15 +276,13 @@ class OrderController extends Controller
         $branch_end_time = Carbon::parse($branch->end_time);
       
         $time = [];
-     
+        
+       
 
         for ($i = 1; $i <= 24; $i++) {
-
-            $T = $branch_start_time->addHours(1)->format("A");
-
             $time[] = [
                 "id" => $i,
-                "text" =>  $this->getTimeFormate($branch_start_time->addHours(1)->format("g A"),  $T)
+                "text" =>  $branch_start_time->addHours(1)->format("g A"),
             ];
 
             if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->format("g A")) {
@@ -295,19 +293,6 @@ class OrderController extends Controller
         
 
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
-    }
-
-    private function getTimeFormate($branch_time, $T)
-    {
-        if($T == 'AM')
-        {
-            return str_replace($T, 'ص', $branch_time);
-
-        }else{
-
-            return str_replace($T, 'م', $branch_time);
-
-        }
     }
 
     public function getState($branch)
