@@ -272,7 +272,7 @@ class OrderController extends Controller
 
         ];
 
-        $branch_start_time = Carbon::parse($branch->start_time);
+        $branch_start_time = Carbon::parse($branch->start_time)->subHour();
         $branch_end_time = Carbon::parse($branch->end_time);
       
         $time = [];
@@ -284,7 +284,7 @@ class OrderController extends Controller
                 "text" =>  $branch_start_time->addHours(1)->format("g A"),
             ];
 
-            if ($time[$i-1]['text'] == $branch_end_time->format("g A")) {
+            if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->format("g A")) {
                 break;
             }
             
