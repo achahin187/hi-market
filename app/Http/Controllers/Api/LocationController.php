@@ -41,19 +41,21 @@ class LocationController extends Controller
           $implodePoints = implode( " ", [$request->long,$request->lat]);
           
           #points
-          $points = array($implodePoints);
+         // $points = array($implodePoints);
 
           #polygon
-          $polygon = $implodePolygon;
-          
+          //$polygon = $implodePolygon;
+          $points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
+          $polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
+          dd($points ,$polygon );
           #loop and send to check if point in polygon retuen boolean
           foreach($points as $key => $point) {
+      
 
             $data = $pointLocation->pointInPolygon($point, $polygon);
 
           } 
        
-        //dd($data);
         #if data == true
         if ($data == true) {        
 

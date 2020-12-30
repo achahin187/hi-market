@@ -401,6 +401,7 @@ class OrderController extends Controller
                                     'pickup_rate'   => $request->pickup_rate,
                                     'time_rate'     => $request->time_rate,
                                     'comment'       => $request->comment,
+                                    'status'        =>  5,
                                 ]); 
 
                 return response()->json([
