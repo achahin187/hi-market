@@ -54,7 +54,7 @@ class ConfirmationOrderResource extends JsonResource
                 return[
                     'id' => $product->id,
                     'name' => $product->name,
-                    'productImage' => asset('product_images/'.$product->image),
+                    'productImage' => asset('product_images/'.$product->images),
                     //'supermaketId' => $product->branches->first()->id??"",
                     'categoryName' => $product->category->name,
                     'productDesc' => $product->description,
