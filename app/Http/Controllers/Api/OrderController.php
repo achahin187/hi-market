@@ -267,7 +267,7 @@ class OrderController extends Controller
             ],
             [
                 "id" => 4,
-                "text" => trans('admin. '.now()->addDays(3)->format("l"))
+                "text" => trans('admin.'.now()->addDays(3)->format("l"))
             ]
 
         ];
