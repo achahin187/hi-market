@@ -153,7 +153,13 @@ class OrderController extends Controller
 
              }   
             
-            #get comapnt and auto approve the order to it 
+            #if client have points and use points 
+
+            if ($client->points > 0 || $client->points!= null) {
+               $finalClientPoint = $client->points -  $order_details["redeem"];
+               $clien->update(['points'=> $finalClientPoint]);
+            }
+            #get comapny and auto approve the order to it 
             if ($company) { 
             #change to the stauts to status 1             
                 if ($company->status = 1) {

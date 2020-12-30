@@ -25,13 +25,14 @@ class PointLocation {
         $this->pointOnVertex = $pointOnVertex;
    
         // Transform string coordinates into arrays with x and y values
-        $point = $this->pointStringToCoordinates($point);
+        $point = $this->pointStringToCoordinates(implode(" ", $point) );
+        
         $vertices = array(); 
        
         foreach ($polygon as $vertex) {
        
             
-            $vertices[] = $this->pointStringToCoordinates(implode(" ", $vertex)); 
+            $vertices[] = $this->pointStringToCoordinates($vertex); 
         }
         // Check if the point sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
@@ -41,7 +42,7 @@ class PointLocation {
         // Check if the point is inside the polygon or on the boundary
         $intersections = 0; 
         $vertices_count = count($vertices);
- 
+       
         for ($i=1; $i < $vertices_count; $i++) {
             $vertex1 = $vertices[$i-1]; 
             $vertex2 = $vertices[$i];
@@ -63,7 +64,7 @@ class PointLocation {
         } 
         // If the number of edges we passed through is odd, then it's in the polygon. 
         if ($intersections % 2 != 0) {
-            return true;
+            dd( $vertex1['x'] and $vertex1['y']) ;
         } else {
             return false;
         }
@@ -79,9 +80,8 @@ class PointLocation {
     }
  
     function pointStringToCoordinates($pointString) {
-        $implode= implode(" ", $pointString);
-       // dd(explode(" ", $implode));
-        $coordinates = explode(" ", $implode);
+        //$implode= implode(" ", $pointString);
+        $coordinates = explode(" ", $pointString);
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  
