@@ -637,8 +637,11 @@ class OrderController extends Controller
             }
  
 
-
-            new SendNotification($order->client->device_token, $order, $data); 
+            if(in_array($order->status, [1,3,4]))
+            {
+                new SendNotification($order->client->device_token, $order, $data);
+            }  
+            
 
 
         }
