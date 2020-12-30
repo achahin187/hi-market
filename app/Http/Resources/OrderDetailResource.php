@@ -35,7 +35,7 @@ class OrderDetailResource extends JsonResource
                 'totalItems' => $this->getOrder()->count(),
                 'priceItems' =>  $this->getOrder()->sum('price'),
                 'shippingFee'=> 5,
-                'totalPrice' =>  $this->getOrder()->sum('price') + 5 + 10,
+                'totalPrice' =>  $this->total_money + 5 + 10,
                 'estimatedVat'=> 10,
                 'paymentMethod'=>'Cash',
             ],
@@ -92,7 +92,7 @@ class OrderDetailResource extends JsonResource
 
     private function getOrder()
     {
-        return DB::table('order_product')->where('order_id',$this->id);
+        return DB::table('order_product')->('order_id',$this->id);
     }
 
     private function checkRate()
