@@ -117,7 +117,7 @@ class Product extends Model
         LastSevenDays::class,
         LastThirtyDays::class,
         LastSixtyDays::class,
-//        CategoryId::class
+        CategoryId::class
     ];
 
     protected static $logName = 'products';
