@@ -43,24 +43,39 @@ class HomeDataResource extends JsonResource
 
     public function getState()
     {
+       $now = Carbon::now();
+   
+       $start_time =  Carbon::parse($this->start_time)->format('H:i');
+       $end_time   =  Carbon::parse($this->end_time)->format('H:i');
 
-       $time = $this->isBetween($this->start_time, $this->end_time, now());
+      if ($start_time == $end_time) {
+          return 'open';
+      }
 
-       if($time == true){
-        return 'open';
-       }else{
+      elseif($start_time < $end_time)
+      {
 
-        return 'closed';
-       }
+        $between = $now->between($start_time, $end_time);
 
-    }
+            if ($between) {
+                return 'open';
+            }else{
+                return 'closed';
+            }//end if
+      }else{
+            if ($now > $start_time) {
+                return 'open';
+            }
+            elseif($now < $this->end_time){
+                return 'open';
+            }else{
+                return 'closed';
+
+            }//end if
+      }//end if
+
+    }//end function 
          
-    public function isBetween($from, $till, $input) {
-        $fromTime = strtotime($from);
-        $toTime = strtotime($till);
-        $inputTime = strtotime($input);
 
-        return $inputTime >= $fromTime and $inputTime <= $toTime;
-    }
 
 }
