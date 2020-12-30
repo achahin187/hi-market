@@ -193,7 +193,7 @@ class ProductController extends Controller
             }
 
             //$images = implode(',', $image_names);
-        }
+       // }
         // else
         // {
         //     $images = '';
