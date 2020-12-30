@@ -258,7 +258,7 @@ class OrderController extends Controller
             ],
             [
                 "id" => 2,
-                "text" => trans("Tomorrow"),
+                "text" => trans("admin.Tomorrow"),
              
             ],
             [
