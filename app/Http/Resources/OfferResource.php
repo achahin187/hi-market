@@ -18,7 +18,7 @@ class OfferResource extends JsonResource
         return [
             'id' => $this->id,
             "imagepath" => asset("offer_images/" . $this->banner),
-            "imagepath2" => asset("offer_images/" . $this->banner2),
+            "imagePopUp" => asset("offer_images/" . $this->banner2),
         ];
     }
 }

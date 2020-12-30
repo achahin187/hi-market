@@ -26,9 +26,13 @@ class LocationController extends Controller
               $polygon[]= $getPlygons->lon;
               $polygon[]= $getPlygons->lat;
           }
-          
+           $implodePolygon=[]; 
           #impload polygon
-          $implodePolygon = implode(" ", (array)$polygon);
+          foreach($polygon as $pol ){
+          $implodePolygon[] = chunck($pol);
+
+          }
+          dd($implodePolygon);
          
           #new instance 
           $pointLocation = new PointLocation();
@@ -38,6 +42,7 @@ class LocationController extends Controller
           
           #points
           $points = array($implodePoints);
+
           #polygon
           $polygon = array($implodePolygon);
 

@@ -32,7 +32,7 @@ class PointLocation {
             
             $vertices[] = $this->pointStringToCoordinates($vertex); 
         }
- 
+        dd($polygon);
         // Check if the point sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
             return $vertices;
@@ -80,7 +80,7 @@ class PointLocation {
     function pointStringToCoordinates($pointString) {
         
         $coordinates = explode(" ", $pointString);
-        
+        //dd($coordinates);
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  

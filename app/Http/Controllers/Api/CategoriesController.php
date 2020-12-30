@@ -131,7 +131,6 @@ class CategoriesController extends Controller
                 }
             }
 
-
             $offer_price = $product->offer_price;
 
             $product->offer = $product->offer_price;
