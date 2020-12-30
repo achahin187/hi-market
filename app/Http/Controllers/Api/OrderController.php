@@ -278,7 +278,7 @@ class OrderController extends Controller
         $time = [];
       
 
-        for ($i = 1; $i < 24; $i++) {
+        for ($i = 1; $i <= 24; $i++) {
             $time[] = [
                 "id" => $i,
                 "text" =>  $branch_start_time->addHours(1)->format("g A"),
