@@ -117,7 +117,7 @@ class Product extends Model
         LastSevenDays::class,
         LastThirtyDays::class,
         LastSixtyDays::class,
-        CategoryId::class
+//        CategoryId::class
     ];
 
     protected static $logName = 'products';
@@ -197,7 +197,7 @@ class Product extends Model
         return app()->getLocale() == "en" ? $this->eng_spec : $this->arab_spec;
     }
     public function scopeSimilar($query,$categories,$supermarket_id)
-    {   
+    {
        $product =  explode(":", request("products") );
 
         $cart = [];
@@ -205,11 +205,11 @@ class Product extends Model
         foreach (explode(",", request("products")) as $index => $product) {
 
             $cart[]=  explode(":", $product)[0];
-               
+
 
         }
-        
-         
+
+
        $query->whereIn('category_id', $categories)->whereHas("branches",function ($query) use($supermarket_id, $cart){
 
            $query->where("branches.id",$supermarket_id)->whereNotIn('product_id', $cart );
