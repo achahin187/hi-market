@@ -13,6 +13,6 @@ class LastSixtyDays extends Filter
 
     protected function query($builder)
     {
-        return $builder->whereDate("created_at", ">", date("Y-m-d H:i:s", now()->subDays(60)->timestamp));
+        return $builder->whereDate("products.created_at", ">", date("Y-m-d H:i:s", now()->subDays(60)->timestamp));
     }
 }

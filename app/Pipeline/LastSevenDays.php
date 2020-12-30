@@ -14,6 +14,6 @@ class LastSevenDays extends Filter
     protected function query($builder)
     {
 
-        return $builder->whereDate("category_supermarket.created_at",">",date("Y-m-d H:i:s",now()->subDays(7)->timestamp));
+        return $builder->whereDate("products.created_at",">",date("Y-m-d H:i:s",now()->subDays(7)->timestamp));
     }
 }
