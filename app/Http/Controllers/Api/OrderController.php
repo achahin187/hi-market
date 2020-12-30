@@ -155,9 +155,12 @@ class OrderController extends Controller
             
             #if client have points and use points 
 
-            if ($client->points > 0 || $client->points!= null) {
-               $finalClientPoint = $client->points -  $order_details["redeem"];
-               $clien->update(['points'=> $finalClientPoint]);
+            if ($client->total_points > 0 || $client->total_points!= null) {
+
+               $finalClientPoint = $client->total_points - $order_details["redeem"];
+               
+               $client->update(['total_points'=> $finalClientPoint]);
+
             }
             #get comapny and auto approve the order to it 
             if ($company) { 
@@ -357,6 +360,15 @@ class OrderController extends Controller
         if ($getOrder) {
 
             $getOrder->update(['status'=>5, 'resone_id'=>$request->reason_id]);
+
+
+            if ($order_details["redeem"]!= 0) {
+
+               $finalClientPoint = $client->total_points + $order_details["redeem"];
+               
+               $client->update(['total_points'=> $finalClientPoint]);
+
+            }
 
             return $this->returnSuccessMessage('order Canceled successfully', 200);
 
