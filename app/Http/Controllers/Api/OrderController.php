@@ -366,7 +366,7 @@ class OrderController extends Controller
 
                $finalClientPoint = $getOrder->client->total_points + $getOrder->point_redeem;
                
-               $client->update(['total_points'=> $finalClientPoint]);
+               $getOrder->client->update(['total_points'=> $finalClientPoint]);
 
             }
 
