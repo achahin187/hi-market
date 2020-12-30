@@ -81,6 +81,7 @@
                     </div>
 
 
+                     {{-- banner 1 --}}
                     <div class="form-group">
                         <label>{{__('admin.banner')}}</label>
                         <br>
@@ -92,12 +93,35 @@
                         @enderror
 
                         <p style="color: red">Width: 400 px</p>
-                       <p style="color: red"> length: 130 px </p>
+                        <p style="color: red"> length: 130 px </p>
                     </div>
-                    
-                        <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner) }}">
 
-                     <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">{{ __('admin.add_offer') }}</button>
+                        <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner) }}">
+                        <br>
+                        <br>
+                        <br>
+                             {{-- banner 1 --}}
+                    <div class="form-group">
+                        <label>{{__('admin.banner')}}</label>
+                        <br>
+                        <input type="file" name="banner2">
+                        @error('banner')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+
+                        <p style="color: red">Width: 400 px</p>
+                        <p style="color: red"> length: 130 px </p>
+                    </div>
+
+                        <img  style="width: 100px;height: 100px;" src="{{ asset('offer_images/'.$offer->banner2) }}">
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                      <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">{{ __('admin.edit_offer') }}</button>
                   </div>
 </form>                    
