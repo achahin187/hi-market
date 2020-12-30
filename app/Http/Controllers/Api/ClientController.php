@@ -238,8 +238,9 @@ class ClientController extends Controller
                 'password' => Hash::make($request->new_password),
                 'device_token'=>$request->device_token
             ]);
-
-            return $this->returnData(['client'], [$client], 'password updated successfully');
+            
+             $token = $client->createToken("hi-market")->accessToken;
+            return $this->returnData(['client', 'token'], [$client, $token], 'password updated successfully');
 
         } else {
 
