@@ -39,14 +39,20 @@ class ProductController extends Controller
     {
         $validation = \Validator::make(request()->all(), [
             "supermarket_id" => "required|exists:branches,id",
-            "category_id" => "required|exists:categories,id"
+            "category_id" => "required"
         ]);
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
         $product_count = Product::whereHas("branches", function ($query) {
             $query->where("branches.id", request("supermarket_id"));
-        })->where("category_id", request("category_id"))->where("status","active")->filter()->count();
+        })->where(function ($q)
+        {
+            if(request("category_id") != 0 && \request("category_id"))
+            {
+                $q->where("category_id",\request("category_id"));
+            }
+        })->where("status","active")->where("flag",\request("flag",0))->filter()->count();
         return $this->returnData(["product_count"], [$product_count]);
     }
 
