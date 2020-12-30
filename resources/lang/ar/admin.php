@@ -48,6 +48,7 @@ return [
     'address' => 'العنوان',
     'add_client'=>'اضافة عميل جديد',
     'Unauthenticated' => 'مستخدم غير معروف',
+    'Today'=>'اليوم',
 
     'admin_managment'=>'الادارة',
     'location_managment' => 'ادارة الامكان',

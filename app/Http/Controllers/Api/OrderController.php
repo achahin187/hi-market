@@ -254,20 +254,20 @@ class OrderController extends Controller
         $days = [
             [
                 "id" => 1,
-                "text" => "Today",
+                "text" => trans("Today"),
             ],
             [
                 "id" => 2,
-                "text" => "Tomorrow",
+                "text" => trans("Tomorrow"),
              
             ],
             [
                 "id" => 3,
-                "text" => now()->addDays(2)->format("l")
+                "text" => trans(now()->addDays(2)->format("l"))
             ],
             [
                 "id" => 4,
-                "text" => now()->addDays(3)->format("l")
+                "text" => trans(now()->addDays(3)->format("l"))
             ]
 
         ];
