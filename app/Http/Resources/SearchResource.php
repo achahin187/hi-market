@@ -23,7 +23,7 @@ class SearchResource extends JsonResource
             "price" => $this->getProduct()->price ?? 0,
             "offer_price" => $this->getProduct()->offer_price ?? 0,
             "rate" => $this->getProduct()->rate ?? 0,
-            "images" => asset("images/" . $this->getProduct()->images),
+            "images" => asset("product_images/" . $this->getProduct()->images),
             "points" => $this->getProduct()->points ?? 0,
             "category" => $this->getProduct()->category->name ?? "",
             "supermarketId" => $this->getBranch()->id,
