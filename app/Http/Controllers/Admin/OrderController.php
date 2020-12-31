@@ -615,7 +615,7 @@ class OrderController extends Controller
 
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
-                $total_points = $order->client->total_points + $getClientPoints+ $this->totalOfferPoints($order) ;
+                $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($order) ;
               
                 $order->client->update(['total_points'=>$total_points]);
             }
@@ -633,7 +633,7 @@ class OrderController extends Controller
               
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
-                $total_points = $order->client->total_points - $getClientPoints;
+                $total_points = $order->client->total_points - $getClientPoints - $this->totalOfferPoints($order) ;
                 $order->client->update(['total_points'=>$total_points]);
             }
  
