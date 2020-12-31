@@ -68,10 +68,12 @@ class CartController extends Controller
             if ($offer->source == 'Branch') {
 
                 $promocodeId = $request->promocode;
-                $offer = Offer::CheckPromoCode($request->promoCode)->WhereHas('branches', function ($q) use($promocodeId){
+
+                $getoffer = Offer::CheckPromoCode($request->promoCode)->WhereHas('branches', function ($q) use($promocodeId){
                         $q->where('branch_offer.branch_id', $promocodeId);
                 })->first();
-                    dd($offer);
+
+                dd($getoffer);
             }
 
         } catch (\Exception $e) {
