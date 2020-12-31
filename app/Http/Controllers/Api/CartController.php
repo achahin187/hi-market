@@ -65,19 +65,19 @@ class CartController extends Controller
         try {
 
              $offer = Offer::CheckPromoCode($request->promoCode)->firstOrFail();
-             
+
             if ($offer->source == 'Branch') {
 
                 $requestOffer= $request->supermarket_id;
 
-                $offer = Offer::WhereHas('branches', function($q) use($requestOffer){
+                $getOffer = Offer::WhereHas('branches', function($q) use($requestOffer){
 
                         $q->where('branch_offer.branch_id', $requestOffer);
 
                 })->first();
 
                 //dd($offer, $request->promoCode, $request->supermarket_id);
-            dd($offer);
+            dd($getOffer);
             }
 
         } catch (\Exception $e) {
