@@ -80,11 +80,11 @@ class ProductController extends Controller
         //     $offer->imagepath = asset('images/' . $offer->image);
         // }
 
-        $data = $this->checkPolygon($request->lat, $request->long);
+        // $data = $this->checkPolygon($request->lat, $request->long);
 
-        $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-
-        dd($getPolygon->area);
+        // $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+        // $getClientBranchOfPolygon = Branch::Where('city_id', $testPolygon->area->areacity->id)->get();
+      
 
         if (auth("client-api")->check()) {
             $client = auth("client-api")->user();
