@@ -614,7 +614,7 @@ class OrderController extends Controller
             if ($order->status == 4) {
 
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
-                dd($this->totalOfferPoints($order));
+              
                 $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($order) ;
               
               
@@ -622,7 +622,7 @@ class OrderController extends Controller
             }
             if(in_array($order->status, [1,3,4]))
             {
-                //dd('bye');
+               
                 new SendNotification($order->client->device_token, $order, $data);
             }  
            
