@@ -8,6 +8,7 @@ use App\Http\Resources\CartResource;
 use App\Http\Resources\PromocodeResource;
 use Illuminate\Http\Request;
 use App\Models\Offer;
+use App\Models\Setting;
 use App\Models\Point;
 use App\Http\Traits\GeneralTrait;
 
@@ -203,8 +204,9 @@ class CartController extends Controller
         #supermarket_id 
         #address_id
         $validation = \Validator::make(\request()->all(), [
-            'supermarket_id' => 'required',
-            'address_id'     => 'required',
+            'supermarket_id'         => 'required',
+            'address_id'             => 'required',
+            'total_cart'             => 'required',
         ]);
 
         if ($validation->fails()) {
@@ -212,10 +214,25 @@ class CartController extends Controller
         }
 
         $client = Auth('client-api')->user();
+        $deliveryOffer  = Offer::Where('type', 'free delivery')->where('status', 1)->first();
         $points = Point::orderBy('points', 'desc')
         ->Where('points',$client->total_points)
         ->orWhere('points','<=',$client->total_points)
         ->first();
+        if ($deliveryOffer) {
+            
+            if ($deliveryOffer->total_order_money <= $request->total_cart) {
+                $shipping = 0;
+            }else{
+
+                $shipping = Setting::first()->delivery;
+ 
+                
+            }
+        }else{
+
+                $shipping = Setting::first()->delivery;
+        }
 
         return [
                     'status' => true,
@@ -226,7 +243,7 @@ class CartController extends Controller
                         'Value'=>$points->value??0, 
                         'type'=>$points->type??0,
                         'vat' => 5,
-                        'shippingFee'=>10, 
+                        'shippingFee'=>$shipping, 
 
                     ],
                 ];
