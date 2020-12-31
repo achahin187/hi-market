@@ -20,7 +20,7 @@ class OrderRateResource extends JsonResource
             'pickup_rate' => $request->pickup_rate,
             'time_rate' => $request->time_rate,
             'comment' => $request->comment,
-            'status' => 'Deliverd and Rated',
+            
         ];
     }
 }
