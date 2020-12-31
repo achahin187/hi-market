@@ -89,7 +89,13 @@ class ConfirmationOrderResource extends JsonResource
 
            if ($offer) {
 
-                return $offer->value;
+            if ($this->total_before >= $offer->total_order_money) {
+                                 
+                   return strval($offer->value);
+                 }else{
+                    return '';
+                 }
+                
                
            }elseif($offerBranches){
 

@@ -64,7 +64,7 @@
                       <div class="tab-pane fade {{ $offer->type == 'product Offer' ?'show active':'hidden'}}" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                           @include('Admin.offers._product_offers_edit') 
                       </div>
-                      <div class="tab-pane fade {{ $offer->type == 'free product' ?'show active':'hidden'}}" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                      <div class="tab-pane fade {{ $offer->type == 'free delivery' ?'show active':'hidden'}}" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
                            @include('Admin.offers._product_free_edit') 
                       </div>
                       <div class="tab-pane fade {{ $offer->type == 'point' ?'show active':'hidden'}}" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">

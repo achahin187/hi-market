@@ -330,7 +330,7 @@ class OffersController extends Controller
      * @return \Illuminate\Http\Response
      */
     private function editPromocode($request, $offer)
-    {  
+    {   
         
         $request_data = collect($request)->except('branch_id');
         
@@ -381,11 +381,11 @@ class OffersController extends Controller
     * @return \Illuminate\Http\Response
     */
     private function editPoint($request, $offer)
-    {
+    { 
         $request_data     = collect($request)->except('branch_id');
-
         $create_promocode =   $offer->update($request_data->toArray());
         if ($request['source'] == 'Branch') {
+        dd('fea');
               $offer->branches()->sync($request['branch_id']);
             // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
 
