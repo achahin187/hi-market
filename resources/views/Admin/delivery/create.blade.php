@@ -96,18 +96,18 @@
                                     <div class="form-group">
                                         <label>{{ __('admin.delivery_company') }} </label>
                                         <select class=" @error('company_id') is-invalid @enderror select2" name="company_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($driver) && Auth('web')->user()->hasRole('super_admin'))
-                                                @foreach($companies as $company)
+                                            @if(isset($driver) && Auth('web')->user()->hasRole('delivery_admin'))
+                                                @foreach($companies->where('id',Auth('web')->user()->company_id) as $company)
 
                                                         <option <?php if($company->id == $driver->company->id) echo 'selected'; ?> value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
 
 
                                                 @endforeach
-                                            @elseif(Auth('web')->user()->hasRole('delivery_admin') )
+                                            @else
                                                 @foreach($companies as $company)
 
 
-                                                        <option value="{{  Auth('web')->user()->company_id }}" >{{  Auth('web')->user()->companycompany['name_'.App()->getLocale()] }}
+                                                        <option value="{{  $company_id }}" >{{  $company['name_'.App()->getLocale()] }}
                                                             </option>
 
 
