@@ -253,7 +253,7 @@ $settings = App\Models\Setting::all()->first();
                                    {{-- delivery-admin --}}
                                 @if(auth()->user()->can('delivery-list'))
                                     <li class="nav-item">
-                                        <a href="{{route('delivery-admins.index')}}" class="nav-link">
+                                        <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>
                                                   {{__('admin.delivery_management')}}
