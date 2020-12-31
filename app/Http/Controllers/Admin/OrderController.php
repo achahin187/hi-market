@@ -649,7 +649,7 @@ class OrderController extends Controller
         return back();
     }
 
-     private function totalOfferPoints()
+     private function totalOfferPoints($order)
     {
         
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
