@@ -69,43 +69,144 @@ class ProductController extends Controller
         $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
-
-        // foreach ($supermarkets as $supermarket) {
-        //     $supermarket->imagepath = $supermarket->image ?  asset('images/' . $supermarket->image) : asset("images/default.svg");
-        //     $supermarket->logopath = asset('images/' . $supermarket->logo);
-        //     //$supermarket->town = $supermarket->city->name;
-        // }
-
-        // foreach ($offers as $offer) {
-        //     $offer->imagepath = asset('images/' . $offer->image);
-        // }
-
-        // $data = $this->checkPolygon($request->lat, $request->long);
-
-        // $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-        // $getClientBranchOfPolygon = Branch::Where('city_id', $testPolygon->area->areacity->id)->get();
       
 
-        if (auth("client-api")->check()) {
-            $client = auth("client-api")->user();
+        $data = $this->checkPolygon($request->lat, $request->long);
+        if ($data) {
+           
+     
 
-            if ($client) {
+            $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+            $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
+                                   ->where('status', 'active')
+                                   ->orderBy('priority', 'asc')
+                                   ->limit(20)
+                                   ->get();
+          
 
-                return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+            if (auth("client-api")->check()) {
+                $client = auth("client-api")->user();
+
+                if ($client) {
+
+                    $client->update([
+                        'lat' => $request->lat,
+                        'lon' => $request->long,
+                    ]);
+
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
 
 
+                } else {
+
+                    return $this->returnError(305, 'there is no client found');
+                }
             } else {
+                Udid::where("body", $request->header("udid"))->updateOrCreate([
+                    "body" => $request->header("udid"),
 
-                return $this->returnError(305, 'there is no client found');
-            }
-        } else {
-            Udid::where("body", $request->header("udid"))->updateOrCreate([
-                "body" => $request->header("udid"),
+                ]);
 
-            ]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+            }//end if 
 
-            return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+        }else{
+
+            $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
+
+            if (auth("client-api")->check()) {
+                $client = auth("client-api")->user();
+
+                if ($client) {
+
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+
+                } else {
+
+                    return $this->returnError(305, 'there is no client found');
+                }
+            } else {
+                Udid::where("body", $request->header("udid"))->updateOrCreate([
+                    "body" => $request->header("udid"),
+
+                ]);
+
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+            }//end if 
         }
+    }
+
+    public function homeSearch(Request $request)
+    {
+
+      
+           
+     
+
+
+            if (auth("client-api")->check()) {
+
+                $client = auth("client-api")->user();
+
+                if ($client) {
+
+
+                    $data = $this->checkPolygon($client->lat, $client->lon);
+
+                    $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                    $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
+                                           ->where('status', 'active')
+                                           ->orderBy('priority', 'asc')
+                                           ->limit(20)
+                                           ->get();
+                  
+                    $client->update([
+                        'lat' => $request->lat,
+                        'lon' => $request->long,
+                    ]);
+
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+
+                } else {
+
+                    return $this->returnError(305, 'there is no client found');
+                }
+            } else {
+                Udid::where("body", $request->header("udid"))->updateOrCreate([
+                    "body" => $request->header("udid"),
+
+                ]);
+
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+            }//end if 
+
+        }else{
+
+            $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
+
+            if (auth("client-api")->check()) {
+                $client = auth("client-api")->user();
+
+                if ($client) {
+
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+
+                } else {
+
+                    return $this->returnError(305, 'there is no client found');
+                }
+            } else {
+                Udid::where("body", $request->header("udid"))->updateOrCreate([
+                    "body" => $request->header("udid"),
+
+                ]);
+
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+            }//end if 
+        
     }
 
     private function getOffer()
