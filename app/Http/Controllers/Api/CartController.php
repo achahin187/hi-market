@@ -70,12 +70,12 @@ class CartController extends Controller
                 $promocode = $request->promoCode;
                 $supermarket_id = $request->supermarket_id;
 
-                $getoffer = Offer::WhereHas('branches', function ($q) use($supermarket_id){
+                $offer = Offer::WhereHas('branches', function ($q) use($supermarket_id){
                         $q->where('branch_offer.branch_id', $supermarket_id);
                          
                 })->where('promocode_name', $promocode)->first();
 
-                dd($getoffer);
+                
             }
 
         } catch (\Exception $e) {
