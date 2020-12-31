@@ -70,7 +70,7 @@ class CartController extends Controller
 
                 $offer = Offer::WhereHas('branches', function($q) use($requestOffer){
 
-                        $q->where('branch_id', $requestOffer);
+                        
 
                 })->first();
 
