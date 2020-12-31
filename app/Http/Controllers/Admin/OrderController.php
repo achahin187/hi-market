@@ -617,7 +617,7 @@ class OrderController extends Controller
                 dd($this->totalOfferPoints($order));
                 $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($order) ;
               
-                dd('hi');
+              
                 $order->client->update(['total_points'=>$total_points]);
             }
             if(in_array($order->status, [1,3,4]))
