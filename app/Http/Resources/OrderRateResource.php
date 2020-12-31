@@ -13,7 +13,7 @@ class OrderRateResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    {   
         return [
             'delivery_rate' => $request->delivery_rate,
             'seller_rate' => $request->seller_rate,
