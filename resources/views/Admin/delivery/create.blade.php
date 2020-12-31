@@ -107,7 +107,7 @@
                                                 @foreach($companies as $company)
 
 
-                                                        <option value="{{  $company_id }}" >{{  $company['name_'.App()->getLocale()] }}
+                                                        <option value="{{  $company->id }}" >{{  $company['name_'.App()->getLocale()] }}
                                                             </option>
 
 
