@@ -64,7 +64,7 @@ class PointLocation {
         } 
         // If the number of edges we passed through is odd, then it's in the polygon. 
         if ($intersections % 2 != 0) {
-            dd( $vertex1['x'] and $vertex1['y']) ;
+            dd( $vertex1['x'] ) ;
         } else {
             return false;
         }

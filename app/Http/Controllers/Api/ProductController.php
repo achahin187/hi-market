@@ -127,7 +127,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
-                "status" => "Product Not Found"
+                "msg" => "Product Not Found"
             ], 404);
         }
 

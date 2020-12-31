@@ -49,7 +49,7 @@ class MyOrdersResource extends JsonResource
                 return $index;
             }
 
-        } 
+        }  
 
     } //end function 
 
