@@ -92,12 +92,6 @@
                                         @enderror
                                     </div>
 
-                                   {{--  <div class="form-group">
-                                        <label class="form-control-label" for="input-password-confirmation">{{ __('admin.Confirm New Password') }}</label>
-                                        <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-lg" placeholder="{{ __('admin.Confirm New Password') }}" >
-                                    </div>
- --}}
-
 
                                     <div class="form-group">
                                         <label>{{ __('admin.delivery_company') }} </label>
@@ -105,17 +99,16 @@
                                             @if(isset($driver))
                                                 @foreach($companies as $company)
 
-                                                    
-
                                                         <option <?php if($company->id == $driver->company->id) echo 'selected'; ?> value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
 
 
                                                 @endforeach
-                                            @else
+                                            @elseif(Auth('web')->user()->hasRole('delivery_admin') )
                                                 @foreach($companies as $company)
 
 
-                                                        <option value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
+                                                        <option value="{{  Auth('web')->user()->company_id }}" >{{  Auth('web')->user()->companycompany['name_'.App()->getLocale()] }}
+                                                            </option>
 
 
                                                 @endforeach
