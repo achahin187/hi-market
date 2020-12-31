@@ -515,7 +515,7 @@ $settings = App\Models\Setting::all()->first();
                                 @if(auth()->user()->hasRole('delivery_admin'))
 
                                     <li class="nav-item">
-                                        <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}" class="nav-link " id="click-form">
+                                        <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}" class="nav-link " >
                                             <i class="nav-icon fas fa-tachometer-alt"></i>
                                             <p>
                                                 {{ __('admin.orders') }}

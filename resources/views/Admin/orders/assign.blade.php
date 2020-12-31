@@ -68,7 +68,7 @@
      
                                                             @foreach(\App\User::role(['driver'])->get() as $driver)
 
-                                                                <option <?php if($order->user->id == $driver->id) echo 'selected'; ?> value="{{ $driver->id }}">
+                                                                <option  value="{{ $driver->id }}">
 
                                                                         {{ $driver->name }}
 
