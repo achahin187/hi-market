@@ -34,12 +34,12 @@ class DeliveryController extends Controller
     {
         if(Auth('web')->user()->hasRole('super_admin')){
 
-            $delivery = User::role(['delivery'])
+            $delivery = User::role(['driver'])
                         ->orderBy('id', 'desc')
                         ->get();
             }else{
 
-            $delivery = User::role(['delivery'])
+            $delivery = User::role(['driver'])
                         ->where('company_id', $request->company_id)
                         ->orderBy('id', 'desc')
                         ->get();    
@@ -55,7 +55,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $roles = Role::whereIn('eng_name',['delivery'])->get();
+        $roles = Role::whereIn('eng_name',['driver'])->get();
         $companies = DeliveryCompany::all();
         return view('Admin.delivery.create',compact('roles','companies'));
     }
