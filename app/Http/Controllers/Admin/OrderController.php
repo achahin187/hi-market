@@ -102,7 +102,7 @@ class OrderController extends Controller
             {
                 if (auth()->user()->hasAnyRole(['super_admin'])) {
                     # code...
-                    $orders = Order::orderBy('id', 'desc')->paginate(10);
+                    $orders = Order::orderBy('id', 'desc')->get();
                 }else{
 
                 return redirect()->back()->withStatus('You  dont  have permission ');
