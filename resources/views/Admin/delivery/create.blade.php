@@ -96,7 +96,7 @@
                                     <div class="form-group">
                                         <label>{{ __('admin.delivery_company') }} </label>
                                         <select class=" @error('company_id') is-invalid @enderror select2" name="company_id" data-placeholder="Select a State" style="width: 100%;" required>
-                                            @if(isset($driver))
+                                            @if(isset($driver) && Auth('web')->user()->hasRole('super_admin'))
                                                 @foreach($companies as $company)
 
                                                         <option <?php if($company->id == $driver->company->id) echo 'selected'; ?> value="{{ $company->id }}">{{ $company['name_'.App()->getLocale()] }}</option>
