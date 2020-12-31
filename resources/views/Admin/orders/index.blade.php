@@ -193,7 +193,7 @@
         @endif
 
      
-        @if($order->status >= $setting->cancellation || auth()->user()->can('order-cancel'))
+        @if(in_array($order->status,[0,1,2,3,4]) || auth()->user()->can('order-cancel'))
         <td>
 
 
