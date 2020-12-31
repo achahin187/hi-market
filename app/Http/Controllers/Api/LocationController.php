@@ -24,15 +24,22 @@ class LocationController extends Controller
           $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
           {
-              $polygon[]= $getPlygons->lon .' '.$getPlygons->lat;
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
                
           }
-         
-           //$implodePolygon=[]; 
-          #impload polygon
-         
-         // $implodePolygon = array_chunk($polygon,2);
 
+
+          //dd($polygons);
+
+          $Finalpolygons=[];
+          foreach ($polygons as $index =>$polygon)
+          {
+             $Finalpolygons[] = $polygon;
+               
+          }
+
+
+            //dd($Finalpolygon);
        
           #new instance 
           $pointLocation = new PointLocation();
@@ -40,23 +47,24 @@ class LocationController extends Controller
           #impload implode Points
           $implodePoints = implode( " ", [$request->long,$request->lat]);
 
-          $implodePolygon = implode( " ", $polygon);
+          //$implodePolygon = implode( " ", $Finalpolygon);
           #points
           $point = array($implodePoints);
 
       
-
-          $data = $pointLocation->pointInPolygon($point, $polygon);
-
+          foreach ($Finalpolygons as  $Finalpolygon) {
          
-        
-       
+           $data = $pointLocation->pointInPolygon($point, $Finalpolygon);
+
+          }
+
         #if data == true
-        if ($data == true || $data) {        
+        if ($data == true) {        
 
-          $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+          $testPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+          dd($testPolygon->area->areacity->id);
           $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
-
+         
                   return response()->json([
                     "status" => true,
                     'msg' =>'location is valid',

@@ -22,18 +22,23 @@ class PointLocation {
     }
  
     function pointInPolygon($point, $polygon, $pointOnVertex = true) {
+
+
+        // print_r($point);
+        // print_r($polygon);
+
         $this->pointOnVertex = $pointOnVertex;
    
         // Transform string coordinates into arrays with x and y values
         $point = $this->pointStringToCoordinates(implode(" ", $point) );
-        
+       
         $vertices = array(); 
        
         foreach ($polygon as $vertex) {
-       
-            
+        
             $vertices[] = $this->pointStringToCoordinates($vertex); 
         }
+        
         // Check if the point sits exactly on a vertex
         if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) {
             return $vertices;
@@ -64,7 +69,7 @@ class PointLocation {
         } 
         // If the number of edges we passed through is odd, then it's in the polygon. 
         if ($intersections % 2 != 0) {
-            dd( [$vertex1['x'] , $vertex1['y']]) ;
+            return  [$vertex1['x'] , $vertex1['y'] ] ;
         } else {
             return false;
         }
@@ -81,7 +86,9 @@ class PointLocation {
  
     function pointStringToCoordinates($pointString) {
         //$implode= implode(" ", $pointString);
+
         $coordinates = explode(" ", $pointString);
+
         return array("x" => $coordinates[0], "y" => $coordinates[1]);
     }
  

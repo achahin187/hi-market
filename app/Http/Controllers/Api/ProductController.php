@@ -70,17 +70,21 @@ class ProductController extends Controller
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
 
+        // foreach ($supermarkets as $supermarket) {
+        //     $supermarket->imagepath = $supermarket->image ?  asset('images/' . $supermarket->image) : asset("images/default.svg");
+        //     $supermarket->logopath = asset('images/' . $supermarket->logo);
+        //     //$supermarket->town = $supermarket->city->name;
+        // }
 
+        // foreach ($offers as $offer) {
+        //     $offer->imagepath = asset('images/' . $offer->image);
+        // }
 
-        foreach ($supermarkets as $supermarket) {
-            $supermarket->imagepath = $supermarket->image ?  asset('images/' . $supermarket->image) : asset("images/default.svg");
-            $supermarket->logopath = asset('images/' . $supermarket->logo);
-            //$supermarket->town = $supermarket->city->name;
-        }
+        $data = $this->checkPolygon($request->lat, $request->long);
 
-        foreach ($offers as $offer) {
-            $offer->imagepath = asset('images/' . $offer->image);
-        }
+        $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+
+        dd($getPolygon->area);
 
         if (auth("client-api")->check()) {
             $client = auth("client-api")->user();
@@ -264,38 +268,42 @@ class ProductController extends Controller
 
     private function checkPolygon($lat, $lon)
     {
-         $getPlygons = Polygon::all();
-          #polygon array
-          $polygon=[];
+         
+          $getPlygons = Polygon::all();
+
+          #polygon array        
+          $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
           {
-              $polygon[]= $getPlygons->lon;
-              $polygon[]= $getPlygons->lat;
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+               
           }
 
-          #impload polygon
-          $implodePolygon = implode(" ", (array)$polygon);
+          $Finalpolygons=[];
+          foreach ($polygons as $index =>$polygon)
+          {
+             $Finalpolygons[] = $polygon;
+               
+          }
 
-          #new instance
+          #new instance 
           $pointLocation = new PointLocation();
 
           #impload implode Points
           $implodePoints = implode( " ", [$lon,$lat]);
 
-
+          //$implodePolygon = implode( " ", $Finalpolygon);
           #points
-          $points = array($implodePoints);
-          #polygon
-          $polygon = array($implodePolygon);
+          $point = array($implodePoints);
 
-          #loop and send to check if point in polygon retuen boolean
-          foreach($points as $key => $point) {
+      
+          foreach ($Finalpolygons as  $Finalpolygon) {
+         
+           $data = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
-            $data = $pointLocation->pointInPolygon($point, $polygon);
+          }
 
-           }
-
-
-           return $data;
+        #if data == true
+        return $data;
     }//end function
 }
