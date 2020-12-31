@@ -218,11 +218,7 @@ class OrderController extends Controller
 
      public function assignorder($order_id)
     {
-         $order = Order::find($order_id);
-
-          /*        $driver_team = Team::where('eng_name','drivers')->first();
-
-        $drivers = $driver_team->users;*/
+        $order = Order::find($order_id);
 
         if($order)
         {

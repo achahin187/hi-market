@@ -66,7 +66,7 @@
                                                     <label>assign driver</label>
                                                   <select class="@error('driver') is-invalid @enderror select2" name="driver" data-placeholder="Select a State" style="width: 100%;" required>
      
-                                                            @foreach(\App\User::role(['driver'])->get() as $driver)
+                                                            @foreach(\App\User::role(['driver'])->where('company_id', request()->company_id)->get() as $driver)
 
                                                                 <option  value="{{ $driver->id }}">
 
