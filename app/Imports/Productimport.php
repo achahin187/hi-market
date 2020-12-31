@@ -8,19 +8,20 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Carbon\Carbon;
+use DB;
 class Productimport implements ToModel, WithHeadingRow
 {
    
     public function model(array $row)
     {
     	
-        return new Product([
-            'name_ar' 			    => $row['name_ar'],
-            'name_en' 			    => $row['name_en'],
-            'eng_description'       => $row['eng_description'],
-            'arab_description'      => $row['arab_description'],
-            'eng_spec'     			=> $row['eng_spec'],
-            'arab_spec'     		=> $row['arab_spec'],
+        $product =  Product::create([
+            'name_ar' 			    => $row['product_arabic_name'],
+            'name_en' 			    => $row['product_english_name'],
+            'eng_description'       => $row['english_description'],
+            'arab_description'      => $row['arabic_description'],
+            'eng_spec'     			=> $row['english_spec'],
+            'arab_spec'     		=> $row['arabic_spec'],
             'price'     			=> $row['price'],
             'offer_price'     		=> $row['offer_price'],
             'rate'     				=> $row['rate'],
@@ -35,10 +36,20 @@ class Productimport implements ToModel, WithHeadingRow
             'status'     			=> $row['status'],
             'start_date'    	 	=> $this->ParseDate($row['start_date']),
             'end_date'     			=> $this->ParseDate($row['end_date']),
-            'exp_date'    			=> $this->ParseDate($row['exp_date']),
-            'production_date'     	=> $this->ParseDate($row['production_date']),
+            //'exp_date'    			=> $this->ParseDate($row['exp_date']),
+            //'production_date'     	=> $this->ParseDate($row['production_date']),
             'barcode'     			=> $row['barcode'],
         ]);
+      
+        
+          $branches = explode(',', $row['branches_id']);
+          foreach ($branches as $branch) {
+              DB::table('product_supermarket')->insert([
+                'product_id' => $product->id,
+                'branch_id'  => $branch,
+              ]);
+          }
+        return $product;
     }
 
 

@@ -39,8 +39,8 @@ class CreateProductsTable extends Migration
             $table->string('status')->default('active');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->dateTime('exp_date');
-            $table->dateTime('production_date');
+            $table->dateTime('exp_date')->nullable();
+            $table->dateTime('production_date')->nullable();
             $table->string('barcode');
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
