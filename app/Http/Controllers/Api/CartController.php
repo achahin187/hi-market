@@ -68,7 +68,7 @@ class CartController extends Controller
             if ($offer->source == 'Branch') {
 
                 $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->first();
-                dd($offer);
+                dd($offer, $request->promoCode, $request->supermarket_id);
             }
 
         } catch (\Exception $e) {
