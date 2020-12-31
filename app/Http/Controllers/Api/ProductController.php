@@ -139,74 +139,74 @@ class ProductController extends Controller
 
     public function homeSearch(Request $request)
     {
-
-      
-           
-     
-
-
+            $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
             if (auth("client-api")->check()) {
 
                 $client = auth("client-api")->user();
 
                 if ($client) {
-
 
                     $data = $this->checkPolygon($client->lat, $client->lon);
 
-                    $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-                    $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
-                                           ->where('status', 'active')
-                                           ->orderBy('priority', 'asc')
-                                           ->limit(20)
-                                           ->get();
-                  
-                    $client->update([
-                        'lat' => $request->lat,
-                        'lon' => $request->long,
-                    ]);
+                    if ($data) {
+                        
 
-                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                        $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                      // dd($request->name);
+                        $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
+                                               ->where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+                      
 
+                        return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+                    }else{
+                   
+                          $supermarkets = Branch::where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+
+                          return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+                    }//end of data
 
                 } else {
 
-                    return $this->returnError(305, 'there is no client found');
-                }
+                    $supermarkets = Branch::where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+
+                }//emd if client
             } else {
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
 
                 ]);
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
-            }//end if 
-
-        }else{
-
-            $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
-
-            if (auth("client-api")->check()) {
-                $client = auth("client-api")->user();
-
-                if ($client) {
-
-                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
-
-
-                } else {
-
-                    return $this->returnError(305, 'there is no client found');
-                }
-            } else {
-                Udid::where("body", $request->header("udid"))->updateOrCreate([
-                    "body" => $request->header("udid"),
-
-                ]);
+                 $supermarkets = Branch::where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
-            }//end if 
+            }//end if  auth
+
         
+
     }
 
     private function getOffer()
