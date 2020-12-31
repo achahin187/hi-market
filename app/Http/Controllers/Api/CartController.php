@@ -65,6 +65,7 @@ class CartController extends Controller
         try {
 
              $offer = Offer::CheckPromoCode($request->promoCode)->firstOrFail();
+             
             if ($offer->source == 'Branch') {
 
                 $requestOffer= $request->supermarket_id;
@@ -76,12 +77,12 @@ class CartController extends Controller
                 })->first();
 
                 //dd($offer, $request->promoCode, $request->supermarket_id);
+            dd($offer);
             }
 
         } catch (\Exception $e) {
             return $this->returnError(404, "Offer Not Found");
         }
-            dd($offer);
         if ( $offer->promocode_name == $request->promoCode ) {
             
              if ($offer->source == 'Branch') {
