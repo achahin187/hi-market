@@ -87,7 +87,7 @@ class CartController extends Controller
             
              if ($offer->source == 'Branch') {
 
-                 $promo_result =  $this->branchType($request->supermarket_id, $request->supermarket_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+                 $promo_result =  $this->branchType($request->supermarket_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
                 
                 
 
@@ -105,13 +105,12 @@ class CartController extends Controller
     }//end function
 
     #check branch
-    private function branchType($branch, $offer_branch, $value, $dicount_on, $promocode_type, $total_money, $deliver_money)
+    private function branchType($branch, $value, $dicount_on, $promocode_type, $total_money, $deliver_money)
     {
-        if ($branch == $offer_branch) {
-                dd('aef');
+       
             return $this->checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money);
           
-        }
+        
 
         
     }
