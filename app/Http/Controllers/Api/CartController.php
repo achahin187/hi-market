@@ -77,6 +77,7 @@ class CartController extends Controller
             }
 
         } catch (\Exception $e) {
+            dd($e);
             return $this->returnError(404, "Offer Not Found");
         }
         
