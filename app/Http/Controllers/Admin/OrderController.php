@@ -612,9 +612,10 @@ class OrderController extends Controller
         {
             $order->update(['status'=>$request->order_status + 1]);
             if ($order->status == 4) {
+
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
-                $total_points = $order->client->total_points + $getClientPoints;
+                $total_points = $order->client->total_points + $getClientPoints+ $this->totalOfferPoints($order) ;
               
                 $order->client->update(['total_points'=>$total_points]);
             }
@@ -646,6 +647,47 @@ class OrderController extends Controller
 
         }
         return back();
+    }
+
+     private function totalOfferPoints()
+    {
+        
+       $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
+       $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
+
+           if ($offer) {
+
+            if ($order->total_before >= $offer->total_order_money) {
+                                 
+                   return strval($offer->value);
+                 }else{
+                    return '';
+                 }
+                
+               
+           }elseif($offerBranches){
+
+                 foreach ($offerBranches as $key => $offerBranch) {
+                   
+                        if ($offerBranch->branch_id == $order->branch_id) {
+
+                             if ($order->total_before >= $offerBranch->total_order_money) {
+                                 
+                                return strval($offerBranch->value);
+                             }else{
+                                return '';
+                             }
+                        }//end if
+                 }//end foreach  
+
+
+
+           }else{
+
+             return "";
+
+           }//end if 
+
     }
 
     public function addProductOrder(Request $request)
