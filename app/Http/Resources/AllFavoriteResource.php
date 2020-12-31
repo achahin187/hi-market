@@ -30,7 +30,7 @@ class AllFavoriteResource extends JsonResource
             "rate" => $this->getProduct()->rate ?? 0,
             "ratings" => $this->getProduct()->ratings ?? "0",
             "priority" => $this->getProduct()->priority ?? 0,
-            "images" => asset("images/" . $this->getProduct()->images),
+            "images" => asset("product_images/" . $this->getProduct()->images),
             "points" => $this->getProduct()->points ?? 0,
             "category_name" => $this->getProduct()->category->name ?? "",
             "category_id" => $this->getProduct()->category_id ?? "",
