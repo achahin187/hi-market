@@ -68,6 +68,7 @@ class CartController extends Controller
             if ($offer->source == 'Branch') {
 
                 $offer = Offer::CheckPromoCode($request->promoCode)->CheckSuperMarket($request->supermarket_id)->first();
+                dd($offer);
             }
 
         } catch (\Exception $e) {
@@ -226,7 +227,7 @@ class CartController extends Controller
             }else{
 
                 $shipping = Setting::first()->delivery;
- 
+
                 
             }
         }else{
