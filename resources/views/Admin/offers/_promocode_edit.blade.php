@@ -132,7 +132,7 @@
 
                     <div class="form-group">
                         <label>{{__('admin.end_date')}}</label>
-                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" value="{{old('end_date')?? date('Y-m-d\TH:i', strtotime($offer->start_date)) }}" data-placeholder="Select a offer end_date" style="width: 100%;" >
+                        <input type="datetime-local" class=" @error('end_date') is-invalid @enderror form-control"  name="end_date" value="{{old('end_date')?? date('Y-m-d\TH:i', strtotime($offer->end_date)) }}" data-placeholder="Select a offer end_date" style="width: 100%;" >
 
                         @error('end_date')
                         <span class="invalid-feedback" role="alert">
