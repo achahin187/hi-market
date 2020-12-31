@@ -70,7 +70,7 @@ class ClientOrdersController extends Controller
          $getCompany = DeliveryCompany::Where('id', $company->delivery_company_id)->first();
          if ($getCompany) { 
          #change to the stauts to status 1             
-            if ($getCompany->status = 1) {
+            if ($getCompany->status == 1) {
                 $order->update(['status'=> 1]);
             }
          }
