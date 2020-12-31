@@ -615,12 +615,14 @@ class OrderController extends Controller
 
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
-                $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($myOrder) ;
+                $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($order) ;
               
                 $order->client->update(['total_points'=>$total_points]);
+                dd('hi');
             }
             if(in_array($order->status, [1,3,4]))
             {
+                dd('bye');
                 new SendNotification($order->client->device_token, $order, $data);
             }  
            
@@ -633,7 +635,7 @@ class OrderController extends Controller
               
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
-                $total_points = $order->client->total_points - $getClientPoints - $this->totalOfferPoints($myOrder) ;
+                $total_points = $order->client->total_points - $getClientPoints - $this->totalOfferPoints($order) ;
                 $order->client->update(['total_points'=>$total_points]);
             }
  
@@ -649,7 +651,7 @@ class OrderController extends Controller
         return back();
     }
 
-     private function totalOfferPoints($myOrder)
+     private function totalOfferPoints($order)
     {
         
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
@@ -657,7 +659,7 @@ class OrderController extends Controller
 
            if ($offer) {
 
-            if ($myOrder->total_before >= $offer->total_order_money) {
+            if ($order->total_before >= $offer->total_order_money) {
                                  
                    return strval($offer->value);
                  }else{
@@ -671,7 +673,7 @@ class OrderController extends Controller
                    
                         if ($offerBranch->branch_id == $order->branch_id) {
 
-                             if ($myOrder->total_before >= $offerBranch->total_order_money) {
+                             if ($order->total_before >= $offerBranch->total_order_money) {
                                  
                                 return strval($offerBranch->value);
                              }else{
