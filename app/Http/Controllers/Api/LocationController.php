@@ -41,15 +41,15 @@ class LocationController extends Controller
           $implodePoints = implode( " ", [$request->long,$request->lat]);
           #points
           $point = array($implodePoints);
-
-      
+          $data=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
+        
          
-           $data = $pointLocation->pointInPolygon($point, $Finalpolygon);
+           $data[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
 
-          dd($data);
+          //var_dump( $data);
 
         #if data == true
         if ($data == true || $data) {        
