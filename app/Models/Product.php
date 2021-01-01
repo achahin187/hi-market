@@ -217,7 +217,7 @@ class Product extends Model
     }
     public function favourite()
     {
-        return $this->hasOne(ClientProduct::class,"product_id");
+        return $this->hasOne(ClientProduct::class,"product_id")->where("udid",request()->header( "udid"));
     }
 
 }
