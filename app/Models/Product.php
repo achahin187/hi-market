@@ -215,5 +215,9 @@ class Product extends Model
            $query->where("branches.id",$supermarket_id)->whereNotIn('product_id', $cart );
        });
     }
+    public function favourite()
+    {
+        return $this->hasOne(ClientProduct::class,"product_id");
+    }
 
 }

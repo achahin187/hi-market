@@ -14,15 +14,16 @@ class SimilarProductsResource extends JsonResource
      */
     public function toArray($request)
     {
+        dd($this->favourite);
         return [
             "id" => $this->id,
             "name" => $this->name,
             "price" => $this->price,
             "offer_price" => $this->offer_price ?? 0,
             "description" => $this->description,
-            "favourite" => $this->favourite ?? 0,
+            "favourite" => (int)($this->favourite) ?? 0,
             "rate" => $this->rate ?? 0,
-            "ratings" => $this->ratings ?? 0,    
+            "ratings" => $this->ratings ?? 0,
             "overview" => $this->specs ?? "",
             "points" => $this->points ?? 0,
             "priority" => $this->priority ?? 0,
