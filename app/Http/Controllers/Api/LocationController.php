@@ -21,7 +21,7 @@ class LocationController extends Controller
           $getPlygons = Polygon::all();
 
           #polygon array        
-          $polygon=[]; 
+          $polygons=[]; 
           foreach ($getPlygons as $getPlygons)
           {
               $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
