@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('products/search', 'ProductController@getproductsearch')->name('search');
     Route::post("products/filter", "ProductController@filter");
     Route::post('social/login', 'AuthController@social');
+    Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
@@ -59,7 +60,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     Route::post('getarea', 'LocationController@index')->name('listArea');
     Route::post('gethomedata', 'ProductController@homeData')->name('listHome');
-    Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
+   
     Route::post('getsupermarketcats', 'CategoriesController@supermarketcategories')->name('listsupermarketcats');
     Route::post('getcategoryproducts', 'CategoriesController@categoryproducts')->name('listcategoryproducts');
     Route::post('supermarketoffers', 'CategoriesController@supermarketoffers')->name('listcategoryproducts');

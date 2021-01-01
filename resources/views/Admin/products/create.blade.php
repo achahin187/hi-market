@@ -380,7 +380,7 @@
                                
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="text" value="{{$product->rate}} " name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
+                                    <input type="text" @if(isset($product)) value="{{$product->rate}}" @else value="" @endif  name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
                                     @error('rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

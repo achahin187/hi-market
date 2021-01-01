@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Polygons\PointLocation;
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +22,7 @@ Route::get('/', function () {
 // User Routes
 
 
+
 // Admin Routes
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
@@ -31,31 +32,34 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         return view('welcome');
     })->name('welcome');
 
-    Route::get('/logout', function () {
+    Route::get('/logout',function(){
 
-        if (\Auth::check()) {
+        if(\Auth::check())
+        {
             \Auth::logout();
             return redirect('/home');
-        } else {
+        }
+        else
+        {
             return redirect('/');
         }
     })->name('logout');
 
     Auth::routes();
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'admin','middleware' => 'auth'],function() {
 
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('', 'HomeController@index')->name('home');
         Route::resource('admins', 'Admin\AdminController', ['except' => ['show']]);
-        Route::resource('categories', 'Admin\CategoryController', ['except' => ['show']]);
-        Route::resource('vendors', 'Admin\VendorController', ['except' => ['show']]);
+        Route::resource('categories', 'Admin\CategoryController',['except' => ['show']]);
+        Route::resource('vendors', 'Admin\VendorController',['except' => ['show']]);
         Route::resource('requests', 'Admin\RequestController');
         Route::resource('reasons', 'Admin\ReasonController');
-        Route::resource('settings', 'Admin\SettingsController', ['except' => ['show', 'create']]);
-        Route::resource('points', 'Admin\PointController', ['except' => ['show']]);
-        Route::resource('supermarkets', 'Admin\SupermarketController', ['except' => ['show']]);
-        Route::resource('subcategories', 'Admin\SubcategoryController', ['except' => ['show']]);
+        Route::resource('settings', 'Admin\SettingsController',['except' => ['show','create']]);
+        Route::resource('points', 'Admin\PointController',['except' => ['show']]);
+        Route::resource('supermarkets', 'Admin\SupermarketController',['except' => ['show']]);
+        Route::resource('subcategories', 'Admin\SubcategoryController',['except' => ['show']]);
         Route::resource('roles', 'Admin\RoleController');
         Route::resource('teams', 'Admin\TeamController');
         Route::resource('clients', 'Admin\ClientController');
@@ -90,8 +94,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('financials', 'Admin\FinancialController');
 
 
-        Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');
-        Route::group(['prefix' => 'products'], function () {
+            Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');
+        Route::group(['prefix' => 'products'],function() {
 
             Route::get('{id}/{flag}/clone/{supermarket_id?}/{branch_id?}', 'Admin\ProductController@clone')->name('products.clone');
             Route::get('{flag?}', 'Admin\ProductController@index')->name('products.index');
@@ -105,7 +109,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         });
 
-        Route::group(['prefix' => 'branches'], function () {
+        Route::group(['prefix' => 'branches'],function() {
 
             Route::get('', 'Admin\BranchController@index')->name('branches.index');
             Route::get('create/{supermarket_id?}', 'Admin\BranchController@create')->name('branches.create');
@@ -118,7 +122,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         });
 
 
-        Route::group(['prefix' => 'offers'], function () {
+        Route::group(['prefix' => 'offers'],function() {
 
             Route::get('offers', 'Admin\OffersssController@index')->name('offers.index');
             Route::get('create/{supermarket_id?}/{branch_id?}', 'Admin\OffersssController@create')->name('offers.create');
@@ -130,11 +134,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         });
 
-        Route::group(['prefix' => 'export'], function () {
+        Route::group(['prefix' => 'export'],function() {
 
             Route::get('admins', 'Admin\AdminController@export')->name('admins.export');
             Route::get('products', 'Admin\ProductController@export')->name('products.export');
-
+       
             Route::get('supermarket/export', 'Admin\SuperMarketAdminController@export')->name('supermarket.export');
             Route::get('products/download', 'Admin\ProductController@download')->name('products.downloadsample');
             Route::get('category', 'Admin\CategoryController@export')->name('category.export');
@@ -143,15 +147,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('vendor', 'Admin\VendorController@export')->name('vendor.export');
         });
 
-        Route::group(['prefix' => 'import'], function () {
+        Route::group(['prefix' => 'import'],function() {
 
             Route::post('admins', 'Admin\AdminController@import')->name('admins.import');
             Route::post('products/import', 'Admin\ProductController@import')->name('products.import');
-
+          
         });
 
 
-        Route::group(['prefix' => 'orders'], function () {
+        Route::group(['prefix' => 'orders'],function() {
 
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
@@ -178,16 +182,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('supermarkets/branches/{supermarket_id}', 'Admin\BranchController@supermarketbranches')->name('supermarket.branches');
         Route::get('branches/products/{branch_id}/{flag}', 'Admin\ProductController@branchproducts')->name('branch.products');
         Route::get('branches/offers/{branch_id}', 'Admin\OffersssController@branchoffers')->name('branch.offers');
-        /*        Route::get('supermarkets/branches/create/{supermarket_id}', 'Admin\SupermarketController@addbranch')->name('supermarketbranches.create');
-                Route::post('supermarkets/branches/store/{supermarket_id}', 'Admin\SupermarketController@storebranch')->name('supermarketbranches.store');
-                Route::get('supermarkets/offers/create/{supermarket_id}', 'Admin\SupermarketController@addoffer')->name('supermarketoffers.create');
-                Route::post('supermarkets/offers/store/{supermarket_id}', 'Admin\SupermarketController@storeoffer')->name('supermarketoffers.store');
-                Route::get('supermarkets/products/create/{supermarket_id}/{flag}', 'Admin\ProductController@create')->name('supermarketproducts.create');
-                Route::post('supermarkets/products/store/{supermarket_id}/{flag}', 'Admin\SupermarketController@storeproduct')->name('supermarketproducts.store');
-                Route::get('branches/offers/create/{branch_id}', 'Admin\BranchController@addoffer')->name('branchoffers.create');
-                Route::post('branches/offers/store/{branch_id}', 'Admin\BranchController@storeoffer')->name('branchoffers.store');
-                Route::get('branches/products/create/{branch_id}', 'Admin\BranchController@addproduct')->name('branchproducts.create');
-                Route::post('branches/products/store/{branch_id}', 'Admin\BranchController@storeproduct')->name('branchproducts.store');*/
+/*        Route::get('supermarkets/branches/create/{supermarket_id}', 'Admin\SupermarketController@addbranch')->name('supermarketbranches.create');
+        Route::post('supermarkets/branches/store/{supermarket_id}', 'Admin\SupermarketController@storebranch')->name('supermarketbranches.store');
+        Route::get('supermarkets/offers/create/{supermarket_id}', 'Admin\SupermarketController@addoffer')->name('supermarketoffers.create');
+        Route::post('supermarkets/offers/store/{supermarket_id}', 'Admin\SupermarketController@storeoffer')->name('supermarketoffers.store');
+        Route::get('supermarkets/products/create/{supermarket_id}/{flag}', 'Admin\ProductController@create')->name('supermarketproducts.create');
+        Route::post('supermarkets/products/store/{supermarket_id}/{flag}', 'Admin\SupermarketController@storeproduct')->name('supermarketproducts.store');
+        Route::get('branches/offers/create/{branch_id}', 'Admin\BranchController@addoffer')->name('branchoffers.create');
+        Route::post('branches/offers/store/{branch_id}', 'Admin\BranchController@storeoffer')->name('branchoffers.store');
+        Route::get('branches/products/create/{branch_id}', 'Admin\BranchController@addproduct')->name('branchproducts.create');
+        Route::post('branches/products/store/{branch_id}', 'Admin\BranchController@storeproduct')->name('branchproducts.store');*/
 
         //system logs
         Route::get('systemlogs', 'Admin\LogController@index')->name('logs.index');
@@ -195,7 +199,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('systemlogs/filter/{filter}', 'Admin\LogController@filter')->name('logs.filter');
 
         //Map
-        Route::post('store-polygon', 'Admin\LocationController@addLocation')->name('add-polygon');
+        Route::post('store-polygon','Admin\LocationController@addLocation')->name('add-polygon');
         //locations
         Route::get('locations', 'Admin\LocationController@index')->name('locations.index');
         Route::get('locations/create', 'Admin\LocationController@create')->name('locations.create');
@@ -211,14 +215,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         //  Route::post('city/{$id}/delete', 'Admin\LocationController@destroyCity')->name('city.destroy');
 
-        Route::get('area/{id}/show', 'Admin\LocationController@showPolygon')->name('locations.area.show');
+         Route::get('area/{id}/show', 'Admin\LocationController@showPolygon')->name('locations.area.show');
 
 
         //supermarket-admins
-        Route::resource('supermarket-admins', 'Admin\SuperMarketAdminController');
+        Route::resource('supermarket-admins','Admin\SuperMarketAdminController');
         //delivery-admins
-        Route::resource('delivery-admins', 'Admin\DeliveryManagerController');
-        Route::resource("delivery-companies", "Admin\DeliveryCompanyController");
+        Route::resource('delivery-admins','Admin\DeliveryManagerController');
+        Route::resource("delivery-companies","Admin\DeliveryCompanyController");
 
         //VendorCategories
         Route::get('getVendorCategories', 'Admin\BranchController@getVendorCategories')->name('vendor.categories');
@@ -226,109 +230,93 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //poit image
         Route::post('point-photo', 'Admin\PointController@pointImage')->name('point.photo');
 
-        //offers
-        Route::resource('offer', 'Admin\OffersController');
+       //offers
+       Route::resource('offer','Admin\OffersController');
 
         //offer.status
-        Route::get('offer_status', 'Admin\OffersController@changeStatus')->name('offer.status');
+        Route::get('offer_status','Admin\OffersController@changeStatus')->name('offer.status');
 
-        //get_brannch_product
+       //get_brannch_product
 
         Route::get('get-branch-product', 'Admin\ProductController@getBranchProduct')->name('get_branch_product');
         //Client Orders
-        Route::get('client/{client_id}/order', 'Admin\ClientOrdersController@create')->name('client.order.create');
-        Route::post('client/{client_id}/order', 'Admin\ClientOrdersController@store')->name('client.order.store');
+        Route::get('client/{client_id}/order','Admin\ClientOrdersController@create')->name('client.order.create');
+        Route::post('client/{client_id}/order','Admin\ClientOrdersController@store')->name('client.order.store');
+
 
 
         //get branch category
-        Route::get('get-branch-category', 'Admin\ClientOrdersController@getBranchCategory')->name('get_branch_category');
+        Route::get('get-branch-category','Admin\ClientOrdersController@getBranchCategory')->name('get_branch_category');
 
         // get Category Products
-        Route::get('get-category-products', 'Admin\ClientOrdersController@getCategoryProducts')->name('get_category_products');
-        // getProduct
-        Route::get('getProduct', 'Admin\ClientOrdersController@getProduct')->name('get_product');
-        //Change Order Status
-        Route::get('change-order-status', 'Admin\OrderController@changeStatusOrder')->name('order.change.status');
+        Route::get('get-category-products','Admin\ClientOrdersController@getCategoryProducts')->name('get_category_products');
+         // getProduct
+        Route::get('getProduct','Admin\ClientOrdersController@getProduct')->name('get_product');
+            //Change Order Status
+        Route::get('change-order-status','Admin\OrderController@changeStatusOrder')->name('order.change.status');
 
         //client order manual
-        Route::post('client/order/store', 'Admin\OrderController@addProductOrder')->name('store.product.client');
+        Route::post('client/order/store','Admin\OrderController@addProductOrder')->name('store.product.client');
         //rollback.change.company
-        Route::get('manual-order-delete/{id}', 'Admin\OrderController@manualOrderDelete')->name('manual.order.delete');
+        Route::get('manual-order-delete/{id}','Admin\OrderController@manualOrderDelete')->name('manual.order.delete');
         //rollback.change.company
-        Route::post('rollback_change_company', 'Admin\OrderController@rollbackChangeCompany')->name('rollback.change.company');
+        Route::post('rollback_change_company','Admin\OrderController@rollbackChangeCompany')->name('rollback.change.company');
         //storeOrder
-        Route::post('store_orders', 'Admin\ClientOrdersController@storeOrder')->name('store.order');
+        Route::post('store_orders','Admin\ClientOrdersController@storeOrder')->name('store.order');
 
-        //OrderShow
-        Route::get('order/show/details/{id}', 'Admin\OrderController@showDetails')->name('orders.show.details');
+        //OrderShow 
+        Route::get('order/show/details/{id}','Admin\OrderController@showDetails')->name('orders.show.details');
 
-        //Delete manular order
-        Route::get('delete_orders', 'Admin\ClientOrdersController@changeManualOrder')->name('change.order');
+        //Delete manular order 
+        Route::get('delete_orders','Admin\ClientOrdersController@changeManualOrder')->name('change.order');
 
-
-        Route::resource('helps', 'Admin\HelpController');
+       
+        Route::resource('helps','Admin\HelpController');
 
         // Route::get('rate',function(){
-        //     $rate =
+        //     $rate = 
         //     [5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
         //     $count = collect($rate)->avg();
         //     dd( $count );
         // });
-        Route::get("test", "Admin\LocationController@test");
+
 // "70 40","-20 30","100 10","-10 -10","40 -20","110 -20"
-        Route::get('check/location/test', function () {
+        // Route::get('test',function(){
 
-            $pointLocation = new pointLocation();
-            $polygon = array("31.399123 30.187870", "31.562183 30.111870", "31.248863 30.012031");
-            $points = array("31.320520 31.512996");
-            foreach ($points as $key => $point) {
-                echo "point ahmed" . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-            }
-            #a.lat the data base point
-            #$lat the
-            //     6371 * acos(
-            //     cos( radians(".$lat.") ) * cos( radians( a.lat ) )
-            //     * cos( radians( a.lon ) - radians(".$lon.") )
-            //     + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
-            //     ) ) AS distance
+        //       // $supermarket_admins =  User::role(['supermarket_admin'])->get();     
 
-            //     // end
+        //       $super_admins = User::role(['super_admin','supermarket_admin'])->get();
+        //       $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
 
-            // $placeOffers = $GLOBALS['db']->query("SELECT a.,o., o.img as offer_img,o.`id` as `offer_id`, a.`img` AS `img_h`,a.`img_100` AS `img_s`,c.name as category_name,c.icon as category_icon, (
-            //     6371 * acos(
-            //             cos( radians(".$lat.") ) * cos( radians( a.lat ) )
-            //             * cos( radians( a.lon ) - radians(".$lon.") )
-            //             + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
-            //             )
-            //     ) AS distance FROM `categories` c INNER JOIN `places` a ON (a.`category` = c.`id`) INNER JOIN `offers` o ON (a.`id` = o.`place_id`) HAVING distance < 0.9 ORDER BY distance limit 1 ;
+        //       $merged = $super_admins->merge($delivery_admins);  
+        //       dd($merged);
+                          
+                            
+         
+        //     });
+            #a.lat the data base point 
+            #$lat the 
+        //     6371 * acos(
+        //     cos( radians(".$lat.") ) * cos( radians( a.lat ) )
+        //     * cos( radians( a.lon ) - radians(".$lon.") )
+        //     + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
+        //     ) ) AS distance
+
+        //     // end 
+
+        // $placeOffers = $GLOBALS['db']->query("SELECT a.,o., o.img as offer_img,o.`id` as `offer_id`, a.`img` AS `img_h`,a.`img_100` AS `img_s`,c.name as category_name,c.icon as category_icon, (
+        //     6371 * acos(
+        //             cos( radians(".$lat.") ) * cos( radians( a.lat ) )
+        //             * cos( radians( a.lon ) - radians(".$lon.") )
+        //             + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
+        //             )
+        //     ) AS distance FROM `categories` c INNER JOIN `places` a ON (a.`category` = c.`id`) INNER JOIN `offers` o ON (a.`id` = o.`place_id`) HAVING distance < 0.9 ORDER BY distance limit 1 ;
 
 
-            // The last point's coordinates must be the same as the first one's, to "close the loop"
+       
 
-
-            // Results
-
-            // This will output:
-            // point 1 (50 70): vertex
-            // point 2 (70 40): inside
-            // point 3 (-20 30): inside
-            // point 4 (100 10): outside
-            // point 5 (-10 -10): outside
-            // point 6 (40 -20): inside
-            // point 7 (110 -20): boundary
-
-            $pointLocation = new pointLocation();
-            $points = array("50 70", "70 40", "-20 30", "100 10", "-10 -10", "40 -20", "110 -20");
-
-            $polygon = array("-50 30", "50 70", "100 50", "80 10", "110 -10", "110 -30", "-20 -50", "-30 -40", "10 -10", "-10 10", "-30 -20", "-50 30");
-
-// The last point's coordinates must be the same as the first one's, to "close the loop"
-            foreach ($points as $key => $point) {
-                echo "point " . ($key + 1) . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-            }
-
-        });
+        //});
 
     });
 
