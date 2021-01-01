@@ -32,10 +32,10 @@ class OrderController extends Controller
     public function index(Request $request, $cancel = false)
     {
         $setting = Setting::all()->first();
-       
-      
+
+
         if($cancel) {
-   
+
             if(auth()->user()->hasRole('delivery'))
             {
                 $cancelledorders = auth()->user()->orders()->where('status',5)->orderBy('id', 'desc')->paginate(10);
@@ -49,7 +49,7 @@ class OrderController extends Controller
         elseif(request()->driver_id)
         {
             if (auth()->user()->id == request()->driver_id) {
-                
+
                 $driver = User::find(request()->driver_id);
 
                 $orders = $driver->orders()->whereNotIn('status',array(0))->get();
@@ -67,9 +67,9 @@ class OrderController extends Controller
             if(auth()->user()->company_id == request()->company_id ){
 
                 $company = DeliveryCompany::find(request()->company_id);
-               
+
                 $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])->get();
-       
+
 
              return view('Admin.orders.index',compact('orders','setting'));
 
@@ -123,7 +123,7 @@ class OrderController extends Controller
 
     public function store(Request $request,$request_id)
     {
-       
+
 
         $rules = [
             'product_id' => 'required|integer|min:0',
@@ -184,7 +184,7 @@ class OrderController extends Controller
 
     public function editorder($order_id)
     {
-       
+
         $order = Order::find($order_id);
 
         $total_product_offers_price = 0;
@@ -230,18 +230,18 @@ class OrderController extends Controller
 
     public function updateorder(Request $request,$order_id)
     {
-        
+
         $order = Order::find($order_id);
-        
+
         $request->validate([
             'driver' => ['sometimes','required','min:0','integer'],
 
         ]);
 
         $order->update(['user_id' => $request->driver ]);
-   
+
         return redirect()->route('orders.index')->withStatus('assign successfully');
-        
+
 
     }
 
@@ -395,7 +395,7 @@ class OrderController extends Controller
 
     public function addproduct(Request $request,$order_id)
     {
-        
+
         $order = Order::find($order_id);
 
         $rules = [
@@ -427,7 +427,7 @@ class OrderController extends Controller
                     $status[] .= false;
                 }
             }
-         
+
 
             if($status)
             {
@@ -508,7 +508,7 @@ class OrderController extends Controller
                 $order->update(['status' => 4,'shipped_at' => now()]);
             }
 
-            
+
             return redirect('/admin/orders')->withStatus(__('order status successfully updated.'));
         }
         return redirect('/admin/admins')->withStatus(__('this id is not in our database'));
@@ -596,9 +596,9 @@ class OrderController extends Controller
 
     public function changeStatusOrder(Request $request)
     {
-        
+
         $order = Order::find($request->order_id);
-        
+
         $data =  [
                   "type" => "order",
                   "orderId" => $order->id,
@@ -610,37 +610,37 @@ class OrderController extends Controller
             if ($order->status == 4) {
 
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
-              
+
                 $total_points = $order->client->total_points + $getClientPoints + $this->totalOfferPoints($order) ;
-              
-              
+
+
                 $order->client->update(['total_points'=>$total_points]);
             }
             if(in_array($order->status, [1,3,4]))
             {
-               
+
                 new SendNotification($order->client->device_token, $order, $data);
-            }  
-           
+            }
+
         }else
         {
             $order->update(['status'=>$request->order_status - 1]);
 
               if ($request->order_status == 4) {
 
-              
+
                 $getClientPoints = DB::table('order_product')->where('order_id' ,$order->id)->sum('points');
 
                 $total_points = $order->client->total_points - $getClientPoints - $this->totalOfferPoints($order) ;
                 $order->client->update(['total_points'=>$total_points]);
             }
- 
+
 
             if(in_array($order->status, [1,3,4]))
             {
                 new SendNotification($order->client->device_token, $order, $data);
-            }  
-            
+            }
+
 
 
         }
@@ -649,34 +649,34 @@ class OrderController extends Controller
 
      private function totalOfferPoints($order)
     {
-        
+
        $offer         =  DB::table('offers')->where('type','point')->where('source', 'Delivertto')->first();
        $offerBranches =  DB::table('offers')->where('type','point')->where('source', 'Branch')->get();
 
            if ($offer) {
 
             if ($order->total_before >= $offer->total_order_money) {
-                                 
+
                    return strval($offer->value);
                  }else{
                     return 0;
                  }
-                
-               
+
+
            }elseif($offerBranches){
 
                  foreach ($offerBranches as $key => $offerBranch) {
-                   
+
                         if ($offerBranch->branch_id == $order->branch_id) {
 
                              if ($order->total_before >= $offerBranch->total_order_money) {
-                                 
+
                                 return strval($offerBranch->value);
                              }else{
                                 return 0;
                              }
                         }//end if
-                 }//end foreach  
+                 }//end foreach
 
 
 
@@ -684,7 +684,7 @@ class OrderController extends Controller
 
              return 0;
 
-           }//end if 
+           }//end if
 
     }
 
@@ -722,7 +722,7 @@ class OrderController extends Controller
 
     public function rollbackChangeCompany(Request $request)
     {
-        
+
 
         $order = Order::Where('id', $request->order_id)->first();
 
@@ -735,24 +735,16 @@ class OrderController extends Controller
 
     public function showDetails($id)
     {
-            
+
         $order = Order::find($id);
         return view('Admin.orders.show_order')->with('order', $order);
     }
 
     public function getMessage($order)
     {
-        $messages = [
-            0 => "New Order Created, waiting for Acceptance",
-            1 => "Your Order $order->num Was Accepted",
-            2 => "Your Order $order->num Was Process",
-            3 => "Your Order $order->num Was Pickup",
-            4 => "Your Order $order->num Was Delivered Rate Your Order",
-            5 => "Your Order $order->num was Cancelled",
-            null => ""
-        ];
+        
 
-         return $messages[$order->status];
+         return __("orders.messages",["num"=>$order->num])[$order->status];
     }
 
     public function testNotification($device_token, $stauts, $data=[])

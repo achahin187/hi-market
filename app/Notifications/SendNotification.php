@@ -134,19 +134,30 @@ class SendNotification {
         $this->storeNotificationOffer();
     }
 
-    public function getMessage($order)
+    public function getMessage($order,$lang)
     {
         $messages = [
-            0 => "New Order Created, waiting for Acceptance",
-            1 => "Your Order $order->num Was Accepted",
-            2 => "Your Order $order->num Was Process",
-            3 => "Your Order $order->num Was Pickup",
-            4 => "Your Order $order->num Was Delivered Rate Your Order",
-            5 => "Your Order $order->num was Cancelled",
-            null => ""
+             "en"=>[
+                 0 => "New Order Created, waiting for Acceptance",
+                 1 => "Your Order $order->num Was Accepted",
+                 2 => "Your Order $order->num Was Process",
+                 3 => "Your Order $order->num Was Pickup",
+                 4 => "Your Order $order->num Was Delivered Rate Your Order",
+                 5 => "Your Order $order->num was Cancelled",
+                 null => ""
+             ],
+            "ar"=>[  0 => "تم إنشاء طلب جديد",
+                1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
+                2 => "تم الموافقة على طلبك رقم {$order->num} ",
+                3 => "طلبك رقم {$order->num} جاري",
+                4 => "طلبك رقم {$order->num} جاري توصيله",
+                5 => "تم توصيل طلبك رقم {$order->num}",
+                6 => "تم إلغاء طلبك رقم $order->num",
+                null => ""]
+
         ];
 
-         return __("orders.messages",["num"=>$order->num])[$order->status];
+         return $messages[$lang][$order->status];
     }
 
     public function getIconeOrder($order)
@@ -180,10 +191,10 @@ class SendNotification {
     {
          NotificationMobile::create([
 
-                'title_ar'    => $this->getMessage($this->order),
-                'title_en'    => $this->getMessage($this->order),
-                'body_ar'     => $this->getMessage($this->order),
-                'body_en'     => $this->getMessage($this->order),
+                'title_ar'    => $this->getMessage($this->order,"ar"),
+                'title_en'    => $this->getMessage($this->order,"en"),
+                'body_ar'     => $this->getMessage($this->order,"ar"),
+                'body_en'     => $this->getMessage($this->order,"en"),
                 'type'        => $this->data['type'],
                 'icon'        => $this->getIconeOrder($this->order),
                 'order_id'    => $this->data['orderId']?? null,
