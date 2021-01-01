@@ -740,12 +740,12 @@ $settings = App\Models\Setting::all()->first();
 </script>
 
 @yield('scripts')
-<script>
+{{-- <script>
     setInterval(function(){
     $("#notification_count").load(window.location.href + "#notification_count");
     $("#unreadNotification").load(window.location.href + "#unreadNotification");
 
     },5000);
-</script>
+</script> --}}
 
 </html>
