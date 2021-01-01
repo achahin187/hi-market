@@ -122,8 +122,8 @@
                                             <td>{{$log->subject_type}}</td>
                                             <td>
 
-                                                @if($log->causer_id)
-                                                    {{App\User::where('id',$log->causer_id)->first()->name}}
+                                                @if($log->causer_id != null)
+                                                    {{App\User::where('id',$log->causer_id)->first()->name??  __('admin.no_user') }}
                                                 @else
                                                     {{ __('admin.no_user') }}
                                                 @endif
@@ -132,7 +132,7 @@
                                             <td>
 
                                                 @if($log->causer_id)
-                                                    {{App\User::where('id',$log->causer_id)->first()->email}}
+                                                    {{App\User::where('id',$log->causer_id)->first()->email ??  __('admin.no_user')}}
                                                 @else
                                                     {{ __('admin.no_user') }}
                                                 @endif

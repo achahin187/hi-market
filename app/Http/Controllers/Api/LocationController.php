@@ -28,9 +28,6 @@ class LocationController extends Controller
                
           }
 
-
-          //dd($polygons);
-
           $Finalpolygons=[];
           foreach ($polygons as $index =>$polygon)
           {
@@ -38,16 +35,10 @@ class LocationController extends Controller
                
           }
 
-
-            //dd($Finalpolygon);
-       
           #new instance 
           $pointLocation = new PointLocation();
-
           #impload implode Points
           $implodePoints = implode( " ", [$request->long,$request->lat]);
-
-          //$implodePolygon = implode( " ", $Finalpolygon);
           #points
           $point = array($implodePoints);
 
@@ -57,6 +48,8 @@ class LocationController extends Controller
            $data = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
+
+          dd($data);
 
         #if data == true
         if ($data == true) {        
