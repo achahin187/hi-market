@@ -182,7 +182,7 @@ class OrderController extends Controller
 
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
-             $delivery_admins =  User::role(['delivery_admin'])->where('company_id',$company->id)->get();
+             $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
              $sendToAdmins = $super_admins->merge($delivery_admins);
 
              Notification::send($sendToAdmins,new OrderNotification($order));
