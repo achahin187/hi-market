@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
          Schema::defaultStringLength(191);
         view()->composer(["layouts.admin_layout","layouts.app"],function($view){
+            if(auth()->check())
            $view->with("notifications",auth()->user()->notifications);
         });
     }
