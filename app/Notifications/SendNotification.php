@@ -22,7 +22,7 @@ class SendNotification {
     {
 
 
-       
+
         $data = [
 
             "to" => $this->device_token,
@@ -71,10 +71,10 @@ class SendNotification {
         if($result == FALSE){
             die(curl_exec($ch));
         }
-        
+
         curl_close($ch);
         #store notification To database
-        $this->storeNotificationOrder();   
+        $this->storeNotificationOrder();
     }
 
     public function sendNotificationOffer()
@@ -128,10 +128,10 @@ class SendNotification {
         if($result == FALSE){
             die(curl_exec($ch));
         }
-        
+
         curl_close($ch);
         #store notification Offer To database
-        $this->storeNotificationOffer();   
+        $this->storeNotificationOffer();
     }
 
     public function getMessage($order)
@@ -146,7 +146,7 @@ class SendNotification {
             null => ""
         ];
 
-         return $messages[$order->status];
+         return __("orders.messages",["num"=>$order->num])[$order->status];
     }
 
     public function getIconeOrder($order)
@@ -168,7 +168,7 @@ class SendNotification {
     public function getIconeOffer($order)
     {
         $messages = [
-           
+
             1 => asset('notification_icons/box.png'),
             null => ""
         ];
@@ -192,7 +192,7 @@ class SendNotification {
                 'superMarket_id'    => $this->data['superMarket_id']?? null,
 
             ]);
-    } 
+    }
 
     public function storeNotificationOffer()
     {
@@ -210,14 +210,14 @@ class SendNotification {
                 'superMarket_id'    => $this->data['superMarket_id']?? null,
 
             ]);
-    } 
+    }
 
     public function getBranch()
     {
         Branch::where('id', $this->data['superMarket_id'])->first();
     }
- 
- 
+
+
 }
 
 // Tests
@@ -231,7 +231,7 @@ class SendNotification {
 //     echo "point " . ($key+1) . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
 // }
 
-// Results 
+// Results
 /*
 This will output:
 point 1 (50 70): vertex
