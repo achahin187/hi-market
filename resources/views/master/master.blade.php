@@ -150,6 +150,28 @@ $settings = App\Models\Setting::all()->first();
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
 
+             @isset($notifications)
+            <li class="nav-item dropdown " id="unreadNotification">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
+                   {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
+                    <div class="dropdown-divider"></div>
+                    @foreach($notifications->limit(10) as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2">{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</i>
+                        <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
+                    </a>
+                    @endforeach
+
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+            @endisset
+
+
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false" v-pre>
@@ -718,6 +740,12 @@ $settings = App\Models\Setting::all()->first();
 </script>
 
 @yield('scripts')
+<script>
+    setInterval(function(){
+    $("#notification_count").load(window.location.href + "#notification_count");
+    $("#unreadNotification").load(window.location.href + "#unreadNotification");
 
+    },5000);
+</script>
 
 </html>
