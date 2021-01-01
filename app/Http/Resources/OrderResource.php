@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
             null => ""
         ];
 
-         return $messages[$order->status];
+         return __("orders.messages",["num"=>$order->num])[$order->status];
     }
 
      public function getIcon($order)
@@ -56,7 +56,7 @@ class OrderResource extends JsonResource
             "order_id"=> $this->order_id??null,
             "product_id"=> $this->product_id??null,
             "super_market_id"=> $this->supermarket_id??null,
-            
+
         ];
     }
 }
