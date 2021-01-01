@@ -30,7 +30,7 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => $this->getMessage($this->order),
+                    "title" => $this->getMessage($this->order,app()->getLocale()),
                     "body" => "Order Updates",
                     "icon" => $this->getIconeOrder($this->order),
                     "requireInteraction" => true,
