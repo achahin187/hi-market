@@ -43,7 +43,7 @@ class OrderNotification extends Notification
     {
         return [
             'id' => $this->order->id,
-            'data' => __("orders.messages.0",["num"=>$this->order->num]),
+            'data' => "orders.messages.0",
 
         ];
     }
