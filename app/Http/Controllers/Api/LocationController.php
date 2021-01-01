@@ -41,18 +41,19 @@ class LocationController extends Controller
           $implodePoints = implode( " ", [$request->long,$request->lat]);
           #points
           $point = array($implodePoints);
-          $data=[];
+          $resultsList=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
         
          
-           $data[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
 
-          //var_dump( $data);
-
+         $data = $this->checkLocation($resultsList);
+       
+         
         #if data == true
-        if ($data == true || $data) {        
+        if ($data) {        
 
           $testPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
           
@@ -76,5 +77,23 @@ class LocationController extends Controller
            ], 404);
 
         }//end if 
+    }
+
+    private function checkLocation($resultsList)
+    {
+
+          if (in_array(true, $resultsList)) {
+
+              foreach ($resultsList as $data) {
+
+                if($data == true){
+
+                     return $data;
+                }
+              }
+             
+          }else{
+            return false;
+          }
     }
 }
