@@ -25,11 +25,13 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\DeliveryCompany;
 use App\Models\Setting;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use App\Notifications\SendNotification;
+use Illuminate\Support\Facades\Notification;
 use DateTime;
 class OrderController extends Controller
 {
@@ -174,9 +176,16 @@ class OrderController extends Controller
                   "type" => "order",
                   "orderId" => $order->id,
                  ];
-             //return $this->sendNotification();
-             new SendNotification($order->client->device_token, $order, $data);  
-            //return $this->returnSuccessMessage('The order has been completed successfully', 200);
+            #send notification to mobile 
+            new SendNotification($order->client->device_token, $order, $data);  
+
+            #send notification to dashboard
+            // $super_admins = User::role(['super_admin','supermarket_admin'])->get();
+            // $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
+            // $sendToAdmins = $super_admins->merge($delivery_admins);  
+            
+            // Notification::send($sendToAdmins,new OrderNotification($order));
+
             return response()->json([
                 "status" => true,
                 "msg" => 'The order has been completed successfully',
@@ -304,23 +313,7 @@ class OrderController extends Controller
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }
 
-    // public function getState($branch)
-    // {
-
-    //     // $now = Carbon::parse(now())->format("H:i:s");
-    //     // $start_time = Carbon::parse($branch->start_time)->format("H:i:s");
-    //     // $end_time = Carbon::parse($branch->end_time)->format("H:i:s");
-    //     //         if ($now >= $start_time && $now <= $end_time) {
-
-    //     //             return 'open';
-
-    //     //         } else {
-    //     //             return 'closed';
-
-    //     //         }
-
-
-    // }
+  
     public function getState($branch)
     {
            $now = now();

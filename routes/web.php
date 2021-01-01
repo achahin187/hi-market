@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Polygons\PointLocation;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -281,14 +282,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         // });
 
 // "70 40","-20 30","100 10","-10 -10","40 -20","110 -20"
-        Route::get('check/location/test',function(){
+        // Route::get('test',function(){
 
-            $pointLocation = new pointLocation();
-            $polygon = array("31.399123 30.187870", "31.562183 30.111870", "31.248863 30.012031");
-            $points = array("31.320520 31.512996");
-            foreach($points as $key => $point) {
-                echo "point ahmed"  . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-            }
+        //       // $supermarket_admins =  User::role(['supermarket_admin'])->get();     
+
+        //       $super_admins = User::role(['super_admin','supermarket_admin'])->get();
+        //       $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
+
+        //       $merged = $super_admins->merge($delivery_admins);  
+        //       dd($merged);
+                          
+                            
+         
+        //     });
             #a.lat the data base point 
             #$lat the 
         //     6371 * acos(
@@ -308,31 +314,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //     ) AS distance FROM `categories` c INNER JOIN `places` a ON (a.`category` = c.`id`) INNER JOIN `offers` o ON (a.`id` = o.`place_id`) HAVING distance < 0.9 ORDER BY distance limit 1 ;
 
 
-            // The last point's coordinates must be the same as the first one's, to "close the loop"
-            
+       
 
-            // Results 
-          
-            // This will output:
-            // point 1 (50 70): vertex
-            // point 2 (70 40): inside
-            // point 3 (-20 30): inside
-            // point 4 (100 10): outside
-            // point 5 (-10 -10): outside
-            // point 6 (40 -20): inside
-            // point 7 (110 -20): boundary
-
-$pointLocation = new pointLocation();
-$points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
-
-$polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
-
-// The last point's coordinates must be the same as the first one's, to "close the loop"
-foreach($points as $key => $point) {
-    echo "point " . ($key+1) . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-}
-
-        });
+        //});
 
     });
 
