@@ -112,7 +112,7 @@ $settings = App\Models\Setting::all()->first();
                     <div class="dropdown-divider"></div>
                     @foreach($notifications as $notification)
                     <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2">{{$notification->data["id"]}}</i>
+                        <i class="fas fa-envelope mr-2">{{$notification->data["data"]}}</i>
                         <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
                     </a>
                     @endforeach
