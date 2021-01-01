@@ -14,7 +14,7 @@ class SimilarProductsResource extends JsonResource
      */
     public function toArray($request)
     {
-        dd($this->favourite);
+
         return [
             "id" => $this->id,
             "name" => $this->name,
