@@ -46,6 +46,6 @@ class CartResource extends JsonResource
 
     private function getBranchName()
     {
-        return Branch::Where('id', request("supermarket_id") )->value("name");
+        return Branch::Where('id', request("supermarket_id") )->value("name_".app()->getLocale());
     }
 }
