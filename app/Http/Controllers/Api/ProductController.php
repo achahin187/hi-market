@@ -373,7 +373,7 @@ class ProductController extends Controller
           $getPlygons = Polygon::all();
 
           #polygon array        
-          $polygons=[]; 
+          $polygon=[]; 
           foreach ($getPlygons as $getPlygons)
           {
               $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
