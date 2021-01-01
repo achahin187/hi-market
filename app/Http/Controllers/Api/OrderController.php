@@ -31,6 +31,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use App\Notifications\SendNotification;
+use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 use DateTime;
 class OrderController extends Controller
@@ -94,15 +95,15 @@ class OrderController extends Controller
            $order_details["promocode"] = $promocodeId;
         }
 
-        
+
 
         $client = getUser();
 
         $date = now();
 
         $date = $date->addDays($request->day_index - 1);
-      
-       
+
+
 
         if ($client) {
 
@@ -135,16 +136,16 @@ class OrderController extends Controller
 
                 'point_redeem' => $order_details["redeem"],
 
-                //'promocode' => $order_details["promocode"], 
+                //'promocode' => $order_details["promocode"],
                 //'mobile_delivery' => '01060487345',
- 
+
                 'status' => 0,
                 'company_id' => 8,
 
             ]);
 
             foreach ( explode(",", request("cart")) as $product) {
-                
+
                     DB::table('order_product')->insert([
                     'order_id'   => $order->id,
                     "product_id" => explode(":", $product)[0],
@@ -153,20 +154,20 @@ class OrderController extends Controller
                     "points"     => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1],
                 ]);
 
-             }   
-            
-            #if client have points and use points 
+             }
+
+            #if client have points and use points
 
             if ($client->total_points > 0 || $client->total_points!= null) {
 
                $finalClientPoint = $client->total_points - $order_details["redeem"];
-               
+
                $client->update(['total_points'=> $finalClientPoint]);
 
             }
-            #get comapny and auto approve the order to it 
-            if ($company) { 
-            #change to the stauts to status 1             
+            #get comapny and auto approve the order to it
+            if ($company) {
+            #change to the stauts to status 1
                 if ($company->status = 1) {
                     $order->update(['status'=> 1]);
                 }
@@ -176,15 +177,15 @@ class OrderController extends Controller
                   "type" => "order",
                   "orderId" => $order->id,
                  ];
-            #send notification to mobile 
-            new SendNotification($order->client->device_token, $order, $data);  
+            #send notification to mobile
+            new SendNotification($order->client->device_token, $order, $data);
 
             #send notification to dashboard
-            // $super_admins = User::role(['super_admin','supermarket_admin'])->get();
-            // $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
-            // $sendToAdmins = $super_admins->merge($delivery_admins);  
-            
-            // Notification::send($sendToAdmins,new OrderNotification($order));
+             $super_admins = User::role(['super_admin','supermarket_admin'])->get();
+             $delivery_admins =  User::role(['delivery_admin'])->where('company_id',$company->id)->get();
+             $sendToAdmins = $super_admins->merge($delivery_admins);
+
+             Notification::send($sendToAdmins,new OrderNotification($order));
 
             return response()->json([
                 "status" => true,
@@ -248,10 +249,10 @@ class OrderController extends Controller
                 "user_id" => getUser()->id,
                 "product_id" => explode(":", $product)[0],
                 "qty" => explode(":", $product)[1],
-              
+
             ]));
         }
-        
+
 
         $cart = $cart->filter(function ($cart) {
             return $cart->product != null;
@@ -277,7 +278,7 @@ class OrderController extends Controller
             [
                 "id" => 2,
                 "text" => trans("admin.Tomorrow"),
-             
+
             ],
             [
                 "id" => 3,
@@ -292,10 +293,10 @@ class OrderController extends Controller
 
         $branch_start_time = Carbon::parse($branch->start_time)->subHour();
         $branch_end_time = Carbon::parse($branch->end_time);
-      
+
         $time = [];
-        
-       
+
+
 
         for ($i = 1; $i <= 24; $i++) {
             $time[] = [
@@ -306,49 +307,49 @@ class OrderController extends Controller
             if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->format("g A")) {
                 break;
             }
-            
+
         }
-        
+
 
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }
 
-  
+
     public function getState($branch)
     {
            $now = now();
-           
+
            $start_time =  Carbon::parse($branch->start_time)->format('H:i');
            $end_time   =  Carbon::parse($branch->end_time)->format('H:i');
-          
+
 
           if ($start_time == $end_time) {
-           
+
               return 'open';
           }
 
           elseif($start_time < $end_time)
           {
-                  
+
             $between = $now->between($start_time, $end_time);
 
                 if ($between) {
-                   
+
                     return 'open';
                 }else{
-                   
+
                     return 'closed';
                 }//end if
           }else{
                 if (Carbon::now()->toTimeString() > $start_time) {
-                   
+
                     return 'open';
                 }
                 elseif(Carbon::now()->toTimeString() < $end_time){
-                   
+
                     return 'open';
                 }else{
-                    
+
                     return 'closed';
 
                 }//end if
@@ -391,7 +392,7 @@ class OrderController extends Controller
         }
 
         $getOrder = Order::find($request->order_id);
-      
+
         if ($getOrder) {
 
             $getOrder->update(['status'=>6, 'resone_id'=>$request->reason_id]);
@@ -400,7 +401,7 @@ class OrderController extends Controller
             if ($getOrder->point_redeem != 0) {
 
                $finalClientPoint = $getOrder->client->total_points + $getOrder->point_redeem;
-               
+
                $getOrder->client->update(['total_points'=> $finalClientPoint]);
 
             }
@@ -408,7 +409,7 @@ class OrderController extends Controller
             return $this->returnSuccessMessage('order Canceled successfully', 200);
 
         }else{
-            
+
             return $this->returnError(404, "This order id not found");
         }
     }
@@ -422,7 +423,7 @@ class OrderController extends Controller
         if ($validation->fails()) {
             return $this->returnValidationError(422, $validation);
         }
-        
+
         $client = getUser();
         if (!$client) {
             return $this->returnError(422, "user not exists");
@@ -446,7 +447,7 @@ class OrderController extends Controller
     public function rateOrder(Request $request)
     {
         $order = Order::find($request->order_id);
-        
+
         if ($order) {
                 $store_rate = $order->update([
                                     'delivery_rate' => $request->delivery_rate,
@@ -455,19 +456,19 @@ class OrderController extends Controller
                                     'time_rate'     => $request->time_rate,
                                     'comment'       => $request->comment,
                                     'status'        =>  5,
-                                ]); 
+                                ]);
 
                 return response()->json([
                     "status"  => true,
                     "msg"     => 'rate send successfully',
                     'data'    => new OrderRateResource($store_rate),
                 ]);
-        
+
         }else{
 
              return $this->returnError(404, "This Order ID Not Found");
         }
-    } 
+    }
 
     private function sendNotification()
     {
@@ -528,7 +529,7 @@ class OrderController extends Controller
         return response()->json([
             "status" => true,
            'data'=> new ConfirmationOrderResource($order),
-        ]);  
+        ]);
     }
 
 }

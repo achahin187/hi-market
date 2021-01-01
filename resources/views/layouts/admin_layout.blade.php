@@ -1,10 +1,9 @@
-
 <?php
 $settings = App\Models\Setting::all()->first();
 
 ?>
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -15,12 +14,13 @@ $settings = App\Models\Setting::all()->first();
     <title>Deliveritto | Dashboard</title>
 
     <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet"
+          href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-     <!-- Favicon -->   
+    <!-- Favicon -->
     <link rel="shortcut icon" type="{{ asset('logo.jpeg') }}" href="{{ asset('logo.jpeg') }}">
 
     <!-- DataTables -->
@@ -33,7 +33,8 @@ $settings = App\Models\Setting::all()->first();
     <!-- Bootstrap Color Picker -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
     <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet"
+          href="{{ asset('plugins') }}/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/select2/css/select2.min.css">
 
@@ -69,8 +70,9 @@ $settings = App\Models\Setting::all()->first();
 
     @endif
 
-     {{-- leaflet --}}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css"  data-require="leaflet@0.7.3" data-semver="0.7.3" />
+    {{-- leaflet --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css"
+          data-require="leaflet@0.7.3" data-semver="0.7.3"/>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -99,17 +101,35 @@ $settings = App\Models\Setting::all()->first();
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown ">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
+                    <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span>
+                    <div class="dropdown-divider"></div>
+                    @foreach($notifications as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2">{{$notification->title_ar}}</i>
+                        <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
+                    </a>
+                    @endforeach
 
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @can('admin-edit')
-                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                        {{ __('Profile') }}
-                    </a>
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                            {{ __('Profile') }}
+                        </a>
                     @endcan
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -150,15 +170,16 @@ $settings = App\Models\Setting::all()->first();
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-                    
-            @if(auth()->user()->hasAnyPermission(['admin-list','supermarketAdmin-list','client-list','point-list','branches-list', 'role-list','reason-list', 'logs-list']))
 
-                      <li class="nav-item has-treeview">     
-                      
+                    @if(auth()->user()->hasAnyPermission(['admin-list','supermarketAdmin-list','client-list','point-list','branches-list', 'role-list','reason-list', 'logs-list']))
+
+                        <li class="nav-item has-treeview">
+
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -166,8 +187,8 @@ $settings = App\Models\Setting::all()->first();
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                        
-                           
+
+
                             <ul class="nav nav-treeview">
 
                                 {{-- admin --}}
@@ -192,15 +213,16 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                 @endif 
+                                @endif
 
-                                   {{-- delivery-admin --}}
+                                {{-- delivery-admin --}}
                                 @if(auth()->user()->can('delivery-list'))
                                     <li class="nav-item">
-                                        <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}" class="nav-link">
+                                        <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}"
+                                           class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>
-                                                  {{__('admin.delivery_management')}}
+                                                {{__('admin.delivery_management')}}
                                             </p>
                                         </a>
                                     </li>
@@ -216,11 +238,11 @@ $settings = App\Models\Setting::all()->first();
                                     </li>
 
 
-                                @endif     
+                                @endif
 
-                                 {{-- client --}}
+                                {{-- client --}}
                                 @if(auth()->user()->can('client-list'))
-                                   {{-- client --}}
+                                    {{-- client --}}
                                     <li class="nav-item">
                                         <a href="{{route('clients.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -229,7 +251,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif    
+                                @endif
                                 {{-- role --}}
                                 @if(auth()->user()->can('role-list'))
                                     <li class="nav-item">
@@ -240,7 +262,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif 
+                                @endif
 
                                 {{-- point --}}
                                 @if(auth()->user()->can('point-list'))
@@ -252,7 +274,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif  
+                                @endif
 
                                 {{-- reason --}}
                                 @if(auth()->user()->can('reason-list'))
@@ -264,7 +286,7 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif  
+                                @endif
 
                                 {{-- logs --}}
                                 @if(auth()->user()->can('logs-list'))
@@ -276,108 +298,106 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif      
+                                @endif
 
                             </ul>
-                          </li> 
-                @endif
-                             {{-- location --}}
-                          @if(auth()->user()->can('location-list'))
-                            {{-- location --}}
-                            <li class="nav-item has-treeview">
-                                <a href="" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>
-                                      {{ __('admin.location_managment') }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
+                        </li>
+                    @endif
+                    {{-- location --}}
+                    @if(auth()->user()->can('location-list'))
+                        {{-- location --}}
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    {{ __('admin.location_managment') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
 
-                                   <li class="nav-item">
+                                <li class="nav-item">
                                     <a href="{{route('locations.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ __('admin.locations') }}</p>
                                     </a>
-                                   </li>
-                                   
-                                </ul>
-                            </li>
-                          @endif   
-                           {{-- category --}}
-                          @if(auth()->user()->can('category-list'))
+                                </li>
 
-                                  <li class="nav-item has-treeview">
-                                        
-                                        <a href="" class="nav-link">
-                                            <i class="nav-icon fas fa-chart-pie"></i>
-                                            <p>
-                                                {{ __('admin.category_managment') }}
-                                                <i class="right fas fa-angle-left"></i>
-                                            </p>
-                                        </a>
-                                        
+                            </ul>
+                        </li>
+                    @endif
+                    {{-- category --}}
+                    @if(auth()->user()->can('category-list'))
 
-                                       
-                                        <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
 
-                                                {{-- main category --}}
-                                                <li class="nav-item">
-                                                    <a href="{{route('categories.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                        <p>
-                                                            {{ __('admin.category') }}
-                                                        </p>
-                                                    </a>
-                                                </li>
-                                          
-                                                {{-- sub category --}}
-                                               {{--  <li class="nav-item">
-                                                    <a href="{{route('subcategories.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                        <p>
-                                                             {{ __('admin.subcategory') }}
-                                                        </p>
-                                                    </a>
-                                                </li> --}}
-                                             
-                                        
-                                                  {{-- measures --}}
-                                                 <li class="nav-item">
-                                                    <a href="{{route('measures.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                       <p>{{ __('admin.measure') }}</p>
-                                                    </a>
-                                                </li>
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    {{ __('admin.category_managment') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
 
-                                                 {{-- sizes --}}
-                                                <li class="nav-item">
-                                                    <a href="{{route('sizes.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                        <p>{{ __('admin.size') }}</p>
-                                                    </a>
-                                                </li>
-                                        </ul>
-                                    </li> 
-                          @endif                        
-                          
-                          @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list','vendor-list','product-list','offer-list']))
-                           {{-- supermarket --}} 
-                            <li class="nav-item has-treeview">
-                                
-                          
-                                <a href="" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>
-                                        {{ __('admin.supermarket_management') }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                
 
-                               
-                                <ul class="nav nav-treeview">
-                                    @if(auth()->user()->can('supermarket-list'))
+                            <ul class="nav nav-treeview">
+
+                                {{-- main category --}}
+                                <li class="nav-item">
+                                    <a href="{{route('categories.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            {{ __('admin.category') }}
+                                        </p>
+                                    </a>
+                                </li>
+
+                                {{-- sub category --}}
+                                {{--  <li class="nav-item">
+                                     <a href="{{route('subcategories.index')}}" class="nav-link">
+                                         <i class="far fa-circle nav-icon"></i>
+                                         <p>
+                                              {{ __('admin.subcategory') }}
+                                         </p>
+                                     </a>
+                                 </li> --}}
+
+
+                                {{-- measures --}}
+                                <li class="nav-item">
+                                    <a href="{{route('measures.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('admin.measure') }}</p>
+                                    </a>
+                                </li>
+
+                                {{-- sizes --}}
+                                <li class="nav-item">
+                                    <a href="{{route('sizes.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('admin.size') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list','vendor-list','product-list','offer-list']))
+                        {{-- supermarket --}}
+                        <li class="nav-item has-treeview">
+
+
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    {{ __('admin.supermarket_management') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+
+
+                            <ul class="nav nav-treeview">
+                                @if(auth()->user()->can('supermarket-list'))
                                     <li class="nav-item">
                                         <a href="{{route('supermarkets.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -386,19 +406,19 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                    @endif
+                                @endif
 
-                                 @if(auth()->user()->can('branches-list'))
+                                @if(auth()->user()->can('branches-list'))
                                     <li class="nav-item">
                                         <a href="{{route('branches.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>{{ __('admin.branches') }}</p>
                                         </a>
                                     </li>
-                                @endif   
+                                @endif
 
                                 @if(auth()->user()->can('vendor-list'))
-                                {{-- Vendors --}}
+                                    {{-- Vendors --}}
                                     <li class="nav-item">
                                         <a href="{{route('vendors.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -407,27 +427,27 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                 @endif 
-                                 @if(auth()->user()->can('product-list'))
-                                  <li class="nav-item">
+                                @endif
+                                @if(auth()->user()->can('product-list'))
+                                    <li class="nav-item">
                                         <a href="{{route('products.index',0)}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>{{ __('admin.list_product') }}</p>
                                         </a>
                                     </li>
-                                   
+
                                     <li class="nav-item">
                                         <a href="{{route('products.index',1)}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>
-                                               {{ __('admin.product_offers') }}
+                                                {{ __('admin.product_offers') }}
                                             </p>
                                         </a>
                                     </li>
-                                  @endif  
+                                @endif
 
                                 @if(auth()->user()->can('offer-list'))
-                                   {{-- offer --}}
+                                    {{-- offer --}}
                                     <li class="nav-item">
                                         <a href="{{route('offer.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -436,74 +456,75 @@ $settings = App\Models\Setting::all()->first();
                                             </p>
                                         </a>
                                     </li>
-                                @endif    
+                                @endif
 
-                                       
-                                </ul>
-                            </li>
-                          @endif
-                            
-                           {{-- delivery --}}
-                           @if(auth()->user()->can('delivery-list'))
-                          {{-- delivery --}} 
-                             <li class="nav-item">
-                                <a href="{{route('delivery.index',['company_id'=>auth()->user()->company_id ])}}" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>{{ __('admin.delivery') }}</p>
-                                </a>
-                            </li>
-                           @endif
 
-                           {{-- Orders --}}
-                           @if(auth()->user()->can('order-list'))
-                                @if(auth()->user()->hasRole('delivery_admin'))
+                            </ul>
+                        </li>
+                    @endif
 
-                               
-                                    <li class="nav-item">
-                                        <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}" class="nav-link" >
-                                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                                            <p>
-                                                {{ __('admin.orders') }}
-                                            </p>
-                                        </a>
-                                    </li>
-                              
+                    {{-- delivery --}}
+                    @if(auth()->user()->can('delivery-list'))
+                        {{-- delivery --}}
+                        <li class="nav-item">
+                            <a href="{{route('delivery.index',['company_id'=>auth()->user()->company_id ])}}"
+                               class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>{{ __('admin.delivery') }}</p>
+                            </a>
+                        </li>
+                    @endif
 
-                                @elseif(auth()->user()->hasRole('driver'))
-                                  <li class="nav-item">
-                                        <a href="{{route('orders.index',['driver_id'=>auth()->user()->id])}}" class="nav-link">
-                                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                                            <p>
-                                                {{ __('admin.orders') }}
-                                            </p>
-                                        </a>
-                                    </li>
-                                @else
-                                  <li class="nav-item">
-                                        <a href="{{route('orders.index')}}" class="nav-link">
-                                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                                            <p>
-                                                {{ __('admin.orders') }}
-                                            </p>
-                                        </a>
-                                    </li>
-                                @endif    
-                           @endif
-                        
-                           {{-- setting --}}
-                           @if(auth()->user()->can('setting-list'))
+                    {{-- Orders --}}
+                    @if(auth()->user()->can('order-list'))
+                        @if(auth()->user()->hasRole('delivery_admin'))
+
+
                             <li class="nav-item">
-                                <a href="{{route('settings.edit',$settings->id??"")}}" class="nav-link">
+                                <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}"
+                                   class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                       {{ __('admin.setting') }}
+                                        {{ __('admin.orders') }}
                                     </p>
                                 </a>
                             </li>
-                           @endif 
- 
 
-                           
+
+                        @elseif(auth()->user()->hasRole('driver'))
+                            <li class="nav-item">
+                                <a href="{{route('orders.index',['driver_id'=>auth()->user()->id])}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders') }}
+                                    </p>
+                                </a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{route('orders.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders') }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                    @endif
+
+                    {{-- setting --}}
+                    @if(auth()->user()->can('setting-list'))
+                        <li class="nav-item">
+                            <a href="{{route('settings.edit',$settings->id??"")}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    {{ __('admin.setting') }}
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+
+
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -514,15 +535,14 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
-            {{--                    <li class="nav-item">
-                                <a href="{{route('notifications.index')}}" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Notifications
-                                    </p>
-                                </a>
-                            </li>--}}
-
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{route('notifications.index')}}" class="nav-link">--}}
+{{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+{{--                            <p>--}}
+{{--                                Notifications--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
 
                     @if(auth()->user()->hasRole('developer'))
@@ -567,7 +587,8 @@ $settings = App\Models\Setting::all()->first();
 
 <!-- jQuery -->
 <script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" data-require="leaflet@0.7.3" data-semver="0.7.3"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"
+        data-require="leaflet@0.7.3" data-semver="0.7.3"></script>
 
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -620,9 +641,9 @@ $settings = App\Models\Setting::all()->first();
         })
 
         //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        $('#datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
         //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
         //Money Euro
         $('[data-mask]').inputmask()
 
@@ -643,16 +664,16 @@ $settings = App\Models\Setting::all()->first();
         //Date range as a button
         $('#daterange-btn').daterangepicker(
             {
-                ranges   : {
-                    'Today'       : [moment(), moment()],
-                    'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 },
                 startDate: moment().subtract(29, 'days'),
-                endDate  : moment()
+                endDate: moment()
             },
             function (start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
@@ -676,11 +697,11 @@ $settings = App\Models\Setting::all()->first();
         //color picker with addon
         $('.my-colorpicker2').colorpicker()
 
-        $('.my-colorpicker2').on('colorpickerChange', function(event) {
+        $('.my-colorpicker2').on('colorpickerChange', function (event) {
             $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
         });
 
-        $("input[data-bootstrap-switch]").each(function(){
+        $("input[data-bootstrap-switch]").each(function () {
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         });
 
@@ -711,7 +732,7 @@ $settings = App\Models\Setting::all()->first();
             $('.priceoffer').val(total_price);
         });
 
-        $('#cancel').on('click', function(){
+        $('#cancel').on('click', function () {
 
             let ordervalue = $(this).val();
 
@@ -720,98 +741,89 @@ $settings = App\Models\Setting::all()->first();
 
         });
 
-        $('.type').on('change', function(){
+        $('.type').on('change', function () {
 
             let type = $(this).val();
 
             console.log(type);
-            if(type == 2)
-            {
-                $('.offer_type').css('display','block');
+            if (type == 2) {
+                $('.offer_type').css('display', 'block');
                 $(".offer_type").prop("disabled", false);
-            }
-            else
-            {
-                $('.offer_type').css('display','none');
+            } else {
+                $('.offer_type').css('display', 'none');
                 $(".offer_type").prop("disabled", true);
             }
 
         });
 
-        $('.offer').on('change', function(){
+        $('.offer').on('change', function () {
 
             let type = $(this).val();
 
 
-            if(type == 'points')
-            {
-                $('.money').css('display','block');
+            if (type == 'points') {
+                $('.money').css('display', 'block');
                 $(".money").prop("disabled", false);
-                $('.points').css('display','block');
+                $('.points').css('display', 'block');
                 $(".points").prop("disabled", false);
-                $('.value_type').css('display','block');
-                $('.value_type').prop("disabled",true);
-                $('.promocode').css('display','none');
+                $('.value_type').css('display', 'block');
+                $('.value_type').prop("disabled", true);
+                $('.promocode').css('display', 'none');
                 $(".promocode").prop("disabled", true);
-            }
-            else if(type == 'promocode')
-            {
-                $('.promocode').css('display','block');
+            } else if (type == 'promocode') {
+                $('.promocode').css('display', 'block');
                 $(".promocode").prop("disabled", false);
-                $('.money').css('display','none');
+                $('.money').css('display', 'none');
                 $(".money").prop("disabled", true);
-                $('.points').css('display','none');
+                $('.points').css('display', 'none');
                 $(".points").prop("disabled", true);
-            }
-            else
-            {
-                $('.value_type').css('display','block');
+            } else {
+                $('.value_type').css('display', 'block');
                 $(".value_type").prop("disabled", false);
-                $('.money').css('display','none');
+                $('.money').css('display', 'none');
                 $(".money").prop("disabled", true);
-                $('.points').css('display','none');
+                $('.points').css('display', 'none');
                 $(".points").prop("disabled", true);
-                $('.promocode').css('display','none');
+                $('.promocode').css('display', 'none');
                 $(".promocode").prop("disabled", true);
             }
 
         });
 
-        $(".datefilter").on('change',function(){
+        $(".datefilter").on('change', function () {
 
             $("#datefilter").submit();
         });
 
-        $(".filteruser").on('change',function(){
+        $(".filteruser").on('change', function () {
 
             $("#filteruser").submit();
         });
 
-        $("#link").on('click',function(e){
+        $("#link").on('click', function (e) {
             e.preventDefault()
             $("#import").trigger('click');
         });
 
-         $("#image_point").on('click',function(e){
+        $("#image_point").on('click', function (e) {
             e.preventDefault()
             $("#upload").trigger('click');
         });
 
-        $("#import").on('change',function(){
+        $("#import").on('change', function () {
 
             $("#import-form").submit();
         });
-
 
 
     });
 
 </script>
 <script>
-      $('#click-form').on('click', function(e){
-            e.preventDefault();
-              $("#form-submit").submit();
-      });
+    $('#click-form').on('click', function (e) {
+        e.preventDefault();
+        $("#form-submit").submit();
+    });
 </script>
 
 <!-- Page script -->
@@ -837,7 +849,7 @@ $settings = App\Models\Setting::all()->first();
             "autoWidth": false,
             "responsive": true,
         });
-         $('#example3').DataTable({
+        $('#example3').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
@@ -846,7 +858,7 @@ $settings = App\Models\Setting::all()->first();
             "autoWidth": false,
             "responsive": true,
         });
-          $('#example4').DataTable({
+        $('#example4').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
@@ -881,7 +893,6 @@ $settings = App\Models\Setting::all()->first();
     $('#reservation').daterangepicker()
 
 </script>
-
 
 
 <!--

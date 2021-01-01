@@ -742,7 +742,7 @@ class OrderController extends Controller
 
     public function getMessage($order)
     {
-        
+
 
          return __("orders.messages",["num"=>$order->num])[$order->status];
     }

@@ -37,13 +37,13 @@ class OrderNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return array
      */
     public function toDatabase()
     {
         return [
             'id' => $this->order->id,
-            'data' => 'You Have New Order',
+            'data' => __("orders.messages.0",["num"=>$this->order->num]),
 
         ];
     }
