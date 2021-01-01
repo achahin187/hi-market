@@ -33,7 +33,7 @@ class CartResource extends JsonResource
             "category_id" => $product->category_id ?? "",
             "flag" => $product->flag ?? 0,
             "supermarket_id" => (int)request("supermarket_id"),
-            "supermarketName" => $this->getBranch()->name,
+            "supermarketName" => $this->getBranchName(),
             "favourite" => (int)(\DB::table("client_product")->where("product_id",$product->id)->where("udid",request()->header("udid"))->count() != 0),
             "percentage" => $product->price && $this->offer_price ? (100 - (($this->offer_price / $this->price) * 100)) : 0,
             "imagepath" => asset("product_images/" . $product->images)??"",
@@ -44,8 +44,8 @@ class CartResource extends JsonResource
         ];
     }
 
-    private function getBranch()
-    {      
-        return Branch::Where('id', request("supermarket_id") )->first();
+    private function getBranchName()
+    {
+        return Branch::Where('id', request("supermarket_id") )->value("name");
     }
 }
