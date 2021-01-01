@@ -110,7 +110,7 @@ $settings = App\Models\Setting::all()->first();
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
                    {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
                     <div class="dropdown-divider"></div>
-                    @foreach($notifications->limit(10) as $notification)
+                    @foreach($notifications as $notification)
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-envelope mr-2">{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</i>
                         <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
