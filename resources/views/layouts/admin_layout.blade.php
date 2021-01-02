@@ -102,10 +102,11 @@ $settings = App\Models\Setting::all()->first();
         <ul class="navbar-nav ml-auto">
             <!-- Messages Dropdown Menu -->
             @isset($notifications)
-            <li class="nav-item dropdown " id="unreadNotification">
+           
+            <li class="nav-item dropdown "id="div1" >
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+                    <span class="badge badge-warning navbar-badge" id="div12">{{$notifications->count()}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
                    {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
@@ -120,6 +121,7 @@ $settings = App\Models\Setting::all()->first();
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+            </div>
             @endisset
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -967,11 +969,21 @@ $settings = App\Models\Setting::all()->first();
 
 @stack('scripts')
 <script>
-    setInterval(function(){
-    $("#notification_count").load(window.location.href + "#notification_count");
-    $("#unreadNotification").load(window.location.href + "#unreadNotification");
 
-    },5000);
+
+$(document).ready(function() {
+var pageRefresh = 5000; //5 s
+    setInterval(function() {
+        refresh();
+    }, pageRefresh);
+});
+
+// Functions
+
+function refresh() {
+    $('#div1').load(location.href + " #div1");
+    $('#div2').load(location.href + " #div2");
+}
 </script>
 </body>
 </html>
