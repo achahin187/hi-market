@@ -151,10 +151,10 @@ $settings = App\Models\Setting::all()->first();
         <ul class="navbar-nav ml-auto">
 
              @isset($notifications)
-            <li class="nav-item dropdown " id="unreadNotification">
+            <li class="nav-item dropdown " id="div1">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+                    <span class="badge badge-warning navbar-badge" id="div2">{{$notifications->count()}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
                    {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
