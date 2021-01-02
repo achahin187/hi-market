@@ -21,9 +21,9 @@ use JWTAuth;
 
 class AuthController extends Controller
 {
-    //
+    //  
     use GeneralTrait;
-
+ 
   
     public function send_sms($name, $mobile, $msg, $lang)
     {
@@ -213,7 +213,7 @@ class AuthController extends Controller
 
         $activation_msg = trans('admin.activation_code') . $code;
 
-        $this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
 
         $msg = "we sent an activation code to verify your mobile number";
 
