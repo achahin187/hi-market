@@ -52,7 +52,7 @@ if (!function_exists("branchTotal")) {
 }
 
 if (!function_exists("CompanyTotal")) {
-    function CompanyTotal($company_id)
+    function  CompanyTotal($company_id)
     {
         return \App\Models\Order::Where('company_id', $company_id)->sum('shipping_before');
     }

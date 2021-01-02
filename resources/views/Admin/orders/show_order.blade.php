@@ -194,11 +194,12 @@
                                 </div> 
 
 
-
+                                @if($order->rate)
                                 <div class="form-group">
                                   <label>Rate</label>
                                   <p>{{ $order->rate }}</p>
                                 </div>
+                                @endif
 
                               @if($order->delivery_rate)
                                 <div class="form-group">
@@ -234,11 +235,12 @@
                                   <p>{{ $order->comment }}</p>
                                 </div>
                               @endif  
-
+                               @if($order->comment)
                                 <div class="form-group">
                                   <label>Delivery Date</label>
                                   <p>{{ $order->delivery_date }}</p>
                                 </div>
+                                @endif
                              
                            
                            
