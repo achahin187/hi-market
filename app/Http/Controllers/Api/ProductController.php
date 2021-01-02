@@ -181,9 +181,19 @@ class ProductController extends Controller
                     $data = $this->checkPolygon($client->lat, $client->lon);
                   
                     if ($data) {
-                        
+                          
+                        if(count( $data) > 2)
+                        {
+                          $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
-                        $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                          
+                        }else{
+
+                          $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                         
+                        }
+
+                        //$getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
                      
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
