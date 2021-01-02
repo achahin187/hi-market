@@ -17,7 +17,7 @@
                     @if(auth()->user()->can('admin-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('notifications.create')}}">add new notification</a></li>
+                               {{--  <li class="breadcrumb-item"><a href="{{route('notifications.create')}}">add new notification</a></li> --}}
                             </ol>
                         </div>
                     @endif
@@ -51,19 +51,16 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>title</th>
-                                        <th>body</th>
-                                        <th>type</th>
-                                        <th>send</th>
+                                        <th>Notification</th>
+                                       
                                         <th>controls</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($notifications as $notification)
                                         <tr>
-                                            <td>{{$notification->title}}</td>
-                                            <td>{{$notification->body}}</td>
-                                            <td>{{$notification->type}}</td>
+                                            <td>{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</td>
+   
                                             <td><button type="button" class="dropdown-item" >{{ __('send') }}</button></td>
                                             <td>
                                                 <div class="dropdown">
@@ -71,11 +68,11 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('offers.destroy', $offer->id) }}" method="post">
+                                                        <form action="{{ route('notifications.destroy', $notification->data['id']) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                                <a class="dropdown-item" href="{{ route('notifications.edit', $notification->id) }}">{{ __('edit & resend') }}</a>
+                                                                {{-- <a class="dropdown-item" href="{{ route('notifications.edit', $notification->id) }}">{{ __('edit & resend') }}</a> --}}
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 

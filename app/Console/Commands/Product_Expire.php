@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
+use App\User;
 use Illuminate\Console\Command;
-
+use Illuminate\Support\Facades\Notification;
 class Product_Expire extends Command
 {
     /**
@@ -38,12 +39,14 @@ class Product_Expire extends Command
      */
     public function handle()
     {
-       $expired_products = Product::where('exp_date',today())->orwhere('end_date',today())->get();
-
-       foreach($expired_products as $product)
-       {
+       $product = Product::where('exp_date',today())->Where('status', 'active')->orwhere('end_date',today())->first();
+        if ($product) {
+       
            $product->update(['status' => 'inactive']);
-       }
+           $sendToAdmins = User::role(['super_admin','supermarket_admin'])->get();
+           Notification::send($sendToAdmins,new OrderNotification($product));
+        }
+      
 
     }
 }

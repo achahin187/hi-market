@@ -10,5 +10,9 @@ return [
         5 => "Your Order :num Was Delivered Rate Your Order",
         6 => "Your Order :num was Cancelled",
         null => ""
+    ],
+
+    "product"=>[
+        0 => 'The product has been deactived',
     ]
 ];

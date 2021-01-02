@@ -273,6 +273,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
        
         Route::resource('helps','Admin\HelpController');
 
+        Route::resource('notifications','Admin\NotificationController');
+
         // Route::get('rate',function(){
         //     $rate = 
         //     [5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1];

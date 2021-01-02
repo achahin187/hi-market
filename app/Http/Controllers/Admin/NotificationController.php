@@ -11,60 +11,7 @@ use Illuminate\Http\Response;
 class NotificationController extends Controller
 {
 
-    protected $serverKey;
 
-    public function __construct()
-    {
-        $this->serverKey = config('app.firebase_server_key');
-    }
-
-    public function saveToken (Request $request)
-    {
-        $client = Client::find($request->user_id);
-        $client->device_token = $request->fcm_token;
-        $client->save();
-
-        if($client)
-            return response()->json([
-                'message' => 'User token updated'
-            ]);
-
-        return response()->json([
-            'message' => 'Error!'
-        ]);
-    }
-
-    public function sendPush (Request $request)
-    {
-        $client = Client::find($request->id);
-        $data = [
-            "to" => $client->device_token,
-            "notification" =>
-                [
-                    "title" => 'Web Push',
-                    "body" => "Sample Notification",
-                    "icon" => url('/logo.png')
-                ],
-        ];
-        $dataString = json_encode($data);
-
-        $headers = [
-            'Authorization: key=' . $this->serverKey,
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-
-        curl_exec($ch);
-
-        return redirect('/home')->with('message', 'Notification sent!');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -72,8 +19,8 @@ class NotificationController extends Controller
      */
     public function index()
     {
-    //
-        $notifications = Notification::where('flag',0)->orderBy('id', 'desc')->get();
+    
+        $notifications = Notification::orderBy('id', 'desc')->get();
 
         return view('Admin.notifications.index',compact('notifications'));
     }
@@ -85,8 +32,7 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        //
-        return view('Admin.notifications.create');
+        
     }
 
     /**
@@ -145,6 +91,8 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notification = Notification::find($id);
+        $notification->delete();
+        return redirect()->route('Admin.notifications.index')->withStatus(__('deleted successfully'));
     }
 }

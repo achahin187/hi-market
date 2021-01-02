@@ -154,7 +154,7 @@ $settings = App\Models\Setting::all()->first();
             <li class="nav-item dropdown " id="div1">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge" id="div2">{{$notifications->count()}}</span>
+                    <span class="badge badge-warning navbar-badge" id="div2">{{auth()->user()->unreadNotifications->count()}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
                    {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
@@ -163,10 +163,14 @@ $settings = App\Models\Setting::all()->first();
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-envelope mr-2">{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</i>
                         <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
+                             @php 
+                              $notification->markAsRead()
+                              @endphp 
+
                     </a>
                     @endforeach
 
-                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    <a href="{{ route('notifications.index') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
             @endisset
@@ -585,6 +589,16 @@ $settings = App\Models\Setting::all()->first();
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                financials
+                            </p>
+                        </a>
+                    </li>
+
+                      <li class="nav-item">
+
+                        <a href="{{route('notifications.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 financials
