@@ -7,9 +7,10 @@ use App\Models\Product;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 use Carbon\Carbon;
 use DB;
-class Productimport implements ToModel, WithHeadingRow
+class Productimport implements ToModel, WithHeadingRow, WithValidation
 {
    
     public function model(array $row)
@@ -56,6 +57,14 @@ class Productimport implements ToModel, WithHeadingRow
     private function ParseDate($date)
     {
     	return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date));
+    }
+
+    public function rules():array
+    {
+        return [
+            '*.product_arabic_name' => ['required'],
+            '*.product_english_name' => ['required'],
+        ];
     }
 }
           
