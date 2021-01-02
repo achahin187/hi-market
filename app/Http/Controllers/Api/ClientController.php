@@ -47,6 +47,7 @@ class ClientController extends Controller
 
     }
 
+
     public function client_profile(Request $request)
     {
 
@@ -411,7 +412,7 @@ class ClientController extends Controller
 
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
-         $this->send_sms('Eramint', $request->phone, $activation_msg, app()->getLocale());
+         $this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
 
         return response()->json([
 
