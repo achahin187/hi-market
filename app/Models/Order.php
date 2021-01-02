@@ -118,6 +118,10 @@ class Order extends Model
         return $this->belongsTo('App\Models\Address','address');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch','branch_id','id');
+    }
 
 
 

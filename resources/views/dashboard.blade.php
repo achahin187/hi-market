@@ -1,7 +1,21 @@
 @extends('master.master')
 
 @section('content')
+@php
+$orders =  \App\Models\Order::orderBy('created_at', 'desc')->take(5)->get();
+$products_count = DB::table('products')->Where('status', 'active')->count();
+$orders_count = DB::table('orders')->count();
+$clients_count = DB::table('clients')->Where('status', 'active')->count();
+$branches_count = DB::table('branches')->Where('status', 'active')->count();
 
+ $sales_data = \App\Models\Order::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_money) as sum')
+        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('MONTH(created_at)')->get();
+
+
+@endphp
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ URL::asset('dist/js/pages/dashboard.js') }}"></script>
      @if(auth()->user()->hasRole('super_admin'))
@@ -10,14 +24,14 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{ $products_count }}</h3>
 
-                    <p>New Orders</p>
+                    <p>Products</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('products.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -25,14 +39,14 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3>{{ $orders_count }}<sup style="font-size: 20px"></sup></h3>
 
-                    <p>Bounce Rate</p>
+                    <p>Orders</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('orders.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -40,14 +54,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{ $clients_count }}</h3>
 
                     <p>User Registrations</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -55,14 +69,14 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{ $branches_count }}</h3>
 
-                    <p>Unique Visitors</p>
+                    <p>Branches</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('branches.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -70,6 +84,57 @@
     @endif
     <!-- /.row -->
     <!-- Main row -->
+
+     <div class="box box-solid">
+
+                <div class="box-header">
+                    <h3 class="box-title">Sales Graph</h3>
+                </div>
+                <div class="box-body border-radius-none">
+                    <div class="chart" id="line-chart" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+
+     <div class="row">
+                <div class="col-md-6">
+                  <div class="box">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">latest 5 Orders</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <table class="table table-bordered">
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>num</th>
+                          <th>Branch</th>
+                          <th>Total Money</th>
+                          <th >Action</th>
+                        </tr>
+                        @isset($orders)
+                        @foreach($orders as $index=>$order)
+                        <tr>
+                          <td>{{ $index +1 }}</td>
+                          <td>{{ $order->num }}</td>
+                          <td>{{ $order->branch->name }}</td>
+                          <td>{{ $order->total_money .' LE' }}</td>
+                          <!-- download button -->
+                            <td> <a href="{{ route('orders.show.details',['id'=>$order->id]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td>
+                             
+                        <!-- delete button -->
+                           
+                            </td>
+                        </tr>
+                          @endforeach
+                        @endisset
+                      </table>
+                    </div>
+                </div>
+              </div>
+              <!-- /.row -->
+
     @if(auth()->user()->hasRole('supser_admin'))
     <div class="row">
         <!-- Left col -->
@@ -594,4 +659,30 @@
             HidefloatButton()
         })
     </script>
+
+     <script>
+
+        //line chart
+        var line = new Morris.Line({
+            element: 'line-chart',
+            resize: true,
+            data: [
+                @foreach ($sales_data as $data)
+                {
+                    ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
+                },
+                @endforeach
+            ],
+            xkey: 'ym',
+            ykeys: ['sum'],
+            labels: ['total'],
+            lineWidth: 2,
+            hideHover: 'auto',
+            gridStrokeWidth: 0.4,
+            pointSize: 4,
+            gridTextFamily: 'Open Sans',
+            gridTextSize: 10
+        });
+    </script>
+
 @endsection

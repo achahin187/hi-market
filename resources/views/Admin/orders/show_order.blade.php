@@ -11,16 +11,8 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>{{ __('admin.client') }}</h1>
+                        <h1>{{ __('admin.order_details') }}</h1>
                     </div>
-
-                    @if(auth()->user()->can('client-create'))
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{route('clients.create')}}">{{ __('admin.add_client') }}</a></li>
-                            </ol>
-                        </div>
-                    @endif
 
                     <div class="col-12">
 
@@ -44,15 +36,29 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.client') }}</h3>
+                                <h3 class="card-title">{{ __('admin.order_details') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                <!-- Image Field -->
                                 <div class="form-group">
-                                  <label>num</label>
+                                  <label>Order num</label>
                                   <p>{{ $order->num }}</p>
                                 </div>
+
+
+                                <div class="form-group">
+                                  <label>Products </label>
+                                  @php
+                                   $products = DB::table('order_product')->where('order_id', $order->id)->get();
+
+                                  @endphp
+                              @foreach( $products as $product)
+                            
+                                  <p>{{ \App\Models\Product::Where('id', $product->product_id)->first()->name }} <span style="color: red;font-weight: bold;"> Quantity :</span> {{ $product->quantity }} <span style="color: red; font-weight: bold;"> price : </span> {{ $product->price}} </p>
+                              @endforeach
+                                </div> 
+
 
                                 <div class="form-group">
                                   <label>Status</label>
@@ -80,58 +86,145 @@
 
                                 <div class="form-group">
                                   <label>Client Name</label>
-                                  <p>{{ $order->client->name_en }}</p>
+                                  <p>{{ $order->client->name }}</p>
                                 </div>
+
+                               <div class="form-group">
+                                  <label>Client Address</label>
+                                  <p>{{ $order->addressOrder->address }}</p>
+                               </div>
+
+                               <div class="form-group">
+                                  <label>Client Phone</label>
+                                  <p>{{ $order->addressOrder->phone }}</p>
+                               </div>
 
                                 <div class="form-group">
                                   <label>company Name</label>
-                                  <p>{{ $order->companies->name_en }}</p>
+                                  <p>{{ $order->companies->name }}</p>
                                 </div>
+
+
+                                <div class="form-group">
+                                  <label>Branch</label>
+                                  <p>{{ $order->branch->name }}</p>
+                                </div>
+                                
+
+                              
+
+
+
+                              @if($order->point_redeem)
+                                <div class="form-group">
+                                  <label>Point Redeem</label>
+                                  <p>{{ $order->point_redeem  }}</p>
+                                </div> 
+                              @endif  
+
+                              @if($order->promocode)
+                                <div class="form-group">
+                                  <label>Promocode</label>
+                                  <p>{{ $order->promocode  }}</p>
+                                </div>
+                             @endif   
+
+                               
+                                {{-- total_before --}}
+                                <div class="form-group">
+                                  <label>Total Money</label>
+                                  <p>{{ $order->total_before  }}</p>
+                                </div>
+
+                                {{-- total_money --}}
+                               @if( $order->total_before != $order->total_money  )
+                                <div class="form-group">
+                                  <label>Total Money</label>
+                                  <p> <span style="color: green;  font-weight: bold;">After Disount</span>  {{ $order->total_money }}</p>
+                                </div>
+
+                               @endif
+
+
+                               <div class="form-group">
+                                  <label>Shipping Fee</label>
+                                  <p>{{ $order->shipping_before }}</p>
+                                   
+                                </div> 
+                               {{-- shipping_fee --}}
+                              @if( $order->shipping_fee == 0)
+                                 <div class="form-group">
+                                  <label>Shipping Fee</label>
+                                  <p> <span style="color: green;  font-weight: bold;">Free Shipping</span> {{ $order->shipping_fee }}</p>
+                                  
+                                </div> 
+
+                              {{-- Shipping Fee --}}
+                               @elseif( $order->shipping_fee != $order->shipping_before)
+                                 <div class="form-group">
+                                  <label>Shipping Fee</label>
+                                  <p>  <span style="color: green;  font-weight: bold;">After Dicount</span> {{ $order->shipping_fee }}</p>
+                                   
+                                </div> 
+
+                              @endif
+
+
+                                <div class="form-group">
+                                  <label>Final Total Money</label>
+                                  <p>  <span style="color: green;  font-weight: bold;">After Dicount</span> {{ $order->shipping_fee }}</p>
+                                   
+                                </div> 
+
+
 
                                 <div class="form-group">
                                   <label>Rate</label>
                                   <p>{{ $order->rate }}</p>
                                 </div>
 
+                              @if($order->delivery_rate)
                                 <div class="form-group">
                                   <label>Delivery Rate</label>
                                   <p>{{ $order->delivery_rate }}</p>
-                                </div>
+                                </div> 
+                              @endif
 
-                                 <div class="form-group">
+                              @if($order->seller_rate)
+                                <div class="form-group">
+                                  <label>Seller Rate</label>
+                                  <p>{{ $order->seller_rate }}</p>
+                                </div>
+                              @endif
+
+                              @if($order->pickup_rate)
+                                <div class="form-group">
+                                  <label>PickUp Rate</label>
+                                  <p>{{ $order->pickup_rate }}</p>
+                                </div>
+                              @endif
+                                
+                              @if($order->time_rate)
+                                <div class="form-group">
+                                  <label>Time Rate</label>
+                                  <p>{{ $order->time_rate }}</p>
+                                </div>
+                              @endif
+                                
+                              @if($order->comment)
+                                <div class="form-group">
+                                  <label>Comment</label>
+                                  <p>{{ $order->comment }}</p>
+                                </div>
+                              @endif  
+
+                                <div class="form-group">
                                   <label>Delivery Date</label>
                                   <p>{{ $order->delivery_date }}</p>
                                 </div>
-
-                                 <div class="form-group">
-                                  <label>Delivery Client Review</label>
-                                  <p>{{ $order->client_review }}</p>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Total Money</label>
-                                  <p>{{ $order->total_money }}</p>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Total Money Befor</label>
-                                  <p>{{ $order->total_before }}</p>
-                                </div>
-
-                                 <div class="form-group">
-                                  <label>Shipping Fee</label>
-                                  <p>{{ $order->shipping_fee }}</p>
-                                </div> 
-
-                                <div class="form-group">
-                                  <label>Shipping Fee before</label>
-                                  <p>{{ $order->shipping_before }}</p>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Branch</label>
-                                  <p>{{ $order->branch->name }}</p>
-                                </div>
+                             
+                           
+                           
 
 
 

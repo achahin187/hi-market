@@ -22,6 +22,8 @@ $settings = App\Models\Setting::all()->first();
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Favicon -->
     <link rel="shortcut icon" type="{{ asset('logo.jpeg') }}" href="{{ asset('logo.jpeg') }}">
+     {{--morris--}}
+    <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins') }}/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -648,6 +650,9 @@ $settings = App\Models\Setting::all()->first();
 <!-- Bootstrap Switch -->
 <script src="{{ asset('plugins') }}/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 
+{{--morris --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
 
 <script>
     $(function () {
@@ -878,6 +883,61 @@ $settings = App\Models\Setting::all()->first();
             "responsive": true,
         });
         $('#example4').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+           $('#example10').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+              $('#example11').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+         $('#example12').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+           $('#example13').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+             $('#example14').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+
+               $('#example15').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,

@@ -7,6 +7,8 @@ use App\Models\Financial;
 use App\Models\Payable;
 use App\Models\Receivable;
 use App\Models\Order;
+use App\Models\Branch;
+use App\Models\DeliveryCompany;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -41,10 +43,23 @@ class FinancialController extends Controller
     public function index(Request $request)
     {
 
-        $financials = $this->model::all();
+        $branches = Branch::WhereHas('orders')->get();
+        $companies = DeliveryCompany::WhereHas('orders')->get();
 
-         return view($this->blade.__FUNCTION__, compact('financials'));
+         return view($this->blade.__FUNCTION__, compact('branches', 'companies'));
       
+    }
+
+    /**
+     *  Display a listing of the Company Orders.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\
+     */
+    public function ShowCompanyOrders($id)
+    {
+        $orders  = Order::where('company_id', $id)->whereIn('status', [5,4])->get();
+        $company = DeliveryCompany::find($id);
+        return view('Admin.financials.company_details', compact('orders', 'company') );
     }
 
     /**
@@ -165,4 +180,6 @@ class FinancialController extends Controller
 
         return redirect(route('financials.index'));
     }
+
+   
 }

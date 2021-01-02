@@ -17,11 +17,11 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if(auth()->user()->can('delivery-list'))
+                           {{--  @if(auth()->user()->can('delivery-list'))
                                 <li class="breadcrumb-item"><a
                                         href="{{route('financials.create')}}">{{ __('admin.add_financials') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         </ol>
                     </div>
 
@@ -42,7 +42,7 @@
         </section>
 
         <!-- Main content -->
-        {{-- table 2 --}} 
+        {{-- table 1 --}} 
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -57,17 +57,11 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.company_name') }}</th>
+                                        <th>{{ __('admin.commision') }}</th>
                                         <th>{{ __('admin.total_order') }}</th>
                                         <th>{{ __('admin.delivertto_money') }}</th>
                                         <th>{{ __('admin.branch_money') }}</th>
-                                        <th>{{ __('admin.branch_recieved') }}</th>
-                                        <th>{{ __('admin.branch_remain') }}</th>
-                                        <th>{{ __('admin.company_remain') }}</th>
-                                        
-                                     
-                                        <th>{{ __('admin.status') }}</th>
-
+                                       
 
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <th>{{ __('admin.controls') }}</th>
@@ -76,28 +70,19 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach($financials as $financial)
+                                    @foreach($branches as $branch)
                                         <tr>
                                             
                                         
-                                        <td>{{$financial->branch->name}}</td>
-                                        <td>{{$financial->company->name}}</td>
-                                        <td>{{$financial->total_order}}</td>
-                                        <td>{{$financial->delivertto_money}}</td>
-                                        <td>{{$financial->branch_money}}</td>
-                                        <td>{{$financial->branch_recieved}}</td>
-                                        <td>{{$financial->branch_remain}}</td>
-                                        <td>{{$financial->company_remain}}</td>
-                                       
-                                       
-                                        <td> 
-                                            <a href="{{ route('financials.status', ['status'=>$financial->status,'id'=>$financial->id]) }}" class="btn btn-block btn-outline-{{ $financial->status ==1 ? 'success': 'danger'}}">{{__($financial->status ==1 ? 'active': 'inactive')}}</a>
-                                        </td>
-                                        
+                                        <td>{{$branch->name }}</td>
+                                        <td>{{$branch->commission }}</td>
 
-                                          
+                                        <td>{{ branchTotal($branch->id) }}</td>
 
+                                        <td>{{branchTotal($branch->id) *$branch->commission/ 100  }}</td>
 
+                                        <td>{{    branchTotal($branch->id) - (branchTotal($branch->id) * $branch->commission/ 100)  }}</td>
+                          
                                             @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                                 <td>
                                                     <div class="dropdown">
@@ -109,7 +94,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                                             @if(auth()->user()->can('delivery-delete'))
                                                                 <form
-                                                                    action="{{ route('financials.destroy', $financial->id) }}"
+                                                                    action="{{ route('financials.destroy',$branch->id) }}"
                                                                     method="post">
                                                                     @csrf
                                                                     @method('delete')
@@ -121,7 +106,7 @@
                                                             @endif
                                                             @if(auth()->user()->can('delivery-edit'))
                                                                 <a class="dropdown-item"
-                                                                   href="{{ route('financials.edit', $financial->id) }}">{{ __('edit') }}</a>
+                                                                   href="{{ route('financials.edit',$branch->id) }}">{{ __('edit') }}</a>
                                                             @endif
 
                                                          
@@ -141,84 +126,55 @@
                 </div>
              </div>                                
         </section>
-       {{-- end table 2 --}} 
+       {{-- end table 1 --}} 
 
-        {{-- table 3 --}} 
-          <!-- Main content -->
-   {{--      <section class="content">
+        {{-- table 2 --}} 
+         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.points') }}</h3>
+                                <h3 class="card-title">{{ __('admin.promocode') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example10" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>{{ __('admin.type') }}</th>
-                                        <th>{{ __('admin.source') }}</th>                                     
-                                        <th>{{ __('admin.value') }}</th>
-                                        <th>{{ __('admin.total_order_money') }}</th>       
+                                        <th>{{ __('admin.branch_name') }}</th>
+                                        <th>{{ __('admin.commision') }}</th>
                                         <th>{{ __('admin.status') }}</th>
-
-
+                                        <th>{{ __('admin.branches') }}</th>
+                                        
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
-                                            <th>{{ __('admin.controls') }}</th>
+                                            <th>{{ __('admin.details') }}</th>
                                         @endif
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    @foreach($financials as $financials)
+                                    @foreach($companies as $company)
                                         <tr>
                                             
-                                        <td>{{$financials->type}}</td>
-                                        <td>{{$financials->source}}</td>
-                                        <
-                                        <td>{{$financials->value}}</td>
-                                        <td>{{$financials->total_order_money}}</td>
-                                       
-                                        <td> 
-                                            <a href="{{ route('financials.status', ['status'=>$financials->status,'id'=>$financials->id]) }}" class="btn btn-block btn-outline-{{ $financials->status ==1 ? 'success': 'danger'}}">{{__($financials->status ==1 ? 'active': 'inactive')}}</a>
-                                        </td>
                                         
+                                        <td>{{$company->name }}</td>
+                                        <td>{{$company->commission }}</td>
+                                        <td>{{$company->status == 1 ?trans('admin.active') :trans('admin.deactive') }}</td>
+                                        <td>
+                                            @foreach($company->branches as $branches)
+                                            <span class="badge badge-primary">{{ $branches->name }}</span>
+                                            @endforeach
+                                        </td>
 
-                                          
-
-
+                          
                                             @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false"
-                                                                class="drop-down-button">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            @if(auth()->user()->can('delivery-delete'))
-                                                                <form
-                                                                    action="{{ route('financials.destroy', $financials->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('delete')
-
-
-                                                                    <button type="button" class="dropdown-item"
-                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                                </form>
-                                                            @endif
+                                                
                                                             @if(auth()->user()->can('delivery-edit'))
-                                                                <a class="dropdown-item"
-                                                                   href="{{ route('financials.edit', $financials->id) }}">{{ __('edit') }}</a>
+                                                                <a  class="btn btn-primary" 
+                                                                   href="{{ route('company.orders',$company->id) }}">{{ __('admin.details') }}</a>
                                                             @endif
-
-                                                         
-
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             @endif
                                         </tr>
@@ -226,19 +182,14 @@
 
                                     </tbody>
                                 </table>
-                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
              </div>                                
         </section>
- --}}
-        {{-- table 2 --}} 
-
+        {{-- end table 2 --}} 
   
-      
-
-        {{-- table 2 --}} 
 
     
 

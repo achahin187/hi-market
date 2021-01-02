@@ -119,6 +119,11 @@ class Branch extends Model
         return $this->belongsToMany('App\Models\Product', 'product_supermarket');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
+
 
 
 

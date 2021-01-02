@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Financial extends Model
 {
      protected $guarded = [];
+
+     public function branch()
+     {
+     	return $this->belongsTo('App\Models\Branch');
+     }
+
 }

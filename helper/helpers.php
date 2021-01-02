@@ -43,3 +43,18 @@ if (!function_exists("wrapNum")) {
         return $x === $max && $includeMax ? $x : (($x - $min) % $d + $d) % $d + $min;
     }
 }
+
+if (!function_exists("branchTotal")) {
+    function branchTotal($branch_id)
+    {
+        return \App\Models\Order::Where('branch_id', $branch_id)->sum('total_before');
+    }
+}
+
+if (!function_exists("CompanyTotal")) {
+    function CompanyTotal($company_id)
+    {
+        return \App\Models\Order::Where('company_id', $company_id)->sum('shipping_before');
+    }
+}
+

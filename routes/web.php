@@ -92,6 +92,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
 
         Route::resource('financials', 'Admin\FinancialController');
+        Route::get('ShowCompanyOrders/{id}', 'Admin\FinancialController@ShowCompanyOrders')->name('company.orders');
+
 
 
             Route::get('client_orders/{client_id}', 'Admin\ClientController@clientorders')->name('client.orders');

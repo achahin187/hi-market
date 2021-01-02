@@ -99,6 +99,8 @@ $settings = App\Models\Setting::all()->first();
 
     <!-- AdminLTE for demo purposes -->
     <script src="{{ URL::asset('dist/js/demo.js') }}"></script>
+         {{--morris--}}
+    <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
 
     <!-- DataTables -->
     <script src="{{ URL::asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -654,6 +656,10 @@ $settings = App\Models\Setting::all()->first();
 <!-- ./wrapper -->
 
 </body>
+{{--morris --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+
 
 <script>
     $(function () {
@@ -752,6 +758,30 @@ $settings = App\Models\Setting::all()->first();
         };
     }(jQuery));
 </script>
+ <script>
+
+        //line chart
+        var line = new Morris.Line({
+            element: 'line-chart',
+            resize: true,
+            data: [
+                @foreach ($sales_data as $data)
+                {
+                    ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
+                },
+                @endforeach
+            ],
+            xkey: 'ym',
+            ykeys: ['sum'],
+            labels: ['total'],
+            lineWidth: 2,
+            hideHover: 'auto',
+            gridStrokeWidth: 0.4,
+            pointSize: 4,
+            gridTextFamily: 'Open Sans',
+            gridTextSize: 10
+        });
+    </script>
 
 @yield('scripts')
 {{-- <script>
