@@ -573,11 +573,12 @@ class ClientController extends Controller
         $client = getUser();
         if ($client) {
             
-        $code = $client->activation_code;
+        $rand = $client->activation_code;
         }else{
-        $code = mt_rand(10000, 99999);
+        $rand = mt_rand(10000, 99999);
 
         }
+
         $activation_msg = trans('admin.activation_code') . $rand;
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
