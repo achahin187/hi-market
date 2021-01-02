@@ -150,7 +150,7 @@ class OrderController extends Controller
                     'order_id'   => $order->id,
                     "product_id" => explode(":", $product)[0],
                     "quantity"   => explode(":", $product)[1],
-                    "price"      => explode(":", $product)[2],
+                    "price"      => explode(":", $product)[2] *  explode(":", $product)[1],
                     "points"     => Product::Where('id', explode(":", $product)[0] )->first()->points * explode(":", $product)[1],
                 ]);
 
