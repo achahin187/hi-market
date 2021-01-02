@@ -108,6 +108,31 @@
                                   <p>{{ $order->client_review }}</p>
                                 </div>
 
+                                <div class="form-group">
+                                  <label>Total Money</label>
+                                  <p>{{ $order->total_money }}</p>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Total Money Befor</label>
+                                  <p>{{ $order->total_before }}</p>
+                                </div>
+
+                                 <div class="form-group">
+                                  <label>Shipping Fee</label>
+                                  <p>{{ $order->shipping_fee }}</p>
+                                </div> 
+
+                                <div class="form-group">
+                                  <label>Shipping Fee before</label>
+                                  <p>{{ $order->shipping_before }}</p>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Branch</label>
+                                  <p>{{ $order->branch->name }}</p>
+                                </div>
+
 
 
                             </div>

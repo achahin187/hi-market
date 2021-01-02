@@ -21,7 +21,7 @@ class NotificationController extends Controller
     {
     
         $notifications = Notification::orderBy('id', 'desc')->get();
-        
+
         return view('Admin.notifications.index',compact('notifications'));
     }
 
@@ -90,7 +90,7 @@ class NotificationController extends Controller
      * @return Response
      */
     public function destroy($id)
-    {
+    {       dd($id);
         $notification = Notification::find($id);
         $notification->delete();
         return redirect()->route('Admin.notifications.index')->withStatus(__('deleted successfully'));

@@ -106,19 +106,24 @@ $settings = App\Models\Setting::all()->first();
             <li class="nav-item dropdown "id="div1" >
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge" id="div12">{{$notifications->count()}}</span>
+                    <span class="badge badge-warning navbar-badge" id="div12">{{auth()->user()->unreadNotifications->count()}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
                    {{--  <span class="dropdown-item dropdown-header">{{$notifications->count()}}</span> --}}
                     <div class="dropdown-divider"></div>
                     @foreach($notifications as $notification)
-                    <a href="#" class="dropdown-item">
+
+                    <a href="{{ $notification->type == 'App\Notifications\OrderNotification' ? route('orders.show.details',$notification->data["id"]) : '#' }}" class="dropdown-item">
                         <i class="fas fa-envelope mr-2">{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</i>
                         <span class="float-right text-muted text-sm">{{$notification->created_at->format("Y-m-d")}}</span>
                     </a>
+                       @php 
+                              $notification->markAsRead()
+                              @endphp 
+
                     @endforeach
 
-                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    <a href="{{ route('notifications.index') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
    

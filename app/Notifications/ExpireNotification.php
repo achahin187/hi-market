@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
+use App\Models\Product;
 class ExpireNotification extends Notification
 {
     use Queueable;
@@ -42,7 +42,7 @@ class ExpireNotification extends Notification
     {
         return [
             'id'   => $this->product->id,
-           'data' => "product.messages.0",
+           'data' => "orders.product.0",
         ];
     }
 

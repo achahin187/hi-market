@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>Notification</h1>
                     </div>
 
                     @if(auth()->user()->can('admin-create'))
@@ -53,35 +53,35 @@
                                     <tr>
                                         <th>Notification</th>
                                        
-                                        <th>controls</th>
+                                       {{--  <th>controls</th> --}}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($notifications as $notification)
                                     @php
+                                          
                                    $data =  json_decode($notification->data);
-                                    
                                     @endphp
                                         <tr>
                                             <td>{{__($data->data,["num"=>$data->id])}}</td>
    
-                                            <td>
+                                           {{--  <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                        <form action="{{ route('notifications.destroy', $data->id) }}" method="post">
+                                                        <form action="{{ route('notifications.destroy', ['notification'=>$notification->id]) }}" method="post">
                                                             @csrf
                                                             @method('delete')
 
-                                                                {{-- <a class="dropdown-item" href="{{ route('notifications.edit', $notification->id) }}">{{ __('edit & resend') }}</a> --}}
+                                                                <a class="dropdown-item" href="{{ route('notifications.edit', $notification->id) }}">{{ __('edit & resend') }}</a>
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this offer?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
 
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
 
