@@ -133,41 +133,9 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                       </table>
                     </div>
                 </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="box">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">latest 5 Companies</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                      <table class="table table-bordered">
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>name</th>
-                          <th>Branch</th>
-                        </tr>
-                        @isset($Companies)
-                        @foreach($Companies as $index=>$company)
-                        <tr>
-                          <td>{{ $index +1 }}</td>
-                          <td>{{ $company->name }}</td>
-                          <td>{{ $company->orders->sum('total_money')  .' LE'}}</td>
-                          <!-- download button -->
-                          {{--   <td> <a href="{{ route('orders.show.details',['id'=>$order->id]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td> --}}
-                             
-                        <!-- delete button -->
-                           
-                            </td>
-                        </tr>
-                          @endforeach
-                        @endisset
-                      </table>
-                    </div>
-                </div>
-              </div>
+            </div>
+             <!-- /.row -->
+         
               <!-- /.row -->
 
     @if(auth()->user()->hasRole('supser_admin'))
