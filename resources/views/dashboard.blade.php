@@ -3,7 +3,7 @@
 @section('content')
 @php
 $orders =  \App\Models\Order::orderBy('created_at', 'desc')->take(5)->get();
-$Companies =  \App\Models\DeliverCompany::orderBy('created_at', 'desc')->take(5)->get();
+$Companies =  \App\Models\DeliveryCompany::orderBy('created_at', 'desc')->take(5)->get();
 $products_count = DB::table('products')->Where('status', 'active')->count();
 $orders_count = DB::table('orders')->count();
 $clients_count = DB::table('clients')->Where('status', 'active')->count();
