@@ -578,7 +578,7 @@ class ClientController extends Controller
         $code = mt_rand(10000, 99999);
 
         }
-
+        $activation_msg = trans('admin.activation_code') . $rand;
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
