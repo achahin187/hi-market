@@ -3,6 +3,7 @@
 @section('content')
 @php
 $orders =  \App\Models\Order::orderBy('created_at', 'desc')->take(5)->get();
+$Companies =  \App\Models\DeliverCompany::orderBy('created_at', 'desc')->take(5)->get();
 $products_count = DB::table('products')->Where('status', 'active')->count();
 $orders_count = DB::table('orders')->count();
 $clients_count = DB::table('clients')->Where('status', 'active')->count();
@@ -122,6 +123,42 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                           <td>{{ $order->total_money .' LE' }}</td>
                           <!-- download button -->
                             <td> <a href="{{ route('orders.show.details',['id'=>$order->id]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td>
+                             
+                        <!-- delete button -->
+                           
+                            </td>
+                        </tr>
+                          @endforeach
+                        @endisset
+                      </table>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="box">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">latest 5 Companies</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <table class="table table-bordered">
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>name</th>
+                          <th>Branch</th>
+                          <th>Total Money</th>
+                          <th >Action</th>
+                        </tr>
+                        @isset($Companies)
+                        @foreach($Companies as $index=>$company)
+                        <tr>
+                          <td>{{ $index +1 }}</td>
+                          <td>{{ $company->name }}</td>
+                          <td>{{ $company->orders->sum('total_money')  .' LE'}}</td>
+                          <!-- download button -->
+                          {{--   <td> <a href="{{ route('orders.show.details',['id'=>$order->id]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td> --}}
                              
                         <!-- delete button -->
                            
