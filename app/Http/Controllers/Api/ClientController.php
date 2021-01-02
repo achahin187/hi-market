@@ -409,7 +409,7 @@ class ClientController extends Controller
             "verify" => $rand,
             "client_id" => $client->id,
         ]);
-        
+
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
          $this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
@@ -570,10 +570,16 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }//end if
+        $client = getUser();
+        if ($client) {
+            
+        $code = $client->activation_code;
+        }else{
+        $code = mt_rand(10000, 99999);
 
-        $code = getUser()->activation_code;
+        }
 
-        $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
         
