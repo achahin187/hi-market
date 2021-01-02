@@ -98,7 +98,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
             </div>
 
 
-     <div class="row">
+            <div class="row">
                 <div class="col-md-6">
                   <div class="box">
                     <div class="box-header with-border">
@@ -148,8 +148,6 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                           <th style="width: 10px">#</th>
                           <th>name</th>
                           <th>Branch</th>
-                          <th>Total Money</th>
-                          <th >Action</th>
                         </tr>
                         @isset($Companies)
                         @foreach($Companies as $index=>$company)
