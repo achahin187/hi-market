@@ -134,6 +134,9 @@
                                 <div class="form-group">
                                   <label>Total Money</label>
                                   <p>{{ $order->total_before  }}</p>
+                                   @php
+                                    $FinalOrder =  $order->total_before ;
+                                  @endphp
                                 </div>
 
                                 {{-- total_money --}}
@@ -141,21 +144,21 @@
                                 <div class="form-group">
                                   <label>Total Money</label>
                                   <p> <span style="color: green;  font-weight: bold;">After Disount</span>  {{ $order->total_money }}</p>
+                                  @php
+                                    $FinalOrder =  $order->total_money ;
+                                  @endphp
                                 </div>
 
                                @endif
 
-
-                               <div class="form-group">
-                                  <label>Shipping Fee</label>
-                                  <p>{{ $order->shipping_before }}</p>
-                                   
-                                </div> 
                                {{-- shipping_fee --}}
                               @if( $order->shipping_fee == 0)
                                  <div class="form-group">
                                   <label>Shipping Fee</label>
                                   <p> <span style="color: green;  font-weight: bold;">Free Shipping</span> {{ $order->shipping_fee }}</p>
+                                  @php
+                                    $Final = 0;
+                                  @endphp
                                   
                                 </div> 
 
@@ -164,15 +167,29 @@
                                  <div class="form-group">
                                   <label>Shipping Fee</label>
                                   <p>  <span style="color: green;  font-weight: bold;">After Dicount</span> {{ $order->shipping_fee }}</p>
+                                   @php
+                                    $Final = $order->shipping_fee;
+                                  @endphp
+                                  
                                    
                                 </div> 
 
-                              @endif
+                              @else
 
+                               <div class="form-group">
+                                  <label>Shipping Fee</label>
+                                  <p>{{ $order->shipping_before }}</p>
+
+                                   @php
+                                    $Final = $order->shipping_before;
+                                  @endphp
+                                   
+                                </div> 
+                              @endif  
 
                                 <div class="form-group">
                                   <label>Final Total Money</label>
-                                  <p>  <span style="color: green;  font-weight: bold;">After Dicount</span> {{ $order->shipping_fee }}</p>
+                                  <p> {{ $Final + $FinalOrder}}</p>
                                    
                                 </div> 
 
