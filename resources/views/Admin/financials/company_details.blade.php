@@ -77,7 +77,7 @@
 
                                         <td>{{$company->commission  }}</td>
 
-                                        <td>{{ '10'   }}</td>
+                                        <td>{{ $order->shipping_before   }}</td>
 
                                         <td>{{$order->shipping_before * $company->commission/ 100  }}</td>
 
