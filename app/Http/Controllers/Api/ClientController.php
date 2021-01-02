@@ -392,7 +392,7 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-        $rand = rand(0,99999);
+        $rand = mt_rand(10000, 99999);
 
         $address=Address::create([
             'name' =>  $request->name,
@@ -409,7 +409,7 @@ class ClientController extends Controller
             "verify" => $rand,
             "client_id" => $client->id,
         ]);
-
+        
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
          $this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());

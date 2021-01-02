@@ -24,7 +24,8 @@ class AuthController extends Controller
     //  
     use GeneralTrait;
  
-  
+
+
     public function send_sms($name, $mobile, $msg, $lang)
     {
 
@@ -104,7 +105,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
+        
         $udid = $request->header('udid');
 
         $validator = Validator::make($request->all(), [
@@ -141,7 +142,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = rand(0,99999);
+        $code = mt_rand(10000, 99999);
 
         $client->update(['activation_code' => $code]);
 
@@ -207,11 +208,11 @@ class AuthController extends Controller
         }
 
 
-        $code = rand(0,99999);
+        $code = mt_rand(10000, 99999);
+        $activation_msg = trans('admin.activation_code') . $code;
+        dd($mobile, $activation_msg, app()->getLocale());
 
         $client->update(['activation_code' => $code]);
-
-        $activation_msg = trans('admin.activation_code') . $code;
 
         $this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
 
