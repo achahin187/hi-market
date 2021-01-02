@@ -58,7 +58,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($notifications as $notification)
-                                    @dd($notification->data );
+                                    @dd(json_decode($notification->data) );
                                         <tr>
                                             <td>{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</td>
    
