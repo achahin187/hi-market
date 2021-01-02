@@ -58,6 +58,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($notifications as $notification)
+                                    @dd($notification->data["data"]);
                                         <tr>
                                             <td>{{__($notification->data["data"],["num"=>$notification->data["id"]])}}</td>
    

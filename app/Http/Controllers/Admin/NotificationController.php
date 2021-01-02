@@ -21,7 +21,7 @@ class NotificationController extends Controller
     {
     
         $notifications = Notification::orderBy('id', 'desc')->get();
-        dd($notifications);
+        
         return view('Admin.notifications.index',compact('notifications'));
     }
 
