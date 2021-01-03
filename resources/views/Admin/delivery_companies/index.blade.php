@@ -77,7 +77,7 @@
                                             <td>{{$deliveryCompany->commission}}</td>
 
                                         <td>
-                                            @foreach($company->branches as $branches)
+                                            @foreach($deliveryCompany->branches as $branches)
                                             <span class="badge badge-primary">{{ $branches->name }}</span>
                                             @endforeach
                                         </td>
