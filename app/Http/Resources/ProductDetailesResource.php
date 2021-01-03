@@ -51,6 +51,7 @@ class ProductDetailesResource extends JsonResource
                 "branch_open_time"=>$branch->open_time ?? "",
                 "branch_close_time"=>$branch->close_time ?? "",
                 "cityname"=>$this->getBranchCity($branch),
+                "offerDetails"=>$this->flag == 1 ? trans('admin.product_offer_flag1') : trans('admin.product_offer_flag0'),
             ];
     }
 

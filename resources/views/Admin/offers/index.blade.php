@@ -258,7 +258,7 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach($offers->where('type','free offer') as $offer)
+                                    @foreach($offers->where('type','free delivery') as $offer)
                                         <tr>
                                             
                                         <td>{{$offer->type}}</td>
@@ -345,7 +345,7 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach($offers->where('type', 'free delivery') as $offer)
+                                    @foreach($offers->where('type', 'product offer') as $offer)
                                         <tr>
                                             
                                         <td>{{$offer->type}}</td>
