@@ -278,7 +278,7 @@
                                             @if(isset($branch))
                                                 @foreach(\App\Models\Area::all() as $area)
 
-                                                    <option <?php if($branch->area->id == $area->id) echo 'selected'; ?> value="{{ $area->id }}">{{ $area->name_en }}</option>
+                                                    <option <?php if($branch->area->id ??"" == $area->id) echo 'selected'; ?> value="{{ $area->id }}">{{ $area->name_en }}</option>
 
                                                 @endforeach
                                             @else

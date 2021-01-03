@@ -50,7 +50,7 @@ class OrderResource extends JsonResource
     {
         return [
             "id"    => $this->id,
-            "title" => $this->title_ar,
+            "title" => $this->title,
             "icon"  => $this->icon,
             "type"  => $this->type,
             "order_id"=> $this->order_id??null,

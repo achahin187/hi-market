@@ -30,7 +30,7 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => $this->getMessage($this->order,app()->getLocale()),
+                    "title" => $this->getMessage($this->order, app()->getLocale()),
                     "body" => "Order Updates",
                     "icon" => $this->getIconeOrder($this->order),
                     "requireInteraction" => true,
@@ -146,7 +146,8 @@ class SendNotification {
                  5 => "Your Order $order->num was Cancelled",
                  null => ""
              ],
-            "ar"=>[  0 => "تم إنشاء طلب جديد",
+            "ar"=>[ 
+                0 => "تم إنشاء طلب جديد",
                 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
                 2 => "تم الموافقة على طلبك رقم {$order->num} ",
                 3 => "طلبك رقم {$order->num} جاري",

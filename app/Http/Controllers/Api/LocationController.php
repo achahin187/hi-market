@@ -41,6 +41,7 @@ class LocationController extends Controller
           $implodePoints = implode( " ", [$request->long,$request->lat]);
           #points
           $point = array($implodePoints);
+          
           $resultsList=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
         
