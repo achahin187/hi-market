@@ -85,7 +85,7 @@ class OrderController extends Controller
         $order_details = $request->all();
 
         $company = DeliveryCompany::WhereHas('branches', function ($q) use ($request) {
-            $q->Where('supermarket_id', $request->branch_id);
+            $q->Where('delivery_companies_branches.branch_id', $request->supermarket_id);
         })->first();
 
         if ($order_details["promocode"]) {
