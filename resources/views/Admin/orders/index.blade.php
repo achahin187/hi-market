@@ -137,8 +137,8 @@
     <th>{{ __('admin.cancel') }}</th>
     @endif
 
-    @if(auth()->user()->can('orders-rollback'))
     <th>{{ __('admin.rollback') }}</th>
+    @if(auth()->user()->can('orders-rollback'))
     @endif
 
   <th>{{ __('admin.controls') }}</th>
