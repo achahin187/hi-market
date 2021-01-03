@@ -44,7 +44,7 @@ class Setting extends Model
 
     protected static $logName = 'settings';
 
-    protected static $logAttributes = ['tax','tax_on_product','delivery','tax_value','cancellation','splash'];
+    protected static $logAttributes = ['tax','tax_on_product','delivery','tax_value','cancellation','splash','reedem_point'];
 
     protected $fillable = [
         'tax','tax_on_product','delivery','tax_value','cancellation','splash','created_by','updated_by'
