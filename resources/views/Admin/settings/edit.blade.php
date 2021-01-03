@@ -98,6 +98,18 @@
                                         @enderror
                                     </div>
 
+                                     <div class="form-group">
+                                        <label for="exampleInputPassword1">{{__('admin.redeem_point')}}</label>
+                                        <input type="text"  name="reedem_point" value="{{$setting->reedem_point}}" class=" @error('reedem_point') is-invalid @enderror form-control" >
+                                        @error('reedem_point')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+
+
                                     <div class="form-group">
                                         <label>{{ __('admin.Cancellation_disabled_when_order') }}</label>
                                         <select class=" @error('tax') is-invalid @enderror select2"  name="cancellation" data-placeholder="Select a State" style="width: 100%;" required>

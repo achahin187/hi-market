@@ -133,12 +133,12 @@
     <th>{{ __('admin.Next') }}</th>
     @endif
 
-    @if(auth()->user()->can('order-cancel'))
     <th>{{ __('admin.cancel') }}</th>
+    @if(auth()->user()->can('order-cancel'))
     @endif
 
     <th>{{ __('admin.rollback') }}</th>
-    @if(auth()->user()->can('orders-rollback'))
+    @if(auth()->user()->can('order-rollback'))
     @endif
 
   <th>{{ __('admin.controls') }}</th>
