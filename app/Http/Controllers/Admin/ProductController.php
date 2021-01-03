@@ -218,7 +218,7 @@ class ProductController extends Controller
                 'vendor_id' => $vendor,
                 'supermarket_id' => $supermarket,
                 //'subcategory_id' => $subcategory,
-                'images' => $images,
+                'images' => $image_names,
                 'barcode' => $barcode,
                 'arab_description' => $arab_description,
                 'eng_description' => $eng_description,
