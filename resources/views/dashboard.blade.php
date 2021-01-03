@@ -32,7 +32,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{ route('products.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              {{--   <a href="{{ route('products.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -47,7 +47,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{ route('orders.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+               {{--  <a href="{{ route('orders.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -62,7 +62,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- <a href="{{ route('clients.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -77,7 +77,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="{{ route('branches.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+               {{--  <a href="{{ route('branches.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
