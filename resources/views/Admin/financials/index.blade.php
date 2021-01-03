@@ -49,7 +49,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.promocode') }}</h3>
+                                <h3 class="card-title">{{ __('admin.branch_financial') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -57,7 +57,7 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.commision') }}</th>
+                                        <th>{{ __('admin.commission') }}</th>
                                         <th>{{ __('admin.total_order') }}</th>
                                         <th>{{ __('admin.delivertto_money') }}</th>
                                         <th>{{ __('admin.branch_money') }}</th>
@@ -135,7 +135,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.promocode') }}</h3>
+                                <h3 class="card-title">{{ __('admin.company_financial') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -143,7 +143,7 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.commision') }}</th>
+                                        <th>{{ __('admin.commission') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.branches') }}</th>
                                         

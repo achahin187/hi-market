@@ -12,11 +12,13 @@ return [
     'order_details' => 'order_details',
     'financials' => 'Financials',
     'branch_financial' => 'Branch Financial',
+    'company_financial' => 'Company Financial',
+   
     'branch_name' => 'Branch Name',
     'total_order' => 'Total Order',
     'delivertto_money' => 'Delivertto Money',
     'branch_money' => 'Branch Money',
-
+    'details' => 'Details',
      //Delivery
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',
@@ -188,7 +190,7 @@ return [
     'image'=>'Image',
     'active'=>'Active',
     'inactive'=>'Inactive',
-    'commission' => 'Commission',
+    'Commission' => 'Commission',
     'controls' => 'Controls',
 
     //Categories

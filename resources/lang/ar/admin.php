@@ -15,6 +15,7 @@ return [
     'total_order' => 'الاجمالى',
     'delivertto_money' => 'حساب ديلفرتو',
     'branch_money' => 'حساب الفروع',
+    'details' => 'تفاصيل',
     'clone'=>'نسخ',
     'export'=>'تحميل ملف ',
     'show' => 'اظهار',
