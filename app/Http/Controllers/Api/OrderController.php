@@ -90,9 +90,12 @@ class OrderController extends Controller
 
         if ($order_details["promocode"]) {
 
-           $promocodeId = Offer::where('type', 'promocode')->where('promocode',$order_details["promocode"] )->first()->id;
+           $promocodeId = Offer::where('type', 'promocode')->where('status', 1)->where('promocode',$order_details["promocode"] )->first();
+           if (!$promocodeId) {
+                return $this->returnError(404, 'promocode not found');
+           }
 
-           $order_details["promocode"] = $promocodeId;
+           $order_details["promocode"] = $promocodeId->id;
         }
 
 
