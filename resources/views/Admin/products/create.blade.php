@@ -167,8 +167,8 @@
                                         
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" id="supermarket_1" data-placeholder="Select a State" style="width: 100%;" required>
                                           
+                                      
                                             @foreach($superMarkets  as $supermarket)
-                                        <option disabled="" selected="">please select supermarket</option>
                                                 <option <?php if($product->supermarket_id == $supermarket->id)  'selected'; ?> value={{ $supermarket->id }}>
                                                {{ $supermarket->name }}</option>
                                             @endforeach    
@@ -180,7 +180,7 @@
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
-                                          
+                                            
                                             @foreach($superMarkets  as $supermarket)
                                                 <option  <?php if($supermarket->id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
                                             @endforeach    

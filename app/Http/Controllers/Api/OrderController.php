@@ -140,7 +140,7 @@ class OrderController extends Controller
                 //'mobile_delivery' => '01060487345',
 
                 'status' => 0,
-                'company_id' => 8,
+                'company_id' => $company ?? 17,
 
             ]);
 
@@ -295,7 +295,7 @@ class OrderController extends Controller
         $branch_end_time = Carbon::parse($branch->end_time);
 
         $time = [];
-
+// dd(Carbon::now()->setlocale('ar')->formatLocalized('%d %B %Y'));
 
 
         for ($i = 1; $i <= 24; $i++) {
