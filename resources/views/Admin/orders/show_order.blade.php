@@ -101,7 +101,7 @@
 
                                 <div class="form-group">
                                   <label>company Name</label>
-                                  <p>{{ $order->companies->name }}</p>
+                                  <p>{{ $order->companies->name ??'' }}</p>
                                 </div>
 
 
