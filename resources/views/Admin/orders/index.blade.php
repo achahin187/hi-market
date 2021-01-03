@@ -367,7 +367,9 @@
 </table>
 </div>
 @endif
- {{ $orders->links() }}
+@if(isset($orders))
+ {{ $orders->appends(request()->query())->links() }}
+ @endif
 <!-- /.card-body -->
 </div>
 <!-- /.card -->

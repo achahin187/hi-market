@@ -68,7 +68,7 @@ class OrderController extends Controller
 
                 $company = DeliveryCompany::find(request()->company_id);
 
-                $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])->get();
+                $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])->paginate(20);
 
 
              return view('Admin.orders.index',compact('orders','setting'));
