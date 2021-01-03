@@ -33,13 +33,13 @@ class SettingsController extends Controller
     {
         //dd($request->all());
         $rules = [
-            'tax' => 'required|integer|min:0',
+            'tax'            => 'required|integer|min:0',
             'tax_on_product' => 'required|integer|min:0',
-            'tax_value' => 'required|numeric|min:0',
-            'delivery' => 'required|numeric|min:0',
-            'cancellation' => 'required|integer|min:0',
-            'splash' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'reedem_point' => 'required'
+            'tax_value'      => 'required|numeric|min:0',
+            'delivery'       => 'required|numeric|min:0',
+            'cancellation'   => 'required|integer|min:0',
+            'reedem_point'   => 'required',
+            'splash'         => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
 
         $this->validate($request, $rules);
@@ -61,17 +61,41 @@ class SettingsController extends Controller
                         unlink('splash/' . $setting->splash);
                     }
                 }
-                $setting->update(['tax' => $request->input('tax') , 'tax_value' => $request->input('tax_value') , 'reedem_point' => $request->input('reedem_point'),'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation , 'splash' => $file_to_store]);
+                $setting->update([
+                    'tax' => $request->input('tax') ,
+                    'tax_value' => $request->input('tax_value') ,
+                    'reedem_point' => $request->reedem_point,
+                    'tax_on_product' => $request->input('tax_on_product') ,
+                    'delivery' => $request->input('delivery'),
+                    'cancellation' => $request->cancellation ,
+                    'splash' => $file_to_store
+                     ]);
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $setting->update(['tax' => $request->input('tax') , 'reedem_point' => $request->input('reedem_point'),'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation ,'splash' => $request->input('checkedimage')]);
+                    $setting->update([
+                        'tax' => $request->input('tax') ,
+                        'reedem_point' => $request->reedem_point,
+                        'tax_value' => $request->input('tax_value') ,
+                        'tax_on_product' => $request->input('tax_on_product') ,
+                        'delivery' => $request->input('delivery'),
+                        'cancellation' => $request->cancellation ,
+                        'splash' => $request->input('checkedimage')
+                        ]);
                 } else {
 
                     if ($setting->splash != null) {
                         unlink('splash/' . $setting->image);
                     }
-                    $setting->update(['tax' => $request->input('tax') , 'reedem_point' => $request->input('reedem_point'),'tax_value' => $request->input('tax_value') , 'tax_on_product' => $request->input('tax_on_product') , 'delivery' => $request->input('delivery'), 'cancellation' => $request->cancellation , 'image' => null]);
+                    $setting->update([
+                    'tax' => $request->input('tax') ,
+                    'reedem_point' => $request->reedem_point,
+                    'tax_value' => $request->input('tax_value') ,
+                    'tax_on_product' => $request->input('tax_on_product') ,
+                    'delivery' => $request->input('delivery'),
+                    'cancellation' => $request->cancellation ,
+                    'image' => null
+                     ]);
                 }
             }
             return redirect('/admin/settings/'.$id.'/edit')->withStatus('settings successfully updated.');
