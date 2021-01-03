@@ -624,12 +624,12 @@
 
 
                                 @if(isset($product) && !isset($clone))
+                                           
 
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{__('admin.image')}}</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-
                                                 @if($product->images != null)
 
                                                     @foreach($productimages as $image)

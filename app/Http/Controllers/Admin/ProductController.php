@@ -94,7 +94,7 @@ class ProductController extends Controller
             'arab_spec'      => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec'       => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price'          => 'nullable|numeric|min:0',
-            'offer_price'    => 'sometimes|required|numeric|lt:price|min:0',
+            'offer_price'    => 'sometimes|numeric|lt:price|nullable|min:0',
             'points'         => 'nullable|integer|min:0',
             'vendor_id'      => 'required|integer|min:0',
             'category_id'    => 'required|integer|min:0',
@@ -573,38 +573,38 @@ class ProductController extends Controller
                     $file_names = $file_to_store;
                 //}
 
-                if ($request->has('image')) {
+               // if ($request->has('image')) {
 
                     // $productimages = explode(',', $product->images);
 
-                    $image = $request->input('image');
+                    // $image = $request->input('image');
 
-                    $filename = $image->getClientOriginalName();
-                    $fileextension = $image->getClientOriginalExtension();
-                    $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+                    // $filename = $image->getClientOriginalName();
+                    // $fileextension = $image->getClientOriginalExtension();
+                    // $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-                    $image->move('product_images', $file_to_store);
+                    // $image->move('product_images', $file_to_store);
 
-                    $file_names = $file_to_store;
+                    // $file_names = $file_to_store;
 
                     //$deletedimages = array_diff($productimages, $checkedimages);
 
 
-                    if (!empty($deletedimages)) {
-                        //foreach ($deletedimages as $deletedimage) {
-                        //    if (($key = array_search($deletedimage, $productimages)) !== false) {
-                          //      unset($productimages[$key]);
-                                unlink('product_images/' . $checkedimages);
-                            //}
-                        //}
-                    }
+                    // if (!empty($deletedimages)) {
+                    //     //foreach ($deletedimages as $deletedimage) {
+                    //     //    if (($key = array_search($deletedimage, $productimages)) !== false) {
+                    //       //      unset($productimages[$key]);
+                    //             unlink('product_images/' . $checkedimages);
+                    //         //}
+                    //     //}
+                    // }
 
                    // $productimages = array_merge($productimages, $file_names);
-                }
-                else
-                {
-                    $productimages = $file_names;
-                }
+                // }
+                // else
+                // {
+                //     $productimages = $file_names;
+                // }
 
                 //$images = implode(',', $productimages);
 
