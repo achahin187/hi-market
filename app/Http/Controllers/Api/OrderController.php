@@ -168,6 +168,7 @@ class OrderController extends Controller
                $client->update(['total_points'=> $finalClientPoint]);
 
             }
+
             #get comapny and auto approve the order to it
             if ($company) {
             #change to the stauts to status 1
