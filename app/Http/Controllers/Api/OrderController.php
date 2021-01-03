@@ -323,7 +323,7 @@ class OrderController extends Controller
 
           if ($start_time == $end_time) {
 
-              return 'open';
+              return trans('admin.open)';
           }
 
           elseif($start_time < $end_time)
@@ -333,7 +333,7 @@ class OrderController extends Controller
 
                 if ($between) {
 
-                    return 'open';
+                    return trans('admin.open') ;
                 }else{
 
                     return 'closed';
@@ -341,14 +341,14 @@ class OrderController extends Controller
           }else{
                 if (Carbon::now()->toTimeString() > $start_time) {
 
-                    return 'open';
+                    return trans('admin.open') ;
                 }
                 elseif(Carbon::now()->toTimeString() < $end_time){
 
-                    return 'open';
+                    return trans('admin.open') ;
                 }else{
 
-                    return 'closed';
+                    return  trans('admin.closed');
 
                 }//end if
           }//end if

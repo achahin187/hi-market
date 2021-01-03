@@ -9,6 +9,8 @@ return [
     'add'=>'إضافة',
     'edit'=>'تعديل',
     'delete'=>'حذف',
+    'closed'=> 'مغلق',
+    'open'=> 'مفتوح',
     'order_details' => 'تفاصسل الاوردر',
     'financials' => 'الماليات',
     'branch_financial' => ' ماليات الفروع',

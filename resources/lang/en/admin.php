@@ -19,6 +19,8 @@ return [
     'delivertto_money' => 'Delivertto Money',
     'branch_money' => 'Branch Money',
     'details' => 'Details',
+    'closed'=> 'Closed',
+    'open'=> 'Open',
      //Delivery
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',
