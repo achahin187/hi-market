@@ -9,7 +9,13 @@ return [
     'role' => 'Role',
     'status' => 'Status',
     'controls' => 'Controls',
-
+    'order_details' => 'order_details',
+    'financials' => 'Financials',
+    'branch_financial' => 'Branch Financial',
+    'branch_name' => 'Branch Name',
+    'total_order' => 'Total Order',
+    'delivertto_money' => 'Delivertto Money',
+    'branch_money' => 'Branch Money',
 
      //Delivery
     'delivery'=> 'Delivery',
