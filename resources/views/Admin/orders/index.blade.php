@@ -77,7 +77,7 @@
 <tbody>
 @foreach($cancelledorders as $order)
 <tr>
-    <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
+    <td><a  href="{{route('orders.show.details',$order->id)}}">{{$order->id}}</a></td>
 
     @if(auth()->user()->hasAnyPermission(['order-delete','order-edit']))
     <td>
@@ -137,8 +137,8 @@
     @if(auth()->user()->can('order-cancel'))
     @endif
 
-    @if(auth()->user()->can('orders-rollback'))
     <th>{{ __('admin.rollback') }}</th>
+    @if(auth()->user()->can('orders-rollback'))
     @endif
 
   <th>{{ __('admin.controls') }}</th>
