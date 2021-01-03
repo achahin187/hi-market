@@ -593,7 +593,7 @@ $settings = App\Models\Setting::all()->first();
                         <a href="{{route('financials.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Financials
+                                {{ __('admin.financials') }}
                             </p>
                         </a>
                     </li>
@@ -603,7 +603,7 @@ $settings = App\Models\Setting::all()->first();
                         <a href="{{route('notifications.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Notifications
+                                {{ __('admin.notifications') }}
                             </p>
                         </a>
                     </li>

@@ -13,7 +13,7 @@ return [
     'financials' => 'Financials',
     'branch_financial' => 'Branch Financial',
     'company_financial' => 'Company Financial',
-   
+    'notifications'=>'Notifications',
     'branch_name' => 'Branch Name',
     'total_order' => 'Total Order',
     'delivertto_money' => 'Delivertto Money',

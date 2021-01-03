@@ -143,7 +143,7 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.commission') }}</th>
+                                        <th>{{ __('admin.Commission') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.branches') }}</th>
                                         
@@ -160,7 +160,7 @@
                                         
                                         <td>{{$company->name }}</td>
                                         <td>{{$company->commission }}</td>
-                                        <td>{{$company->status == 1 ?trans('admin.active') :trans('admin.deactive') }}</td>
+                                        <td>{{$company->status == 1 ?trans('admin.active') :trans('admin.inactive') }}</td>
                                         <td>
                                             @foreach($company->branches as $branches)
                                             <span class="badge badge-primary">{{ $branches->name }}</span>

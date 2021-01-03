@@ -110,11 +110,6 @@
                                   <p>{{ $order->branch->name }}</p>
                                 </div>
                                 
-
-                              
-
-
-
                               @if($order->point_redeem)
                                 <div class="form-group">
                                   <label>Point Redeem</label>
