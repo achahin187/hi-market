@@ -293,16 +293,16 @@ class OrderController extends Controller
 
         $branch_start_time = Carbon::parse($branch->start_time)->subHour();
         $branch_end_time = Carbon::parse($branch->end_time);
-       
 
+        Carbon::setlocale(request()->header('lang'));
         $time = [];
         for ($i = 1; $i <= 24; $i++) {
             $time[] = [
                 "id" => $i,
-                "text" =>  $branch_start_time->addHours(1)->format("g A"),
+                "text" =>  $branch_start_time->addHours(1)->translatedFormat("g A"),
             ];
 
-            if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->format("g A")) {
+            if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->translatedFormat("g A")) {
                 break;
             }
 
