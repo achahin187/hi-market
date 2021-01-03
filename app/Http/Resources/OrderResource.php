@@ -50,7 +50,7 @@ class OrderResource extends JsonResource
     {
         return [
             "id"    => $this->id,
-            "title" => $this->title,
+            "title" => app()->gelocale() == 'ar' ? $this->title_ar : $this->title_en,
             "icon"  => $this->icon,
             "type"  => $this->type,
             "order_id"=> $this->order_id??null,

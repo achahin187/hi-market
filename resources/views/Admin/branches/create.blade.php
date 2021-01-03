@@ -292,10 +292,6 @@
                                         </select>
                                     </div>
 
-
-                                   
-
-
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.priority')}}</label>
                                         <input type="number" name="priority" min="0" @if(isset($branch)) value="{{$branch->priority}}" @else value="0" @endif class=" @error('priority') is-invalid @enderror form-control" required>
