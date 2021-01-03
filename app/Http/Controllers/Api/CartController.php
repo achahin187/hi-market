@@ -64,8 +64,9 @@ class CartController extends Controller
 
         try {
 
-             $offer = Offer::CheckPromoCode($request->promoCode)->firstOrFail();
-            if ($offer->source == 'Branch') {
+             $offer = Offer::CheckPromoCode($request->promoCode)->first();
+
+            if ($offer && $offer->source == 'Branch') {
 
                 $promocode = $request->promoCode;
                 $supermarket_id = $request->supermarket_id;
