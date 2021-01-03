@@ -13,7 +13,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(total_money) as sum')
-        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('MONTH(created_at)')->get();
+        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('YEAR(created_at)')->get();
 
 
 @endphp
