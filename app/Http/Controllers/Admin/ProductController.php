@@ -87,7 +87,7 @@ class ProductController extends Controller
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             // 'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
-            'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
+            'barcode' => ['required','numeric','digits_between:10,16','unique_with:products, supermarket_id'],
             'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'price' => 'nullable|numeric|min:0',
@@ -176,11 +176,11 @@ class ProductController extends Controller
             $points == 0;
         }
 
-
-        if ($request->hasFile('images')) {
+      
+        if ($request->image) {
 
             // $image_names = [];
-            $files = $request->file('images');
+            $image = $request->file('image');
 
             // foreach ($files as $image) {
                 $filename = $image->getClientOriginalName();
@@ -190,6 +190,7 @@ class ProductController extends Controller
                 $image->move('product_images', $file_to_store);
 
                 $image_names = $file_to_store;
+               
             }
 
             //$images = implode(',', $image_names);

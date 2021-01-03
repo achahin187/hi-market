@@ -161,7 +161,7 @@
                             <div class="card-body">
 
                             @if(isset($product))
-                          
+
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         
@@ -629,12 +629,10 @@
 
                                                 @endif
 
-                                                <input name="image"  type="file">
+                                                <input  type="file"  name="image">
 
                                             </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
+                                      
                                         </div>
                                     </div>
                                          <p style="color: red">Width: 80 px</p>
@@ -646,10 +644,10 @@
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
-                                            <div class="custom-file">
-                                                <input name="image"  type="file" class="custom-file-input @error('images') is-invalid @enderror" id="exampleInputFile">
+                                           
+                                                <input name="image"  type="file" class=" @error('image') is-invalid @enderror" id="exampleInputFile">
                                                
-                                            </div>
+                                           
                                            
                                         </div>
                                     </div>
@@ -660,10 +658,10 @@
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
-                                            <div class="custom-file">
-                                                <input name="image"  type="file" class=" @error('images') is-invalid @enderror" id="exampleInputFile">
+                                           
+                                                <input name="image"  type="file" class=" @error('image') is-invalid @enderror" >
                                               
-                                            </div>
+                                            
                                           
                                         </div>
                                     </div>
