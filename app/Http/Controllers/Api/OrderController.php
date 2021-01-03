@@ -292,12 +292,10 @@ class OrderController extends Controller
         ];
 
         $branch_start_time = Carbon::parse($branch->start_time)->subHour();
-        $branch_end_time = Carbon::parse($branch->end_time);
+        $branch_end_time = Carbon::parse($branch->end_time)
+       
 
         $time = [];
-// dd(Carbon::now()->setlocale('ar')->formatLocalized('%d %B %Y'));
-
-
         for ($i = 1; $i <= 24; $i++) {
             $time[] = [
                 "id" => $i,

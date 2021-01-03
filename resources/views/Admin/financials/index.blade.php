@@ -62,10 +62,6 @@
                                         <th>{{ __('admin.delivertto_money') }}</th>
                                         <th>{{ __('admin.branch_money') }}</th>
                                        
-
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
-                                            <th>{{ __('admin.controls') }}</th>
-                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -83,38 +79,6 @@
 
                                         <td>{{    branchTotal($branch->id) - (branchTotal($branch->id) * $branch->commission/ 100)  }}</td>
                           
-                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false"
-                                                                class="drop-down-button">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            @if(auth()->user()->can('delivery-delete'))
-                                                                <form
-                                                                    action="{{ route('financials.destroy',$branch->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('delete')
-
-
-                                                                    <button type="button" class="dropdown-item"
-                                                                            onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
-                                                                </form>
-                                                            @endif
-                                                            @if(auth()->user()->can('delivery-edit'))
-                                                                <a class="dropdown-item"
-                                                                   href="{{ route('financials.edit',$branch->id) }}">{{ __('edit') }}</a>
-                                                            @endif
-
-                                                         
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            @endif
                                         </tr>
                                     @endforeach
 
