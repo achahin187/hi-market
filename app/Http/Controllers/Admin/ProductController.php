@@ -557,7 +557,7 @@ class ProductController extends Controller
             {
                 $branch = $request->input('branch_id');
             }
-
+            // dd($request->all());
             if ($request->hasFile('images')) {
 
                 $image = $request->file('images');
@@ -659,14 +659,14 @@ class ProductController extends Controller
                     //$deletedimages = array_diff($productimages, $checkedimages);
 
 
-                    if (!empty($deletedimages)) {
-                        //foreach ($deletedimages as $deletedimage) {
-                           // if (($key = array_search($deletedimage, $productimages)) !== false) {
-                               // unset($productimages);
-                                unlink('product_images/' . $checkedimages);
-                            //}
-                        //}
-                    }
+                    // if (!empty($deletedimages)) {
+                    //     //foreach ($deletedimages as $deletedimage) {
+                    //        // if (($key = array_search($deletedimage, $productimages)) !== false) {
+                    //            // unset($productimages);
+                    //             unlink('product_images/' . $checkedimages);
+                    //         //}
+                    //     //}
+                    // }
 
                    // $images = implode(',', $productimages);
 
