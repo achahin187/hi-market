@@ -143,7 +143,7 @@ class OrderController extends Controller
                 //'mobile_delivery' => '01060487345',
 
                 'status' => 0,
-                'company_id' => $company ?? 17,
+                'company_id' => $company->id ?? 17,
 
             ]);
 
