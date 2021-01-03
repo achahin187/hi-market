@@ -150,9 +150,9 @@
 </tr>
 </thead>
 <tbody>
-@foreach($orders as $order)
+@foreach($orders as $order) 
     <tr>
-        <td><a  href="{{route('order_details',$order->id)}}">{{$order->id}}</a></td>
+        <td><a  href="{{route('orders.show.details',$order->id)}}">{{$order->id}}</a></td>
 
          <td>{{ $order->user->name ?? 'not assign'}}</td>
 
@@ -367,6 +367,7 @@
 </table>
 </div>
 @endif
+ {{ $orders->appends(request()->query())->links() }}
 <!-- /.card-body -->
 </div>
 <!-- /.card -->

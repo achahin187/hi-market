@@ -144,6 +144,7 @@
 
                                     </tbody>
                                 </table>
+                                 {{ $logs->appends(request()->query())->links() }}
                             </div>
                             <!-- /.card-body -->
                         </div>

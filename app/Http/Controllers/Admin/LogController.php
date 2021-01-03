@@ -25,7 +25,7 @@ class LogController extends Controller
     public function index()
     {
         //
-        $logs = Systemlog::all();
+        $logs = Systemlog::paginate(10);
 
         return view('Admin.systemlogs.index',compact('logs'));
 
