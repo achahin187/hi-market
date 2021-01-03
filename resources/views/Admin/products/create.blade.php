@@ -161,7 +161,7 @@
                             <div class="card-body">
 
                             @if(isset($product))
-                            @dd($product)
+                          
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         
