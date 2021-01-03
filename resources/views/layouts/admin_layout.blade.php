@@ -535,23 +535,22 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
-
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                financials
+                                {{ __('admin.financials') }}
                             </p>
                         </a>
                     </li>
 
-                     <li class="nav-item">
+                      <li class="nav-item">
 
                         <a href="{{route('notifications.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                financials
+                                {{ __('admin.notifications') }}
                             </p>
                         </a>
                     </li>
