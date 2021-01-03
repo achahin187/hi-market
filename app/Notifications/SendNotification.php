@@ -191,7 +191,7 @@ class SendNotification {
 
     public function storeNotificationOrder()
     {
-         NotificationMobile::create([
+            NotificationMobile::create([
 
                 'title_ar'    => $this->getMessage($this->order,"ar"),
                 'title_en'    => $this->getMessage($this->order,"en"),
@@ -209,7 +209,7 @@ class SendNotification {
 
     public function storeNotificationOffer()
     {
-         NotificationMobile::create([
+            NotificationMobile::create([
 
                 'title_ar'    => 'New Offers In '.'Delivered'. ', Check It Now',
                 'title_en'    => 'New Offers In '.'Delivered'. ', Check It Now',

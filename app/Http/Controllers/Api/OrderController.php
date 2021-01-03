@@ -20,6 +20,7 @@ use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
 use App\Models\Offer;
+use App\Models\NotificationMobile;
 use App\Models\Address;
 use App\Models\Reason;
 use App\Models\Client;
@@ -172,13 +173,13 @@ class OrderController extends Controller
                 }
             }
 
-             $data =  [
-                  "type" => "order",
-                  "orderId" => $order->id,
-                 ];
+             // $data =  [
+             //      "type" => "order",
+             //      "orderId" => $order->id,
+             //     ];
             #send notification to mobile
-            new SendNotification($order->client->device_token, $order, $data);
-
+            //new SendNotification($order->client->device_token, $order, $data);
+            $this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
              $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
@@ -196,6 +197,24 @@ class OrderController extends Controller
             return $this->returnError(404, 'client donst exist');
 
         }
+    }
+
+    private  function storeNotificationOrder($order)
+    {
+            NotificationMobile::create([
+
+                'title_ar'          => "تم إنشاء طلب جديد",
+                'title_en'          => "New Order Created, waiting for Acceptance",
+                'body_ar'           => "تم إنشاء طلب جديد",
+                'body_en'           => "New Order Created, waiting for Acceptance",
+                'type'              => 'order',
+                'icon'              => asset('notification_icons/box.png'),
+                'order_id'          => $order->id?? null,
+                'client_id'         => null,
+                'product_id'        => null,
+                'superMarket_id'    => null,
+
+            ]);
     }
 
     public function addcart(Request $request)
