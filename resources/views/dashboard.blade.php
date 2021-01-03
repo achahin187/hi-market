@@ -6,7 +6,7 @@ $orders =  \App\Models\Order::orderBy('created_at', 'desc')->take(5)->get();
 $Companies =  \App\Models\DeliveryCompany::orderBy('created_at', 'desc')->take(5)->get();
 $products_count = DB::table('products')->Where('status', 'active')->count();
 $orders_count = DB::table('orders')->count();
-$clients_count = DB::table('clients')->Where('status', 'active')->count();
+$clients_count = DB::table('clients')->Where('status',1)->count();
 $branches_count = DB::table('branches')->Where('status', 'active')->count();
 
  $sales_data = \App\Models\Order::select(

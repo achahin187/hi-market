@@ -62,8 +62,27 @@ class Productimport implements ToModel, WithHeadingRow, WithValidation
     public function rules():array
     {
         return [
-            '*.product_arabic_name' => ['required'],
+            '*.product_arabic_name'  => ['required'],
             '*.product_english_name' => ['required'],
+            '*.english_description'  => ['nullable'],
+            '*.arabic_description'   => ['nullable'],
+            '*.barcode'              => ['nullable'],
+            '*.english_spec'         => ['required'],
+            '*.arabic_spec'          => ['required'],
+            '*.price'                => ['required'],
+            '*.offer_price'          => ['required'],
+            '*.rate'                 => ['required'],
+            '*.priority'             => ['required'],
+            '*.points'               => ['required'],
+            '*.category_id'          => ['required'],
+            '*.vendor_id'            => ['required'],
+            '*.supermarket_id'       => ['required'],
+            '*.measure_id'           => ['required'],
+            '*.size_id'              => ['required'],
+            '*.flag'                 => ['required'],
+            '*.status'               => ['required'],
+            '*.start_date'           => ['required'],
+            '*.end_date'             => ['required'],
         ];
     }
 }

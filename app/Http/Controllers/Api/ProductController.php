@@ -76,7 +76,7 @@ class ProductController extends Controller
            
      
 
-            $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+            $getPolygon   = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                    ->where('status', 'active')
                                    ->orderBy('priority', 'asc')
@@ -398,13 +398,36 @@ class ProductController extends Controller
           $point = array($implodePoints);
 
       
+           $resultsList=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
+        
          
-           $data = $pointLocation->pointInPolygon($point, $Finalpolygon);
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
 
         #if data == true
-        return $data;
+         $data = $this->checkLocation($resultsList);
+
     }//end function
+
+     private function checkLocation($resultsList)
+    {
+
+          if (in_array(true, $resultsList)) {
+
+              foreach ($resultsList as $data) {
+
+                if($data == true){
+
+                     return $data;
+                }//end if 
+              }
+             
+          }else{
+
+            return false;
+
+          }//end else
+    }//end private function
 }
