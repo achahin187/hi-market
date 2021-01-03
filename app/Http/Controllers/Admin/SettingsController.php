@@ -31,14 +31,15 @@ class SettingsController extends Controller
 
     public function update(Request $request,$id)
     {
-        //
+        //dd($request->all());
         $rules = [
             'tax' => 'required|integer|min:0',
             'tax_on_product' => 'required|integer|min:0',
             'tax_value' => 'required|numeric|min:0',
             'delivery' => 'required|numeric|min:0',
             'cancellation' => 'required|integer|min:0',
-            'splash' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'splash' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'reedem_point' => 'required'
         ];
 
         $this->validate($request, $rules);
