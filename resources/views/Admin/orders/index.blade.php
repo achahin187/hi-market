@@ -193,14 +193,15 @@
         @endif
 
      
-        @if(in_array($order->status,[0,1,2,3,4]) || auth()->user()->can('order-cancel'))
+        @if( auth()->user()->can('order-cancel'))
         <td>
-
+            @if(in_array($order->status,[0,1,2,3,4]) )
 
                 <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}"   value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
 
             @else
                 <button type="button" data-toggle="modal" data-target="#my-modal-{{ $order->id }}" disabled value="{{$order->id}}" class="btn btn-danger">{{ __('admin.cancel') }}</button>
+            @endif    
 
         </td>
         @endif
