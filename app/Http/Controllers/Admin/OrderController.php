@@ -598,7 +598,7 @@ class OrderController extends Controller
                   "type" => "order",
                   "orderId" => $order->id,
                  ];
-
+ 
         if($request->type == 'next')
         {
             $order->update(['status'=>$request->order_status + 1]);
@@ -615,6 +615,8 @@ class OrderController extends Controller
             {
 
                 new SendNotification($order->client->device_token, $order, $data);
+            }else{
+                $this->storeNotificationOrder($order);
             }
 
         }else
@@ -642,6 +644,24 @@ class OrderController extends Controller
         return back();
     }
 
+    private  function storeNotificationOrder($order)
+    {
+            NotificationMobile::create([
+
+                'title_ar'          => "تم إنشاء طلب جديد",
+                'title_en'          => "New Order Created, waiting for Acceptance",
+                'body_ar'           => "تم إنشاء طلب جديد",
+                'body_en'           => "New Order Created, waiting for Acceptance",
+                'type'              => 'order',
+                'icon'              => asset('notification_icons/box.png'),
+                'order_id'          => $order->id?? null,
+                'client_id'         => null,
+                'product_id'        => null,
+                'superMarket_id'    => null,
+
+            ]);
+    }
+    
      private function totalOfferPoints($order)
     {
 
