@@ -81,8 +81,8 @@ class Productimport implements ToModel, WithHeadingRow, WithValidation
             '*.size_id'              => ['required'],
             '*.flag'                 => ['required'],
             '*.status'               => ['required'],
-            '*.start_date'           => ['required'],
-            '*.end_date'             => ['required'],
+            '*.start_date'           => ['nullable'],
+            '*.end_date'             => ['nullable'],
         ];
     }
 }
