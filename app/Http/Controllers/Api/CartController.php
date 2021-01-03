@@ -66,7 +66,7 @@ class CartController extends Controller
 
              $offer = Offer::CheckPromoCode($request->promoCode)->first();
 
-            if ($offer && $offer->source == 'Branch') {
+            if ( $offer->source == 'Branch') {
 
                 $promocode = $request->promoCode;
                 $supermarket_id = $request->supermarket_id;
@@ -84,24 +84,30 @@ class CartController extends Controller
             return $this->returnError(404, "Offer Not Found");
         }
         
-        if ( $offer->promocode_name == $request->promoCode ) {
-            
-             if ($offer->source == 'Branch') {
-
-                 $promo_result =  $this->branchType($request->supermarket_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+        if ($offer) {
+        
+            if ( $offer->promocode_name == $request->promoCode ) {
                 
+                 if ($offer->source == 'Branch') {
+
+                     $promo_result =  $this->branchType($request->supermarket_id, $offer->value, $offer->discount_on, $offer->promocode_type, $request->total_money, $request->deliver_money);
+                    
+                    
+
+                 }else{
+
+                     $promo_result =  $this->checkType($offer->promocode_type, $offer->discount_on, $offer->value,  $request->total_money, $request->deliver_money);
+                 }
                 
+              return response()->json($promo_result);
+               
+               
+            }
 
-             }else{
-
-                 $promo_result =  $this->checkType($offer->promocode_type, $offer->discount_on, $offer->value,  $request->total_money, $request->deliver_money);
-             }
+        }else{
             
-          return response()->json($promo_result);
-           
-           
+            return $this->returnError(404, "Offer Not Found");
         }
-
 
     }//end function
 
