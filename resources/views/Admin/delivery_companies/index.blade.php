@@ -59,8 +59,7 @@
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.commission') }}</th>
-
-
+                                         <th>{{ __('admin.branches') }}</th>
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <th>{{ __('admin.controls') }}</th>
                                         @endif
@@ -76,6 +75,12 @@
                                              __("admin.auto_approve") : __("admin.approve") }} </td>
 
                                             <td>{{$deliveryCompany->commission}}</td>
+
+                                        <td>
+                                            @foreach($company->branches as $branches)
+                                            <span class="badge badge-primary">{{ $branches->name }}</span>
+                                            @endforeach
+                                        </td>
 
 
                                             @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))

@@ -366,7 +366,6 @@
                                     @enderror
                                 </div>
 
-                                @if($flag == 1)
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.offer_price')}}</label>
@@ -377,6 +376,7 @@
                                             </span>
                                         @enderror
                                     </div>
+                                @if($flag == 1)
                                 @endif
 
                                

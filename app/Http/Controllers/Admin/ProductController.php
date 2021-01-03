@@ -135,6 +135,7 @@ class ProductController extends Controller
 
         $vendor = $request->input('vendor_id');
 
+
         if($supermarket_id != null && $supermarket_id != -1)
         {
             $supermarket = $supermarket_id;
@@ -165,6 +166,11 @@ class ProductController extends Controller
         $size = $request->input('size_id');
 
         $offer_price = $request->offer_price;
+        
+        if ($offer_price != null) {
+            $flag = 1;
+        }
+
 
 
         if ($price == null) {
@@ -191,6 +197,8 @@ class ProductController extends Controller
 
                 $image_names = $file_to_store;
                
+            }else{
+                $image_names = ''; 
             }
 
             //$images = implode(',', $image_names);
@@ -506,6 +514,11 @@ class ProductController extends Controller
                 $price = 0;
             }
 
+            if ($offer_price != null) {
+                $flag = 1;
+            }
+            
+
             if($points == null)
             {
                 $points == 0;
@@ -549,7 +562,7 @@ class ProductController extends Controller
                     // $productimages = explode(',', $product->images);
 
                     $image = $request->input('image');
-                    dd($request->all());
+                   
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
