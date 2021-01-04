@@ -72,7 +72,7 @@ class ProductController extends Controller
       
 
         $data = $this->checkPolygon($request->lat, $request->long);
-       
+       dd($data);
         if ($data) {
        
 
