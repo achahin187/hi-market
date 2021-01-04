@@ -40,7 +40,7 @@ class ProductDetailesResource extends JsonResource
                 "category" => $this->category ?? "",
                 "deliver_to" => $branch->city->name,
                 "delivery_time" => request()->header('lang') == 'ar' ? 'دقيقة 30' : ' 30 minutes',
-                "specs"=>$specifications,
+                "specs"=>$this->specifications,
                 "branch_open_time"=>$branch->open_time ?? "",
                 "branch_close_time"=>$branch->close_time ?? "",
                 "cityname"=>$this->getBranchCity($branch),
