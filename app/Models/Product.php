@@ -150,6 +150,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\Measures');
     }
 
+     public function city() {
+        return $this->belongsTo('App\Models\City');
+    }
+
     public function size() {
         return $this->belongsTo('App\Models\Size');
     }
