@@ -71,7 +71,7 @@ class ProductController extends Controller
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
       
 
-      
+        return $request->lat and  $request->long;
         $data = $this->checkPolygon($request->lat, $request->long);
        
 
