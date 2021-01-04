@@ -83,7 +83,7 @@ class ProductController extends Controller
 
             }else{
 
-              $getPolygon = Polygon::where('lat', $data['y'])->where('lon', $data['x'])->first();
+              $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
             }
 
           
