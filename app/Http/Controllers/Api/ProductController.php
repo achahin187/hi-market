@@ -121,12 +121,23 @@ class ProductController extends Controller
 
                   //dd( $request->header("udid"), $request->lat , $request->long);
               $udid = Udid::where("body", $request->header("udid") )->first();
-               $udid->updateOrCreate([
+              if($udid)
+              {
+                
+               $udid->update([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->long,
 
                 ]);
+              }else{
+                $udid->create([
+                    "body" => $request->header("udid"),
+                    'lat' => $request->lat,
+                    'lon' => $request->long,
+
+                ]);
+              }
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
             }//end if 
