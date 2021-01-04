@@ -72,10 +72,9 @@ class ProductController extends Controller
       
 
         $data = $this->checkPolygon($request->lat, $request->long);
+       
         if ($data) {
        
-           
-     
 
             $getPolygon   = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
@@ -294,40 +293,6 @@ class ProductController extends Controller
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
     }
 
-   /* public function getproductsearch(Request $request)
-    {
-
-          $validation = \Validator::make($request->all(), [
-            "supermarket_id" => "required",
-        ]);
-        if ($validation->fails()) {
-            return $this->returnValidationError(422, $validation);
-        }
-
-        $client = getUser();
-
-
-        if ($client) {
-        #new instance
-
-
-
-
-
-        foreach ($products as   $product) {
-              $data = $product->where('name_en', 'LIKE', '%' . $name . "%")
-                              ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
-                              ->get();
-          }
-
-
-
-                // $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->get();
-
-                return $this->returnData(['supermarkets'], [HomeDataResource::collection($data)]);
-
-            }
-    }*/
 
    public function getproductsearch(Request $request)
     {
@@ -387,7 +352,6 @@ class ProductController extends Controller
              $Finalpolygons[] = $polygon;
                
           }
-
           #new instance 
           $pointLocation = new PointLocation();
 
@@ -409,6 +373,7 @@ class ProductController extends Controller
 
         #if data == true
          $data = $this->checkLocation($resultsList);
+         return $data;
 
     }//end function
 
@@ -421,6 +386,7 @@ class ProductController extends Controller
 
                 if($data == true){
 
+       
                      return $data;
                 }//end if 
               }
