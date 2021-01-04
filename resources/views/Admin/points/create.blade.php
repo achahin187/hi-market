@@ -67,7 +67,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>type </label>
                                     <select class="@error('type') is-invalid @enderror select2 type" name="type" data-placeholder="Select a State" style="width: 100%;" required>
 
@@ -93,9 +93,9 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
-                                <div class="form-group offer_type" style="display: none">
+                            {{--     <div class="form-group offer_type" style="display: none">
                                     <label>offer type </label>
                                     <select class="@error('offer_type') is-invalid @enderror select2" name="offer_type" data-placeholder="Select a State" style="width: 100%;display: none" required>
 
@@ -119,7 +119,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.points_value')}}</label>

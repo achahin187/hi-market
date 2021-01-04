@@ -39,8 +39,8 @@ class PointController extends Controller
 
         $request->validate([
             'points' => ['required', 'min:1', 'unique:points,points','integer'],
-            'type' => ['required', 'min:0', 'integer'],
-            'offer_type' => ['sometimes','string'],
+            /*'type' => ['required', 'min:0', 'integer'],
+            'offer_type' => ['sometimes','string'],*/
             'value' => ['required', 'min:0', 'numeric'],
             'status' => ['required','string'],
             'start_date' => 'sometimes|after:today',
@@ -49,7 +49,7 @@ class PointController extends Controller
         ]);
         
 
-        if($request->type == 2)
+/*        if($request->type == 2)
         {
             $offer_type = $request->offer_type;
         }
@@ -57,7 +57,7 @@ class PointController extends Controller
         {
             $offer_type = 'not an offer';
         }
-
+*/
         if($request->has('start_date'))
         {
             $start = $request->start_date;
@@ -82,8 +82,8 @@ class PointController extends Controller
 
                 'points' => $request->input('points'),
                 'value' => $request->input('value'),
-                'type' => $request->input('type'),
-                'offer_type' => $offer_type,
+ /*               'type' => $request->input('type'),
+                'offer_type' => $offer_type,*/
                 'status' => $request->input('status'),
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),
@@ -132,8 +132,8 @@ class PointController extends Controller
 
             $rules = [
                 'points' => ['required', 'min:1', 'integer'],
-                'type' => ['required', 'min:0', 'integer'],
-                'offer_type' => ['sometimes','string'],
+               /* 'type' => ['required', 'min:0', 'integer'],
+                'offer_type' => ['sometimes','string'],*/
                 'value' => ['required', 'min:0', 'numeric'],
                 'start_date' => 'sometimes|after:today',
                 'end_date' => 'sometimes|after:start_date|date'
@@ -144,20 +144,19 @@ class PointController extends Controller
 
         $point = Point::find($id);
 
-        if($request->type == 2)
+/*        if($request->type == 2)
         {
             $offer_type = $request->offer_type;
         }
         else
         {
             $offer_type = 'not an offer';
-        }
+        }*/
 
 
 //        $points = Point::orderBy('id', 'desc')->get();
 
 
-        if($point) {
 
 /*            if($point->from != $request->from || $point->to != $request->to) {
 
@@ -176,13 +175,14 @@ class PointController extends Controller
             }*/
 
 
+        if($point) {
 
                 $point->update([
 
                     'points' => $request->input('points'),
                     'value' => $request->input('value'),
-                    'type' => $request->input('type'),
-                    'offer_type' => $offer_type,
+                    /*'type' => $request->input('type'),
+                    'offer_type' => $offer_type,*/
                     'start_date' => $request->input('start_date'),
                     'end_date' => $request->input('end_date'),
                     'updated_by' => $user->id

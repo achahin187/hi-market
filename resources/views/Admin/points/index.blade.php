@@ -69,9 +69,9 @@
                                     <thead>
                                     <tr>
                                         <th>points</th>
-                                        <th>type</th>
-                                        <th>offer_type</th>
-                                        <th>value</th>
+                                       {{--  <th>type</th>
+                                        <th>offer_type</th> --}}
+                                        <th>EGP Discount value</th>
                                         @if(auth()->user()->can('point-active'))
                                         <th>status</th>
                                         @endif
@@ -85,7 +85,7 @@
                                     @foreach($points as $point)
                                         <tr>
                                             <td>{{$point->points}}</td>
-                                            <td>
+                                            {{-- <td>
                                                 @if($point->type == 0)
 
                                                     discount
@@ -100,8 +100,8 @@
                                                 @endif
 
 
-                                            </td>
-                                            <td>
+                                            </td> --}}
+                                            {{-- <td>
 
                                                 @if($point->offer_type == 'value')
 
@@ -117,8 +117,8 @@
                                                 @endif
 
 
-                                            </td>
-                                            <td>{{$point->value}}</td>
+                                            </td> --}}
+                                            <td>{{$point->value ."  EGP"}}</td>
                                             @if(auth()->user()->can('point-active'))
                                             <td>
 
