@@ -71,8 +71,8 @@ class ProductController extends Controller
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
       
 
+      
         $data = $this->checkPolygon($request->lat, $request->long);
-       dd($data);
         if ($data) {
        
 
@@ -204,9 +204,6 @@ class ProductController extends Controller
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
             }//end if  auth
-
-        
-
     }
 
     private function getOffer()
@@ -370,7 +367,7 @@ class ProductController extends Controller
            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
-          dd($resultsList);
+          
         #if data == true
          $data = $this->checkLocation($resultsList);
          return $data;
