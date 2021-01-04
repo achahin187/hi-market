@@ -38,7 +38,7 @@ class ProductDetailesResource extends JsonResource
                 "favourite" => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
                 "category" => $this->category ?? "",
-                "deliver_to" => $this->deliver_to,
+                "deliver_to" => $this->city->name,
                 "delivery_time" => $this->delivery_time,
                 "specs"=>$this->specs,
                 "branch_open_time"=>$branch->open_time ?? "",
