@@ -101,7 +101,7 @@ class ProductController extends Controller
 
                 $client = Client::where('id',auth("client-api")->user()->id)->first();
                   if ($client) {
-                  dd($client);
+                 
 
                       $client->update([
                           'lat' => $request->lat,
