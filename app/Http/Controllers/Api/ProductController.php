@@ -74,9 +74,9 @@ class ProductController extends Controller
        
         $data = $this->checkPolygon($request->lat, $request->lon);
        
+          dd($data);
 
         if ($data) {
-          dd($data);
             if(count( $data) > 2)
             {
               $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
