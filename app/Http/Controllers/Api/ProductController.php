@@ -100,25 +100,26 @@ class ProductController extends Controller
             if (auth("client-api")->check()) {
 
                 $client = Client::find(auth("client-api")->user()->id);
-              
-                if ($client && $request->lat && $request->lon) {
-
-                    $client->update([
-                        'lat' => $request->lat,
-                        'lon' => $request->lon,
-                    ]);
                 
+                  if ($client && $request->lat && $request->lon) {
 
-                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                      $client->update([
+                          'lat' => $request->lat,
+                          'lon' => $request->lon,
+                      ]);
+                  
 
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                      
+                         dd( $client);
 
-                } else {
+                  } else {
 
-                    return $this->returnError(305, 'there is no client found');
-                }
+                      return $this->returnError(305, 'there is no client found');
+                  }
             } else {
 
-                  dd( $request->header("udid"), $request->lat , $request->long);
+                  dd( $request->header("udid"), $request->lat , $request->lon);
              
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
