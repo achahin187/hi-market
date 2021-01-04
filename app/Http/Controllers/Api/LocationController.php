@@ -53,8 +53,8 @@ class LocationController extends Controller
          
         #if data == true
         if ($data) {        
-        dd(count($data));
-        if(count( $data) > 0)
+        
+        if(count( $data) > 2)
         {
           $testPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
