@@ -110,7 +110,7 @@ class ProductController extends Controller
                   
 
                       return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
-                      
+
                          dd( $client);
 
                   } else {
@@ -132,7 +132,7 @@ class ProductController extends Controller
             }//end if 
 
         }else{
-
+          dd('nodata');
             $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
 
             if (auth("client-api")->check()) {
