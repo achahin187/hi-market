@@ -121,7 +121,7 @@ class ProductController extends Controller
 
                   //dd( $request->header("udid"), $request->lat , $request->long);
               $udid = Udid::where("body", $request->header("udid") )->first();
-               $udid->update([
+               $udid->updateOrCreate([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->long,
