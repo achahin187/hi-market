@@ -55,9 +55,9 @@ class LocationController extends Controller
          
         #if data == true
         if ($data) {        
-
+         
           $testPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-          
+            
           $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
          
                   return response()->json([

@@ -73,6 +73,7 @@ class ProductController extends Controller
 
       
         $data = $this->checkPolygon($request->lat, $request->long);
+
         if ($data) {
        
 
@@ -83,16 +84,18 @@ class ProductController extends Controller
                                    ->limit(20)
                                    ->get();
           
-
+                
             if (auth("client-api")->check()) {
-                $client = auth("client-api")->user();
 
-                if ($client) {
+                $client = Client::find(auth("client-api")->user()->id);
+              
+                if ($client && $request->lat && $request->long) {
 
                     $client->update([
                         'lat' => $request->lat,
                         'lon' => $request->long,
                     ]);
+                
 
                     return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
 
@@ -102,8 +105,12 @@ class ProductController extends Controller
                     return $this->returnError(305, 'there is no client found');
                 }
             } else {
+
+
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
+                    'lat' => $request->lat,
+                    'lon' => $request->long,
 
                 ]);
 
@@ -238,6 +245,7 @@ class ProductController extends Controller
 
         $product_details = Product::where('id', $product_id)->first();
 
+        return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
 
         // $product_images = explode(',', $product->images);
 
@@ -287,7 +295,7 @@ class ProductController extends Controller
         // $product_details->delivery_time = '30 minutes';
 
 
-        return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
+        
     }
 
 

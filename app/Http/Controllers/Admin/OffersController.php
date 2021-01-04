@@ -124,7 +124,7 @@ class OffersController extends Controller
                   "superMarket_id" => $request_data['branch_id']??null,
                  ];
 
-        new SendNotification('topics', '', $data);    
+         new SendNotification('topics', '', $data);    
         return redirect()->route($this->route.'index');
     }
 
@@ -274,6 +274,7 @@ class OffersController extends Controller
 
           if ($request->banner2) {
             if ($offer->banner2 != $request->banner2) {
+              //dd( base_path('offer_images/'.$offer->banner2) );
                 unlink( base_path('public/offer_images/'.$offer->banner2) );
                
             }
@@ -319,7 +320,8 @@ class OffersController extends Controller
                   "superMarket_id" => $request_data['branch_id']??null,
                  ];
 
-         new SendNotification('topics', '', $data);    
+           
+         new SendNotification('topics', '', $data);  
         return redirect()->route($this->route.'index');
     }
 
@@ -349,7 +351,6 @@ class OffersController extends Controller
             //$create_promocode->attach()
             $allBranches =  Branch::all(); 
             foreach ($allBranches as  $allBranche) {
-                
                 $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
             }
         }
@@ -385,7 +386,7 @@ class OffersController extends Controller
         $request_data     = collect($request)->except('branch_id');
         $create_promocode =   $offer->update($request_data->toArray());
         if ($request['source'] == 'Branch') {
-        dd('fea');
+      
               $offer->branches()->sync($request['branch_id']);
             // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
 
