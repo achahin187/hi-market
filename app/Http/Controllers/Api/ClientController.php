@@ -138,8 +138,8 @@ class ClientController extends Controller
 
                         $variable_here = $points->points - (int)(($request->total_order_money / $points->value) * $points->points);
                         $user = Client::where('id', $client->id)->first();
-                        $user->update([
-                            'points'=> $variable_here + $user->total_points,
+                        $user->update([ 
+                            'total_points'=> $variable_here + $user->total_points,
                         ]); 
 
                     }
