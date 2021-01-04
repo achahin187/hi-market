@@ -72,7 +72,7 @@ class ProductController extends Controller
       
 
        
-        $data = $this->checkPolygon($request->lat, $request->lon);
+        $data = $this->checkPolygon($request->lat, $request->long);
        
 
         if ($data) {
@@ -101,11 +101,11 @@ class ProductController extends Controller
 
                 $client = Client::find(auth("client-api")->user()->id);
                 
-                  if ($client && $request->lat && $request->lon) {
+                  if ($client && $request->lat && $request->long) {
 
                       $client->update([
                           'lat' => $request->lat,
-                          'lon' => $request->lon,
+                          'lon' => $request->long,
                       ]);
                   
 
@@ -119,12 +119,12 @@ class ProductController extends Controller
                   }
             } else {
 
-                  dd( $request->header("udid"), $request->lat , $request->lon);
+                  dd( $request->header("udid"), $request->lat , $request->long);
              
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
-                    'lon' => $request->lon,
+                    'lon' => $request->long,
 
                 ]);
 
