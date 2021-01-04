@@ -113,7 +113,7 @@ class ClientController extends Controller
 
         if ($points) {
             
-            if ($points->type == 0) {
+            /*if ($points->type == 0) {
                 $total = $request->total_order_money - (( $request->total_order_money * $points->value)/100) ;
             }
             else{
@@ -124,7 +124,15 @@ class ClientController extends Controller
             if ($total <=  (( $request->total_order_money * $setting->reedem_point)/100)) {
 
                 $total = (( $request->total_order_money * $setting->reedem_point)/100)  ;
-            }
+            }*/
+
+            $total = $request->total_order_money - $points->value ;
+
+                if($total <= 0 )
+                {
+                    $total = (( $request->total_order_money * $setting->reedem_point)/100); 
+                }
+
               return [
                         'status' => true,
                         'msg'=>'',
