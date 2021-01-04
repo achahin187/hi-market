@@ -143,7 +143,7 @@ class ProductController extends Controller
             }//end if 
 
         }else{
-          dd('nodata');
+          /*dd('nodata');*/
             $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
 
             if (auth("client-api")->check()) {
