@@ -860,8 +860,10 @@ $settings = App\Models\Setting::all()->first();
 <script>
     $(function () {
         $("#example1").DataTable({
+            "paging": false,
             "responsive": true,
             "autoWidth": false,
+           
         });
         $('#example2').DataTable({
             "paging": true,

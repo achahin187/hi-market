@@ -34,11 +34,11 @@ class ProductController extends Controller
     {
      
         if($flag == 1)
-        {
-            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+        {  
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
             return view('Admin.product_offers.index',compact('products','flag'));
         }
-        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->get();
+        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
         return view('Admin.products.index',compact('products','flag'));
     }
 

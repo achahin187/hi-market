@@ -401,6 +401,8 @@
 
                                     </tbody>
                                 </table>
+                             
+                                 {{ $products->appends(request()->query())->links() }}
                             </div>
                             <!-- /.card-body -->
                         </div>
