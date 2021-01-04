@@ -370,7 +370,7 @@ class ProductController extends Controller
            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
-
+          dd($resultsList);
         #if data == true
          $data = $this->checkLocation($resultsList);
          return $data;
