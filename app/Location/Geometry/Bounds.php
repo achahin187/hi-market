@@ -4,6 +4,8 @@
 namespace App\Location\Geometry;
 
 
+
+
 class Bounds implements \Iterator, \ArrayAccess, \Countable
 {
     /**
@@ -26,12 +28,15 @@ class Bounds implements \Iterator, \ArrayAccess, \Countable
     {
         $points = $b ? [$a, $b] : $a;
         foreach ($points as $point) {
-            $this->points[] = new Point($point->x, $point->y);
+            $this->points[] = $point;
+
         }
+
         /*
          * loop over points and min and max point in area
          */
         foreach ($this->points as $point) {
+
             if (!$this->min && !$this->max) {
                 $this->min = $point->copy();
                 $this->max = $point->copy();
@@ -42,7 +47,6 @@ class Bounds implements \Iterator, \ArrayAccess, \Countable
                 $this->max->y = max($point->y, $this->max->y);
             }
         }
-
 
     }
 
@@ -94,9 +98,9 @@ class Bounds implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * Check if point exists inside area or not
+     * Check if point exists inside rectangle or not
      * the point can (Bounds) or (Point)
-     * @param $point
+     * @param Point|Bounds $point
      * @return bool
      */
     public function contains($point)
