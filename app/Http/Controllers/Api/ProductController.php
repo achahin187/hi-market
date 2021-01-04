@@ -101,7 +101,7 @@ class ProductController extends Controller
 
                 $client = Client::find(auth("client-api")->user()->id);
               
-                if ($client && $request->lat && $request->long) {
+                if ($client && $request->lat && $request->lon) {
 
                     $client->update([
                         'lat' => $request->lat,
@@ -118,7 +118,7 @@ class ProductController extends Controller
                 }
             } else {
 
-                 // dd( $request->header("udid"), $request->lat , $request->long);
+                  dd( $request->header("udid"), $request->lat , $request->long);
              
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
