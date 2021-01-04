@@ -250,15 +250,15 @@ class ProductController extends Controller
 
         // $favproduct = DB::table('client_product')->where('udid', $request->header("udid"))->where('product_id', $product_id)->first();
 
-        $names = ['production_date', 'exp_date', 'measure', 'size'];
+        // $names = ['production_date', 'exp_date', 'measure', 'size'];
 
-        $values = [$product->production_date, $product->exp_date, 'kilo', !is_null($product->size) ? $product->size->value : 0];
+        // $values = [$product->production_date, $product->exp_date, 'kilo', !is_null($product->size) ? $product->size->value : 0];
 
-        $specifications = [];
+        // $specifications = [];
 
-        for ($i = 0; $i < count($names); $i++) {
-            array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
-        }
+        // for ($i = 0; $i < count($names); $i++) {
+        //     array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
+        // }
 
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);
         // if (isset($favproduct)) {
