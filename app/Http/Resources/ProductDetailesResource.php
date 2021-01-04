@@ -41,8 +41,8 @@ class ProductDetailesResource extends JsonResource
                 "deliver_to" => $branch->city->name,
                 "delivery_time" => request()->header('lang') == 'ar' ? 'دقيقة 30' : ' 30 minutes',
                 "specs"=> [
-                    "measure" => $this->measure->name ??"",
-                    "size" => $this->size->value ??"",              
+                    "name" => $this->measure->name ??"",
+                    "value" => $this->size->value ??"",              
                     "production_date" => $this->production_date ??"",
                     "exp_date" => $this->exp_date ??"",
                 ],
