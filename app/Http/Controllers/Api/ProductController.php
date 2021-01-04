@@ -76,7 +76,7 @@ class ProductController extends Controller
        
 
         if ($data) {
-
+          dd($data);
             if(count( $data) > 0)
             {
               $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
