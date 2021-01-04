@@ -376,8 +376,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                @if($flag == 1)
-                                @endif
+                               
 
                                
                                  <div class="form-group">

@@ -152,7 +152,7 @@ class CartController extends Controller
                     'msg'=>'',
                     'data'=>[
                         'discount_on' => $dicount_on,
-                        'OrderMoney'=>$total,
+                        'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>$deliver_money, 
                         'Total'=>$total + $deliver_money,
                      ],
@@ -168,7 +168,7 @@ class CartController extends Controller
                     'msg'=>'',
                     'data'=>[
                         'discount_on' => $dicount_on,
-                        'OrderMoney'=>$total_money,
+                        'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>$total, 
                         'Total'=>$total + $total_money,
                     ],
@@ -190,7 +190,7 @@ class CartController extends Controller
                     'msg'=>'',
                     'data'=>[
                         'discount_on' => $dicount_on,
-                        'OrderMoney'=>$total,
+                        'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>$deliver_money, 
                         'Total'=>$total + $deliver_money,
                     ],
@@ -207,7 +207,7 @@ class CartController extends Controller
                     'msg'=>'',
                     'data'=>[
                         'discount_on' => $dicount_on,
-                        'OrderMoney'=>$total_money,
+                        'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>$total, 
                         'Total'=>$total_money + $total,
                     ],
