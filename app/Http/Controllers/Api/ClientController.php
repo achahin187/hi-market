@@ -136,7 +136,7 @@ class ClientController extends Controller
 
               return [
                         'status' => true,
-                        'msg'=>'',
+                        'msg'=>'Collect More Points to get Offers',
                         'data'=>[
                             'totalOrderMoney' => intval($request->total_order_money),                        
                         ],
