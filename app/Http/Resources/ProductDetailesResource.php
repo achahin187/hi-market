@@ -37,7 +37,7 @@ class ProductDetailesResource extends JsonResource
                 "BranchName" => $this->getBranchName()->name,
                 "favourite" => (int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
-                "category" => $this->category ?? "",
+                "category" => $this->category->name ?? "",
                 "deliver_to" => $branch->city->name,
                 "delivery_time" => request()->header('lang') == 'ar' ? 'دقيقة 30' : ' 30 minutes',
                 "specs"=> [
