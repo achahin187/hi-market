@@ -111,7 +111,7 @@ class ProductController extends Controller
 
                       return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
 
-                         dd( $client);
+                         /*dd( $client);*/
 
                   } else {
 

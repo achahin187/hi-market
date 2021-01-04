@@ -57,10 +57,10 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.commission') }}</th>
-                                        <th>{{ __('admin.total_order') }}</th>
-                                        <th>{{ __('admin.delivertto_money') }}</th>
-                                        <th>{{ __('admin.branch_money') }}</th>
+                                        <th>{{ __('admin.Delivertto_Commission') }}</th>
+                                        <th>{{ __('admin.total_orders_money') }}</th>
+                                        <th>{{ __('admin.delivertto_money_form_commission') }}</th>
+                                        <th>{{ __('admin.branch_money_form_commission') }}</th>
                                        
                                     </tr>
                                     </thead>
@@ -71,13 +71,13 @@
                                             
                                         
                                         <td>{{$branch->name }}</td>
-                                        <td>{{$branch->commission }}</td>
+                                        <td>{{$branch->commission ." %" }}</td>
 
                                         <td>{{ branchTotal($branch->id) }}</td>
 
                                         <td>{{branchTotal($branch->id) *$branch->commission/ 100  }}</td>
 
-                                        <td>{{    branchTotal($branch->id) - (branchTotal($branch->id) * $branch->commission/ 100)  }}</td>
+                                        <td>{{branchTotal($branch->id) - (branchTotal($branch->id) * $branch->commission/ 100)  }}</td>
                           
                                         </tr>
                                     @endforeach
@@ -107,7 +107,7 @@
                                     <thead>
                                     <tr>
                                         <th>{{ __('admin.branch_name') }}</th>
-                                        <th>{{ __('admin.Commission') }}</th>
+                                        <th>{{ __('admin.Delivertto_Commission') }}</th>
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.branches') }}</th>
                                         
@@ -123,7 +123,7 @@
                                             
                                         
                                         <td>{{$company->name }}</td>
-                                        <td>{{$company->commission }}</td>
+                                        <td>{{$company->commission ." %"}}</td>
                                         <td>{{$company->status == 1 ?trans('admin.active') :trans('admin.inactive') }}</td>
                                         <td>
                                             @foreach($company->branches as $branches)

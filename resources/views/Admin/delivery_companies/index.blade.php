@@ -74,7 +74,7 @@
                                             <td>{{$deliveryCompany->status ?
                                              __("admin.auto_approve") : __("admin.approve") }} </td>
 
-                                            <td>{{$deliveryCompany->commission}}</td>
+                                            <td>{{$deliveryCompany->commission ."  %"}}</td>
 
                                         <td>
                                             @foreach($deliveryCompany->branches as $branches)
