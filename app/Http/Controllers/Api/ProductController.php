@@ -72,7 +72,7 @@ class ProductController extends Controller
       
 
         return $request->lat and  $request->long;
-        $data = $this->checkPolygon($request->lat, $request->long);
+        $data = $this->checkPolygon($request->lat, $request->lon);
        
 
         if ($data) {
@@ -105,7 +105,7 @@ class ProductController extends Controller
 
                     $client->update([
                         'lat' => $request->lat,
-                        'lon' => $request->long,
+                        'lon' => $request->lon,
                     ]);
                 
 
@@ -123,7 +123,7 @@ class ProductController extends Controller
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
-                    'lon' => $request->long,
+                    'lon' => $request->lon,
 
                 ]);
 
