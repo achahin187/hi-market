@@ -295,9 +295,9 @@ class BranchController extends Controller
                 'commission' => $request->commission,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'area_id' => $request->area_id,
-                 'rating' => $request->rating,
+                'rating' => $request->rating,
                 'city_id' => $request->city_id,
+                'area_id' => $request->area_id,
               
             ]);
 
@@ -306,15 +306,30 @@ class BranchController extends Controller
             } else {
 
                 if ($request->has('checkedimage')) {
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id, 'start_time' => $request->start_time,
-                'end_time' => $request->end_time,'image' => $request->input('checkedimage')]);
+                    $branch->update([
+                        'name_ar' => $request->name_ar,
+                        'name_en' => $request->name_en,
+                        'supermarket_id' => $request->supermarket_id,
+                        'start_time' => $request->start_time,
+                        'end_time' => $request->end_time,
+                        'image' => $request->input('checkedimage'),
+                        'city_id' => $request->city_id,
+                        'area_id' => $request->area_id,
+                    ]);
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->image != null) {
                         unlink('branche_image/' . $branch->image);
                     }
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id, 'start_time' => $request->start_time,
-                'end_time' => $request->end_time,'image' => null]);
+                    $branch->update([
+                        'name_ar' => $request->name_ar,
+                        'name_en' => $request->name_en,
+                        'supermarket_id' => $request->supermarket_id,
+                        'start_time' => $request->start_time,
+                        'end_time' => $request->end_time,
+                        'city_id' => $request->city_id,
+                        'area_id' => $request->area_id,
+                        'image' => null]);
                        $branch->categories()->sync($request->categories);
                 }
             }
@@ -333,25 +348,46 @@ class BranchController extends Controller
                     }
                 }
 
-                $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
-                 'start_time' => $request->start_time,
-                'end_time' => $request->end_time,'logo' => $file_to_store]);
+                $branch->update([
+                    'name_ar' => $request->name_ar,
+                    'name_en' => $request->name_en,
+                    'supermarket_id' => $request->supermarket_id,
+                    'start_time' => $request->start_time,
+                    'end_time' => $request->end_time,
+                    'logo' => $file_to_store,
+                    'city_id' => $request->city_id,
+                    'area_id' => $request->area_id,
+            ]);
                    $branch->categories()->sync($request->categories);
               }else {
 
                 if ($request->has('checkedlogo')) {
 
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
-                     'start_time' => $request->start_time,
-                     'end_time' => $request->end_time,'logo' => $request->input('checkedlogo')]);
+                    $branch->update([
+                        'name_ar' => $request->name_ar,
+                        'name_en' => $request->name_en,
+                        'supermarket_id' => $request->supermarket_id,
+                        'start_time' => $request->start_time,
+                        'end_time' => $request->end_time,
+                        'logo' => $request->input('checkedlogo'),
+                        'city_id' => $request->city_id,
+                        'area_id' => $request->area_id,
+                 ]);
                        $branch->categories()->sync($request->categories);
                 } else {
                     if ($branch->logo != null) {
                         unlink('branche_image/' . $branch->logo);
                     }
-                    $branch->update(['name_ar' => $request->name_ar, 'name_en' => $request->name_en,'supermarket_id' => $request->supermarket_id,
-                     'start_time' => $request->start_time,
-                    'end_time' => $request->end_time,'logo' => null]);
+                    $branch->update([
+                        'name_ar' => $request->name_ar,
+                        'name_en' => $request->name_en,
+                        'supermarket_id' => $request->supermarket_id,
+                        'start_time' => $request->start_time,
+                        'end_time' => $request->end_time,
+                        'logo' => null,
+                        'city_id' => $request->city_id,
+                        'area_id' => $request->area_id,
+                ]);
                        $branch->categories()->sync($request->categories);
                 }
             }

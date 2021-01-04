@@ -127,9 +127,7 @@ class Product extends Model
 
     protected static $logAttributes = ['name_ar','name_en','price','offer_price','images','category_id','vendor_id','supermarket_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','rate','exp_date','points','priority','barcode','production_date'];
 
-    protected $fillable = [
-        'name_ar','name_en',"views",'price','offer_price','rate','images','category_id','vendor_id','supermarket_id','branch_id','subcategory_id','arab_description','eng_description','flag','status','start_date','end_date','measure_id','size_id','subcategory_id','ratings','eng_spec','arab_spec','exp_date','production_date','points','priority','barcode','created_by','updated_by'
-    ];
+    protected $guarded = [];
 
     public function category() {
         return $this->belongsTo('App\Models\Category', 'category_id');

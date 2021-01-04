@@ -865,6 +865,13 @@ $settings = App\Models\Setting::all()->first();
             "autoWidth": false,
            
         });
+        $("#example20").DataTable({
+            "searching": true,
+            "responsive": true,
+            "autoWidth": false,
+             "paging": true,
+           
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,

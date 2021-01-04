@@ -251,20 +251,20 @@
 
                                     @endif
 
-
+                                    
                                     <div class="form-group">
                                         <label>{{__('admin.city')}} </label>
                                         <select class=" @error('city_id') is-invalid @enderror select2" name="city_id" data-placeholder="Select a State" style="width: 100%;" required>
                                             @if(isset($branch))
                                                 @foreach(\App\Models\City::all() as $city)
 
-                                                    <option <?php if($branch->city->id == $city->id) echo 'selected'; ?> value="{{ $city->id }}">{{ $city->name_en }}</option>
+                                                    <option  value="{{ $city->id }}"  {{ $branch->city->id == $city->id ?  'selected' :"" }}>{{ $city->name }}</option>
 
                                                 @endforeach
                                             @else
                                                 @foreach(\App\Models\City::all() as $city)
 
-                                                    <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
 
                                                 @endforeach
 
