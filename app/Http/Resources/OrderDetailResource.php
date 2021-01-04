@@ -35,8 +35,8 @@ class OrderDetailResource extends JsonResource
                 'totalItems' => $this->getOrder()->count(),
                 'priceItems' =>  $this->getOrder()->sum('price'),
                 'shippingFee'=> 5,
-                'totalPrice' =>  (int)$this->total_money + 5 + 10,
-                'estimatedVat'=> 10,
+                'totalPrice' =>  (int)$this->total_money + $this->shipping_fee + 0,
+                'estimatedVat'=> 0,
                 'paymentMethod'=>'Cash',
             ],
 
