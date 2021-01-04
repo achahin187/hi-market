@@ -47,4 +47,11 @@ class Measures extends Model
     public function products() {
         return $this->hasMany('App\Models\Product');
     }
+
+
+      protected function getNameAttribute()
+    {
+
+        return app()->getLocale() == "ar" ? $this->arab_name : $this->end_name;
+    }
 }
