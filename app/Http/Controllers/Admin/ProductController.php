@@ -311,21 +311,21 @@ class ProductController extends Controller
 
         if($supermarket_id != null && $supermarket_id != -1)
         {
-            $products = Product::where('flag',$flag)->where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->get();
+            $products = Product::where('flag',$flag)->where('supermarket_id',$supermarket_id)->orderBy('id', 'desc')->paginate(20);
             return view('Admin.products.index', compact('products', 'columns', 'flag','supermarket_id'));
         }
         elseif ($branch_id != null && $supermarket_id == -1)
         {
-            $products = Product::where('flag',$flag)->where('branch_id',$branch_id)->orderBy('id', 'desc')->get();
+            $products = Product::where('flag',$flag)->where('branch_id',$branch_id)->orderBy('id', 'desc')->paginate(20);
             return view('Admin.products.index', compact('products', 'columns', 'flag','branch_id'));
         }
         else {
 
             if ($flag == 1) {
-                $products = Product::where('flag', $flag)->orderBy('id', 'desc')->get();
+                $products = Product::where('flag', $flag)->orderBy('id', 'desc')->paginate(20);
                 return view('Admin.product_offers.index', compact('products', 'columns', 'flag'));
             }
-            $products = Product::where('flag', $flag)->orderBy('id', 'desc')->get();
+            $products = Product::where('flag', $flag)->orderBy('id', 'desc')->paginate(20);
             return view('Admin.products.index', compact('products', 'columns', 'flag'));
         }
     }

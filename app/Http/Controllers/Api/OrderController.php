@@ -19,6 +19,7 @@ use App\Http\Resources\OrderDetailResource;
 use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
+use App\Models\Offer;
 use App\Models\Reason;
 use App\Models\Client;
 use App\Models\Order;

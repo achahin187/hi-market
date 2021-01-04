@@ -110,7 +110,6 @@
                                     'measure_id',
                                     'size_id',
                                     'start_date',
-                                    'end_date',
                                     'production_date',
                                     'exp_date',
                                     'status',
@@ -401,8 +400,9 @@
 
                                     </tbody>
                                 </table>
-                             
+                                @if($products)
                                  {{ $products->appends(request()->query())->links() }}
+                                 @endif
                             </div>
                             <!-- /.card-body -->
                         </div>
