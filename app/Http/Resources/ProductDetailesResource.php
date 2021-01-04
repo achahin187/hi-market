@@ -40,7 +40,12 @@ class ProductDetailesResource extends JsonResource
                 "category" => $this->category ?? "",
                 "deliver_to" => $branch->city->name,
                 "delivery_time" => request()->header('lang') == 'ar' ? 'دقيقة 30' : ' 30 minutes',
-                "specs"=> [request()->header('lang') == 'ar' ? $this->arab_spec : $this->eng_spec],
+                "specs"=> [
+                    "measure" => $this->measure->name,
+                    "size" => $this->size->name ,              
+                    "production_date" => $this->production_date ,
+                    "exp_date" => $this->exp_date ,
+                ],
                 "branch_open_time"=>$branch->open_time ?? "",
                 "branch_close_time"=>$branch->close_time ?? "",
                 "cityname"=>$this->getBranchCity($branch),
