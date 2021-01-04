@@ -34,7 +34,7 @@ class CategoryProductResource extends JsonResource
             "supermarket_id" => (int)request("supermarket_id"),
             "supermarketName" => $this->getBranch(),
             "favourite" =>(int) (\DB::table("client_product")->where("product_id",$this->id)->where("udid",request()->header("udid"))->count() != 0),
-            "percentage" => $this->offer_price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
+            "percentage" =>$this->offer_price > 0 ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 100,
             "category" => $this->category ?? "",
         ];
     }
