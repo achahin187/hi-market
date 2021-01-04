@@ -73,11 +73,11 @@ class ProductController extends Controller
 
       
         $data = $this->checkPolygon($request->lat, $request->long);
-
-        if ($data) {
        
 
-            $getPolygon   = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+        if ($data) {
+
+            $getPolygon   = Polygon::where('lat',  $data[0]['y'])->where('lon', $data[0]['x'])->first();
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                    ->where('status', 'active')
                                    ->orderBy('priority', 'asc')
@@ -106,7 +106,7 @@ class ProductController extends Controller
                 }
             } else {
 
-
+             
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
@@ -154,12 +154,12 @@ class ProductController extends Controller
                 if ($client) {
 
                     $data = $this->checkPolygon($client->lat, $client->lon);
-
+                  
                     if ($data) {
                         
 
                         $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-                      // dd($request->name);
+                     
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
                                                ->where('name_en', 'LIKE', '%' . $request->name . "%")
@@ -292,10 +292,7 @@ class ProductController extends Controller
         // $product_details->category = !is_null($product->category) ? $product->category->name_en : "";
         // $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
         // $product_details->deliver_to = 'cairo';
-        // $product_details->delivery_time = '30 minutes';
-
-
-        
+        // $product_details->delivery_time = '30 minutes';  
     }
 
 
@@ -375,7 +372,7 @@ class ProductController extends Controller
            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
-          
+         
         #if data == true
          $data = $this->checkLocation($resultsList);
          return $data;
@@ -391,8 +388,8 @@ class ProductController extends Controller
 
                 if($data == true){
 
-       
                      return $data;
+                     break;
                 }//end if 
               }
              
