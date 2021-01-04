@@ -124,7 +124,8 @@
                                         
                                         <td>{{$company->name }}</td>
                                         <td>{{$company->commission ." %"}}</td>
-                                        <td>{{$company->status == 1 ?trans('admin.active') :trans('admin.inactive') }}</td>
+                                        <td>{{$company->status == 1 ?trans('admin.auto_approve') :trans('admin.approve') }}</td>
+
                                         <td>
                                             @foreach($company->branches as $branches)
                                             <span class="badge badge-primary">{{ $branches->name }}</span>

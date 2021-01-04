@@ -58,7 +58,7 @@
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
                                         <th>{{ __('admin.status') }}</th>
-                                        <th>{{ __('admin.commission') }}</th>
+                                        <th>{{ __('admin.Delivertto_commission') }}</th>
                                          <th>{{ __('admin.branches') }}</th>
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <th>{{ __('admin.controls') }}</th>
