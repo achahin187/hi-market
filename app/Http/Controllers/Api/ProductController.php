@@ -242,52 +242,52 @@ class ProductController extends Controller
         $product_details = Product::where('id', $product_id)->first();
 
 
-        $product_images = explode(',', $product->images);
+        // $product_images = explode(',', $product->images);
 
-        $favproduct = DB::table('client_product')->where('udid', $request->header("udid"))->where('product_id', $product_id)->first();
+        // $favproduct = DB::table('client_product')->where('udid', $request->header("udid"))->where('product_id', $product_id)->first();
 
-        $names = ['production_date', 'exp_date', 'measure', 'size'];
+        // $names = ['production_date', 'exp_date', 'measure', 'size'];
 
-        $values = [$product->production_date, $product->exp_date, 'kilo', !is_null($product->size) ? $product->size->value : 0];
+        // $values = [$product->production_date, $product->exp_date, 'kilo', !is_null($product->size) ? $product->size->value : 0];
 
-        $specifications = [];
+        // $specifications = [];
 
-        for ($i = 0; $i < count($names); $i++) {
-            array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
-        }
+        // for ($i = 0; $i < count($names); $i++) {
+        //     array_push($specifications, array('name' => $names[$i], 'value' => $values[$i]));
+        // }
 
-        if (isset($favproduct)) {
-            $product_details->favourite = 1;
-        } else {
-            $product_details->favourite = 0;
-        }
+        // if (isset($favproduct)) {
+        //     $product_details->favourite = 1;
+        // } else {
+        //     $product_details->favourite = 0;
+        // }
 
-        if ($product->flag == 1) {
+        // if ($product->flag == 1) {
 
-            $offer_price = $product->offer_price;
-            $price = $product->price;
+        //     $offer_price = $product->offer_price;
+        //     $price = $product->price;
 
-            $product_details->offer = 1;
-            $product_details->percentage = ($offer_price / $price) * 100;
-        } else {
-            $product_details->offer = 0;
-        }
+        //     $product_details->offer = 1;
+        //     $product_details->percentage = ($offer_price / $price) * 100;
+        // } else {
+        //     $product_details->offer = 0;
+        // }
 
-        $imagepaths = [];
+        // $imagepaths = [];
 
-        foreach ($product_images as $image) {
-            array_push($imagepaths, asset('product_images/' . $image));
-        }
+        // foreach ($product_images as $image) {
+        //     array_push($imagepaths, asset('product_images/' . $image));
+        // }
 
-        $product_details->imagepaths = $imagepaths;
-        $product_details->image = $imagepaths[0];
-        $product_details->ratings = $product->ratings;
-        $product_details->reviews = $product->clientreviews()->select('client_id', 'name', 'review')->get();
-        $product_details->specifications = $specifications;
-        $product_details->category = !is_null($product->category) ? $product->category->name_en : "";
-        $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
-        $product_details->deliver_to = 'cairo';
-        $product_details->delivery_time = '30 minutes';
+        // $product_details->imagepaths = $imagepaths;
+        // $product_details->image = $imagepaths[0];
+        // $product_details->ratings = $product->ratings;
+        // $product_details->reviews = $product->clientreviews()->select('client_id', 'name', 'review')->get();
+        // $product_details->specifications = $specifications;
+        // $product_details->category = !is_null($product->category) ? $product->category->name_en : "";
+        // $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
+        // $product_details->deliver_to = 'cairo';
+        // $product_details->delivery_time = '30 minutes';
 
 
         return $this->returnData(['product'], [new ProductDetailesResource($product_details)]);

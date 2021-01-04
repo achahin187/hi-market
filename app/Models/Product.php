@@ -132,7 +132,7 @@ class Product extends Model
     ];
 
     public function category() {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo('App\Models\Category', 'category_id');
     }
     public function vendor() {
         return $this->belongsTo('App\Models\Vendor');
@@ -142,16 +142,13 @@ class Product extends Model
         return $this->belongsTo('App\Models\Supermarket');
     }
 
-    public function subcategory() {
-        return $this->belongsTo('App\Models\SubCategory');
-    }
-
+   
     public function measure() {
         return $this->belongsTo('App\Models\Measures');
     }
 
      public function city() {
-        return $this->belongsTo('App\Models\City');
+        return $this->belongsTo('App\Models\City', 'city_id');
     }
 
     public function size() {
