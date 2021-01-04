@@ -747,7 +747,7 @@ class ProductController extends Controller
     public function supermarketproducts($supermarket_id,$flag)
     {
         //
-        $products = Product::where('supermarket_id',$supermarket_id)->where('flag',$flag)->orderBy('id', 'desc')->get();
+        $products = Product::where('supermarket_id',$supermarket_id)->where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
         return view('Admin.products.index',compact('products','flag','supermarket_id'));
     }
 
@@ -756,7 +756,7 @@ class ProductController extends Controller
 
         $products = Product::where('flag',$flag)->WhereHas('branches', function ($q) use ($branch_id){
             $q->where('branches.id',$branch_id);
-        })->get();  
+        })->paginate(20);  
 
           
         return view('Admin.products.index',compact('products','flag','branch_id'));
@@ -881,7 +881,7 @@ class ProductController extends Controller
 
             $q->Where('branches.id',$request->branch_id);
 
-        })->get();
+        })->paginate(20);
         
         return response()->json($products);
     }
