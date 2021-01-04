@@ -74,8 +74,8 @@ class ProductController extends Controller
        
         $data = $this->checkPolygon($request->lat, $request->lon);
        
-          dd($data);
-
+       /*   dd($data);
+*/
         if ($data) {
             if(count( $data) > 2)
             {
@@ -397,7 +397,7 @@ class ProductController extends Controller
            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
-         dd($resultsList);
+       /*  dd($resultsList);*/
         #if data == true
          $data = $this->checkLocation($resultsList);
          return $data;
