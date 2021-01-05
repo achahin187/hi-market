@@ -535,6 +535,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
+                    @if(auth()->user()->can('financials-list'))
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -544,7 +545,8 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
+                    @if(auth()->user()->can('notifications-list'))
                       <li class="nav-item">
 
                         <a href="{{route('notifications.index')}}" class="nav-link">
@@ -554,8 +556,9 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
-                      <li class="nav-item">
+                    @endif
+                     <li class="nav-item">
+                    @if(auth()->user()->can('contactUs-list'))
 
                         <a href="{{route('inboxes.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -564,9 +567,10 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
                      <li class="nav-item">
 
+                    @if(auth()->user()->can('help-list'))
                         <a href="{{route('helps.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -574,6 +578,7 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
+                    @endif
 
 {{--                    <li class="nav-item">--}}
 {{--                        <a href="{{route('notifications.index')}}" class="nav-link">--}}

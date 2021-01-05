@@ -145,6 +145,11 @@ class PermissionTableSeeder extends Seeder
             'help-delete',
             'help-edit',
 
+            'notifications-list',
+            'notifications-create',
+            'notifications-delete',
+            'notifications-edit',
+
             'contactUs-list',
             'contactUs-seen',
             'contactUs-delete',

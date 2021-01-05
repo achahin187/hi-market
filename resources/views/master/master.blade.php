@@ -577,6 +577,7 @@ $settings = App\Models\Setting::all()->first();
 
                     {{-- setting --}}
                     @if(auth()->user()->can('setting-list'))
+
                         <li class="nav-item">
                             <a href="{{route('settings.edit',$settings->id??"")}}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -589,6 +590,7 @@ $settings = App\Models\Setting::all()->first();
 
 
 
+                    @if(auth()->user()->can('financials-list'))
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -598,7 +600,8 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
+                    @if(auth()->user()->can('notifications-list'))
                       <li class="nav-item">
 
                         <a href="{{route('notifications.index')}}" class="nav-link">
@@ -608,8 +611,9 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
                      <li class="nav-item">
+                    @if(auth()->user()->can('contactUs-list'))
 
                         <a href="{{route('inboxes.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -618,9 +622,10 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
                      <li class="nav-item">
 
+                    @if(auth()->user()->can('help-list'))
                         <a href="{{route('helps.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -628,7 +633,7 @@ $settings = App\Models\Setting::all()->first();
                             </p>
                         </a>
                     </li>
-
+                    @endif
                     @if(auth()->user()->hasRole('developer'))
 
                             <li class="nav-item">
