@@ -26,7 +26,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a
-                                    href="{{route('delivery-companies.index')}}">{{ __('admin.delivery_companies') }}</a>
+                                    href="{{route('helps.index')}}">{{ __('admin.delivery_companies') }}</a>
                             </li>
                             <li class="breadcrumb-item active">{{ __('admin.add') }}</li>
                         </ol>
@@ -52,7 +52,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" action=" {{route('delivery-companies.store') }}" method="POST"
+                            <form role="form" action=" {{route('helps.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
 
