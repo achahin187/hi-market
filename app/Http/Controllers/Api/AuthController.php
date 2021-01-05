@@ -292,7 +292,7 @@ class AuthController extends Controller
     public function getHelp()
     {
         $help = Help::all();
-        return $this->returnData(['helps'], [new HelpResource($help)];
+        return $this->returnData(['helps'], [new HelpResource($help)]);
 
     }
 
