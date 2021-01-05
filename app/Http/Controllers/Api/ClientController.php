@@ -110,7 +110,7 @@ class ClientController extends Controller
 
         $points = Point::orderBy('points', 'desc')
         ->Where('value','<=',$request->total_order_money)
-        ->orWhere('points','<=',$request->total_redeem_point)
+        ->Where('points','<=',$request->total_redeem_point)
         ->where('status','active')
         ->first();
 
@@ -129,9 +129,8 @@ class ClientController extends Controller
                 $total = (( $request->total_order_money * $setting->reedem_point)/100)  ;
             }*/
 
-            $total = $request->total_order_money - $points->value ;
+            $total = $request->total_order_money - $points->value;
 
-dd($total);
                 if($total <= 0 )
                 {
                     $total = (( $request->total_order_money * $setting->reedem_point)/100);
