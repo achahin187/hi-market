@@ -140,7 +140,7 @@ class ProductController extends Controller
                 ]);
               }
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0,$testPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
             }//end if 
 
         }else{//else data
