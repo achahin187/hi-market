@@ -73,7 +73,7 @@
                                   <td>{{ $inbox->name }}</td>
                                 
                                   <td>
-                                  <span class="label label-{{ $inbox->statuse == 0 ? 'danger' :'success' }}" id="read{{ $inbox->id }}">{{ $inbox->statuse == 0 ? 'unread' :'read' }}</span>
+                                  <span class="badge badge-{{ $inbox->statuse == 0 ? 'danger' :'success' }}" id="read{{ $inbox->id }}">{{ $inbox->statuse == 0 ? 'unread' :'read' }}</span>
                                   </td>
                                   
                                       <!-- Delete button -->
