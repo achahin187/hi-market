@@ -55,8 +55,10 @@
                                 <table id="example1" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>{{ __('admin.title') }}</th>
-                                        <th>{{ __('admin.describtion') }}</th>
+                                        <th>{{ __('admin.title_ar') }}</th>
+                                        <th>{{ __('admin.title_en') }}</th>
+                                        <th>{{ __('admin.describtion_ar') }}</th>
+                                        <th>{{ __('admin.describtion_en') }}</th>
                                         <th>{{ __('admin.image') }}</th>
                                         @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
                                             <th>{{ __('admin.controls') }}</th>
@@ -67,8 +69,10 @@
 
                                     @foreach($helps as $help)
                                         <tr>
-                                            <td>{{$help->title}}</td>
-                                            <td>{{$help->describtion}}</td>
+                                            <td>{{$help->title_ar}}</td>
+                                            <td>{{$help->title_en}}</td>
+                                            <td>{{$help->describtion_ar}}</td>
+                                            <td>{{$help->describtion_en}}</td>
                                             <td> <img src="{{ asset('helps/'.$help->image) }}"></td>
 
                                   

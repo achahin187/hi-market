@@ -63,7 +63,7 @@
                                         <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
                                         <input type="text" value="{{$help->title_ar}}" name="title_ar"
                                                class=" @error('title_ar') is-invalid @enderror form-control" required>
-                                        @error('name')
+                                        @error('title_ar')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -72,8 +72,29 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
                                         <input type="text" value="{{$help->title_en}}" name="title_en"
-                                               class=" @error('name_en') is-invalid @enderror form-control" required>
-                                        @error('name_en')
+                                               class=" @error('title_en') is-invalid @enderror form-control" required>
+                                        @error('title_en')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
+                                        <input type="text" value="{{$help->description_ar}}" name="description_ar"
+                                               class=" @error('description_ar') is-invalid @enderror form-control" required>
+                                        @error('description_ar')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
+                                        <input type="text" value="{{$help->description_en}}" name="description_en"
+                                               class=" @error('description_en') is-invalid @enderror form-control" required>
+                                        @error('description_en')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -82,7 +103,10 @@
                                   
                                       <div class="form-group">
                                         <label for="image">Icon</label>
-                                        <input style="width: 100px; height: 10px "value="{{old("icon") ?? 1}}" @if($help->image) checked @endif type="file" name="image">
+                                        <input value="{{old("image") ?? 1}}" type="file" name="image">
+
+                                        <img style="width: 100px; height: 100px;" src="{{ asset('help/'.$help->image) }}">
+
                                         @error('image')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
