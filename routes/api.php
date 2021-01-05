@@ -124,7 +124,7 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
     Route::post('test/notification', 'AuthController@testNotification');
 
     //contactUS
-    Route::post('contactUs','ClientController@contactUs' )
+    Route::post('contactUs','ClientController@contactUs' );
 
 
 });
