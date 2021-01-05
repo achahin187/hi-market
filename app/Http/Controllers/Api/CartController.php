@@ -237,6 +237,7 @@ class CartController extends Controller
         ->orWhere('points','<=',$client->total_points)
         ->where('status','active')
         ->first();
+        dd($points);
 
         if ($deliveryOffer) {
             
