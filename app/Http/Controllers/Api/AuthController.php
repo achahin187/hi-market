@@ -240,8 +240,11 @@ class AuthController extends Controller
         }
 
         try {
+
             $client = Client::Where('email', $request->email)->first();
+
             if (!$client) {
+
                 $client = Client::create([
                     'name'  => $request->name,
                     'email' => $request->email,
@@ -251,12 +254,13 @@ class AuthController extends Controller
                     ])->body
                 ]);
             }
-        } catch (\Exception $exception) {
 
+        } catch (\Exception $exception) {
+            dd($exception);
             return response()->json([
                 "success" => false,
                 "msg" => "Client Not Exists With this Udid"
-            ]);
+            ], 404);
         }
         
        $client->update(['device_token'=>$request->device_token]);
