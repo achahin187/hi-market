@@ -11,6 +11,7 @@ use App\Models\Address;
 use App\Models\Setting;
 use App\Models\Point;
 use App\Models\Udid;
+use App\Models\Inbox;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
