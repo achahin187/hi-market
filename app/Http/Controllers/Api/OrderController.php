@@ -113,7 +113,7 @@ class OrderController extends Controller
 
         if ($client) {
 
-            if (request("asap") == 1) {
+            if ($request("asap") == 1) {
                 $order_details["delivery_date"] = Carbon::now()->addMinutes(45);
             } else {
 
