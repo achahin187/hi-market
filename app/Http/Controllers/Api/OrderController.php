@@ -181,12 +181,12 @@ class OrderController extends Controller
                 }
             }
 
-             $data =  [
-                  "type" => "order",
-                  "orderId" => $order->id,
-                 ];
-            #send notification to mobile
-            new SendNotification($order->client->device_token, $order, $data);
+            //  $data =  [
+            //       "type" => "order",
+            //       "orderId" => $order->id,
+            //      ];
+            // #send notification to mobile
+            // new SendNotification($order->client->device_token, $order, $data);
 
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
