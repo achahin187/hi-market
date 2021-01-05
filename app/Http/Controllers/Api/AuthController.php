@@ -295,8 +295,8 @@ class AuthController extends Controller
             "status" => true,
             "data" => [
                 "helps" => [
-                    "title"=> $help->title,
-                    "description"=> $help->description,
+                    "title"=> $help->Title,
+                    "description"=> $help->Description,
                     "image"=> $help->image,
                 ],  
             ]
