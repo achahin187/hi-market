@@ -237,7 +237,6 @@ class CartController extends Controller
         ->Where('points','<=',$client->total_points)
         ->where('status','active')
         ->first();
-        dd($points);
 
         if ($deliveryOffer) {
             
