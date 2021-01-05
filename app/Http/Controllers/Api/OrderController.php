@@ -101,7 +101,7 @@ class OrderController extends Controller
         }
 
 
-        $address = Adress::Where('id', $order_details["address_id"])->first();
+        $address = Address::Where('id', $order_details["address_id"])->first();
 
         $client = getUser();
 
