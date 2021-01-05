@@ -66,7 +66,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @dd($helps);
+                                    
                                     @foreach($helps as $help)
                                         <tr>
                                             <td>{{$help->title_ar}}</td>
