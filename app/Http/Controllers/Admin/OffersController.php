@@ -148,16 +148,16 @@ class OffersController extends Controller
             // foreach ($get_branches as  $branch) {
             //  $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
             // }
-
-        }else{
-
-            //$create_promocode->attach()
-            $allBranches =  Branch::all(); 
-            foreach ($allBranches as  $allBranche) {
-                
-                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
-            }
         }
+        // }else{
+
+        //     //$create_promocode->attach()
+        //     $allBranches =  Branch::all(); 
+        //     foreach ($allBranches as  $allBranche) {
+                
+        //         $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+        //     }
+        //}
     }
     /**
     * Display the specified resource.
@@ -198,13 +198,13 @@ class OffersController extends Controller
             //     foreach ($get_branches as  $branch) {
             //      $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
             //     }
-        }else{
-            $allBranches =  Branch::all(); 
-            foreach ($allBranches as  $allBranche) {
+         }//else{
+        //     $allBranches =  Branch::all(); 
+        //     foreach ($allBranches as  $allBranche) {
                 
-                $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
-            }  
-        }      
+        //         $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
+        //     }  
+        // }      
 
 
     }
@@ -346,14 +346,14 @@ class OffersController extends Controller
             //  $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
             // }
 
-        }else{
+         } //else{
 
-            //$create_promocode->attach()
-            $allBranches =  Branch::all(); 
-            foreach ($allBranches as  $allBranche) {
-                $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
-            }
-        }
+        //     //$create_promocode->attach()
+        //     $allBranches =  Branch::all(); 
+        //     foreach ($allBranches as  $allBranche) {
+        //         $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
+        //     }
+        // }
     }
     /**
     * Display the specified resource.
@@ -393,13 +393,13 @@ class OffersController extends Controller
             //     foreach ($get_branches as  $branch) {
             //      $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
             //     }
-        }else{
-            $allBranches =  Branch::all(); 
-            foreach ($allBranches as  $allBranche) {
+         }//else{
+        //     $allBranches =  Branch::all(); 
+        //     foreach ($allBranches as  $allBranche) {
                 
-                $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
-            }  
-        }      
+        //         $update_offer = $allBranche->update(['offer_id'=> $offer->id]);
+        //     }  
+        // }      
 
 
     }
