@@ -61,6 +61,7 @@
                                      <div class="form-group">
                                         <label for="exampleInputEmail1">{{ __('admin.title_ar') }}</label>
                                         <input type="text" value="{{ old('title_ar') }}"
+                                                name="title_ar" 
                                                class=" @error('title_ar') is-invalid @enderror form-control" required>
                                         @error('title_ar')
                                         <span class="invalid-feedback" role="alert">
