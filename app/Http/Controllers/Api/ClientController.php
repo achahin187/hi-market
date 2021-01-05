@@ -530,7 +530,7 @@ class ClientController extends Controller
             return $this->returnError(422, $validator->errors()->first());
         }
         
-        $client = getUser();
+        $client = auth()->user();
 
         $contact_us = Inbox::create([
             'name'      => $request->name,
