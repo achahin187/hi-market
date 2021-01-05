@@ -80,13 +80,13 @@ class ProductController extends Controller
             {
               $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
-              $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
+              $notTopic = Polygon::where('topic', '!=',$getPolygon->topic)->get();
               
             }else{
 
               $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
 
-              $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
+              $notTopic = Polygon::where('topic', '!=',$getPolygon->topic)->get();
              
             }
 
