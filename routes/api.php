@@ -27,7 +27,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post("products/filter", "ProductController@filter");
     Route::post('social/login', 'AuthController@social');
     Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
-     //contactUS
+    //contactUS
     Route::post('contactUs','ClientController@contactUs' );
 });
 
