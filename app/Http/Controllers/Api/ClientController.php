@@ -542,7 +542,7 @@ class ClientController extends Controller
 
         $client = getUser();
 
-       
+           
             $contact_us = Inbox::create([
                 'name'      => $request->name,
                 'title'     => $request->title,
