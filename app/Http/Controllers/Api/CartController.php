@@ -232,9 +232,11 @@ class CartController extends Controller
         $client = Auth('client-api')->user();
         $deliveryOffer  = Offer::Where('type', 'free delivery')->where('status', 1)->first();
         $points = Point::orderBy('points', 'desc')
-        ->Where('points',$client->total_points)
+        ->Where('value','<=',$request->total_money)
         ->orWhere('points','<=',$client->total_points)
+        ->where('status','active')
         ->first();
+
         if ($deliveryOffer) {
             
             if ($deliveryOffer->total_order_money <= $request->total_cart) {
