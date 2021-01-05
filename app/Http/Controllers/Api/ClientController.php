@@ -539,10 +539,10 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }
-
+        dd('afe');
         $client = getUser();
 
-           
+            
             $contact_us = Inbox::create([
                 'name'      => $request->name,
                 'title'     => $request->title,
