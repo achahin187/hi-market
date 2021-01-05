@@ -522,7 +522,6 @@ class ClientController extends Controller
     public function contact_us(Request $request)
     {
          $validator = \Validator::make($request->all(), [
-            'name'        => 'required',
             'title'       => 'required',
             'message'     => 'required',
         ]);
@@ -535,7 +534,6 @@ class ClientController extends Controller
         $client = auth()->user();
 
         $contact_us = Inbox::create([
-            'name'      => $request->name,
             'title'     => $request->title,
             'message'   => $request->message,
             'client_id' => $client != null ? $client->id :null ,

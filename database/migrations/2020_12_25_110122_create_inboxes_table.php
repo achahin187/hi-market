@@ -15,7 +15,6 @@ class CreateInboxesTable extends Migration
     {
         Schema::create('inboxes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->text('message');
             $table->string('udid')->nullable();
