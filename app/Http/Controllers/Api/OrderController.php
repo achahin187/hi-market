@@ -179,7 +179,7 @@ class OrderController extends Controller
             if ($company) {
             #change to the stauts to status 1
                 if ($order_details["asap"] != 1) {
-                    $order->update(['status'=> 0]);
+                    $order->update(['status'=> ]);
                 }
                 elseif ($company->status == 1) {
                     $order->update(['status'=> 1]);
