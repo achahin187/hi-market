@@ -231,7 +231,7 @@ class CartController extends Controller
 
         $client = Auth('client-api')->user();
         $deliveryOffer  = Offer::Where('type', 'free delivery')->where('status', 1)->first();
-        
+
         $points = Point::orderBy('points', 'desc')
         ->Where('value','<=',$request->total_cart)
         ->orWhere('points','<=',$client->total_points)
