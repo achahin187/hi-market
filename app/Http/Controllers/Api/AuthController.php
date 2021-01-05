@@ -106,8 +106,6 @@ class AuthController extends Controller
 
         $udid = $request->header('udid');
 
-    
-
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'mobile_number')],
@@ -117,8 +115,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->returnValidationError(422, $validator);
         }
-
-        
 
         try {
             $client = Client::create([
@@ -256,7 +252,7 @@ class AuthController extends Controller
             }
 
         } catch (\Exception $exception) {
-            dd($exception);
+            
             return response()->json([
                 "success" => false,
                 "msg" => "Client Not Exists With this Udid"
