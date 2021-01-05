@@ -227,7 +227,7 @@ class AuthController extends Controller
     {
 
         $udid = $request->header('udid');
-
+        dd($request->device_token);
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'email'=> ['required','email'],
