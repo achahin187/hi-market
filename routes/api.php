@@ -27,16 +27,13 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post("products/filter", "ProductController@filter");
     Route::post('social/login', 'AuthController@social');
     Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
-    //contactUS
-    Route::post('contactUs','ClientController@contactUs');
+   
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
 
-    
+
     Route::get('logout', 'AuthController@logout')->name('logout');
-
-
     Route::get('products', 'ProductController@index')->name('listproducts');
     Route::post('product', 'ProductController@productdetails')->name('productdetails');
     Route::post("product/count", "ProductController@productCount");
@@ -125,6 +122,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
 
     //test notification
     Route::post('test/notification', 'AuthController@testNotification');
+
+     //contactUS
+    Route::post('contactUs','ClientController@contactUs');
 
    
 
