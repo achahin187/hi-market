@@ -23,10 +23,10 @@ class AuthController extends Controller
     //
     use GeneralTrait;
 
-   
+  
     public function send_sms($name, $mobile, $msg, $lang)
     {
-        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=NVV2TzQxTHl5cThvcVFzWmozMEkwWWxxczRKT0k1VTRrUHNkaDJ0ZDhZcUtoMlN5WXBIcUVpekl2SlpZ5f4a28289ba33&name=' . $name . '&message=' . $msg . '&numbers=' . $mobile . '&sender=' . $name . '&language=' . $lang;
+        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name=' . $name . '&message=' . $msg . '&numbers=' . $mobile . '&sender=' . $name . '&language=' . $lang;
 
         $client = new \GuzzleHttp\Client();
 
@@ -140,7 +140,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = '12345';
+        $code = rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
@@ -148,7 +148,7 @@ class AuthController extends Controller
         $activation_msg = 'your activation code is' . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        //$this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
