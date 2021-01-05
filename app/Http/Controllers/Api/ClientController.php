@@ -29,9 +29,11 @@ class ClientController extends Controller
 
     public function __construct()
     {
+         if (\request()->header("Authorization")) {
 
+            $this->middleware("auth:client-api");
 
-        $this->middleware("auth:client-api");
+        }
     }
 
     public function client_profile(Request $request)
@@ -517,7 +519,7 @@ class ClientController extends Controller
         }
     }
 
-    public function contactUs(Request $request)
+    public function contact_us(Request $request)
     {
          $validator = \Validator::make($request->all(), [
             'name'        => 'required',
