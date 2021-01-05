@@ -11,6 +11,7 @@ use App\Models\Address;
 use App\Models\Setting;
 use App\Models\Point;
 use App\Models\Udid;
+use App\Models\Inbox;
 use App\Rules\CurrentPasswordCheckRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,6 +107,7 @@ class ClientController extends Controller
         $client = Auth('client-api')->user();
 
         $points = Point::orderBy('points', 'desc')
+        ->Where('value',$request->total_order_money)
         ->Where('points',$request->total_redeem_point)
         ->orWhere('points','<=',$request->total_redeem_point)
         ->where('status','active')

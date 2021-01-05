@@ -28,7 +28,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('social/login', 'AuthController@social');
     Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
     //contactUS
-    Route::post('contactUs','ClientController@contactUs' );
+    Route::post('contactUs','ClientController@contactUs');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
