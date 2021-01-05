@@ -134,16 +134,6 @@ class ClientController extends Controller
                     $total = (( $request->total_order_money * $setting->reedem_point)/100);
                     
                         # code...
-                    if($points->value > $request->total_order_money)
-                    {
-
-                        $variable_here = $points->points - (int)(($request->total_order_money / $points->value) * $points->points);
-                        $user = Client::where('id', $client->id)->first();
-                        $user->update([ 
-                            'total_points'=> $variable_here + $user->total_points,
-                        ]); 
-
-                    }
                 }
 
               return [
