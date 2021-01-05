@@ -547,7 +547,7 @@ class ClientController extends Controller
                 'name'      => $request->name,
                 'title'     => $request->title,
                 'message'   => $request->message,
-                'client_id' => $client != null ? $clinet->id :null ,
+                'client_id' => $client != null ? $client->id :null ,
                 'udid'      => $client == null ? request()->header('udid') : null ,
 
             ]); 
