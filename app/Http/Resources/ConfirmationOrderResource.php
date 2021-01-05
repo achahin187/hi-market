@@ -26,11 +26,11 @@ class ConfirmationOrderResource extends JsonResource
 
             'ShippingAddress'=>[
 
-                 'id'      => $this->addressOrder->id,
-                 'label'   => $this->addressOrder->address_lable ??'',
-                 'name'    => $this->addressOrder->name ??'',
-                 'address' => $this->addressOrder->address ??'',
-                 'phone'   => $this->addressOrder->phone ??'',
+                 'id'      => $this->id,
+                 'label'   => $this->address_lable ??'',
+                 'name'    => $this->name ??'',
+                 'address' => $this->address ??'',
+                 'phone'   => $this->phone ??'',
                  'time'    => Carbon::parse($this->delivery_date)->translatedFormat('M d Y H:i A')  ??'' ,
             ],
 

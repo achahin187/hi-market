@@ -26,9 +26,9 @@ class OrderDetailResource extends JsonResource
             'rate' => $this->checkRate(),
 
             'address'=>[
-                'name' => $this->addressOrder->name,
-                'desc' => $this->addressOrder->address,
-                'phone' => $this->addressOrder->phone,
+                'name' => $this->name,
+                'desc' => $this->address,
+                'phone' => $this->phone,
             ],
 
             'orderSummary' =>[
