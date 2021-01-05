@@ -98,7 +98,14 @@ class OffersController extends Controller
 
         switch ($request->type) {
             case 'promocode':
-               $this->createPromocode($request_data);
+                    if($request['promocode_type'] == 'Percentage' && ($request['value'] > 100 
+                      ||  $request['value'] <= 0))
+                      {
+                          return redirect()->route($this->route.'index')->withStatus("Percentage value must be between 0 : 100");
+                      }else{
+
+                         $this->createPromocode($request_data);
+                      }
                 break;
 
             case 'product Offer':
@@ -139,25 +146,13 @@ class OffersController extends Controller
     {  
         
         $request_data = collect($request)->except('branch_id');
-        
+
         $create_promocode =   $this->model::create($request_data->toArray());
 
         if ($request['source'] == 'Branch') {
             $create_promocode->branches()->attach($request['branch_id']);
-            // $get_branches = Branch::WhereIn('id',$request['branch_id'])->get();
-            // foreach ($get_branches as  $branch) {
-            //  $update_offer = $branch->update(['offer_id'=> $create_promocode->id]);
-            // }
         }
-        // }else{
 
-        //     //$create_promocode->attach()
-        //     $allBranches =  Branch::all(); 
-        //     foreach ($allBranches as  $allBranche) {
-                
-        //         $update_offer = $allBranche->update(['offer_id'=> $create_promocode->id]);
-        //     }
-        //}
     }
     /**
     * Display the specified resource.
