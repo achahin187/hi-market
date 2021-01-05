@@ -525,5 +525,33 @@ class ClientController extends Controller
 
         }
     }
+
+    public function contactUs(Request $request)
+    {
+         $validator = \Validator::make($request->all(), [
+            'name'        => 'required',
+            'title'       => 'required',
+            'message'     => 'required',
+        ]);
+
+
+       if ($validator->fails()) {
+            return $this->returnError(422, $validator->errors()->first());
+        }
+
+        $client = getUser();
+
+       
+            $contact_us = Inbox::create([
+                'name'      => $request->name,
+                'title'     => $request->title,
+                'message'   => $request->message,
+                'client_id' => $client != null ? $clinet->id :null ,
+                'udid'      => $client == null ? request()->header('udid') : null ,
+
+            ]); 
+       
+         return $this->returnSuccessMessage('your message sent successfully', 200);
+    }//end function
 }
 

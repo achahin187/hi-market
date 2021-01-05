@@ -61,7 +61,7 @@
                                       <tr>
                                           <th>#</th>
                                           <th>الاسم</th>
-                                         
+                                         <th>النعوان</th>
                                           <th>الحالة</th>
                                           <th>الاكشن</th>
                                       </tr>
@@ -71,6 +71,7 @@
                               <tr id="tr{{ $inbox->id }}" style="background-color: {{$inbox->statuse == 0 ? '#d2cccc' :'#fffcfc'   }}">
                                   <td>{{ $index + 1 }}</td>
                                   <td>{{ $inbox->name }}</td>
+                                  <td>{{ $inbox->title }}</td>
                                 
                                   <td>
                                   <span class="badge badge-{{ $inbox->statuse == 0 ? 'danger' :'success' }}" id="read{{ $inbox->id }}">{{ $inbox->statuse == 0 ? 'unread' :'read' }}</span>
