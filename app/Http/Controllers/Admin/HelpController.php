@@ -114,7 +114,6 @@ class HelpController extends Controller
             'title_en' =>'required|string',
             'description_ar' =>'required',
             'description_en' =>'required',
-            'image' =>'required',
             
         ]);
 
@@ -126,7 +125,13 @@ class HelpController extends Controller
 
                     unlink('help_images/' . $help->image);
                 }
-            $request_data['image'] = $request->image;
+
+            $filename = $request->image->getClientOriginalName();
+            $fileextension = $request->image->getClientOriginalExtension();
+            $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+            $request->image->move('help_images', $file_to_store);  
+
+            $request_data['image'] = $file_to_store;
            
          }
 
@@ -145,6 +150,11 @@ class HelpController extends Controller
     {
           $help = $this->model::find($id);
         if ($help) {
+            
+            if ($help->image != null) {
+
+                    unlink('help_images/' . $help->image);
+                }
             $help->delete();
             return redirect()->route($this->route.'index');
         }else{
