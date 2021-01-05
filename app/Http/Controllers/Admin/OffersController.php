@@ -68,7 +68,7 @@ class OffersController extends Controller
             'start_date' =>'required',
             'end_date' =>'required',
             'banner' =>'required',
-            'banner2' =>'required',
+           // 'banner2' =>'required',
             
         ]);
 
