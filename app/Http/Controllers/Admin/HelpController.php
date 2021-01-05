@@ -58,7 +58,7 @@ class HelpController extends Controller
             'image' =>'required',
             
         ]);
-        $request_data  = $request->->except('image');
+        $request_data  = $request->except('image');
 
         if ($request->image) {
             
