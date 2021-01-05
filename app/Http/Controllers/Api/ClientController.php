@@ -131,6 +131,7 @@ class ClientController extends Controller
 
             $total = $request->total_order_money - $points->value ;
 
+dd($total);
                 if($total <= 0 )
                 {
                     $total = (( $request->total_order_money * $setting->reedem_point)/100);
