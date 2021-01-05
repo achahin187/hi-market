@@ -76,6 +76,7 @@ class ProductController extends Controller
        
 
         if ($data) {
+          
             if(count( $data) > 2)
             {
               $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
@@ -111,7 +112,7 @@ class ProductController extends Controller
                       ]);
                   
 
-                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0, $testPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0, $getPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
 
 
                   } else {
@@ -140,7 +141,7 @@ class ProductController extends Controller
                 ]);
               }
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0,$testPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0,$getPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
             }//end if 
 
         }else{//else data
