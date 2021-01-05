@@ -15,10 +15,14 @@ class OfferResource extends JsonResource
      */
     public function toArray($request)
     {
+
+
         return [
             'id' => $this->id,
             "imagepath" => asset("offer_images/" . $this->banner),
-            "imagePopUp" => asset("offer_images/" . $this->banner2),
+            "imagePopUp" => asset("offer_images/" . $this->banner2)??"",
+            "flag" => $this->banner2 == null ? 0 : 1,
+
         ];
     }
 }
