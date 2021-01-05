@@ -178,7 +178,11 @@ class OrderController extends Controller
             #get comapny and auto approve the order to it
             if ($company) {
             #change to the stauts to status 1
-                if ($company->status == 1) {
+                if(request("asap") == 0)
+                {
+                    $order->update(['status'=> 0]);
+                }
+                elseif ($company->status == 1) {
                     $order->update(['status'=> 1]);
                 }else{
                     $order->update(['status'=> 0]);
