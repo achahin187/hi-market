@@ -26,7 +26,9 @@ class LocationController extends Controller
     public function index()
     {
 
-        $locations = City::whereHas('areaList')->orderBy('area_list_count', 'desc')->get();
+
+        $locations = City::whereHas('areaList')->get();
+
 
         return view($this->blade . __FUNCTION__)->with('locations', $locations);
     }
