@@ -18,7 +18,7 @@ class CreateHelpsTable extends Migration
             $table->string('title_ar');
             $table->string('title_en');
             $table->text('describtion_ar');
-            $table->text('describtion_en ');
+            $table->text('describtion_en');
             $table->string('image');
             $table->timestamps();
         });
