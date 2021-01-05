@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\HelpResource;
 use App\Http\Resources\SocialLoginResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Client;
@@ -291,6 +292,7 @@ class AuthController extends Controller
     public function getHelp()
     {
         $help = Help::all();
+          return $this->returnData(['helps'], [new HelpResource($help));
          return response()->json([
             "status" => true,
             "data" => [
