@@ -234,10 +234,9 @@ class CartController extends Controller
 
         $points = Point::orderBy('points', 'desc')
         ->Where('value','<=',$request->total_cart)
-        ->orWhere('points','<=',$client->total_points)
+        ->Where('points','<=',$client->total_points)
         ->where('status','active')
         ->first();
-        dd($points);
 
         if ($deliveryOffer) {
             
