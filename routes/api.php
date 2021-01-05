@@ -29,10 +29,11 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('homeSearch', 'ProductController@homeSearch')->name('listHome');
 });
 
-Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
-
     //contactUS
     Route::post('contactUs','ClientController@contactUs');
+Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], function () {
+
+    
     Route::get('logout', 'AuthController@logout')->name('logout');
 
 

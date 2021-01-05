@@ -529,20 +529,19 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }
-        dd('afe');
+        
         $client = getUser();
 
-            
-            $contact_us = Inbox::create([
-                'name'      => $request->name,
-                'title'     => $request->title,
-                'message'   => $request->message,
-                'client_id' => $client != null ? $client->id :null ,
-                'udid'      => $client == null ? request()->header('udid') : null ,
+        $contact_us = Inbox::create([
+            'name'      => $request->name,
+            'title'     => $request->title,
+            'message'   => $request->message,
+            'client_id' => $client != null ? $client->id :null ,
+            'udid'      => $client == null ? request()->header('udid') : null ,
 
-            ]); 
+        ]); 
        
-         return $this->returnSuccessMessage('your message sent successfully', 200);
+        return $this->returnSuccessMessage('your message sent successfully', 200);
     }//end function
 }
 
