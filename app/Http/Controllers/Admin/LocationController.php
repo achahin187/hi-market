@@ -49,7 +49,7 @@ class LocationController extends Controller
     public function addLocation(request $request)
     {
         $locations = collect(json_decode($request->data, true));
-
+        $city = City::where('id', $request->city_id)->first();
         if ($request->count < 5) {
             return response()->json(['msg' => 'sorry you must add at least 5 polygons']);
         } else {
@@ -58,16 +58,17 @@ class LocationController extends Controller
             $area = Area::create([
                 'name_ar' => $request->area_ar,
                 'name_en' => $request->area_en,
-                'city' => $request->city_id,
-                'status' => 'active',
+                'city'    => $request->city_id,
+                'status'  => 'active',
             ]);
 
             foreach ($locations as $key => $location) {
 
                 $Polygon = Polygon::create([
-                    'lat' => $location['lat'],
-                    'lon' => $location['lng'],
+                    'lat'     => $location['lat'],
+                    'lon'     => $location['lng'],
                     'area_id' => $area->id,
+                    'topic'   => $city->name_en,
                 ]);
 
             }

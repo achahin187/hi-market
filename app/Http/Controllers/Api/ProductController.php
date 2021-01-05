@@ -74,17 +74,19 @@ class ProductController extends Controller
        
         $data = $this->checkPolygon($request->lat, $request->lon);
        
-       /*   dd($data);
-*/
+
         if ($data) {
             if(count( $data) > 2)
             {
               $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
+              $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
               
             }else{
 
               $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+
+              $notTopic = Polygon::where('topic', '!=',$testPolygon->topic)->get();
              
             }
 
@@ -109,17 +111,16 @@ class ProductController extends Controller
                       ]);
                   
 
-                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0, $testPolygon->topic, $notTopic->pluck('topic')->unique('topic')]);
 
-                         /*dd( $client);*/
 
                   } else {
 
                       return $this->returnError(305, 'there is no client found');
-                  }
+                  }//end client
             } else {
 
-                  //dd( $request->header("udid"), $request->lat , $request->lon);
+                 
               $udid = Udid::where("body", $request->header("udid") )->first();
               if($udid)
               {
@@ -142,8 +143,8 @@ class ProductController extends Controller
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
             }//end if 
 
-        }else{
-          /*dd('nodata');*/
+        }else{//else data
+       
             $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
 
             if (auth("client-api")->check()) {
@@ -166,7 +167,7 @@ class ProductController extends Controller
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
             }//end if 
-        }
+        }//end data
     }
 
     public function homeSearch(Request $request)

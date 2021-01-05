@@ -27,7 +27,7 @@ class AreaController extends Controller
     public function index()
     {
           $All_lat = Polygon::all();
-        dd(); 
+         
         $areas = Area::orderBy('id', 'desc')->get();
 
         return view('Admin.areas.index',compact('areas'));
