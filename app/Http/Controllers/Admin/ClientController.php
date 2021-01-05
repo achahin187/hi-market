@@ -254,9 +254,9 @@ class ClientController extends Controller
 
     public function clientorders($client_id)
     {
-                $setting = Setting::all()->first();
+        $setting = Setting::all()->first();
 
-        $orders = Order::where('client_id',$client_id)->orderBy('id', 'desc')->get();
+        $orders = Order::where('client_id',$client_id)->orderBy('id', 'desc')->paginate(20);
         return view('Admin.orders.index',compact('orders','setting'));
     }
 
