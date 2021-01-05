@@ -59,8 +59,8 @@
 
                                 <div class="card-body">
                                      <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
-                                        <input type="text" value=""
+                                        <label for="exampleInputEmail1">{{ __('admin.title_ar') }}</label>
+                                        <input type="text" value="{{ old('title_ar') }}"
                                                class=" @error('title_ar') is-invalid @enderror form-control" required>
                                         @error('title_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -69,8 +69,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
-                                        <input type="text" value="" name="title_en"
+                                        <label for="exampleInputEmail1">{{ __('admin.title_en') }}</label>
+                                        <input type="text" value="{{ old('title_ar') }}" name="title_en"
                                                class=" @error('title_en') is-invalid @enderror form-control" required>
                                         @error('title_en')
                                         <span class="invalid-feedback" role="alert">
@@ -80,8 +80,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
-                                        <input type="text" value="" name="description_ar"
+                                        <label for="exampleInputEmail1">{{ __('admin.description_ar') }}</label>
+                                        <input type="text" value="{{ old('description_ar') }}" name="description_ar"
                                                class=" @error('description_ar') is-invalid @enderror form-control" required>
                                         @error('description_ar')
                                         <span class="invalid-feedback" role="alert">
@@ -90,8 +90,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
-                                        <input type="text" value="" name="description_en"
+                                        <label for="exampleInputEmail1">{{ __('admin.description_en') }}</label>
+                                        <input type="text" value="{{ old('description_en') }}" name="description_en"
                                                class=" @error('description_en') is-invalid @enderror form-control" required>
                                         @error('description_en')
                                         <span class="invalid-feedback" role="alert">

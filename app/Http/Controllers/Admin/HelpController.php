@@ -53,8 +53,10 @@ class HelpController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' =>'required|string',
-            'describtion' =>'required',
+            'title_ar' =>'required|string',
+            'title_en' =>'required|string',
+            'description_ar' =>'required',
+            'description_en' =>'required',
             'image' =>'required',
             
         ]);

@@ -73,7 +73,7 @@
                                             <td>{{$help->title_en}}</td>
                                             <td>{{$help->description_ar}}</td>
                                             <td>{{$help->description_en}}</td>
-                                            <td> <img src="{{ asset('helps/'.$help->image) }}"></td>
+                                            <td> <img src="{{ asset('help_images/'.$help->image) }}"></td>
 
                                   
 

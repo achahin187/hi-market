@@ -105,7 +105,7 @@
                                         <label for="image">Icon</label>
                                         <input value="{{old("image")}}" type="file" name="image">
 
-                                        <img style="width: 100px; height: 100px;" src="{{ asset('help/'.$help->image) }}">
+                                        <img style="width: 100px; height: 100px;" src="{{ asset('help_images/'.$help->image) }}">
 
                                         @error('image')
                                         <span class="invalid-feedback" role="alert">
