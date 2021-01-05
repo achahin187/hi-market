@@ -31,6 +31,7 @@ class AuthController extends Controller
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('get', $url);
+        dd($response);
     }
 
     public function verifycode(Request $request)
@@ -148,7 +149,7 @@ class AuthController extends Controller
         $activation_msg = 'your activation code is' . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
