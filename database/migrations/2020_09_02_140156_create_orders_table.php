@@ -16,7 +16,9 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('mobile_delivery');
+            $table->string('name');
             $table->string('address');
+            $table->string('phone');
             $table->unsignedFloat('rate')->nullable();
             $table->dateTime('delivery_date');
             $table->unsignedFloat('delivery_rate')->nullable();

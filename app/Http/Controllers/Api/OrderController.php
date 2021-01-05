@@ -100,7 +100,8 @@ class OrderController extends Controller
         }
 
 
-
+        $address = Adress::Where('id', $order_details["address_id"])->first();
+        
         $client = getUser();
 
         $date = now();
@@ -124,7 +125,10 @@ class OrderController extends Controller
                 'num' => '#'.str_pad(rand() + 1, 8, "0", STR_PAD_LEFT),
 
                 'client_id' => $client->id,
-                'address' => $order_details["address_id"],
+
+                'name'    => $address->name,
+                'address' => $address->address,
+                'phone'   => $address->phone,
 
                 'delivery_date' =>  str_replace("PM","",$order_details["delivery_date"]) ,
 
