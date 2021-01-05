@@ -295,8 +295,8 @@ class AuthController extends Controller
             "status" => true,
             "data" => [
                 "helps" => [
-                    "title"=> $help->title,
-                    "description"=> $help->description,
+                    "title"=>  Request()->header('lang') == 'ar' ? $help->title_ar : $help->title_en,
+                    "description"=> Request()->header('lang') == 'ar' ? $help->description_ar : $help->description_en,
                     "image"=> $help->image,
                 ],  
             ]
