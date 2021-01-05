@@ -20,6 +20,7 @@ use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
 use App\Models\Offer;
+use App\Models\Address;
 use App\Models\Reason;
 use App\Models\Client;
 use App\Models\Order;
@@ -101,7 +102,7 @@ class OrderController extends Controller
 
 
         $address = Adress::Where('id', $order_details["address_id"])->first();
-        
+
         $client = getUser();
 
         $date = now();
