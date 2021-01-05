@@ -103,7 +103,7 @@
                                   
                                       <div class="form-group">
                                         <label for="image">Icon</label>
-                                        <input value="{{old("image") ?? 1}}" type="file" name="image">
+                                        <input value="{{old("image")}}" type="file" name="image">
 
                                         <img style="width: 100px; height: 100px;" src="{{ asset('help/'.$help->image) }}">
 

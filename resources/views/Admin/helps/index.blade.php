@@ -66,13 +66,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    
                                     @foreach($helps as $help)
                                         <tr>
                                             <td>{{$help->title_ar}}</td>
                                             <td>{{$help->title_en}}</td>
-                                            <td>{{$help->describtion_ar}}</td>
-                                            <td>{{$help->describtion_en}}</td>
+                                            <td>{{$help->description_ar}}</td>
+                                            <td>{{$help->description_en}}</td>
                                             <td> <img src="{{ asset('helps/'.$help->image) }}"></td>
 
                                   

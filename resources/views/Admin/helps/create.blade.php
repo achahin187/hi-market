@@ -58,111 +58,54 @@
 
 
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Name Ar</label>
-                                        <input type="text" value="{{old("name_ar")}}" name="name_ar"
-                                               class=" @error('name_ar') is-invalid @enderror form-control" required>
-                                        @error('name')
+                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
+                                        <input type="text" value=""
+                                               class=" @error('title_ar') is-invalid @enderror form-control" required>
+                                        @error('title_ar')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name En</label>
-                                        <input type="text" value="{{old("name_en")}}" name="name_en"
-                                               class=" @error('name_en') is-invalid @enderror form-control" required>
-                                        @error('name_en')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{{ __('admin.email') }}</label>
-                                        <input type="email" value="{{old("email")}}" name="email"
-                                               class="@error('email') is-invalid @enderror form-control"
-                                               id="exampleInputEmail1" placeholder="Enter email" required>
-                                        @error('email')
+                                        <label for="exampleInputEmail1">{{ __('admin.title') }}</label>
+                                        <input type="text" value="" name="title_en"
+                                               class=" @error('title_en') is-invalid @enderror form-control" required>
+                                        @error('title_en')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                    {{--
                                     <div class="form-group">
-                                        <label for="phone_number">Phone Number</label>
-                                        <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
-                                    </div> --}}
-
-                                    @for ($i = 0; $i < 2; $i++)
-                                        <div class="form-group">
-                                            <label>@lang('admin.phone')</label>
-                                            <input type="text" id='phone_number' name="phone_number[]"
-                                                   class="form-control" value="{{old("phone_number")}}">
-                                        </div>
-                                    @endfor
-                                    <div class="form-group">
-                                        <label for="commission">Commission</label>
-                                        <input id="commission" name="commission" value="{{old("commission")}}"
-                                               type="number" class="form-control">
+                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
+                                        <input type="text" value="" name="description_ar"
+                                               class=" @error('description_ar') is-invalid @enderror form-control" required>
+                                        @error('description_ar')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="branch">Branch</label>
-                                        <select name="branch_id[]" id="branch" multiple class="form-control select2">
-                                            @foreach($branches as $branch)
-                                                <option @if(old("branch_id") == $branch->id) selected
-                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="exampleInputEmail1">{{ __('admin.description') }}</label>
+                                        <input type="text" value="" name="description_en"
+                                               class=" @error('description_en') is-invalid @enderror form-control" required>
+                                        @error('description_en')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
+                                  
+                                      <div class="form-group">
+                                        <label for="image">Icon</label>
+                                        <input value="{{old("image")}}" type="file" name="image">
+                                   
 
-                                    <div class="form-group">
-                                        <label>{{__('admin.city')}} </label>
-                                        <select id="city" class=" @error('city_id') is-invalid @enderror select2"
-                                                name="city_id" data-placeholder="Select a State" style="width: 100%;"
-                                                required>
-
-
-                                            @foreach(\App\Models\City::all() as $cities)
-
-                                                <option value="{{ $cities->id }}">{{ $cities->name }}</option>
-
-                                            @endforeach
-
-
-                                        </select>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label>{{ __('admin.status') }}</label>
-
-                                        <select class=" @error('status') is-invalid @enderror select2" name="status"
-                                                data-placeholder="Select a State" style="width: 100%;" required>
-                                            @php
-                                                $statuses = [
-                                                 '0'=>trans('active'),
-                                                  '1'=>trans('inactive')
-                                              ];
-                                            @endphp
-                                            @foreach($statuses  as $index=>$status)
-                                                <option value={{ $index }}>
-                                                    {{ $status }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-
-                                        <label for="status">Auto Approve</label>
-
-                                        <input style="margin-left: 10px " id="status" value="{{old("status") ?? 1}}"
-                                               type="checkbox" name="status">
-
-                                        @error('status')
+                                        @error('image')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
