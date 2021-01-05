@@ -565,6 +565,16 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
 
+                     <li class="nav-item">
+
+                        <a href="{{route('helps.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                {{ __('admin.helps') }}
+                            </p>
+                        </a>
+                    </li>
+
 {{--                    <li class="nav-item">--}}
 {{--                        <a href="{{route('notifications.index')}}" class="nav-link">--}}
 {{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}

@@ -15,7 +15,8 @@ class CreateHelpsTable extends Migration
     {
         Schema::create('helps', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title_ar');
+            $table->string('title_en');
             $table->text('describtion');
             $table->string('image');
             $table->timestamps();
