@@ -142,7 +142,7 @@ class Product extends Model
 
    
     public function measure() {
-        return $this->belongsTo('App\Models\Measures', 'meas');
+        return $this->belongsTo('App\Models\Measures', 'measure_id');
     }
 
      public function city() {
