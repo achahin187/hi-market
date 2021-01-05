@@ -292,18 +292,8 @@ class AuthController extends Controller
     public function getHelp()
     {
         $help = Help::all();
-          return $this->returnData(['helps'], [new HelpResource($help));
-         return response()->json([
-            "status" => true,
-            "data" => [
-                "helps" => [
-                    "title"=>  Request()->header('lang') == 'ar' ? $help->title_ar : $help->title_en,
-                    "description"=> Request()->header('lang') == 'ar' ? $help->description_ar : $help->description_en,
-                    "image"=> $help->image,
-                ],  
-            ]
+        return $this->returnData(['helps'], [new HelpResource($help));
 
-        ]);
     }
 
     public function testNotification(Request $request)
