@@ -148,7 +148,7 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products','categories'], [CategoryProductResource::collection($products),CategoryResource::collection($categories)]);
+        return $this->returnData(['products','categories','supermarket'], [CategoryProductResource::collection($products),CategoryResource::collection($categories),$supermarket->name]);
     }
 
     public function categoryproducts(Request $request)
