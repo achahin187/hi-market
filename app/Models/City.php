@@ -63,7 +63,7 @@ class City extends Model
     }
 
     public function areaList() {
-        return $this->hasMany('App\Models\Area','city');
+        return $this->hasMany('App\Models\Area');
     }
 
     public function supermarkets() {
