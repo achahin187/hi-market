@@ -67,7 +67,7 @@ class HelpController extends Controller
             $filename = $request->image->getClientOriginalName();
             $fileextension = $request->image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
-            $$request->image->move('help_images', $file_to_store);  
+            $request->image->move('help_images', $file_to_store);  
             $request_data['image'] = $file_to_store;         
         }        
         $user = $this->model::create($request_data);
