@@ -15,14 +15,15 @@ class HomeDataResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    { 
+      Carbon::setlocale(request()->header('lang'));
         return [
                 "id"=>$this->id,
                 "name"=>$this->name,
                 "state"=>$this->getState(),
                 "flag" =>$this->getState() == 'open' ? 1 : 0,
-                "start_time"=>Carbon::parse($this->start_time)->format("g:i a"),
-                "end_time"=>Carbon::parse($this->end_time)->format("g:i a"),
+                "start_time"=>Carbon::parse($this->start_time)->translatedFormat("g:i a"),
+                "end_time"=>Carbon::parse($this->end_time)->translatedFormat("g:i a"),
                 "rating"=>$this->rating,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name?? '',
