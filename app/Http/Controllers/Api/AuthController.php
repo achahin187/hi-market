@@ -247,6 +247,7 @@ class AuthController extends Controller
                     'name'  => $request->name,
                     'email' => $request->email,
                     'type'  => $request->type,
+                    'device_token'=>$request->device_token,
                     "unique_id" => Udid::where("body", $udid)->firstOrCreate([
                         "body"=>request()->header("udid")
                     ])->body
