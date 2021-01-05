@@ -9,11 +9,11 @@ $orders_count = DB::table('orders')->count();
 $clients_count = DB::table('clients')->Where('status',1)->count();
 $branches_count = DB::table('branches')->Where('status', 'active')->count();
 
- $sales_data = \App\Models\Order::select(
+  /* $sales_data = \App\Models\Order::select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(total_money) as sum')
-        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('YEAR(created_at)')->get();
+        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('YEAR(created_at)')->get();*/
 
 
 @endphp
@@ -666,26 +666,26 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
      <script>
 
         //line chart
-        var line = new Morris.Line({
-            element: 'line-chart',
-            resize: true,
-            data: [
-                @foreach ($sales_data as $data)
-                {
-                    ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
-                },
-                @endforeach
-            ],
-            xkey: 'ym',
-            ykeys: ['sum'],
-            labels: ['total'],
-            lineWidth: 2,
-            hideHover: 'auto',
-            gridStrokeWidth: 0.4,
-            pointSize: 4,
-            gridTextFamily: 'Open Sans',
-            gridTextSize: 10
-        });
+        // var line = new Morris.Line({
+        //     element: 'line-chart',
+        //     resize: true,
+        //     data: [
+        //         foreach ($sales_data as $data)
+        //         {
+        //             ym: "{ $data->year }}-{ $data->month }}", sum: "{ $data->sum }}"
+        //         },
+        //         endforeach
+        //     ],
+        //     xkey: 'ym',
+        //     ykeys: ['sum'],
+        //     labels: ['total'],
+        //     lineWidth: 2,
+        //     hideHover: 'auto',
+        //     gridStrokeWidth: 0.4,
+        //     pointSize: 4,
+        //     gridTextFamily: 'Open Sans',
+        //     gridTextSize: 10
+        // });
     </script>
 
 @endsection

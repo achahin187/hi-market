@@ -28,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->string('type')->nullable();
             $table->string('device_token')->nullable();
             $table->boolean('verify')->default(1);
+            $table->boolean('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();

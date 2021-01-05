@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->text('client_review')->nullable();
             $table->string('promocode')->nullable();
             $table->string('review_status')->nullable();
+            $table->string('total_money')->nullable();
             $table->unsignedFloat('order_price')->nullable();
             $table->unsignedInteger('status');
             $table->bigInteger('client_id')->unsigned();

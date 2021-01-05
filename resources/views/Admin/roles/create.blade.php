@@ -127,7 +127,7 @@
 
                                                   
 
-                                                     <label class="col-md-12 control-label mb-10 text-left"> {{ explode("-", $permission->name)[0] }}
+                                                     <label style="margin-top: 20px;" class="col-md-12 control-label mb-10 text-left"> {{ explode("-", $permission->name)[0] }}
                                                      </label>
            
                                                   

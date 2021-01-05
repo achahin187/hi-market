@@ -772,26 +772,26 @@ $settings = App\Models\Setting::all()->first();
  <script>
 
         //line chart
-        var line = new Morris.Line({
-            element: 'line-chart',
-            resize: true,
-            data: [
-                @foreach ($sales_data as $data)
-                {
-                    ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
-                },
-                @endforeach
-            ],
-            xkey: 'ym',
-            ykeys: ['sum'],
-            labels: ['total'],
-            lineWidth: 2,
-            hideHover: 'auto',
-            gridStrokeWidth: 0.4,
-            pointSize: 4,
-            gridTextFamily: 'Open Sans',
-            gridTextSize: 10
-        });
+        // var line = new Morris.Line({
+        //     element: 'line-chart',
+        //     resize: true,
+        //     data: [
+        //         foreach ($sales_data as $data)
+        //         {
+        //             ym: "{ $data->year }}-{ $data->month }}", sum: "{ $data->sum }}"
+        //         },
+        //         endforeach
+        //     ],
+        //     xkey: 'ym',
+        //     ykeys: ['sum'],
+        //     labels: ['total'],
+        //     lineWidth: 2,
+        //     hideHover: 'auto',
+        //     gridStrokeWidth: 0.4,
+        //     pointSize: 4,
+        //     gridTextFamily: 'Open Sans',
+        //     gridTextSize: 10
+        // });
     </script>
 
 @yield('scripts')
