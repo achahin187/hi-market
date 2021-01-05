@@ -17,7 +17,7 @@ class MyOrdersResource extends JsonResource
         return [
             'id' => $this->id,
             'orderNumer' => $this->num,
-            'created_at' => Carbon::parse($this->created_at)->translatedFormat('M d Y'),
+            'created_at' => Carbon::parse($this->created_at)->translatedFormat('d M Y'),
             'status' => $this->getStatus(),
             'products'=>$this->products->map(function($product){
                 return[
