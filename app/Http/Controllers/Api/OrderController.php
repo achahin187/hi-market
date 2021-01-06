@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Lang;
 use App\Notifications\SendNotification;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Polygons\PointLocation;
 use DateTime;
 class OrderController extends Controller
 {
@@ -328,6 +329,89 @@ class OrderController extends Controller
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }
 
+    public function checkAddressPolygon(Request $request)
+    {
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+            "address_id"     => "required",
+        ]);
+
+        if ($validation->fails()) {
+            return $this->returnError(422, $validation->errors()->first());
+        }//end if
+
+         $branch = Branch::where('id', $request->supermarket_id)->first();
+         $address = Address::where('id', $request->address_id)->first();
+
+         $getPlygons =  $branch->area->polygon;
+
+          #polygon array        
+          $polygons=[]; 
+          foreach ($getPlygons as $getPlygons)
+          {
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+               
+          }
+
+        
+          $Finalpolygons=[];
+          foreach ($polygons as $index =>$polygon)
+          {
+             $Finalpolygons[] = $polygon;
+               
+          }
+          #new instance 
+          $pointLocation = new PointLocation();
+          #impload implode Points
+          $implodePoints = implode( " ", [$address->lon,$address->lat]);
+          #points
+          $point = array($implodePoints);
+          
+          $resultsList=[];
+          foreach ($Finalpolygons as  $Finalpolygon) {
+        
+         
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+
+          }
+         $data = $this->checkLocation($resultsList);
+         
+        #if data == true
+        if ($data) {        
+        
+            return response()->json([
+            "status" => true,
+            'msg' =>'location is valid',
+            ]);
+
+        } else {
+
+            return response()->json([
+             "status" => true,  
+             'msg' =>'location is not valid',
+           ], 404);
+
+        }//end if 
+
+    } 
+
+    private function checkLocation($resultsList)
+    {
+
+          if (in_array(true, $resultsList)) {
+
+              foreach ($resultsList as $data) {
+
+                if($data == true){
+
+                     return $data;
+                }
+              }
+             
+          }else{
+            return false;
+          }
+    }
 
     public function getState($branch)
     {
@@ -339,7 +423,7 @@ class OrderController extends Controller
 
           if ($start_time == $end_time) {
 
-              return trans('admin.open');
+              return 'open';
           }
 
           elseif($start_time < $end_time)
@@ -349,22 +433,22 @@ class OrderController extends Controller
 
                 if ($between) {
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }else{
 
-                    return trans('admin.closed');
+                    return 'closed';
                 }//end if
           }else{
                 if (Carbon::now()->toTimeString() > $start_time) {
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }
                 elseif(Carbon::now()->toTimeString() < $end_time){
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }else{
 
-                    return  trans('admin.closed');
+                    return  'closed';
 
                 }//end if
           }//end if
@@ -545,5 +629,7 @@ class OrderController extends Controller
            'data'=> new ConfirmationOrderResource($order),
         ]);
     }
+
+
 
 }

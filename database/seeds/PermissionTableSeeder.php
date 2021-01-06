@@ -214,7 +214,6 @@ class PermissionTableSeeder extends Seeder
 
             'name' => 'super',
             'email' => 'super_admin@delivertto.com',
-           
             'password' => '123456789',
         ]);
 

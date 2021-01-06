@@ -36,6 +36,17 @@ class ClientController extends Controller
         }
     }
 
+     public function send_sms($name, $mobile, $msg, $lang)
+    {
+
+        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('get', $url);
+
+    }
+
     public function client_profile(Request $request)
     {
 
@@ -557,6 +568,8 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }//end if
+
+        $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
         
     }//end function
 }
