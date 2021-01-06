@@ -149,7 +149,7 @@ class AuthController extends Controller
         $activation_msg = 'your activation code is' . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        //$this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
@@ -226,7 +226,7 @@ class AuthController extends Controller
     {
 
         $udid = $request->header('udid');
-        dd($request->device_token);
+     
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'email'=> ['required','email'],
