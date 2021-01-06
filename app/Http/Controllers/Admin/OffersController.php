@@ -73,7 +73,7 @@ class OffersController extends Controller
         ]);
 
         $request_data = $request->all();
-
+          dd($request->banner, $request_data);
           if ($request->banner && $request->banner2) {
                 #Store Banner to DataBase banner...
                 $filename = $request->banner->getClientOriginalName();
@@ -250,7 +250,7 @@ class OffersController extends Controller
         $offer = $this->model::find($id);
 
         $request_data = $request->all();
-        
+         dd($request->banner, $request_data);
           if ($request->banner) {
             if ($offer->banner != $request->banner) {
                 unlink( base_path('public/offer_images/'.$offer->banner) );
