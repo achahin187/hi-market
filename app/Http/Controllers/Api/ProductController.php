@@ -133,7 +133,8 @@ class ProductController extends Controller
 
                 ]);
               }else{
-                $udid->create([
+                
+                Udid::create([
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->lon,
