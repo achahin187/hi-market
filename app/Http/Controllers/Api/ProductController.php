@@ -112,7 +112,7 @@ class ProductController extends Controller
                       ]);
                   
                      
-                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer()->total_order_money??"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
 
 
                   } else {
@@ -142,7 +142,7 @@ class ProductController extends Controller
                 ]);
               }
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer()->total_order_money??"0",$getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0",$getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
             }//end if 
 
         }else{//else data
@@ -154,7 +154,7 @@ class ProductController extends Controller
 
                 if ($client) {
 
-                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer()->total_order_money??"0"]);
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
 
                 } else {
@@ -168,7 +168,7 @@ class ProductController extends Controller
 
                 ]);
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer()->total_order_money??"0"]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
             }//end if 
         }//end data
     }
