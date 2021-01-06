@@ -164,15 +164,15 @@
 
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
-                                        
+
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" id="supermarket_1" data-placeholder="Select a State" style="width: 100%;" required>
-                                          
-                                      
+
+
                                             @foreach($superMarkets  as $supermarket)
                                                 <option <?php if($product->supermarket_id == $supermarket->id)  'selected'; ?> value={{ $supermarket->id }}>
                                                {{ $supermarket->name }}</option>
-                                            @endforeach    
-                                                
+                                            @endforeach
+
                                         </select>
                                     </div>
                                 @else
@@ -180,11 +180,11 @@
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
-                                            
+
                                             @foreach($superMarkets  as $supermarket)
                                                 <option  <?php if($supermarket->id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
-                                            @endforeach    
-                                                
+                                            @endforeach
+
                                         </select>
                                     </div>
 
@@ -210,13 +210,13 @@
 
                                     @elseif(isset($branch_id))
                                         @foreach(\App\Models\Branch::all() as $branch)
-{{-- 
+{{--
                                             <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option> --}}
 
                                         @endforeach
 
                                     @else
-                                    
+
                                    {{--  @foreach(\App\Models\Branch::all() as $branch)
 
                                             <option></option>
@@ -248,7 +248,7 @@
                                         @endif
 
                                     </select>
-                                </div>    
+                                </div>
 
                                 <div class="form-group">
                                     <label>{{__('admin.vendor')}} </label>
@@ -260,7 +260,7 @@
 
                                             @endforeach
                                         @else
-                                           
+
                                         @endif
                                     </select>
                                 </div>
@@ -376,9 +376,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                               
 
-                               
+
+
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
                                     <input type="text" @if(isset($product)) value="{{$product->rate}}" @else value="" @endif  name="rate" class=" @error('rate') is-invalid @enderror form-control" required>
@@ -421,7 +421,7 @@
                                 </div>
 
 
-{{-- 
+{{--
                                 @if(!isset($client))
 
                                     <div class="form-group">
@@ -444,7 +444,7 @@
 
                                 @endif
  --}}
-                               
+
 
                             {{--     <div class="form-group">
                                     <label>{{__('admin.subcategory')}} </label>
@@ -501,9 +501,9 @@
                                 @endif
 
 
-                             
-                                               
-                                                     {{-- 
+
+
+                                                     {{--
                                               @foreach(\App\Models\Branch::all() as $branch)
 
                                                 <option value="{{ $branch->id }}">
@@ -514,9 +514,9 @@
 
                                           {{--   @endforeach --}}
 
-                                        
- 
- 
+
+
+
 
                                {{--  @if(isset($branch_id))
 
@@ -530,7 +530,7 @@
                                         @if(isset($product))
                                             @foreach(\App\Models\Measures::all() as $measure)
 
-                                                <option <?php if($product->measure->id == $measure->id) echo 'selected'; ?> value="{{ $measure->id }}">{{ $measure->eng_name }}</option>
+                                                <option <?php if($product->measure->id ?? false == $measure->id) echo 'selected'; ?> value="{{ $measure->id }}">{{ $measure->eng_name }}</option>
 
                                             @endforeach
                                         @else
@@ -641,7 +641,7 @@
                                                 <input  type="file"  name="image">
 
                                             </div>
-                                      
+
                                         </div>
                                     </div>
                                          <p style="color: red">Width: 80 px</p>
@@ -653,11 +653,11 @@
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
-                                           
+
                                                 <input name="image"  type="file" class=" @error('image') is-invalid @enderror" id="exampleInputFile">
-                                               
-                                           
-                                           
+
+
+
                                         </div>
                                     </div>
                                             <p style="color: red">Width: 80 px</p>
@@ -667,11 +667,11 @@
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{ __('admin.image') }}</label>
                                         <div class="input-group">
-                                           
+
                                                 <input name="image"  type="file" class=" @error('image') is-invalid @enderror" >
-                                              
-                                            
-                                          
+
+
+
                                         </div>
                                     </div>
                                                 <p style="color: red">Width: 80 px</p>
@@ -703,7 +703,7 @@
                 success: function(data) {
                     $('#branches').html('');
                     data.forEach(function(x){
-                        
+
                     $('#branches').append(new Option(x.name_ar,x.id,true,true)).trigger("change");
                     })
                 }
@@ -719,9 +719,9 @@
                 success: function(data) {
                     $('#categories').html('');
                     data.forEach(function(x){
-                    @if (app()->getLocale() == 'ar') 
+                    @if (app()->getLocale() == 'ar')
                     $('#categories').append(new Option(x.eng_name,x.id,false,false)).trigger("change");
-                    
+
                     @else
                      $('#categories').append(new Option(x.eng_name,x.id,false,false)).trigger("change");
                     @endif
