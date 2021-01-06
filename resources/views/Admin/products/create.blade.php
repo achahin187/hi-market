@@ -389,6 +389,16 @@
                                     @enderror
                                 </div>
 
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
+                                    <input type="text" @if(isset($product)) value="{{$product->rating}}" @else value="" @endif  name="rating" class=" @error('rating') is-invalid @enderror form-control" required>
+                                    @error('rating')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">{{__('admin.points')}}</label>
