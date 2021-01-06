@@ -314,6 +314,7 @@ class OrderController extends Controller
         Carbon::setlocale(request()->header('lang'));
         $time = [];
         for ($i = 1; $i <= 24; $i++) {
+
             $time[] = [
                 "id" => $i,
                 "text" =>  $branch_start_time->addHours(1)->translatedFormat("g A"),
