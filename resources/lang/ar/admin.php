@@ -69,6 +69,7 @@ return [
     'Thursday'=>'الخميس',
     'Friday'=>'الجمعة',
 
+    'outpolygon' =>'هذا العنوان غير موجود فى منطقة السوبر ماركت',
     'admin_managment'=>'الادارة',
     'location_managment' => 'ادارة الامكان',
     'category_managment' => 'ادارة الاقسام',

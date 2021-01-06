@@ -59,6 +59,7 @@ return [
     'Thursday'=>'Thursday',
     'Friday'=>'Friday',
 
+    'outpolygon' => 'This Address is not Covered In Supermarket Zone',
 
     'area_ar' =>'Area Arabic',
     'area_en' =>'Area English',

@@ -50,26 +50,6 @@ class OrderController extends Controller
         }
     }
 
-    // public function clientorders(Request $request)
-    // {
-
-
-    //     $client = getUser();
-
-    //     if ($client) {
-
-    //         if (count($client->orders) > 0) {
-    //             return $this->returnData(['orders'], [OrderResource::collection($client->orders)]);
-    //         } else {
-
-
-    //             return $this->returnError(404, 'there is no orders for this client');
-    //         }
-    //     } else {
-
-    //         return $this->returnError(404, 'there is no client found');
-    //     }
-    // }
 
     public function getorder($order_id)
     {
@@ -343,6 +323,7 @@ class OrderController extends Controller
 
          $branch = Branch::where('id', $request->supermarket_id)->first();
          $address = Address::where('id', $request->address_id)->first();
+         #check if  beanch
          if ($branch) {
              $getPlygons =  $branch->area->polygon;
          }else{
@@ -385,14 +366,14 @@ class OrderController extends Controller
         
             return response()->json([
             "status" => true,
-            'msg' =>'location is valid',
-            ]);
+            'msg' => trans('admin.inpolygon'),
+            ], 200);
 
         } else {
 
             return response()->json([
-             "status" => true,  
-             'msg' =>'location is not valid',
+             "status" => false,  
+             'msg' => trans('admin.outpolygon'),
            ], 404);
 
         }//end if 

@@ -391,7 +391,7 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-        $rand = "12345";
+        $rand = rand(0,99999);
 
         $address=Address::create([
             'name' =>  $request->name,
@@ -569,7 +569,11 @@ class ClientController extends Controller
             return $this->returnError(422, $validator->errors()->first());
         }//end if
 
+        $code = rand(0,99999);
+        
         $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+
+         return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
         
     }//end function
 }
