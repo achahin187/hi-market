@@ -126,6 +126,9 @@ Route::group(['namespace' => 'Api', 'middleware' => 'check_mobile_serial'], func
      //contactUS
     Route::post('contactUs','ClientController@contact_us');
 
+    //Resend SMS
+    Route::post('resend','ClientController@contact_us');
+
    
 
 

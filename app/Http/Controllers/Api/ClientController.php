@@ -345,21 +345,21 @@ class ClientController extends Controller
     {
         $client = \auth("client-api")->user();
 
-        $validator = \Validator::make($request->all(), [
-            'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-            'label' => ['required', 'string'],
-            'default' => ['boolean'],
-            'lat' => ['required', 'string'],
-            'lon' => ['required', 'string'],
-            'phone' => ['required','unique:addresses,phone','digits:11'],
-            'govern' => ['required','string'],
-            'name' => ['required','string'],
-            'phone' => ['required','string'],
+         $validation = \Validator::make(\request()->all(), [
+            'address' => 'required|min:2|not_regex:/([%\$#\*<>]+)/',
+            'label'   => 'required|string',
+            'default' => 'boolean',
+            'lat'     => 'required|string',
+            'lon'     => 'required|string',
+            'phone'   => 'required|unique:addresses,phone|digits:11',
+            'govern'  => 'required|string',
+            'name'    => 'required|string',
+            'phone'   => 'required|string',
         ]);
 
 
-        if ($validator->fails()) {
-            return $this->returnError(422, $validator->errors()->first());
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
         }
 
         if($request->default == 1)
@@ -524,6 +524,7 @@ class ClientController extends Controller
          $validator = \Validator::make($request->all(), [
             'title'       => 'required',
             'message'     => 'required',
+            'phone'       => 'required|digits:11',
         ]);
 
 
@@ -536,12 +537,27 @@ class ClientController extends Controller
         $contact_us = Inbox::create([
             'title'     => $request->title,
             'message'   => $request->message,
+            'phone'     => $request->phone,
             'client_id' => $client != null ? $client->id :null ,
             'udid'      => $client == null ? request()->header('udid') : null ,
 
         ]); 
        
-        return $this->returnSuccessMessage('your message sent successfully', 200);
+        return $this->returnSuccessMessage('Your Message Sent Successfully', 200);
+    }//end function
+
+    #resend sms function ...
+    public function resendSms(Request $request)
+    {   
+        $validator = \Validator::make($request->all(), [
+            'mobile_number'       => 'required|digits:11',
+        ]);
+
+
+       if ($validator->fails()) {
+            return $this->returnError(422, $validator->errors()->first());
+        }//end if
+        
     }//end function
 }
 
