@@ -509,7 +509,7 @@ class ProductController extends Controller
 
             $priority = $request->input('priority');
 
-
+            $measuring_unit = $request->input('measuring_unit');
 
             $size = $request->input('size');
 
@@ -619,8 +619,8 @@ class ProductController extends Controller
                     'exp_date' => $exp_date,
                     'production_date' => $request->production_date,
                     'priority' => $priority,
-
-                    'size' => $size,
+                    'measure_id' => $measuring_unit,
+                    'size_id' => $size,
                     'updated_by' => $user->id
 
                 ]);
@@ -681,8 +681,8 @@ class ProductController extends Controller
                         'exp_date' => $exp_date,
                         'production_date' => $request->production_date,
                         'priority' => $priority,
-                        'measuring_unit' => $measuring_unit,
-                        'size' => $size,
+                        'measure_id' => $measuring_unit,
+                        'size_id' => $size,
                         'updated_by' => $user->id
                     ]);
                          $product->branches()->sync($request->branch_id);
@@ -710,8 +710,8 @@ class ProductController extends Controller
                         'exp_date' => $exp_date,
                         'production_date' => $request->production_date,
                         'priority' => $priority,
-                        'measuring_unit' => $measuring_unit,
-                        'size' => $size,
+                        'measure_id' => $measuring_unit,
+                        'size_id' => $size,
                         'updated_by' => $user->id,
                         'images' => $product->iamges,
                     ]);
