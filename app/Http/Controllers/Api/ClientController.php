@@ -351,7 +351,7 @@ class ClientController extends Controller
             'default' => 'boolean',
             'lat'     => 'required|string',
             'lon'     => 'required|string',
-            'phone'   => 'required|unique:addresses,phone |digits:11',
+            'phone'   => 'required|unique:addresses,phone|digits:11',
             'govern'  => 'required|string',
             'name'    => 'required|string',
             'phone'   => 'required|string',
@@ -524,6 +524,7 @@ class ClientController extends Controller
          $validator = \Validator::make($request->all(), [
             'title'       => 'required',
             'message'     => 'required',
+            'phone'       => 'required|digits:11',
         ]);
 
 
@@ -536,12 +537,13 @@ class ClientController extends Controller
         $contact_us = Inbox::create([
             'title'     => $request->title,
             'message'   => $request->message,
+            'phone'     => $request->phone,
             'client_id' => $client != null ? $client->id :null ,
             'udid'      => $client == null ? request()->header('udid') : null ,
 
         ]); 
        
-        return $this->returnSuccessMessage('your message sent successfully', 200);
+        return $this->returnSuccessMessage('Your Message Sent Successfully', 200);
     }//end function
 }
 

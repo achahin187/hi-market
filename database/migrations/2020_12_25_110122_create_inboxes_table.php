@@ -17,6 +17,7 @@ class CreateInboxesTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('message');
+            $table->string('phone')->nullable();
             $table->string('udid')->nullable();
             $table->bigInteger('client_id')->nullable();
             $table->boolean('statuse')->default(0);
