@@ -26,6 +26,8 @@ class CreateClientsTable extends Migration
             $table->string('activation_code')->nullable();
             $table->string('image')->nullable();
             $table->string('type')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lon')->nullable();
             $table->string('device_token')->nullable();
             $table->boolean('verify')->default(1);
             $table->boolean('status')->default(1);

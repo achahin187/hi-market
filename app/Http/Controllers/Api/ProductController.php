@@ -111,7 +111,7 @@ class ProductController extends Controller
                           'lon' => $request->lon,
                       ]);
                   
-                      dd($notTopic->pluck('topic'));
+                     
                       return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0, $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
 
 

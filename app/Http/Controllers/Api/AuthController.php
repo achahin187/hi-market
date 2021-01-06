@@ -143,7 +143,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = rand(0,99999);
+        $code = '12345';//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
@@ -151,7 +151,7 @@ class AuthController extends Controller
         $activation_msg = 'your activation code is' . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        $this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
+        //$this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
