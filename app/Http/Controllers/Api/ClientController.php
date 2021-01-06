@@ -88,7 +88,7 @@ class ClientController extends Controller
                 ];
             });
         $image = DB::table('point_photos')->first();
-        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, asset('points/'.$image->image)]);
+        return $this->returnData(['myPoints',"points", "pointsImage"], [$client->total_points ?? 0, $points, asset('points/'.$image->image) ??"" ]);
     }
 
     public function usePoints(Request $request)

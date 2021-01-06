@@ -143,7 +143,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = '12345';//rand(0,99999);
+        $code = 12345;//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
