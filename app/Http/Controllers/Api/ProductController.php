@@ -208,7 +208,7 @@ class ProductController extends Controller
                                                ->get();
                       
 
-                        return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),$this->getOffer()->total_order_money??0]);
+                        return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
                     }else{
                    
