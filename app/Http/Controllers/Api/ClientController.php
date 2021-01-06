@@ -346,15 +346,15 @@ class ClientController extends Controller
         $client = \auth("client-api")->user();
 
         $validator = \Validator::make($request->all(), [
-            'address' => ['required', 'min:2', 'not_regex:/([%\$#\*<>]+)/'],
-            'label' => ['required', 'string'],
-            'default' => ['boolean'],
-            'lat' => ['required', 'string'],
-            'lon' => ['required', 'string'],
-            'phone' => ['required','unique:addresses,phone','digits:11'],
-            'govern' => ['required','string'],
-            'name' => ['required','string'],
-            'phone' => ['required','string'],
+            'address' => 'required|min:2|not_regex:/([%\$#\*<>]+)/',
+            'label'   => 'required|string',
+            'default' => 'boolean',
+            'lat'     => 'required|string',
+            'lon'     => 'required|string',
+            'phone'   => 'required|unique:addresses,phone |digits:11',
+            'govern'  => 'required|string',
+            'name'    => 'required|string',
+            'phone'   => 'required|string',
         ]);
 
 

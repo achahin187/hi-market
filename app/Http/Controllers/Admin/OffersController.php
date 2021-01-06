@@ -81,17 +81,19 @@ class OffersController extends Controller
 
                 $request->banner->move('offer_images', $file_to_store);
 
+               
                 $request_data['banner'] = $file_to_store;
 
                 #Store Banner to DataBase banner2...
-                $filename = $request->banner2->getClientOriginalName();
-                $fileextension = $request->banner2->getClientOriginalExtension();
-                $file_to_store2 = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+                $filename2 = $request->banner2->getClientOriginalName();
+                $fileextension2= $request->banner2->getClientOriginalExtension();
+                $file_to_store2 = time() . '_' . explode('.', $filename2)[0] . '_.' . $fileextension2;
 
-                $request->banner2->move('offer_images', $file_to_store);
+                $request->banner2->move('offer_images', $file_to_store2);
          
-
+                
                 $request_data['banner2'] = $file_to_store2;
+
           }//end if
 
            
@@ -144,10 +146,10 @@ class OffersController extends Controller
      */
     private function createPromocode($request)
     {  
-        
         $request_data = collect($request)->except('branch_id');
 
         $create_promocode =   $this->model::create($request_data->toArray());
+   
 
         if ($request['source'] == 'Branch') {
             $create_promocode->branches()->attach($request['branch_id']);
