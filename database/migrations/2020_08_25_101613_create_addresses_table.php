@@ -18,6 +18,8 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('govern');
+            $table->string('address');
+            $table->string('notes');
             $table->text('description');
             $table->boolean('default')->default(0);
             $table->string('address_lable');

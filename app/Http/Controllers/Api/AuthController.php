@@ -28,7 +28,7 @@ class AuthController extends Controller
     public function send_sms($name, $mobile, $msg, $lang)
     {
 
-        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers=01004479447&sender='. $name .'&language='.$lang;
+        $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
 
         $client = new \GuzzleHttp\Client();
 
@@ -38,7 +38,6 @@ class AuthController extends Controller
 
     public function verifycode(Request $request)
     {
-
 
         $mobile = $request->mobile_number;
 
@@ -66,7 +65,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
 
         $validator = Validator::make($request->all(), [
             'mobile_number' => ['required'],
