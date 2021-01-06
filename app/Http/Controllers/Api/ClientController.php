@@ -345,7 +345,7 @@ class ClientController extends Controller
     {
         $client = \auth("client-api")->user();
 
-        $validator = \Validator::make($request->all(), [
+         $validation = \Validator::make(\request()->all(), [
             'address' => 'required|min:2|not_regex:/([%\$#\*<>]+)/',
             'label'   => 'required|string',
             'default' => 'boolean',
@@ -358,8 +358,8 @@ class ClientController extends Controller
         ]);
 
 
-        if ($validator->fails()) {
-            return $this->returnError(422, $validator->errors()->first());
+        if ($validation->fails()) {
+            return $this->returnValidationError(422, $validation);
         }
 
         if($request->default == 1)
