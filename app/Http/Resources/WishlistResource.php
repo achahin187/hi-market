@@ -29,7 +29,7 @@ class WishlistResource extends JsonResource
             "supermarket_id" => Branch::find(request("supermarket_id"))->id,
             "supermarketname" => Branch::find(request("supermarket_id"))->name,
             //"ratings" => (string)$this->ratings ?? "0",
-            "rate" => $this->rate,
+            "rate" => (int)$this->rate,
             "description" => $this->description ?? "",
             "category"=>$this->category
 

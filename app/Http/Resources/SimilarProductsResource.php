@@ -23,7 +23,7 @@ class SimilarProductsResource extends JsonResource
             "description" => $this->description,
             "favourite" => $this->favourite ?1: 0,
             "rate" => $this->rate ?? 0,
-            "ratings" => (string)$this->ratings ?? "0",
+            "ratings" => $this->ratings ?? 0,
             "overview" => $this->specs ?? "",
             "points" => $this->points ?? 0,
             "priority" => $this->priority ?? 0,
