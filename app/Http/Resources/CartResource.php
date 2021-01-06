@@ -25,7 +25,7 @@ class CartResource extends JsonResource
             "price" => $product->price ?? 0,
             "offer_price" => $product->offer_price ?? 0,
             "rate" => $product->rate ?? 0,
-            "ratings" => $product->ratings ?? "0",
+            "ratings" => (string)$product->ratings ?? "0",
             "priority" => $product->priority ?? 0,
             "images" => asset("product_images/" . $product->images)??"",
             "points" => $product->points ?? 0,

@@ -28,7 +28,7 @@ class AllFavoriteResource extends JsonResource
             "price" => $this->getProduct()->price ?? 0,
             "offer_price" => $this->getProduct()->offer_price ?? 0,
             "rate" => $this->getProduct()->rate ?? 0,
-            "ratings" => $this->getProduct()->ratings ?? "0",
+            "ratings" => (string)$this->getProduct()->ratings ?? "0",
             "priority" => $this->getProduct()->priority ?? 0,
             "images" => asset("product_images/" . $this->getProduct()->images),
             "points" => $this->getProduct()->points ?? 0,
