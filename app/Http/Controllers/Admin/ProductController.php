@@ -32,9 +32,9 @@ class ProductController extends Controller
      */
     public function index($flag)
     {
-     
+
         if($flag == 1)
-        {  
+        {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
             return view('Admin.product_offers.index',compact('products','flag'));
         }
@@ -56,7 +56,7 @@ class ProductController extends Controller
             return view('Admin.products.create', compact('flag','supermarket_id','superMarkets'));
         }
         elseif ($branch_id != null && $supermarket_id == -1)
-        {   
+        {
              $superMarkets = Supermarket::all();
             return view('Admin.products.create', compact('flag','branch_id','superMarkets'));
         }
@@ -79,14 +79,14 @@ class ProductController extends Controller
 
         $user = auth()->user();
 
-      
+
 
         $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-          
+
             'barcode'        => ['required','numeric','digits_between:10,16','unique_with:products, supermarket_id'],
             'arab_spec'      => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_spec'       => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
@@ -170,7 +170,7 @@ class ProductController extends Controller
         $size = $request->input('size_id');
 
         $offer_price = $request->offer_price;
-        
+
         if ($offer_price != null) {
             $flag = 1;
         }
@@ -186,7 +186,7 @@ class ProductController extends Controller
             $points == 0;
         }
 
-      
+
         if ($request->image) {
 
             // $image_names = [];
@@ -200,9 +200,9 @@ class ProductController extends Controller
                 $image->move('product_images', $file_to_store);
 
                 $image_names = $file_to_store;
-               
+
             }else{
-                $image_names = ''; 
+                $image_names = '';
             }
 
             //$images = implode(',', $image_names);
@@ -218,9 +218,9 @@ class ProductController extends Controller
 
         if ($haveBarcode) {
          return redirect('admin/products/'.$flag)->withStatus(__('product is already exist '));
-            
+
         }else{
-              
+
             $product = Product::create([
                 'name_ar' => $arab_name,
                 'name_en' => $eng_name,
@@ -255,17 +255,17 @@ class ProductController extends Controller
 
         // $haveBarcode = Barcode::Where('supermarket_id',$supermarket)->get()->toArray();
         // $search = in_array($barcode, $haveBarcode);
-     
-      
+
+
 
         // foreach ($barcodes as $key => $barcodes) {
         //     if ($barcodee->barcode == $barcode) {
         //         dd($barcodee->barcode , $barcode);
         //     }
         // }
-     
-   
-      
+
+
+
 
         $product->branches()->sync($request->branch_id);
 
@@ -382,7 +382,7 @@ class ProductController extends Controller
 
     public function clone($id,$flag,$supermarket_id = null,$branch_id = null)
     {
-        
+
         $product      = Product::find($id);
         $superMarkets = Supermarket::all();
 
@@ -431,7 +431,7 @@ class ProductController extends Controller
      */
     public function update(Request $request,$id,$flag,$supermarket_id = null,$branch_id = null)
     {
-       
+
         $product = Product::find($id);
 
         $user = auth()->user();
@@ -462,7 +462,7 @@ class ProductController extends Controller
             'images' => 'nullable',
             'images.*' => 'image|mimes:jpeg,png,jpg|max:277'
         ];
-        
+
         $this->validate($request, $rules);
 
         if($product) {
@@ -509,7 +509,7 @@ class ProductController extends Controller
 
             $priority = $request->input('priority');
 
-            $measuring_unit = $request->input('measuring_unit');
+
 
             $size = $request->input('size');
 
@@ -521,7 +521,7 @@ class ProductController extends Controller
             if ($offer_price != null) {
                 $flag = 1;
             }
-            
+
 
             if($points == null)
             {
@@ -566,7 +566,7 @@ class ProductController extends Controller
                     // $productimages = explode(',', $product->images);
 
                     $image = $request->input('image');
-                   
+
                     $filename = $image->getClientOriginalName();
                     $fileextension = $image->getClientOriginalExtension();
                     $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
@@ -619,10 +619,10 @@ class ProductController extends Controller
                     'exp_date' => $exp_date,
                     'production_date' => $request->production_date,
                     'priority' => $priority,
-                    'measuring_unit' => $measuring_unit,
+
                     'size' => $size,
                     'updated_by' => $user->id
-           
+
                 ]);
                  $product->branches()->sync($request->branch_id);
 
@@ -630,10 +630,10 @@ class ProductController extends Controller
             } else {
                 if ($request->file('image') ) {
 
-                
+
                     //$productimages = explode(',', $product->images);
 
-                    
+
                     $image = $request->image;
                    // dd($image);
                     $filename = $image->getClientOriginalName();
@@ -667,7 +667,7 @@ class ProductController extends Controller
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
                          'offer_price' => $offer_price,
-                        
+
                         //'subcategory_id' => $subcategory,
                         'images' => $file_names,
                         'barcode' => $barcode,
@@ -697,7 +697,7 @@ class ProductController extends Controller
                         'category_id' => $category,
                         'vendor_id' => $vendor,
                         'supermarket_id' => $supermarket,
-                      
+
                         //'subcategory_id' => $subcategory,
                         'barcode' => $barcode,
                         'arab_description' => $arab_description,
@@ -756,13 +756,13 @@ class ProductController extends Controller
     }
 
     public function branchproducts($branch_id,$flag)
-    {  
+    {
 
         $products = Product::where('flag',$flag)->WhereHas('branches', function ($q) use ($branch_id){
             $q->where('branches.id',$branch_id);
-        })->paginate(20);  
+        })->paginate(20);
 
-          
+
         return view('Admin.products.index',compact('products','flag','branch_id'));
     }
 
@@ -827,7 +827,7 @@ class ProductController extends Controller
     {
 
         $product = Product::Where('id', $id )->where('flag', $flag)->first();
-       
+
         if($product)
         {
             if($product->status == 'active') {
@@ -852,14 +852,14 @@ class ProductController extends Controller
          return  Excel::download(new ProductsExport , 'products.xlsx');
     }
 
-    
+
 
     /**
      * @return \Illuminate\Support\Collection
      */
     public function import(Request $request)
     {
-    
+
         Excel::import(new Productimport , $request->file);
 
          return redirect()->back()->withStatus(__('Added successfully'));
@@ -886,16 +886,16 @@ class ProductController extends Controller
             $q->Where('branches.id',$request->branch_id);
 
         })->paginate(20);
-        
+
         return response()->json($products);
     }
 
     public function getProduct(Request $request)
     {
          $products = Product::Where('id', $request->product_id)->first();
-        
+
         return response()->json($products);
     }
 
-   
+
 }
