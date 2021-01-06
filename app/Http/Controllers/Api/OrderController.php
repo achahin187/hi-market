@@ -377,7 +377,6 @@ class OrderController extends Controller
            ], 404);
 
         }//end if 
-
     } 
 
     private function checkLocation($resultsList)

@@ -193,6 +193,7 @@ return [
     'image'=>'Image',
     'active'=>'Active',
     'inactive'=>'Inactive',
+    'activation_code'=> 'Delivertto Activated Code :'
     'Commission' => 'Commission',
     'controls' => 'Controls',
 

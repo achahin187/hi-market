@@ -36,7 +36,7 @@ class ClientController extends Controller
         }
     }
 
-     public function send_sms($name, $mobile, $msg, $lang)
+    public function send_sms($name, $mobile, $msg, $lang)
     {
 
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
@@ -345,7 +345,7 @@ class ClientController extends Controller
         $address = Address::find(\request("address_id"));
 
         if ($address->verify == request("code")) {
-            $address->update(["verified" => 1]);
+            $address->update(["verified" => 1, 'verify' => null]);
             return $this->returnSuccessMessage("address verified");
         }
 
@@ -410,7 +410,8 @@ class ClientController extends Controller
         ]);
 
         #send sms to the number in address
-
+        $activation_msg = trans('admin.activation_code') . $rand;
+         $this->send_sms('Eramint', $request->phone, $activation_msg, app()->getLocale());
 
         return response()->json([
 
@@ -569,8 +570,8 @@ class ClientController extends Controller
             return $this->returnError(422, $validator->errors()->first());
         }//end if
 
-        $code = rand(0,99999);
-        
+        $code = getUser()->activation_code;
+
         $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);

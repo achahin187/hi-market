@@ -53,6 +53,7 @@ return [
     'image'=>'صورة ',
     'active'=>'مفعل',
     'inactive'=>'غير مفعل',
+    'activation_code' => 'كود تفعيل ديلفرتو :',
     'commission' => 'النسبة',
     'gender' => 'النوع',
     'controls' => 'ادوات التجكم',
