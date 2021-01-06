@@ -366,11 +366,11 @@ class OrderController extends Controller
         
             return response()->json([
             "status" => true,
-            'msg' => trans('admin.inpolygon'),
+            'msg' => 'valid',
             ], 200);
 
         } else {
-
+  
             return response()->json([
              "status" => false,  
              'msg' => trans('admin.outpolygon'),
