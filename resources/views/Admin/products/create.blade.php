@@ -391,8 +391,8 @@
 
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="text" @if(isset($product)) value="{{$product->rating}}" @else value="" @endif  name="rating" class=" @error('rating') is-invalid @enderror form-control" required>
-                                    @error('rating')
+                                    <input type="text" @if(isset($product)) value="{{$product->ratings}}" @else value="" @endif  name="ratings" class=" @error('ratings') is-invalid @enderror form-control" required>
+                                    @error('ratings')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
