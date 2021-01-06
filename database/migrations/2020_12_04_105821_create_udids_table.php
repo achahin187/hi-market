@@ -17,6 +17,8 @@ class CreateUdidsTable extends Migration
             $table->id();
             $table->string("body");
             $table->bigInteger("client_id")->unsigned()->nullable();
+            $table->string("lat")->nullable();
+            $table->string("lon")->nullable();
             $table->foreign("client_id")->references("id")->on("clients")->onDelete("cascade");
         });
     }

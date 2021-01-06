@@ -30,7 +30,7 @@ class HomeDataResource extends JsonResource
                 "imagepath"=> asset('branche_image/'.$this->image),
                 "logopath"=>asset('branche_image/'.$this->logo),
                 'isOffer'=> !!$this->getOffer(),
-                'totalMoney'=> (string)$this->getOffer()->total_order_money??"0",
+                'totalMoney'=> (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0",
                 
 
             ];
