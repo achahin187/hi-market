@@ -173,6 +173,8 @@ class ProductController extends Controller
 
         if ($offer_price != null || $offer_price > 0) {
             $flag = 1;
+        }else{
+            $flag = 0;
         }
 
 
