@@ -551,7 +551,7 @@
                                         @if(isset($product))
                                             @foreach(\App\Models\Size::all() as $size)
 
-                                                <option <?php if($product->size->id == $size->id) echo 'selected'; ?> value="{{ $size->id }}">{{ $size->value }}</option>
+                                                <option <?php if($product->size->id ?? false == $size->id) echo 'selected'; ?> value="{{ $size->id }}">{{ $size->value }}</option>
 
                                             @endforeach
                                         @else
