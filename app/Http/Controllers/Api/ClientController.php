@@ -545,5 +545,19 @@ class ClientController extends Controller
        
         return $this->returnSuccessMessage('Your Message Sent Successfully', 200);
     }//end function
+
+    #resend sms function ...
+    public function resendSms(Request $request)
+    {   
+        $validator = \Validator::make($request->all(), [
+            'mobile_number'       => 'required|digits:11',
+        ]);
+
+
+       if ($validator->fails()) {
+            return $this->returnError(422, $validator->errors()->first());
+        }//end if
+        
+    }//end function
 }
 

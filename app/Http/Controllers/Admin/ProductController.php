@@ -171,7 +171,7 @@ class ProductController extends Controller
 
         $offer_price = $request->offer_price;
 
-        if ($offer_price != null) {
+        if ($offer_price != null || $offer_price > 0) {
             $flag = 1;
         }
 
