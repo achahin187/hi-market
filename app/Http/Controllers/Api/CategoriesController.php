@@ -86,13 +86,14 @@ class CategoriesController extends Controller
 
         ]);
     }
-
+ 
 
     public function supermarketoffers(Request $request)
     {
 
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
+            "category_id" => "required",
 
         ]);
         if ($validation->fails()) {
@@ -114,8 +115,13 @@ class CategoriesController extends Controller
             ->where("supermarket_id", $request->supermarket_id)
             ->select('product_id')->get();
 
+       if ($request->category_id != 0) {
+              
+         $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
+        }else{
+          $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->where('category_id', $request->category_id)->get();  
+        }     
 
-        $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->get();
         $categories = $supermarket->categories;
 
 
