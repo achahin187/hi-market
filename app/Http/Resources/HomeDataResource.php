@@ -24,7 +24,7 @@ class HomeDataResource extends JsonResource
                 "flag" =>$this->getState() == 'open' ? 1 : 0,
                 "start_time"=>Carbon::parse($this->start_time)->translatedFormat("g:i a"),
                 "end_time"=>Carbon::parse($this->end_time)->translatedFormat("g:i a"),
-                "rating"=>(string)$this->rating,
+                "rating"=>$this->rate ?? 0,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name?? '',
                 "imagepath"=> asset('branche_image/'.$this->image),
