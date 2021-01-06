@@ -343,8 +343,11 @@ class OrderController extends Controller
 
          $branch = Branch::where('id', $request->supermarket_id)->first();
          $address = Address::where('id', $request->address_id)->first();
-
-         $getPlygons =  $branch->area->polygon;
+         if ($branch) {
+             $getPlygons =  $branch->area->polygon;
+         }else{
+            return $this->returnError(404, 'there is no branch found'); 
+         }
 
           #polygon array        
           $polygons=[]; 
@@ -364,7 +367,7 @@ class OrderController extends Controller
           #new instance 
           $pointLocation = new PointLocation();
           #impload implode Points
-          $implodePoints = implode( " ", [$address->lon,$address->lat]);
+          $implodePoints = implode(" ", [$address->lon,$address->lat]);
           #points
           $point = array($implodePoints);
           
@@ -407,10 +410,13 @@ class OrderController extends Controller
 
                      return $data;
                 }
+
               }
              
           }else{
+
             return false;
+
           }
     }
 
