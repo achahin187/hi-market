@@ -23,10 +23,10 @@ class OffersController extends Controller
         $this->blade = 'Admin.offers.' ;
         $this->route = 'offer.' ;
 
-        $this->middleware('permission:delivery-list', ['only' => ['index']]);
-        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
-        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:offer-list', ['only' => ['index']]);
+        $this->middleware('permission:offer-create', ['only' => ['create','store']]);
+        $this->middleware('permission:offer-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:offer-delete', ['only' => ['destroy']]);
     }
     /**
     * Display a listing of the resource.

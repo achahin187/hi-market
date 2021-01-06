@@ -351,15 +351,15 @@ class ClientController extends Controller
             'default' => ['boolean'],
             'lat' => ['required', 'string'],
             'lon' => ['required', 'string'],
-            'phone' => 'required|unique:addresses,phone|digits:11',
-            'govern' => 'required|string',
-            'name' => 'required|string',
-            'phone' => 'required|string',
+            'phone' => ['required','unique:addresses,phone','digits:11'],
+            'govern' => ['required','string'],
+            'name' => ['required','string'],
+            'phone' => ['required','string'],
         ]);
 
 
         if ($validator->fails()) {
-            return $this->returnError(300, $validator->errors()->first());
+            return $this->returnError(422, $validator->errors()->first());
         }
 
         if($request->default == 1)

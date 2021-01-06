@@ -113,7 +113,7 @@ class OrderController extends Controller
 
         if ($client) {
 
-            if (request("asap") == 1) {
+            if ($order_details["asap"] == 1) {
                 $order_details["delivery_date"] = Carbon::now()->addMinutes(45);
             } else {
 
@@ -178,7 +178,10 @@ class OrderController extends Controller
             #get comapny and auto approve the order to it
             if ($company) {
             #change to the stauts to status 1
-                if ($company->status == 1) {
+                if ($order_details["asap"] != 1) {
+                    $order->update(['status'=>0 ]);
+                }
+                elseif ($company->status == 1) {
                     $order->update(['status'=> 1]);
                 }else{
                     $order->update(['status'=> 0]);

@@ -43,12 +43,18 @@ class PermissionTableSeeder extends Seeder
             'deliveryAdmin-edit',
             'deliveryAdmin-active', //do
 
+            'deliveryCompany-list',
+            'deliveryCompany-create',
+            'deliveryCompany-delete',
+            'deliveryCompany-edit',
+            'deliveryCompany-active', //do
 
-            'driver-list',
-            'driver-create',
-            'driver-delete',
-            'driver-edit',
-            'driver-active',
+
+            'delivery-list',
+            'delivery-create',
+            'delivery-delete',
+            'delivery-edit',
+            'delivery-active',
 
 
             'order-list',

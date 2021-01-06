@@ -27,6 +27,7 @@ class LocationController extends Controller
     {
         $locations = City::whereHas('areaList')->get();
 
+
         return view($this->blade . __FUNCTION__)->with('locations', $locations);
     }
 

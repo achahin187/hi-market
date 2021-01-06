@@ -488,7 +488,7 @@ $settings = App\Models\Setting::all()->first();
 
                     {{-- Orders --}}
                     @if(auth()->user()->can('order-list'))
-                        @if(auth()->user()->hasRole('delivery_admin'))
+                        @if(auth()->user()->hasRole('deliveryAdmin'))
 
 
                             <li class="nav-item">
