@@ -73,7 +73,6 @@ class OffersController extends Controller
         ]);
 
         $request_data = $request->all();
-          dd($request->banner, $request_data);
           if ($request->banner && $request->banner2) {
                 #Store Banner to DataBase banner...
                 $filename = $request->banner->getClientOriginalName();
@@ -81,6 +80,7 @@ class OffersController extends Controller
                 $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
                 $request->banner->move('offer_images', $file_to_store);
+          dd($file_to_store);
 
                 $request_data['banner'] = $file_to_store;
 

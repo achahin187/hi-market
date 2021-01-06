@@ -86,19 +86,20 @@ class ProductController extends Controller
             'name_en' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
             'arab_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
             'eng_description' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            // 'barcode' => ['required','numeric','digits_between:10,16',Rule::unique((new Product)->getTable())->ignore(auth()->id())],
-            'barcode' => ['required','numeric','digits_between:10,16','unique_with:products, supermarket_id'],
-            'arab_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'eng_spec' => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
-            'price' => 'nullable|numeric|min:0',
-            'offer_price' => 'sometimes|required|numeric|lt:price|min:0',
-            'points' => 'nullable|integer|min:0',
-            'vendor_id' => 'required|integer|min:0',
-            'category_id' => 'required|integer|min:0',
+          
+            'barcode'        => ['required','numeric','digits_between:10,16','unique_with:products, supermarket_id'],
+            'arab_spec'      => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'eng_spec'       => ['nullable','min:2','not_regex:/([%\$#\*<>]+)/'],
+            'price'          => 'nullable|numeric|min:0',
+            'offer_price'    => 'sometimes|required|numeric|lt:price|min:0',
+            'points'         => 'nullable|integer|min:0',
+            'vendor_id'      => 'required|integer|min:0',
+            'category_id'    => 'required|integer|min:0',
             'supermarket_id' => 'required|integer|min:0',
-            'branch_id'     => 'required|array',
-            'rate'     => 'required|numeric|max:5|min:1',
-           // 'subcategory_id' => 'required|integer|min:0',
+            'branch_id'      => 'required|array',
+            'rate'           => 'required|numeric|max:5|min:1',
+            'ratings'        => 'required|numeric|min:1',
+           //'subcategory_id' => 'required|integer|min:0',
             'start_date' => 'sometimes|after:today|date',
             'end_date' => 'sometimes|after:start_date|date',
             'production_date' => 'sometimes|after:today|date',
@@ -115,7 +116,10 @@ class ProductController extends Controller
         $arab_name = $request->input('name_ar');
 
         $eng_name = $request->input('name_en');
+
         $rate = $request->input('rate');
+
+        $ratings = $request->input('ratings');
 
         $arab_description = $request->input('arab_description');
 
@@ -129,7 +133,7 @@ class ProductController extends Controller
 
         $points = $request->input('points');
 
-        $quantity = $request->input('quantity');
+        //$quantity = $request->input('quantity');
 
         $category = $request->input('category_id');
 
@@ -239,11 +243,12 @@ class ProductController extends Controller
                 'exp_date' => $exp_date,
                 'production_date' => $request->production_date,
                 'priority' => $priority,
-                'quantity' => $quantity,
+                //'quantity' => $quantity,
                 'measure_id' => $measuring_unit,
                 'size_id' => $size,
                 'created_by' => $user->id,
-                'rate' => $rate
+                'rate'     => $rate,
+                'ratings' => $ratings,
             ]);
         }
 
@@ -426,8 +431,7 @@ class ProductController extends Controller
      */
     public function update(Request $request,$id,$flag,$supermarket_id = null,$branch_id = null)
     {
-        //
-        //dd($request->all());
+       
         $product = Product::find($id);
 
         $user = auth()->user();
