@@ -12,7 +12,6 @@ use App\Models\Barcode;
 use App\Models\Supermarket;
 use App\Imports\Productimport;
 use App\Exports\ProductExport;
-use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -79,6 +78,8 @@ class ProductController extends Controller
 
 
         $user = auth()->user();
+
+
 
         $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
@@ -508,7 +509,7 @@ class ProductController extends Controller
 
             $priority = $request->input('priority');
 
-
+            $measuring_unit = $request->input('measuring_unit');
 
             $size = $request->input('size');
 
@@ -618,8 +619,8 @@ class ProductController extends Controller
                     'exp_date' => $exp_date,
                     'production_date' => $request->production_date,
                     'priority' => $priority,
-
-                    'size' => $size,
+                    'measure_id' => $measuring_unit,
+                    'size_id' => $size,
                     'updated_by' => $user->id
 
                 ]);
@@ -680,8 +681,8 @@ class ProductController extends Controller
                         'exp_date' => $exp_date,
                         'production_date' => $request->production_date,
                         'priority' => $priority,
-
-                        'size' => $size,
+                        'measure_id' => $measuring_unit,
+                        'size_id' => $size,
                         'updated_by' => $user->id
                     ]);
                          $product->branches()->sync($request->branch_id);
@@ -709,8 +710,8 @@ class ProductController extends Controller
                         'exp_date' => $exp_date,
                         'production_date' => $request->production_date,
                         'priority' => $priority,
-
-                        'size' => $size,
+                        'measure_id' => $measuring_unit,
+                        'size_id' => $size,
                         'updated_by' => $user->id,
                         'images' => $product->iamges,
                     ]);
@@ -843,7 +844,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function export()
     {
@@ -854,7 +855,7 @@ class ProductController extends Controller
 
 
     /**
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function import(Request $request)
     {
