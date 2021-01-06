@@ -149,13 +149,12 @@ class AuthController extends Controller
         $activation_msg = trans('admin.activation_code') . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        
+
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
         return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], $msg);
-
     }
 
     public function resetpassword(Request $request)
