@@ -266,7 +266,7 @@ class ClientController extends Controller
             
              $token = $client->createToken("hi-market")->accessToken;
         return $this->returnData(
-                ['client', 'token','msg'], [new ClientResource($client), $token], 'password updated successfully']);
+                ['client', 'token','msg'], [new ClientResource($client), $token, 'password updated successfully']);
 
         } else {
 
