@@ -353,7 +353,7 @@ class OrderController extends Controller
 
           $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
 
-          dd($result);
+          dd($address->lat,$address->lon);
         
         //   $Finalpolygons=[];
         //   foreach ($polygons as $index =>$polygon)
