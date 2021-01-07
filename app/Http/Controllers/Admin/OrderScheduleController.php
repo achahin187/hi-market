@@ -17,7 +17,8 @@ class OrderScheduleController extends Controller
     {
         $order = Order::find($id);
         $order->update([
-            "asap"=>(int) !$order->asap
+            "asap"=>(int) !$order->asap,
+            "type"=>"asap"
         ]);
         return back();
     }
