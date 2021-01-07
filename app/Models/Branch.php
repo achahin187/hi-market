@@ -124,9 +124,6 @@ class Branch extends Model
         return $this->hasMany('App\Models\Order');
     }
 
-
-
-
     public function area()
     {
         return $this->belongsTo('App\Models\Area');

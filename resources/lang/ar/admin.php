@@ -53,6 +53,7 @@ return [
     'image'=>'صورة ',
     'active'=>'مفعل',
     'inactive'=>'غير مفعل',
+    'activation_code' => 'كود تفعيل ديلفرتو :',
     'commission' => 'النسبة',
     'gender' => 'النوع',
     'controls' => 'ادوات التجكم',
@@ -69,6 +70,7 @@ return [
     'Thursday'=>'الخميس',
     'Friday'=>'الجمعة',
 
+    'outpolygon' =>'هذا العنوان غير موجود فى منطقة السوبر ماركت',
     'admin_managment'=>'الادارة',
     'location_managment' => 'ادارة الامكان',
     'category_managment' => 'ادارة الاقسام',

@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Lang;
 use App\Notifications\SendNotification;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Polygons\PointLocation;
 use DateTime;
 class OrderController extends Controller
 {
@@ -49,26 +50,6 @@ class OrderController extends Controller
         }
     }
 
-    // public function clientorders(Request $request)
-    // {
-
-
-    //     $client = getUser();
-
-    //     if ($client) {
-
-    //         if (count($client->orders) > 0) {
-    //             return $this->returnData(['orders'], [OrderResource::collection($client->orders)]);
-    //         } else {
-
-
-    //             return $this->returnError(404, 'there is no orders for this client');
-    //         }
-    //     } else {
-
-    //         return $this->returnError(404, 'there is no client found');
-    //     }
-    // }
 
     public function getorder($order_id)
     {
@@ -329,6 +310,95 @@ class OrderController extends Controller
         return $this->returnData(["days", "time", "state"], [$days, $time, $this->getState($branch)]);
     }
 
+    public function checkAddressPolygon(Request $request)
+    {
+        $validation = \Validator::make($request->all(), [
+            "supermarket_id" => "required",
+            "address_id"     => "required",
+        ]);
+
+        if ($validation->fails()) {
+            return $this->returnError(422, $validation->errors()->first());
+        }//end if
+
+         $branch = Branch::where('id', $request->supermarket_id)->first();
+         $address = Address::where('id', $request->address_id)->first();
+         #check if  beanch
+         if ($branch) {
+             $getPlygons =  $branch->area->polygon;
+         }else{
+            return $this->returnError(404, 'there is no branch found'); 
+         }
+
+          #polygon array        
+          $polygons=[]; 
+          foreach ($getPlygons as $getPlygons)
+          {
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+               
+          }
+
+        
+          $Finalpolygons=[];
+          foreach ($polygons as $index =>$polygon)
+          {
+             $Finalpolygons[] = $polygon;
+               
+          }
+          #new instance 
+          $pointLocation = new PointLocation();
+          #impload implode Points
+          $implodePoints = implode(" ", [$address->lon,$address->lat]);
+          #points
+          $point = array($implodePoints);
+          
+          $resultsList=[];
+          foreach ($Finalpolygons as  $Finalpolygon) {
+        
+         
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+
+          }
+         $data = $this->checkLocation($resultsList);
+         
+        #if data == true
+        if ($data) {        
+        
+            return response()->json([
+            "status" => true,
+            'msg' => 'valid',
+            ], 200);
+
+        } else {
+  
+            return response()->json([
+             "status" => false,  
+             'msg' => trans('admin.outpolygon'),
+           ], 404);
+
+        }//end if 
+    } 
+
+    private function checkLocation($resultsList)
+    {
+
+          if (in_array(true, $resultsList)) {
+
+              foreach ($resultsList as $data) {
+
+                if($data == true){
+
+                     return $data;
+                }
+
+              }
+             
+          }else{
+
+            return false;
+
+          }
+    }
 
     public function getState($branch)
     {
@@ -340,7 +410,7 @@ class OrderController extends Controller
 
           if ($start_time == $end_time) {
 
-              return trans('admin.open');
+              return 'open';
           }
 
           elseif($start_time < $end_time)
@@ -350,22 +420,22 @@ class OrderController extends Controller
 
                 if ($between) {
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }else{
 
-                    return trans('admin.closed');
+                    return 'closed';
                 }//end if
           }else{
                 if (Carbon::now()->toTimeString() > $start_time) {
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }
                 elseif(Carbon::now()->toTimeString() < $end_time){
 
-                    return trans('admin.open') ;
+                    return 'open';
                 }else{
 
-                    return  trans('admin.closed');
+                    return  'closed';
 
                 }//end if
           }//end if
@@ -546,5 +616,7 @@ class OrderController extends Controller
            'data'=> new ConfirmationOrderResource($order),
         ]);
     }
+
+
 
 }

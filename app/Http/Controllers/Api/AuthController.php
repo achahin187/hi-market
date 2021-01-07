@@ -21,10 +21,11 @@ use JWTAuth;
 
 class AuthController extends Controller
 {
-    //
+    //  
     use GeneralTrait;
+ 
 
-  
+
     public function send_sms($name, $mobile, $msg, $lang)
     {
 
@@ -52,7 +53,7 @@ class AuthController extends Controller
 
         if ($client->activation_code == $code) {
 
-            $client->update(['verify'=>1]);
+            $client->update(['verify'=>1, 'activation_code' => null]);
 
             return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], 'the code is valid');
 
@@ -104,7 +105,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
+        
         $udid = $request->header('udid');
 
         $validator = Validator::make($request->all(), [
@@ -141,20 +142,20 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = rand(0,99999);
+        $code = mt_rand(10000, 99999);
 
         $client->update(['activation_code' => $code]);
 
 
-        $activation_msg = 'your activation code is' . $code;
+        $activation_msg = trans('admin.activation_code') . $code;
 
         $client->update(['device_token'=>$request->device_token]);
-        $this->send_sms('Delivertto', $request->mobile_number, $code, app()->getLocale());
+
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
         return $this->returnData(['client',"token"], [new ClientResource($client),$client->createToken("hi-market")->accessToken], $msg);
-
     }
 
     public function resetpassword(Request $request)
@@ -177,7 +178,7 @@ class AuthController extends Controller
 
         if (isset($client)) {
           
-            $client->update(['password' => $request->new_password, 'device_token'=>$request->device_token]);
+            $client->update(['password' => $request->new_password, 'device_token'=>$request->device_token, 'activation_code'=>null]);
 
             $token = $client->createToken("hi-market")->accessToken;
 
@@ -207,20 +208,19 @@ class AuthController extends Controller
         }
 
 
-        $code = rand(0,99999);
+        $code = mt_rand(10000, 99999);
+        $activation_msg = trans('admin.activation_code') . $code;
+        dd($mobile, $activation_msg, app()->getLocale());
 
         $client->update(['activation_code' => $code]);
 
-        $activation_msg = trans('admin.Delivertto verification code: ') . $code;
-
-        $this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
 
         $msg = "we sent an activation code to verify your mobile number";
 
 
         return $this->returnData(['code'], [$code], $msg);
     }
-
 
     public function social(Request $request)
     {
@@ -266,7 +266,6 @@ class AuthController extends Controller
 
         return $this->returnData(['client',"token"], [new SocialLoginResource($client),$client->createToken("hi-market")->accessToken], $msg);
     }
-
 
     public function getAuthUser(Request $request)
     {

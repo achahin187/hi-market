@@ -62,6 +62,10 @@ class Area extends Model
         return $this->belongsTo('App\Models\City','city');
     }
 
+    public function polygon() {
+        return $this->hasMany('App\Models\Polygon');
+    }
+
     public function supermarkets() {
         return $this->hasMany('App\Models\Branch');
     }
