@@ -400,6 +400,7 @@
 
                                     </tbody>
                                 </table>
+                        
                                 @if($products)
                                  {{ $products->appends(request()->query())->links() }}
                                  @endif

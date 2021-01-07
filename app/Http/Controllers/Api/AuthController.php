@@ -21,11 +21,10 @@ use JWTAuth;
 
 class AuthController extends Controller
 {
-    //  
+    //
     use GeneralTrait;
- 
 
-
+  
     public function send_sms($name, $mobile, $msg, $lang)
     {
 
@@ -105,7 +104,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        
+
         $udid = $request->header('udid');
 
         $validator = Validator::make($request->all(), [
@@ -142,7 +141,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = mt_rand(10000, 99999);
+        $code = 12345 ;//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
@@ -151,7 +150,7 @@ class AuthController extends Controller
 
         $client->update(['device_token'=>$request->device_token]);
 
-        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
+        //$this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
@@ -208,13 +207,13 @@ class AuthController extends Controller
         }
 
 
-        $code = mt_rand(10000, 99999);
-        $activation_msg = trans('admin.activation_code') . $code;
-        dd($mobile, $activation_msg, app()->getLocale());
+        $code = 12345;//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
-        $this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
+        $activation_msg = trans('admin.activation_code') . $code;
+
+        //$this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
 
         $msg = "we sent an activation code to verify your mobile number";
 

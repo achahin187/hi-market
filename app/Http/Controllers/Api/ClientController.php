@@ -260,7 +260,7 @@ class ClientController extends Controller
         if (Hash::check($request->old_password, $client->password)) {
             
             $client->update([
-                'password' => Hash::make($request->new_password),
+                'password' => $request->new_password,
                 'device_token'=>$request->device_token
             ]);
             
@@ -392,7 +392,9 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-        $rand = mt_rand(10000, 99999);
+
+        $rand = 12345;//rand(0,99999);
+
 
         $address=Address::create([
             'name' =>  $request->name,
@@ -412,7 +414,9 @@ class ClientController extends Controller
 
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
-         $this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
+
+        //$this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
+
 
         return response()->json([
 
@@ -580,6 +584,7 @@ class ClientController extends Controller
         }
 
         $activation_msg = trans('admin.activation_code') . $rand;
+
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
