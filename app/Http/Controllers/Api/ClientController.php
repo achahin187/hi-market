@@ -396,7 +396,7 @@ class ClientController extends Controller
         $rand = 12345;//rand(0,99999);
 
 
-        $address=Address::create([
+        $address = Address::create([
             'name' =>  $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
@@ -538,7 +538,7 @@ class ClientController extends Controller
 
     public function contact_us(Request $request)
     {
-         $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [
             'title'       => 'required',
             'message'     => 'required',
             'phone'       => 'required|digits:11',
@@ -588,7 +588,6 @@ class ClientController extends Controller
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
-        
     }//end function
 }
 

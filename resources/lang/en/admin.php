@@ -22,6 +22,9 @@ return [
     'closed'=> 'Closed',
     'open'=> 'Open',
      //Delivery
+    'home' => 'Home',
+    'work' => 'Work',
+
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',
     'not_available'=> 'Not Available',
