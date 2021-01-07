@@ -366,10 +366,10 @@
                                     @enderror
                                 </div>
 
-
+                                
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.offer_price')}}</label>
-                                        <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->offer_price}}" @else value="0" @endif class=" @error('offer_price') is-invalid @enderror form-control">
+                                        <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->offer_price ??0}}" @else value="0" @endif class=" @error('offer_price') is-invalid @enderror form-control">
                                         @error('offer_price')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -388,10 +388,10 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                               
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
-                                    <input type="text" @if(isset($product)) value="{{$product->ratings}}" @else value="" @endif  name="ratings" class=" @error('ratings') is-invalid @enderror form-control" required>
+                                    <input type="text" @if(isset($product)) value="{{$product->ratings??0}}" @else value="" @endif  name="ratings" class=" @error('ratings') is-invalid @enderror form-control" required>
                                     @error('ratings')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

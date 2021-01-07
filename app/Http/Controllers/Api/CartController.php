@@ -244,7 +244,12 @@ class CartController extends Controller
                 $shipping = 0;
             }else{
 
-                $shipping = Setting::first()->delivery;
+                $shipping = Setting::first();
+                 if ($shipping) {
+                    $shipping = $shipping->delivery;
+                }else{
+                    $shipping = 0;
+                }
 
             }
         }else{

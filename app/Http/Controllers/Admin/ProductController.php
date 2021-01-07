@@ -170,14 +170,14 @@ class ProductController extends Controller
         $size = $request->input('size_id');
 
         $offer_price = $request->offer_price;
-
-        if ($offer_price != null || $offer_price > 0) {
-            $flag = 1;
-        }else{
+        //dd($offer_price);
+        if ($offer_price == 0) {
             $flag = 0;
+        }else{
+            $flag = 1;
         }
 
-        dd($falg);
+
 
         if ($price == null) {
             $price = 0;
@@ -520,10 +520,14 @@ class ProductController extends Controller
                 $price = 0;
             }
 
-            if ($offer_price != null) {
+            if ($offer_price != 0) {
                 $flag = 1;
+            }else{
+                $flag = 0;
+
             }
 
+            
 
             if($points == null)
             {
