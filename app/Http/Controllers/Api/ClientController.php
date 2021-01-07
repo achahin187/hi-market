@@ -391,7 +391,7 @@ class ClientController extends Controller
             $default = 0; 
         }
 
-        $rand = rand(0,99999);
+        $rand = 12345;//rand(0,99999);
 
         $address=Address::create([
             'name' =>  $request->name,
@@ -411,7 +411,7 @@ class ClientController extends Controller
 
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
-         $this->send_sms('Eramint', $request->phone, $activation_msg, app()->getLocale());
+        //$this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
 
         return response()->json([
 
@@ -572,7 +572,7 @@ class ClientController extends Controller
 
         $code = getUser()->activation_code;
 
-        $this->send_sms('Eramint', $request->mobile_number, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
         

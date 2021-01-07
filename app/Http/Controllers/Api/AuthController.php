@@ -141,7 +141,7 @@ class AuthController extends Controller
         //$accessToken = $client->createToken("hi-market")->accessToken;
 
 
-        $code = rand(0,99999);
+        $code = 12345 ;//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
@@ -150,7 +150,7 @@ class AuthController extends Controller
 
         $client->update(['device_token'=>$request->device_token]);
 
-        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
+        //$this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
         $msg = "you have been registered sucessfully";
 
@@ -207,13 +207,13 @@ class AuthController extends Controller
         }
 
 
-        $code = rand(0,99999);
+        $code = 12345;//rand(0,99999);
 
         $client->update(['activation_code' => $code]);
 
         $activation_msg = trans('admin.activation_code') . $code;
 
-        $this->send_sms('Eramint', $mobile, $activation_msg, app()->getLocale());
+        //$this->send_sms('Delivertto', $mobile, $activation_msg, app()->getLocale());
 
         $msg = "we sent an activation code to verify your mobile number";
 
