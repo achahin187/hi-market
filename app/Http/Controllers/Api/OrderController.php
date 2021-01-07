@@ -315,43 +315,43 @@ class OrderController extends Controller
     public function checkAddressPolygon(Request $request)
     {
         dd('aefu');
-        $validation = \Validator::make($request->all(), [
-            "supermarket_id" => "required",
-            "address_id"     => "required",
-        ]);
+        // $validation = \Validator::make($request->all(), [
+        //     "supermarket_id" => "required",
+        //     "address_id"     => "required",
+        // ]);
 
-        if ($validation->fails()) {
-            return $this->returnError(422, $validation->errors()->first());
-        }//end if
+        // if ($validation->fails()) {
+        //     return $this->returnError(422, $validation->errors()->first());
+        // }//end if
 
-         $branch = Branch::where('id', $request->supermarket_id)->first();
-         $address = Address::where('id', $request->address_id)->first();
+        //  $branch = Branch::where('id', $request->supermarket_id)->first();
+        //  $address = Address::where('id', $request->address_id)->first();
 
-         return $branch;
-         die();
-         #check if  beanch
-         if ($branch) {
-             $getPlygons =  $branch->area->polygon;
-             dd($getPlygons);
-         }else
-            return $this->returnError(404, 'there is no branch found'); 
-         }
+        //  return $branch;
+        //  die();
+        //  #check if  beanch
+        //  if ($branch) {
+        //      $getPlygons =  $branch->area->polygon;
+        //      dd($getPlygons);
+        //  }else
+        //     return $this->returnError(404, 'there is no branch found'); 
+        //  }
 
 
 
-          #polygon array        
-          $polygons=[]; 
-          foreach ($getPlygons as $getPlygons)
-          {
-              $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
+        //   #polygon array        
+        //   $polygons=[]; 
+        //   foreach ($getPlygons as $getPlygons)
+        //   {
+        //       $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
                
-          }
+        //   }
 
-          $bound = new Bounds($polygons);
+        //   $bound = new Bounds($polygons);
 
-          $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
+        //   $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
 
-          dd($result);
+        //   dd($result);
         
         //   $Finalpolygons=[];
         //   foreach ($polygons as $index =>$polygon)
