@@ -334,7 +334,7 @@ class OrderController extends Controller
           $polygons=[]; 
           foreach ($getPlygons as $getPlygon)
           {
-              $polygons[$getPlygons->area_id][]= $getPlygon->lon .' '.$getPlygon->lat;
+              $polygons[$getPlygon->area_id][]= $getPlygon->lon .' '.$getPlygon->lat;
                
           }
 
