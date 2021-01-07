@@ -47,6 +47,7 @@ class ClientController extends Controller
 
     }
 
+
     public function client_profile(Request $request)
     {
 
@@ -391,7 +392,11 @@ class ClientController extends Controller
             $default = 0; 
         }
 
+<<<<<<< HEAD
         $rand = 12345;//rand(0,99999);
+=======
+        $rand = mt_rand(10000, 99999);
+>>>>>>> 701a15ae68973be4fc378b140e5a7234bc0b5eac
 
         $address=Address::create([
             'name' =>  $request->name,
@@ -411,7 +416,11 @@ class ClientController extends Controller
 
         #send sms to the number in address
         $activation_msg = trans('admin.activation_code') . $rand;
+<<<<<<< HEAD
         //$this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
+=======
+         $this->send_sms('Delivertto', $request->phone, $activation_msg, app()->getLocale());
+>>>>>>> 701a15ae68973be4fc378b140e5a7234bc0b5eac
 
         return response()->json([
 
@@ -569,9 +578,19 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }//end if
+        $client = getUser();
+        if ($client) {
+            
+        $rand = $client->activation_code;
+        }else{
+        $rand = mt_rand(10000, 99999);
 
-        $code = getUser()->activation_code;
+        }
 
+<<<<<<< HEAD
+=======
+        $activation_msg = trans('admin.activation_code') . $rand;
+>>>>>>> 701a15ae68973be4fc378b140e5a7234bc0b5eac
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
 
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
