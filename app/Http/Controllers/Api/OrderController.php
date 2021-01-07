@@ -324,8 +324,8 @@ class OrderController extends Controller
         }//end if
 
          $branch = Branch::where('id', $request->supermarket_id)->first();
-        dd($branch);
-         // $address = Address::where('id', $request->address_id)->first();
+          $address = Address::where('id', $request->address_id)->first();
+        dd($address);
 
          // return $branch;
          // die();
