@@ -353,14 +353,14 @@ class OrderController extends Controller
           $point = array($implodePoints);
           
           
-          dd($point, $Finalpolygon);
-          $resultsList=[];
-          foreach ($Finalpolygons as  $Finalpolygon) {
-        
+       
          
-           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+           $resultsList = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
-          }
+          dd($resultsList);
+          // foreach ($Finalpolygons as  $Finalpolygon) {
+
+          // }
          $data = $this->checkLocation($resultsList);
          
         #if data == true
