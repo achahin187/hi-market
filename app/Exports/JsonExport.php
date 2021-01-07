@@ -30,6 +30,7 @@ class JsonExport implements FromCollection,WithHeadings
 
             $content = json_decode(file_get_contents(public_path("products/" . $file->getBasename())));
 
+            dump($content);
             $this->data->add($content[0]);
         }
         return $this->data;
