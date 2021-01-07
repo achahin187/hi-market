@@ -91,12 +91,12 @@
 
                                <div class="form-group">
                                   <label>Client Address</label>
-                                  <p>{{ $order->addressOrder->address }}</p>
+                                  <p>{{ $order->address }}</p>
                                </div>
 
                                <div class="form-group">
                                   <label>Client Phone</label>
-                                  <p>{{ $order->addressOrder->phone }}</p>
+                                  <p>{{ $order->phone }}</p>
                                </div>
 
                                 <div class="form-group">
