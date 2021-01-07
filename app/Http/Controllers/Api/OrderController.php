@@ -326,17 +326,18 @@ class OrderController extends Controller
           $branch = Branch::where('id', $request->supermarket_id)->first();
           $address = Address::where('id', $request->address_id)->first();
 
-            dd($branch->area->polygon);
+            
          #check if  beanch
-        //  if ($branch) {
-        //      $getPlygons =  $branch->area->polygon;
-        //      dd($getPlygons);
-        //  }else
-        //     return $this->returnError(404, 'there is no branch found'); 
-        //  }
+         if ($branch) {
+             $getPlygons =  $branch->area->polygon;
+          
+         }else{
+
+            return $this->returnError(404, 'there is no branch found'); 
+         }
 
 
-        // dd('out if');
+         dd($getPlygons);
 
 
 
