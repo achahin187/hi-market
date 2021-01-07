@@ -24,8 +24,6 @@ class ProductsImport implements ToModel, WithHeadingRow
             "name_en" => $row["english_product_name"],
             "eng_description" => strip_tags($row["product_description"]),
             "arab_description" => strip_tags($row["product_description"]),
-
-
         ]);
         $product->save();
         return $product;
@@ -35,16 +33,16 @@ class ProductsImport implements ToModel, WithHeadingRow
     {
         $client = new Client();
         $files = json_decode($files);
-
         if (!file_exists(public_path("products/images"))) {
             mkdir(public_path("products/images"));
         }
-        $fileName = "";
+        $fileNames = [];
         foreach ($files as $file) {
             $fileName = time() . ".jpg";
+            $fileNames[] = $fileName;
             $client->get($file->image, ["sink" => fopen(public_path("products/images/$fileName"), "w")]);
         }
-        return $fileName;
+        return $fileNames;
     }
 
 
