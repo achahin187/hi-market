@@ -358,11 +358,11 @@ class OrderController extends Controller
         foreach ($Finalpolygons as  $Finalpolygon) {
 
          $resultsList = $pointLocation->pointInPolygon($point, $Finalpolygon);
-         
+
         }
 
-          dd($resultsList);
-         $data = $this->checkLocation($resultsList);
+        
+        $data = $this->checkLocation($resultsList);
          
         #if data == true
         if ($data) {        
