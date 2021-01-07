@@ -183,7 +183,7 @@ class ProductController extends Controller
                 if ($client) {
 
                     $data = $this->checkPolygon($client->lat, $client->lon);
-                    dd($data);
+                    dd($data, $client->lat);
                     if ($data) {
                           
                         if(count( $data) > 2)
