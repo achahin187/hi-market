@@ -36,9 +36,12 @@ class ProductController extends Controller
         if($flag == 1)
         {
             $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
+
             return view('Admin.product_offers.index',compact('products','flag'));
+        }else{
+
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
         }
-        $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
         return view('Admin.products.index',compact('products','flag'));
     }
 
@@ -521,8 +524,11 @@ class ProductController extends Controller
             }
 
             if ($offer_price != 0) {
+
                 $flag = 1;
+
             }else{
+
                 $flag = 0;
 
             }

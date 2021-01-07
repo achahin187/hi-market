@@ -167,7 +167,7 @@
 
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" id="supermarket_1" data-placeholder="Select a State" style="width: 100%;" required>
 
-
+                                            
                                             @foreach($superMarkets  as $supermarket)
                                                 <option <?php if($product->supermarket_id == $supermarket->id)  'selected'; ?> value={{ $supermarket->id }}>
                                                {{ $supermarket->name }}</option>
@@ -180,9 +180,9 @@
                                   <div class="form-group">
                                         <label>{{ __('admin.supermarket') }}</label>
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" id="supermarket_1" name="supermarket_id" style="width: 100%;" required>
-
+                                             <option  selected  disabled>Please Select Supermarket</option>
                                             @foreach($superMarkets  as $supermarket)
-                                                <option  <?php if($supermarket->id == $supermarket->id) echo 'selected'; ?> value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
+                                                <option value={{ $supermarket->id }}>{{ $supermarket->name }}</option>
                                             @endforeach
 
                                         </select>
@@ -201,7 +201,7 @@
                                 <select id="branches" class=" @error('branch_id') is-invalid @enderror select2" name="branch_id[]"  style="width: 100%;"  multiple>
 
                                     @if(isset($product))
-
+                                     <option  selected  disabled>Please Select Branches</option>
                                         @foreach(\App\Models\Branch::all() as $branch)
 
                                             <option  {{ $product->branches->where('id', $branch->id)->count() != 0 ?  'selected' : ""  }} value="{{ $branch->id }}">{{ $branch->name_en }}</option>
@@ -209,6 +209,7 @@
                                         @endforeach
 
                                     @elseif(isset($branch_id))
+                                    <option  selected  disabled>Please Select Branches</option>
                                         @foreach(\App\Models\Branch::all() as $branch)
 {{--
                                             <option <?php if($branch->id == $branch->id) echo 'selected'; ?> value="{{ $branch->id }}">{{ $branch->name_en }}</option> --}}
@@ -233,12 +234,14 @@
                                     <select class=" @error('category_id') is-invalid @enderror select2"  id="vendor_1"  name="category_id" data-placeholder="Select a State" style="width: 100%;" required >
 
                                         @if(isset($product))
+                                        <option  selected  disabled>Please Select Category</option>
                                             @foreach(\App\Models\Category::all() as $category)
 
                                                 <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                             @endforeach
                                         @else
+                                          <option  selected  disabled>Please Select Category</option>
                                             @foreach(\App\Models\Category::all() as $category)
 
                                                 <option value="{{ $category->id }}">{{ $category->name_en }}</option>
@@ -254,6 +257,7 @@
                                     <label>{{__('admin.vendor')}} </label>
                                     <select class=" @error('vendor_id') is-invalid @enderror select2"  name="vendor_id" id='categories' data-placeholder="Select a State" style="width: 100%;" required>
                                         @if(isset($product))
+                                          <option  selected  disabled>Please Select Vendor</option>
                                             @foreach(\App\Models\Vendor::all() as $vendor)
 
                                                 <option <?php if($product->vendor->id ?? "" == $vendor->id) echo 'selected'; ?> value="{{ $vendor->id }}">{{ $vendor->eng_name }}</option>
