@@ -345,13 +345,13 @@ class OrderController extends Controller
              $Finalpolygons[] = $polygon;
                
           }
-         return  $Finalpolygons;
           #new instance 
           $pointLocation = new PointLocation();
           #impload implode Points
           $implodePoints = implode(" ", [$address->lon,$address->lat]);
           #points
           $point = array($implodePoints);
+         return  $implodePoints;
           
           $resultsList=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
