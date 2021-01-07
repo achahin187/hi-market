@@ -24,7 +24,6 @@ class FetchProducts implements ShouldQueue
      */
     private $data;
     private $index = 0;
-
     /**
      * Create a new job instance.
      *
