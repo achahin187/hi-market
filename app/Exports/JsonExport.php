@@ -5,9 +5,10 @@ namespace App\Exports;
 use File;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class JsonExport implements FromCollection,WithHeadings
+class JsonExport implements FromCollection, WithHeadings
 {
     /**
      * @var Collection
@@ -21,7 +22,7 @@ class JsonExport implements FromCollection,WithHeadings
 
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function collection()
     {
@@ -30,9 +31,20 @@ class JsonExport implements FromCollection,WithHeadings
 
             $content = json_decode(file_get_contents(public_path("products/" . $file->getBasename())));
 
-            dump($content);
+            if($content)
+            {
+
             $this->data->add($content[0]);
+
+            }else{
+            dump($content[0]);
+
+            }
+
+
+
         }
+
         return $this->data;
     }
 
@@ -42,8 +54,9 @@ class JsonExport implements FromCollection,WithHeadings
     public function headings(): array
     {
         return [
-          "in_wishlist",
-          "product_average_rating",
+
+            "in_wishlist",
+            "product_average_rating",
             "product_rating_count",
             "product_id",
             "brand_name",
@@ -69,16 +82,15 @@ class JsonExport implements FromCollection,WithHeadings
             "arabic_product_size",
             "product_size",
             "currency",
-            "image",
-            "is_default",
-            "FileBig_image",
-            "FileBig_is_default",
+            "File",
+            "FileBig",
             "shipping_third_party",
             "product_rating",
             "saving",
             "product_description",
             "qty",
             "tax"
+
         ];
     }
 }
