@@ -351,7 +351,7 @@ class OrderController extends Controller
           $implodePoints = implode(" ", [$address->lon,$address->lat]);
           #points
           $point = array($implodePoints);
-         return  $implodePoints;
+          
           
           $resultsList=[];
           foreach ($Finalpolygons as  $Finalpolygon) {
@@ -360,6 +360,7 @@ class OrderController extends Controller
            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
           }
+          dd($resultsList);
          $data = $this->checkLocation($resultsList);
          
         #if data == true
