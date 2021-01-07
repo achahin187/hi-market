@@ -337,23 +337,23 @@ class OrderController extends Controller
          }
 
 
-         dd($getPlygons);
+         //dd($getPlygons);
 
 
 
-         //  #polygon array        
-         //  $polygons=[]; 
-         //  foreach ($getPlygons as $getPlygons)
-         //  {
-         //      $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
+          #polygon array        
+          $polygons=[]; 
+          foreach ($getPlygons as $getPlygons)
+          {
+              $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
                
-         //  }
+          }
 
-         //  $bound = new Bounds($polygons);
+          $bound = new Bounds($polygons);
 
-         //  $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
+          $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
 
-         //  dd($result);
+          dd($result);
         
         //   $Finalpolygons=[];
         //   foreach ($polygons as $index =>$polygon)
