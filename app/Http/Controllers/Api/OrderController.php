@@ -37,6 +37,7 @@ use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Polygons\PointLocation;
 use DateTime;
+use App\Location\Geometry\Bounds;
 class OrderController extends Controller
 {
     //
@@ -330,53 +331,61 @@ class OrderController extends Controller
             return $this->returnError(404, 'there is no branch found'); 
          }
 
+
+
           #polygon array        
           $polygons=[]; 
           foreach ($getPlygons as $getPlygons)
           {
-              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+              $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
                
           }
 
+          $bound = new Bounds($polygons);
+
+          $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]))
+
+          dd($result);
         
-          $Finalpolygons=[];
-          foreach ($polygons as $index =>$polygon)
-          {
-             $Finalpolygons[] = $polygon;
+        //   $Finalpolygons=[];
+        //   foreach ($polygons as $index =>$polygon)
+        //   {
+        //      $Finalpolygons[] = $polygon;
                
-          }
-          #new instance 
-          $pointLocation = new PointLocation();
-          #impload implode Points
-          $implodePoints = implode(" ", [$address->lon,$address->lat]);
-          #points
-          $point = array($implodePoints);
+        //   }
+
+        //   #new instance 
+        //   $pointLocation = new PointLocation();
+        //   #impload implode Points
+        //   $implodePoints = implode(" ", [$address->lon,$address->lat]);
+        //   #points
+        //   $point = array($implodePoints);
           
-          $resultsList=[];
-          foreach ($Finalpolygons as  $Finalpolygon) {
+        //   $resultsList=[];
+        //   foreach ($Finalpolygons as  $Finalpolygon) {
         
          
-           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+        //    $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
-          }
-         $data = $this->checkLocation($resultsList);
+        //   }
+        //  $data = $this->checkLocation($resultsList);
          
-        #if data == true
-        if ($data) {        
+        // #if data == true
+        // if ($data) {        
         
-            return response()->json([
-            "status" => true,
-            'msg' => 'valid',
-            ], 200);
+        //     return response()->json([
+        //     "status" => true,
+        //     'msg' => 'valid',
+        //     ], 200);
 
-        } else {
+        // } else {
   
-            return response()->json([
-             "status" => false,  
-             'msg' => trans('admin.outpolygon'),
-           ], 404);
+        //     return response()->json([
+        //      "status" => false,  
+        //      'msg' => trans('admin.outpolygon'),
+        //    ], 404);
 
-        }//end if 
+        // }//end if 
     } 
 
     private function checkLocation($resultsList)
