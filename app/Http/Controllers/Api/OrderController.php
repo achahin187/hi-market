@@ -332,13 +332,12 @@ class OrderController extends Controller
 
           #polygon array        
           $polygons=[]; 
-          foreach ($getPlygons as $getPlygons)
+          foreach ($getPlygons as $getPlygon)
           {
-              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+              $polygons[$getPlygons->area_id][]= $getPlygon->lon .' '.$getPlygon->lat;
                
           }
 
-         return  $polygons;
         
           $Finalpolygons=[];
           foreach ($polygons as $index =>$polygon)
@@ -346,6 +345,7 @@ class OrderController extends Controller
              $Finalpolygons[] = $polygon;
                
           }
+         return  $Finalpolygons;
           #new instance 
           $pointLocation = new PointLocation();
           #impload implode Points
