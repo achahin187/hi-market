@@ -314,6 +314,7 @@ class OrderController extends Controller
 
     public function checkAddressPolygon(Request $request)
     {
+        dd('aefu');
         $validation = \Validator::make($request->all(), [
             "supermarket_id" => "required",
             "address_id"     => "required",
