@@ -351,9 +351,9 @@ class OrderController extends Controller
 
           $bound = new Bounds($polygons);
 
-          $result = $bound->intersect(new Bounds([new Point($address->lat,$address->lon)]));
+          $result = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
 
-          dd($address->lat,$address->lon);
+            return $result;
         
         //   $Finalpolygons=[];
         //   foreach ($polygons as $index =>$polygon)
