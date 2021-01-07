@@ -256,7 +256,7 @@ class ClientController extends Controller
               return $this->returnValidationError(422, $validator);
         }
  
-
+        dd($client->password , $request->old_password );
         if (Hash::check($request->old_password, $client->password)) {
             
             $client->update([
