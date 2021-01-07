@@ -351,9 +351,9 @@ class OrderController extends Controller
 
           $bound = new Bounds($polygons);
 
-          $result = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
+          $data = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
 
-            return $result;
+      
         
         //   $Finalpolygons=[];
         //   foreach ($polygons as $index =>$polygon)
@@ -378,22 +378,22 @@ class OrderController extends Controller
         //   }
         //  $data = $this->checkLocation($resultsList);
          
-        // #if data == true
-        // if ($data) {        
+        #if data == true
+        if ($data) {        
         
-        //     return response()->json([
-        //     "status" => true,
-        //     'msg' => 'valid',
-        //     ], 200);
+            return response()->json([
+            "status" => true,
+            'msg' => 'valid',
+            ], 200);
 
-        // } else {
+        } else {
   
-        //     return response()->json([
-        //      "status" => false,  
-        //      'msg' => trans('admin.outpolygon'),
-        //    ], 404);
+            return response()->json([
+             "status" => false,  
+             'msg' => trans('admin.outpolygon'),
+           ], 404);
 
-        // }//end if 
+        }//end if 
     } 
 
     private function checkLocation($resultsList)
