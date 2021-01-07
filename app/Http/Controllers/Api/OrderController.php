@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Polygons\PointLocation;
 use DateTime;
 use App\Location\Geometry\Bounds;
+use App\Location\Geometry\Point;
 class OrderController extends Controller
 {
     //
