@@ -327,6 +327,7 @@ class OrderController extends Controller
          $address = Address::where('id', $request->address_id)->first();
 
          dd($branch);
+         die();
          #check if  beanch
          if ($branch) {
              $getPlygons =  $branch->area->polygon;
