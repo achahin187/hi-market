@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function __construct()
     {
         if (\request()->header("Authorization")) {
-            $this->middleware("auth:client-api");
+            $this->middleware("auth:client-api") ; 
         }
     }
     #vendor
@@ -91,7 +91,7 @@ class ProductController extends Controller
              
             }
 
-          
+                      
 
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                    ->where('status', 'active')
