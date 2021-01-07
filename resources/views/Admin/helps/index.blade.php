@@ -17,7 +17,7 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if(auth()->user()->can('delivery-list'))
+                            @if(auth()->user()->can('help-list'))
                                 <li class="breadcrumb-item"><a
                                         href="{{route('helps.create')}}">{{ __('admin.helps') }}</a>
                                 </li>
@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.delivery_company') }}</h3>
+                                <h3 class="card-title">{{ __('admin.help') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -60,7 +60,7 @@
                                         <th>{{ __('admin.describtion_ar') }}</th>
                                         <th>{{ __('admin.describtion_en') }}</th>
                                         <th>{{ __('admin.image') }}</th>
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                        @if(auth()->user()->hasAnyPermission(['help-delete','help-edit']))
                                             <th>{{ __('admin.controls') }}</th>
                                         @endif
                                     </tr>
@@ -77,7 +77,7 @@
 
                                   
 
-                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            @if(auth()->user()->hasAnyPermission(['help-delete','help-edit']))
                                                 <td>
                                                     <div class="dropdown">
                                                         <button type="button" id="dropdownMenu2" data-toggle="dropdown"
@@ -86,7 +86,7 @@
                                                             <i class="fas fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            @if(auth()->user()->can('delivery-delete'))
+                                                            @if(auth()->user()->can('help-delete'))
                                                                 <form
                                                                     action="{{ route('helps.destroy', $help->id) }}"
                                                                     method="post">
@@ -98,7 +98,7 @@
                                                                             onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                                 </form>
                                                             @endif
-                                                            @if(auth()->user()->can('delivery-edit'))
+                                                            @if(auth()->user()->can('help-edit'))
                                                                 <a class="dropdown-item"
                                                                    href="{{ route('helps.edit', $help->id) }}">{{ __('edit') }}</a>
                                                             @endif
