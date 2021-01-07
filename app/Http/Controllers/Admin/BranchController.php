@@ -244,7 +244,8 @@ class BranchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id,$supermarket_id = null)
-    {   dd($request->all());
+    {   
+        //dd($request->all());
         
            $request->validate([
             'name_ar' => ['required','min:2','max:60','not_regex:/([%\$#\*<>]+)/'],
