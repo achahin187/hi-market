@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class JsonExport implements FromCollection, WithHeadings
+class ProductsJsonExport implements FromCollection, WithHeadings
 {
     /**
      * @var Collection
@@ -31,16 +31,15 @@ class JsonExport implements FromCollection, WithHeadings
 
             $content = json_decode(file_get_contents(public_path("products/" . $file->getBasename())));
 
-            if($content)
+            if ($content)
             {
 
-            $this->data->add($content[0]);
+                $this->data->add($content[0]);
 
-            }else{
-            dump($content[0]);
+            } else {
+                dump($content[0]);
 
             }
-
 
 
         }
