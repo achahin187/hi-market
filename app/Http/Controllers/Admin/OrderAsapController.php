@@ -10,7 +10,7 @@ class OrderAsapController extends Controller
 {
     public function index()
     {
-        $orders = Order::where("asap", 1)->paginate();
+        $orders = Order::where("asap", 1)->orWhereDate("delivery_date",now()->format("Y-m-d"))->paginate();
         return view("Admin.orders_asap.index", compact("orders"));
     }
 
