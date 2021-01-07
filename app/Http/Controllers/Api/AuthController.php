@@ -242,11 +242,11 @@ class AuthController extends Controller
             if (!$client) {
 
                 $client = Client::create([
-                    'name'  => $request->name,
-                    'email' => $request->email,
-                    'type'  => $request->type,
-                    'device_token'=>$request->device_token,
-                    "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                    'name'         => $request->name,
+                    'email'        => $request->email,
+                    'type'         => $request->type,
+                    'device_token' => $request->device_token,
+                    "unique_id"    => Udid::where("body", $udid)->firstOrCreate([
                         "body"=>request()->header("udid")
                     ])->body
                 ]);

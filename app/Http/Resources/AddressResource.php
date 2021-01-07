@@ -23,7 +23,7 @@ class AddressResource extends JsonResource
             "govern"=>$this->govern,
             "description"=>$this->description,
             "default"=> $this->default,
-            "address_label"=>$this->address_lable,
+            "address_label"=> trans($this->address_lable),
             "lat"=>$this->lat,
             "lon"=>$this->lon,
             "additional"=>$this->notes??"" ,

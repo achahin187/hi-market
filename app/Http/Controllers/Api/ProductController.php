@@ -21,7 +21,6 @@ use App\Http\Resources\HomeDataResource;
 use App\Http\Resources\OfferResource;
 use Carbon\Carbon;
 use App\Polygons\PointLocation;
-
 class ProductController extends Controller
 {
     //
@@ -47,15 +46,13 @@ class ProductController extends Controller
         }
         $product_count = Product::whereHas("branches", function ($query) {
             $query->where("branches.id", request("supermarket_id"));
-        })->where(function ($q) {
-            if (request("category_id") != 0 && \request("category_id")) {
-                $q->where("category_id", \request("category_id"));
+        })->where(function ($q)
+        {
+            if(request("category_id") != 0 && \request("category_id"))
+            {
+                $q->where("category_id",\request("category_id"));
             }
-        })->where("status", "active")->where(function ($q) {
-            if (request("is_offer", 0)) {
-                $q->where("flag", \request("is_offer"));
-            }
-        })->filter()->count();
+        })->where("status","active")->where("flag",\request("is_offer",0))->filter()->count();
         return $this->returnData(["product_count"], [$product_count]);
     }
 
@@ -63,89 +60,93 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $checkSatus = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i'))->get();
+        $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->get();
 
-        foreach ($checkSatus as $status) {
-            $status->update(['status' => 0]);
+        foreach ($checkSatus as  $status) {
+            $status->update(['status'=> 0]);
         }
 
-        $offers = Offer::Where('source', 'Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
+        $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
 
         $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
+      
 
-
+       
         $data = $this->checkPolygon($request->lat, $request->lon);
-
+       
 
         if ($data) {
 
-            if (count($data) > 2) {
-                $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+            if(count( $data) > 2)
+            {
+              $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
-                $notTopic = Polygon::where('topic', '!=', $getPolygon->topic)->get();
+              $notTopic = Polygon::where('topic', '!=',$getPolygon->topic)->get();
+              
+            }else{
 
-            } else {
+              $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
 
-                $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
-
-                $notTopic = Polygon::where('topic', '!=', $getPolygon->topic)->get();
-
+              $notTopic = Polygon::where('topic', '!=',$getPolygon->topic)->get();
+             
             }
 
+          
 
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
-                ->where('status', 'active')
-                ->orderBy('priority', 'asc')
-                ->limit(20)
-                ->get();
-
-
+                                   ->where('status', 'active')
+                                   ->orderBy('priority', 'asc')
+                                   ->limit(20)
+                                   ->get();
+          
+                
             if (auth("client-api")->check()) {
 
-                $client = Client::where('id', auth("client-api")->user()->id)->first();
-                if ($client) {
+                $client = Client::where('id',auth("client-api")->user()->id)->first();
+                  if ($client) {
+                 
+
+                      $client->update([
+                          'lat' => $request->lat,
+                          'lon' => $request->lon,
+                      ]);
+                  
+                     
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
 
 
-                    $client->update([
-                        'lat' => $request->lat,
-                        'lon' => $request->lon,
-                    ]);
+                  } else {
 
-
-                    return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
-
-
-                } else {
-
-                    return $this->returnError(305, 'there is no client found');
-                }//end client
+                      return $this->returnError(305, 'there is no client found');
+                  }//end client
             } else {
 
+                 
+              $udid = Udid::where("body", $request->header("udid") )->first();
+              if($udid)
+              {
+                
+               $udid->update([
+                    "body" => $request->header("udid"),
+                    'lat' => $request->lat,
+                    'lon' => $request->lon,
 
-                $udid = Udid::where("body", $request->header("udid"))->first();
-                if ($udid) {
+                ]);
+              }else{
 
-                    $udid->update([
-                        "body" => $request->header("udid"),
-                        'lat' => $request->lat,
-                        'lon' => $request->lon,
+                Udid::create([
+                    "body" => $request->header("udid"),
+                    'lat' => $request->lat,
+                    'lon' => $request->lon,
 
-                    ]);
-                } else {
+                ]);
+              }
 
-                    Udid::create([
-                        "body" => $request->header("udid"),
-                        'lat' => $request->lat,
-                        'lon' => $request->lon,
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0",$getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+            }//end if 
 
-                    ]);
-                }
-
-                return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
-            }//end if
-
-        } else {//else data
-
+        }else{//else data
+       
             $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
 
             if (auth("client-api")->check()) {
@@ -153,106 +154,126 @@ class ProductController extends Controller
 
                 if ($client) {
 
-                    return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
 
                 } else {
 
                     return $this->returnError(305, 'there is no client found');
                 }
-
+                
             } else {
                 Udid::where("body", $request->header("udid"))->updateOrCreate([
                     "body" => $request->header("udid"),
 
                 ]);
 
-                return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
-            }//end if
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
+            }//end if 
         }//end data
     }
 
     public function homeSearch(Request $request)
     {
-        $offers = Offer::Where('source', 'Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
-        if (auth("client-api")->check()) {
+            $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
 
-            $client = auth("client-api")->user();
+            if (auth("client-api")->check()) {
 
-            if ($client) {
+                $client = auth("client-api")->user();
 
-                $data = $this->checkPolygon($client->lat, $client->lon);
+                if ($client) {
 
-                if ($data) {
+                    $data = $this->checkPolygon($client->lat, $client->lon);
+                   //dd($data, $client->lat);
+                    if ($data) {
+                          
+                          if(count( $data) > 2)
+                          {
+                            $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
-                    if (count($data) > 2) {
-                        $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
+                            
+                          }else{
 
+                            $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                           
+                          }
 
-                    } else {
+                        //$getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                     
+                        $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
+                                               ->where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+                      
 
-                        $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                        return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
-                    }
+                    }else{
+                   
+                          $supermarkets = Branch::where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
 
-                    //$getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                          return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
-                    $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
-                        ->where('status', 'active')
-                        ->where('name_en', 'LIKE', '%' . $request->name . "%")
-                        ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
-                        ->orderBy('priority', 'asc')
-                        ->limit(20)
-                        ->get();
-
-
-                    return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
+                    }//end of data
 
                 } else {
 
                     $supermarkets = Branch::where('status', 'active')
-                        ->where('name_en', 'LIKE', '%' . $request->name . "%")
-                        ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
-                        ->orderBy('priority', 'asc')
-                        ->limit(20)
-                        ->get();
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")         
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
 
-                    return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
 
-                }//end of data
-
+                }//end if client
             } else {
 
-                $supermarkets = Branch::where('status', 'active')
-                    ->where('name_en', 'LIKE', '%' . $request->name . "%")
-                    ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
-                    ->orderBy('priority', 'asc')
-                    ->limit(20)
-                    ->get();
 
-                return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
+                Udid::where("body", $request->header("udid"))->updateOrCreate([
+                    "body" => $request->header("udid"),
 
-            }//emd if client
-        } else {
-            Udid::where("body", $request->header("udid"))->updateOrCreate([
-                "body" => $request->header("udid"),
+                ]);
 
-            ]);
+                $data = $this->checkPolygon($request->lat, $request->lon);
+                
+                         if(count( $data) > 2)
+                          {
+                            $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
 
-            $supermarkets = Branch::where('status', 'active')
-                ->where('name_en', 'LIKE', '%' . $request->name . "%")
-                ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
-                ->orderBy('priority', 'asc')
-                ->limit(20)
-                ->get();
+                            
+                          }else{
 
-            return $this->returnData(["supermarkets", "offers", "isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers), !!$this->getOffer(), (string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money : "0"]);
-        }//end if  auth
+                            $getPolygon = Polygon::where('lat', $data[1])->where('lon', $data[0])->first();
+                           
+                          }
+
+                     
+                        $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
+                                               ->where('status', 'active')
+                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+
+
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
+            }//end if  auth
     }
 
     private function getOffer()
     {
-        $offer = Offer::where('type', 'free delivery')->first();
+        $offer = Offer::where('type','free delivery')->first();
         return $offer;
     }
 
@@ -260,7 +281,7 @@ class ProductController extends Controller
     {
 
         $validation = \Validator::make($request->all(), [
-            "id" => "required",
+            "id"             => "required",
             "supermarket_id" => "required",
         ]);
         if ($validation->fails()) {
@@ -329,34 +350,35 @@ class ProductController extends Controller
         // $product_details->category = !is_null($product->category) ? $product->category->name_en : "";
         // $product_details->supermarket = !is_null($product->supermarket) ? $product->supermarket->eng_name : "";
         // $product_details->deliver_to = 'cairo';
-        // $product_details->delivery_time = '30 minutes';
+        // $product_details->delivery_time = '30 minutes';  
     }
 
 
-    public function getproductsearch(Request $request)
+   public function getproductsearch(Request $request)
     {
 
-        $supermarket_id = $request->supermarket_id;
-        $name = $request->name;
-        $products = Product::orWhere('name_en', 'LIKE', '%' . $name . "%")
-            ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
-            ->get();
+            $supermarket_id = $request->supermarket_id;
+            $name = $request->name;
+            $products = Product::orWhere('name_en', 'LIKE', '%' . $name . "%")
+                               ->orWhere('name_ar', 'LIKE', '%' . $name . "%")
+                                ->get();
 
-        if (count($products) < 1) {
+            if (count($products) < 1) {
 
-            return response()->json([
-                'status' => true,
-                'msg' => '',
-                'data' => [],
-            ]);
-        } else {
+                 return response()->json([
+                        'status' => true,
+                        'msg' => '',
+                        'data' => [],
+                        ]);
+            } else {
 
-            $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id', $products->pluck('id'))->where('branch_id', $supermarket_id)->get();
+                $branches_ids = DB::table('product_supermarket')->WhereIn('Product_id',$products->pluck('id'))->where('branch_id', $supermarket_id)->get();
 
-            return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
+                return $this->returnData(['products'], [SearchResource::collection($branches_ids)]);
 
-        }
+            }
     }
+
 
 
     public function filter()
@@ -373,64 +395,66 @@ class ProductController extends Controller
 
     private function checkPolygon($lat, $lon)
     {
+         
+          $getPlygons = Polygon::all();
 
-        $getPlygons = Polygon::all();
+          #polygon array        
+          $polygons=[]; 
+          foreach ($getPlygons as $getPlygons)
+          {
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+               
+          }
 
-        #polygon array
-        $polygons = [];
-        foreach ($getPlygons as $getPlygons) {
-            $polygons[$getPlygons->area_id][] = $getPlygons->lon . ' ' . $getPlygons->lat;
+          $Finalpolygons=[];
+          foreach ($polygons as $index =>$polygon)
+          {
+             $Finalpolygons[] = $polygon;
+               
+          }
+          #new instance 
+          $pointLocation = new PointLocation();
 
-        }
+          #impload implode Points
+          $implodePoints = implode( " ", [$lon,$lat]);
 
-        $Finalpolygons = [];
-        foreach ($polygons as $index => $polygon) {
-            $Finalpolygons[] = $polygon;
+          //$implodePolygon = implode( " ", $Finalpolygon);
+          #points
+          $point = array($implodePoints);
 
-        }
-        #new instance
-        $pointLocation = new PointLocation();
+      
+           $resultsList=[];
+          foreach ($Finalpolygons as  $Finalpolygon) {
+        
+         
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
-        #impload implode Points
-        $implodePoints = implode(" ", [$lon, $lat]);
-
-        //$implodePolygon = implode( " ", $Finalpolygon);
-        #points
-        $point = array($implodePoints);
-
-
-        $resultsList = [];
-        foreach ($Finalpolygons as $Finalpolygon) {
-
-
-            $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
-
-        }
-        /*  dd($resultsList);*/
+          }
+       /*  dd($resultsList);*/
         #if data == true
-        $data = $this->checkLocation($resultsList);
-        return $data;
+         $data = $this->checkLocation($resultsList);
+         return $data;
 
     }//end function
 
-    private function checkLocation($resultsList)
+     private function checkLocation($resultsList)
     {
 
-        if (in_array(true, $resultsList)) {
+          if (in_array(true, $resultsList)) {
 
-            foreach ($resultsList as $data) {
+              foreach ($resultsList as $data) {
 
-                if ($data == true) {
+                if($data == true){
 
-                    return $data;
-                    break;
-                }//end if
-            }
-
-        } else {
+                     return $data;
+                     break;
+                }//end if 
+              }
+             
+          }else{
 
             return false;
 
-        }//end else
+          }//end else
     }//end private function
 }
