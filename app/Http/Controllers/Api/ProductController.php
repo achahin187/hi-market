@@ -176,6 +176,7 @@ class ProductController extends Controller
     public function homeSearch(Request $request)
     {
             $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
+
             if (auth("client-api")->check()) {
 
                 $client = auth("client-api")->user();
@@ -244,6 +245,7 @@ class ProductController extends Controller
                 ]);
 
                 $data = $this->checkPolygon($request->lat, $request->lon);
+                
                          if(count( $data) > 2)
                           {
                             $getPolygon = Polygon::where('lat', $data[0]['y'])->where('lon', $data[0]['x'])->first();
