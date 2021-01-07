@@ -256,11 +256,11 @@ class ClientController extends Controller
               return $this->returnValidationError(422, $validator);
         }
  
-        
+
         if (Hash::check($request->old_password, $client->password)) {
             
             $client->update([
-                'password' => Hash::make($request->new_password),
+                'password' => $request->new_password,
                 'device_token'=>$request->device_token
             ]);
             
