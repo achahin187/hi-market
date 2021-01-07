@@ -321,7 +321,7 @@ class OrderController extends Controller
             return $this->returnError(422, $validation->errors()->first());
         }//end if
 
-         $branch  = Branch::where('id', $request->supermarket_id)->first();
+         $branch = Branch::where('id', $request->supermarket_id)->first();
          $address = Address::where('id', $request->address_id)->first();
          #check if  beanch
          if ($branch) {
@@ -332,9 +332,9 @@ class OrderController extends Controller
 
           #polygon array        
           $polygons=[]; 
-          foreach ($getPlygons as $getPlygon)
+          foreach ($getPlygons as $getPlygons)
           {
-              $polygons[$getPlygon->area_id][]= $getPlygon->lon .' '.$getPlygon->lat;
+              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
                
           }
 
@@ -352,17 +352,14 @@ class OrderController extends Controller
           #points
           $point = array($implodePoints);
           
-          
-       
-         
-        foreach ($Finalpolygons as  $Finalpolygon) {
-
-         $resultsList = $pointLocation->pointInPolygon($point, $Finalpolygon);
-
-        }
-
+          $resultsList=[];
+          foreach ($Finalpolygons as  $Finalpolygon) {
         
-        $data = $this->checkLocation($resultsList);
+         
+           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+
+          }
+         $data = $this->checkLocation($resultsList);
          
         #if data == true
         if ($data) {        
