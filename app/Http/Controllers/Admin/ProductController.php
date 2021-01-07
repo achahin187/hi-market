@@ -177,7 +177,7 @@ class ProductController extends Controller
             $flag = 0;
         }
 
-
+        dd($falg);
 
         if ($price == null) {
             $price = 0;
