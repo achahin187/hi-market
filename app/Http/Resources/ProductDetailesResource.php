@@ -39,7 +39,7 @@ class ProductDetailesResource extends JsonResource
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
                 "category" => $this->category->name ?? "",
                 "deliver_to" => $branch->city->name,
-                "delivery_time" => request()->header('lang') == 'ar' ? 'دقيقة 30' : ' 30 minutes',
+                "delivery_time" => request()->header('lang') == 'ar' ? '30' : ' 30',
                 "specs"=> [
                     [
                     "name" => $this->measure->name ??"",
