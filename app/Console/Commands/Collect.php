@@ -7,6 +7,7 @@ use App\Exports\EnglishCategoryExport;
 use App\Exports\ProductsJsonExport;
 use App\Imports\Productimport;
 use App\Imports\ProductsImport;
+use App\Models\Category;
 use File;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
@@ -56,7 +57,20 @@ class Collect extends Command
         Excel::store(new ProductsJsonExport, "products.xlsx");
         Excel::store(new EnglishCategoryExport, "english_categories.xlsx");
         Excel::store(new ArabicCategoriesExport, "arabic_categories.xlsx");
-//        Excel::import(new ProductsImport, storage_path("app/products.xlsx"));
+//        Excel::import(new )
+        $arabic_categories = json_decode(file_get_contents(public_path("arabic_categories.json.json")));
+        $english_categories = json_decode(file_get_contents(public_path("english_categories.json.json")));
+        foreach ($arabic_categories as $i => $category) {
+            Category::create([
+                "name_en" => $english_categories[$i]->name,
+                "name_ar" => $category->name,
+                "image" => $category->image
+            ]);
+        }
+
+        Excel::import(new ProductsImport, storage_path("app/products.xlsx"));
 
     }
+
+
 }

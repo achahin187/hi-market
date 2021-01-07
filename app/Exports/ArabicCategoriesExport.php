@@ -3,8 +3,9 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ArabicCategoriesExport implements FromCollection
+class ArabicCategoriesExport implements FromCollection,WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
