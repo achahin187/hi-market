@@ -24,17 +24,21 @@ class FetchProducts implements ShouldQueue
      */
     private $data;
     private $index = 0;
+    private $lang;
+
     /**
      * Create a new job instance.
      *
      * @param $category
+     * @param $lang
      */
-    public function __construct($category)
+    public function __construct($category,$lang)
     {
         //
         $this->category = $category;
 
 
+        $this->lang = $lang;
     }
 
     /**
@@ -60,7 +64,7 @@ class FetchProducts implements ShouldQueue
             'warehouse_id' => '1',
             'sort_by' => 'popularity',
             'category_id' => $this->category->category_id,
-            'lang_id' => '1',
+            'lang_id' => $this->lang,
             'user_id' => '',
         );
         $data = $this->fetch($body);
@@ -81,7 +85,7 @@ class FetchProducts implements ShouldQueue
 
             $this->client->get($product->image, ["sink" => fopen(public_path("data/$fileName"), "w")]);
             $product->image = $fileName;
-            dispatch(new FetchProductDetails($product))->onQueue("products");
+            dispatch(new FetchProductDetails($product,$this->lang))->onQueue("products");
             $this->data->add($product);
 
         }

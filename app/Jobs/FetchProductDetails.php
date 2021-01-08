@@ -16,16 +16,19 @@ class FetchProductDetails implements ShouldQueue
     private $product;
     private $client;
     private $data ;
+    private $lang;
 
     /**
      * Create a new job instance.
      *
      * @param $product
+     * @param $lang
      */
-    public function __construct($product)
+    public function __construct($product,$lang)
     {
 
         $this->product = $product;
+        $this->lang = $lang;
     }
 
     /**
@@ -39,7 +42,7 @@ class FetchProductDetails implements ShouldQueue
         $this->data= collect();
         $body = array(
             'product_id' => $this->product->product_id,
-            'lang_id' => '2',
+            'lang_id' => $this->lang,
             'user_id' => '',
             'warehouse_id' => '1',
         );
@@ -58,10 +61,12 @@ class FetchProductDetails implements ShouldQueue
             dump($fileName);
         }
         $this->data->add($product);
-        if(!file_exists(public_path("products")))
+        $path = public_path("products/".($this->lang == 1 ? "en" : "ar"));
+        if(!file_exists($path))
         {
-            mkdir(public_path("products"));
+            mkdir($path);
         }
-        file_put_contents(public_path("products/productdetails" . time() . ".json"), json_encode($this->data));
+
+        file_put_contents($path."/". time()."products.json", json_encode($this->data));
     }
 }

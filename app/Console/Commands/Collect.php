@@ -46,17 +46,24 @@ class Collect extends Command
      */
     public function handle()
     {
-        $files = File::allFiles(public_path("products"));
-        foreach ($files as $file) {
+        $ar_products = File::allFiles(public_path("products/ar"));
+        $ar_products_collection = collect();
+        foreach ($ar_products as $file) {
 
-            $content = json_decode(file_get_contents(public_path("products/" . $file->getBasename())));
+            $content = json_decode(file_get_contents(public_path("products/ar/" . $file->getBasename())));
 
-            $this->data->add($content[0]);
+            $ar_products_collection->add($content[0]);
+        }
+        $en_products = File::allFile(public_path("products/en"));
+        $en_products_collection = collect();
+        foreach ($en_products as $file) {
+            $content = json_decode(file_get_contents(public_path("products/en/" . $file->getBasename())));
+            $en_products_collection->add($content[0]);
         }
 
-        Excel::store(new ProductsJsonExport, "products.xlsx");
-        Excel::store(new EnglishCategoryExport, "english_categories.xlsx");
-        Excel::store(new ArabicCategoriesExport, "arabic_categories.xlsx");
+//        Excel::store(new ProductsJsonExport, "products.xlsx");
+//        Excel::store(new EnglishCategoryExport, "english_categories.xlsx");
+//        Excel::store(new ArabicCategoriesExport, "arabic_categories.xlsx");
 //        Excel::import(new )
         $arabic_categories = json_decode(file_get_contents(public_path("arabic_categories.json.json")));
         $english_categories = json_decode(file_get_contents(public_path("english_categories.json.json")));
@@ -68,7 +75,7 @@ class Collect extends Command
             ]);
         }
 
-        Excel::import(new ProductsImport, storage_path("app/products.xlsx"));
+//        Excel::import(new ProductsImport, storage_path("app/products.xlsx"));
 
     }
 
