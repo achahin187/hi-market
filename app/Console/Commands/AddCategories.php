@@ -92,7 +92,7 @@ class AddCategories extends Command
         });
         file_put_contents(public_path("english_subcategories.json.json"), json_encode($subcategories));
         foreach ($subcategories as $subcategory) {
-            dispatch((new FetchProducts($subcategory))->onQueue("subcategory"));
+            dispatch((new FetchProducts($subcategory,1))->onQueue("subcategory"));
         }
         $data["lang"] = 2;
         $cats_ar = $this->client->get("https://prod.thegroceryshop.com/web_services14/getCategory", ["body" => json_encode($data)]);
