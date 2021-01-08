@@ -237,7 +237,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('admin.free_delivery1') }}</h3>
+                                <h3 class="card-title">{{ __('admin.free_delivery') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

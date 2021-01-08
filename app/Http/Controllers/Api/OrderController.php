@@ -37,6 +37,8 @@ use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Polygons\PointLocation;
 use DateTime;
+use App\Location\Geometry\Bounds;
+use App\Location\Geometry\Point;
 class OrderController extends Controller
 {
     //
@@ -321,45 +323,60 @@ class OrderController extends Controller
             return $this->returnError(422, $validation->errors()->first());
         }//end if
 
-         $branch = Branch::where('id', $request->supermarket_id)->first();
-         $address = Address::where('id', $request->address_id)->first();
+          $branch = Branch::where('id', $request->supermarket_id)->first();
+          $address = Address::where('id', $request->address_id)->first();
+
+            
          #check if  beanch
          if ($branch) {
              $getPlygons =  $branch->area->polygon;
+          
          }else{
+
             return $this->returnError(404, 'there is no branch found'); 
          }
+
+
+         //dd($getPlygons);
+
+
 
           #polygon array        
           $polygons=[]; 
           foreach ($getPlygons as $getPlygons)
           {
-              $polygons[$getPlygons->area_id][]= $getPlygons->lon .' '.$getPlygons->lat;
+              $polygons[]= new Point( $getPlygons->lat , $getPlygons->lon) ;
                
           }
 
+          $bound = new Bounds($polygons);
+
+          $data = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
+
+      
         
-          $Finalpolygons=[];
-          foreach ($polygons as $index =>$polygon)
-          {
-             $Finalpolygons[] = $polygon;
+        //   $Finalpolygons=[];
+        //   foreach ($polygons as $index =>$polygon)
+        //   {
+        //      $Finalpolygons[] = $polygon;
                
-          }
-          #new instance 
-          $pointLocation = new PointLocation();
-          #impload implode Points
-          $implodePoints = implode(" ", [$address->lon,$address->lat]);
-          #points
-          $point = array($implodePoints);
+        //   }
+
+        //   #new instance 
+        //   $pointLocation = new PointLocation();
+        //   #impload implode Points
+        //   $implodePoints = implode(" ", [$address->lon,$address->lat]);
+        //   #points
+        //   $point = array($implodePoints);
           
-          $resultsList=[];
-          foreach ($Finalpolygons as  $Finalpolygon) {
+        //   $resultsList=[];
+        //   foreach ($Finalpolygons as  $Finalpolygon) {
         
          
-           $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+        //    $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
 
-          }
-         $data = $this->checkLocation($resultsList);
+        //   }
+        //  $data = $this->checkLocation($resultsList);
          
         #if data == true
         if ($data) {        
