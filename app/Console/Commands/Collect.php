@@ -8,8 +8,9 @@ use App\Exports\ProductsJsonExport;
 use App\Imports\Productimport;
 use App\Imports\ProductsImport;
 use App\Models\Category;
-use File;
+
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Collect extends Command
@@ -48,18 +49,22 @@ class Collect extends Command
     {
         $ar_products = File::allFiles(public_path("products/ar"));
         $ar_products_collection = collect();
+        $this->info("processing :" . count($ar_products) . " product");
         foreach ($ar_products as $file) {
 
             $content = json_decode(file_get_contents(public_path("products/ar/" . $file->getBasename())));
 
             $ar_products_collection->add($content[0]);
         }
-        $en_products = File::allFile(public_path("products/en"));
+        $this->info("fetched english products ".$ar_products_collection->count()." product");
+        $en_products = File::allFiles(public_path("products/en"));
+        $this->info("processing :" . count($en_products) . " product");
         $en_products_collection = collect();
         foreach ($en_products as $file) {
             $content = json_decode(file_get_contents(public_path("products/en/" . $file->getBasename())));
             $en_products_collection->add($content[0]);
         }
+        $this->info("fetched english products ".$en_products_collection->count()." product");
 
 //        Excel::store(new ProductsJsonExport, "products.xlsx");
 //        Excel::store(new EnglishCategoryExport, "english_categories.xlsx");

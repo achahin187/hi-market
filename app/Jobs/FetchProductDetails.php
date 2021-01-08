@@ -53,10 +53,13 @@ class FetchProductDetails implements ShouldQueue
         if (!file_exists(public_path("data/productdetails"))) {
             mkdir(public_path("data/productdetails"));
         }
-        foreach ($product->File as $index=> $image) {
+        foreach ($product->File as $index => $image) {
 
-            $fileName = time().$product->english_product_name.".jpg";
+            $fileName = time().uniqid().".jpg";
+
             $this->client->get($image->image, ["sink" =>fopen(public_path("data/productdetails/".(Str::snake($fileName))),"w")]);
+
+
             $product->File[$index]->image = $fileName;
             dump($fileName);
         }
