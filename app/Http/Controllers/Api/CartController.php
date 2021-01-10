@@ -11,7 +11,7 @@ use App\Models\Offer;
 use App\Models\Setting;
 use App\Models\Point;
 use App\Http\Traits\GeneralTrait;
-
+use Carbon\Carbon;
 class CartController extends Controller
 {
     use GeneralTrait;
@@ -64,7 +64,15 @@ class CartController extends Controller
 
         try {
 
-             
+            $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i:s')  )->get();
+        
+            if ($checkSatus) {
+                
+                foreach ($checkSatus as  $status) {
+                    $status->update(['status'=> 0]);
+                }
+            }
+
              $offer = Offer::CheckPromoCode($request->promoCode)->Where('status', 1 )->first();
 
             if ( $offer->source == 'Branch') {
