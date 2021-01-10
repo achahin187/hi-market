@@ -615,7 +615,9 @@ class OrderController extends Controller
             {
 
                 new SendNotification($order->client->device_token, $order, $data);
+
             }else{
+                
                 $this->storeNotificationOrder($order);
             }
 

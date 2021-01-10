@@ -99,8 +99,20 @@ class BranchController extends Controller
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-        //dd($file_to_store);
+        
             $image->move('branche_image', $file_to_store);
+        }
+        
+        if($logoimage = $request->file('logo_image'))
+        {
+
+            $filename = $logoimage->getClientOriginalName();
+            $fileextension = $logoimage->getClientOriginalExtension();
+            $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $logoimage->move('branche_image', $logo);
+
+        }
 
             $branch = Branch::create([
 
