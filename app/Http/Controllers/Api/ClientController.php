@@ -602,10 +602,13 @@ class ClientController extends Controller
             }//end if address
         }//end if 
 
-            $activation_msg = trans('admin.activation_code') . $rand;
+        dd($rand);
 
-            $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );
-         return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
+        $activation_msg = trans('admin.activation_code') . $rand;
+
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );
+
+        return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
     }//end function
 }
 
