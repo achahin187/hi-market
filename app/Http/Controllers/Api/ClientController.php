@@ -566,9 +566,11 @@ class ClientController extends Controller
 
     #resend sms function ...
     public function resendSms(Request $request)
-    {   #forget password no login  ---> 
-        #register  ----->no login
-        #address  -------> login
+    {   
+        #forget password -------> no login  
+        #register        -------> no login
+        #address         -------> login
+
         $validator = \Validator::make($request->all(), [
             'mobile_number'       => 'required|digits:11',
         ]);
@@ -584,12 +586,16 @@ class ClientController extends Controller
 
         if ($address) {
            $rand =  $address->verify;
+        }else{
+            return $this->returnError(404, 'This Address Not Found');
         }
 
 
         if ($client) {
             
             $rand = $client->activation_code;
+        }else{
+            return $this->returnError(404, 'This Mobile Number Not Found');
         }
 
 
