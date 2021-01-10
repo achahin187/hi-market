@@ -81,7 +81,7 @@ class CartController extends Controller
 
         } catch (\Exception $e) {
           
-            return $this->returnError(404, "Offer Not Found");
+            return $this->returnError(404, trans('admin.promocode_not_found'));
         }
         
         if ($offer) {
