@@ -109,10 +109,10 @@ class AuthController extends Controller
         $udid = $request->header('udid');
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+            'name'          => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'mobile_number')],
-            'password' => ['required'],
-            'email' => ['nullable', 'unique:clients,email'],
+            'password'      => ['required'],
+            'email'         => ['nullable', 'unique:clients,email'],
         ]);
 
         if ($validator->fails()) {
