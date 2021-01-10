@@ -106,7 +106,7 @@ class CartController extends Controller
 
         }else{
             
-            return $this->returnError(404, "Offer Not Found");
+            return $this->returnError(404, trans('admin.promocode_not_found'));
         }
 
     }//end function
