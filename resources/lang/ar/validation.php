@@ -83,7 +83,7 @@ return [
     ],
     'string' => 'يجب أن يكون :attribute نصآ.',
     'timezone' => 'يجب أن يكون :attribute نطاقًا زمنيًا صحيحًا',
-    'unique' => 'قيمة :attribute مُستخدمة من قبل',
+    'unique' => ':attribute مُستخدم من قبل',
     'uploaded' => 'فشل في تحميل الـ :attribute',
     'url' => 'صيغة الرابط :attribute غير صحيحة',
 

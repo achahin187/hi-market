@@ -583,7 +583,10 @@ class ClientController extends Controller
             if ($client) {
                 
             $rand = $client->activation_code;
+            dd('client');
             }else{
+            dd('notclient');
+
             $rand = mt_rand(10000, 99999);
 
             }
@@ -593,10 +596,12 @@ class ClientController extends Controller
 
             $address = Address::Where('id', $request->address_id)->first();
             if ($address) {
+                   dd('address');
 
                 $rand = $address->verify;
 
             }else{
+                   dd('not address');
 
                 return $this->returnError(404, 'id not found');
             }//end if address
