@@ -68,7 +68,7 @@ class OffersController extends Controller
             'start_date' =>'required',
             'end_date' =>'required',
             'banner' =>'required',
-            'promocode_name' =>'unique,offers,promocode_name',
+            'promocode_name' =>'unique:offers,promocode_name',
            // 'banner2' =>'required',
             
         ]);

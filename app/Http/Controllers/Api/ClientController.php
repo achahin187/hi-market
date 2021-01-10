@@ -42,7 +42,7 @@ class ClientController extends Controller
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
 
         $client = new \GuzzleHttp\Client();
-            dd($client);
+            
         $response = $client->request('get', $url);
 
     }
