@@ -123,6 +123,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'mobile_number' => $request->mobile_number,
                 'password' => $request->password,
+                'verify' => 0,
                 "unique_id" => Udid::where("body", $udid)->firstOrCreate([
                     "body"=>request()->header("udid")
                 ])->body

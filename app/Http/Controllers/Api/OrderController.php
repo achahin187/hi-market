@@ -339,19 +339,23 @@ class OrderController extends Controller
             [
                 "id" => 1,
                 "text" => trans("admin.Today"),
+                "date" => "Today",
             ],
             [
                 "id" => 2,
                 "text" => trans("admin.Tomorrow"),
+                "date" => "Tomorrow",
 
             ],
             [
                 "id" => 3,
-                "text" => trans('admin.'.now()->addDays(2)->format("l"))
+                "text" => trans('admin.'.now()->addDays(2)->format("l")),
+                "date" => now()->addDays(2)->format("l"),
             ],
             [
                 "id" => 4,
-                "text" => trans('admin.'.now()->addDays(3)->format("l"))
+                "text" => trans('admin.'.now()->addDays(3)->format("l")),
+                "date" => now()->addDays(3)->format("l")
             ]
 
         ];
@@ -366,6 +370,7 @@ class OrderController extends Controller
             $time[] = [
                 "id" => $i,
                 "text" =>  $branch_start_time->addHours(1)->translatedFormat("g A"),
+                "date" =>  $branch_start_time->addHours(0)->format("g A"),
             ];
 
             if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->translatedFormat("g A")) {
