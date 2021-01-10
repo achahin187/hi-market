@@ -145,7 +145,12 @@ class CartController extends Controller
     {
           if ($dicount_on == 'Order') {
 
-                $total =  $total_money - $value ; 
+                $total =  $total_money - $value ;
+
+                if($total < 0)
+                {
+                    $total = 0;    
+                } 
 
                 return [
                     'status' => true,
@@ -161,7 +166,12 @@ class CartController extends Controller
             #Delivery
             }else{
 
-                $total =  $deliver_money - $value  ; 
+                $total =  $deliver_money - $value  ;
+
+                if($total < 0)
+                {
+                    $total = 0;    
+                }  
 
                 return [
                     'status' => true,
@@ -185,6 +195,10 @@ class CartController extends Controller
                
                $total = $total_money - ( $total_money * $value)/100; 
 
+                if($total < 0)
+                {
+                    $total = 0;    
+                } 
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -202,6 +216,10 @@ class CartController extends Controller
 
                $total = $deliver_money - ( $deliver_money * $value)/100; 
 
+               if($total < 0)
+                {
+                    $total = 0;    
+                } 
                 return [
                     'status' => true,
                     'msg'=>'',
