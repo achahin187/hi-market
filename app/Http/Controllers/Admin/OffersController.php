@@ -135,7 +135,7 @@ class OffersController extends Controller
                  ];
 
          new SendNotification('topics', '', $data);    
-        return redirect()->route($this->route.'index');
+        return redirect()->route($this->route.'index')->withStatus(__('admin.created_successfully'));
     }
 
    
@@ -320,7 +320,7 @@ class OffersController extends Controller
 
            
          new SendNotification('topics', '', $data);  
-        return redirect()->route($this->route.'index');
+        return redirect()->route($this->route.'index')->withStatus(__('admin.update_successfully'));;
     }
 
     /**

@@ -64,7 +64,7 @@
                                   <label>Status</label>
                                    <?php $status = 
                                       [
-                                       'new' => 0,
+                                       'new'      => 0,
                                        'approved' => 1,
                                        'prepared' => 2,
                                        'shipping' => 3,
