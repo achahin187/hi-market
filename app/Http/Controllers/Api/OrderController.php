@@ -20,6 +20,7 @@ use App\Http\Resources\MyOrdersResource;
 use App\Http\Traits\GeneralTrait;
 use App\Models\Branch;
 use App\Models\Offer;
+use App\Models\NotificationMobile;
 use App\Models\Address;
 use App\Models\Reason;
 use App\Models\Client;
@@ -172,13 +173,16 @@ class OrderController extends Controller
                 }
             }
 
-             $data =  [
-                  "type" => "order",
-                  "orderId" => $order->id,
-                 ];
+             // $data =  [
+             //      "type" => "order",
+             //      "orderId" => $order->id,
+             //     ];
             #send notification to mobile
-            new SendNotification($order->client->device_token, $order, $data);
+            if ( $order->status == 1) {
+                new SendNotification($order->client->device_token, $order, $data);
+            }
 
+            $this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
              $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
@@ -197,6 +201,71 @@ class OrderController extends Controller
 
         }
     }
+
+    public function storeNotificationOrder($order)
+    {
+        NotificationMobile::create([
+
+                'title_ar'          => $this->getMessage($order,"ar"),
+                'title_en'          => $this->getMessage($order,"en"),
+                'body_ar'           => $this->getMessage($order,"ar"),
+                'body_en'           => $this->getMessage($order,"en"),
+                'type'              => 'order',
+                'icon'              => $this->getIconeOrder($order),
+                'order_id'          => $order->id?? null,
+                'client_id'         => $order->client_id?? null,
+                'product_id'        =>  null,
+                'superMarket_id'    =>  null,
+
+            ]);
+    }
+
+    public function getMessage($order,$lang)
+    {
+        $messages = [
+
+             "en"=>[
+                 0 => "New Order Created, waiting for Acceptance",
+                // 1 => "Your Order $order->num Waiting for Accepting",
+                 1 => "Your Order $order->num Was Accepted",
+                 2 => "Your Order $order->num Was Process",
+                 3 => "Your Order $order->num Was Pickup",
+                 4 => "Your Order $order->num Was Delivered",
+                 5 => "Your Order $order->num Was Delivered Rate Your Order",
+                 6 => "Your Order $order->num was Cancelled",
+                 null => ""
+             ],
+            "ar"=>[ 
+                        0 => "تم إنشاء طلب جديد",
+               // 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
+                1 => "تم الموافقة على طلبك رقم {$order->num} ",
+                2 => "طلبك رقم {$order->num}  جاري تحضيره",
+                3 => "طلبك رقم {$order->num} جاري توصيله",
+                4 => "تم توصيل طلبك رقم {$order->num}",
+                5 => "  وتم تقييمه تم توصيل طلبك رقم {$order->num}",
+                6 => "تم إلغاء طلبك رقم $order->num",
+                null => ""]
+        ];
+
+         return $messages[$lang][$order->status];
+    }
+
+    public function getIconeOrder($order)
+    {
+        $messages = [
+            0 => asset('notification_icons/box.png'),
+            1 => asset('notification_icons/box.png'),
+            2 => asset('notification_icons/box.png'),
+            3 => asset('notification_icons/box.png'),
+            4 => asset('notification_icons/delivery-bike.png'),
+            5 => asset('notification_icons/delivery-man.png'),
+            6 => asset('notification_icons/box.png'),
+            null => ""
+        ];
+
+         return $messages[$order->status];
+    }
+
 
     public function addcart(Request $request)
     {
@@ -273,19 +342,23 @@ class OrderController extends Controller
             [
                 "id" => 1,
                 "text" => trans("admin.Today"),
+                "date" => "Today",
             ],
             [
                 "id" => 2,
                 "text" => trans("admin.Tomorrow"),
+                "date" => "Tomorrow",
 
             ],
             [
                 "id" => 3,
-                "text" => trans('admin.'.now()->addDays(2)->format("l"))
+                "text" => trans('admin.'.now()->addDays(2)->format("l")),
+                "date" => now()->addDays(2)->format("l"),
             ],
             [
                 "id" => 4,
-                "text" => trans('admin.'.now()->addDays(3)->format("l"))
+                "text" => trans('admin.'.now()->addDays(3)->format("l")),
+                "date" => now()->addDays(3)->format("l")
             ]
 
         ];
@@ -300,6 +373,7 @@ class OrderController extends Controller
             $time[] = [
                 "id" => $i,
                 "text" =>  $branch_start_time->addHours(1)->translatedFormat("g A"),
+                "date" =>  $branch_start_time->addHours(0)->format("g A"),
             ];
 
             if ($i > 1 && $time[$i-1]['text'] == $branch_end_time->translatedFormat("g A")) {

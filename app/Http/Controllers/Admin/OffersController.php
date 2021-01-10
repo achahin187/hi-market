@@ -68,12 +68,13 @@ class OffersController extends Controller
             'start_date' =>'required',
             'end_date' =>'required',
             'banner' =>'required',
+            'promocode_name' =>'unique:offers,promocode_name',
            // 'banner2' =>'required',
             
         ]);
 
         $request_data = $request->all();
-          if ($request->banner && $request->banner2) {
+          if ($request->banner) {
                 #Store Banner to DataBase banner...
                 $filename = $request->banner->getClientOriginalName();
                 $fileextension = $request->banner->getClientOriginalExtension();
@@ -81,9 +82,12 @@ class OffersController extends Controller
 
                 $request->banner->move('offer_images', $file_to_store);
 
-               
                 $request_data['banner'] = $file_to_store;
+                
+          }//end if
 
+          if ($request->banner2) {
+           
                 #Store Banner to DataBase banner2...
                 $filename2 = $request->banner2->getClientOriginalName();
                 $fileextension2= $request->banner2->getClientOriginalExtension();
@@ -91,10 +95,10 @@ class OffersController extends Controller
 
                 $request->banner2->move('offer_images', $file_to_store2);
          
-                
                 $request_data['banner2'] = $file_to_store2;
 
           }//end if
+
 
            
 
@@ -134,7 +138,7 @@ class OffersController extends Controller
                  ];
 
          new SendNotification('topics', '', $data);    
-        return redirect()->route($this->route.'index');
+        return redirect()->route($this->route.'index')->withStatus(__('admin.created_successfully'));
     }
 
    
@@ -319,7 +323,7 @@ class OffersController extends Controller
 
            
          new SendNotification('topics', '', $data);  
-        return redirect()->route($this->route.'index');
+        return redirect()->route($this->route.'index')->withStatus(__('admin.update_successfully'));;
     }
 
     /**

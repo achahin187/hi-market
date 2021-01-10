@@ -63,20 +63,21 @@
                                 <div class="form-group">
                                   <label>Status</label>
                                    <?php $status = 
-                                     [
-                                       'new' => 0,
+                                      [
+                                       'new'      => 0,
                                        'approved' => 1,
                                        'prepared' => 2,
                                        'shipping' => 3,
                                        'deliverd' => 4,
                                        'received' => 5,
-                                        ];?>
+                                       'Canceled' => 6,
+                                      ];?>
 
                            @foreach ($status as $index => $state)
 
                                 @if($order->status == $state )
 
-                                              <p>{{ $index }}</p>
+                                    <p>{{ $index }}</p>
 
                                 @endif
                        

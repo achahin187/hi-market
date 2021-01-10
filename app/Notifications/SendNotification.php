@@ -137,26 +137,47 @@ class SendNotification {
     public function getMessage($order,$lang)
     {
         $messages = [
+            //  "en"=>[
+            //      0 => "New Order Created, waiting for Acceptance",
+            //      1 => "Your Order $order->num Waiting for Accepting",
+            //      2 => "Your Order $order->num Was Accepted",
+            //      3 => "Your Order $order->num Was Process",
+            //      4 => "Your Order $order->num Was Pickup",
+            //      5 => "Your Order $order->num Was Delivered Rate Your Order",
+            //      6 => "Your Order $order->num was Cancelled",
+            //      null => ""
+            //  ],
+            // "ar"=>[ 
+            //     0 => "تم إنشاء طلب جديد",
+            //     1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
+            //     2 => "تم الموافقة على طلبك رقم {$order->num} ",
+            //     3 => "طلبك رقم {$order->num}  جاري تحضيره",
+            //     4 => "طلبك رقم {$order->num} جاري توصيله",
+            //     5 => "تم توصيل طلبك رقم {$order->num}",
+            //     6 => "تم إلغاء طلبك رقم $order->num",
+            //     null => ""]
+
              "en"=>[
                  0 => "New Order Created, waiting for Acceptance",
-                 1 => "Your Order $order->num Waiting for Accepting",
-                 2 => "Your Order $order->num Was Accepted",
-                 3 => "Your Order $order->num Was Process",
-                 4 => "Your Order $order->num Was Pickup",
+                // 1 => "Your Order $order->num Waiting for Accepting",
+                 1 => "Your Order $order->num Was Accepted",
+                 2 => "Your Order $order->num Was Process",
+                 3 => "Your Order $order->num Was Pickup",
+                 4 => "Your Order $order->num Was Delivered",
                  5 => "Your Order $order->num Was Delivered Rate Your Order",
                  6 => "Your Order $order->num was Cancelled",
                  null => ""
              ],
             "ar"=>[ 
-                0 => "تم إنشاء طلب جديد",
-                1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
-                2 => "تم الموافقة على طلبك رقم {$order->num} ",
-                3 => "طلبك رقم {$order->num}  جاري تحضيره",
-                4 => "طلبك رقم {$order->num} جاري توصيله",
-                5 => "تم توصيل طلبك رقم {$order->num}",
+                0 => " إنشاء طلب جديد.. بانتظار الموافقة",
+               // 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
+                1 => "تم الموافقة على طلبك رقم {$order->num} ",
+                2 => "طلبك رقم {$order->num}  جاري تحضيره",
+                3 => "طلبك رقم {$order->num} جاري توصيله",
+                4 => "تم توصيل طلبك رقم {$order->num}",
+                5 => "  وتم تقييمه تم توصيل طلبك رقم {$order->num}",
                 6 => "تم إلغاء طلبك رقم $order->num",
                 null => ""]
-
         ];
 
          return $messages[$lang][$order->status];
@@ -191,7 +212,7 @@ class SendNotification {
 
     public function storeNotificationOrder()
     {
-         NotificationMobile::create([
+        NotificationMobile::create([
 
                 'title_ar'    => $this->getMessage($this->order,"ar"),
                 'title_en'    => $this->getMessage($this->order,"en"),
@@ -233,25 +254,3 @@ class SendNotification {
 
 }
 
-// Tests
-
-
-// $pointLocation = new pointLocation();
-// $points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
-// $polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
-// // The last point's coordinates must be the same as the first one's, to "close the loop"
-// foreach($points as $key => $point) {
-//     echo "point " . ($key+1) . " ($point): " . $pointLocation->pointInPolygon($point, $polygon) . "<br>";
-// }
-
-// Results
-/*
-This will output:
-point 1 (50 70): vertex
-point 2 (70 40): inside
-point 3 (-20 30): inside
-point 4 (100 10): outside
-point 5 (-10 -10): outside
-point 6 (40 -20): inside
-point 7 (110 -20): boundary
-*/

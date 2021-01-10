@@ -31,11 +31,11 @@
                         </select>
                     </div>
 
-                     <div class="form-group" id="branch" hidden="true">
+                     <div class="form-group" id="branch" {{$offer->source == 'Branch'?'': 'hidden' }} >
                         <label for="branch">Branch</label>
                         <select name="branch_id[]" id="branche_5" multiple class="form-control select2">
                         
-                            <option  selected  disabled>Please Select branch</option>
+                            <option    disabled>Please Select branch</option>
 
                             
                                @foreach($branches  as $branch)

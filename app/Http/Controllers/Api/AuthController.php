@@ -30,6 +30,7 @@ class AuthController extends Controller
 
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
 
+
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('get', $url);
@@ -108,9 +109,10 @@ class AuthController extends Controller
         $udid = $request->header('udid');
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
+            'name'          => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'mobile_number' => ['required', 'digits:11', Rule::unique('clients', 'mobile_number')],
-            'password' => ['required'],
+            'password'      => ['required'],
+            'email'         => ['nullable', 'unique:clients,email'],
         ]);
 
         if ($validator->fails()) {
@@ -119,11 +121,12 @@ class AuthController extends Controller
 
         try {
             $client = Client::create([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name'          => $request->name,
+                'email'         => $request->email,
                 'mobile_number' => $request->mobile_number,
-                'password' => $request->password,
-                "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                'password'      => $request->password,
+                'verify'        => 0,
+                "unique_id"     => Udid::where("body", $udid)->firstOrCreate([
                     "body"=>request()->header("udid")
                 ])->body
             ]);

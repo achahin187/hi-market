@@ -11,7 +11,7 @@ use App\Models\Offer;
 use App\Models\Setting;
 use App\Models\Point;
 use App\Http\Traits\GeneralTrait;
-
+use Carbon\Carbon;
 class CartController extends Controller
 {
     use GeneralTrait;
@@ -64,6 +64,15 @@ class CartController extends Controller
 
         try {
 
+            $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i:s')  )->get();
+        
+            if ($checkSatus) {
+                
+                foreach ($checkSatus as  $status) {
+                    $status->update(['status'=> 0]);
+                }
+            }
+
              $offer = Offer::CheckPromoCode($request->promoCode)->Where('status', 1 )->first();
 
             if ( $offer->source == 'Branch') {
@@ -81,7 +90,7 @@ class CartController extends Controller
 
         } catch (\Exception $e) {
           
-            return $this->returnError(404, "Offer Not Found");
+            return $this->returnError(404, trans('admin.promocode_not_found'));
         }
         
         if ($offer) {
@@ -106,7 +115,7 @@ class CartController extends Controller
 
         }else{
             
-            return $this->returnError(404, "Offer Not Found");
+            return $this->returnError(404, trans('admin.promocode_not_found'));
         }
 
     }//end function
@@ -145,7 +154,12 @@ class CartController extends Controller
     {
           if ($dicount_on == 'Order') {
 
-                $total =  $total_money - $value ; 
+                $total =  $total_money - $value ;
+
+                if($total < 0)
+                {
+                    $total = 0;    
+                } 
 
                 return [
                     'status' => true,
@@ -161,7 +175,12 @@ class CartController extends Controller
             #Delivery
             }else{
 
-                $total =  $deliver_money - $value  ; 
+                $total =  $deliver_money - $value  ;
+
+                if($total < 0)
+                {
+                    $total = 0;    
+                }  
 
                 return [
                     'status' => true,
@@ -185,6 +204,10 @@ class CartController extends Controller
                
                $total = $total_money - ( $total_money * $value)/100; 
 
+                if($total < 0)
+                {
+                    $total = 0;    
+                } 
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -202,6 +225,10 @@ class CartController extends Controller
 
                $total = $deliver_money - ( $deliver_money * $value)/100; 
 
+               if($total < 0)
+                {
+                    $total = 0;    
+                } 
                 return [
                     'status' => true,
                     'msg'=>'',

@@ -24,6 +24,9 @@ return [
      //Delivery
     'home' => 'Home',
     'work' => 'Work',
+    'promocode_not_found'=>"This Promocode is in valid",
+    'product_offer_flag1'=> 'This item cannot be exchanged or returned.',
+    'product_offer_flag0'=> 'This item can be exchanged or returned in 14 days.',
 
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',

@@ -99,63 +99,42 @@ class BranchController extends Controller
             $fileextension = $image->getClientOriginalExtension();
             $file_to_store = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
 
-        //dd($file_to_store);
+        
             $image->move('branche_image', $file_to_store);
+        }
+        
+        if($logoimage = $request->file('logo_image'))
+        {
+
+            $filename = $logoimage->getClientOriginalName();
+            $fileextension = $logoimage->getClientOriginalExtension();
+            $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
+
+            $logoimage->move('branche_image', $logo);
+
+        }
 
             $branch = Branch::create([
 
-                'name_ar' => $arab_name,
-                'name_en' => $eng_name,
-                'status' => $status,
+                'name_ar'        => $arab_name,
+                'name_en'        => $eng_name,
+                'status'         => $status,
                 'supermarket_id' => $supermarket,
-                'image' => $file_to_store,
-                'priority' => $priority,
-                'commission' => $commission,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-                'area_id' => $request->area_id,
-                'city_id' => $request->city_id,
-                'rating' => $request->rating,
+                'image'          => $file_to_store,
+                'logo'           => $logo,
+                'priority'       => $priority,
+                'commission'     => $commission,
+                'start_time'     => $request->start_time,
+                'end_time'       => $request->end_time,
+                'area_id'        => $request->area_id,
+                'city_id'        => $request->city_id,
+                'rating'         => $request->rating,
                
             ]);
 
             $branch->categories()->sync($request->categories);
-        }
-        else
-        {
-            if($logoimage = $request->file('logo_image'))
-            {
-
-                $filename = $logoimage->getClientOriginalName();
-                $fileextension = $logoimage->getClientOriginalExtension();
-                $logo = time() . '_' . explode('.', $filename)[0] . '_.' . $fileextension;
-
-                $logoimage->move('branche_image', $logo);
-
-            }
-            else
-            {
-                $logo = null;
-            }
-           $branch = Branch::create([
-
-                'name_ar' => $arab_name,
-                'name_en' => $eng_name,
-                'status' => $status,
-                'supermarket_id' => $supermarket,
-                'logo' => $logo,
-                'priority' => $priority,
-                'commission' => $commission,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-                'area_id' => $request->area_id,
-                 'rating' => $request->rating,
-                'city_id' => $request->city_id,
-             
-            ]);
-
-            $branch->categories()->sync($request->categories);
-        }
+        
+      
 
         if($branch)
         {

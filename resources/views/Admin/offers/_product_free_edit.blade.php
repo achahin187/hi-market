@@ -2,7 +2,7 @@
     
 @csrf 
  @method('PUT')                    
-                <input type="hidden" value="free product" name="type"> 
+                <input type="hidden" value="free delivery" name="type"> 
 
                     <div class="form-group">
                         <label for="branch">Branch</label>

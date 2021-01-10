@@ -38,11 +38,11 @@ class ClientController extends Controller
 
     public function send_sms($name, $mobile, $msg, $lang)
     {
-
+        
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
 
         $client = new \GuzzleHttp\Client();
-
+            
         $response = $client->request('get', $url);
 
     }
@@ -567,6 +567,10 @@ class ClientController extends Controller
     #resend sms function ...
     public function resendSms(Request $request)
     {   
+        #forget password -------> no login  
+        #register        -------> no login
+        #address         -------> login
+
         $validator = \Validator::make($request->all(), [
             'mobile_number'       => 'required|digits:11',
         ]);
@@ -575,20 +579,36 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }//end if
-        $client = getUser();
-        if ($client) {
-            
-        $rand = $client->activation_code;
-        }else{
-        $rand = mt_rand(10000, 99999);
 
+       
+        $address = Address::where('id', $request->address_id)->first();
+        $client = Client::Where('mobile_number', $request->mobile_number)->first(); 
+
+        if ($request->address_id && $address) {
+            if ($address) {
+              $rand =  $address->verify;
+                
+            }else{
+
+            return $this->returnError(404, 'This Address Not Found');
+            }
         }
 
+
+        if (Auth()->check()) {
+            
+            $rand = $client->activation_code;
+        }else{
+            return $this->returnError(404, 'This Mobile Number Not Found');
+        }
+
+
+        
         $activation_msg = trans('admin.activation_code') . $rand;
 
-        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
+        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );
 
-         return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
+        return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
     }//end function
 }
 

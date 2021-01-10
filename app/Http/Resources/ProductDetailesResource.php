@@ -39,7 +39,7 @@ class ProductDetailesResource extends JsonResource
                 "percentage" => $this->price ? (int)(100 - (($this->offer_price / $this->price) * 100)) : 0,
                 "category" => $this->category->name ?? "",
                 "deliver_to" => $branch->city->name,
-                "delivery_time" => request()->header('lang') == 'ar' ? '30' : ' 30',
+                "delivery_time" => request()->header('lang') == 'ar' ? '30 دقيقة  ' : ' 30 Minutes',
                 "specs"=> [
                     [
                     "name" => $this->measure->name ??"",
@@ -51,6 +51,7 @@ class ProductDetailesResource extends JsonResource
                 "branch_open_time"=>$branch->open_time ?? "",
                 "branch_close_time"=>$branch->close_time ?? "",
                 "cityname"=>$this->getBranchCity($branch),
+                "offerDetails"=>$this->flag == 1 ? trans('admin.product_offer_flag1') : trans('admin.product_offer_flag0'),
             ];
     }
 
