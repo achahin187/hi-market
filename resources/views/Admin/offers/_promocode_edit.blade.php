@@ -23,7 +23,7 @@
                         <label for="branch">SuperMarket</label>
                         <select name="supermarket_id" id='supermarket_4'  class="form-control select2">
                         
-                            <option    disabled>Please Select Source</option>
+                            <option  selected  disabled>Please Select Source</option>
                         @foreach( $supermarkets as  $supermarket) 
                             <option  @if(old("supermarket_id") == $supermarket->id) selected
                                         @endif value="{{$supermarket->id}}"{{ $offer->supermarket_id ==  $supermarket->id ? 'selected' : ''}}>{{$supermarket->name}}</option>
@@ -35,7 +35,7 @@
                         <label for="branch">Branch</label>
                         <select name="branch_id[]" id="branche_5" multiple class="form-control select2">
                         
-                            <option  selected  disabled>Please Select branch</option>
+                            <option    disabled>Please Select branch</option>
 
                             
                                @foreach($branches  as $branch)
