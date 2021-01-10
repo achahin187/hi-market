@@ -117,7 +117,7 @@ return [
 
     'attributes' => [
         'name' => 'الاسم',
-        'mobile number' => 'رقم الهاتف',
+        'mobile_number' => 'رقم الهاتف',
         'workPhone' => 'هاتف العمل',
         'website' => 'الخاص بالموقع',
         'PersonalPhone' => 'الهاتف الشخصى',
