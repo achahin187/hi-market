@@ -181,7 +181,7 @@ class OrderController extends Controller
             if ( $order->status == 1) {
                 new SendNotification($order->client->device_token, $order, $data);
             }
-            
+
             $this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
@@ -220,7 +220,7 @@ class OrderController extends Controller
             ]);
     }
 
-     public function getMessage($order,$lang)
+    public function getMessage($order,$lang)
     {
         $messages = [
 

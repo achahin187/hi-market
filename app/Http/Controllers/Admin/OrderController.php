@@ -647,35 +647,35 @@ class OrderController extends Controller
         return back();
     }
 
-    public function getMessage($order,$lang)
-    {
-        $messages = [
+    // public function getMessage($order,$lang)
+    // {
+    //     $messages = [
 
-             "en"=>[
-                 0 => "New Order Created, waiting for Acceptance",
-                // 1 => "Your Order $order->num Waiting for Accepting",
-                 1 => "Your Order $order->num Was Accepted",
-                 2 => "Your Order $order->num Was Process",
-                 3 => "Your Order $order->num Was Pickup",
-                 4 => "Your Order $order->num Was Delivered",
-                 5 => "Your Order $order->num Was Delivered Rate Your Order",
-                 6 => "Your Order $order->num was Cancelled",
-                 null => ""
-             ],
-            "ar"=>[ 
-                        0 => "تم إنشاء طلب جديد",
-               // 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
-                1 => "تم الموافقة على طلبك رقم {$order->num} ",
-                2 => "طلبك رقم {$order->num}  جاري تحضيره",
-                3 => "طلبك رقم {$order->num} جاري توصيله",
-                4 => "تم توصيل طلبك رقم {$order->num}",
-                5 => "  وتم تقييمه تم توصيل طلبك رقم {$order->num}",
-                6 => "تم إلغاء طلبك رقم $order->num",
-                null => ""]
-        ];
+    //          "en"=>[
+    //              0 => "New Order Created, waiting for Acceptance",
+    //             // 1 => "Your Order $order->num Waiting for Accepting",
+    //              1 => "Your Order $order->num Was Accepted",
+    //              2 => "Your Order $order->num Was Process",
+    //              3 => "Your Order $order->num Was Pickup",
+    //              4 => "Your Order $order->num Was Delivered",
+    //              5 => "Your Order $order->num Was Delivered Rate Your Order",
+    //              6 => "Your Order $order->num was Cancelled",
+    //              null => ""
+    //          ],
+    //         "ar"=>[ 
+    //             0 => "تم إنشاء طلب جديد",
+    //            // 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
+    //             1 => "تم الموافقة على طلبك رقم {$order->num} ",
+    //             2 => "طلبك رقم {$order->num}  جاري تحضيره",
+    //             3 => "طلبك رقم {$order->num} جاري توصيله",
+    //             4 => "تم توصيل طلبك رقم {$order->num}",
+    //             5 => "  وتم تقييمه تم توصيل طلبك رقم {$order->num}",
+    //             6 => "تم إلغاء طلبك رقم $order->num",
+    //             null => ""]
+    //     ];
 
-         return $messages[$lang][$order->status];
-    }
+    //      return $messages[$lang][$order->status];
+    // }
     private  function storeNotificationOrder($order)
     {
             NotificationMobile::create([
@@ -805,7 +805,6 @@ class OrderController extends Controller
 
     public function getMessage($order)
     {
-
 
          return __("orders.messages",["num"=>$order->num])[$order->status];
     }
