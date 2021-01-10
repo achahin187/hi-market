@@ -119,12 +119,12 @@ class AuthController extends Controller
 
         try {
             $client = Client::create([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name'          => $request->name,
+                'email'         => $request->email,
                 'mobile_number' => $request->mobile_number,
-                'password' => $request->password,
-                'verify' => 0,
-                "unique_id" => Udid::where("body", $udid)->firstOrCreate([
+                'password'      => $request->password,
+                'verify'        => 0,
+                "unique_id"     => Udid::where("body", $udid)->firstOrCreate([
                     "body"=>request()->header("udid")
                 ])->body
             ]);

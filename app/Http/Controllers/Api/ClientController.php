@@ -38,7 +38,7 @@ class ClientController extends Controller
 
     public function send_sms($name, $mobile, $msg, $lang)
     {
-
+        dd($name, $mobile, $msg, $lang);
         $url = 'https://dashboard.mobile-sms.com/api/sms/send?api_key=aTJuUTJzRElWMUJMUFpMeEVoeW93OWJCSkZsMWRmUGhYc2Rsa3VveVdXYWtsNXlJeGNOSERZWWMxMm9u5feda9be3e6d2&name='. $name .'&message='. $msg .'&numbers='.$mobile.'&sender='. $name .'&language='.$lang;
 
         $client = new \GuzzleHttp\Client();
@@ -575,19 +575,36 @@ class ClientController extends Controller
        if ($validator->fails()) {
             return $this->returnError(422, $validator->errors()->first());
         }//end if
+
         $client = getUser();
-        if ($client) {
+        if (!request()->address_id) {
             
-        $rand = $client->activation_code;
+
+            if ($client) {
+                
+            $rand = $client->activation_code;
+            }else{
+            $rand = mt_rand(10000, 99999);
+
+            }
+
+
         }else{
-        $rand = mt_rand(10000, 99999);
 
-        }
+            $address = Address::Where('id', $request->address_id)->first();
+            if ($address) {
 
-        $activation_msg = trans('admin.activation_code') . $rand;
+                $rand = $address->verify;
 
-        $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, app()->getLocale());
+            }else{
 
+                return $this->returnError(404, 'id not found');
+            }//end if address
+        }//end if 
+
+            $activation_msg = trans('admin.activation_code') . $rand;
+
+            $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );
          return $this->returnSuccessMessage('Your verification Code Re-Sent Successfully', 200);
     }//end function
 }
