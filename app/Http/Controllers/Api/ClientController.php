@@ -584,14 +584,18 @@ class ClientController extends Controller
         $address = Address::where('id', $request->address_id)->first();
         $client = Client::Where('mobile_number', $request->mobile_number)->first(); 
 
-        if ($address) {
-           $rand =  $address->verify;
-        }else{
+        if ($request->address_id && $address) {
+            if ($address) {
+              $rand =  $address->verify;
+                
+            }else{
+
             return $this->returnError(404, 'This Address Not Found');
+            }
         }
 
 
-        if ($client) {
+        if (Auth()->check()) {
             
             $rand = $client->activation_code;
         }else{
