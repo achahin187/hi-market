@@ -178,7 +178,10 @@ class OrderController extends Controller
              //      "orderId" => $order->id,
              //     ];
             #send notification to mobile
-            //new SendNotification($order->client->device_token, $order, $data);
+            if ( $order->status == 1) {
+                new SendNotification($order->client->device_token, $order, $data);
+            }
+            
             $this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
