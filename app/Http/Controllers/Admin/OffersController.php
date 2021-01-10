@@ -74,7 +74,7 @@ class OffersController extends Controller
         ]);
 
         $request_data = $request->all();
-          if ($request->banner && $request->banner2) {
+          if ($request->banner || $request->banner2) {
                 #Store Banner to DataBase banner...
                 $filename = $request->banner->getClientOriginalName();
                 $fileextension = $request->banner->getClientOriginalExtension();
