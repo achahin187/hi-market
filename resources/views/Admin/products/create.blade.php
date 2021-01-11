@@ -167,7 +167,7 @@
 
                                         <select class=" @error('supermarket_id') is-invalid @enderror select2" name="supermarket_id" id="supermarket_1" data-placeholder="Select a State" style="width: 100%;" required>
 
-                                            
+
                                             @foreach($superMarkets  as $supermarket)
                                                 <option <?php if($product->supermarket_id == $supermarket->id)  'selected'; ?> value={{ $supermarket->id }}>
                                                {{ $supermarket->name }}</option>
@@ -237,7 +237,7 @@
                                         <option  selected  disabled>Please Select Category</option>
                                             @foreach(\App\Models\Category::all() as $category)
 
-                                                <option <?php if($product->category->id == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                                <option <?php if($product->category->id ?? false == $category->id) echo 'selected'; ?> value="{{ $category->id }}">{{ $category->name_en }}</option>
 
                                             @endforeach
                                         @else
@@ -370,7 +370,7 @@
                                     @enderror
                                 </div>
 
-                                
+
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">{{__('admin.offer_price')}}</label>
                                         <input type="number" name="offer_price" min="0" max="99999.99" step="0.01" @if(isset($product)) value="{{$product->offer_price ??0}}" @else value="0" @endif class=" @error('offer_price') is-invalid @enderror form-control">
@@ -392,7 +392,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                               
+
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">{{__('admin.rate')}}</label>
                                     <input type="text" @if(isset($product)) value="{{$product->ratings??0}}" @else value="" @endif  name="ratings" class=" @error('ratings') is-invalid @enderror form-control" required>
@@ -624,7 +624,7 @@
 
 
                                 @if(isset($product) && !isset($clone))
-                                           
+
 
                                     <div class="form-group">
                                         <label for="exampleInputFile">{{__('admin.image')}}</label>
