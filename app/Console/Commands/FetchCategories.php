@@ -49,8 +49,8 @@ class FetchCategories extends Command
             'user_id' => '',
         ];
         $cats_ar = $this->client->post("https://prod.thegroceryshop.com/web_services14/getCategory", ["body" => json_encode($data)]);
-        dump($cats_ar->getBody()->getContents());
-        file_put_contents(public_path("arabic_categories.json.json"), json_encode($cats_ar->getBody()->getContents()));
+        $cats_ar = json_decode($cats_ar->getBody()->getContents())->response->data->NestedCategory;
+        file_put_contents(public_path("arabic_categories.json.json"), json_encode($cats_ar));
         return 0;
     }
 }
