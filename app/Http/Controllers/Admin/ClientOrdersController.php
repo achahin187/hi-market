@@ -49,25 +49,31 @@ class ClientOrdersController extends Controller
     public function storeOrder(Request $request)
     {          
         $request_data = $request->all();
+        //dd($request_data);
         #get company
         $company = DB::table('delivery_companies_branches')
                     ->where('branch_id',$request_data['branch_id'])
                     ->first();
          #store order           
          $order = Order::create([
-                'num' => '#'.str_pad(rand() + 1, 8, "0", STR_PAD_LEFT),
-                'order_price'=> $request_data['order_price'],
-                'client_id'  => $request_data['client_id'],
-                'status'     => 0,
-                'shipping_fee'=> $request_data['delivery'],
-                'address'=> 1,//static
-                'branch_id'=> $request_data['branch_id'],
-                'company_id' => $company->delivery_company_id, 
-               
+                'num'           => '#'.str_pad(rand() + 1, 8, "0", STR_PAD_LEFT),
+                'order_price'   => $request_data['order_price'],
+                'client_id'     => $request_data['client_id'],
+                'status'        => 0,
+                'shipping_fee'  => $request_data['delivery'],               
+                'branch_id'     => $request_data['branch_id'],
+                'company_id'    => $company->delivery_company_id?? 17, 
+                'name'          => $request_data['name'],
+                'address'       => $request_data['address'],
+                'phone'         => $request_data['mobile_number'],
+                'total_money'   => $request_data["order_price"],
+                'branch_id'     => $request_data["branch_id"],
+                'shipping_fee'  => $request_data["delivery"],
+                'delivery_date' => \Carbon\Carbon::now() ,
             ]);
 
          #get comapnt and auto approve the order to it 
-         $getCompany = DeliveryCompany::Where('id', $company->delivery_company_id)->first();
+         $getCompany = DeliveryCompany::Where('id', $company->delivery_company_id??17)->first();
          if ($getCompany) { 
          #change to the stauts to status 1             
             if ($getCompany->status == 1) {

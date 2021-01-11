@@ -35,13 +35,13 @@ class MyOrdersResource extends JsonResource
     {
         $statuses = 
                 [
-                    'Pending'      => 0,
-                    'Accepted'     => 1,
-                    'Process'      => 2,
-                    'Pickup'       => 3,
-                    'Deliverd'     => 4,
+                    'Pending'                => 0,
+                    'Accepted'               => 1,
+                    'Process'                => 2,
+                    'Pickup'                 => 3,
+                    'Deliverd'               => 4,
                     'Deliverd and Rated'     => 5,
-                    'Canceled'     => 6,
+                    'Canceled'               => 6,
                 ];
 
         foreach ($statuses as $index => $status) {
