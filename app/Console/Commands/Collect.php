@@ -76,7 +76,7 @@ class Collect extends Command
                     "eng_description"=>strip_tags($en_products_collection[$i]->product_description),
                     "arab_description"=>strip_tags($product->product_description),
                     "rate"=>$product->product_average_rating,
-                    "rating"=>$product->product_rating_count,
+                    "ratings"=>$product->product_rating_count,
                     "price"=>$product->product_acutal_price,
                     "offer_price"=>$product->product_offer_price,
                     "images"=>$product->File[0]->image
