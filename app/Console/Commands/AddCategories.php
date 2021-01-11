@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-
+use parallel\Runtime;
 class AddCategories extends Command
 {
 

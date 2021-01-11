@@ -56,8 +56,10 @@ class FetchProductDetails implements ShouldQueue
         foreach ($product->File as $index => $image) {
 
             $fileName = time().uniqid().".jpg";
-
+if($this->lang != 2)
+{
             $this->client->get($image->image, ["sink" =>fopen(public_path("data/productdetails/".(Str::snake($fileName))),"w")]);
+}
 
 
             $product->File[$index]->image = $fileName;
