@@ -71,8 +71,8 @@ class Collect extends Command
         foreach ($ar_products_collection as $i => $product) {
             $product  =Product::create(
                 [
-                    "ar_name" => $product->arabic_product_name,
-                    "en_name" => $en_products_collection[$i]->english_product_name,
+                    "name_ar" => $product->arabic_product_name,
+                    "name_en" => $en_products_collection[$i]->english_product_name,
                     "eng_description"=>strip_tags($en_products_collection[$i]->product_description),
                     "arab_description"=>strip_tags($product->product_description),
                     "rate"=>$product->product_average_rating,
