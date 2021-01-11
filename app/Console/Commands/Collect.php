@@ -69,6 +69,10 @@ class Collect extends Command
         file_put_contents(public_path("products/english_products.json"), json_encode($en_products_collection));
         $this->info("fetched english products " . $en_products_collection->count() . " product");
         foreach ($ar_products_collection as $i => $product) {
+            if(is_null($product))
+            {
+                continue;
+            }
             $product  =Product::create(
                 [
                     "name_ar" => $product->arabic_product_name,
