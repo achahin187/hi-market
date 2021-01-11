@@ -32,7 +32,7 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        
+        return view('Admin.notifications.create');
     }
 
     /**
@@ -43,9 +43,9 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
 
-
+        new SendNotification($order->client->device_token, $order, $data);
 
     }
 
@@ -90,7 +90,7 @@ class NotificationController extends Controller
      * @return Response
      */
     public function destroy($id)
-    {       dd($id);
+    {      
         $notification = Notification::find($id);
         $notification->delete();
         return redirect()->route('Admin.notifications.index')->withStatus(__('deleted successfully'));

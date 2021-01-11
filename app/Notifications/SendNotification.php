@@ -134,6 +134,64 @@ class SendNotification {
         $this->storeNotificationOffer();
     }
 
+      public function sendNotificationCustom()
+    {
+
+        $data = [
+
+            "to" => '/topics/Deals',
+            "data"=> $this->data,
+
+            "notification" =>
+                [
+                    "title" => 'New Offers In Delivertto, Check It Now',
+                    "body"  =>  'New Offers In Delivertto, Check It Now',
+                    "icon"  => $this->getIconeOffer(1),
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+        if($result == FALSE){
+            die(curl_exec($ch));
+        }
+
+        curl_close($ch);
+        #store notification Offer To database
+        $this->storeNotificationOffer();
+    }
+
+
     public function getMessage($order,$lang)
     {
         $messages = [
@@ -219,6 +277,24 @@ class SendNotification {
                 'body_ar'     => $this->getMessage($this->order,"ar"),
                 'body_en'     => $this->getMessage($this->order,"en"),
                 'type'        => $this->data['type'],
+                'icon'        => $this->getIconeOrder($this->order),
+                'order_id'    => $this->data['orderId']?? null,
+                'client_id'   => $this->order->client_id?? null,
+                'product_id'  => $this->data['product_id']?? null,
+                'superMarket_id'    => $this->data['superMarket_id']?? null,
+
+            ]);
+    }
+
+    public function storeNotificationCustom()
+    {
+        NotificationMobile::create([
+
+                'title_ar'    => $this->getMessage($this->order,"ar"),
+                'title_en'    => $this->getMessage($this->order,"en"),
+                'body_ar'     => $this->getMessage($this->order,"ar"),
+                'body_en'     => $this->getMessage($this->order,"en"),
+                'type'        => 'custom',
                 'icon'        => $this->getIconeOrder($this->order),
                 'order_id'    => $this->data['orderId']?? null,
                 'client_id'   => $this->order->client_id?? null,

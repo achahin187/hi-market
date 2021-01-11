@@ -96,7 +96,7 @@ class OrderController extends Controller
 
 
         if ($client) {
-
+ 
             if ($order_details["asap"] == 1) {
                 $order_details["delivery_date"] = Carbon::now()->addMinutes(45);
             } else {
@@ -128,10 +128,6 @@ class OrderController extends Controller
                 'branch_id' =>  $order_details["supermarket_id"],
 
                 'point_redeem' => $order_details["redeem"],
-
-                //'promocode' => $order_details["promocode"],
-                //'mobile_delivery' => '01060487345',
-
                 'status' => 0,
                 'company_id' => $company->id ?? 17,
 
@@ -173,10 +169,10 @@ class OrderController extends Controller
                 }
             }
 
-             // $data =  [
-             //      "type" => "order",
-             //      "orderId" => $order->id,
-             //     ];
+             $data =  [
+                          "type"    => "order",
+                          "orderId" => $order->id,
+                     ];
             #send notification to mobile
             if ( $order->status == 1) {
                 new SendNotification($order->client->device_token, $order, $data);

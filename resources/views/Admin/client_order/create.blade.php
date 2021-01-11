@@ -71,6 +71,8 @@
                                                     @enderror
                                                 </div>
 
+                                                <input type="hidden" name="name" value="{{$client->name }}">
+
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{{__('admin.email')  }}</label>
                                                     <input type="email" value="{{$client->email }} " name="email" class="@error('email') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" disabled required>
@@ -387,7 +389,9 @@
                     $('.product_9').html('');
 
                      $('.product_9').append(new Option('select Product',0,true,true));
-                    data.forEach(function(x,i){
+
+                       
+                    data.data.forEach(function(x){
                 
 
                     $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
