@@ -266,11 +266,11 @@ class ProductController extends Controller
                                                ->where('status', 'active')
                                                ->get();
 
-                        $supermarkets = $supermarket->where('name_en', 'LIKE', '%' . $request->name . "%")
-                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
-                                               ->orderBy('priority', 'asc')
-                                               ->limit(20)
-                                               ->get();                      
+                        $supermarkets = collect($supermarket)->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                                     ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
+                                                     ->orderBy('priority', 'asc')
+                                                     ->limit(20)
+                                                      ->get();                      
                           dd($supermarkets);
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
