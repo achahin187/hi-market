@@ -266,8 +266,8 @@ class ProductController extends Controller
                                                ->where('status', 'active')
                                                ->get();
 
-                        $supermarkets = collect($supermarket)->where('name_en', 'LIKE', '%' . $request->name . "%")
-                                                     ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
+                        $supermarkets = $supermarket->whereIn('name_en', 'LIKE', '%' . $request->name . "%")
+                                                     ->orWhereIn('name_ar', 'LIKE', '%' . $request->name . "%")
                                                      ->orderBy('priority', 'asc')
                                                      ->limit(20)
                                                       ->get();                      
