@@ -35,7 +35,7 @@ class SettingsController extends Controller
         $request->validate([
 
             'delivery'       => 'required|numeric',
-            'reedem_point'   => 'required|numeric|min:1|max:100',
+            'reedem_point'   => 'required|numeric|min:0|max:100',
         
         ]);
 

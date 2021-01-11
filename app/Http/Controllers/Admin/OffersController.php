@@ -172,14 +172,18 @@ class OffersController extends Controller
     }
     /**
     * Display the specified resource.
-    *
+    * free delivery 
     * @param  array  $request
     * @return \Illuminate\Http\Response
     */
     private function createFreeProduct($request)
     {   
-      //dd($request);
-        $create_promocode = $this->model::create($request);
+        $free_delivery = $this->model::where('type', 'free delivery')->first();
+        if ($free_delivery) {
+            $free_delivery->update($request);
+         }else{
+            $create_promocode = $this->model::create($request);
+         } 
     }
     /**
     * Display the specified resource.

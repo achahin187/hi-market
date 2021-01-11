@@ -47,7 +47,7 @@ class OrderResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    {   
         return [
             "id"    => $this->id,
             "title" => request()->header('lang') == 'ar' ? $this->title_ar : $this->title_en,
