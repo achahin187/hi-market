@@ -188,7 +188,7 @@ class ProductController extends Controller
 
                 if ($client) {
 
-                    $data = $this->checkPolygon($client->lat, $client->lon);
+                    $data = $this->checkPolygon($request->lat, $request->lon);
                    //dd($data, $client->lat);
                     if ($data) {
 
@@ -262,7 +262,7 @@ class ProductController extends Controller
 
                           }
 
-
+                          dd($getPolygon->area->areacity);
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
                                                ->where('name_en', 'LIKE', '%' . $request->name . "%")
