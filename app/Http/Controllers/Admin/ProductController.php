@@ -30,17 +30,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($flag)
+    public function index($flag, Request $request)
     {
 
         if($flag == 1)
         {
-            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->when($request->search, function($q) use ($request){
+
+            return  $q->where('name_en', 'LIKE', '%' . $request->search . "%")
+                      ->orWhere('name_ar', 'LIKE','%'.$request->search.'%'); 
+
+        })->latest()->paginate(20);
 
             return view('Admin.product_offers.index',compact('products','flag'));
         }else{
 
-            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->paginate(20);
+            $products = Product::where('flag',$flag)->orderBy('id', 'desc')->when($request->search, function($q) use ($request){
+
+            return  $q->where('name_en', 'LIKE', '%' . $request->search . "%")
+                      ->orWhere('name_ar', 'LIKE','%'.$request->search.'%'); 
+
+
+        })->latest()->paginate(20);
+
         }
         return view('Admin.products.index',compact('products','flag'));
     }

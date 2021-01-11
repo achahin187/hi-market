@@ -115,14 +115,12 @@
                                         <select  class="city @error('city_id') is-invalid @enderror select2"
                                                 name="city_id" data-placeholder="Select a State" style="width: 100%;"
                                                 required>
-
-
+                                            <option disabled selected>Please Select Branch</option>
                                             @foreach(\App\Models\City::all() as $cities)
 
                                                 <option value="{{ $cities->id }}">{{ $cities->name }}</option>
 
                                             @endforeach
-
 
                                         </select>
                                     </div>
@@ -171,7 +169,21 @@
                                     </div>
 
 
+
                                 </div>
+
+                                <div class="row area-list">
+
+                                    
+                                    
+
+                                    
+
+
+                                </div>        
+
+
+
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
@@ -189,25 +201,98 @@
 @endsection
 
 @push('scripts')
+
 <script>
-    
+ 
   $(".city").change(function(){
+
+        var selectedCity = $(this).val();
+
 
         $.ajax({
 
             url: "{{ route('get_city_branches') }}?city_id=" + $(this).val(),
             method: 'GET',
             success: function(data) {
-                
-                data.forEach(function(x){
+                data.branches.forEach(function(x){
                     
                     $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-             })
+                 })
+
+                    $('.area-list').empty();
+            
+                data.areas.forEach(function(area){
+                    var x = 1;
+                    var max_input = data.areaCount +1;
+                   
+
+                    if (x < max_input) {
+                          $('.area-list').append(`
+
+                            <div class="col-sm-4">
+                                
+                                <div class="form-group">
+                                        <label>{{__('admin.city')}} </label>
+                                        <select  class="city @error('city_id') is-invalid @enderror "
+                                                name="city_id" data-placeholder="Select a State" style="width: 100%;"
+                                                required>
+
+                                               
+
+                                        </select>
+                                    </div>
+
+
+                            </div> 
+
+                             <div class="col-sm-4">
+                                
+                                <div class="form-group">
+                                        <label>{{__('admin.city')}} </label>
+                                        <select  class="city @error('city_id') is-invalid @enderror "
+                                                name="city_id" data-placeholder="Select a State" style="width: 100%;"
+                                                required>
+
+                                               
+
+                                        </select>
+                                    </div>
+
+
+                            </div> 
+
+
+                            <div class="col-sm-4">
+                                
+                                <div class="form-group">
+                                        
+                                        <input value=''>Price</input>
+                                    </div>
+
+
+                            </div>` 
+
+                        );
+                          
+                       // $('#select2-hamdyinput'+x+'-container').append($options);
+                    
+                        $('.city').select2();
+                        $('.city').append(new Option(area.name_ar,area.id,false,false)).trigger("change");
+                        //$('.area2').append(new Option(area.name_ar,area.id,false,false)).trigger("change");
+                        x++;
+                    }
+               
+                 });
+                  
 
             }
-        });// end ajax.
+         });// end ajax.
     });// end functions.
 
+
+
 </script>
+
+
 @endpush            

@@ -139,9 +139,25 @@
                                 </div>
 
                             </form>
+
+                            <form  action="{{ route('products.index',request()->flag) }}" method="get">
+                                
+                                
+                             <div class="row" style="margin-top: 20px;margin-left: 5px;margin-right: 10px">
+
+                                    <div class="form-group col-md-6">
+                                       <input type="search" name="search" class="form-control">
+                                    </div>
+
+
+                                    <div class="form-group col-md-6">
+                                        <button type="submit" class="btn btn-primary">{{__('admin.search')}}</button>
+                                    </div>
+                                </div>
+                            </form>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example100" class="table table-bordered table-striped">
 
                                     <thead>
                                         <tr>

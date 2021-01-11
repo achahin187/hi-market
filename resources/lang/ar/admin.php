@@ -136,7 +136,7 @@ return [
     'cat_search'=>'البحث عن قسم',
     'no_cat_with_id'=>'لا أقسام بهذا الرقم التعريفي',
     'cat_deleted'=>'لقد تم حذف القسم بنجاح',
-
+    'search' => 'بحث',
     //Products
     'products'=>'المنتجات',
     'product_offers'=>'عروض المنتجات',
