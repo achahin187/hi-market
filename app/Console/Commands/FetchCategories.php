@@ -48,7 +48,7 @@ class FetchCategories extends Command
             'lang_id' => '2',
             'user_id' => '',
         ];
-        $cats_ar = $this->client->get("https://prod.thegroceryshop.com/web_services14/getCategory", ["body" => json_encode($data)]);
+        $cats_ar = $this->client->post("https://prod.thegroceryshop.com/web_services14/getCategory", ["body" => json_encode($data)]);
         dump($cats_ar->getBody()->getContents());
         file_put_contents(public_path("arabic_categories.json.json"), json_encode($cats_ar->getBody()->getContents()));
         return 0;
