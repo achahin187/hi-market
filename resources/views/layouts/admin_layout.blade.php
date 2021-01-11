@@ -501,6 +501,26 @@ $settings = App\Models\Setting::all()->first();
                                 </a>
                             </li>
 
+                             <li class="nav-item">
+                                <a href="{{ route('orders.asap.index') }}"
+                                   class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders') }}
+                                    </p>
+                                </a>
+                            </li>
+
+                             <li class="nav-item">
+                                <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}"
+                                   class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders') }}
+                                    </p>
+                                </a>
+                            </li>
+
 
                         @elseif(auth()->user()->hasRole('driver'))
                             <li class="nav-item">

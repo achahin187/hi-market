@@ -69,7 +69,8 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'mobile_number' => ['required'],
-            'password' => ['required'],
+            'password'      => ['required'],
+            'device_token'  => ['required'],
         ]);
 
 
@@ -82,8 +83,8 @@ class AuthController extends Controller
 
         //login
         if (auth("client-web")->attempt([
-            "mobile_number" => $request->mobile_number,
-             "password" => $request->password,
+             "mobile_number" => $request->mobile_number,
+             "password"      => $request->password,
              
          ])) 
         {
