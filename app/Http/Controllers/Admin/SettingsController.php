@@ -31,15 +31,15 @@ class SettingsController extends Controller
 
     public function update(Request $request,$id)
     {
-        //dd($request->all());
-        $rules = [
-           
-            'delivery'       => 'required|numeric|min:0',
-            'reedem_point'   => 'required',
-          
-        ];
+        
+        $request->validate([
 
-        $this->validate($request, $rules);
+            'delivery'       => 'required|numeric',
+            'reedem_point'   => 'required|numeric|min:1|max:100',
+        
+        ]);
+
+       
 
 
         $setting = Setting::find($id);

@@ -154,9 +154,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 
         Route::group(['prefix' => 'orders'], function () {
+            
             Route::get("asap", "Admin\OrderAsapController@index")->name("orders.asap.index");
             Route::post("schedule/{order_id}/status", "Admin\OrderScheduleController@changeStatus")->name("orders.schedule.change_status");
             Route::get("scheduled","Admin\OrderScheduleController@index");
+
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');
             Route::post('add/{request_id}', 'Admin\OrderController@store')->name('orders.store');
@@ -237,8 +239,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('offer_status', 'Admin\OffersController@changeStatus')->name('offer.status');
 
         //get_brannch_product
-
         Route::get('get-branch-product', 'Admin\ProductController@getBranchProduct')->name('get_branch_product');
+
         //Client Orders
         Route::get('client/{client_id}/order', 'Admin\ClientOrdersController@create')->name('client.order.create');
         Route::post('client/{client_id}/order', 'Admin\ClientOrdersController@store')->name('client.order.store');
@@ -269,9 +271,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //Delete manular order
         Route::get('delete_orders', 'Admin\ClientOrdersController@changeManualOrder')->name('change.order');
 
-
+        //help
         Route::resource('helps', 'Admin\HelpController');
 
+        //notifications
         Route::resource('notifications', 'Admin\NotificationController');
 
         //contact us
@@ -285,39 +288,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //     dd( $count );
         // });
 
-// "70 40","-20 30","100 10","-10 -10","40 -20","110 -20"
-        // Route::get('test',function(){
 
-        //       // $supermarket_admins =  User::role(['supermarket_admin'])->get();
-
-        //       $super_admins = User::role(['super_admin','supermarket_admin'])->get();
-        //       $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
-
-        //       $merged = $super_admins->merge($delivery_admins);
-        //       dd($merged);
-
-
-        //     });
-        #a.lat the data base point
-        #$lat the
-        //     6371 * acos(
-        //     cos( radians(".$lat.") ) * cos( radians( a.lat ) )
-        //     * cos( radians( a.lon ) - radians(".$lon.") )
-        //     + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
-        //     ) ) AS distance
-
-        //     // end
-
-        // $placeOffers = $GLOBALS['db']->query("SELECT a.,o., o.img as offer_img,o.`id` as `offer_id`, a.`img` AS `img_h`,a.`img_100` AS `img_s`,c.name as category_name,c.icon as category_icon, (
-        //     6371 * acos(
-        //             cos( radians(".$lat.") ) * cos( radians( a.lat ) )
-        //             * cos( radians( a.lon ) - radians(".$lon.") )
-        //             + sin( radians(".$lat.") ) * sin( radians( a.lat ) )
-        //             )
-        //     ) AS distance FROM `categories` c INNER JOIN `places` a ON (a.`category` = c.`id`) INNER JOIN `offers` o ON (a.`id` = o.`place_id`) HAVING distance < 0.9 ORDER BY distance limit 1 ;
-
-
-        //});
 
     });
 

@@ -65,8 +65,8 @@ class OffersController extends Controller
 
         $request->validate([
             'type' =>'required',
-            'start_date' =>'required',
-            'end_date' =>'required',
+            'start_date' =>'required|after:yesterday',
+            'end_date' =>'required|after:start_date',
             'banner' =>'required',
             'promocode_name' =>'unique:offers,promocode_name',
            // 'banner2' =>'required',
