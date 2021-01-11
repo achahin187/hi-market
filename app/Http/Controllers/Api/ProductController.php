@@ -265,8 +265,10 @@ class ProductController extends Controller
                           dd($getPolygon->area->areacity->id);
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
-                                               ->where('name_en', 'LIKE', '%' . $request->name . "%")
-                                               ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%")
+                                               ->where(function($q){
+                                                  $q->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                                  ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%");
+                                               })
                                                ->orderBy('priority', 'asc')
                                                ->limit(20)
                                                ->get();
