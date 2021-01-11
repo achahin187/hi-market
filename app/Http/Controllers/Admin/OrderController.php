@@ -181,34 +181,35 @@ class OrderController extends Controller
     {
 
         $order = Order::find($order_id);
-
-        $total_product_offers_price = 0;
-
-        $total_products_price = 0;
-
-
+        $supermarkets = Supermarket::all();
+        $setting = Setting::first();
 
         if($order)
         {
-
-
-            $request = CartRequest::find($order->request);
-
-            foreach ($order->products()->where('flag',0)->get() as $product)
-            {
-                $total_products_price = $total_products_price + $product->pivot->price;
-            }
-            foreach ($order->products()->where('flag',1)->get() as $product)
-            {
-                $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
-            }
-            return view('Admin.orders.edit', compact('order','total_products_price','total_product_offers_price','request'));
+            return view('Admin.orders.edit', compact('order','supermarkets','setting'));
 
         }
         else
         {
             return redirect('admin/orders')->withStatus('no order have this id');
         }
+
+        // $total_product_offers_price = 0;
+
+        // $total_products_price = 0;
+            // $request = CartRequest::find($order->request);
+
+            // foreach ($order->products()->where('flag',0)->get() as $product)
+            // {
+            //     $total_products_price = $total_products_price + $product->pivot->price;
+            // }
+            // foreach ($order->products()->where('flag',1)->get() as $product)
+            // {
+            //     $total_product_offers_price = $total_product_offers_price + $product->pivot->price;
+            // }
+            // return view('Admin.orders.edit', compact('order','total_products_price','total_product_offers_price','request')); 
+
+
     }
 
      public function assignorder($order_id)

@@ -15,23 +15,23 @@
                             <ol class="breadcrumb float-sm-right">
 
                                 @if(isset($supermarket_id))
-                                      @if(auth()->user()->can('product-create')) 
+                                      @if(auth()->user()->can('product-create'))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.add_supermarket_product')}}</a></li>
                                     @endif
                                 @elseif(isset($branch_id))
-                                 @if(auth()->user()->can('branches-create')) 
+                                 @if(auth()->user()->can('branches-create'))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',['flag' => $flag , 'supermarket_id' => -1 , 'branch_id' => $branch_id])}}">{{__('admin.add_branch_product')}}</a></li>
-                                 @endif    
+                                 @endif
                                 @else
-                                     @if(auth()->user()->can('product-create')) 
+                                     @if(auth()->user()->can('product-create'))
                                     <li class="breadcrumb-item"><a href="{{route('products.create',$flag)}}">{{__('admin.add_product')}}</a></li>
                                     @endif
                                 @endif
 
-                                @if(auth()->user()->can('product-export')) 
+                                @if(auth()->user()->can('product-export'))
                                 <li class="breadcrumb-item"><a href="{{route('products.export')}}">{{__('admin.export')}}</a></li>
                                 @endif
-                                @if(auth()->user()->can('product-import')) 
+                                @if(auth()->user()->can('product-import'))
                                     <li class="breadcrumb-item">
 
                                         <a id="link" href="">{{__('admin.import')}}</a>
@@ -42,8 +42,8 @@
                                         </form>
                                     </li>
                                 @endif
-                                
-                                @if(auth()->user()->can('product-download'))    
+
+                                @if(auth()->user()->can('product-download'))
                                 <li class="breadcrumb-item"><a href="{{route('products.downloadsample')}}">{{__('admin.download')}}</a></li>
                                 @endif
                             </ol>
@@ -160,14 +160,14 @@
                                             @else
                                                 {{-- trans('admin.status') --}}
                                                 {{-- <td>--}}
-                                                <?php $main_cols =[ 
+                                                <?php $main_cols =[
                                                 'name_ar',
                                                 'name_en',
                                                 'priority',
                                                 'status',
                                                 'category',
                                                 'supermarket',
-                                                
+
                                                 ];
                                                 ?>
 
@@ -179,7 +179,7 @@
                                                 @endforeach
 
                                             @endif
-                                            @if(auth()->user()->hasAnyPermission(['product-delete','product-edit'])) 
+                                            @if(auth()->user()->hasAnyPermission(['product-delete','product-edit']))
                                             <th>{{ __('admin.controls') }}</th>
                                             @endif
 
@@ -224,50 +224,50 @@
                                                 @if(in_array('category_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->category->name_ar}}</td>
+                                                        <td>{{$product->category->name_ar ?? ""}}</td>
                                                     @else
-                                                        <td>{{$product->category->name_en}}</td>
+                                                        <td>{{$product->category->name_en ?? ""}}</td>
                                                     @endif
 
                                                 @endif
                                                 @if(in_array('vendor_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->vendor->arab_name}}</td>
+                                                        <td>{{$product->vendor->arab_name ?? ""}}</td>
                                                     @else
-                                                        <td>{{$product->vendor->eng_name}}</td>
+                                                        <td>{{$product->vendor->eng_name ?? ""}}</td>
                                                     @endif
 
                                                 @endif
                                                 @if(in_array('supermarket_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->supermarket->arab_name}}</td>
+                                                        <td>{{$product->supermarket->arab_name ?? ""}}</td>
                                                     @else
-                                                        <td>{{$product->supermarket->eng_name}}</td>
+                                                        <td>{{$product->supermarket->eng_name?? ""}}</td>
                                                     @endif
 
                                                 @endif
 
 
-                                              
-                                               
+
+
                                                 @if(in_array('measure_id',$columns))
 
                                                     @if(App::getLocale() == 'ar')
-                                                        <td>{{$product->measure->arab_name}}</td>
+                                                        <td>{{$product->measure->arab_name ?? ""}}</td>
                                                     @else
-                                                        <td>{{$product->measure->eng_name}}</td>
+                                                        <td>{{$product->measure->eng_name ?? ""}}</td>
                                                     @endif
 
                                                 @endif
                                                 @if(in_array('size_id',$columns))
-                                                    <td>{{$product->size->value}}</td>
+                                                    <td>{{$product->size->value ?? ""}}</td>
                                                 @endif
                                                 @if(in_array('start_date',$columns))
 
                                                     @if($flag == 1)
-                                                        <td>{{$product->start_date}}</td>
+                                                        <td>{{$product->start_date ?? ""}}</td>
 
                                                     @else
                                                         <td>doesn't have start date</td>
@@ -348,16 +348,16 @@
                                                 </td>
                                                 @endif
                                                 @if(App::getLocale() == 'ar')
-                                                    <td>{{$product->category->name_ar}}</td>
+                                                    <td>{{$product->category->name_ar ?? ""}}</td>
                                                 @else
-                                                    <td>{{$product->category->name_en}}</td>
+                                                    <td>{{$product->category->name_en ?? ""}}</td>
                                                 @endif
 
 
                                                 @if(App::getLocale() == 'ar')
-                                                    <td>{{$product->supermarket->arab_name}}</td>
+                                                    <td>{{$product->supermarket->arab_name?? ""}}</td>
                                                 @else
-                                                    <td>{{$product->supermarket->eng_name}}</td>
+                                                    <td>{{$product->supermarket->eng_name ?? ""}}</td>
                                                 @endif
 
 
@@ -371,7 +371,7 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                          @if(auth()->user()->can('product-delete')) 
+                                                          @if(auth()->user()->can('product-delete'))
                                                         <form action="@if(isset($supermarket_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.destroy', ['id' => $product->id,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.destroy', $product->id) }} @endif" method="post">
                                                             @csrf
                                                             @method('delete')
@@ -382,13 +382,13 @@
 
                                                         </form>
                                                         @endif
-                                                        @if(auth()->user()->can('product-edit')) 
+                                                        @if(auth()->user()->can('product-edit'))
                                                             <a class="dropdown-item" href="@if(isset($supermarket_id)){{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }} @else {{ route('products.edit', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.edit')}}</a>
                                                         @endif
 
-                                                       @if(auth()->user()->can('product-clone')) 
+                                                       @if(auth()->user()->can('product-clone'))
                                                             <a class="dropdown-item" href="@if(isset($supermarket_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => $supermarket_id]) }} @elseif(isset($branch_id)) {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag ,'supermarket_id' => -1 , 'branch_id' => $branch_id]) }}  @else {{ route('products.clone', ['id' => $product->id,'flag' => $product->flag]) }} @endif">{{__('admin.clone')}}</a>
-                                                        @endif    
+                                                        @endif
 
                                                     </div>
                                                 </div>
@@ -400,7 +400,7 @@
 
                                     </tbody>
                                 </table>
-                        
+
                                 @if($products)
                                  {{ $products->appends(request()->query())->links() }}
                                  @endif
