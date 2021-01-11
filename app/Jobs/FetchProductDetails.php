@@ -15,7 +15,7 @@ class FetchProductDetails implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $product;
     private $client;
-    private $data ;
+    private $data;
     private $lang;
 
     /**
@@ -24,7 +24,7 @@ class FetchProductDetails implements ShouldQueue
      * @param $product
      * @param $lang
      */
-    public function __construct($product,$lang)
+    public function __construct($product, $lang)
     {
 
         $this->product = $product;
@@ -39,7 +39,7 @@ class FetchProductDetails implements ShouldQueue
     public function handle()
     {
         $this->client = new Client();
-        $this->data= collect();
+        $this->data = collect();
         $body = array(
             'product_id' => $this->product->product_id,
             'lang_id' => $this->lang,
@@ -55,23 +55,21 @@ class FetchProductDetails implements ShouldQueue
         }
         foreach ($product->File as $index => $image) {
 
-            $fileName = time().uniqid().".jpg";
-if($this->lang != 2)
-{
-            $this->client->get($image->image, ["sink" =>fopen(public_path("data/productdetails/".(Str::snake($fileName))),"w")]);
-}
+            $fileName = time() . uniqid() . ".jpg";
+            if ($this->lang != 2) {
+                $this->client->get($image->image, ["sink" => fopen(public_path("data/productdetails/" . (Str::snake($fileName))), "w")]);
+            }
 
 
             $product->File[$index]->image = $fileName;
             dump($fileName);
         }
         $this->data->add($product);
-        $path = public_path("products/".($this->lang == 1 ? "en" : "ar"));
-        if(!file_exists($path))
-        {
+        $path = public_path("products/" . ($this->lang == 1 ? "en" : "ar"));
+        if (!file_exists($path)) {
             mkdir($path);
         }
 
-        file_put_contents($path."/". time()."products.json", json_encode($this->data));
+        file_put_contents($path . "/" . time() . "products.json", json_encode($this->data));
     }
 }

@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use parallel\Runtime;
+
 class AddCategories extends Command
 {
 
@@ -92,9 +92,7 @@ class AddCategories extends Command
         foreach ($subcategories as $subcategory) {
             dispatch((new FetchProducts($subcategory,1))->onQueue("subcategory"));
         }
-        $data["lang"] = 2;
-        $cats_ar = $this->client->get("https://prod.thegroceryshop.com/web_services14/getCategory", ["body" => json_encode($data)]);
-        file_put_contents(public_path("arabic_categories.json.json"), json_encode($cats_ar));
+
 
         return 1;
     }
