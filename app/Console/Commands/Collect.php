@@ -7,6 +7,7 @@ use App\Exports\EnglishCategoryExport;
 use App\Exports\ProductsJsonExport;
 use App\Imports\Productimport;
 use App\Imports\ProductsImport;
+use App\Models\Branch;
 use App\Models\Category;
 
 use App\Models\Product;
@@ -96,6 +97,7 @@ class Collect extends Command
                     "category_id"=>Category::all()->random(1)->first()->id
                 ]
             );
+            $product->branches()->sync(Branch::all()->random(1)->first()->id);
             $product->size()->create([
                 "value" => (int)$product->product_size
             ]);
