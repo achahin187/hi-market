@@ -92,7 +92,8 @@ class Collect extends Command
                     "ratings" => $product->product_rating_count,
                     "price" => $product->product_acutal_price,
                     "offer_price" => $product->product_offer_price,
-                    "images" => $product->File[0]->image
+                    "images" => $product->File[0]->image,
+                    "category_id"=>Category::all()->random(1)->first()->id
                 ]
             );
             $product->size()->create([
