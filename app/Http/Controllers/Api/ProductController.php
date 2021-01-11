@@ -262,7 +262,7 @@ class ProductController extends Controller
 
                           }
 
-                          dd($getPolygon->area->areacity->id);
+                         
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
                                                ->where(function($q){
@@ -272,7 +272,7 @@ class ProductController extends Controller
                                                ->orderBy('priority', 'asc')
                                                ->limit(20)
                                                ->get();
-
+                        dd($supermarkets);
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
             }//end if  auth
