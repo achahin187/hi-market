@@ -56,7 +56,8 @@ class Collect extends Command
 
             $ar_products_collection->add($content[0]);
         }
-        $this->info("fetched english products ".$ar_products_collection->count()." product");
+        file_put_contents(public_path("products/arabic_products.json"), json_encode($ar_products_collection));
+        $this->info("fetched english products " . $ar_products_collection->count() . " product");
         $en_products = File::allFiles(public_path("products/en"));
         $this->info("processing :" . count($en_products) . " product");
         $en_products_collection = collect();
@@ -64,7 +65,8 @@ class Collect extends Command
             $content = json_decode(file_get_contents(public_path("products/en/" . $file->getBasename())));
             $en_products_collection->add($content[0]);
         }
-        $this->info("fetched english products ".$en_products_collection->count()." product");
+        file_put_contents(public_path("products/english_products.json"), json_encode($en_products_collection));
+        $this->info("fetched english products " . $en_products_collection->count() . " product");
 
 //        Excel::store(new ProductsJsonExport, "products.xlsx");
 //        Excel::store(new EnglishCategoryExport, "english_categories.xlsx");
