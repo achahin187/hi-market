@@ -20,7 +20,7 @@ class WishlistResource extends JsonResource
             "name" => $this->name,
             "category_id" => $this->category->id,
             "categoryname" => $this->category->name,
-            "price" => $this->price ?? 0,
+            "price" => number_format($this->price,2) ?? 0,
             "offer_price" => $this->offer_price ?? 0,
             "percentage" => ($this->offer_price / $this->price) * 100,
             "imagepath" => asset("product_images/".$this->images),
