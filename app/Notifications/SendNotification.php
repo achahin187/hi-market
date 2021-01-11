@@ -195,29 +195,9 @@ class SendNotification {
     public function getMessage($order,$lang)
     {
         $messages = [
-            //  "en"=>[
-            //      0 => "New Order Created, waiting for Acceptance",
-            //      1 => "Your Order $order->num Waiting for Accepting",
-            //      2 => "Your Order $order->num Was Accepted",
-            //      3 => "Your Order $order->num Was Process",
-            //      4 => "Your Order $order->num Was Pickup",
-            //      5 => "Your Order $order->num Was Delivered Rate Your Order",
-            //      6 => "Your Order $order->num was Cancelled",
-            //      null => ""
-            //  ],
-            // "ar"=>[ 
-            //     0 => "تم إنشاء طلب جديد",
-            //     1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
-            //     2 => "تم الموافقة على طلبك رقم {$order->num} ",
-            //     3 => "طلبك رقم {$order->num}  جاري تحضيره",
-            //     4 => "طلبك رقم {$order->num} جاري توصيله",
-            //     5 => "تم توصيل طلبك رقم {$order->num}",
-            //     6 => "تم إلغاء طلبك رقم $order->num",
-            //     null => ""]
-
+          
              "en"=>[
                  0 => "New Order Created, waiting for Acceptance",
-                // 1 => "Your Order $order->num Waiting for Accepting",
                  1 => "Your Order $order->num Was Accepted",
                  2 => "Your Order $order->num Was Process",
                  3 => "Your Order $order->num Was Pickup",
@@ -228,7 +208,6 @@ class SendNotification {
              ],
             "ar"=>[ 
                 0 => " إنشاء طلب جديد.. بانتظار الموافقة",
-               // 1 => "طلبك بإنتظار الموافقة رقم {$order->num} ",
                 1 => "تم الموافقة على طلبك رقم {$order->num} ",
                 2 => "طلبك رقم {$order->num}  جاري تحضيره",
                 3 => "طلبك رقم {$order->num} جاري توصيله",
