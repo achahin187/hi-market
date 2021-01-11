@@ -265,7 +265,7 @@ class ProductController extends Controller
                          
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
-                                               ->where(function($q){
+                                               ->where(function($q) use($request){
                                                   $q->where('name_en', 'LIKE', '%' . $request->name . "%")
                                                   ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%");
                                                })
