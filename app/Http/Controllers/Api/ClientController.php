@@ -603,7 +603,7 @@ class ClientController extends Controller
         }
 
 
-        
+        dd($rand);
         $activation_msg = trans('admin.activation_code') . $rand;
 
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );

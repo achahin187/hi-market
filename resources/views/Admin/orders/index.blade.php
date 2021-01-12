@@ -196,7 +196,7 @@
 
                     @endif
            
-                @endforeach
+            @endforeach
                 
 
 
