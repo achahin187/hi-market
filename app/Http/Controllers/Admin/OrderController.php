@@ -616,11 +616,11 @@ class OrderController extends Controller
             {
 
                 new SendNotification($order->client->device_token, $order, $data);
-                $this->storeNotificationOrder($order);
+                //$this->storeNotificationOrder($order);
 
             }else{
                 
-                $this->storeNotificationOrder($order);
+                $this->storeNotification($order);
             }
 
         }else
@@ -675,7 +675,7 @@ class OrderController extends Controller
 
          return $messages[$lang][$order->status];
     }
-    private  function storeNotificationOrder($order)
+    private  function storeNotification($order)
     {
             NotificationMobile::create([
 
