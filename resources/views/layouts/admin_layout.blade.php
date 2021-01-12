@@ -227,7 +227,7 @@ $settings = App\Models\Setting::all()->first();
                                 @endif
 
                                 {{-- delivery-admin --}}
-                                @if(auth()->user()->can('delivery-list'))
+                                @if(auth()->user()->can('deliveryAdmin-list'))
                                     <li class="nav-item">
                                         <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}"
                                            class="nav-link">
