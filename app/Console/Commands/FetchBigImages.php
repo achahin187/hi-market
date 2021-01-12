@@ -48,6 +48,10 @@ class FetchBigImages extends Command
         }
         foreach ($products as $product)
         {
+            if(is_null($product))
+            {
+                continue;
+            }
             foreach ($product->FileBig as $i => $m)
             {
                 $fileName = uniqid().".jpg";
