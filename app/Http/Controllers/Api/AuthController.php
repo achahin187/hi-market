@@ -24,7 +24,7 @@ class AuthController extends Controller
     //
     use GeneralTrait;
 
-  
+
     public function send_sms($name, $mobile, $msg, $lang)
     {
 
@@ -85,8 +85,8 @@ class AuthController extends Controller
         if (auth("client-web")->attempt([
              "mobile_number" => $request->mobile_number,
              "password"      => $request->password,
-             
-         ])) 
+
+         ]))
         {
 
             $client = Auth::guard('client-web')->user();
@@ -134,7 +134,7 @@ class AuthController extends Controller
 
 
         } catch (\Exception $exception) {
-           
+
             return response()->json([
                 "success" => false,
                 "status" => "Client Not Exists With this Udid"
@@ -164,7 +164,7 @@ class AuthController extends Controller
     public function resetpassword(Request $request)
     {
 
-       
+
         $validator = \Validator::make($request->all(), [
             'mobile_number' => ['required','numeric','digits:11'],
             'new_password'  => ['required', 'confirmed'],
@@ -180,7 +180,7 @@ class AuthController extends Controller
         $client= Client::where('mobile_number',$request->mobile_number)->first();
 
         if (isset($client)) {
-          
+
             $client->update(['password' => $request->new_password, 'device_token'=>$request->device_token, 'activation_code'=>null]);
 
             $token = $client->createToken("hi-market")->accessToken;
@@ -188,14 +188,14 @@ class AuthController extends Controller
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], 'password updated successfully');
 
-           
-          
+
+
         }else{
 
                 return $this->returnError(422, 'the phone number is no correct');
         }
     }
-    #ssend sms 
+    #ssend sms
     public function forgetpassword(Request $request)
     {
 
@@ -229,7 +229,7 @@ class AuthController extends Controller
     {
 
         $udid = $request->header('udid');
-     
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:2', 'max:60', 'not_regex:/([%\$#\*<>]+)/'],
             'email'=> ['required','email'],
@@ -257,13 +257,13 @@ class AuthController extends Controller
             }
 
         } catch (\Exception $exception) {
-            
+
             return response()->json([
                 "success" => false,
                 "msg" => "Client Not Exists With this Udid"
             ], 404);
         }
-        
+
        $client->update(['device_token'=>$request->device_token]);
        $msg = 'login Successfully';
 
@@ -277,7 +277,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth("client-api")->user()->tokens()->delete();
+        auth("client-api")->user()->token->revoke();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -304,7 +304,7 @@ class AuthController extends Controller
         $data = [
             "to" => $request->device_token,
 
-            "data"=> 
+            "data"=>
                 [
                     "type" => "order",
                     "orderId" => "13",
