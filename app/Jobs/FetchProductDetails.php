@@ -76,7 +76,7 @@ class FetchProductDetails implements ShouldQueue
         $productResponse->product_acutal_price = $product->product_acutal_price;
 
         $productResponse->product_offer_price = $product->product_offer_price;
-        $productResponse->prodcut_offer_percent = $product->product_offer_percent;
+        $productResponse->product_offer_percent = $product->product_offer_percent;
         $productResponse->offered_price_status = $product->offered_price_status;
         $productResponse->offered_start_date = $product->offered_start_date;
         $productResponse->offered_end_date = $product->offered_end_date;
