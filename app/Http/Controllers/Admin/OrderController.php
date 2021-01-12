@@ -55,9 +55,7 @@ class OrderController extends Controller
                 $orders = $driver->orders()->whereNotIn('status',array(0))
                 ->when($request->search, function ($q) use ($request) {
 
-                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+                   return $q->where('num', 'LIKE', '%' . $request->search . '%');
 
                 })->orderBy('id', 'desc')->paginate(10);
 
@@ -78,9 +76,7 @@ class OrderController extends Controller
                 $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])
                  ->when($request->search, function ($q) use ($request) {
 
-                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+                 return  $q->where('num', 'LIKE', '%' . $request->search . '%');
 
                 })->orderBy('id', 'desc')->paginate(20);
 
@@ -101,9 +97,7 @@ class OrderController extends Controller
             $orders = $driver->orders()->whereNotIn('status',array(0,1,5))
              ->when($request->search, function ($q) use ($request) {
 
-                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+                 return  $q->where('num', 'LIKE', '%' . $request->search . '%');
 
                 })->orderBy('id', 'desc')->paginate(20);
 
@@ -116,9 +110,7 @@ class OrderController extends Controller
                 $orders = auth()->user()->orders()->whereNotIn('status',array(0,1,5))
                  ->when($request->search, function ($q) use ($request) {
 
-                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
-                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+                 return  $q->where('num', 'LIKE', '%' . $request->search . '%');
 
                 })->orderBy('id', 'desc')->paginate(20);
             }
@@ -130,14 +122,12 @@ class OrderController extends Controller
             {
                 if (auth()->user()->hasAnyRole(['super_admin'])) {
                    
-                    $orders = Order::
-                      when($request->search, function ($q) use ($request) {
+                    $orders = Order::when($request->search, function ($q) use ($request) {
 
-                     return $q->whereTranslationLike('num', '%' . $request->search . '%')
-                              ->orWhereTranslationLike('id', '%' . $request->search . '%')
-                              ->orWhereTranslationLike('name', '%' . $request->search . '%');
-
+                     return $q->where('num', 'LIKE', '%' . $request->search . '%');
+                    
                     })->orderBy('id', 'desc')->paginate(20);
+                    
                 }else{
 
                 return redirect()->back()->withStatus('You  dont  have permission ');

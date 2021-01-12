@@ -140,6 +140,7 @@
 <thead>
 <tr>
     <th>{{ __('admin.order_id') }}</th>
+    <th>{{ __('admin.num') }}</th>
     <th>{{ __('admin.assign_to') }}</th>
     <th>{{ __('admin.status') }}</th>
     @if(auth()->user()->can('order-previous'))
@@ -169,6 +170,8 @@
 @foreach($orders as $order) 
     <tr>
         <td><a  href="{{route('orders.show.details',$order->id)}}">{{$order->id}}</a></td>
+        {{-- num --}}
+        <td>{{$order->num}}</td>
 
          <td>{{ $order->user->name ?? 'not assign'}}</td>
 
