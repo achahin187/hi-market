@@ -42,6 +42,10 @@ class FetchBigImages extends Command
         $products = file_get_contents(public_path("products/arabic_products.json"));
         $products = collect(json_decode($products));
         $data = collect();
+        if(!file_exists(public_path("data/productdetails")))
+        {
+            mkdir(public_path("data/productdetails"));
+        }
         foreach ($products as $product)
         {
             foreach ($product->FileBig as $i => $m)
