@@ -30,7 +30,7 @@ class SendNotification {
                 # code...
                 break;
                 
-            case 'Order':
+            case 'order':
                 $this->sendNotificationOrder(); 
                 break;
 
@@ -307,7 +307,7 @@ class SendNotification {
 
      public function sendNotificationCustom()
     {
-        
+
         $data = [
 
             "to" => '/topics/Deals',
