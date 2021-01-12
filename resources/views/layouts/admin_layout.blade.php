@@ -905,9 +905,10 @@ $settings = App\Models\Setting::all()->first();
 <script>
     $(function () {
         $("#example1").DataTable({
-            "paging": false,
             "responsive": true,
             "autoWidth": false,
+            "searching": false,
+            "ordering": false,
            
         });
         $("#example20").DataTable({

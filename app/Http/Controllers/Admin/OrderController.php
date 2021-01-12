@@ -52,7 +52,14 @@ class OrderController extends Controller
 
                 $driver = User::find(request()->driver_id);
 
-                $orders = $driver->orders()->whereNotIn('status',array(0))->get();
+                $orders = $driver->orders()->whereNotIn('status',array(0))
+                ->when($request->search, function ($q) use ($request) {
+
+                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+
+                })->orderBy('id', 'desc')->paginate(10);
 
                 return view('Admin.orders.index',compact('orders','setting','driver'));
 
@@ -68,7 +75,14 @@ class OrderController extends Controller
 
                 $company = DeliveryCompany::find(request()->company_id);
 
-                $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])->paginate(20);
+                $orders = $company->orders()->whereIn('status',[1,2,3,4,5,6])
+                 ->when($request->search, function ($q) use ($request) {
+
+                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+
+                })->orderBy('id', 'desc')->paginate(20);
 
 
              return view('Admin.orders.index',compact('orders','setting'));
@@ -84,7 +98,14 @@ class OrderController extends Controller
 
             $driver = User::find(request()->driver_id);
 
-            $orders = $driver->orders()->whereNotIn('status',array(0,1,5))->get();
+            $orders = $driver->orders()->whereNotIn('status',array(0,1,5))
+             ->when($request->search, function ($q) use ($request) {
+
+                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+
+                })->orderBy('id', 'desc')->paginate(20);
 
             return view('Admin.orders.index',compact('orders','setting','driver'));
         }
@@ -92,17 +113,31 @@ class OrderController extends Controller
         {
             if(auth()->user()->hasRole(['driver']))
             {
-                $orders = auth()->user()->orders()->whereNotIn('status',array(0,1,5))->get();
+                $orders = auth()->user()->orders()->whereNotIn('status',array(0,1,5))
+                 ->when($request->search, function ($q) use ($request) {
+
+                 return $q->whereTranslationLike('num', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('id', '%' . $request->search . '%')
+                          ->orWhereTranslationLike('name', '%' . $request->search . '%');
+
+                })->orderBy('id', 'desc')->paginate(20);
             }
             elseif(auth()->user()->hasRole(['delivery-manager']))
             {
-                $orders = Order::whereNotIn('status',array(0,1,5))->get();
+                $orders = Order::whereNotIn('status',array(0,1,5))->orderBy('id', 'desc')->paginate(20);
             }
             else
             {
                 if (auth()->user()->hasAnyRole(['super_admin'])) {
                    
-                    $orders = Order::orderBy('id', 'desc')->paginate(20);
+                    $orders = Order::
+                      when($request->search, function ($q) use ($request) {
+
+                     return $q->whereTranslationLike('num', '%' . $request->search . '%')
+                              ->orWhereTranslationLike('id', '%' . $request->search . '%')
+                              ->orWhereTranslationLike('name', '%' . $request->search . '%');
+
+                    })->orderBy('id', 'desc')->paginate(20);
                 }else{
 
                 return redirect()->back()->withStatus('You  dont  have permission ');

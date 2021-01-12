@@ -61,6 +61,22 @@
 {{ __('admin.orders') }}
 
 @endif
+  <form action="{{ route('orders.index') }}" method="get">
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
+            </div>
+
+            <div class="col-md-2">
+                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
+            </div>
+
+        </div><!-- end of row -->
+
+    </form><!-- end of form -->
+
 </div>
 <!-- /.card-header -->
 @if(isset($cancelledorders))
