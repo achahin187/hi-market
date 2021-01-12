@@ -34,7 +34,7 @@ return [
     'total_delivery'=> 'مجموع التوصيل',
     'total_discount'=> 'محموع الخصم',
     'add_total'     => 'اضافة اضافة',
-
+    'num' => 'رقم الطلب',
 
     'promocode_not_found'=>"هذا الكود غير صحيح",
     'product_offer_flag1'=> 'هذا المنتج لا يمكن استبداله أو إرجاعه.',

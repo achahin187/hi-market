@@ -280,7 +280,7 @@ $settings = App\Models\Setting::all()->first();
                                  @endif 
 
                                    {{-- delivery-admin --}}
-                                @if(auth()->user()->can('delivery-list'))
+                                @if(auth()->user()->can('deliveryAdmin-list'))
                                     <li class="nav-item">
                                         <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -528,7 +528,7 @@ $settings = App\Models\Setting::all()->first();
                     @endif
 
                     {{-- delivery --}}
-                    @if(auth()->user()->can('delivery-list'))
+                    @if(auth()->user()->can('driver-list'))
                         {{-- delivery --}}
                         <li class="nav-item">
                             <a href="{{route('delivery.index')}}" class="nav-link">

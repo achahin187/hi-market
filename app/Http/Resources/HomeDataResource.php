@@ -27,6 +27,7 @@ class HomeDataResource extends JsonResource
                 "rating"=>$this->rate ?? 0,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name?? '',
+                "distance"=> $this->distance()?? '',
                 "imagepath"=> asset('branche_image/'.$this->image),
                 "logopath"=>asset('branche_image/'.$this->logo),
                 'isOffer'=> !!$this->getOffer(),
@@ -36,6 +37,32 @@ class HomeDataResource extends JsonResource
             ];
     }
 
+    public function distance()
+    {
+        $branch = \App\Models\Branch::where('id', $this->id)->first()->area->polygon->first();
+        if (Auth()->check() && $branch || request()->lat || request()->lon) {
+            
+            $lat1 = $branch->lat;
+            $lon1 = $branch->lon;
+            $lat2 = request()->lat?? auth('client-api')->user()->lat;
+            $lon2 = request()->lon?? auth('client-api')->user()->lon;
+            $pi80 = M_PI / 180; 
+            $lat1 *= $pi80; 
+            $lon1 *= $pi80; 
+            $lat2 *= $pi80; 
+            $lon2 *= $pi80; 
+            $r = 6372.797; // mean radius of Earth in km 
+            $dlat = $lat2 - $lat1; 
+            $dlon = $lon2 - $lon1; 
+            $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2); 
+            $c = 2 * atan2(sqrt($a), sqrt(1 - $a)); 
+            $km = $r * $c; 
+
+        return number_format($km);
+        }else{
+          return "";
+        }
+    }
     public function getOffer()
     {
         $offer = Offer::where('type','free delivery')->first();

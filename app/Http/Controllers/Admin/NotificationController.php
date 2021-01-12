@@ -7,7 +7,7 @@ use App\Models\Client;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use App\Notifications\SendNotification;
 class NotificationController extends Controller
 {
 
@@ -43,9 +43,13 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        
+         $data =  [
+                    "type" => "Custom",
+                   ];
 
-        new SendNotification($order->client->device_token, $order, $data);
+        new SendNotification('Custom', '', $data);
+        
+        return redirect()->route('notifications.index')->withStatus(__('added successfully'));
 
     }
 

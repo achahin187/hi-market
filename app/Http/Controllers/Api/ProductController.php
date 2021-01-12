@@ -114,6 +114,7 @@ class ProductController extends Controller
                       $client->update([
                           'lat' => $request->lat,
                           'lon' => $request->lon,
+                          'topic' => $getPolygon->topic,
                       ]);
 
 
@@ -135,6 +136,7 @@ class ProductController extends Controller
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->lon,
+                    
 
                 ]);
               }else{
@@ -143,6 +145,7 @@ class ProductController extends Controller
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->lon,
+
 
                 ]);
               }
@@ -250,7 +253,8 @@ class ProductController extends Controller
                     "body" => $request->header("udid"),
 
                 ]);
-
+                if ($request->lat && $request->lon) {
+                  # code...
                 $data = $this->checkPolygon($request->lat, $request->lon);
 
                          if(count( $data) > 2)
@@ -274,6 +278,18 @@ class ProductController extends Controller
                                                ->orderBy('priority', 'asc')
                                                ->limit(20)
                                                ->get();
+                }else{
+
+                   $supermarkets = Branch::where('status', 'active')
+                                               ->where(function($q) use($request){
+                                                  $q->where('name_en', 'LIKE', '%' . $request->name . "%")
+                                                  ->orWhere('name_ar', 'LIKE', '%' . $request->name . "%");
+                                               })
+                                               ->orderBy('priority', 'asc')
+                                               ->limit(20)
+                                               ->get();
+
+                }
                      
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);

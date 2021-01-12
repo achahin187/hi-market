@@ -61,6 +61,22 @@
 {{ __('admin.orders') }}
 
 @endif
+  <form action="{{ route('orders.index') }}" method="get">
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
+            </div>
+
+            <div class="col-md-2">
+                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
+            </div>
+
+        </div><!-- end of row -->
+
+    </form><!-- end of form -->
+
 </div>
 <!-- /.card-header -->
 @if(isset($cancelledorders))
@@ -124,6 +140,7 @@
 <thead>
 <tr>
     <th>{{ __('admin.order_id') }}</th>
+    <th>{{ __('admin.num') }}</th>
     <th>{{ __('admin.assign_to') }}</th>
     <th>{{ __('admin.status') }}</th>
     @if(auth()->user()->can('order-previous'))
@@ -153,6 +170,8 @@
 @foreach($orders as $order) 
     <tr>
         <td><a  href="{{route('orders.show.details',$order->id)}}">{{$order->id}}</a></td>
+        {{-- num --}}
+        <td>{{$order->num}}</td>
 
          <td>{{ $order->user->name ?? 'not assign'}}</td>
 
@@ -177,7 +196,7 @@
 
                     @endif
            
-                @endforeach
+            @endforeach
                 
 
 
@@ -185,11 +204,11 @@
 
         @if(auth()->user()->can('order-previous'))
 
-        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ $order->status == 0 ? 'disabled' : '' }}">Previous</a></td>
+        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'previous','order_id'=>$order->id]) }}" class="btn btn-success {{ in_array($order->status, [0,6])  ? 'disabled' : '' }}">Previous</a></td>
         @endif
 
         @if(auth()->user()->can('order-next'))
-        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ $order->status >= 4 ? 'disabled' : '' }}" >Next</a></td>
+        <td><a href="{{ route('order.change.status',['order_status'=>$order->status, 'type'=>'next','order_id'=>$order->id]) }}" class="btn btn-primary {{ in_array($order->status, [4,6]) ? 'disabled' : '' }}" >Next</a></td>
         @endif
 
      

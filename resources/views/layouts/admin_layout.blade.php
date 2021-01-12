@@ -227,7 +227,7 @@ $settings = App\Models\Setting::all()->first();
                                 @endif
 
                                 {{-- delivery-admin --}}
-                                @if(auth()->user()->can('delivery-list'))
+                                @if(auth()->user()->can('deliveryAdmin-list'))
                                     <li class="nav-item">
                                         <a href="{{route('delivery-admins.index',['company_id'=>auth()->user()->company_id ])}}"
                                            class="nav-link">
@@ -488,7 +488,7 @@ $settings = App\Models\Setting::all()->first();
 
                     {{-- Orders --}}
                     @if(auth()->user()->can('order-list'))
-                        @if(auth()->user()->hasRole('deliveryAdmin'))
+                        {{-- @if(auth()->user()->hasRole('deliveryAdmin')) --}}
 
 
                             <li class="nav-item">
@@ -506,7 +506,7 @@ $settings = App\Models\Setting::all()->first();
                                    class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        {{ __('admin.orders') }}
+                                        {{ __('admin.orders.asap') }}
                                     </p>
                                 </a>
                             </li>
@@ -540,7 +540,7 @@ $settings = App\Models\Setting::all()->first();
                                     </p>
                                 </a>
                             </li>
-                        @endif
+                       {{--  @endif --}}
                     @endif
 
                     {{-- setting --}}
@@ -905,9 +905,10 @@ $settings = App\Models\Setting::all()->first();
 <script>
     $(function () {
         $("#example1").DataTable({
-            "paging": false,
             "responsive": true,
             "autoWidth": false,
+            "searching": false,
+            "ordering": false,
            
         });
         $("#example20").DataTable({

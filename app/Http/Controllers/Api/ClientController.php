@@ -583,7 +583,7 @@ class ClientController extends Controller
        
         $address = Address::where('id', $request->address_id)->first();
         $client = Client::Where('mobile_number', $request->mobile_number)->first(); 
-
+        
         if ($request->address_id && $address) {
             if ($address) {
               $rand =  $address->verify;
@@ -595,7 +595,7 @@ class ClientController extends Controller
         }
 
 
-        if (Auth()->check()) {
+        if ($client) {
             
             $rand = $client->activation_code;
         }else{
@@ -603,7 +603,7 @@ class ClientController extends Controller
         }
 
 
-        
+
         $activation_msg = trans('admin.activation_code') . $rand;
 
         $this->send_sms('Delivertto', $request->mobile_number, $activation_msg, request()->header('lang') );
