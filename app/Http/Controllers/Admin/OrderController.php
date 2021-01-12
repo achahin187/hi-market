@@ -620,7 +620,7 @@ class OrderController extends Controller
 
             }else{
                 
-                $this->storeNotificationOrder($order);
+                $this->storeNotification($order);
             }
 
         }else
@@ -675,7 +675,7 @@ class OrderController extends Controller
 
          return $messages[$lang][$order->status];
     }
-    private  function storeNotificationOrder($order)
+    private  function storeNotification($order)
     {
             NotificationMobile::create([
 

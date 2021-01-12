@@ -178,7 +178,7 @@ class OrderController extends Controller
                 new SendNotification($order->client->device_token, $order, $data);
             }
 
-            $this->storeNotificationOrder($order);
+            //$this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
              $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();
