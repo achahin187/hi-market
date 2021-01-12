@@ -640,7 +640,7 @@ class OrderController extends Controller
             if(in_array($order->status, [1,3,4]))
             {
 
-                new SendNotification($order->client->device_token, $order, $data);
+                new SendNotification($order->client->device_token, $order, $data, 'order');
                 //$this->storeNotificationOrder($order);
 
             }else{
@@ -664,7 +664,7 @@ class OrderController extends Controller
 
             if(in_array($order->status, [1,3,4]))
             {
-                new SendNotification($order->client->device_token, $order, $data);
+                new SendNotification($order->client->device_token, $order, $data, 'order');
             }
 
 

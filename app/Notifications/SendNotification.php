@@ -10,13 +10,13 @@ class SendNotification {
     public $order;
     public $data;
 
-    public function __construct($device_token, $order, $data=[])
+    public function __construct($device_token, $order, $data=[], $type)
     {
         $this->device_token = $device_token;
         $this->order = $order;
         $this->data = $data;
         
-        switch ($device_token) {
+        switch ($type) {
             case 'Delivertto':
                 $this->sendNotificationOffer();
                 break;

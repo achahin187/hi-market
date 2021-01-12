@@ -175,7 +175,8 @@ class OrderController extends Controller
                       ];
             #send notification to mobile
             if ( $order->status == 1) {
-                new SendNotification($order->client->device_token, $order, $data);
+                
+                new SendNotification($order->client->device_token, $order, $data, 'order');
             }
 
             //$this->storeNotificationOrder($order);
