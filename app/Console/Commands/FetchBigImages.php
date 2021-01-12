@@ -41,16 +41,20 @@ class FetchBigImages extends Command
     {
         $products = file_get_contents(public_path("products/arabic_products.json"));
         $products = collect(json_decode($products));
+        $data = collect();
         foreach ($products as $product)
         {
-            foreach ($product->FileBig as $m)
+            foreach ($product->FileBig as $i => $m)
             {
                 $fileName = uniqid().".jpg";
                 $this->info("fetching {$m->image}");
                 $this->client->get($m->image,["sink"=>fopen(public_path("data/productdetails/$fileName"),"w")]);
+                $product->FileBig[$i]->image = $fileName;
                 $this->info("fetched: ". $m->image. " and saved file $fileName");
             }
+            $data->push($product);
         }
+        file_put_contents(public_path("products/products.json"),json_encode($data));
         return 0;
     }
 }
