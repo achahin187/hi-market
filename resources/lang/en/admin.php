@@ -28,6 +28,10 @@ return [
     'product_offer_flag1'=> 'This item cannot be exchanged or returned.',
     'product_offer_flag0'=> 'This item can be exchanged or returned in 14 days.',
 
+    'promocode' => 'PromoCode',
+    'free_delivery' => 'Free Delivery',
+    'product_offer' => 'Product Offer',
+
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',
     'not_available'=> 'Not Available',

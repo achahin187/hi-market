@@ -27,10 +27,21 @@ return [
     'dashboard_home' => 'الصفحة الرئيسية',
     'home' => 'المنزل',
     'work' => 'العمل',
+    'total_product'=> 'اجمالى المنتجات',
+    'delivery'=> 'التوصيل',
+    'product'=> 'المنتجات',
+    'dicount'=> 'الخصم',
+    'total_delivery'=> 'مجموع التوصيل',
+    'total_discount'=> 'محموع الخصم',
+    'add_total'     => 'اضافة اضافة',
+
+
     'promocode_not_found'=>"هذا الكود غير صحيح",
     'product_offer_flag1'=> 'هذا المنتج لا يمكن استبداله أو إرجاعه.',
     'product_offer_flag0'=> 'هذا المنتج يمكن استبداله أو إرجاعه خلال 14 يوم.',
-
+    'promocode' => 'بروموكود',
+    'free_delivery' => 'التوصيل المجانى',
+    'product_offer' => 'عروض المنتجات',
     'lang' => 'ar',
     'name_ar' => 'الاسم بالعربي',
     'name_en' => 'الاسم بالنجليزي',
