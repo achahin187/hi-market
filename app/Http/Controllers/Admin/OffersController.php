@@ -140,7 +140,7 @@ class OffersController extends Controller
         }
      
                
-          
+              new SendNotification('topics', '', $data);  
         return redirect()->route($this->route.'index')->withStatus(__('admin.created_successfully'));
     }
 
