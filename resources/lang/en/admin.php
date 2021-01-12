@@ -32,6 +32,8 @@ return [
     'free_delivery' => 'Free Delivery',
     'product_offer' => 'Product Offer',
 
+    'num' => 'Order Number',
+
     'delivery'=> 'Delivery',
     'add_driver'=> 'Add Driver',
     'not_available'=> 'Not Available',
