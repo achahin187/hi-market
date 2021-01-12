@@ -44,10 +44,11 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
          $data =  [
-                "type" => "Custom",
-               ];
+                    "type" => "Custom",
+                   ];
 
         new SendNotification('Custom', '', $data);
+        
         return redirect()->route('notifications.index')->withStatus(__('added successfully'));
 
     }

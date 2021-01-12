@@ -22,6 +22,7 @@ class SendNotification {
                 break;
 
             case 'Custom':
+
                  $this->sendNotificationCustom();
                 break;
 
@@ -306,7 +307,7 @@ class SendNotification {
 
      public function sendNotificationCustom()
     {
-
+        dd($data);
         $data = [
 
             "to" => '/topics/Deals',
