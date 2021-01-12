@@ -95,7 +95,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1"> {{ __('admin.location') }}</label>
-                                                    <input type="text" value="" name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                                    <input type="text" value="{{ $order->address }}" name="address" class="@error('address') is-invalid @enderror form-control" id="exampleInputEmail1" placeholder="Enter email" required>
                                                     @error('address')
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -122,26 +122,19 @@
                                 
 
                                             <div class="card-body">
-                                                                      
-                                                                    
+       
+                                                                   
                                                 <div class="form-group ">
                                                     <label for="branch">{{ __('admin.supermarket') }}</label>
-                                                    <select name="supermarket_id" 
-                                                   {{--  @if(session()->get('supermarket_id') != $supermarket->id) class="  
-                                                     form-control select2 click_here" @else class="  
-                                                     form-control select2"@endif  --}} class="  
+                                                    <select name="supermarket_id" class="  
                                                      form-control select2 supermarket_6">
                                                  
-                                                <option    selected disabled="" >Please Select Source</option>
+                                                    @foreach( $supermarkets as  $supermarket)
 
-                                                    @foreach( $supermarkets as  $supermarket) 
-                                                     <option
-                                                     
-                                                      @if(session()->get('supermarket_id') != $supermarket->id && session()->get('supermarket_id') != null) selected disabled
-                                                       @endif  
-                                              
-                                                        value="{{ $supermarket->id }}">{{$supermarket->name}}
+                                                    <option
+                                                        value="{{ $supermarket->id }}" {{ $order->branch->id == $supermarket->id ? 'selected' : ""}}>{{$supermarket->name}}
                                                     </option>
+
                                                     @endforeach
 
                                                     </select>
@@ -154,7 +147,7 @@
                                                     <label for="branch">{{ __('admin.branch') }}</label>
                                                     <select name="branch_id"  class="branch_9 form-control select2">
                                                     
-                                                        <option  selected  disabled>Please Select Branch</option>
+                                                        
                                                            
                                                     </select>
                                                 </div>
@@ -203,7 +196,7 @@
 
                                                     <tbody class="order-list">
 
-                                                   
+                                                   @foreach($order->products as $product)
                                                         <tr>
                                                             <td> 
                                                                 <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput" 
@@ -222,7 +215,7 @@
                                                                 <a href="#" class="add_input btn btn-info"><i class="fa fa-plus">اضافة</i></a>
                                                             </td>
                                                         </tr>
-                                                           
+                                                    @endforeach           
 
                                                     </tbody>
 
@@ -345,33 +338,66 @@
 
 
     @endsection
-
+@php
+   $products =  \App\Models\Product::all();
+@endphp
 
 
 {{-- Js Code  --}}
 @push('scripts')
     {{-- supermarket ajax --}}
 <script>
-        $(".supermarket_6").change(function(){
-
+    $( document ).ready(function() {
+        // $(".supermarket_6").change(function(){
+        var id = $('.supermarket_6').val();
             $.ajax({
                
-                url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + $(this).val(),
+                url: "{{ route('get_supermarket_branches') }}?supermarket_id=" + id,
                 method: 'GET',
                 success: function(data) {
 
                     $('.branch_9').html('');
 
-                    $('.branch_9').append(new Option('select Branch',0,true,true));
+                    //$('.branch_9').append(new Option('select Branch',0,true,true));
 
                     data.forEach(function(x){
                         
                     $('.branch_9').append(new Option(x.name_ar,x.id,false,false));
 
+                        if (x.id == {{ $order->branch_id }}) {
+                              
+                            $('.branch_9').find('option').attr('selected',"selected");     
+                              $('.branch_9').find('option:selected').trigger("change")
+                            
+                        }
                     })
                 }
             });//end ajax
+           
+              $.ajax({
 
+                url: "{{ route('get_branch_product') }}?branch_id=" + {{ $order->branch_id }},
+                method: 'GET',
+                success: function(data) {
+                    $('.product_9').html('');
+
+                     $('.product_9').append(new Option('select Product',0,true,true));
+
+                    
+                       
+                    data.data.forEach(function(x){
+
+                    //  $('.product_9').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+
+                     $('.product-price').val(parseInt(x.price));
+                    $(".product_qty").attr("data-price", x.price);
+                     //$('.product_9').attr('name', 'product['+x.id+'][quantity]');
+                    })
+                }
+
+
+            });//end ajax
+ 
 
         });
 </script>
@@ -401,15 +427,45 @@
                      //$('.product_9').attr('name', 'product['+x.id+'][quantity]');
                 
                     })
-
+ 
+                              
+                               
+                    $('.branch_9').find('option:selected').trigger("change")
                        
+                    var list =  $('.order-list');
 
+                    @foreach($order->products as $product)
+                        `<tr>
+                        <td> 
+                            <select class="product_9 @error('product_id') is-invalid @enderror select2 product" value="{{ $product->id }}" name="products[]" id="hamdyinputx" 
+                            data-placeholder="Select a product" style="width: 100%;" required>
+                            @foreach( $products as $pro)
+                                <option {{ $product->id == $pro->id ? 'selected' : '' }}>{{ $pro->name }}</option>
+                            @endforeach    
+                              
+                            </select>
+                        </td>
+                        <td>  
+                            <input type="number" name="quantity[]" min="1" value="1" class=" @error('quantity') is-invalid @enderror form-control product-quantity" required>
+                        </td>
+                        <td class="product-price">  
+                         
+                        </td>
+                        <td>
+                            <a href="#" class="remove_input btn btn-danger" style="width: 73px;height: 46px;"><i class="fa fa-trash">حذف</i></a> 
+
+                                            </button> 
+                        </td>
+                    </tr>`
+                        // var list = $(list).find('product_9').attr('selected',"selected");
+                        //  $(list).find('option:selected').trigger("change")
+                    @endforeach
                    
                 }
             });// end ajax
 
-             $(".branch_9").attr("disabled", "disabled");
-             $(".supermarket_6").attr("disabled", "disabled");
+             // $(".branch_9").attr("disabled", "disabled");
+             // $(".supermarket_6").attr("disabled", "disabled");
                   
                     var selectedStatus      = $(this).find('option:selected').val();
                     var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
