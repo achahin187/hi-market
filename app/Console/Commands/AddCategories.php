@@ -92,6 +92,10 @@ class AddCategories extends Command
         foreach ($subcategories as $subcategory) {
             dispatch((new FetchProducts($subcategory,1,true))->onQueue("subcategory"));
         }
+        foreach ($subcategories as $subcategory)
+        {
+            dispatch((new FetchProducts($subcategory,2,true))->onQueue("subcategory"));
+        }
 
 
         return 1;
