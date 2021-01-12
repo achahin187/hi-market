@@ -506,7 +506,7 @@ $settings = App\Models\Setting::all()->first();
                                    class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        {{ __('admin.orders') }}
+                                        {{ __('admin.orders.asap') }}
                                     </p>
                                 </a>
                             </li>
