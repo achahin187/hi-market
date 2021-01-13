@@ -160,7 +160,7 @@ class CartController extends Controller
                 {
                     $total = 0;    
                 } 
-
+                $dicount = $total_money - $total;
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -169,6 +169,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>(int)$deliver_money, 
                         'Total'=>$total + $deliver_money,
+                        'dicount'=>$dicount,
                      ],
 
                 ];
@@ -181,7 +182,7 @@ class CartController extends Controller
                 {
                     $total = 0;    
                 }  
-
+                 $dicount = $deliver_money - $total;
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -190,6 +191,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>(int)$total, 
                         'Total'=>$total + $total_money,
+                         'dicount'=>$dicount,
                     ],
 
                 ];
@@ -208,6 +210,7 @@ class CartController extends Controller
                 {
                     $total = 0;    
                 } 
+                $dicount = $total_money - $total;
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -216,6 +219,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>$deliver_money, 
                         'Total'=>$total + $deliver_money,
+                        'dicount'=>$dicount, 
                     ],
 
                 ];
@@ -229,6 +233,7 @@ class CartController extends Controller
                 {
                     $total = 0;    
                 } 
+                $dicount = $deliver_money - $total; 
                 return [
                     'status' => true,
                     'msg'=>'',
@@ -237,6 +242,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>(int)$total, 
                         'Total'=>$total_money + $total,
+                        'dicount'=>$dicount,  
                     ],
                 ];
             }

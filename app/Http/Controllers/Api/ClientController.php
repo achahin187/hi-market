@@ -147,14 +147,16 @@ class ClientController extends Controller
                 {
                     $total = (( $request->total_order_money * $setting->reedem_point)/100);
                     
-                        # code...
+                        
                 }
-
+                
+                $dicount =  $request->total_order_money - $total ;
               return [
                         'status' => true,
                         'msg'=>'',
                         'data'=>[
                             'totalOrderMoney' => $total,                        
+                            'discount' => (double)$dicount,                        
                         ],
                     ];
         }else{
@@ -163,7 +165,7 @@ class ClientController extends Controller
                         'status' => true,
                         'msg'=>'',
                         'data'=>[
-                            'totalOrderMoney' => intval($request->total_order_money),                        
+                            'totalOrderMoney' => intval($request->total_order_money),                         
                         ],
                     ];
         }
