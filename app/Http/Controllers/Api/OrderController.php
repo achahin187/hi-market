@@ -396,7 +396,7 @@ class OrderController extends Controller
 
           $branch = Branch::where('id', $request->supermarket_id)->first();
           $address = Address::where('id', $request->address_id)->first();
-           
+
             
          #check if  beanch
          if ($branch) {
@@ -408,10 +408,6 @@ class OrderController extends Controller
          }
 
 
-         //dd($getPlygons);
-
-
-
           #polygon array        
           $polygons=[]; 
           foreach ($getPlygons as $getPlygons)
@@ -420,35 +416,17 @@ class OrderController extends Controller
                
           }
 
-          $bound = new Bounds($polygons);
+          if ($address) {
+                 
+              $bound = new Bounds($polygons);
 
-          $data = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
+              $data = $bound->intersect(new Bounds([new Point($address->lat, $address->lon)]));
 
-      
-        
-        //   $Finalpolygons=[];
-        //   foreach ($polygons as $index =>$polygon)
-        //   {
-        //      $Finalpolygons[] = $polygon;
-               
-        //   }
+             } else{
 
-        //   #new instance 
-        //   $pointLocation = new PointLocation();
-        //   #impload implode Points
-        //   $implodePoints = implode(" ", [$address->lon,$address->lat]);
-        //   #points
-        //   $point = array($implodePoints);
-          
-        //   $resultsList=[];
-        //   foreach ($Finalpolygons as  $Finalpolygon) {
-        
-         
-        //    $resultsList[] = $pointLocation->pointInPolygon($point, $Finalpolygon);
+                return $this->returnError(404, 'There Is No Address Found'); 
+             }  
 
-        //   }
-        //  $data = $this->checkLocation($resultsList);
-         
         #if data == true
         if ($data) {        
         
