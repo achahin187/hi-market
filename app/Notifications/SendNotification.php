@@ -47,8 +47,6 @@ class SendNotification {
      public function sendNotificationDelivery()
     {
 
-
-
         $data = [
 
             "to" => $this->device_token,
@@ -56,9 +54,9 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => $this->getMessage($this->order, app()->getLocale()),
-                    "body" => "Order Updates",
-                    "icon" => $this->getIconeOrder($this->order),
+                    "title" => request()->header('lang') == 'ar' ? 'هناك طلب جديد' :'You Have New Order',
+                    "body" => request()->header('lang') == 'ar' ? 'هناك طلب جديد' :'You Have New Order',
+                    "icon" => '',
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",
