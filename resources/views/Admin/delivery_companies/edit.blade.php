@@ -104,6 +104,8 @@
                                         <label for="commission">{{ __('admin.commission') }}</label>
                                         <input id="commission" name="commission" value="{{$delivery->commission}}" type="number" class="form-control">
                                     </div>
+
+
                                     <div class="form-group">
                                         <label for="branch">{{ __('admin.branch') }}</label>
                                         <select name="branch_id[]" multiple id="branch" class="form-control select2">

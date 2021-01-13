@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\DeliveryCompany;
+use App\Models\Client;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -53,10 +54,11 @@ class DeliveryCompanyController extends Controller
         ]);
 
         $request_data = $request->all();
-        $request_data['phone_number'] = array_filter($request->phone_number);
+        // $request_data['phone_number'] = array_filter($request->phone_number);
 
-        $company = DeliveryCompany::create($request_data);
-        $company->branches()->sync($request_data["branch_id"]);
+        // $company = DeliveryCompany::create($request_data);
+        // $company->branches()->sync($request_data["branch_id"]);
+        $this->storeCompanyClient($request);
         return redirect()->route("delivery-companies.index");
     }
 
@@ -127,5 +129,16 @@ class DeliveryCompanyController extends Controller
         } catch (\Exception $e) {
             return redirect()->route("delivery-companies.index")->withStatus("Something Went Wrong");
         }
+    }
+
+    private function storeCompanyClient($request)
+    {   
+        
+       Client::updateOrCreate([
+            'name' => $request->name_en,
+            'email' => $request->email,
+            'password' => $request->phone_number[0],
+            'verify' => 0,
+       ]);
     }
 }
