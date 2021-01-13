@@ -396,7 +396,7 @@ class OrderController extends Controller
 
           $branch = Branch::where('id', $request->supermarket_id)->first();
           $address = Address::where('id', $request->address_id)->first();
-          return $address;
+            dd( $address);
             
          #check if  beanch
          if ($branch) {
