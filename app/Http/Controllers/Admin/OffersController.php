@@ -69,7 +69,7 @@ class OffersController extends Controller
             'end_date' =>'required|after:start_date',
             'banner' =>'required',
             'promocode_name' =>'unique:offers,promocode_name',
-           // 'banner2' =>'required',
+           // 'banner2' =>'required',promocode_name
             
         ]);
 
@@ -167,15 +167,17 @@ class OffersController extends Controller
             $create_promocode->branches()->attach($request['branch_id']);
 
             foreach ($request['branch_id'] as $branch) {
+
               $branch_name = Branch::Where('id',$branch)->first();
               $topic = $branch_name->area->polygon->first()->topic;
+
                 if ($topic) {
                   new SendNotification($topic, '', $data, 'Topic'); 
-                }
-             } 
+                }//end if
+             } //end foreach
 
         }else{
-           new SendNotification('Deals', '', $data); 
+           new SendNotification('Deals', '', $data, 'Delivertto'); 
         }
 
     }
