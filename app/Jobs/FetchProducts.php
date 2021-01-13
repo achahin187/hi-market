@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Fetch\ProductFetch;
+
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Console\Command;
@@ -25,20 +25,23 @@ class FetchProducts implements ShouldQueue
     private $data;
     private $index = 0;
     private $lang;
+    private $is_subcategory;
 
     /**
      * Create a new job instance.
      *
      * @param $category
      * @param $lang
+     * @param $is_subcategory
      */
-    public function __construct($category,$lang)
+    public function __construct($category,$lang,$is_subcategory)
     {
         //
         $this->category = $category;
 
 
         $this->lang = $lang;
+        $this->is_subcategory = $is_subcategory;
     }
 
     /**
@@ -81,11 +84,11 @@ class FetchProducts implements ShouldQueue
         foreach ($products as $product) {
             dump("product with id :" . $product->product_id);
 
-            $fileName = time() . "{$this->category->name}.jpg";
+//            $fileName = time() . "{$this->category->name}.jpg";
 
-            $this->client->get($product->image, ["sink" => fopen(public_path("data/$fileName"), "w")]);
-            $product->image = $fileName;
-            dispatch(new FetchProductDetails($product,$this->lang))->onQueue("products");
+//            $this->client->get($product->image, ["sink" => fopen(public_path("data/$fileName"), "w")]);
+//            $product->image = $fileName;
+            dispatch(new FetchProductDetails($product,$this->lang,$this->category,$this->is_subcategory))->onQueue("products");
             $this->data->add($product);
 
         }

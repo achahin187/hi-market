@@ -78,11 +78,11 @@ class AddCategories extends Command
         $this->info("grabbing english categories");
         $this->info($this->categories->count());
         foreach ($this->categories as $category) {
-            dispatch(new FetchProducts($category,2))->onQueue("category");
+            dispatch(new FetchProducts($category,2,false))->onQueue("category");
         }
 //        $this->info(count(json_decode(file_get_contents(public_path("products.json")))));
         foreach ($this->categories as $category) {
-            dispatch((new FetchProducts($category, 1))->onQueue("category"));
+            dispatch((new FetchProducts($category, 1,false))->onQueue("category"));
         }
         file_put_contents(public_path("english_categories.json.json"), json_encode($this->categories));
         $subcategories = $this->categories->filter(function ($cat) {
@@ -90,7 +90,11 @@ class AddCategories extends Command
         });
         file_put_contents(public_path("english_subcategories.json.json"), json_encode($subcategories));
         foreach ($subcategories as $subcategory) {
-            dispatch((new FetchProducts($subcategory,1))->onQueue("subcategory"));
+            dispatch((new FetchProducts($subcategory,1,true))->onQueue("subcategory"));
+        }
+        foreach ($subcategories as $subcategory)
+        {
+            dispatch((new FetchProducts($subcategory,2,true))->onQueue("subcategory"));
         }
 
 

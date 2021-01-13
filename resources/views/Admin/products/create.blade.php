@@ -19,7 +19,6 @@
                                 <li class="breadcrumb-item"><a href="{{route('supermarket.products',['flag' => $flag , 'supermarket_id' => $supermarket_id])}}">{{__('admin.supermarket_products')}}</a></li>
                                 <li class="breadcrumb-item active">{{__('admin.supermarket_products')}}</li>
 
-
                             @elseif(isset($branch_id))
 
                                 <li class="breadcrumb-item"><a href="{{route('branch.products',['flag' => $flag , 'branch_id' => $branch_id])}}">{{__('admin.branch_products')}}</a></li>
