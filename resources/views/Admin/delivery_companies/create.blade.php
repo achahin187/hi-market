@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <label>@lang('admin.phone')</label>
                                             <input type="text" id='phone_number' name="phone_number[]"
-                                                   class="form-control" value="{{old("phone_number")}}">
+                                                   class="form-control" value="{{old("phone_number[$i]")}}">
                                         </div>
                                     @endfor
 

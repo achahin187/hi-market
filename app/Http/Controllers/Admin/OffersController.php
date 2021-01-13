@@ -100,15 +100,12 @@ class OffersController extends Controller
           }//end if
 
 
-          $data =  [
-                "type" => "Deal",
-                "product_id" => $request_data['product_id'] ?? null,
-                "superMarket_id" => $request_data['branch_id']??null,
-               ];
+         
 
 
         switch ($request->type) {
             case 'promocode':
+
                     if($request['promocode_type'] == 'Percentage' && ($request['value'] > 100 
                       ||  $request['value'] <= 0))
                       {
@@ -118,6 +115,7 @@ class OffersController extends Controller
                          $this->createPromocode($request_data, $data);
 
                       }
+
                 break;
 
             case 'product Offer':
@@ -152,17 +150,29 @@ class OffersController extends Controller
      * @return \Illuminate\Http\Response
      */
     private function createPromocode($request, $data)
-    {  
+    {    
         $request_data = collect($request)->except('branch_id');
 
         $create_promocode =   $this->model::create($request_data->toArray());
+                
+        $data =  [
+          "type" => "Deal",
+          "product_id" => $request_data['product_id'] ?? null,
+          "superMarket_id" => $request_data['branch_id']??null,
+        ];
         
 
         if ($request['source'] == 'Branch') {
             $create_promocode->branches()->attach($request['branch_id']);
+
             foreach ($request['branch_id'] as $branch) {
-               new SendNotification('topics', '', $data); 
+              $branch_name = Branch::Where('id',$branch)->first();
+              $topic = $branch_name->area->polygon->first()->topic;
+                if ($topic) {
+                  new SendNotification($topic, '', $data, 'Topic'); 
+                }
              } 
+
         }else{
            new SendNotification('Deals', '', $data); 
         }

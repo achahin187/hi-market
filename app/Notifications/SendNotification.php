@@ -27,7 +27,7 @@ class SendNotification {
                 break;
 
             case 'Topic':
-                # code...
+                 $this->sendNotificationOffer();
                 break;
                 
             case 'order':
@@ -104,7 +104,7 @@ class SendNotification {
 
         $data = [
 
-            "to" => '/topics/Deals',
+            "to" => '/topics/'.$this->device_token,
             "data"=> $this->data,
 
             "notification" =>
