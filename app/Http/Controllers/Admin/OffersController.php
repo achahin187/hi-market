@@ -177,8 +177,8 @@ class OffersController extends Controller
              } //end foreach
 
         }else{
-          $Deal_all = ['type'=>'deal_all']  
-           new SendNotification('Deal_all', '', $data, 'Delivertto'); 
+          $Deal_all = ['type'=>'deal_all'];
+           new SendNotification('Deal_all', '', $Deal_all, 'Delivertto'); 
         }
 
     }
