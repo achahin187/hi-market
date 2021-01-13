@@ -112,7 +112,7 @@ class OffersController extends Controller
                           return redirect()->route($this->route.'index')->withStatus("Percentage value must be between 0 : 100");
                       }else{
 
-                         $this->createPromocode($request_data, $data);
+                         $this->createPromocode($request_data);
 
                       }
 
@@ -124,12 +124,12 @@ class OffersController extends Controller
 
             case 'free delivery':
                $this->createFreeProduct($request_data);
-                new SendNotification('topics', '', $data);  
+                //new SendNotification('topics', '', $data);  
                 break;
 
             case 'point':
                $this->createPoint($request_data);
-                new SendNotification('topics', '', $data);  
+                //new SendNotification('topics', '', $data);  
                 break;    
             
             default:
@@ -138,7 +138,7 @@ class OffersController extends Controller
         }
      
                
-              new SendNotification('topics', '', $data);  
+             // new SendNotification('topics', '', $data);  
         return redirect()->route($this->route.'index')->withStatus(__('admin.created_successfully'));
     }
 
@@ -163,6 +163,7 @@ class OffersController extends Controller
         
 
         if ($request['source'] == 'Branch') {
+
             $create_promocode->branches()->attach($request['branch_id']);
 
             foreach ($request['branch_id'] as $branch) {
