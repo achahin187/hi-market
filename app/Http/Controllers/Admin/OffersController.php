@@ -149,7 +149,7 @@ class OffersController extends Controller
      * @param  array  $request
      * @return \Illuminate\Http\Response
      */
-    private function createPromocode($request, $data)
+    private function createPromocode($request)
     {    
         $request_data = collect($request)->except('branch_id');
 
