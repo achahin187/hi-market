@@ -125,9 +125,6 @@ class CartController extends Controller
     {
        
             return $this->checkType($promocode_type, $dicount_on, $value, $total_money, $deliver_money);
-          
-        
-
         
     }
 

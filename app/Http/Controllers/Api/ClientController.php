@@ -149,14 +149,14 @@ class ClientController extends Controller
                     
                         
                 }
-                
+
                 $dicount =  $request->total_order_money - $total ;
               return [
                         'status' => true,
                         'msg'=>'',
                         'data'=>[
                             'totalOrderMoney' => $total,                        
-                            'discount' => (double)$dicount,                        
+                            'discount'        => (double)$dicount,                        
                         ],
                     ];
         }else{

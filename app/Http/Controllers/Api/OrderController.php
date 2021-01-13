@@ -182,8 +182,8 @@ class OrderController extends Controller
             if ($company) {
                 $company_client = Client::Where('company_id', $comapny->id)->Where('verify', 1)->first();
                 if ($company_client) {
-                   
-                    new SendNotification($company_client->device_token, $order, $data, 'Delivery');
+                    $comapnyData = ['type'=>"Delivery"]
+                    new SendNotification($company_client->device_token, '', $comapnyData, 'Delivery');
                 }
                   
               }  
@@ -629,49 +629,7 @@ class OrderController extends Controller
         }
     }
 
-    // private function sendNotification()
-    // {
 
-    //         $url = 'https://fcm.googleapis.com/fcm/send';
-    //         $api_key = 'Key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu';
-    //         $fields = array(
-    //             'to' => 'c4wEkQfiRw6xpqzeqjSb72:APA91bGn3LQaR8IhIGuGMekyUQjhrMbvC8KX_DLzQljljnvVJZ7r02oolp59-MkE8yLaTRxhSz8QJwxlVL7m0WXIF2wQBcctsZskrzcdz9nsvpkLZhsuJU7LdXxs-KcpdxCuIt2NZqaD',
-    //             "data" => [
-    //                  "Nick" => "Mario",
-    //                  "body" => "great match!",
-    //                  "Room" => "PortugalVSDenmark",
-    //                ],
-    //             'notification' => [
-    //                 'title' => 'test data',
-    //                 'text' => 'test data',
-    //                 'click_action' => 'HomeActivity',
-    //             ],
-    //             'android' => [
-    //                 "priority" => "high"
-    //             ],
-    //             'priority' => 10
-    //         );
-    //         $headers = array(
-    //             'Content-Type:application/json',
-    //             'Authorization:' . $api_key
-    //         );
-
-    //         $ch = curl_init();
-    //         curl_setopt($ch, CURLOPT_URL, $url);
-    //         curl_setopt($ch, CURLOPT_POST, true);
-    //         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    //         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    //         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    //         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-    //         $result = curl_exec($ch);
-    //         return $result;
-    //         if ($result === FALSE) {
-    //             die('FCM Send Error: ' . curl_error($ch));
-    //         }
-    //         curl_close($ch);
-    //         $result = json_decode($result);
-    // }
 
     public function orderConfirmation(Request $request)
     {

@@ -172,12 +172,13 @@ class OffersController extends Controller
               $topic = $branch_name->area->polygon->first()->topic;
 
                 if ($topic) {
-                  new SendNotification($topic, '', $data, 'Topic'); 
+                  new SendNotification($topic, '', $data, 'Deal'); 
                 }//end if
              } //end foreach
 
         }else{
-           new SendNotification('Deals', '', $data, 'Delivertto'); 
+          $Deal_all = ['type'=>'deal_all']  
+           new SendNotification('Deal_all', '', $data, 'Delivertto'); 
         }
 
     }
