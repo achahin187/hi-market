@@ -166,7 +166,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>(int)$deliver_money, 
                         'Total'=>$total + $deliver_money,
-                        'dicount'=>$dicount,
+                        'discount'=>$dicount,
                      ],
 
                 ];
@@ -188,7 +188,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>(int)$total, 
                         'Total'=>$total + $total_money,
-                         'dicount'=>$dicount,
+                         'discount'=>$dicount,
                     ],
 
                 ];
@@ -216,7 +216,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total,
                         'DeliveryMoney'=>$deliver_money, 
                         'Total'=>$total + $deliver_money,
-                        'dicount'=>$dicount, 
+                        'discount'=>$dicount, 
                     ],
 
                 ];
@@ -239,7 +239,7 @@ class CartController extends Controller
                         'OrderMoney'=>(string)$total_money,
                         'DeliveryMoney'=>(int)$total, 
                         'Total'=>$total_money + $total,
-                        'dicount'=>$dicount,  
+                        'discount'=>$dicount,  
                     ],
                 ];
             }
