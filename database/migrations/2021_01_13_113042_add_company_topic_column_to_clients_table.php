@@ -14,7 +14,7 @@ class AddCompanyTopicColumnToClientsTable extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('comany_topic')->nullable();
+            $table->string('company_topic')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCompanyTopicColumnToClientsTable extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-             $table->dropColumn("comany_topic");
+             $table->dropColumn("company_topic");
         });
     }
 }
