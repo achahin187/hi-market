@@ -54,10 +54,10 @@ class DeliveryCompanyController extends Controller
         ]);
 
         $request_data = $request->all();
-        // $request_data['phone_number'] = array_filter($request->phone_number);
+        $request_data['phone_number'] = array_filter($request->phone_number);
 
-        // $company = DeliveryCompany::create($request_data);
-        // $company->branches()->sync($request_data["branch_id"]);
+        $company = DeliveryCompany::create($request_data);
+        $company->branches()->sync($request_data["branch_id"]);
         $this->storeCompanyClient($request);
         return redirect()->route("delivery-companies.index");
     }
