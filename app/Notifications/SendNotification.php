@@ -9,20 +9,24 @@ class SendNotification {
     public $device_token;
     public $order;
     public $data;
+    public $title;
+    public $body;
 
-    public function __construct($device_token, $order, $data=[], $type)
+    public function __construct($device_token, $order, $data=[], $type, $title=null, $body=null)
     {
         $this->device_token = $device_token;
-        $this->order = $order;
-        $this->data = $data;
+        $this->order        = $order;
+        $this->data         = $data;
+        $this->title        = $title;
+        $this->body         = $body;
         
         switch ($type) {
+            
             case 'Delivertto':
                 $this->sendNotificationOffer();
                 break;
 
             case 'Custom':
-
                  $this->sendNotificationCustom();
                 break;
 
@@ -44,7 +48,7 @@ class SendNotification {
         }
     }
 
-     public function sendNotificationDelivery()
+    public function sendNotificationDelivery()
     {
 
         $data = [
@@ -313,14 +317,14 @@ class SendNotification {
 
         $data = [
 
-            "to" => '/topics/Deals',
+            "to" => '/topics/Custom',
             "data"=> $this->data,
 
             "notification" =>
                 [
-                    "title" => 'New Offers In Delivertto, Check It Now',
-                    "body" =>  'New Offers In Delivertto, Check It Now',
-                    "icon" => $this->getIconeOffer(1),
+                    "title" => $this->title,
+                    "body" =>  $this->body,
+                    "icon" => '',
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
                     "android_channel_id"=> "fcm_default_channel",

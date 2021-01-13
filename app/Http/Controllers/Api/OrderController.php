@@ -178,7 +178,7 @@ class OrderController extends Controller
                 
                 new SendNotification($order->client->device_token, $order, $data, 'order');
             }
-
+            //Send Notification To Company That have Order...
             if ($company) {
                 $company_client = Client::Where('company_id', $comapny->id)->Where('verify', 1)->first();
                 if ($company_client) {
