@@ -179,11 +179,14 @@ class OrderController extends Controller
                 new SendNotification($order->client->device_token, $order, $data, 'order');
             }
 
-            if ($company) {
-                Client::Where('company_id', $comapny->id)->Where('verify', 1)->first();
-                new SendNotification($company->, $order, $data, 'order');
+            // if ($company) {
+            //     $company_client = Client::Where('company_id', $comapny->id)->Where('verify', 1)->first();
+            //     if () {
+            //         # code...
+            //     }
+            //     new SendNotification($company->, $order, $data, 'order');
                   
-              }  
+            //   }  
             //$this->storeNotificationOrder($order);
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
