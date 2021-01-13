@@ -60,8 +60,8 @@ class SendNotification {
 
             "notification" =>
                 [
-                    "title" => request()->header('lang') == 'ar' ? 'هناك عرض حديد من ديليقيرتة' :'New Offers In Delivertto, Check It Now',,
-                    "body" => request()->header('lang') == 'ar' ? 'هناك عرض حديد من ديليقيرتة' :'New Offers In Delivertto, Check It Now',,
+                    "title" =>  'هناك عرض حديد من ديليقيرتة',
+                    "body" =>   'هناك عرض حديد من ديليقيرتة' ,
                     "icon" => '',
                     "requireInteraction" => true,
                     "click_action"=> "HomeActivity",
