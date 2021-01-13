@@ -139,6 +139,7 @@ class DeliveryCompanyController extends Controller
             'email' => $request->email,
             'password' => $request->phone_number[0],
             'verify' => 0,
+            'comany_topic' => $request->name_en,
        ]);
     }
 }
