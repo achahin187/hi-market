@@ -407,12 +407,12 @@
              $(".branch_9").attr("disabled", "disabled");
              $(".supermarket_6").attr("disabled", "disabled");
                   
-                    var selectedStatus      = $(this).find('option:selected').val();
-                    var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
+             var selectedStatus      = $(this).find('option:selected').val();
+             var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
 
-                     $('.branch_id').val(selectedStatus);
-                     $('.branch_product_id').val(selectedStatus);
-                     $('.supermarket_id').val(selectedsuperMarket);
+             $('.branch_id').val(selectedStatus);
+             $('.branch_product_id').val(selectedStatus);
+             $('.supermarket_id').val(selectedsuperMarket);
 
                     
                     
