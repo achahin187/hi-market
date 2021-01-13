@@ -219,8 +219,6 @@ class SendNotification {
         $this->storeNotificationOffer();
     }
 
-   
-
     public function getMessage($order,$lang)
     {
         $messages = [
