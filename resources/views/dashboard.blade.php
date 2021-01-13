@@ -110,7 +110,6 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                         <tr>
                           <th style="width: 10px">#</th>
                           <th>num</th>
-                       
                           <th>Total Money</th>
                           <th >Action</th>
                         </tr>
@@ -119,7 +118,6 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                         <tr>
                           <td>{{ $index +1 }}</td>
                           <td>{{ $order->num }}</td>
-                        
                           <td>{{ $order->total_money .' LE' }}</td>
                           <!-- download button -->
                             <td> <a href="{{ route('orders.show.details',['id'=>$order->id]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td>
