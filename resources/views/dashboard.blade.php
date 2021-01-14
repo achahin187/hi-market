@@ -668,7 +668,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
              element: 'line-chart',
              resize: true,
              data: [
-                 foreach ($sales_data as $data)
+                 @foreach ($sales_data as $data)
                  {
                      ym: "{ $data->year }}-{ $data->month }}", sum: "{ $data->sum }}"
                  },
