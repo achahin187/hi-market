@@ -212,7 +212,7 @@ class CategoriesController extends Controller
                     "msg" => "",
                     "data" => [
                         "products" => CategoryProductResource::collection($products),
-                        "more"=>$products->hasMorPages()
+                        "more"=>$products->hasMorePages()
                     ]
                 ]);
 
