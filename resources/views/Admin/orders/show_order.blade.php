@@ -1,4 +1,4 @@
-{{-- @extends('layouts.admin_layout')
+@extends('layouts.admin_layout')
 
 @section('content')
 
@@ -126,7 +126,7 @@
                              @endif   
 
                                
-                                {{-- total_before --}}
+                                {{--  total_before --}}
                                 <div class="form-group">
                                   <label>Total Money</label>
                                   <p>{{ $order->total_before  }}</p>
@@ -238,11 +238,6 @@
                                 </div>
                                 @endif
                              
-                           
-                           
-
-
-
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -258,5 +253,3 @@
     </div>
 
 @endsection
-
- --}}
