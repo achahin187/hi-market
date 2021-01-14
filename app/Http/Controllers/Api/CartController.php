@@ -53,9 +53,9 @@ class CartController extends Controller
     {
 
         $validation = \Validator::make(\request()->all(), [
-            'promoCode' => 'required',
-            'total_money' => 'required',
-            'deliver_money' => 'required'
+            'promoCode'     => 'required',
+            'total_money'   => 'required',
+            'deliver_money' => 'required',
             
         ]);
         if ($validation->fails()) {
@@ -73,7 +73,10 @@ class CartController extends Controller
                 }
             }
 
-             $offer = Offer::CheckPromoCode($request->promoCode)->Where('status', 1 )->first();
+            $offer = Offer::CheckPromoCode($request->promoCode)->Where('status', 1 )->first();
+
+            #check if user use this promocode before
+            
 
             if ( $offer->source == 'Branch') {
 
