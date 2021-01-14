@@ -100,7 +100,7 @@ class AuthController extends Controller
             $test = $client->update([
                 'device_token' => $request->device_token
             ]);
-            return $test;
+            
 
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
