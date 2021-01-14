@@ -71,26 +71,17 @@ class ClientController extends Controller
 
         $this->validate($request,$rules);
 
-        $name = $request->input('name');
-
-        $email = $request->input('email');
-
-        $password = Hash::make($request->input('password'));
-
-        $address = $request->input('address');
-
-        $mobile_number = $request->input('mobile_number');
 
         $client = Client::create([
 
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'address' => $address,
-            'mobile_number' => $mobile_number,
-            //'area' => $request->area_id,
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'address' => $request->input('address'),
+            'mobile_number' => $request->input('mobile_number'),
             'status' => $request->status,
-            'created_by' => $user->id
+            'created_by' => $user->id,
+            'verify' => 1
         ]);
 
         if($client)
