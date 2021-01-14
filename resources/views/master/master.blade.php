@@ -793,6 +793,7 @@ $settings = App\Models\Setting::all()->first();
              data: [
                  @foreach ($sales_data as $data)
                  {
+                    @dd( $data->year, $data->month, $data->sum  )
                      ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
                  },
                  @endforeach
