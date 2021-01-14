@@ -662,7 +662,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
         })
     </script>
 
-     <script>
+    {{--  <script>
 
         //line chart
          var line = new Morris.Line({
@@ -685,6 +685,6 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
              gridTextFamily: 'Open Sans',
              gridTextSize: 10
          });
-    </script>
+    </script> --}}
 
 @endsection
