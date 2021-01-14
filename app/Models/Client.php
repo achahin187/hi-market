@@ -122,6 +122,11 @@ class Client extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
+    public function promocode()
+    {
+        return $this->belongsToMany('App\Models\Offer', 'promocode_user');
+    }
+
     // public function getJWTIdentifier()
     // {
     //     return $this->getKey();

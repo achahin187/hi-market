@@ -9,11 +9,11 @@ $orders_count = DB::table('orders')->count();
 $clients_count = DB::table('clients')->Where('status',1)->count();
 $branches_count = DB::table('branches')->Where('status', 'active')->count();
 
-  /* $sales_data = \App\Models\Order::select(
+   $sales_data = \App\Models\Order::select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(total_money) as sum')
-        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('YEAR(created_at)')->get();*/
+        )->whereRaw('YEAR(created_at)',date("Y"))->groupByRaw('YEAR(created_at)')->get();
 
 
 @endphp

@@ -39,4 +39,9 @@ class Offer extends Model
     {
     	return $this->belongsTo('App\Models\Product');
     }
+
+    public function client()
+    {
+        return $this->belongsToMany('App\Models\Client', 'promocode_user');
+    }
 }
