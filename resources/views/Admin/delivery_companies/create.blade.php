@@ -131,10 +131,6 @@
                                     <div class="form-group">
                                         <label for="branch">Branch</label>
                                         <select name="branch_id[]" id="branch" multiple class="form-control select2 branches">
-                                           {{--  @foreach($branches as $branch)
-                                                <option @if(old("branch_id") == $branch->id) selected
-                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
-                                            @endforeach --}}
                                         </select>
                                     </div>
 
@@ -148,8 +144,8 @@
                                                 data-placeholder="Select a State" style="width: 100%;" required>
                                             @php
                                                 $statuses = [
-                                                 '0'=>trans('active'),
-                                                  '1'=>trans('inactive')
+                                                 '0' =>trans('active'),
+                                                 '1' =>trans('inactive')
                                               ];
                                             @endphp
                                             @foreach($statuses  as $index=>$status)
