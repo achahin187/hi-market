@@ -22,7 +22,7 @@ class ClientResource extends JsonResource
             "total_points"=>!is_null($this->total_points) ? $this->total_points : 0,
             "image"=>!is_null($this->image) ? asset('client/'.$this->image) : "default.png",
             'verify'=> !! $this->verify,
-            'device_token' => $this->device_token,
+            
 
         ];
     }

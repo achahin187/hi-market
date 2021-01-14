@@ -111,7 +111,7 @@
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.branches') }}</th>
                                         
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                        @if(auth()->user()->hasAnyPermission(['financial-list-branch-delete','financial-list-branch-edit']))
                                             <th>{{ __('admin.details') }}</th>
                                         @endif
                                     </tr>
@@ -133,10 +133,10 @@
                                         </td>
 
                           
-                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            @if(auth()->user()->hasAnyPermission(['financial-list-branch-delete','financial-list-branch-edit']))
                                                 <td>
                                                 
-                                                            @if(auth()->user()->can('delivery-edit'))
+                                                            @if(auth()->user()->can('financial-list-branch-edit'))
                                                                 <a  class="btn btn-primary" 
                                                                    href="{{ route('company.orders',$company->id) }}">{{ __('admin.details') }}</a>
                                                             @endif
