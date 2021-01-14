@@ -655,6 +655,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
         <!-- right col -->
     </div>
     @endif
+
     <script>
         $().ready(function(){
             HidefloatButton()
@@ -670,7 +671,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
              data: [
                  @foreach ($sales_data as $data)
                  {
-                     ym: "{ $data->year }}-{ $data->month }}", sum: "{ $data->sum }}"
+                     ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
                  },
                  endforeach
              ],
