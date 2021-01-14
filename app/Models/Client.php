@@ -74,7 +74,7 @@ class Client extends Authenticatable
 
     protected static $logName = 'client';
 
-    protected static $logAttributes = ['status', 'password', 'name', 'email', 'mobile_number', 'address', 'device_token','image'];
+    protected static $logAttributes = ['status', 'password', 'name', 'email', 'mobile_number', 'address','image'];
 
     protected $guarded = [];
 
