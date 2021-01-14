@@ -110,20 +110,9 @@
                                                type="password" class="form-control">
                                     </div>
 
-
-                                    <div class="form-group">
-                                        <label for="branch">Branch</label>
-                                        <select name="branch_id[]" id="branch" multiple class="form-control select2">
-                                            @foreach($branches as $branch)
-                                                <option @if(old("branch_id") == $branch->id) selected
-                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
+                                     <div class="form-group">
                                         <label>{{__('admin.city')}} </label>
-                                        <select id="city" class=" @error('city_id') is-invalid @enderror select2"
+                                        <select  class="city @error('city_id') is-invalid @enderror select2"
                                                 name="city_id" data-placeholder="Select a State" style="width: 100%;"
                                                 required>
 
@@ -137,6 +126,19 @@
 
                                         </select>
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id[]" id="branch" multiple class="form-control select2 branches">
+                                            @foreach($branches as $branch)
+                                                <option @if(old("branch_id") == $branch->id) selected
+                                                        @endif value="{{$branch->id}}">{{$branch->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                   
 
 
                                     <div class="form-group">
@@ -190,4 +192,24 @@
 
 @endsection
 
+@push('scripts')
+<script>
+    
+  $(".city").change(function(){
 
+        $.ajax({
+
+            url: "{{ route('get_city_branches') }}?city_id=" + $(this).val(),
+            method: 'GET',
+            success: function(data) {
+                console.log(data);
+                data.data.forEach(function(x){
+                    
+                    $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+
+                })
+
+            }
+        });// end ajax
+</script>
+@endpush            

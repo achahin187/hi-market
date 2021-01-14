@@ -66,7 +66,7 @@ class DeliveryCompanyController extends Controller
         $request_data['phone_number'] = array_filter($request->phone_number);
 
         $company = DeliveryCompany::create($request_data);
-        dd($company);
+
         $company->branches()->sync($request_data["branch_id"]);
         $this->storeCompanyClient($request, $company->id);
         return redirect()->route("delivery-companies.index");
@@ -143,15 +143,21 @@ class DeliveryCompanyController extends Controller
 
     private function storeCompanyClient($request,$company_id)
     {   
-        dd($company_id);
+        
        Client::updateOrCreate([
             'name' => $request->name_en,
             'email' => $request->email,
             'password' => $request->password,
             'mobile_number' => $request->phone_number[0],
-            'verify' => 1,
             'company_topic' => $request->name_en,
             'company_id' => $company_id,
+            'verify' => 1,
        ]);
+    }
+
+    public function get_city_branches(Request $request)
+    {
+        $branches = Branch::Where('city_id', $request->city_id)->get();
+        return Response()->json($branches);
     }
 }

@@ -280,7 +280,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //contact us
         Route::resource('inboxes', 'Admin\InboxController')->only(['index', 'update', 'destroy']);
 
-       
+        Route::get('get_city_branches', 'Admin\DeliveryCompanyController@get_city_branches')->name('get_city_branches');
 
         // Route::get('rate',function(){
         //     $rate =
