@@ -59,7 +59,7 @@ class Collect extends Command
             $ar_products_collection->add($content[0]);
         }
         file_put_contents(public_path("products/arabic_products.json"), json_encode($ar_products_collection));
-        $this->info("fetched english products " . $ar_products_collection->count() . " product");
+        $this->info("fetched arabic products " . $ar_products_collection->count() . " product");
         $en_products = File::allFiles(public_path("products/en"));
         $this->info("processing :" . count($en_products) . " product");
         $en_products_collection = collect();
@@ -71,38 +71,10 @@ class Collect extends Command
         $this->info("fetched english products " . $en_products_collection->count() . " product");
         $arabic_categories = json_decode(file_get_contents(public_path("arabic_categories.json.json")));
         $english_categories = json_decode(file_get_contents(public_path("english_categories.json.json")));
-        foreach ($arabic_categories as $i => $category) {
-            Category::create([
-                "name_en" => $english_categories[$i]->name,
-                "name_ar" => $category->name,
-                "image" => $category->image,
-                "id" => $category->category_id
-            ]);
-        }
-        foreach ($ar_products_collection as $i => $product) {
-            if (is_null($product)) {
-                continue;
-            }
-            $product = Product::create(
-                [
-                    "name_ar" => $product->arabic_product_name,
-                    "name_en" => $en_products_collection[$i]->english_product_name,
-                    "eng_description" => strip_tags($en_products_collection[$i]->product_description),
-                    "arab_description" => strip_tags($product->product_description),
-                    "rate" => $product->product_average_rating,
-                    "ratings" => $product->product_rating_count,
-                    "price" => $product->product_acutal_price,
-                    "offer_price" => $product->product_offer_price,
-                    "images" => $product->File[0]->image,
-                    "category_id"=>Category::all()->random(1)->first()->id
-                ]
-            );
-            $product->branches()->sync(Branch::all()->random(1)->first()->id);
-            $product->size()->create([
-                "value" => (int)$product->product_size
-            ]);
-        }
-//        Excel::store(new ProductsJsonExport, "products.xlsx");
+//        Excel::store(new ArabicCategoriesExport, "arabic_categories.xlsx");
+
+
+        Excel::store(new ProductsJsonExport, "products.xlsx");
 //        Excel::store(new EnglishCategoryExport, "english_categories.xlsx");
 //        Excel::store(new ArabicCategoriesExport, "arabic_categories.xlsx");
 //        Excel::import(new )
