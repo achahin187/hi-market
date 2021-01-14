@@ -89,6 +89,7 @@ class AuthController extends Controller
         if (auth("client-web")->attempt([
             "mobile_number" => $request->mobile_number,
             "password" => $request->password,
+            'status'   => 1,
 
         ])) {
 
