@@ -207,9 +207,11 @@
                     
                 //     $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-                // })
+             //})
 
             }
-        });// end ajax
+        });// end ajax.
+    });// end ajax.
+
 </script>
 @endpush            
