@@ -17,7 +17,7 @@
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            @if(auth()->user()->can('delivery-list'))
+                            @if(auth()->user()->can('deliveryAdmin-list'))
                                 <li class="breadcrumb-item"><a
                                         href="{{route('delivery-companies.create')}}">{{ __('admin.add_delivery_company') }}</a>
                                 </li>
@@ -60,7 +60,7 @@
                                         <th>{{ __('admin.status') }}</th>
                                         <th>{{ __('admin.Delivertto_commission') }}</th>
                                          <th>{{ __('admin.branches') }}</th>
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                        @if(auth()->user()->hasAnyPermission(['deliveryAdmin-delete','deliveryAdmin-edit']))
                                             <th>{{ __('admin.controls') }}</th>
                                         @endif
                                     </tr>
@@ -83,7 +83,7 @@
                                         </td>
 
 
-                                            @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                            @if(auth()->user()->hasAnyPermission(['deliveryAdmin-delete','deliveryAdmin-edit']))
                                                 <td>
                                                     <div class="dropdown">
                                                         <button type="button" id="dropdownMenu2" data-toggle="dropdown"
@@ -92,7 +92,7 @@
                                                             <i class="fas fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            @if(auth()->user()->can('delivery-delete'))
+                                                            @if(auth()->user()->can('deliveryAdmin-delete'))
                                                                 <form
                                                                     action="{{ route('delivery-companies.destroy', $deliveryCompany->id) }}"
                                                                     method="post">
@@ -104,7 +104,7 @@
                                                                             onclick="confirm('{{ __("Are you sure you want to delete this record?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                                 </form>
                                                             @endif
-                                                            @if(auth()->user()->can('delivery-edit'))
+                                                            @if(auth()->user()->can('deliveryAdmin-edit'))
                                                                 <a class="dropdown-item"
                                                                    href="{{ route('delivery-companies.edit', $deliveryCompany->id) }}">{{ __('edit') }}</a>
                                                             @endif
