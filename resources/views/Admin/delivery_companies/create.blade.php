@@ -131,10 +131,10 @@
                                     <div class="form-group">
                                         <label for="branch">Branch</label>
                                         <select name="branch_id[]" id="branch" multiple class="form-control select2 branches">
-                                            @foreach($branches as $branch)
+                                           {{--  @foreach($branches as $branch)
                                                 <option @if(old("branch_id") == $branch->id) selected
                                                         @endif value="{{$branch->id}}">{{$branch->name}}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
 
@@ -202,16 +202,16 @@
             url: "{{ route('get_city_branches') }}?city_id=" + $(this).val(),
             method: 'GET',
             success: function(data) {
-                console.log(data);
-                // data.data.forEach(function(x){
+                
+                data.forEach(function(x){
                     
-                //     $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                    $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-             //})
+             })
 
             }
         });// end ajax.
-    });// end ajax.
+    });// end functions.
 
 </script>
 @endpush            
