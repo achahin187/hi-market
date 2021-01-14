@@ -65,7 +65,7 @@ class ProductController extends Controller
     {
         // Add Rate And Address Branch ++.
         // Change to Branch
-        $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->get();
+        $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i')  )->paginate();
 
         foreach ($checkSatus as  $status) {
             $status->update(['status'=> 0]);
@@ -118,7 +118,7 @@ class ProductController extends Controller
                       ]);
 
 
-                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic',"more"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic'),$offers->hasMorePages()]);
 
 
                   } else {
@@ -136,7 +136,7 @@ class ProductController extends Controller
                     "body" => $request->header("udid"),
                     'lat' => $request->lat,
                     'lon' => $request->lon,
-                    
+
 
                 ]);
               }else{
@@ -268,7 +268,7 @@ class ProductController extends Controller
 
                           }
 
-                         
+
                         $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                                ->where('status', 'active')
                                                ->where(function($q) use($request){
@@ -290,7 +290,7 @@ class ProductController extends Controller
                                                ->get();
 
                 }
-                     
+
 
                 return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
             }//end if  auth
