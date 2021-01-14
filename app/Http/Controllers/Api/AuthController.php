@@ -79,9 +79,7 @@ class AuthController extends Controller
 
 
         if ($validator->fails()) {
-
             return $this->returnValidationError(422, $validator);
-
         }
 
 
@@ -99,11 +97,11 @@ class AuthController extends Controller
 
             $msg = "you have been logged in successfully";
 
-            $client->update([
+            $test = $client->update([
                 'device_token' => $request->device_token
             ]);
 
-
+            dd($test);
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
         }
