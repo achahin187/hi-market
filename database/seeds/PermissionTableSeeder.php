@@ -24,7 +24,6 @@ class PermissionTableSeeder extends Seeder
             'role-edit',
             'role-delete',
 
-
             'admin-list',
             'admin-create',
             'admin-delete',
