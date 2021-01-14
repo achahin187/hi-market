@@ -147,7 +147,7 @@ class DeliveryCompanyController extends Controller
             'name' => $request->name_en,
             'email' => $request->email,
             'password' => $request->phone_number[0],
-            'verify' => 0,
+            'verify' => 1,
             'company_topic' => $request->name_en,
        ]);
     }
