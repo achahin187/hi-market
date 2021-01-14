@@ -1104,7 +1104,7 @@ $(document).ready(function() {
 var pageRefresh = 5000; //5 s
     setInterval(function() {
         refresh();
-        console.log(refresh());
+        
     }, pageRefresh);
 });
 

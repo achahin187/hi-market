@@ -128,8 +128,8 @@ class OrderController extends Controller
                 'branch_id' =>  $order_details["supermarket_id"],
 
                 'point_redeem' => $order_details["redeem"],
-                'status' => 0,
                 'company_id' => $company->id ?? 17,
+                'status' => 0,
 
             ]);
 
