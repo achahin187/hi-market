@@ -673,7 +673,7 @@ $branches_count = DB::table('branches')->Where('status', 'active')->count();
                  {
                      ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
                  },
-                 endforeach
+                 @endforeach
              ],
              xkey: 'ym',
              ykeys: ['sum'],
