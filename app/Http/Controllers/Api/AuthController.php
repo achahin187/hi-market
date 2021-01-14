@@ -93,7 +93,7 @@ class AuthController extends Controller
 
         ])) {
 
-            $client = Auth::guard('client-web')->user();
+            $client = Client::where('id', Auth::guard('client-web')->user()->id)->first();
 
             $token = $client->createToken("hi-market")->accessToken;
 
