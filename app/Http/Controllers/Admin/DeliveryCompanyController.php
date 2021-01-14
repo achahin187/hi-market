@@ -66,6 +66,7 @@ class DeliveryCompanyController extends Controller
         $request_data['phone_number'] = array_filter($request->phone_number);
 
         $company = DeliveryCompany::create($request_data);
+        dd($company);
         $company->branches()->sync($request_data["branch_id"]);
         $this->storeCompanyClient($request, $company->id);
         return redirect()->route("delivery-companies.index");
@@ -142,7 +143,7 @@ class DeliveryCompanyController extends Controller
 
     private function storeCompanyClient($request,$company_id)
     {   
-        
+        dd($company_id);
        Client::updateOrCreate([
             'name' => $request->name_en,
             'email' => $request->email,
