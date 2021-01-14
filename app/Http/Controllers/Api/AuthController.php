@@ -99,7 +99,10 @@ class AuthController extends Controller
 
             $msg = "you have been logged in successfully";
 
-            $client->update(['device_token' => $request->device_token]);
+            $client->update([
+                'device_token' => $request->device_token
+            ]);
+
 
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
