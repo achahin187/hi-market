@@ -38,9 +38,9 @@ class CategoriesController extends Controller
         $branch_id = $request->id;
 
         $checkSatus  = Offer::where('end_date', '<', Carbon::now()->format('Y-m-d H:i:s')  )->get();
-        
+
         if ($checkSatus) {
-            
+
             foreach ($checkSatus as  $status) {
                 $status->update(['status'=> 0]);
             }
@@ -61,9 +61,9 @@ class CategoriesController extends Controller
 
         $offers = offer::WhereHas('branches', function($q) use($branch_id){
             $q->where('branch_id', $branch_id);
-        })->where('status', 1)->where('source', 'Branch')->orderBy('priority', 'asc')->get();
+        })->where('status', 1)->where('source', 'Branch')->orderBy('priority', 'asc')->paginate();
 
-       
+
         foreach ($categories as $category) {
             $category->imagepath = asset('categories_image/' . $category->image);
         }
@@ -81,12 +81,13 @@ class CategoriesController extends Controller
                 "supermarket" => [
                     'id' => $branch->id,
                     "name" => $branch->name,
-                ]
+                ],
+                "more"=>$offers->hasMorePages()
             ]
 
         ]);
     }
- 
+
 
     public function supermarketoffers(Request $request)
     {
@@ -116,11 +117,11 @@ class CategoriesController extends Controller
             ->select('product_id')->get();
 
        if ($request->category_id == 0) {
-              
-         $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->orderBy('priority', 'asc')->get();
+
+         $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->orderBy('priority', 'asc')->paginate();
         }else{
-          $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->where('category_id', $request->category_id)->orderBy('priority', 'asc')->get();
-        }     
+          $products = $supermarket->products()->has("category")->filter()->where('status', 'active')->where('flag', 1)->where('category_id', $request->category_id)->orderBy('priority', 'asc')->paginate();
+        }
 
         $categories = $supermarket->categories;
 
@@ -154,7 +155,7 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products','categories','supermarket'], [CategoryProductResource::collection($products),CategoryResource::collection($categories),$supermarket->name]);
+        return $this->returnData(['products','categories','supermarket',"more"], [CategoryProductResource::collection($products),CategoryResource::collection($categories),$supermarket->name,$products->hasMorePages()]);
     }
 
     public function categoryproducts(Request $request)
@@ -183,7 +184,7 @@ class CategoriesController extends Controller
 
                 $products = $category->products()->whereHas("branches",function($query){
                     $query->where("branches.id",request("supermarket_id"));
-                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->orderBy('priority', 'asc')->get();
+                })->whereNotNull("created_at")->has("category")->filter()->where('status', 'active')->orderBy('priority', 'asc')->paginate();
 
 
                 // foreach ($products as $product) {
@@ -210,7 +211,8 @@ class CategoriesController extends Controller
                     "status" => true,
                     "msg" => "",
                     "data" => [
-                        "products" => CategoryProductResource::collection($products)
+                        "products" => CategoryProductResource::collection($products),
+                        "more"=>$products->hasMorePages()
                     ]
                 ]);
 

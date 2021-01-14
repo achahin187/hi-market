@@ -66,7 +66,7 @@ class FetchProductDetails implements ShouldQueue
             $productResponse = new Response();
             $productResponse->category_id = $this->category->category_id;
             $productResponse->in_wishlist = $product->in_wishlist;
-            $productResponse->product_average_rating = $product->product_rating_count;
+            $productResponse->product_average_rating = $product->product_average_rating;
             $productResponse->product_id = $product->product_id;
             $productResponse->brand_name = $product->brand_name;
             $productResponse->arabic_brand_name = $product->arabic_brand_name;
