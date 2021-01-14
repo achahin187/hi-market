@@ -203,11 +203,11 @@
             method: 'GET',
             success: function(data) {
                 console.log(data);
-                data.data.forEach(function(x){
+                // data.data.forEach(function(x){
                     
-                    $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
+                //     $('.branches').append(new Option(x.name_ar,x.id,false,false)).trigger("change");
 
-                })
+                // })
 
             }
         });// end ajax
