@@ -27,10 +27,10 @@ class FinancialController extends Controller
         $this->blade = 'Admin.financials.' ;
         $this->route = 'financials.' ;
 
-        $this->middleware('permission:delivery-list', ['only' => ['index']]);
-        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
-        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:financial-list-branch', ['only' => ['index']]);
+        $this->middleware('permission:financial-list-branch', ['only' => ['create','store']]);
+        $this->middleware('permission:financial-list-branch', ['only' => ['edit','update']]);
+        $this->middleware('permission:financial-list-branch', ['only' => ['destroy']]);
     }
 
     /**
