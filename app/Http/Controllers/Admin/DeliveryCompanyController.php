@@ -12,7 +12,16 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DeliveryCompanyController extends Controller
-{
+{   
+
+
+     function __construct()
+    {
+        $this->middleware('permission:deliveryCompany-list', ['only' => ['index']]);
+        $this->middleware('permission:deliveryCompany-create', ['only' => ['create','store']]);
+        $this->middleware('permission:deliveryCompany-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:deliveryCompany-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
