@@ -132,8 +132,8 @@ class DeliveryCompanyController extends Controller
     public function destroy($id)
     {
         try {
-            $delivery = DeliveryCompany::find($id);
-            $delivery->delete();
+            $company = DeliveryCompany::find($id);
+            $company->delete();
             return redirect()->route("delivery-companies.index")->withStatus("deleted");
         } catch (\Exception $e) {
             return redirect()->route("delivery-companies.index")->withStatus("Something Went Wrong");
@@ -147,7 +147,7 @@ class DeliveryCompanyController extends Controller
             'name' => $request->name_en,
             'email' => $request->email,
             'password' => $request->password,
-            'phone_number' => $request->phone_number[0],
+            'mobile_number' => $request->phone_number[0],
             'verify' => 1,
             'company_topic' => $request->name_en,
             'company_id' => $company_id,
