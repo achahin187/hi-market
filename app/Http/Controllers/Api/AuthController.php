@@ -101,7 +101,7 @@ class AuthController extends Controller
                 'device_token' => $request->device_token
             ]);
 
-            dd($test);
+            return $test;
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
         }
