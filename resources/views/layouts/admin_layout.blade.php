@@ -555,7 +555,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
-                    @if(auth()->user()->can('financials-list'))
+                    @if(auth()->user()->can('financial-list-branch'))
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -566,7 +566,7 @@ $settings = App\Models\Setting::all()->first();
                         </a>
                     </li>
                     @endif
-                    @if(auth()->user()->can('financial-list-branch'))
+                    @if(auth()->user()->can('notifications-list'))
                       <li class="nav-item">
 
                         <a href="{{route('notifications.index')}}" class="nav-link">

@@ -11,6 +11,13 @@ use App\Notifications\SendNotification;
 class NotificationController extends Controller
 {
 
+     function __construct()
+    {
+        $this->middleware('permission:notifications-list', ['only' => ['index']]);
+        $this->middleware('permission:notifications-create', ['only' => ['create','store']]);
+        $this->middleware('permission:notifications-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:notifications-delete', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
