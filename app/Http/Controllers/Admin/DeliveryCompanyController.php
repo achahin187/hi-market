@@ -157,7 +157,7 @@ class DeliveryCompanyController extends Controller
 
     public function get_city_branches(Request $request)
     {
-        $branches = Branch::Where('city_id', $request->city_id)->get();
+        $branches = Branch::WhereDoesntHave('companies')->Where('city_id', $request->city_id)->get();
         return Response()->json($branches);
     }
 }
