@@ -9,26 +9,35 @@ class SendNotification {
     public $device_token;
     public $order;
     public $data;
+    public $title;
+    public $body;
 
-    public function __construct($device_token, $order, $data=[], $type)
+    public function __construct($device_token, $order, $data=[], $type, $title=null, $body=null)
     {
         $this->device_token = $device_token;
-        $this->order = $order;
-        $this->data = $data;
+        $this->order        = $order;
+        $this->data         = $data;
+        $this->title        = $title;
+        $this->body         = $body;
         
         switch ($type) {
-            case 'Delivertto':
-                $this->sendNotificationOffer();
+
+            case 'deal_all':
+                $this->sendNotificationOfferDelivertto();
+                break;
+
+            case 'Deal':
+                 $this->sendNotificationOffer();
                 break;
 
             case 'Custom':
-
                  $this->sendNotificationCustom();
                 break;
 
-            case 'Topic':
-                # code...
-                break;
+
+            case 'Delivery':
+                 $this->sendNotificationDelivery();
+                break;    
                 
             case 'order':
                 $this->sendNotificationOrder(); 
@@ -40,6 +49,121 @@ class SendNotification {
         }
     }
 
+    #Done
+    public function sendNotificationOfferDelivertto()
+    {
+
+        $data = [
+
+            "to" => $this->device_token,
+            "data"=> $this->data,
+
+            "notification" =>
+                [
+                    "title" =>  'هناك عرض حديد من ديليقيرتة',
+                    "body" =>   'هناك عرض حديد من ديليقيرتة' ,
+                    "icon" => '',
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+        if($result == FALSE){
+            die(curl_exec($ch));
+        }
+
+        curl_close($ch);
+        #store notification To database
+        //$this->storeNotificationOrder();
+    }
+    #Done
+    public function sendNotificationDelivery()
+    {
+
+        $data = [
+
+            "to" => $this->device_token,
+            "data"=> $this->data,
+
+            "notification" =>
+                [
+                    "title" => request()->header('lang') == 'ar' ? 'هناك طلب جديد' :'You Have New Order',
+                    "body" => request()->header('lang') == 'ar' ? 'هناك طلب جديد' :'You Have New Order',
+                    "icon" => '',
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
+
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
+
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+        if($result == FALSE){
+            die(curl_exec($ch));
+        }
+
+        curl_close($ch);
+        #store notification To database
+        //$this->storeNotificationOrder();
+    }
+    #Done
     public function sendNotificationOrder()
     {
 
@@ -98,13 +222,13 @@ class SendNotification {
         #store notification To database
         $this->storeNotificationOrder();
     }
-
+    #Done
     public function sendNotificationOffer()
     {
 
         $data = [
 
-            "to" => '/topics/Deals',
+            "to" => '/topics/'.$this->device_token,
             "data"=> $this->data,
 
             "notification" =>
@@ -155,64 +279,63 @@ class SendNotification {
         #store notification Offer To database
         $this->storeNotificationOffer();
     }
+    #Done
+    public function sendNotificationCustom()
+    {
 
-    //   public function sendNotificationCustom()
-    // {
+        $data = [
 
-    //     $data = [
+            "to" => '/topics/Custom',
+            "data"=> $this->data,
 
-    //         "to" => '/topics/Deals',
-    //         "data"=> $this->data,
+            "notification" =>
+                [
+                    "title" => $this->title,
+                    "body" =>  $this->body,
+                    "icon" => '',
+                    "requireInteraction" => true,
+                    "click_action"=> "HomeActivity",
+                    "android_channel_id"=> "fcm_default_channel",
+                    "high_priority"=> "high",
+                    "show_in_foreground"=> true
+                ],
 
-    //         "notification" =>
-    //             [
-    //                 "title" => 'New Offers In Delivertto, Check It Now',
-    //                 "body"  =>  'New Offers In Delivertto, Check It Now',
-    //                 "icon"  => $this->getIconeOffer(1),
-    //                 "requireInteraction" => true,
-    //                 "click_action"=> "HomeActivity",
-    //                 "android_channel_id"=> "fcm_default_channel",
-    //                 "high_priority"=> "high",
-    //                 "show_in_foreground"=> true
-    //             ],
+            "android"=>
+                [
+                 "priority"=>"high",
+                ],
 
-    //         "android"=>
-    //             [
-    //              "priority"=>"high",
-    //             ],
+                "priority" => 10,
+                    "webpush"=> [
+                          "headers"=> [
+                            "Urgency"=> "high",
+                          ],
+                    ],
+        ];
 
-    //             "priority" => 10,
-    //                 "webpush"=> [
-    //                       "headers"=> [
-    //                         "Urgency"=> "high",
-    //                       ],
-    //                 ],
-    //     ];
+        $dataString = json_encode($data);
 
-    //     $dataString = json_encode($data);
+        $headers = [
+            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
+            'Content-Type: application/json',
+        ];
 
-    //     $headers = [
-    //         'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
-    //         'Content-Type: application/json',
-    //     ];
+        $ch = curl_init();
 
-    //     $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+        if($result == FALSE){
+            die(curl_exec($ch));
+        }
 
-    //     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-    //     curl_setopt($ch, CURLOPT_POST, true);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-    //     $result = curl_exec($ch);
-    //     if($result == FALSE){
-    //         die(curl_exec($ch));
-    //     }
-
-    //     curl_close($ch);
-    //     #store notification Offer To database
-    //     $this->storeNotificationOffer();
-    // }
-
+        curl_close($ch);
+        #store notification Offer To database
+        //$this->storeNotificationOffer();
+    }
 
     public function getMessage($order,$lang)
     {
@@ -305,62 +428,7 @@ class SendNotification {
             ]);
     }
 
-     public function sendNotificationCustom()
-    {
-
-        $data = [
-
-            "to" => '/topics/Deals',
-            "data"=> $this->data,
-
-            "notification" =>
-                [
-                    "title" => 'New Offers In Delivertto, Check It Now',
-                    "body" =>  'New Offers In Delivertto, Check It Now',
-                    "icon" => $this->getIconeOffer(1),
-                    "requireInteraction" => true,
-                    "click_action"=> "HomeActivity",
-                    "android_channel_id"=> "fcm_default_channel",
-                    "high_priority"=> "high",
-                    "show_in_foreground"=> true
-                ],
-
-            "android"=>
-                [
-                 "priority"=>"high",
-                ],
-
-                "priority" => 10,
-                    "webpush"=> [
-                          "headers"=> [
-                            "Urgency"=> "high",
-                          ],
-                    ],
-        ];
-
-        $dataString = json_encode($data);
-
-        $headers = [
-            'Authorization: key=AAAAT5xxAlY:APA91bHptl1T_41zusVxw_wJoMyOOCozlgz2J4s6FlwsMZgFDdRq4nbNrllEFp6CYVPxrhUl6WGmJl5qK1Dgf1NHOSkcPLRXZaSSW_0TwlWx7R3lY-ZqeiwpgeG00aID2m2G22ZtFNiu',
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-        $result = curl_exec($ch);
-        if($result == FALSE){
-            die(curl_exec($ch));
-        }
-
-        curl_close($ch);
-        #store notification Offer To database
-        //$this->storeNotificationOffer();
-    }
+ 
 
     public function storeNotificationOffer()
     {

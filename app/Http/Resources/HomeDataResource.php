@@ -27,7 +27,7 @@ class HomeDataResource extends JsonResource
                 "rating"=>$this->rate ?? 0,
                 "city_id"=>$this->city_id,
                 "city"=> $this->city->name?? '',
-                "distance"=> $this->distance()?? '',
+                "distance"=> $this->distance()?? 0,
                 "imagepath"=> asset('branche_image/'.$this->image),
                 "logopath"=>asset('branche_image/'.$this->logo),
                 'isOffer'=> !!$this->getOffer(),

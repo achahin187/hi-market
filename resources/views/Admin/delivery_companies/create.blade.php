@@ -90,24 +90,27 @@
                                         @enderror
                                     </div>
 
-                                    {{--
-                                    <div class="form-group">
-                                        <label for="phone_number">Phone Number</label>
-                                        <input id="phone_number" name="phone_number" value="{{old("phone_number")}}" class="form-control" type="text">
-                                    </div> --}}
-
                                     @for ($i = 0; $i < 2; $i++)
                                         <div class="form-group">
                                             <label>@lang('admin.phone')</label>
                                             <input type="text" id='phone_number' name="phone_number[]"
-                                                   class="form-control" value="{{old("phone_number")}}">
+                                                   class="form-control" value="{{old("phone_number[$i]")}}">
                                         </div>
                                     @endfor
+
                                     <div class="form-group">
                                         <label for="commission">Commission</label>
                                         <input id="commission" name="commission" value="{{old("commission")}}"
                                                type="number" class="form-control">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input id="password" name="password" value="{{old("password")}}"
+                                               type="password" class="form-control">
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label for="branch">Branch</label>
                                         <select name="branch_id[]" id="branch" multiple class="form-control select2">

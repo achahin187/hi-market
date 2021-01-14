@@ -69,7 +69,7 @@ class OffersController extends Controller
             'end_date' =>'required|after:start_date',
             'banner' =>'required',
             'promocode_name' =>'unique:offers,promocode_name',
-           // 'banner2' =>'required',
+           // 'banner2' =>'required',promocode_name
             
         ]);
 
@@ -100,24 +100,22 @@ class OffersController extends Controller
           }//end if
 
 
-          $data =  [
-                "type" => "Deal",
-                "product_id" => $request_data['product_id'] ?? null,
-                "superMarket_id" => $request_data['branch_id']??null,
-               ];
+         
 
 
         switch ($request->type) {
             case 'promocode':
+
                     if($request['promocode_type'] == 'Percentage' && ($request['value'] > 100 
                       ||  $request['value'] <= 0))
                       {
                           return redirect()->route($this->route.'index')->withStatus("Percentage value must be between 0 : 100");
                       }else{
 
-                         $this->createPromocode($request_data, $data);
+                         $this->createPromocode($request_data);
 
                       }
+
                 break;
 
             case 'product Offer':
@@ -126,12 +124,12 @@ class OffersController extends Controller
 
             case 'free delivery':
                $this->createFreeProduct($request_data);
-                new SendNotification('topics', '', $data);  
+                //new SendNotification('topics', '', $data);  
                 break;
 
             case 'point':
                $this->createPoint($request_data);
-                new SendNotification('topics', '', $data);  
+                //new SendNotification('topics', '', $data);  
                 break;    
             
             default:
@@ -140,7 +138,7 @@ class OffersController extends Controller
         }
      
                
-              new SendNotification('topics', '', $data);  
+             // new SendNotification('topics', '', $data);  
         return redirect()->route($this->route.'index')->withStatus(__('admin.created_successfully'));
     }
 
@@ -151,20 +149,36 @@ class OffersController extends Controller
      * @param  array  $request
      * @return \Illuminate\Http\Response
      */
-    private function createPromocode($request, $data)
-    {  
+    private function createPromocode($request)
+    {    
         $request_data = collect($request)->except('branch_id');
 
         $create_promocode =   $this->model::create($request_data->toArray());
+                
+        $data =  [
+          "type" => "Deal",
+          "product_id" => $request_data['product_id'] ?? null,
+          "superMarket_id" => $request_data['branch_id']??null,
+        ];
         
 
         if ($request['source'] == 'Branch') {
+
             $create_promocode->branches()->attach($request['branch_id']);
+
             foreach ($request['branch_id'] as $branch) {
-               new SendNotification('topics', '', $data); 
-             } 
+
+              $branch_name = Branch::Where('id',$branch)->first();
+              $topic = $branch_name->area->polygon->first()->topic;
+
+                if ($topic) {
+                  new SendNotification($topic, '', $data, 'Deal'); 
+                }//end if
+             } //end foreach
+
         }else{
-           new SendNotification('Deals', '', $data); 
+          $Deal_all = ['type'=>'deal_all'];
+           new SendNotification('Deal_all', '', $Deal_all, 'Delivertto'); 
         }
 
     }

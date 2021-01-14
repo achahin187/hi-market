@@ -399,24 +399,20 @@
                      $('.product-price').val(parseInt(x.price));
                     $(".product_qty").attr("data-price", x.price);
                      //$('.product_9').attr('name', 'product['+x.id+'][quantity]');
-                
                     })
 
-                       
-
-                   
                 }
             });// end ajax
 
              $(".branch_9").attr("disabled", "disabled");
              $(".supermarket_6").attr("disabled", "disabled");
                   
-                    var selectedStatus      = $(this).find('option:selected').val();
-                    var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
+             var selectedStatus      = $(this).find('option:selected').val();
+             var selectedsuperMarket = $('.supermarket_6').find('option:selected').val();
 
-                     $('.branch_id').val(selectedStatus);
-                     $('.branch_product_id').val(selectedStatus);
-                     $('.supermarket_id').val(selectedsuperMarket);
+             $('.branch_id').val(selectedStatus);
+             $('.branch_product_id').val(selectedStatus);
+             $('.supermarket_id').val(selectedsuperMarket);
 
                     
                     
@@ -460,13 +456,12 @@
 
         var max_input = 9;
         var options = $("#hamdyinput").html();
-        console.log(options);
-
+       
           
         if (x < max_input) {
               $('.order-list').append(`<tr>
                         <td> 
-                            <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinputx" 
+                            <select class="product_9 @error('product_id') is-invalid @enderror select2 product" name="products[]" id="hamdyinput${x}" 
                             data-placeholder="Select a product" style="width: 100%;" required>
                                 ${options}
                             </select>
@@ -520,7 +515,7 @@ function calculateTotal() {
         price += parseFloat($(this).html());
 
     });//end of product price
-   
+   console.log(price);
     $('.total-price').html(price);
 
    

@@ -45,10 +45,12 @@ class NotificationController extends Controller
     {
          $data =  [
                     "type" => "Custom",
-                   ];
+                  ];
+        $message_title = $request->title_ar;          
+        $message_body  = $request->body_ar;  
 
-        new SendNotification('Custom', '', $data);
-        
+        new SendNotification('Custom', '', $data, 'Custom',$message_title, $message_body);
+       
         return redirect()->route('notifications.index')->withStatus(__('added successfully'));
 
     }
