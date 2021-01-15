@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Mockery\Matcher\Closure;
+use parallel\Runtime;
 
 class FetchBigImages extends Command
 {
@@ -39,30 +41,32 @@ class FetchBigImages extends Command
      */
     public function handle()
     {
-        $products = file_get_contents(public_path("products/arabic_products.json"));
-        $products = collect(json_decode($products));
+        $data = [];
+        $products = collect(json_decode(file_get_contents(public_path("products/arabic_products.json"))));
+
+        $self = $this;
+
+
         $data = collect();
-        if(!file_exists(public_path("data/productdetails")))
-        {
-            mkdir(public_path("data/productdetails"));
-        }
-        foreach ($products as $product)
-        {
-            if(is_null($product))
-            {
-                continue;
+        foreach ($products as $product) {
+            foreach ($product->File as $i => $file) {
+                $fileName = time() . uniqid() . ".jpg";
+                $self->client->get($file->image, ["sink" => fopen(public_path("data/productdetails/$fileName"), "w")]);
+                $product->File[$i]->image = $fileName;
+                $this->info("fetch file $fileName from $product->arabic_product_name");
             }
-            foreach ($product->FileBig as $i => $m)
-            {
-                $fileName = uniqid().".jpg";
-                $this->info("fetching {$m->image}");
-                $this->client->get($m->image,["sink"=>fopen(public_path("data/productdetails/$fileName"),"w")]);
+            foreach ($product->FileBig as $i => $file) {
+                $fileName = time() . uniqid() . ".jpg";
+                $self->client->get($file->image, ["sink" => fopen(public_path("data/productdetails/$fileName"), "w")]);
                 $product->FileBig[$i]->image = $fileName;
-                $this->info("fetched: ". $m->image. " and saved file $fileName");
+                $this->info("fetched $fileName file big");
             }
-            $data->push($product);
+            $data->add($product);
+            dump($data);
         }
-        file_put_contents(public_path("products/products.json"),json_encode($data));
+
+
+        file_put_contents(public_path("products/products.json"), json_encode($data));
         return 0;
     }
 }
