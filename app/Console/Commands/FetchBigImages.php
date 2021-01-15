@@ -59,6 +59,10 @@ class FetchBigImages extends Command
 
         $data = collect();
         foreach ($ar_products_collection as $product) {
+            if(is_null($product))
+            {
+                continue;
+            }
             foreach ($product->File as $i => $file) {
                 $fileName = time() . uniqid() . ".jpg";
                 $self->client->get($file->image, ["sink" => fopen(public_path("data/productdetails/$fileName"), "w")]);
