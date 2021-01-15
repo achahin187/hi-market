@@ -105,11 +105,12 @@
                                   <p>{{ $order->companies->name ??'' }}</p>
                                 </div>
 
-
+                              @if($order->branch->name)
                                 <div class="form-group">
                                   <label>Branch</label>
-                                  <p>{{ isset($order->branch->name) ??'' }}</p>
+                                  <p>{{ $order->branch->name }}</p>
                                 </div>
+                               @endif 
                                 
                               @if($order->point_redeem)
                                 <div class="form-group">

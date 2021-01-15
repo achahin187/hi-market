@@ -79,9 +79,7 @@ class AuthController extends Controller
 
 
         if ($validator->fails()) {
-
             return $this->returnValidationError(422, $validator);
-
         }
 
 
@@ -89,17 +87,21 @@ class AuthController extends Controller
         if (auth("client-web")->attempt([
             "mobile_number" => $request->mobile_number,
             "password" => $request->password,
+            'status'   => 1,
 
         ])) {
 
-            $client = Auth::guard('client-web')->user();
+            $client = Client::where('id', Auth::guard('client-web')->user()->id)->first();
 
             $token = $client->createToken("hi-market")->accessToken;
 
             $msg = "you have been logged in successfully";
 
-            $client->update(['device_token' => $request->device_token]);
+            $test = $client->update([
+                'device_token' => $request->device_token
+            ]);
 
+           
             return $this->returnData(
                 ['client', 'token'], [new ClientResource($client), $token], $msg);
         }

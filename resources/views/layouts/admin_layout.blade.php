@@ -393,7 +393,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
-                    @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list','vendor-list','product-list','offer-list']))
+                    @if(auth()->user()->hasAnyPermission(['supermarketAdmin-list','branches-list','vendor-list','product-list','offer-list']))
                         {{-- supermarket --}}
                         <li class="nav-item has-treeview">
 
@@ -408,7 +408,7 @@ $settings = App\Models\Setting::all()->first();
 
 
                             <ul class="nav nav-treeview">
-                                @if(auth()->user()->can('supermarket-list'))
+                                @if(auth()->user()->can('supermarketAdmin-list'))
                                     <li class="nav-item">
                                         <a href="{{route('supermarkets.index')}}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -555,7 +555,7 @@ $settings = App\Models\Setting::all()->first();
                         </li>
                     @endif
 
-                    @if(auth()->user()->can('financials-list'))
+                    @if(auth()->user()->can('financial-list-branch'))
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -1104,6 +1104,7 @@ $(document).ready(function() {
 var pageRefresh = 5000; //5 s
     setInterval(function() {
         refresh();
+        
     }, pageRefresh);
 });
 

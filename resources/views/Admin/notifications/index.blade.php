@@ -14,10 +14,10 @@
                         <h1>Notification</h1>
                     </div>
 
-                    @if(auth()->user()->can('admin-create'))
+                    @if(auth()->user()->can('notifications-create'))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                               {{--  <li class="breadcrumb-item"><a href="{{route('notifications.create')}}">add new notification</a></li> --}}
+                                <li class="breadcrumb-item"><a href="{{route('notifications.create')}}">add new notification</a></li>
                             </ol>
                         </div>
                     @endif

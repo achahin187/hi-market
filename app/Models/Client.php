@@ -74,7 +74,7 @@ class Client extends Authenticatable
 
     protected static $logName = 'client';
 
-    protected static $logAttributes = ['status', 'password', 'name', 'email', 'mobile_number', 'address', 'image'];
+    protected static $logAttributes = ['status', 'password', 'name', 'email', 'mobile_number', 'address','image'];
 
     protected $guarded = [];
 
@@ -120,6 +120,11 @@ class Client extends Authenticatable
     public function setPasswordAttribute($value){
 
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function promocode()
+    {
+        return $this->belongsToMany('App\Models\Offer', 'promocode_user');
     }
 
     // public function getJWTIdentifier()

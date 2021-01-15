@@ -428,25 +428,25 @@ $settings = App\Models\Setting::all()->first();
 
 
                                 {{-- measures --}}
-                                                 <li class="nav-item">
-                                                    <a href="{{route('measures.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                       <p>{{ __('admin.measure') }}</p>
-                                                    </a>
-                                                </li>
+                                 <li class="nav-item">
+                                    <a href="{{route('measures.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                       <p>{{ __('admin.measure') }}</p>
+                                    </a>
+                                </li>
 
-                                                 {{-- sizes --}}
-                                                <li class="nav-item">
-                                                    <a href="{{route('sizes.index')}}" class="nav-link">
-                                                        <i class="far fa-circle nav-icon"></i>
-                                                        <p>{{ __('admin.size') }}</p>
-                                                    </a>
-                                                </li>
+                                 {{-- sizes --}}
+                                <li class="nav-item">
+                                    <a href="{{route('sizes.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('admin.size') }}</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endif
 
-                    @if(auth()->user()->hasAnyPermission(['supermarket-list','branches-list','vendor-list','product-list','offer-list']))
+                    @if(auth()->user()->hasAnyPermission(['supermarketAdmin-list','branches-list','vendor-list','product-list','offer-list']))
                         {{-- supermarket --}}
                         <li class="nav-item has-treeview">
 
@@ -590,7 +590,7 @@ $settings = App\Models\Setting::all()->first();
 
 
 
-                    @if(auth()->user()->can('financials-list'))
+                    @if(auth()->user()->can('financial-list-branch'))
                     <li class="nav-item">
 
                         <a href="{{route('financials.index')}}" class="nav-link">
@@ -787,26 +787,27 @@ $settings = App\Models\Setting::all()->first();
  <script>
 
         //line chart
-        // var line = new Morris.Line({
-        //     element: 'line-chart',
-        //     resize: true,
-        //     data: [
-        //         foreach ($sales_data as $data)
-        //         {
-        //             ym: "{ $data->year }}-{ $data->month }}", sum: "{ $data->sum }}"
-        //         },
-        //         endforeach
-        //     ],
-        //     xkey: 'ym',
-        //     ykeys: ['sum'],
-        //     labels: ['total'],
-        //     lineWidth: 2,
-        //     hideHover: 'auto',
-        //     gridStrokeWidth: 0.4,
-        //     pointSize: 4,
-        //     gridTextFamily: 'Open Sans',
-        //     gridTextSize: 10
-        // });
+         var line = new Morris.Line({
+             element: 'line-chart',
+             resize: true,
+             data: [
+                 @foreach ($sales_data as $data)
+                 {
+                    
+                     ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
+                 },
+                 @endforeach
+             ],
+             xkey: 'ym',
+             ykeys: ['sum'],
+             labels: ['total'],
+             lineWidth: 2,
+             hideHover: 'auto',
+             gridStrokeWidth: 0.4,
+             pointSize: 4,
+             gridTextFamily: 'Open Sans',
+             gridTextSize: 10
+         });
     </script>
 
 @yield('scripts')

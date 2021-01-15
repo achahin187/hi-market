@@ -19,10 +19,10 @@ class DeliveryManagerController extends Controller
         $this->blade = 'Admin.delivery_admin.' ;
         $this->route = 'delivery-admins.' ;
 
-        $this->middleware('permission:delivery-list', ['only' => ['index']]);
-        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
-        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:deliveryAdmin-list', ['only' => ['index']]);
+        $this->middleware('permission:deliveryAdmin-create', ['only' => ['create','store']]);
+        $this->middleware('permission:deliveryAdmin-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:deliveryAdmin-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.

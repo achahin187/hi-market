@@ -128,8 +128,8 @@ class OrderController extends Controller
                 'branch_id' =>  $order_details["supermarket_id"],
 
                 'point_redeem' => $order_details["redeem"],
-                'status' => 0,
                 'company_id' => $company->id ?? 17,
+                'status' => 0,
 
             ]);
 
@@ -178,6 +178,10 @@ class OrderController extends Controller
                 
                 new SendNotification($order->client->device_token, $order, $data, 'order');
             }
+             #Store Notification 
+            if ( $order->status == 0 ) {
+                 $this->storeNotificationOrder($order);
+            }
             //Send Notification To Company That have Order...
             if ($company) {
                 $company_client = Client::Where('company_id', $company->id)->Where('verify', 1)->first();
@@ -187,7 +191,7 @@ class OrderController extends Controller
                 }
                   
               }  
-            //$this->storeNotificationOrder($order);
+           
             #send notification to dashboard
              $super_admins = User::role(['super_admin','supermarket_admin'])->get();
              $delivery_admins =  User::role(['delivery_admin'])->where('company_id',8)->get();

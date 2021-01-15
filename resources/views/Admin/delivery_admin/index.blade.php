@@ -17,7 +17,7 @@
 
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                @if(auth()->user()->can('delivery-create'))
+                                @if(auth()->user()->can('deliveryAdmin-create'))
                                 <li class="breadcrumb-item"><a href="{{route('delivery-admins.create')}}">{{ __('admin.add_delivery_admin') }}</a></li>
                                 @endif
                             </ol>
@@ -55,7 +55,7 @@
                                     <tr>
                                         <th>{{ __('admin.name') }}</th>
                                         <th>{{ __('admin.email') }}</th>
-                                    @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                    @if(auth()->user()->hasAnyPermission(['deliveryAdmin-delete','deliveryAdmin-edit']))
                                         <th>{{ __('admin.controls') }}</th>
                                     @endif    
                                     </tr>
@@ -66,14 +66,14 @@
                                         <tr>
                                             <td>{{$delivery_admin->name}}</td>
                                             <td>{{$delivery_admin->email}}</td>
-                                        @if(auth()->user()->hasAnyPermission(['delivery-delete','delivery-edit']))
+                                        @if(auth()->user()->hasAnyPermission(['deliveryAdmin-delete','deliveryAdmin-edit']))
                                             <td>
                                                 <div class="dropdown">
                                                     <button type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="drop-down-button">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if(auth()->user()->can('delivery-delete'))
+                                                    @if(auth()->user()->can('deliveryAdmin-delete'))
                                                         <form action="{{ route('delivery-admins.destroy', $delivery_admin->id) }}" method="post">
                                                             @csrf
                                                             @method('delete')
@@ -83,7 +83,7 @@
                                                                 <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this vendor?") }}') ? this.parentElement.submit() : ''">{{ __('delete') }}</button>
                                                         </form>
                                                     @endif
-                                                    @if(auth()->user()->can('delivery-edit'))
+                                                    @if(auth()->user()->can('deliveryAdmin-edit'))
                                                                 <a class="dropdown-item" href="{{ route('delivery-admins.edit', $delivery_admin->id) }}">{{ __('edit') }}</a>
                                                     @endif            
                                                     </div>

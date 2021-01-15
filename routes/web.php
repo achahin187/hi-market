@@ -89,6 +89,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //Route::put('cities/status/{city_id}', 'Admin\CityController@status')->name('cities.status');
 
         Route::resource('financials', 'Admin\FinancialController');
+        
         Route::get('ShowCompanyOrders/{id}', 'Admin\FinancialController@ShowCompanyOrders')->name('company.orders');
 
 
@@ -280,7 +281,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         //contact us
         Route::resource('inboxes', 'Admin\InboxController')->only(['index', 'update', 'destroy']);
 
-       
+        Route::get('get_city_branches', 'Admin\DeliveryCompanyController@get_city_branches')->name('get_city_branches');
 
         // Route::get('rate',function(){
         //     $rate =

@@ -191,9 +191,9 @@ map.on('click', function (e) {
 
              if (data == 'done') {
                
-                {{ session()->put('status','added success')}}
+                {{ session()->flash('status','added success')}}
                 location.href = "{{ route('locations.area.index',['location_id'=> $city->id]) }}"
-                /*
+                
              }
             }
         })

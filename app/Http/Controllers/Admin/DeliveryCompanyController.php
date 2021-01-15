@@ -12,7 +12,16 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DeliveryCompanyController extends Controller
-{
+{   
+
+
+     function __construct()
+    {
+        $this->middleware('permission:deliveryCompany-list', ['only' => ['index']]);
+        $this->middleware('permission:deliveryCompany-create', ['only' => ['create','store']]);
+        $this->middleware('permission:deliveryCompany-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:deliveryCompany-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -57,8 +66,9 @@ class DeliveryCompanyController extends Controller
         $request_data['phone_number'] = array_filter($request->phone_number);
 
         $company = DeliveryCompany::create($request_data);
+
         $company->branches()->sync($request_data["branch_id"]);
-        $this->storeCompanyClient($request);
+        $this->storeCompanyClient($request, $company->id);
         return redirect()->route("delivery-companies.index");
     }
 
@@ -123,23 +133,31 @@ class DeliveryCompanyController extends Controller
     public function destroy($id)
     {
         try {
-            $delivery = DeliveryCompany::find($id);
-            $delivery->delete();
+            $company = DeliveryCompany::find($id);
+            $company->delete();
             return redirect()->route("delivery-companies.index")->withStatus("deleted");
         } catch (\Exception $e) {
             return redirect()->route("delivery-companies.index")->withStatus("Something Went Wrong");
         }
     }
 
-    private function storeCompanyClient($request)
+    private function storeCompanyClient($request,$company_id)
     {   
         
        Client::updateOrCreate([
             'name' => $request->name_en,
             'email' => $request->email,
-            'password' => $request->phone_number[0],
-            'verify' => 0,
+            'password' => $request->password,
+            'mobile_number' => $request->phone_number[0],
             'company_topic' => $request->name_en,
+            'company_id' => $company_id,
+            'verify' => 1,
        ]);
+    }
+
+    public function get_city_branches(Request $request)
+    {
+        $branches = Branch::WhereDoesntHave('companies')->Where('city_id', $request->city_id)->get();
+        return Response()->json($branches);
     }
 }
