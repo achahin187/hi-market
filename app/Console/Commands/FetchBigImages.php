@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Mockery\Matcher\Closure;
 use parallel\Runtime;
 
@@ -42,13 +43,22 @@ class FetchBigImages extends Command
     public function handle()
     {
         $data = [];
-        $products = collect(json_decode(file_get_contents(public_path("products/arabic_products.json"))));
+        $ar_products = File::allFiles(public_path("products/ar"));
+        $ar_products_collection = collect();
+        $this->info("processing :" . count($ar_products) . " product");
+        foreach ($ar_products as $file) {
+
+            $content = json_decode(file_get_contents(public_path("products/ar/" . $file->getBasename())));
+
+            $ar_products_collection->add($content[0]);
+        }
+
 
         $self = $this;
 
 
         $data = collect();
-        foreach ($products as $product) {
+        foreach ($ar_products_collection as $product) {
             foreach ($product->File as $i => $file) {
                 $fileName = time() . uniqid() . ".jpg";
                 $self->client->get($file->image, ["sink" => fopen(public_path("data/productdetails/$fileName"), "w")]);
