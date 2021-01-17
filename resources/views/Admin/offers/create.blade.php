@@ -163,6 +163,7 @@
                 url: "{{ route('get_branch_product') }}?branch_id=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
+                 // console.log(data);
                     $('#product_2').html('');
                     data.forEach(function(x){
                         

@@ -909,7 +909,7 @@ class ProductController extends Controller
 
             $q->Where('branches.id',$request->branch_id);
 
-        })->paginate(20);
+        })->get();
 
         return response()->json($products);
     }
