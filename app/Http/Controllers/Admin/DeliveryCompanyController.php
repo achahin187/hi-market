@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\DeliveryCompany;
 use App\Models\Client;
+use App\Models\City;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,13 +16,13 @@ class DeliveryCompanyController extends Controller
 {   
 
 
-     function __construct()
-    {
-        $this->middleware('permission:deliveryCompany-list', ['only' => ['index']]);
-        $this->middleware('permission:deliveryCompany-create', ['only' => ['create','store']]);
-        $this->middleware('permission:deliveryCompany-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:deliveryCompany-delete', ['only' => ['destroy']]);
-    }
+    //  function __construct()
+    // {
+    //     $this->middleware('permission:deliveryCompany-list', ['only' => ['index']]);
+    //     $this->middleware('permission:deliveryCompany-create', ['only' => ['create','store']]);
+    //     $this->middleware('permission:deliveryCompany-edit', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:deliveryCompany-delete', ['only' => ['destroy']]);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -54,11 +55,11 @@ class DeliveryCompanyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name_ar" => "required",
-            "name_en" => "required",
-            "email" => ["required", "email", 'unique:delivery_companies'],
-            "phone_number.0" => "required|digits:11",
-            "commission" => "required|integer",
+            "name_ar"        => "required",
+            "name_en"        => "required",
+            "email"          => "required|email|unique:delivery_companies,email",
+            "phone_number.0" => "required|digits:11|unique:delivery_companies,phone_number",
+            "commission"     => "required|integer",
             //"branch_id" => "required"
         ]);
 
@@ -157,7 +158,10 @@ class DeliveryCompanyController extends Controller
 
     public function get_city_branches(Request $request)
     {
-        $branches = Branch::WhereDoesntHave('companies')->Where('city_id', $request->city_id)->get();
-        return Response()->json($branches);
+        $branches  = Branch::WhereDoesntHave('companies')->Where('city_id', $request->city_id)->get();
+        $countArea = City::Where('id', $request->city_id)->first()->areaList->count();
+        $areas = City::Where('id', $request->city_id)->first()->areaList;
+    
+        return Response()->json(['branches'=>$branches, 'areaCount'=>$countArea, 'areas'=> $areas]);
     }
 }

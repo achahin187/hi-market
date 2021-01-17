@@ -158,7 +158,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             
             Route::get("asap", "Admin\OrderAsapController@index")->name("orders.asap.index");
             Route::post("schedule/{order_id}/status", "Admin\OrderScheduleController@changeStatus")->name("orders.schedule.change_status");
-            Route::get("scheduled","Admin\OrderScheduleController@index");
+            Route::get("scheduled","Admin\OrderScheduleController@index")->name('orders.scheduled.index');
 
             Route::get('{cancel?}', 'Admin\OrderController@index')->name('orders.index');
             Route::get('add/{request_id}', 'Admin\OrderController@create')->name('orders.create');

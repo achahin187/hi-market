@@ -418,7 +418,8 @@
                     
         });
 
-        $('.product_9').change(function(){
+        //$('.product_9').change(function(){
+        $('body').on('keyup change', '.product_9', function() {    
 
             $.ajax({
                 url: "{{ route('get_product') }}?product_id=" + $(this).val(),
@@ -426,6 +427,7 @@
                 success: function(data) {
                  
                   $('.product-price').html(data.price);
+                  console.log(data);
                    calculateTotal();
                    //$('.product_9').attr('name', 'product['+data.id+'][quantity]');
                 }
