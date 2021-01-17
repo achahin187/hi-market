@@ -917,11 +917,13 @@ $settings = App\Models\Setting::all()->first();
 
 <script>
     $(function () {
-        $("#example1").DataTable({
+        $("#example30").DataTable({
             "responsive": true,
-            "autoWidth": false,
-            "searching": false,
-            "ordering": false,
+            "autoWidth": true,
+            "searching": true,
+            "ordering": true,
+            "paging": true,
+            "searching": true,
            
         });
         $("#example20").DataTable({

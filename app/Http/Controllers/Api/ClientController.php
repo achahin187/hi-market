@@ -51,7 +51,6 @@ class ClientController extends Controller
     public function client_profile(Request $request)
     {
 
-
         $client = getUser();
 
         return $this->returnData(['client'], [new ClientResource($client)]);
