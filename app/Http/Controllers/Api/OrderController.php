@@ -130,6 +130,7 @@ class OrderController extends Controller
                 'point_redeem' => $order_details["redeem"],
                 'company_id' => $company->id ?? 17,
                 'status' => 0,
+                'asap' => $order_details["asap"],
 
             ]);
 
