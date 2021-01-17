@@ -53,7 +53,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
+                                      {{--   <div class="form-group">
                                             <label for="exampleInputEmail1">{{__('admin.title_en')}}</label>
                                             <input type="text" value="" name="title_en" class=" @error('title_en') is-invalid @enderror form-control" required>
                                             @error('title_en')
@@ -61,7 +61,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{{__('admin.body_ar')}}</label>
@@ -73,7 +73,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
+                                      {{--   <div class="form-group">
                                             <label for="exampleInputEmail1">{{__('admin.body_en')}}</label>
                                             <input type="text" value="" name="body_en" class=" @error('body_en') is-invalid @enderror form-control" required>
                                             @error('body_en')
@@ -81,7 +81,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
 
                                        
                                    
