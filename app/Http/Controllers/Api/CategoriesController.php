@@ -155,7 +155,7 @@ class CategoriesController extends Controller
         };
 
 
-        return $this->returnData(['products','categories','supermarket',"more","count"], [CategoryProductResource::collection($products),CategoryResource::collection($categories),$supermarket->name,$products->hasMorePages(),$products->count()]);
+        return $this->returnData(['products','categories','supermarket',"more","count"], [CategoryProductResource::collection($products),CategoryResource::collection($categories),$supermarket->name,$products->hasMorePages(),$products->total()]);
     }
 
     public function categoryproducts(Request $request)
@@ -213,7 +213,7 @@ class CategoriesController extends Controller
                     "data" => [
                         "products" => CategoryProductResource::collection($products),
                         "more"=>$products->hasMorePages(),
-                        "count"=>$products->count()
+                        "count"=>$products->total()
                     ]
                 ]);
 
