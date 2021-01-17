@@ -55,11 +55,11 @@ class DeliveryCompanyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name_ar" => "required",
-            "name_en" => "required",
-            "email" => ["required", "email", 'unique:delivery_companies'],
-            "phone_number.0" => "required|digits:11",
-            "commission" => "required|integer",
+            "name_ar"        => "required",
+            "name_en"        => "required",
+            "email"          => "required|email|unique:delivery_companies,email",
+            "phone_number.0" => "required|digits:11|unique:delivery_companies,phone_number",
+            "commission"     => "required|integer",
             //"branch_id" => "required"
         ]);
 
