@@ -19,10 +19,10 @@ class DeliveryController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:delivery-list', ['only' => ['index']]);
-        $this->middleware('permission:delivery-create', ['only' => ['create','store']]);
-        $this->middleware('permission:delivery-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:delivery-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:driver-list'  , ['only' => ['index']]);
+        $this->middleware('permission:driver-create', ['only' => ['create','store']]);
+        $this->middleware('permission:driver-edit'  , ['only' => ['edit','update']]);
+        $this->middleware('permission:driver-delete', ['only' => ['destroy']]);
     }
 
     /**
