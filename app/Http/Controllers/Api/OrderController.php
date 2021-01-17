@@ -131,6 +131,7 @@ class OrderController extends Controller
                 'company_id' => $company->id ?? 17,
                 'status' => 0,
                 'asap' => $order_details["asap"],
+                'type' => $order_details["asap"] == 1 ? 'asap' : 'schedule',
 
             ]);
 

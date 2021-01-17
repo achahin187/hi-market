@@ -488,7 +488,29 @@ $settings = App\Models\Setting::all()->first();
 
                     {{-- Orders --}}
                     @if(auth()->user()->can('order-list'))
-                        {{-- @if(auth()->user()->hasRole('deliveryAdmin')) --}}
+
+                      <li class="nav-item">
+                                <a href="{{ route('orders.asap.index') }}"
+                                   class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders.asap') }}
+                                    </p>
+                                </a>
+                            </li>
+
+                             <li class="nav-item">
+                                <a href="{{ route('orders.scheduled.index') }}"
+                                   class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        {{ __('admin.orders.scheduled') }}
+                                    </p>
+                                </a>
+                            </li>
+
+
+                        @if(auth()->user()->hasAnyRole(['deliveryAdmin-list', 'delivery-list'])) 
 
 
                             <li class="nav-item">
@@ -501,15 +523,6 @@ $settings = App\Models\Setting::all()->first();
                                 </a>
                             </li>
 
-                             <li class="nav-item">
-                                <a href="{{ route('orders.asap.index') }}"
-                                   class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        {{ __('admin.orders.asap') }}
-                                    </p>
-                                </a>
-                            </li>
 
                              <li class="nav-item">
                                 <a href="{{ route('orders.index',['company_id'=>auth()->user()->company_id ]) }}"
@@ -540,7 +553,7 @@ $settings = App\Models\Setting::all()->first();
                                     </p>
                                 </a>
                             </li>
-                       {{--  @endif --}}
+                        @endif 
                     @endif
 
                     {{-- setting --}}
