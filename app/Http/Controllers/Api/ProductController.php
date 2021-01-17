@@ -73,7 +73,7 @@ class ProductController extends Controller
 
         $offers = Offer::Where('source','Delivertto')->where('status', 1)->orderBy('priority', 'asc')->get();
 
-        $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->get();
+        $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->paginate();
 
 
 
@@ -101,8 +101,7 @@ class ProductController extends Controller
             $supermarkets = Branch::Where('city_id', $getPolygon->area->areacity->id)
                                    ->where('status', 'active')
                                    ->orderBy('priority', 'asc')
-                                   ->limit(20)
-                                   ->get();
+                                   ->paginate();
 
 
             if (auth("client-api")->check()) {
@@ -118,7 +117,7 @@ class ProductController extends Controller
                       ]);
 
 
-                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+                      return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", 'topics', 'nonTopic','more'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $getPolygon->topic, $notTopic->unique('topic')->pluck('topic'), $supermarkets->hasMorePages()]);
 
 
                   } else {
@@ -150,19 +149,19 @@ class ProductController extends Controller
                 ]);
               }
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0",$getPolygon->topic, $notTopic->unique('topic')->pluck('topic')]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", 'topics', 'nonTopic', 'more'], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0",$getPolygon->topic, $notTopic->unique('topic')->pluck('topic'), $supermarkets->hasMorePages()]);
             }//end if
 
         }else{//else data
 
-            $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->limit(20)->inRandomOrder()->get();
+            $supermarkets = Branch::where('status', 'active')->orderBy('priority', 'asc')->inRandomOrder()->paginate();
 
             if (auth("client-api")->check()) {
                 $client = auth("client-api")->user();
 
                 if ($client) {
 
-                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
+                    return $this->returnData(["supermarkets", "offers","isOffer","totalMoney", "more"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $supermarkets->hasMorePages()]);
 
 
                 } else {
@@ -176,7 +175,7 @@ class ProductController extends Controller
 
                 ]);
 
-                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0"]);
+                return $this->returnData(["supermarkets", "offers","isOffer", "totalMoney", "more"], [HomeDataResource::collection($supermarkets), OfferResource::collection($offers),!!$this->getOffer(),(string)$this->getOffer() != null ? (string)$this->getOffer()->total_order_money :"0", $supermarkets->hasMorePages()]);
             }//end if
         }//end data
     }
