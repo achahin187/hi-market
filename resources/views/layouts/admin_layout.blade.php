@@ -510,7 +510,7 @@ $settings = App\Models\Setting::all()->first();
                             </li>
 
 
-                        @if(auth()->user()->hasAnyRole(['deliveryAdmin-list', 'delivery-list'])) 
+                        @if(auth()->user()->hasAnyRole(['deliveryAdmin-list', 'driver-list'])) 
 
 
                             <li class="nav-item">
