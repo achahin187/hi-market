@@ -27,10 +27,10 @@ class NotificationController extends Controller
         {
             $orders = NotificationMobile::Where('client_id', $client->id)
                         ->orderBy('created_at', 'desc')
-                        ->get();
+                        ->paginate();
                       
          
-            return $this->returnData(["orders"], [OrderResource::collection( $orders)]);
+            return $this->returnData(["orders", "more"], [OrderResource::collection( $orders), $orders->hasMorePages()]);
 
         }else{
 
