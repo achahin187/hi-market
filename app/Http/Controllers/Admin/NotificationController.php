@@ -55,6 +55,7 @@ class NotificationController extends Controller
                   ];
         $message_title = $request->title_ar;          
         $message_body  = $request->body_ar;  
+                  dd($message_title, $message_body);
 
         new SendNotification('Custom', '', $data, 'Custom',$message_title, $message_body);
        
